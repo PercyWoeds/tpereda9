@@ -1,0 +1,79 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listado Vales</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Td</th>
+      <th>Fecha</th>
+      <th>Turno</th>
+      <th>Cod emp</th>
+      <th>Caja</th>
+      <th>Serie</th>
+      <th>Numero</th>
+      <th>Cod cli</th>
+      
+      <th>Placa</th>
+      <th>Odometro</th>
+      <th>Cod prod</th>
+      <th>Cantidad</th>
+      <th>Precio</th>
+      <th>Importe</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @sellvales.each do |sellvale| %>
+      <tr>
+        <td class="small bordered_bottom bordered_right"><%= sellvale.td %></td>
+        <% if sellvale.fecha != nil %>
+        <td class="small bordered_bottom bordered_right"> <%= sellvale.fecha.strftime("%d/%m/%Y") %></td>
+        <% else %>
+        <td class="small bordered_bottom bordered_right"> <%= sellvale.fecha %></td>
+        <% end %>
+        
+        <td class="small bordered_bottom bordered_right" ><%= sellvale.turno %></td>
+        <td class="small bordered_bottom bordered_right"><%= sellvale.cod_emp %></td>
+        <td class="small bordered_bottom bordered_right"><%= sellvale.caja %></td>
+        <td class="small bordered_bottom bordered_right"><%= sellvale.serie %></td>
+        <td class="small bordered_bottom bordered_right"><%= sellvale.numero %></td>
+        <td class="small bordered_bottom bordered_right"><%= sellvale.cod_cli %></td>
+        
+        <td class="small bordered_bottom bordered_right"><%= sellvale.placa %></td>
+        <td class="small bordered_bottom bordered_right"><%= sellvale.odometro %></td>
+        <td class="small bordered_bottom bordered_right"><%= sellvale.cod_prod %></td>
+        <td class="small bordered_bottom bordered_right"><%= sellvale.cantidad %></td>
+        <td class="small bordered_bottom bordered_right"><%= sellvale.precio %></td>
+        <td class="small bordered_bottom bordered_right"><%= sellvale.importe %></td>
+        
+        <td><%= link_to 'Ver', sellvale %></td>
+        <td><%= link_to 'Editar', edit_sellvale_path(sellvale) %></td>
+        
+        <td><%= link_to 'Eliminar', sellvale, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        
+        
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= will_paginate @sellvales %>
+
+<br>
+
+
+<%= link_to 'New Sellvale', new_sellvale_path %>
+
+<h2>Importar Archivo  "*.csv"</h2>
+
+<%= form_tag import_sellvales_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
+
+ Download:
+  <%= link_to "CSV", sellvales_path(format: "csv"), multipart: true  %> 
+  
+  

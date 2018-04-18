@@ -64,8 +64,28 @@
                 <h2 class="title">Módulos del sistema</h2>
 
                 <div id="cards-wrapper" class="cards-wrapper row">
+                    
+                    
+            <%if @current_user.level == "parte" || @current_user.level == "admin" %>
 
-            <%if @current_user.level == "compras" || @current_user.level == "admin" %>
+                        <div class="item item-green col-md-4 col-sm-6 col-xs-6">
+                            <div class="item-inner">
+                                <div class="icon-holder">
+                                    <i class="icon fa icon_documents"></i>
+                                </div><!--//icon-holder-->
+                                <h3 class="title">Parte Diario </h3>
+                                <p class="intro">Registro de parte diario </p>
+                                <%= link_to "", "/companies/parte/#{@company.id}", class: "link" %>
+                                 <span></span>
+
+                                
+                            </div><!--//item-inner-->
+                        </div><!--//item-->
+
+                    <% end %>
+
+
+            <%if @current_user.level == "compras" || @current_user.level == "admin" || @current_user.level == "parte" %>
 
                         <div class="item item-green col-md-4 col-sm-6 col-xs-6">
                             <div class="item-inner">
@@ -83,7 +103,7 @@
 
                     <% end %>
 
-                    <%if @current_user.level == "almacen" || @current_user.level == "admin" || @current_user.level == "compras" %>     
+                    <%if @current_user.level == "almacen" || @current_user.level == "admin" || @current_user.level == "compras" || @current_user.level == "parte" %>     
 
                         <div class="item item-pink item-2 col-md-4 col-sm-6 col-xs-6">
                             <div class="item-inner">
@@ -114,7 +134,7 @@
                         </div><!--//item-->
                     <% end %>    
 
-                    <%if @current_user.level == "ventas" || @current_user.level == "admin"%> 
+                    <%if @current_user.level == "ventas" || @current_user.level == "admin" || @current_user.level == "compras" || @current_user.level == "parte" %> 
 
                     <div class="item item-purple col-md-4 col-sm-6 col-xs-6">
                         <div class="item-inner">
@@ -127,23 +147,17 @@
                             <%= link_to "", "/companies/faqs/#{@company.id}", class: "link" %><span></span></a>
                         </div><!--//item-inner-->
                     </div><!--//item-->
-
-                    <div class="item item-primary col-md-4 col-sm-6 col-xs-6">
-                        <div class="item-inner">
-                            <div class="icon-holder">
-                                <span aria-hidden="true" class="icon icon_genius"></span>
-                            </div><!--//icon-holder-->
-                            <h3 class="title">Mantenimiento unidades</h3>
-                            <p class="intro">Control de mantenimento unidades de </p>
-                            <a><%= link_to "", "/companies/mantenimiento/#{@company.id}", class: "link" %><span></span></a>
-                        </div><!--//item-inner-->
-                    </div><!--//item-->
                     <% end %>
+                    
+                 <%if @current_user.level == "mantenimiento" || @current_user.level == "admin"  %> 
+                    <% end %>
+                    
+                    
                     <%if @current_user.level == "almacen" || @current_user.level == "admin"%> 
                     <div class="item item-orange col-md-4 col-sm-6 col-xs-6">
                         <div class="item-inner">
                             <div class="icon-holder">
-                                <span aria-hidden="true" class="icon icon_gift"></span>
+                                <span aria-hidden="true" class="icon icon_tools"></span>
                             </div><!--//icon-holder-->
                             <h3 class="title"> Configuracion</h3>
                             <p class="intro">Configuracion.</p>
@@ -153,12 +167,12 @@
 
                     <% end %>
 
-                    <%if @current_user.level == "finanzas" || @current_user.level == "admin"%> 
+                    <%if @current_user.level == "finanzas" || @current_user.level == "admin" || @current_user.level == "parte"%> 
 
                      <div class="item item-orange col-md-4 col-sm-6 col-xs-6">
                         <div class="item-inner">
                             <div class="icon-holder">
-                                <span aria-hidden="true" class="icon icon_gift"></span>
+                                <span aria-hidden="true" class="icon icon_calulator"></span>
                             </div><!--//icon-holder-->
                             <h3 class="title">Cuentas por cobrar </h3>
                                 <p class="intro">Cuentas por cobrar cliente </p>
@@ -173,7 +187,7 @@
                     <div class="item item-purple col-md-4 col-sm-6 col-xs-6">                
                             <div class="item-inner">
                                 <div class="icon-holder">
-                                    <span aria-hidden="true" class="icon icon_genius"></span>
+                                    <span aria-hidden="true" class="icon icon_drawer"></span>
                                 </div><!--//icon-holder-->
                                 <h3 class="title">Cuentas por pagar </h3>
                                 <p class="intro">Cuentas por pagar proveedores </p>
@@ -183,7 +197,7 @@
 
                     <% end %>
 
-                    <%if @current_user.level == "caja" || @current_user.level == "admin"%> 
+                    <%if @current_user.level == "caja" || @current_user.level == "admin"|| @current_user.level == "parte" %> 
 
                     <div class="item item-primary col-md-4 col-sm-6 col-xs-6">
                         <div class="item-inner">
@@ -204,7 +218,7 @@
                     <div class="item item-primary col-md-4 col-sm-6 col-xs-6">
                         <div class="item-inner">
                             <div class="icon-holder">
-                                <span aria-hidden="true" class="icon icon_gift"></span>
+                                <span aria-hidden="true" class="icon icon_group"></span>
                             </div><!--//icon-holder-->
                             <h3 class="title">Recursos Humanos </h3>
                             <p class="intro">Gestión de personal </p>
@@ -219,7 +233,7 @@
                     <div class="item item-primary col-md-4 col-sm-6 col-xs-6">
                         <div class="item-inner">
                             <div class="icon-holder">
-                                <span aria-hidden="true" class="icon icon_gift"></span>
+                                <span aria-hidden="true" class="icon icon_wallet_alt"></span>
                             </div><!--//icon-holder-->
                             <h3 class="title">Bancos </h3>
                             <p class="intro">Gestión de bancos </p>

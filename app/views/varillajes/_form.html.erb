@@ -1,0 +1,66 @@
+<%= simple_form_for(@varillaje) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    
+          <div class="field">
+      <%= f.label :fecha , "Fecha *", :class => "bold" %><br />
+
+      <% if @current_user.level = "admin" %>
+        <%= f.text_field :fecha, value: Time.zone.now.strftime("%d/%m/%Y") %>
+      <% else %>
+        <%= f.text_field :fecha, value: Time.zone.now.strftime("%d/%m/%Y")  %>
+      <% end %>
+      </div>
+      <div class="field">
+      <%= f.label :tipo , "Tanque :", :class => "bold" %><br />
+      <%= f.collection_select :tanque_id, @tanques, :id, :code, :prompt => true %>
+      </div>
+
+
+      <div class="field">
+      <%= f.label :varilla, "Medida *", :class => "bold"  %><br />
+      <%= f.input_field :varilla   %>  
+      </div>
+    <div class="field">
+      <%= f.label :documento, "Documento *", :class => "bold"  %><br />
+      <%= f.input_field :documento   %>  
+      </div>
+
+    <br />
+     
+     </input>
+    
+
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+    
+    <div class="small">
+      Once you're done adding products, don't forget to <strong><%= @action_txt %></strong> your invoice.
+    </div>
+
+<% end %>
+
+
+
+<%= render 'layouts/autocomplete' %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#ac_manguera").autocomplete("/varillaje/ac_mangueras", {
+			matchSubset: 1,
+			matchContains: 1,
+      selectFirst: false
+    });
+    
+       $("#ac_manguera").result(function(event, data, formatted) {
+      $("#ac_manguera_id").val(data[2]);
+      $("#ac_product_name").val(data[4]);
+      $("#ac_product_price").val(data[6]);
+      $("#ac_le_an_gln").val(data[8]);
+      $("#ac_product_id").val(data[10]);
+      $("#selected_manguera").html(data[0]);
+    });      
+});
+</script>

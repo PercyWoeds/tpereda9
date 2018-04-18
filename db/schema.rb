@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180310142226) do
+ActiveRecord::Schema.define(version: 20180827233058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,6 +75,19 @@ ActiveRecord::Schema.define(version: 20180310142226) do
     t.string   "full_address"
     t.integer  "address2_id"
     t.integer  "customer_id"
+  end
+
+  create_table "afericions", force: :cascade do |t|
+    t.datetime "fecha"
+    t.string   "turno"
+    t.integer  "employee_id"
+    t.integer  "tanque_id"
+    t.string   "documento"
+    t.float    "quantity"
+    t.float    "importe"
+    t.string   "concepto"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "afps", force: :cascade do |t|
@@ -252,6 +265,13 @@ ActiveRecord::Schema.define(version: 20180310142226) do
   create_table "concepts", force: :cascade do |t|
     t.string   "descrip"
     t.string   "code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "creditos", force: :cascade do |t|
+    t.string   "code"
+    t.string   "nombre"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -639,6 +659,20 @@ ActiveRecord::Schema.define(version: 20180310142226) do
     t.integer  "ccosto_id"
   end
 
+  create_table "factura_details", force: :cascade do |t|
+    t.integer  "factura_id"
+    t.integer  "sellvale_id"
+    t.integer  "producto_id"
+    t.float    "price"
+    t.float    "price_discount"
+    t.float    "quantity"
+    t.float    "total"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "product_id"
+    t.float    "discount"
+  end
+
   create_table "facturas", force: :cascade do |t|
     t.integer  "company_id"
     t.integer  "location_id"
@@ -672,6 +706,21 @@ ActiveRecord::Schema.define(version: 20180310142226) do
     t.float    "detraccion"
     t.integer  "numero2"
     t.integer  "document_id"
+    t.string   "descuento"
+    t.integer  "tipoventa"
+    t.integer  "tipoventa_id"
+    t.string   "ruc"
+  end
+
+  create_table "faltantes", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "tipofaltante_id"
+    t.string   "descrip"
+    t.text     "comments"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.float    "total"
+    t.datetime "fecha"
   end
 
   create_table "fiveparameters", force: :cascade do |t|
@@ -890,6 +939,13 @@ ActiveRecord::Schema.define(version: 20180310142226) do
     t.float    "preciocigv"
     t.float    "preciosigv"
     t.integer  "moneda"
+  end
+
+  create_table "islands", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "items", force: :cascade do |t|
@@ -1425,6 +1481,7 @@ ActiveRecord::Schema.define(version: 20180310142226) do
     t.string   "unidad"
     t.string   "ubicacion"
     t.float    "quantity"
+    t.float    "currtotal"
   end
 
   create_table "products_categories", force: :cascade do |t|
@@ -1458,6 +1515,8 @@ ActiveRecord::Schema.define(version: 20180310142226) do
     t.string   "turno"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "tanque_id"
+    t.integer  "island_id"
   end
 
   create_table "puntos", force: :cascade do |t|
@@ -1568,6 +1627,9 @@ ActiveRecord::Schema.define(version: 20180310142226) do
     t.integer  "purchaseorder_id"
     t.string   "yearmonth"
     t.string   "tipo"
+    t.float    "participacion"
+    t.float    "percepcion"
+    t.string   "tiponota"
   end
 
   create_table "purchaseships", force: :cascade do |t|
@@ -1676,6 +1738,41 @@ ActiveRecord::Schema.define(version: 20180310142226) do
     t.integer  "company_id"
     t.string   "code"
     t.string   "already_processed"
+  end
+
+  create_table "sellvales", force: :cascade do |t|
+    t.string   "td"
+    t.datetime "fecha"
+    t.string   "turno"
+    t.string   "cod_emp"
+    t.string   "caja"
+    t.string   "serie"
+    t.string   "numero"
+    t.string   "cod_cli"
+    t.string   "ruc"
+    t.string   "placa"
+    t.string   "odometro"
+    t.string   "cod_prod"
+    t.float    "cantidad"
+    t.string   "precio"
+    t.string   "importe"
+    t.float    "igv"
+    t.float    "fpago"
+    t.float    "dolat"
+    t.float    "implista"
+    t.string   "cod_tar"
+    t.string   "km"
+    t.string   "chofer"
+    t.string   "tk_devol"
+    t.string   "cod_sucu"
+    t.string   "isla"
+    t.string   "dni_cli"
+    t.string   "clear"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float    "dolar"
+    t.string   "processed"
+    t.string   "tipo"
   end
 
   create_table "servicebuys", force: :cascade do |t|
@@ -1872,15 +1969,27 @@ ActiveRecord::Schema.define(version: 20180310142226) do
   end
 
   create_table "tanks", force: :cascade do |t|
+    t.string   "code"
     t.string   "comments"
+    t.float    "saldo_inicial"
+    t.float    "varilla"
     t.integer  "product_id"
     t.integer  "company_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   add_index "tanks", ["company_id"], name: "index_tanks_on_company_id", using: :btree
   add_index "tanks", ["product_id"], name: "index_tanks_on_product_id", using: :btree
+
+  create_table "tanques", force: :cascade do |t|
+    t.string   "code"
+    t.integer  "product_id"
+    t.float    "saldo_inicial"
+    t.float    "varilla"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
 
   create_table "tempcps", force: :cascade do |t|
     t.datetime "fecha2"
@@ -1916,11 +2025,27 @@ ActiveRecord::Schema.define(version: 20180310142226) do
     t.integer  "company_id"
   end
 
+  create_table "tipofaltantes", force: :cascade do |t|
+    t.string   "code"
+    t.string   "descrip"
+    t.float    "importe"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "tipotrabajadors", force: :cascade do |t|
     t.integer  "code"
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "tipoventa", force: :cascade do |t|
+    t.string   "code"
+    t.string   "nombre"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "tipoventa_id"
   end
 
   create_table "tms", force: :cascade do |t|
@@ -2063,6 +2188,83 @@ ActiveRecord::Schema.define(version: 20180310142226) do
     t.text     "comments"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "varillajes", force: :cascade do |t|
+    t.integer  "tanque_id"
+    t.integer  "product_id"
+    t.float    "inicial"
+    t.float    "compras"
+    t.float    "directo"
+    t.float    "consumo"
+    t.float    "transfe"
+    t.float    "saldo"
+    t.float    "varilla"
+    t.string   "dife_dia"
+    t.datetime "fecha"
+    t.string   "documento"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "venta", force: :cascade do |t|
+    t.string   "td"
+    t.datetime "fecha"
+    t.string   "turno"
+    t.string   "cod_emp"
+    t.string   "caja"
+    t.string   "serie"
+    t.string   "numero"
+    t.string   "cod_cli"
+    t.string   "ruc"
+    t.string   "placa"
+    t.string   "odometro"
+    t.string   "cod_prod"
+    t.float    "cantidad"
+    t.string   "precio"
+    t.string   "importe"
+    t.float    "igv"
+    t.float    "fpago"
+    t.float    "dolat"
+    t.float    "implista"
+    t.string   "cod_tar"
+    t.string   "km"
+    t.string   "chofer"
+    t.string   "tk_devol"
+    t.string   "cod_sucu"
+    t.string   "isla"
+    t.string   "dni_cli"
+    t.string   "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "ventaisla_details", force: :cascade do |t|
+    t.integer  "pump_id"
+    t.float    "le_an_gln"
+    t.float    "le_ac_gln"
+    t.float    "price"
+    t.float    "quantity"
+    t.float    "total"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "ventaisla_id"
+    t.integer  "product_id"
+  end
+
+  create_table "ventaislas", force: :cascade do |t|
+    t.datetime "fecha"
+    t.string   "turno"
+    t.integer  "employee_id"
+    t.integer  "pump_id"
+    t.float    "importe"
+    t.float    "le_an_gln"
+    t.float    "le_ac_gln"
+    t.float    "galones"
+    t.float    "precio_ven"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "ventaisla_id"
   end
 
   create_table "viatico_details", force: :cascade do |t|

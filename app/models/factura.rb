@@ -20,6 +20,7 @@ class Factura < ActiveRecord::Base
   has_many   :delivery 
   has_many   :invoice_services
   has_many   :customer_payment_details
+  has_many   :factura_details 
   
    TABLE_HEADERS = ["TD",
                       "Documento",
@@ -35,6 +36,7 @@ class Factura < ActiveRecord::Base
   TABLE_HEADERS2 = ["TD",
                       "Documento",
                      "Fecha",
+                     "Ruc",
                      "Cliente",
                      "Moneda",
                      "SUBTOTAL",
@@ -104,6 +106,11 @@ class Factura < ActiveRecord::Base
         lcnumero = numero.to_s
         Voided.where(:id=>'2').update_all(:numero =>lcnumero)        
   end
+  def correlativo2
+        numero = Voided.find(15).numero.to_i + 1
+        lcnumero = numero.to_s
+        Voided.where(:id=>'15').update_all(:numero =>lcnumero)        
+  end
 
 
   def get_subtotal(items)
@@ -122,7 +129,7 @@ class Factura < ActiveRecord::Base
         total -= total * (discount.to_f / 100)
         
         begin
-          product = Service.find(id.to_i)
+          product = Product.find(id.to_i)
           subtotal += total
         rescue
         end
@@ -152,7 +159,7 @@ class Factura < ActiveRecord::Base
             total -= total * (discount.to_f / 100)
         
             begin
-              product = Service.find(id.to_i)
+              product = Product.find(id.to_i)
               
               if(product)
                 if(product.tax1 and product.tax1 > 0)
@@ -170,9 +177,51 @@ class Factura < ActiveRecord::Base
     return tax
   end
 
+ def get_total_1(items)
+    total0 = 0
+    
+    for item in items
+      if(item and item != "")
+        parts = item.split("|BRK|")
+        
+        id = parts[0]
+        quantity = parts[1]
+        price = parts[2] 
+        discount = parts[3]
+        
+        total = price.to_f * quantity.to_i
+        total -= total * (discount.to_f / 100)
+        
+        begin
+          product = Product.find(id.to_i)
+          total0 += total 
+          rescue
+        end
+      end
+    end
+    
+    return total0
+  end
+  
+
+  def get_subtotal2
+  
+    
+    invoices = FacturaDetail.where(["factura_id = ? ", self.id ])
+    ret = 0
+    
+    for invoice in invoices
+    
+          ret += invoice.total 
+        
+    end
+   
+    
+    return ret
+  end
   
   def delete_products()
-    invoice_services = InvoiceService.where(factura_id: self.id)
+    invoice_services = FacturaDetail.where(factura_id: self.id)
     
     for ip in invoice_services
       ip.destroy
@@ -193,9 +242,9 @@ class Factura < ActiveRecord::Base
         total -= total * (discount.to_f / 100)
         
         begin
-          product = Service.find(id.to_i)
+          product = Product.find(id.to_i)
           
-          new_invoice_product = InvoiceService.new(:factura_id => self.id, :service_id => product.id, :price => price.to_f, :quantity => quantity.to_f, :discount => discount.to_f, :total => total.to_f)
+          new_invoice_product = FacturaDetail.new(:factura_id => self.id, :product_id => product.id, :price => price.to_f, :quantity => quantity.to_f, :discount => discount.to_f, :total => total.to_f)
 
           new_invoice_product.save
 
@@ -281,6 +330,7 @@ class Factura < ActiveRecord::Base
     return @itemproducts
   end
   
+   
   def get_guias    
     @itemguias = Deliveryship.find_by_sql(['Select deliveries.id,deliveries.code,deliveries.description 
      from deliveryships INNER JOIN deliveries ON deliveryships.delivery_id =  deliveries.id where deliveries.remision=2 and  deliveryships.factura_id = ?', self.id ])
@@ -424,15 +474,47 @@ class Factura < ActiveRecord::Base
     end
   end
   
+  def get_importe_soles1
+    valor = 0
+    
+    if self.moneda_id == 2
+          if self.document_id   == 2
+                  valor = self.subtotal*-1
+                    
+          else  
+                  valor = self.subtotal 
+          
+           end   
+            
+    end
+    return valor     
+  end 
+  
+  def get_importe_soles2
+    valor = 0
+    
+    if self.moneda_id == 2
+          if self.document_id   == 2
+                  valor = self.tax*-1
+                    
+          else  
+                  valor = self.tax 
+          
+           end   
+            
+    end
+    return valor     
+  end 
+  
   def get_importe_soles
     valor = 0
     
     if self.moneda_id == 2
           if self.document_id   == 2
-                  valor = self.balance*-1
+                  valor = self.total*-1
                     
           else  
-                  valor = self.balance
+                  valor = self.total 
           
            end   
             

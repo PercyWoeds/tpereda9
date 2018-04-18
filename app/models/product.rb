@@ -11,6 +11,7 @@ class Product < ActiveRecord::Base
   belongs_to :supplier
   belongs_to :products_category
   belongs_to :stock 
+  belongs_to :product  
 
   has_many :movement_details
   has_many :items
@@ -24,6 +25,8 @@ class Product < ActiveRecord::Base
   has_many :marcas
   has_many :inventario_detalles
   has_many :output_details 
+  has_many :ventaisla_details
+  
   
   before_destroy :ensure_not_referenced_by_any_line_item
 

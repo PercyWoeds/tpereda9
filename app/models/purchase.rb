@@ -2,7 +2,7 @@ class Purchase < ActiveRecord::Base
   self.per_page = 20
   
   validates_presence_of :company_id, :supplier_id, :documento,:document_id,:date1,:date2,:date3
-  
+  validates_uniqueness_of :documento, scope: :document_id
 
   belongs_to :company
   belongs_to :location
@@ -47,7 +47,8 @@ TABLE_HEADERS2  = ["ITEM ",
                      "Fecha",
                      "Fec.Vmto",
                      "Proveedor",
-                     "Moneda",                                         
+                     "Moneda",  
+                     "Percepcion",  
                      "SOLES",
                      "DOLARES ",
                      "OBSERV"]
@@ -334,7 +335,8 @@ def get_tax3(items, supplier_id)
         quantity = parts[1]
         price = parts[2]
         discount = parts[3]
-        lcprice_tax = item.price.to_f*1.18      
+        
+        lcprice_tax = price.to_f*1.18      
 
         quantity_1 = (quantity.to_f) * -1
       
@@ -346,7 +348,7 @@ def get_tax3(items, supplier_id)
           product = Product.find(id.to_i)
           
           new_pur_product = PurchaseDetail.new(:purchase_id => self.id, :product_id => product.id,
-          :price_with_tax => lcprice_tax, :price_without_tax=>item.price.to_f,:quantity => quantity_1, :discount => discount.to_f,
+          :price_with_tax => lcprice_tax, :price_without_tax=>price.to_f,:quantity => quantity_1, :discount => discount.to_f,
           :total => total)
           new_pur_product.save
         

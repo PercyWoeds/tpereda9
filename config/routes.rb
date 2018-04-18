@@ -1,5 +1,20 @@
   Mnygo::Application.routes.draw do
 
+  resources :tipofaltantes
+  resources :faltantes
+  resources :tipoventa
+  resources :creditos
+  resources :varillajes
+  resources :afericions
+  resources :ventaisla_details
+  resources :ventaislas
+  resources :tanques
+  resources :tanks
+  resources :tanks
+  resources :islands
+  resources :islands
+  resources :sellvales
+  resources :venta
   resources :ccostos
   resources :destinos
   resources :viatico_details
@@ -54,7 +69,6 @@
   resources :ajusts
   resources :viaticos 
 
-  resources :tanks
   resources :employees
   resources :pumps
   resources :supplier_payments
@@ -71,10 +85,42 @@
   resources :viaticos do
     resources :viatico_details, except: [:index,:show], controller: "viaticos/viatico_details"
     
+  end
+  
+  resources :facturas do 
+    collection { get :reportes}
+    collection { get :reportes2}
+    collection { get :reportes3}
+    collection { get :reportes4} #Reporte ventas
+    collection { get :reportes03}
+    collection { get :reportes04}
+    collection { get :reportes05}
+    collection { get :exportxls }
+    collection { get :rpt_ccobrar3_pdf  }
   end 
-  resource :viaticos do 
+    
+  
+  resources :ventaislas  do
+    resources :ventaisla_details, except: [:index,:show], controller: "ventaislas/ventaisla_details"
+     
+  end 
+   resources :facturas do
+    resources :factura_details, except: [:index,:show], controller: "facturas/facturas_details"
+    collection { post :discontinue }
+    collection do 
+      put :discontinue 
+    end 
+    collection { post :print }
+    
+  end 
+    
+  
+  resources :viaticos do 
     collection { get :rpt_viatico_pdf    }
     collection { get :update_inicial}
+  end 
+  resources :sellvales  do
+    collection { post :import }
   end 
   
     
@@ -82,10 +128,6 @@
     collection { post :import }
   end 
   
-  resources :facturas do
-    collection { get :exportxls }
-    collection { get :rpt_ccobrar3_pdf    }
-  end 
   
   resources :inventarios  do
     collection { post :import }
@@ -339,7 +381,10 @@ end
   
   match 'companies/reports/rpt_facturas_all/:company_id' => 'reports#rpt_facturas_all', via: [:get, :post]
   match 'companies/reports/rpt_facturas_all2/:company_id' => 'reports#rpt_facturas_all2', via: [:get, :post]
-
+  match 'companies/reports/rpt_facturas_3/:company_id' => 'reports#rpt_facturas_3', via: [:get, :post]
+  match 'companies/reports/rpt_facturas_4/:company_id' => 'reports#rpt_facturas_4', via: [:get, :post]
+  match 'companies/reports/rpt_facturas_5/:company_id' => 'reports#rpt_facturas_5', via: [:get, :post]
+  
   match 'companies/reports/rpt_purchase_all/:company_id' => 'reports#rpt_purchase_all', via: [:get, :post]
   match 'companies/reports/rpt_product_all/:company_id' => 'reports#rpt_product_all', via: [:get, :post]
 
@@ -347,7 +392,12 @@ end
   match 'companies/reports/:company_id' => 'reports#reports', via: [:get, :post]
 
   match 'companies/reports/rpt_caja2_pdf/:company_id' => 'reports#rpt_caja2_pdf', via: [:get, :post]
-  match 'companies/reports/rpt_viatico_pdf/:company_id' => 'reports#rpt_viatico_pdf', via: [:get, :post]  
+  match 'companies/reports/rpt_viatico_pdf/:company_id' => 'reports#rpt_viatico_pdf', via: [:get, :post]
+  
+  match 'companies/reports/reports_parte/:company_id' => 'reports#reports_parte', via: [:get, :post]    
+  match 'companies/reports/rpt_parte_1/:company_id' => 'reports#rpt_parte_1', via: [:get, :post]    
+  match 'companies/reports/rpt_parte_2/:company_id' => 'reports#rpt_parte_2', via: [:get, :post]    
+  match 'companies/reports/rpt_parte_3/:company_id' => 'reports#rpt_parte_3', via: [:get, :post]    
   # Company users
 
   match 'company_users/ac_users' => 'company_users#ac_users', via: [:get, :post]
@@ -490,6 +540,7 @@ end
   match 'facturas/ac_guias/:company_id' => 'facturas#ac_guias', via: [:get, :post]
   
   match 'facturas/new/:company_id' => 'facturas#new', via: [:get, :post]
+  match 'facturas/new2/:company_id' => 'facturas#new2', via: [:get, :post]
   match 'facturas/export/:company_id' => 'facturas#export', via: [:get, :post]
   match 'facturas/export2/:company_id' => 'facturas#export2', via: [:get, :post]
   match 'facturas/export3/:company_id' => 'facturas#export3', via: [:get, :post]
@@ -506,6 +557,8 @@ end
   match 'companies/facturas/generar3/:company_id' => 'facturas#generar3', via: [:get, :post]
   match 'facturas/generar4/:company_id' => 'facturas#generar4', via: [:get, :post]
   match 'facturas/generar5/:company_id' => 'facturas#generar5', via: [:get, :post]
+  
+  match 'facturas/newfactura2/:factura_id' => 'facturas#newfactura2', via: [:get, :post]
   #match 'serviceorders/rpt_serviceorder_all_pdf/:id' => 'serviceorders#rpt_serviceorder_all_pdf', via: [:get, :post]
 
   
@@ -745,7 +798,9 @@ end
   match 'customer_payments/rpt_ccobrar11_pdf/:id' => 'customer_payments#rpt_ccobrar11_pdf', via: [:get, :post]
   
   match 'companies/customer_payments/:company_id' => 'customer_payments#list_customerpayments', via: [:get, :post]  
-
+  
+  match 'companies/reports/rpt_ordenes1_pdf/:company_id' => 'reports#rpt_ordenes1_pdf', via: [:get, :post]
+  
   resources :customer_payments
 
   match 'inventories_detaisl/additems/:company_id' => 'additems#list', via: [:get, :post]  
@@ -872,6 +927,7 @@ end
   match 'companies/license/:id' => 'companies#license', via: [:get, :post]
   match 'companies/components/:id' => 'companies#components', via: [:get, :post]
   match 'companies/cpagar/:id' => 'companies#cpagar', via: [:get, :post]
+  match 'companies/parte/:id' => 'companies#parte', via: [:get, :post]
   match 'companies/ccobrar/:id' => 'companies#ccobrar', via: [:get, :post]
   match 'companies/showcase/:id' => 'companies#showcase', via: [:get, :post]
   match 'companies/planilla/:id' => 'companies#planilla', via: [:get, :post]
@@ -949,6 +1005,9 @@ end
 
   # Sessions
   resources :sessions
+
+  match 'ventaisla/ac_mangueras' => 'ventaislas#ac_mangueras', via: [:get, :post]
+  resources :ventaislas
   
 
   # Frontpage

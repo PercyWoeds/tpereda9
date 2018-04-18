@@ -1,11 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  comments: MyString
-  product_id: 
-  company_id: 
+  code: MyString
+  product_id: 1
+  saldo_inicial: 1.5
+  varilla: 1.5
+  product_id: 1
 
 two:
-  comments: MyString
-  product_id: 
-  company_id: 
+  code: MyString
+  product_id: 1
+  saldo_inicial: 1.5
+  varilla: 1.5
+  product_id: 1

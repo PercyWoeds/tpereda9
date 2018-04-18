@@ -1062,6 +1062,26 @@ class ReportsController < ApplicationController
     @monedas = Moneda.all 
   end 
 
+def rpt_facturas_3
+    @company = Company.find(params[:company_id])
+    @pagetitle = "Facturas por Cliente"    
+    @customers = @company.get_customers()
+    @monedas = Moneda.all 
+  end 
+
+def rpt_facturas_4
+    @company = Company.find(params[:company_id])
+    @pagetitle = "Facturas por Cliente"    
+    @customers = @company.get_customers()
+    @monedas = Moneda.all 
+  end 
+ def rpt_facturas_5
+    @company = Company.find(params[:company_id])
+    @pagetitle = "Facturas por Cliente"    
+    @customers = @company.get_customers()
+    @monedas = Moneda.all 
+  end 
+
   def rpt_facturas_all
     @company = Company.find(params[:company_id])
     @monedas = Moneda.all 
@@ -1404,5 +1424,31 @@ class ReportsController < ApplicationController
     @cajas =Caja.order(:descrip)
     
   end
+  def reports_parte 
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Listado de Parte diario "    
+    
+  end
+  
+  def rpt_parte_1
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Reportes de Ordenes "    
+    @customers = @company.get_customers()
+    @monedas=@company.get_monedas    
+  end
+  
+  def rpt_parte_2
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Reportes de Ordenes "    
+    @customers = @company.get_customers()
+    @monedas=@company.get_monedas    
+  end
+  def rpt_parte_3
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Reportes de Ordenes "    
+    @customers = @company.get_customers()
+    @monedas=@company.get_monedas    
+  end
+
 
 end

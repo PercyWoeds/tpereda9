@@ -1263,8 +1263,9 @@ def get_pendientes_day_customer_detraccion(fecha1,fecha2,cliente)
     
     for factura in facturas
     
+        if factura.detraccion != nil
           ret += factura.detraccion.round(2)
-      
+        end 
       end
     end 
 
@@ -1355,7 +1356,7 @@ def get_pendientes_day_customer_detraccion(fecha1,fecha2,cliente)
     return @purchases 
   end
   def get_purchases_day(fecha1,fecha2)
-    @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",  ]).order(:supplier_id,:moneda_id,:date1)    
+    @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:supplier_id,:moneda_id,:date1)    
     return @purchases 
   end
 
@@ -1429,6 +1430,10 @@ def get_purchases_day_categoria2(fecha1,fecha2,moneda,tipo)
         ret += purchase.subtotal
       elsif(value == "tax")
         ret += purchase.tax
+        
+      elsif(value == "balance")
+        ret += purchase.balance
+      
       else
         ret += purchase.total_amount
       end
@@ -1450,6 +1455,9 @@ def get_purchases_day_categoria2(fecha1,fecha2,moneda,tipo)
         ret += purchase.subtotal
       elsif(value == "tax")
         ret += purchase.tax
+      elsif(value == "balance")
+        ret += purchase.balance 
+      
       else
         ret += purchase.total_amount
       end
@@ -1470,6 +1478,9 @@ def get_purchases_day_categoria2(fecha1,fecha2,moneda,tipo)
         ret += factura.subtotal
       elsif(value == "tax")
         ret += factura.tax
+      elsif(value == "balance")
+        ret += factura.balance 
+      
       else         
         ret += factura.total_amount.round(2)
       end
@@ -2603,6 +2614,74 @@ def get_purchaseorder_detail2(fecha1,fecha2)
         end 
      end 
 
+     #salidas 
+    @ventas  = Factura.where('fecha>= ? and fecha <= ? and substring(code,1,4)= ? ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59","FF02")
+
+     for sal in @ventas
+        $lcFecha     = sal.fecha 
+        $lcDocumento = sal.code
+        $lcDocumentId = "01"
+        
+        @ventasdetail=  FacturaDetail.where(:factura_id=>sal.id)
+
+        for detail in @ventasdetail 
+
+          movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)
+
+          if movdetail        
+             detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0, :salida=>detail.quantity,
+            :costo_ingreso =>0,:costo_salida =>detail.price,:costo_saldo=>detail.price,:product_id=> detail.product_id,:document_id=> $lcDocumentId,
+            :documento=>$lcDocumento,:tm =>"11",:amount => detail.quantity,:stock_final=> 0, to:"06")
+             detail.save 
+          else     
+          
+            #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
+            #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
+            #detail.save 
+
+          end   
+        end 
+     end 
+     
+     
+    @ventas  = Sellvale.where('fecha>= ? and fecha <= ?  and balance > 0 ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59")
+
+     for sal in @ventas
+        $lcFecha     = sal.fecha 
+        $lcDocumento = sal.code
+        $lcDocumentId = "12"
+        
+
+        for detail in @ventas
+          if detail.product_id =='02'
+            lcproductid = 2
+          end 
+          
+          if detail.product_id =='03'
+              lcproductid = 3
+          end 
+          
+          if detail.product_id =='05'
+              lcproductid = 1
+          end 
+          
+          movdetail  = MovementDetail.find_by(:product_id=> lcproductid)
+
+          if movdetail        
+             detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0, :salida=>detail.quantity,
+            :costo_ingreso =>0,:costo_salida =>detail.price,:costo_saldo=>detail.price,:product_id=> lcproductid,:document_id=> $lcDocumentId,
+            :documento=>$lcDocumento,:tm =>"11",:amount => detail.quantity,:stock_final=> 0, to:"06")
+             detail.save 
+          else     
+          
+            #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
+            #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
+            #detail.save 
+
+          end   
+        
+       end 
+     end 
     
     
     @ajuste = Ajust.where('fecha1>= ? and fecha1 <= ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59")
@@ -2937,6 +3016,72 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
     return ret
     
  end 
+ 
+ # Parte diario
+ 
+ def  get_parte_1(fecha) 
+   
+     @varilla = Varillaje.where(["fecha >= ? and fecha <= ? ", "#{fecha} 00:00:00","#{fecha} 23:59:59"  ])
+   
+    return @varilla 
+ end 
+ 
+ def  get_parte_2(fecha1,fecha2) 
+   
+     @contado = Sellvale.where(["fecha >= ? and fecha <= ? and processed = ? and tipo = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"0","2" ]).order(:cod_prod,:fecha)
+   
+    return @contado
+ end 
+def get_facturas_by_day_value(fecha1,fecha2,moneda,value='total')
+  
+    purchases = Factura.where([" company_id = ? AND fecha >= ? and fecha <= ? and moneda_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda , ]).order(:id,:moneda_id)    
+
+    ret = 0
+    for purchase in purchases
+    
+      
+      if (value == "subtotal")
+        
+        
+        ret += purchase.get_importe_soles1
+        
+      elsif(value == "tax")
+      
+        ret += purchase.get_importe_soles2
+        
+      else
+        
+        ret += purchase.get_importe_soles
+      
+      end
+    end
+    
+    return ret
+
+
+  end 
+  
+  
+  
+  def  get_ventas_combustibles(fecha1,fecha2) 
+
+     facturas = Ventaisla.where(["fecha >= ?  and fecha <=  ?  " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ] ).order(:fecha)
+     
+       return facturas 
+ 
+  end 
+  
+  def  get_ventas_combustibles_producto(fecha1,fecha2) 
+
+      facturas = Sellvale.where(["fecha >= ?  and fecha <=  ?  and td <> ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N"  ] ).order(:fecha,:cod_prod)
+     
+       return facturas 
+ 
+  end 
+  
+  
+
+  
  
 end
 

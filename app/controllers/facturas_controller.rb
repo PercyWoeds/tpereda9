@@ -4,9 +4,163 @@ include ServicesHelper
 require "open-uri"
  
 class FacturasController < ApplicationController
+  
+    $: << Dir.pwd  + '/lib'
 
-  before_filter :authenticate_user!, :checkServices
+ # before_filter :authenticate_user!
 
+  def reportes
+  
+    @company=Company.find(1)          
+    @fecha = params[:fecha1]    
+    
+    @parte_rpt = @company.get_parte_1(@fecha)
+    
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Ordenes ",template: "varillajes/parte_rpt.pdf.erb",locals: {:varillajes => @parte_rpt}
+        
+        end   
+      when "To Excel" then render xlsx: 'exportxls'
+      else render action: "index"
+    end
+  end
+  
+    def reportes2 
+  
+    @company=Company.find(1)          
+    @fecha = params[:fecha1]    
+    
+    @parte_rpt = @company.get_parte_1(@fecha)
+    
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Ordenes ",template: "varillajes/parte2_rpt.pdf.erb",locals: {:varillajes => @parte_rpt}
+        
+        end   
+      when "To Excel" then render xlsx: 'exportxls'
+      else render action: "index"
+    end
+  end
+  
+  def reportes3 
+  
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    
+    @contado_rpt = @company.get_parte_2(@fecha1,@fecha2)
+    
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Ordenes ",template: "varillajes/parte3_rpt.pdf.erb",locals: {:varillajes => @contado_rpt}
+        
+        end   
+      when "To Excel" then render xlsx: 'exportxls'
+      else render action: "index"
+    end
+  end
+
+def reportes4 
+    $lcFacturasall = '1'
+
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @moneda = params[:moneda_id]    
+  
+
+    @facturas_rpt = @company.get_facturas_day(@fecha1,@fecha2,@moneda)          
+    
+    @total1  = @company.get_facturas_by_day_value(@fecha1,@fecha2,@moneda,"subtotal")  
+    @total2  = @company.get_facturas_by_day_value(@fecha1,@fecha2,@moneda,"tax")  
+    @total3  = @company.get_facturas_by_day_value(@fecha1,@fecha2,@moneda,"total")  
+    
+    
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Facturas ",template: "facturas/rventas_rpt.pdf.erb",locals: {:facturass => @facturas_rpt}
+        
+        end   
+      when "To Excel" then render xlsx: 'exportxls'
+      else render action: "index"
+    end
+  end
+  
+def reportes03
+
+
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @moneda = params[:moneda_id]    
+
+    @facturas_rpt = @company.get_ventas_combustibles(@fecha1,@fecha2)          
+    
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Facturas ",template: "facturas/rventas03_rpt.pdf.erb",
+         locals: {:facturass => @facturas_rpt},
+         :orientation      => 'Landscape',
+         
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               }
+               
+               
+        end   
+      when "To Excel" then render xlsx: 'exportxls'
+      else render action: "index"
+    end
+  end
+  
+def reportes05
+
+
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @moneda = params[:moneda_id]    
+
+    @facturas_rpt = @company.get_ventas_combustibles_producto(@fecha1,@fecha2)          
+    
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Facturas ",template: "facturas/rventas05_rpt.pdf.erb",
+         locals: {:facturass => @facturas_rpt},
+         :orientation      => 'Landscape',
+         
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               }
+               
+               
+        end   
+      when "To Excel" then render xlsx: 'reportes05'
+        
+      else render action: "index"
+    end
+  end
 
   def discontinue
     
@@ -110,7 +264,7 @@ class FacturasController < ApplicationController
         price = parts[2]
         discount = parts[3]
         
-        product = Service.find(id.to_i)
+        product = Product.find(id.to_i)
         product[:i] = i
         product[:quantity] = quantity.to_f
         product[:price] = price.to_f
@@ -231,11 +385,11 @@ class FacturasController < ApplicationController
   
     if(@company.can_view(current_user))
 
-         @invoices = Factura.all.order('id DESC').paginate(:page => params[:page])
+         @invoices = Factura.all.order('fecha DESC').paginate(:page => params[:page])
         if params[:search]
-          @invoices = Factura.search(params[:search]).order('id DESC').paginate(:page => params[:page])
+          @invoices = Factura.search(params[:search]).order('fecha DESC').paginate(:page => params[:page])
         else
-          @invoices = Factura.all.order('id DESC').paginate(:page => params[:page]) 
+          @invoices = Factura.order('fecha DESC').paginate(:page => params[:page]) 
         end
 
     
@@ -304,7 +458,6 @@ class FacturasController < ApplicationController
         
         $lcFecha =f.fecha.strftime("%Y-%m-%d")   
         
-
 
       newsubdia =Csubdiario.new(:csubdia=>$lcSubdiario,:ccompro=>$lastcompro1,:cfeccom=>$lcFecha, :ccodmon=>"MN",
         :csitua=>"F",:ctipcam=>"0.00",:cglosa=>f.code,:csubtotal=>f.subtotal,:ctax=>f.tax,:ctotal=>f.total,
@@ -568,7 +721,14 @@ class FacturasController < ApplicationController
     @customer = @invoice.customer
     @tipodocumento = @invoice.document 
     
-    $lcruc = "20424092941" 
+    if @invoice.descuento == "1"
+      @factura_details = @invoice.factura_details 
+    end 
+    
+    
+    
+    
+    $lcruc = "20555691263" 
     
     $lcTipoDocumento = @invoice.document.descripshort
     parts1 = @invoice.code.split("-")
@@ -608,10 +768,47 @@ class FacturasController < ApplicationController
   def new
     @pagetitle = "Nueva factura"
     @action_txt = "Create"
+    $lcAction="Boleta"
+    $Action= "create"
+    
+    @invoice = Factura.new
+    
+    @invoice[:code] = "#{generate_guid11()}"
+    
+    @invoice[:processed] = false
+    @invoice[:descuento] = "0"
+    
+    
+    
+    @company = Company.find(params[:company_id])
+    @invoice.company_id = @company.id
+    
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+    @payments = @company.get_payments()
+    @services = @company.get_services()
+    @products = @company.get_products()
+    
+    @deliveryships = @invoice.my_deliverys 
+    @tipofacturas = @company.get_tipofacturas() 
+    @monedas = @company.get_monedas()
+    @tipodocumento = @company.get_documents()
+    @tipoventas = Tipoventum.all 
+    @ac_user = getUsername()
+    @invoice[:user_id] = getUserId()
+    @invoice[:moneda_id] = 2
+    @invoice[:document_id] = 3
+    
+  end
+  def new2
+    @pagetitle = "Nueva factura"
+    @action_txt = "Create"
+    $lcAction="Factura"
     
     @invoice = Factura.new
     @invoice[:code] = "#{generate_guid3()}"
     @invoice[:processed] = false
+    
     
     @company = Company.find(params[:company_id])
     @invoice.company_id = @company.id
@@ -624,9 +821,31 @@ class FacturasController < ApplicationController
     @tipofacturas = @company.get_tipofacturas() 
     @monedas = @company.get_monedas()
     @tipodocumento = @company.get_documents()
+    @tipoventas = Tipoventum.all 
     @ac_user = getUsername()
     @invoice[:user_id] = getUserId()
   end
+  
+def newfactura2
+    
+    @company = Company.find(1)
+    @factura = Factura.find(params[:factura_id])
+    @customer = Customer.find(@factura.customer_id) 
+    
+    
+    $lcContratoId = @customer.id
+    $lcCode  = @customer.account
+    $lcNameCode = @customer.name 
+  
+    $lcFacturaId= @factura.id 
+    
+  
+    @detalleitems =  Sellvale.where(processed:"0",cod_cli: @customer.account)
+    @factura_detail = Factura.new
+
+  
+  end 
+
 
   # GET /invoices/1/edit
   def edit
@@ -640,8 +859,12 @@ class FacturasController < ApplicationController
     @payments = @company.get_payments()    
     @services = @company.get_services()
     @deliveryships = @invoice.my_deliverys 
-
+    @tipofacturas = @company.get_tipofacturas() 
     @products_lines = @invoice.products_lines
+    @tipoventas = Tipoventum.all 
+    @tipodocumento = @company.get_documents()
+    @monedas = @company.get_monedas()
+    @products = @company.get_products()
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
@@ -658,28 +881,30 @@ class FacturasController < ApplicationController
     items2 = params[:items2].split(",")
 
     @invoice = Factura.new(factura_params)
-    
     @company = Company.find(params[:factura][:company_id])
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @payments  = @company.get_payments()    
     @services  = @company.get_services()
-
-
-    
-    
-    @invoice[:subtotal] = @invoice.get_subtotal(items)
+    @products = @company.get_products()
+    @tipoventas = Tipoventum.all 
+    @tipodocumento = @company.get_documents()
+    @tipofacturas = @company.get_tipofacturas() 
+    @monedas = @company.get_monedas()
+   
+    @invoice[:subtotal] = @invoice.get_total_1(items) / 1.18
+    @invoice[:total]   = @invoice.get_total_1(items) 
     begin
-      @invoice[:tax] = @invoice.get_tax(items, @invoice[:customer_id])
+      @invoice[:tax] = @invoice[:total] - @invoice[:subtotal]
     rescue
       @invoice[:tax] = 0
     end
-    @invoice[:total]   = @invoice[:subtotal] + @invoice[:tax]
+    
     @invoice[:balance] = @invoice[:total]
     @invoice[:pago]    = 0
     @invoice[:charge]  = 0
-    
+    @invoice[:descuento] = "1"
     
     
     
@@ -698,7 +923,11 @@ class FacturasController < ApplicationController
         # Create products for kit
         @invoice.add_products(items)
         @invoice.add_guias(items2)
-        @invoice.correlativo
+        if $lcAction == "Boleta"
+          @invoice.correlativo2
+        else
+          @invoice.correlativo
+        end 
         # Check if we gotta process the invoice
         @invoice.process()
 
@@ -734,6 +963,7 @@ class FacturasController < ApplicationController
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
+    @tipoventas = Tipoventum.all 
     
     @invoice[:subtotal] = @invoice.get_subtotal(items)
     @invoice[:tax] = @invoice.get_tax(items, @invoice[:customer_id])
@@ -784,13 +1014,17 @@ class FacturasController < ApplicationController
     lcmonedadolares ="1"
     lcmonedasoles ="2"
     @facturas_rpt = @company.get_pendientes_cliente(@fecha1,@fecha2,@cliente)    
+    
     @total_cliente_dolares   = @company.get_pendientes_day_customer(@fecha1,@fecha2, @cliente, lcmonedadolares)
     @total_cliente_soles = @company.get_pendientes_day_customer(@fecha1,@fecha2, @cliente,lcmonedasoles)
     @total_cliente_detraccion = @company.get_pendientes_day_customer_detraccion(@fecha1,@fecha2, @cliente)
+    puts @total_cliente_soles
+    
     case params[:print]
       when "To PDF" then 
           redirect_to :action => "rpt_ccobrar3_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2], :customer_id => params[:customer_id] 
-      when "To Excel" then render xlsx: 'exportxls'
+      when "To Excel" then render xlsx: 'rpt_ccobrar3_xls'
+        
       else render action: "index"
     end
   end
@@ -859,10 +1093,18 @@ class FacturasController < ApplicationController
        for  product in @facturas_rpt
 
             row = []          
-            row << product.document.descripshort
+            row << product.document.deFAacscripshort
             row << product.code
             row << product.fecha.strftime("%d/%m/%Y")            
+            if ruc != nil
+              row << product.ruc 
+            else
+              row << "-"
+              row << product.customer.ruc  
+            end 
+            
             row << product.customer.name  
+            
             if product.moneda_id == 1
               row << "USD"
             else
@@ -1216,8 +1458,6 @@ class FacturasController < ApplicationController
           table_content << row
           end 
           
-          
-          
 
           result = pdf.table table_content, {:position => :center,
                                         :header => true,
@@ -1253,9 +1493,6 @@ class FacturasController < ApplicationController
       end 
       #totales 
       
-      
-      
-
       pdf 
 
     end
@@ -1419,13 +1656,108 @@ class FacturasController < ApplicationController
       invoice_headers  = [["Fecha : ",$lcHora]]    
       invoice_headers
   end
- 
+ def discontinue
+    
+    @facturasselect = Sellvale.find(params[:products_ids])
+
+    for item in @facturasselect
+        begin
+          a = item.id
+          b = Product.find_by(code: item.cod_prod)             
+          descuento =  item.implista - item.importe.to_f
+          preciolista = item.precio.to_f + descuento
+          
+          new_invoice_detail = FacturaDetail.new(factura_id: $lcFacturaId  ,sellvale_id: item.id , product_id: b.id ,price:preciolista, price_discount: item.precio, quantity: item.cantidad,total: item.importe)
+          new_invoice_detail.save
+          a= Sellvale.find(item.id)
+          a.processed ='1'
+          a.save
+          
+        end              
+    end
+    
+    @invoice = Factura.find($lcFacturaId)
+    
+    @invoice[:total] = @invoice.get_subtotal2.round(2)
+    
+    lcTotal = @invoice[:total]  / 1.18
+    @invoice[:subtotal] = lcTotal.round(2)
+    
+    lcTax =@invoice[:total] - @invoice[:subtotal]
+    @invoice[:tax] = lcTax.round(2)
+    
+    @invoice[:balance] = @invoice[:total]
+    @invoice[:pago] = 0
+    @invoice[:charge] = 0
+    @invoice[:descuento] = "1"
+    
+    respond_to do |format|
+      if @invoice.save
+        # Create products for kit
+        
+                # Check if we gotta process the invoice
+        
+        format.html { redirect_to(@invoice, :notice => 'Invoice was successfully created.') }
+        format.xml  { render :xml => @invoice, :status => :created, :location => @invoice }
+      else
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @invoice.errors, :status => :unprocessable_entity }
+      end
+    end
+    
+    
+    
+     
+  end   
+
+def print
+          lib = File.expand_path('../../../lib', __FILE__)
+        $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+        puts "ruta******"
+        puts lib 
+        
+        
+        
+        require 'sunat'
+        require './config/config'
+        require './app/generators/invoice_generator'
+        require './app/generators/credit_note_generator'
+        require './app/generators/debit_note_generator'
+        require './app/generators/receipt_generator'
+        require './app/generators/daily_receipt_summary_generator'
+        require './app/generators/voided_documents_generator'
+
+        SUNAT.environment = :test 
+
+        files_to_clean = Dir.glob("*.xml") + Dir.glob("./app/pdf_output/*.pdf") + Dir.glob("*.zip")
+        files_to_clean.each do |file|
+          File.delete(file)
+        end         
+    
+       if $lcMoneda == "D"  
+            $lcFileName=""
+            case_49 = InvoiceGenerator.new(1,3,1,$lg_serie_factura).with_different_currency2
+          #  puts $lcFileName 
+       else
+            case_3  = InvoiceGenerator.new(1,3,1,$lg_serie_factura).with_igv2(true)
+       end 
+    
+        
+        $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+                
+        send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+
+        
+        @@document_serial_id =""
+        $aviso=""
+    end 
+
 
 
 
   private
   def factura_params
-    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id,:detraccion,:factura2,:description,:document_id)
+    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id,:detraccion,:factura2,:description,:document_id,:tipoventa_id)
   end
 
 end
