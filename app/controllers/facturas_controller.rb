@@ -923,12 +923,9 @@ def newfactura2
         # Create products for kit
         @invoice.add_products(items)
         @invoice.add_guias(items2)
-        if $lcAction == "Boleta"
-          @invoice.correlativo2
-        else
-          @invoice.correlativo
-        end 
-        # Check if we gotta process the invoice
+        
+        @invoice.correlativo
+               # Check if we gotta process the invoice
         @invoice.process()
 
         
