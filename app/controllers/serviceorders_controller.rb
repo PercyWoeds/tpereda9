@@ -530,7 +530,7 @@ class ServiceordersController < ApplicationController
 
       if @serviceorder[:total] >= 700.00
 
-        @serviceorder[:detraccion] = @serviceorder[:total] * 10/100
+        @serviceorder[:detraccion] = @serviceorder[:total] * 12/100
       else
         @serviceorder[:detraccion] = 0
       end 
@@ -542,7 +542,7 @@ class ServiceordersController < ApplicationController
       if @dolar1.compra != nil 
         if @serviceorder[:total]*@dolar1.compra >= 700.00
 
-          @serviceorder[:detraccion] = @serviceorder[:total] * 10/100
+          @serviceorder[:detraccion] = @serviceorder[:total] * 12/100
 
           @serviceorder[:dolar] = @dolar1.compra 
         else
