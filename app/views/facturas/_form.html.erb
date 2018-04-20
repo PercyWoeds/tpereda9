@@ -160,26 +160,23 @@
 
 <div class="mid_box">
   <h4>
-    Agregar Productos   
+    Agregar Servicios
   </h4>
   
   <form method="get" action="/services" onsubmit="addItemToInvoice2(); return false;">
-    
-    <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />
-    
-    <strong>Producto:</strong><br />
-    <input type="text" name="ac_item" id="ac_item" value="" />
+   <strong>Servicio:</strong><br />
+    <%= select_tag(:ac_item_id,options_from_collection_for_select(@services,'id','name') ) %>
     <div class="small">
       Ingrese un termino de busqueda para encontrar un producto.
     </div>
-
+    <br />
     
-
     <strong>Precio:</strong><br />
-    <input type="text" name="ac_item_price" id="ac_item_price" value="" class="tf_short" readonly  />
+    <input type="text" name="ac_item_price" id="ac_item_price" value="" class="tf_short" />
     <div class="small">
       Precio del  producto para agregar una factura.
     </div>
+    <br />
     <br />
     
     

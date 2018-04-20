@@ -264,7 +264,7 @@ def reportes05
         price = parts[2]
         discount = parts[3]
         
-        product = Product.find(id.to_i)
+        product = Service.find(id.to_i)
         product[:i] = i
         product[:quantity] = quantity.to_f
         product[:price] = price.to_f
@@ -721,12 +721,7 @@ def reportes05
     @customer = @invoice.customer
     @tipodocumento = @invoice.document 
     
-    if @invoice.descuento == "1"
-      @factura_details = @invoice.factura_details 
-    end 
-    
-    
-    
+   
     
     $lcruc = "20555691263" 
     
@@ -773,10 +768,10 @@ def reportes05
     
     @invoice = Factura.new
     
-    @invoice[:code] = "#{generate_guid11()}"
+    @invoice[:code] = "#{generate_guid3()}"
     
     @invoice[:processed] = false
-    @invoice[:descuento] = "0"
+    
     
     
     
@@ -793,7 +788,7 @@ def reportes05
     @tipofacturas = @company.get_tipofacturas() 
     @monedas = @company.get_monedas()
     @tipodocumento = @company.get_documents()
-    @tipoventas = Tipoventum.all 
+
     @ac_user = getUsername()
     @invoice[:user_id] = getUserId()
     @invoice[:moneda_id] = 2
@@ -881,31 +876,26 @@ def newfactura2
     items2 = params[:items2].split(",")
 
     @invoice = Factura.new(factura_params)
+    
     @company = Company.find(params[:factura][:company_id])
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
-    @payments  = @company.get_payments()    
-    @services  = @company.get_services()
-    @products = @company.get_products()
-    @tipoventas = Tipoventum.all 
-    @tipodocumento = @company.get_documents()
-    @tipofacturas = @company.get_tipofacturas() 
-    @monedas = @company.get_monedas()
-   
-    @invoice[:subtotal] = @invoice.get_total_1(items) / 1.18
-    @invoice[:total]   = @invoice.get_total_1(items) 
+    @payments = @company.get_payments()    
+    @services = @company.get_services()
+
+    @invoice[:subtotal] = @invoice.get_subtotal(items)
+    
     begin
-      @invoice[:tax] = @invoice[:total] - @invoice[:subtotal]
+      @invoice[:tax] = @invoice.get_tax(items, @invoice[:customer_id])
     rescue
       @invoice[:tax] = 0
     end
     
+    @invoice[:total] = @invoice[:subtotal] + @invoice[:tax]
     @invoice[:balance] = @invoice[:total]
-    @invoice[:pago]    = 0
-    @invoice[:charge]  = 0
-    @invoice[:descuento] = "1"
-    
+    @invoice[:pago] = 0
+    @invoice[:charge] = 0
     
     
      parts = (@invoice[:code]).split("-")

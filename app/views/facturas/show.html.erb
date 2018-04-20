@@ -70,7 +70,6 @@
 <%= render "customers/show" %>
 
 <%= hr() %>
-<% if @invoice.descuento == '0'%>
 
 <h3>
   Detalle servicios
@@ -236,83 +235,6 @@
   <%= hr() %>
 <% end %>
 
-<% else%>
-<div class="button">
-  <%= link_to "Agregar Item","/facturas/newfactura2/#{@invoice.id}" %>
-</div> 
-
- 
-  <tbody>
-    <table>
-      
-      <tr>
-        <th> Codigo</th>
-        <th> Descripcion</th>
-        <th> Precio </th>
-        <th> Cantidad</th>
-        <th> Total </th>
-      </tr>
-      
-    <%  @factura_details.each do |quote| %>
-      <tr>
-        <td class="bordered_bottom bordered_right">
-          <%= link_to quote.product.code   %>
-        </td>
-        <td class="bordered_bottom bordered_right">
-          <%= quote.product.name  %>
-        </td>
-        
-        <td class="bordered_bottom bordered_right">
-          <%= quote.price %>
-        </td>
-        <td class="bordered_bottom bordered_right">
-          <%= money(quote.quantity) %>
-        </td>
-        <td class="bordered_bottom bordered_right">
-          <%= money(quote.total) %>
-        </td>
-        
-        
-          
-          <td><%= link_to 'Eliminar',[@invoice,quote], method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-    
-    <tr>
-      <td colspan="5" class="bordered_bottom bordered_right">
-        &nbsp;
-      </td>
-    </tr>
-    <tr>
-      <td colspan="4" class="bordered_bottom bordered_right bold">
-        Subtotal:
-      </td>
-      <td class="bordered_bottom bordered_right bold right">
-        <%= money(@invoice.subtotal) %>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="4" class="bordered_bottom bordered_right bold">
-        Tax:
-      </td>
-      <td class="bordered_bottom bordered_right bold right">
-        <%= money(@invoice.tax) %>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="4" class="bordered_bottom bordered_right bold">
-        Total:
-      </td>
-      <td class="bordered_bottom bordered_right bold right">
-        <%= money(@invoice.total) %>
-      </td>
-    </tr>
-    
-</table>
-</tbody>
-
-
-<% end %>
 
 
 <% if @invoice.comments != "" %>
@@ -354,11 +276,6 @@
 <div class="button">
   
    
-			<%= form_tag print_facturas_path do %>
-     	    <%= submit_tag  "Imprimir  ",  :"data-no-turbolink" => true  %>
-			<% end %>		
-	
-  
   
   <%= link_to 'Enviar factura via email', "/facturas/email/#{@invoice.id}" %>
   

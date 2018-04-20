@@ -129,7 +129,7 @@ class Factura < ActiveRecord::Base
         total -= total * (discount.to_f / 100)
         
         begin
-          product = Product.find(id.to_i)
+          product = Service.find(id.to_i)
           subtotal += total
         rescue
         end
@@ -159,7 +159,7 @@ class Factura < ActiveRecord::Base
             total -= total * (discount.to_f / 100)
         
             begin
-              product = Product.find(id.to_i)
+              product = Service.find(id.to_i)
               
               if(product)
                 if(product.tax1 and product.tax1 > 0)
@@ -193,7 +193,7 @@ class Factura < ActiveRecord::Base
         total -= total * (discount.to_f / 100)
         
         begin
-          product = Product.find(id.to_i)
+          product = Service.find(id.to_i)
           total0 += total 
           rescue
         end
@@ -242,13 +242,15 @@ class Factura < ActiveRecord::Base
         total -= total * (discount.to_f / 100)
         
         begin
-          product = Product.find(id.to_i)
+          product = Service.find(id.to_i)
           
-          new_invoice_product = FacturaDetail.new(:factura_id => self.id, :product_id => product.id, :price => price.to_f, :quantity => quantity.to_f, :discount => discount.to_f, :total => total.to_f)
+          new_invoice_product = InvoiceService.new(:factura_id => self.id, :service_id => product.id, :price => price.to_f, :quantity => quantity.to_f, :discount => discount.to_f, :total => total.to_f)
 
           new_invoice_product.save
 
         rescue
+          
+      
           
         end
       end
