@@ -538,6 +538,32 @@ class Factura < ActiveRecord::Base
         return valor         
   end
   
+  def get_importe_balance_soles
+       valor = 0
+       if self.moneda_id ==2
+          if self.document_id   == 2
+                  valor = self.balance*-1
+                    
+          else  
+                  valor = self.balance
+          
+           end   
+          end 
+        return valor         
+  end
+  def get_importe_balance_dolares
+       valor = 0
+       if self.moneda_id ==1
+          if self.document_id   == 2
+                  valor = self.balance*-1
+                    
+          else  
+                  valor = self.balance
+          
+           end   
+          end 
+        return valor         
+  end
   
   
 end
