@@ -374,9 +374,11 @@ end
   match 'companies/reports/rpt_calmacen6_pdf/:company_id' => 'reports#rpt_calmacen6_pdf', via: [:get, :post]  
   match 'companies/reports/rpt_calmacen7_pdf/:company_id' => 'reports#rpt_calmacen7_pdf', via: [:get, :post]  
   match 'companies/reports/rpt_calmacen8_pdf/:company_id' => 'reports#rpt_calmacen8_pdf', via: [:get, :post]
+  match 'companies/reports/rpt_calmacen9_pdf/:company_id' => 'reports#rpt_calmacen9_pdf', via: [:get, :post]
   match 'companies/reports/rpt_calmacen10_pdf/:company_id' => 'reports#rpt_calmacen10_pdf', via: [:get, :post]
   match 'companies/reports/rpt_calmacen11_pdf/:company_id' => 'reports#rpt_calmacen11_pdf', via: [:get, :post]
   match 'companies/reports/rpt_calmacen12_pdf/:company_id' => 'reports#rpt_calmacen12_pdf', via: [:get, :post]
+  
   match 'companies/reports/rpt_cajust1_pdf/:company_id' => 'reports#rpt_cajust1_pdf', via: [:get, :post]
   match 'companies/reports/rpt_viatico_pdf/:company_id' => 'reports#rpt_viatico_pdf', via: [:get, :post]
   
