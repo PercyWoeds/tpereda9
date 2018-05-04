@@ -1,8 +1,9 @@
 # Change these
 
-server '159.203.161.54', port: your_port_num, roles: [:web, :app, :db], primary: true
+server '159.203.161.54', port: 80, roles: [:web, :app, :db], primary: true
+# config valid only for current version of Capistrano
 
-set :repo_url,        'git@github.com:PercyWoeds/tpereda3.git'
+set :repo_url,        'git@github.com:tpereda3.git'
 set :application,     'tpereda3'
 set :user,            'deploy'
 set :puma_threads,    [4, 16]
@@ -23,17 +24,6 @@ set :ssh_options,     { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh
 set :puma_preload_app, true
 set :puma_worker_timeout, nil
 set :puma_init_active_record, true  # Change to false when not using ActiveRecord
-
-## Defaults:
-# set :scm,           :git
-# set :branch,        :master
-# set :format,        :pretty
-# set :log_level,     :debug
-# set :keep_releases, 5
-
-## Linked Files & Directories (Default None):
-# set :linked_files, %w{config/database.yml}
-# set :linked_dirs,  %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 namespace :puma do
   desc 'Create Directories for Puma Pids and Socket'
@@ -75,11 +65,5 @@ namespace :deploy do
   end
 
   before :starting,     :check_revision
-  after  :finishing,    :compile_assets
   after  :finishing,    :cleanup
-  after  :finishing,    :restart
 end
-
-# ps aux | grep puma    # Get puma pid
-# kill -s SIGUSR2 pid   # Restart puma
-# kill -s SIGTERM pid   # Stop puma
