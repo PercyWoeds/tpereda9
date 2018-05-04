@@ -6,11 +6,6 @@
   
   <h5><center> Desde: <%= @fecha1 %>  Hasta: <%= @fecha2 %>  </center></h5>
   
-  <% if @moneda == 2%>
-  <h5><center> Moneda  : Soles </center></h5>  
-  <% else %>
-  <h5><center> Moneda  : Dolares </center></h5>  
-  <% end %>
   
   <font size="2" face="Courier New" >  
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
@@ -27,6 +22,7 @@
     <td width="5%"> TD </td>
     <td width="10%"> Numero  </td>
     <td width="12%"> Fecha </td>
+    <td width="12%"> Ruc</td>
     <td width="25%"> Cliente </td>
     <td width="5%"> Mon. </td>
     <td width="12%"> V.Venta</td>
@@ -76,7 +72,7 @@
                   <% lctotal = detalle.total %>
                 <% end %>
                 <td width = "12%" align ="right"><%= sprintf("%.2f",lcsubtotal)   %></td>
-                <td width = "12%" align ="right"><%= sprintf("%.3f",lctax)   %></td>
+                <td width = "12%" align ="right"><%= sprintf("%.2f",lctax)   %></td>
                 <td width = "12%" align ="right"><%= sprintf("%.2f",lctotal)   %></td>
                 </tr>
             

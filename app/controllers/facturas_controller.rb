@@ -87,7 +87,7 @@ def reportes4
     case params[:print]
       when "To PDF" then 
         begin 
-         render  pdf: "Facturas ",template: "facturas/rventas_rpt.pdf.erb",locals: {:facturass => @facturas_rpt}
+         render  pdf: "Facturas ",template: "facturas/rventas_rpt.pdf.erb",locals: {:facturas => @facturas_rpt}
         
         end   
       when "To Excel" then render xlsx: 'exportxls'
@@ -1081,15 +1081,12 @@ def newfactura2
        for  product in @facturas_rpt
 
             row = []          
-            row << product.document.deFAacscripshort
+            row << product.document.descripshort
             row << product.code
             row << product.fecha.strftime("%d/%m/%Y")            
-            if ruc != nil
-              row << product.ruc 
-            else
-              row << "-"
-              row << product.customer.ruc  
-            end 
+            
+            row << product.customer.ruc  
+            
             
             row << product.customer.name  
             
@@ -1167,6 +1164,7 @@ def newfactura2
     end
 
       row =[]
+      row << ""
       row << ""
       row << ""
       row << ""
@@ -1544,7 +1542,7 @@ def newfactura2
         pdf = build_pdf_header_rpt(pdf)
         pdf = build_pdf_body_rpt(pdf)
         build_pdf_footer_rpt(pdf)
-        $lcFileName =  "app/pdf_output/rpt_factura_all.pdf"              
+        $lcFileName =  "app/pdf_output/rpt_factura.pdf"              
     end     
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
     send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')

@@ -142,7 +142,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
            $lcNumero    = ordencompra.documento     
            $lcFecha     = ordencompra.date1
            $lcProveedor = ordencompra.supplier.name 
-           $lcPercepcion = ordencompra.participacion.round(2).to_s
+           
            $lcBalance    = ordencompra.balance.round(2).to_s 
 
         @orden_compra1  = @company.get_purchase_detalle(ordencompra.id)
@@ -634,7 +634,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row << product.date2.strftime("%d/%m/%Y")
             row << product.supplier.name
             row << product.moneda.symbol  
-            row << sprintf("%.2f",product.participacion.to_s)
+
 
             if product.moneda_id == 1 
                 row << "0.00 "
@@ -684,7 +684,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row << " "
             end 
             row << product.moneda.symbol  
-            row << sprintf("%.2f",product.participacion.to_s)
+            
 
             if product.moneda_id == 1 
                 row << "0.00 "
@@ -2651,7 +2651,7 @@ def build_pdf_header_rpt48(pdf)
     $lcLocationId = @purchaseorder.location_id
     $lcDivisionId = @purchaseorder.division_id
     $lcTipoFacturaCompra = "0"
-    $lcPercepcion = @purchaseorder[:participacion]
+  
 
     @detalleitems =  @company.get_orden_detalle(@purchaseorder.id)
 
@@ -2683,7 +2683,7 @@ def newfactura2
     $lcMoneda  = @purchaseorder.moneda.description
     $lcLocationId = @purchaseorder.location_id
     $lcDivisionId = @purchaseorder.division_id
-    $lcPercepcion = @purchaseorder[:participacion]
+    
 
     $lcTipoFacturaCompra= "1"
     @detalleitems =  @company.get_orden_detalle2(@purchaseorder.id)
@@ -2713,13 +2713,9 @@ def newfactura2
 
     $lcFechaVmto     =  fechas2
     $lcDocumento     =  params[:documento]
-    $lcParticipacion =  params[:participacion]
     
-    puts "Participacion"
-    puts $lcParticipacion 
-
 @purchase = Purchase.new(:company_id=>1,:supplier_id=>$lcProveedorId,:date1=>$lcFechaEmision,:date2=>$lcFechaEmision,:payment_id=>$lcFormaPagoId,:document_id=>$lcDocumentId,:documento=>$lcDocumento,
-:date3 => $lcFechaVmto,:moneda_id => $lcMonedaId,:user_id =>@current_user.id,:purchaseorder_id=>$lcPurchaseOrderId,:participacion=> $lcParticipacion)
+:date3 => $lcFechaVmto,:moneda_id => $lcMonedaId,:user_id =>@current_user.id,:purchaseorder_id=>$lcPurchaseOrderId)
     
     @company = Company.find(1)
     
@@ -2733,7 +2729,7 @@ def newfactura2
     @tipodocumento = @purchase[:document_id]  
 
     @purchase[:tipo] = $lcTipoFacturaCompra
-    @purchase[:participacion] = $lcParticipacion
+    
 
     if $lcTipoFacturaCompra =="1"
       @detalleitems =  @company.get_orden_detalle2($lcPurchaseOrderId)
@@ -2789,7 +2785,7 @@ def newfactura2
     @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]
     @purchase[:charge]  = 0
     @purchase[:pago] = 0
-    @purchase[:balance] =   @purchase[:total_amount] + @purchase[:participacion]
+    @purchase[:balance] =   @purchase[:total_amount] 
     
       curr_seller = User.find(@current_user.id)
       @ac_user = curr_seller.username
@@ -3072,7 +3068,7 @@ def newfactura2
     @purchase = Purchase.new
     
     @purchase[:processed] = false
-    @purchase[:participacion] = 0
+    
     @company = Company.find(params[:company_id])
     @purchase.company_id = @company.id
     
@@ -3156,7 +3152,7 @@ def newfactura2
     @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]
     @purchase[:charge]  = 0
     @purchase[:pago] = 0
-    @purchase[:balance] =   @purchase[:total_amount]+@purchase[:participacion]
+    @purchase[:balance] =   @purchase[:total_amount]
     @purchase[:tipo]    = 0
     
     
@@ -3277,7 +3273,7 @@ def newfactura2
       :product_id,:unit_id,:price_with_tax,:price_without_tax,:price_public,:quantity,:other,:money_type,
       :discount,:tax1,:payable_amount,:tax_amount,:total_amount,:status,:pricestatus,:charge,:pago,
       :balance,:tax2,:supplier_id,:order1,:plate_id,:user_id,:company_id,:location_id,:division_id,:comments,
-      :processed,:return,:date_processed,:payment_id,:document_id,:documento,:moneda_id,:participacion)
+      :processed,:return,:date_processed,:payment_id,:document_id,:documento,:moneda_id)
   end
 
 end
