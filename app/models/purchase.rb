@@ -585,9 +585,18 @@ def get_tax3(items, supplier_id)
     
     a=ProductsCategory.find(codigo)
     return a.category
-      
-    
   end   
+  def get_service_name(codigo)  
+    a = Service.find_by(code:codigo) 
+    
+    if a 
+      return a.name 
+    else
+      return " no existe "
+      
+    end 
+  end   
+  
   def get_tipocambio(fecha)
       fecha1 = fecha.strftime("%F") 
      tipocambio = Tipocambio.find_by("dia  >= ?  and dia <= ?", "#{fecha1} 00:00:00","#{fecha1} 23:59:59")

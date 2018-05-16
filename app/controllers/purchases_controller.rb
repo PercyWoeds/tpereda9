@@ -283,19 +283,26 @@ WHERE purchase_details.product_id = ?',params[:id] ])
               row << compras.products_category_id
               row << compras.get_categoria_name(compras.products_category_id)
             else
-              row <<" "
-              row << compras.get_service_name(compras.product_id)
+              row << "SERVICIOS"
+              row << compras.get_service_name(compras.code)
             end 
             calculo = 0
-            if compras.products_category_id == 2
-              calculo = compras.total / 1.18
-              row   << calculo.round(2).to_s
-              total += calculo.round(2)
-              
+            if @tipo =='0'
+              if compras.products_category_id == 2
+                calculo = compras.total / 1.18
+                row   << calculo.round(2).to_s
+                total += calculo.round(2)
+                
+              else
+                row << compras.total.round(2).to_s
+                total += compras.total.round(2)
+              end 
             else
-              row << compras.total.round(2).to_s
-              total += compras.total.round(2)
+                row << compras.total.round(2).to_s
+                total += compras.total.round(2)
+              
             end 
+            
             table_content << row
             nroitem=nroitem + 1
       end
@@ -510,6 +517,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
     end 
 
   # Export purchaseorder to PDF
+  
   def rpt_purchase4_all
         
     @company =Company.find(1)
@@ -547,10 +555,6 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 ## FIN RESUMEN FACTURAS X CATEGORIA
 
 
-
-
-
-## Reporte de productos pendientes de ingreso
 
 ##### reporte de factura emitidas
 
@@ -620,13 +624,9 @@ WHERE purchase_details.product_id = ?',params[:id] ])
         
           if lcCliente == product.supplier_id
 
-             #if product.payment_id == nil 
-              fechas2 = product.date2 
-             #else 
-             # days = product.payment.day 
-             # fechas2 = product.fechas2 + days.days              
-             #end 
-
+             
+            fechas2 = product.date2 
+             
             row = []          
             row << lcDoc
             row << product.documento 
@@ -3265,6 +3265,27 @@ def newfactura2
   end
 
   
+  def rpt_purchase5
+    
+      @company=Company.find(1)          
+      @fecha1 = params[:fecha1]    
+      @fecha2 = params[:fecha2]    
+      @proveedor = params[:supplier]    
+      
+      @parte_rpt = @company.get_purchase_5(@fecha1,@fecha2,@proveedor)
+      
+      
+      case params[:print]
+        when "To PDF" then 
+          begin 
+           render  pdf: "FacturaProveedor ",template: "purchases/purchase5_rpt.pdf.erb",locals: {:purchases => @parte_rpt}
+          
+          end   
+        when "To Excel" then render xlsx: 'purchase5_xls'
+        else render action: "index"
+      end
+      
+  end
 
   
   private

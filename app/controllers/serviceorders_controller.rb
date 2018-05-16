@@ -538,7 +538,7 @@ class ServiceordersController < ApplicationController
     else
 
       @dolar1 = @company.get_dolar(@serviceorder[:fecha1].to_date )
-
+      if @dolar1
       if @dolar1.compra != nil 
         if @serviceorder[:total]*@dolar1.compra >= 700.00
 
@@ -549,7 +549,17 @@ class ServiceordersController < ApplicationController
           @serviceorder[:detraccion] = 0
         end 
       end 
+     else
+          
+        if  @serviceorder[:total]* 3.22 >= 700.00
 
+          @serviceorder[:detraccion] = @serviceorder[:total] * 12/100
+
+          @serviceorder[:dolar] = 3.22
+        else
+          @serviceorder[:detraccion] = 0
+        end 
+     end 
     end 
 
     

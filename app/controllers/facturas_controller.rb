@@ -28,7 +28,7 @@ class FacturasController < ApplicationController
     end
   end
   
-    def reportes2 
+  def reportes2 
   
     @company=Company.find(1)          
     @fecha = params[:fecha1]    
@@ -1167,7 +1167,7 @@ def newfactura2
       row << ""
       row << ""
       row << ""
-      row << ""
+      
       row << "TOTALES => "
       row << ""
       row << subtotal.round(2).to_s

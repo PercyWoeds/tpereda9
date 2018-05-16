@@ -1353,6 +1353,12 @@ def get_pendientes_day_customer_detraccion(fecha1,fecha2,cliente)
     @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:supplier_id,:moneda_id,:date1)    
     return @purchases 
   end
+  
+    def get_purchases_5(fecha1,fecha2,proveedor)
+    @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ?  and provedor = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",proveedor ]).order(:supplier_id,:moneda_id,:date1)    
+    return @purchases 
+  end
+
 
   def get_purchases_day_tipo(fecha1,fecha2,tipo)
     if tipo =="2" 
@@ -1377,10 +1383,10 @@ def get_pendientes_day_customer_detraccion(fecha1,fecha2,cliente)
       @purchases = Purchase.find_by_sql(['Select servicebuys.code,SUM(purchase_details.total) AS TOTAL
       from purchase_details   
       INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
-      INNER JOIN servicebuys ON servicebuys.id = products.id
+      INNER JOIN servicebuys ON purchase_details.product_id = servicebuys.id
       WHERE purchases.date1 >= ? and purchases.date1 <= ?  and purchases.moneda_id= ?  and purchases.tipo = ?
-      GROUP BY servicebuys.code  
-      ORDER BY servicebuys.code  ' , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda,tipo ])
+      GROUP BY servicebuys.code
+      ORDER BY servicebuys.code ' , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda,tipo ])
       
     end 
     return @purchases

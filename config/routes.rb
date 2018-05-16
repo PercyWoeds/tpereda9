@@ -184,6 +184,7 @@ end
   
   resources :suppliers do
     collection { post :import  }
+    
   end 
 
   resources :orders do 
@@ -256,6 +257,7 @@ end
   
   resources :purchases do
      collection { post :datos  }
+     collection { get :rpt_purchase5 }
   end 
   
   resources :payrolls, only: [:index, :show] do
@@ -343,6 +345,7 @@ end
   match 'companies/reports/rpt_purchase2_all/:company_id' => 'reports#rpt_purchase2_all', via: [:get, :post]
   match 'companies/reports/rpt_purchase3_all/:company_id' => 'reports#rpt_purchase3_all', via: [:get, :post]
   match 'companies/reports/rpt_purchase4_all/:company_id' => 'reports#rpt_purchase4_all', via: [:get, :post]
+  match 'companies/reports/rpt_purchase5_all/:company_id' => 'reports#rpt_purchase5_all', via: [:get, :post]
   
   match 'companies/reports/rpt_purchaseorder_all/:company_id' => 'reports#rpt_purchaseorder_all', via: [:get, :post]
   match 'companies/reports/rpt_purchaseorder2_all/:company_id' => 'reports#rpt_purchaseorder2_all', via: [:get, :post]
