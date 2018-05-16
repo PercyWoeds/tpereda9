@@ -596,6 +596,16 @@ def get_tax3(items, supplier_id)
       
     end 
   end   
+  def get_servicebuy_name(codigo)  
+    a = Servicebuy.find_by(code:codigo) 
+    
+    if a 
+      return a.name 
+    else
+      return " no existe "
+      
+    end 
+  end   
   
   def get_tipocambio(fecha)
       fecha1 = fecha.strftime("%F") 

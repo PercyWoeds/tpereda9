@@ -4,10 +4,45 @@ include ProductsHelper
 include PurchasesHelper
 
 class PurchasesController < ApplicationController
-  before_filter :authenticate_user!, :checkProducts
+  before_filter :authenticate_user!
             
 
+def reportep01 
     
+      @company=Company.find(1)          
+      @fecha1 = params[:fecha1]    
+      @fecha2 = params[:fecha2]    
+      @proveedor = params[:supplier]    
+      
+      @parte_rpt = @company.get_purchase_5(@fecha1,@fecha2,@proveedor)
+      
+      case params[:print]
+        when "To PDF" then 
+          begin 
+           render  pdf: "FacturaProveedor ",template: "purchases/purchase5_rpt.pdf.erb",locals: {:purchases => @parte_rpt}
+          
+          end   
+        when "To Excel" then render xlsx: 'purchase5_xls'
+        else render action: "index"
+      end
+      
+  end
+
+ def show
+    @purchase = Purchase.find(params[:id])
+    @supplier = @purchase.supplier
+     @cierre = Cierre.last 
+    parts0 = @cierre.fecha.strftime("%Y-%m-%d") 
+    parts = parts0.split("-")
+    
+    $yy = parts[0].to_i
+    $mm = parts[1].to_i
+    $dd = parts[2].to_i 
+  end
+
+
+
+
   def ingresos
         @company = Company.find(params[:id])
         @purchases  = PurchaseDetail.all.paginate(:page => params[:page])
@@ -284,7 +319,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
               row << compras.get_categoria_name(compras.products_category_id)
             else
               row << "SERVICIOS"
-              row << compras.get_service_name(compras.code)
+              row << compras.get_servicebuy_name(compras.code)
             end 
             calculo = 0
             if @tipo =='0'
@@ -3015,19 +3050,8 @@ def newfactura2
   end
   
   # GET /purchases/1
-  # GET /purchases/1.xml
-  def show
-    @purchase = Purchase.find(params[:id])
-    @supplier = @purchase.supplier
-     @cierre = Cierre.last 
-    parts0 = @cierre.fecha.strftime("%Y-%m-%d") 
-    parts = parts0.split("-")
-    
-    $yy = parts[0].to_i
-    $mm = parts[1].to_i
-    $dd = parts[2].to_i 
-  end
-
+  # GET /purchases/11.xml
+ 
   # GET /purchases/new
   # GET /purchases/new.xml
   def search
@@ -3264,29 +3288,8 @@ def newfactura2
       invoice_headers
   end
 
-  
-  def rpt_purchase5
-    
-      @company=Company.find(1)          
-      @fecha1 = params[:fecha1]    
-      @fecha2 = params[:fecha2]    
-      @proveedor = params[:supplier]    
-      
-      @parte_rpt = @company.get_purchase_5(@fecha1,@fecha2,@proveedor)
-      
-      
-      case params[:print]
-        when "To PDF" then 
-          begin 
-           render  pdf: "FacturaProveedor ",template: "purchases/purchase5_rpt.pdf.erb",locals: {:purchases => @parte_rpt}
-          
-          end   
-        when "To Excel" then render xlsx: 'purchase5_xls'
-        else render action: "index"
-      end
-      
-  end
 
+  
   
   private
   def purchase_params

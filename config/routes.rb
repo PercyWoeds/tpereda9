@@ -257,7 +257,7 @@ end
   
   resources :purchases do
      collection { post :datos  }
-     collection { get :rpt_purchase5 }
+     collection { get :reportep01 }
   end 
   
   resources :payrolls, only: [:index, :show] do

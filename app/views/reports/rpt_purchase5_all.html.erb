@@ -16,7 +16,7 @@
 <br>
 
   
-<%= form_tag(rpt_purchase5_purchases_path, :method => "get") do %>
+<%= form_tag(reportep01_purchases_path, :method => "get") do %>
 
     <div class="field">
         Desde
@@ -26,16 +26,12 @@
         Hasta
         <input type="date" name="fecha2" value="2018-04-19" style = "width: 150px" >
     </div>
+    
         Proveedor     
         <br>
-
-<%= select_tag(:supplier,options_from_collection_for_select(@suppliers,'id','name') ) %>        
+            <%= select_tag(:supplier,options_from_collection_for_select(@suppliers,'id','name') ) %>        
         <br>
         
-    
-	
-
-
 <br> 
  <%= submit_tag "To PDF", :name => "print" %>
  <%= submit_tag "To Excel", :name => "print" %>
