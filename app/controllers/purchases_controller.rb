@@ -1118,7 +1118,7 @@ def build_pdf_header_rpt48(pdf)
               row << "0.00 "
             end 
             if product.products_category_id == 2
-              valortotal_sigv=valortotal 
+              valortotal_sigv=valortotal / 1.18
               row << sprintf("%.2f",valortotal_sigv.to_s)
               @totales2  += valortotal / 1.18   
             else  
@@ -1193,7 +1193,7 @@ def build_pdf_header_rpt48(pdf)
             
              
             if product.products_category_id == 2
-              valortotal_sigv=valortotal 
+              valortotal_sigv=valortotal / 1.18
               row << sprintf("%.2f",valortotal_sigv.to_s)
               @totales2  += valortotal / 1.18   
             else  
