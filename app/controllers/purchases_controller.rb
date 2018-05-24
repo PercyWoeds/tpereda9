@@ -1202,9 +1202,7 @@ def build_pdf_header_rpt48(pdf)
             end 
             
             
-            
-            @totales2 += valortotal   
-            @cantidad2 += product.quantity
+              @cantidad2 += product.quantity
             table_content << row          
             
 
