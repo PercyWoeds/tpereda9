@@ -1107,16 +1107,25 @@ def build_pdf_header_rpt48(pdf)
                 valortotal = product.total*@tipocambio
               else
                 row << "0.00 "
+                
                 row << sprintf("%.2f",product.price.to_s)
+                
                 valortotal = product.total*@tipocambio
+                
               end 
             else
               row << "0.00 "
               row << "0.00 "
             end 
+            if product.products_category_id = 1
+              valortotal_sigv=valortotal 
+              row << sprintf("%.2f",valortotal_sigv.to_s)
+              @totales2  += valortotal / 1.18   
+            else  
+              row << sprintf("%.2f",valortotal.to_s)
+              @totales2  += valortotal   
+            end 
             
-            row << sprintf("%.2f",valortotal.to_s)
-            @totales2  += valortotal   
             @cantidad2 += product.quantity
             table_content << row          
             nroitem=nroitem + 1
@@ -1181,8 +1190,18 @@ def build_pdf_header_rpt48(pdf)
               row << "0.00 "
               row << "0.00 "
             end 
+            
              
-            row << sprintf("%.2f",valortotal.to_s)
+            if product.products_category_id = 1
+              valortotal_sigv=valortotal 
+              row << sprintf("%.2f",valortotal_sigv.to_s)
+              @totales2  += valortotal / 1.18   
+            else  
+              row << sprintf("%.2f",valortotal.to_s)
+              @totales2  += valortotal   
+            end 
+            
+            
             
             @totales2 += valortotal   
             @cantidad2 += product.quantity
