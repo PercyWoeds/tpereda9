@@ -1202,7 +1202,7 @@ def build_pdf_header_rpt48(pdf)
             end 
             
             
-              @cantidad2 += product.quantity
+            @cantidad2 += product.quantity
             table_content << row          
             
 
@@ -1604,18 +1604,24 @@ def build_pdf_header_rpt48(pdf)
                 @tipocambio = product.get_tipocambio(product.fecha)
                 else
                   @tipocambio = 1
-                  end 
+                end 
                    valorcambio =product.price * @tipocambio
                 row << sprintf("%.2f",product.price.to_s)
                 row << sprintf("%.2f",valorcambio.to_s)
-                valortotal = product.total*@tipocambio
-               
+                if product.products_category_id == 2
+                valortotal = product.total*@tipocambio / 1.18
+               else
+                 valortotal = product.total*@tipocambio 
+               end 
               else
                 
                 row << "0.00 "
                 row << sprintf("%.2f",valorcambio.to_s)
-               
-                 valortotal = product.total*@tipocambio
+               if product.products_category_id == 2
+                 valortotal = product.total*@tipocambio / 1.18
+                else
+                  valortotal = product.total*@tipocambio 
+                end 
               end 
 
             else

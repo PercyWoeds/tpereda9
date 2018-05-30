@@ -94,16 +94,18 @@ class Employee < ActiveRecord::Base
              puts product_hash["cusspp"]
              puts product_hash["carnet_seguro"]
              puts product_hash["fecha_nacimiento"]
-             
+             puts product_hash["cuenta_bancaria"]
              
             product.cusspp = product_hash["cusspp"]
             product.carnet_seguro = product_hash["carnet_seguro"]
             product.fecha_nacimiento =  product_hash["fecha_nacimiento"]
+            product.cuenta_bancaria =  product_hash["cuenta_bancaria"]
             
             product.save 
             
             else
                  puts product_hash["idnumber"]
+                 
           end     
           
         end # end CSV.foreach
