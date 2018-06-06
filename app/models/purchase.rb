@@ -39,7 +39,9 @@ TABLE_HEADERS2  = ["ITEM ",
                      "CANTIDAD",
                      "COSTO US$",
                      "COSTO S/.",
-                     "TOTAL "]
+                     "TOTAL US$",
+                     "TOTAL S/"
+                     ]
 
 
  TABLE_HEADERS3 = ["TD",
@@ -616,6 +618,98 @@ def get_tax3(items, supplier_id)
        return 0 
      end 
   end 
+
+  def get_importe_soles1
+    valor = 0
+    
+    if self.moneda_id == 2
+          if self.document_id   == 2
+                  valor = self.payable_amount*-1
+                    
+          else  
+                  valor = self.payable_amount
+          
+           end   
+            
+    end
+    return valor     
+  end 
+  
+  def get_importe_soles2
+    valor = 0
+    
+    if self.moneda_id == 2
+          if self.document_id   == 2
+                  valor = self.tax_amount*-1
+                    
+          else  
+                  valor = self.tax_amount
+          
+           end   
+            
+    end
+    return valor     
+  end 
+  
+  def get_importe_soles
+    valor = 0
+    
+    if self.moneda_id == 2
+          if self.document_id   == 2
+                  valor = self.total_amount*-1
+                    
+          else  
+                  valor = self.total_amount
+          
+           end   
+            
+    end
+    return valor     
+  end 
+  
+  def get_importe_dolares
+       valor = 0
+       if self.moneda_id ==1
+          if self.document_id   == 2
+                  valor = self.balance*-1
+                    
+          else  
+                  valor = self.balance
+          
+           end   
+          end 
+        return valor         
+  end
+  
+  def get_importe_balance_soles
+       valor = 0
+       if self.moneda_id ==2
+          if self.document_id   == 2
+                  valor = self.balance*-1
+                    
+          else  
+                  valor = self.balance
+          
+           end   
+          end 
+        return valor         
+  end
+  def get_importe_balance_dolares
+       valor = 0
+       if self.moneda_id ==1
+          if self.document_id   == 2
+                  valor = self.balance*-1
+                    
+          else  
+                  valor = self.balance
+          
+           end   
+          end 
+        return valor         
+  end
+  
+  
+  
   
 
 end

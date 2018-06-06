@@ -23,12 +23,11 @@ wb.styles do |s|
     
    @facturas_rpt.each do |payment|
         
-        sheet.add_row [payment.document.descripshort, payment.code,payment.fecha,payment.fecha2,payment.customer.ruc,payment.customer.name,payment.moneda.symbol,payment.get_importe_soles1,payment.get_importe_soles2,payment.get_importe_soles], :style => [cadena,cadena,date,date,cadena,cadena,cadena,currency,currency,currency]
+        sheet.add_row [payment.document.descripshort, payment.documento,payment.date1,payment.date2,payment.supplier.ruc,payment.supplier.name,payment.moneda.symbol,payment.get_importe_soles1,payment.get_importe_soles2,payment.get_importe_soles], :style => [cadena,cadena,date,date,cadena,cadena,cadena,currency,currency,currency]
     
    end
    
-   sheet.add_row ["","","","","Totales => ","",@total1,@total2,@total3], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency]
-   
+
    
 end
 end 

@@ -45,12 +45,12 @@
        
                     <tr>
                     <td width= "5%" ><%= detalle.document.descripshort  %></td>
-                    <td width= "10%" ><%=  detalle.code %>   </td>
-                    <td width = "12%" align ="center"><%= detalle.fecha.strftime("%d/%m/%Y")     %></td>
+                    <td width= "10%" ><%=  detalle.documento %>   </td>
+                    <td width = "12%" align ="center"><%= detalle.date1.strftime("%d/%m/%Y")     %></td>
                     
-                    <td width = "12%" align ="left"><%= detalle.customer.ruc   %> </td>
+                    <td width = "12%" align ="left"><%= detalle.supplier.ruc   %> </td>
 
-                    <td width = "25%" align ="left"><%= detalle.customer.name   %> </td>
+                    <td width = "25%" align ="left"><%= detalle.supplier.name   %> </td>
                     
                     
                     <% if detalle.moneda_id == 1 %>
@@ -61,13 +61,13 @@
                     
                     
                 <% if detalle.document_id == 2 %>
-                  <% lcsubtotal = detalle.subtotal * -1 %>
-                  <% lctax =  detalle.tax * -1 %>
-                  <% lctotal = detalle.total* -1 %>
+                  <% lcsubtotal = detalle.payable_amount * -1 %>
+                  <% lctax =  detalle.tax_amount * -1 %>
+                  <% lctotal = detalle.total_amount* -1 %>
                 <% else %> 
-                  <% lcsubtotal = detalle.subtotal %>
-                  <% lctax =  detalle.tax %>
-                  <% lctotal = detalle.total %>
+                  <% lcsubtotal = detalle.payable_amount %>
+                  <% lctax =  detalle.tax_amount %>
+                  <% lctotal = detalle.total_amount %>
                 <% end %>
                 <td width = "12%" align ="right"><%= sprintf("%.2f",lcsubtotal)   %></td>
                 <td width = "12%" align ="right"><%= sprintf("%.2f",lctax)   %></td>

@@ -5,7 +5,7 @@ class Payroll < ActiveRecord::Base
     belongs_to :loan     
     belongs_to :parameter
     
-    
+    has_many :horas_mes
     has_many :type_payrolls
     has_many :payroll_details, :dependent => :destroy
     has_many :payrollbonis
@@ -143,6 +143,24 @@ class Payroll < ActiveRecord::Base
     end   
    
     def actualizar
+        
+         @horasplanilla = HorasMe.where(payroll_id: self.id)    
+         
+         for horas in @horasplanilla
+                detalle = PayrollDetail.find_by(payroll_id: self.id,employee_id: horas.employee_id)
+                if detalle 
+                    detalle.falta = horas.fal
+                    detalle.vaca = horas.vac
+                    detalle.desmed = horas.dm
+                    detalle.subsidio = horas.sub 
+                    detalle.otros = horas.pat 
+                    detalle.dias  = horas.tot 
+                    detalle.totaldia = 30 - detalle.falta - detalle.vaca - detalle.desmed - detalle.subsidio - detalle.otros 
+                    detalle.save 
+                end 
+         end 
+         
+        
         
         @planilla =  PayrollDetail.where(payroll_id: self.id)    
             

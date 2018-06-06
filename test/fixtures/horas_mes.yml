@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  dt: 1.5
+  fal: 1.5
+  sub: 1.5
+  dm: 1.5
+  pat: 1.5
+  vac: 1.5
+  tot: 1.5
+  payroll_id: 1
+  employee_id: 1
+
+two:
+  dt: 1.5
+  fal: 1.5
+  sub: 1.5
+  dm: 1.5
+  pat: 1.5
+  vac: 1.5
+  tot: 1.5
+  payroll_id: 1
+  employee_id: 1

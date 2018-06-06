@@ -7,26 +7,6 @@ class PurchasesController < ApplicationController
   before_filter :authenticate_user!
             
 
-def reportep01 
-    
-      @company=Company.find(1)          
-      @fecha1 = params[:fecha1]    
-      @fecha2 = params[:fecha2]    
-      @proveedor = params[:supplier]    
-      
-      @parte_rpt = @company.get_purchase_5(@fecha1,@fecha2,@proveedor)
-      
-      case params[:print]
-        when "To PDF" then 
-          begin 
-           render  pdf: "FacturaProveedor ",template: "purchases/purchase5_rpt.pdf.erb",locals: {:purchases => @parte_rpt}
-          
-          end   
-        when "To Excel" then render xlsx: 'purchase5_xls'
-        else render action: "index"
-      end
-      
-  end
 
  def show
     @purchase = Purchase.find(params[:id])
@@ -1070,10 +1050,14 @@ def build_pdf_header_rpt48(pdf)
 
       @totales1 = 0
       @totales2 = 0
+      @totaldolares = 0
+      @totaldolares2 = 0
       @cantidad = 0
       @cantidad2 = 0
+      
       total_qty = 0
       total_soles = 0
+      total_dolares = 0
       nroitem = 1
       @tipocambio = 1
       valorcambio = 0
@@ -1095,7 +1079,7 @@ def build_pdf_header_rpt48(pdf)
            
             if product.price != nil 
               if product.moneda_id == 1
-                 if product.fecha 
+                if product.fecha 
                    puts product.fecha 
                   @tipocambio = product.get_tipocambio(product.fecha)
                 else
@@ -1104,6 +1088,7 @@ def build_pdf_header_rpt48(pdf)
                 valorcambio =product.price * @tipocambio
                 row << sprintf("%.2f",product.price.to_s)
                 row << sprintf("%.2f",valorcambio.to_s)
+                
                 valortotal = product.total*@tipocambio
               else
                 row << "0.00 "
@@ -1116,17 +1101,32 @@ def build_pdf_header_rpt48(pdf)
             else
               row << "0.00 "
               row << "0.00 "
+              
             end 
+            if product.moneda_id == 1
+              row << sprintf("%.2f",product.quantity * product.price )
+                @totaldolares2 += product.quantity * product.price     
+            else
+              row << "0.00"  
+            end 
+            
+            
             if product.products_category_id == 2
+              
               valortotal_sigv=valortotal / 1.18
               row << sprintf("%.2f",valortotal_sigv.to_s)
+              
               @totales2  += valortotal / 1.18   
             else  
               row << sprintf("%.2f",valortotal.to_s)
+              
               @totales2  += valortotal   
             end 
             
+            
             @cantidad2 += product.quantity
+            
+            
             table_content << row          
             nroitem=nroitem + 1
             valorcambio = 0
@@ -1136,10 +1136,14 @@ def build_pdf_header_rpt48(pdf)
           else
             total_qty    += @cantidad2   
             total_soles  += @totales2
+            total_dolares += @totaldolares2
+            
             @totales1 += @totales2 
             @cantidad += @cantidad2 
             @cantidad2 = 0
             @totales2  =0
+            @totaldolares2  =0
+            
             row =[]
             row << ""
             row << ""
@@ -1151,9 +1155,13 @@ def build_pdf_header_rpt48(pdf)
             row << sprintf("%.2f",total_qty.to_s)
             row << " "
             row << " "
+            row << sprintf("%.2f",total_dolares.to_s)
             row << sprintf("%.2f",total_soles.to_s)
+            
+            
             total_qty   = 0
             total_soles = 0
+            total_dolares = 0
             
             table_content << row
             lcCategoria = product.products_category_id
@@ -1180,15 +1188,26 @@ def build_pdf_header_rpt48(pdf)
                 valorcambio =product.price * @tipocambio
                 row << sprintf("%.2f",product.price.to_s)
                 row << sprintf("%.2f",valorcambio.to_s)
+              
                 valortotal = product.total*@tipocambio
               else
                 row << "0.00 "
                 row << sprintf("%.2f",product.price.to_s)
+              
                 valortotal = product.total*@tipocambio
               end 
             else
               row << "0.00 "
               row << "0.00 "
+              
+              
+            end 
+            
+            if product.moneda_id == 1
+              row << sprintf("%.2f",product.quantity * product.price )
+                @totaldolares2 += product.quantity * product.price     
+            else
+              row << "0.00"  
             end 
             
              
@@ -1203,6 +1222,8 @@ def build_pdf_header_rpt48(pdf)
             
             
             @cantidad2 += product.quantity
+            
+            
             table_content << row          
             
 
@@ -1212,6 +1233,7 @@ def build_pdf_header_rpt48(pdf)
       
       total_qty    += @cantidad2   
       total_soles  += @totales2
+      total_dolares += @totaldolares2
       
       @totales1 += @totales2 
       @cantidad += @cantidad2 
@@ -1229,7 +1251,10 @@ def build_pdf_header_rpt48(pdf)
       row << sprintf("%.2f",total_qty.to_s)
       row << " "
       row << " "
+      row << sprintf("%.2f",total_dolares.to_s)
       row << sprintf("%.2f",total_soles.to_s)
+      
+      
         table_content << row
       row =[]
       row << ""
@@ -1242,8 +1267,9 @@ def build_pdf_header_rpt48(pdf)
       row << sprintf("%.2f",@cantidad.to_s)
       row << " "
       row << " "
+      row << sprintf("%.2f",@totaldolares2.to_s)
       row << sprintf("%.2f",@totales1.to_s)
-
+      
 
       table_content << row
       
@@ -1253,7 +1279,7 @@ def build_pdf_header_rpt48(pdf)
                                         } do 
                                           columns([0]).align=:center
                                           columns([1]).align=:left
-                                          columns([1]).width = 100
+                                          columns([1]).width = 50
                                           columns([2]).align=:left
                                           columns([2]).width = 50
                                           columns([3]).align=:left
@@ -1268,6 +1294,8 @@ def build_pdf_header_rpt48(pdf)
                                           columns([9]).align=:right
                                           columns([10]).align=:right
                                           columns([10]).width = 40
+                                          columns([11]).align=:right
+                                          columns([11]).width = 40
                                         end                                          
       pdf.move_down 10      
       #totales 

@@ -1,0 +1,49 @@
+<%= simple_form_for(@horas_me) do |f| %>
+  <%= f.error_notification %>
+
+  
+   <div class="field">
+      <%= f.label :payroll_id,"Planilla :" %><br />
+      <%= f.collection_select :payroll_id, @payrolls, :id, :code, :prompt => true %>
+      
+    </div>
+    
+    <div class="field">
+      <%= f.label :employee_id,"Empleado :" %><br />
+      <%= f.collection_select :employee_id, @employees, :id, :full_name, :prompt => true %>
+      
+    </div>
+    
+    <div class="field">
+      <%= f.label :dt, "Dias trabajados", :class => "bold" %><br />
+      <%= f.number_field :dt %>
+    </div>
+    <div class="field">
+      <%= f.label :fal, "Faltas", :class => "bold" %><br />
+      <%= f.number_field :fal %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :sub, "Subsidio", :class => "bold" %><br />
+      <%= f.number_field :sub %>
+    </div>
+    <div class="field">
+      <%= f.label :dm, "DM", :class => "bold" %><br />
+      <%= f.number_field :dm %>
+    </div>
+    <div class="field">
+      <%= f.label :pat, "PAT", :class => "bold" %><br />
+      <%= f.number_field :pat %>
+    </div>
+    <div class="field">
+      <%= f.label :vac, "VAC", :class => "bold" %><br />
+      <%= f.number_field :vac %>
+    </div>
+    
+  
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+  
+<% end %>

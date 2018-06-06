@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Horas Mes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Planilla</th>
+      <th>Empleado</th>
+      
+      <th>Dt</th>
+      <th>Fal</th>
+      <th>Sub</th>
+      <th>Dm</th>
+      <th>Pat</th>
+      <th>Vac</th>
+      <th>Tot</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @horas_mes.each do |horas_me| %>
+      <tr>
+        <td><%= horas_me.payroll.code %></td>
+        <td><%= horas_me.employee.full_name %></td>
+        
+        <td><%= horas_me.dt %></td>
+        <td><%= horas_me.fal %></td>
+        <td><%= horas_me.sub %></td>
+        <td><%= horas_me.dm %></td>
+        <td><%= horas_me.pat %></td>
+        <td><%= horas_me.vac %></td>
+        <td><%= horas_me.tot %></td>
+        <td><%= link_to 'Show', horas_me %></td>
+        <td><%= link_to 'Edit', edit_horas_me_path(horas_me) %></td>
+        <td><%= link_to 'Destroy', horas_me, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Horas me', new_horas_me_path %>

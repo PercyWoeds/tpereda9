@@ -1,5 +1,6 @@
   Mnygo::Application.routes.draw do
 
+  resources :horas_mes
   resources :tipofaltantes
   resources :faltantes
   resources :tipoventa
@@ -98,6 +99,8 @@
     collection { get :exportxls }
     collection { get :rpt_ccobrar3 }
     collection { get :rpt_ccobrar3_pdf }
+    collection { get :reportep01 }
+    
   end 
     
   
@@ -257,7 +260,7 @@ end
   
   resources :purchases do
      collection { post :datos  }
-     collection { get :reportep01 }
+     
   end 
   
   resources :payrolls, only: [:index, :show] do

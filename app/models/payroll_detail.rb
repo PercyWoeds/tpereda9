@@ -19,7 +19,7 @@ class PayrollDetail < ActiveRecord::Base
        end
        
        
-       self.dias = self.totaldia + self.falta + self.vaca 
+       #self.dias = self.totaldia + self.falta + self.vaca 
     end
     
 end

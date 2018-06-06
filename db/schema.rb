@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180827233058) do
+ActiveRecord::Schema.define(version: 20180827233060) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -657,6 +657,7 @@ ActiveRecord::Schema.define(version: 20180827233058) do
     t.string   "full_name2"
     t.string   "cusspp"
     t.integer  "ccosto_id"
+    t.string   "cuenta_bancaria"
   end
 
   create_table "factura_details", force: :cascade do |t|
@@ -784,6 +785,20 @@ ActiveRecord::Schema.define(version: 20180827233058) do
   add_index "histories", ["created_at"], name: "index_histories_on_created_at", using: :btree
   add_index "histories", ["historiable_id"], name: "index_histories_on_historiable_id", using: :btree
   add_index "histories", ["user_id"], name: "index_histories_on_user_id", using: :btree
+
+  create_table "horas_mes", force: :cascade do |t|
+    t.float    "dt"
+    t.float    "fal"
+    t.float    "sub"
+    t.float    "dm"
+    t.float    "pat"
+    t.float    "vac"
+    t.float    "tot"
+    t.integer  "payroll_id"
+    t.integer  "employee_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "instruccions", force: :cascade do |t|
     t.text     "description1"
@@ -1969,14 +1984,11 @@ ActiveRecord::Schema.define(version: 20180827233058) do
   end
 
   create_table "tanks", force: :cascade do |t|
-    t.string   "code"
     t.string   "comments"
-    t.float    "saldo_inicial"
-    t.float    "varilla"
     t.integer  "product_id"
     t.integer  "company_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "tanks", ["company_id"], name: "index_tanks_on_company_id", using: :btree

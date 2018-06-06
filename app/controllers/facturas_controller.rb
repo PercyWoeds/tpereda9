@@ -8,6 +8,9 @@ class FacturasController < ApplicationController
     $: << Dir.pwd  + '/lib'
 
  # before_filter :authenticate_user!
+ 
+ 
+ 
 
   def reportes
   
@@ -1738,6 +1741,26 @@ def print
         @@document_serial_id =""
         $aviso=""
     end 
+def reportep01 
+    
+      @company=Company.find(1)          
+      @fecha1 = params[:fecha1]    
+      @fecha2 = params[:fecha2]    
+      @proveedor = params[:supplier]    
+      
+      @facturas_rpt = @company.get_purchases_5(@fecha1,@fecha2,@proveedor)
+      
+      case params[:print]
+        when "To PDF" then 
+          begin 
+           render  pdf: "FacturaProveedor ",template: "purchases/purchase5_rpt.pdf.erb",locals: {:purchases => @facturas_rpt}
+          
+          end   
+        when "To Excel" then render xlsx: 'purchase5_xls'
+        else render action: "index"
+      end
+      
+  end
 
 
 
