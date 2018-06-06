@@ -28,6 +28,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     @viatico_detail = ViaticoDetail.new
     @gastos = Gasto.order(:codigo)
     @company = Company.find(1)
+    
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @documents = @company.get_documents()
@@ -35,6 +36,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     @viatico_detail[:fecha] = Date.today 
     @destinos = Destino.all
     @employees = @company.get_employees 
+    company_id = @company.id
     
   end
 

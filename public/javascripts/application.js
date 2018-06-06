@@ -1763,7 +1763,7 @@ function addItemToLgv2() {
  //............................................................................  
 // Shortcut to create new customer form
   function createSupplier() {
-    var company_id = $("#viatico_company_id").val();
+    var company_id = 1 ;
     
     $.get('/suppliers/new/' + company_id + '?ajax=1', {
     },
@@ -1780,7 +1780,7 @@ function addItemToLgv2() {
 
   // Create new customer in the invoice via ajax
   function doCreateSupplier() {
-    var company_id = $("#viatico_company_id").val();
+    var company_id = 1 ;
     var ruc = $("#supplier_ruc").val();
     var name = $("#supplier_name").val();
     var email = $("#supplier_email").val();

@@ -3,7 +3,8 @@ include CompaniesHelper
 
 
 class SuppliersController < ApplicationController
-  before_filter :authenticate_user!, :checkCompanies
+  before_filter :authenticate_user!
+  
 
   def import
       Supplier.import(params[:file])
@@ -50,8 +51,8 @@ class SuppliersController < ApplicationController
   def new
     @pagetitle = "New supplier"
     
-    if(params[:company_id])
-      @company = Company.find(params[:company_id])
+    
+      @company = Company.find(1)
     
       if(@company.can_view(current_user))
         @supplier = Supplier.new
@@ -59,9 +60,6 @@ class SuppliersController < ApplicationController
       else
         errPerms()
       end
-    else
-      redirect_to('/companies')
-    end
     
     
     if(params[:ajax])
@@ -149,8 +147,16 @@ class SuppliersController < ApplicationController
   
     # Create via ajax
   def create_ajax
-    if(params[:company_id] and params[:company_id] != "" and params[:name] and params[:name] != "" and params[:ruc] != "")
-      @supplier = Supplier.new(:company_id => params[:company_id].to_i, :name => params[:name], :email => params[:email], :phone1 => params[:phone1], :phone2 => params[:phone2], :address1 => params[:address1], :address2 => params[:address2], :city => params[:city], :state => params[:state], :zip => params[:zip], :country => params[:country], :comments => params[:comments],:ruc=>params[:ruc])
+    if(params[:name] and params[:name] != "" and params[:ruc] != "")
+      params[:company_id]= 1
+      @supplier = Supplier.new(:company_id => 1, :name => params[:name], :email => params[:email],
+      :phone1 => params[:phone1], :phone2 => params[:phone2], :address1 => params[:address1],
+      :address2 => params[:address2], :city => params[:city], :state => params[:state],
+      :zip => params[:zip], :country => params[:country], :comments => params[:comments],:ruc=>params[:ruc])
+      
+      puts params[:name]
+      puts params[:ruc]
+      
       
       if @supplier.save
         render :text => "#{@supplier.id}|BRK|#{@supplier.name}"
