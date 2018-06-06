@@ -624,7 +624,7 @@ def get_tax3(items, supplier_id)
     
     if self.moneda_id == 2
           if self.document_id   == 2
-                  valor = self.payable_amount*-1
+                  valor = self.payable_amount
                     
           else  
                   valor = self.payable_amount
@@ -656,7 +656,7 @@ def get_tax3(items, supplier_id)
     
     if self.moneda_id == 2
           if self.document_id   == 2
-                  valor = self.total_amount*-1
+                  valor = self.total_amount
                     
           else  
                   valor = self.total_amount
@@ -671,7 +671,7 @@ def get_tax3(items, supplier_id)
        valor = 0
        if self.moneda_id ==1
           if self.document_id   == 2
-                  valor = self.balance*-1
+                  valor = self.balance
                     
           else  
                   valor = self.balance
@@ -685,7 +685,7 @@ def get_tax3(items, supplier_id)
        valor = 0
        if self.moneda_id ==2
           if self.document_id   == 2
-                  valor = self.balance*-1
+                  valor = self.balance
                     
           else  
                   valor = self.balance
@@ -698,7 +698,7 @@ def get_tax3(items, supplier_id)
        valor = 0
        if self.moneda_id ==1
           if self.document_id   == 2
-                  valor = self.balance*-1
+                  valor = self.balance
                     
           else  
                   valor = self.balance

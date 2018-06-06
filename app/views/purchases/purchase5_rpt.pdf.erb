@@ -61,9 +61,9 @@
                     
                     
                 <% if detalle.document_id == 2 %>
-                  <% lcsubtotal = detalle.payable_amount * -1 %>
-                  <% lctax =  detalle.tax_amount * -1 %>
-                  <% lctotal = detalle.total_amount* -1 %>
+                  <% lcsubtotal = detalle.payable_amount  %>
+                  <% lctax =  detalle.tax_amount  %>
+                  <% lctotal = detalle.total_amount %>
                 <% else %> 
                   <% lcsubtotal = detalle.payable_amount %>
                   <% lctax =  detalle.tax_amount %>
@@ -78,9 +78,10 @@
 
 
     
-      <% subtotal = @company.get_facturas_day_value(@fecha1,@fecha2, "subtotal",@moneda) %>
-      <% tax = @company.get_facturas_day_value(@fecha1,@fecha2, "tax",@moneda)%>
-      <% total = @company.get_facturas_day_value(@fecha1,@fecha2, "total",@moneda) %>
+      <% subtotal += lcsubtotal %>
+      <% tax += lctax %>
+      <% total +=lctotal %>
+      
       
       <hr>  
      </table>
