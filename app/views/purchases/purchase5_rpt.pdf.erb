@@ -40,7 +40,9 @@
       <% nroitem = 1%>
       <% total_1 =  0%>
       <% total_2 =  0%>
-      
+      <% subtotal =  0%>
+      <% tax =  0 %>
+      <% total =  0%>
        <% for  detalle in @facturas_rpt  %>
        
                     <tr>
@@ -73,14 +75,15 @@
                 <td width = "12%" align ="right"><%= sprintf("%.2f",lctax)   %></td>
                 <td width = "12%" align ="right"><%= sprintf("%.2f",lctotal)   %></td>
                 </tr>
+                <% subtotal += lcsubtotal %>
+      <% tax += lctax %>
+      <% total += lctotal %>
+      
             
          <% end %>
 
 
     
-      <% subtotal += lcsubtotal %>
-      <% tax += lctax %>
-      <% total +=lctotal %>
       
       
       <hr>  
