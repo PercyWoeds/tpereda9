@@ -538,13 +538,8 @@ def get_tax3(items, supplier_id)
     end   
   end 
   end
-
-  def process_menos
-      puts "xxxxxxxxxxxxxxx eliminar "
-      puts self.purchaseorder_id
-    
+  def process_documentos 
       if self.purchaseorder_id != nil 
-        
         
         a = Purchaseorder.find_by(id: self.purchaseorder_id, supplier_id: self.supplier_id)
         
@@ -554,6 +549,9 @@ def get_tax3(items, supplier_id)
         end 
       end
 
+  
+  end 
+  def process_menos
     if self.tipo =="0"
       
 
