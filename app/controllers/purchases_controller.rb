@@ -3312,8 +3312,11 @@ def newfactura2
     @purchase= Purchase.find(params[:id])
     company_id = @purchase[:company_id]
     
-    if @purchase.processed != "1" 
+    if @purchase.processed == "1" 
+      puts "espero elimine.-.-"
       @purchase.process_menos
+      
+      
     end   
     
     @purchase.destroy

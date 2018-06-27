@@ -473,7 +473,7 @@ def get_tax3(items, supplier_id)
     end
   end
   
-  def process2
+    def process2
 
     if(self.processed == "1" or self.processed == true  )
         self.date_processed = Time.now
@@ -540,10 +540,25 @@ def get_tax3(items, supplier_id)
   end
 
   def process_menos
+      puts "xxxxxxxxxxxxxxx eliminar "
+      puts self.purchaseorder_id
+    
+      if self.purchaseorder_id != nil 
+        
+        
+        a = Purchaseorder.find_by(id: self.purchaseorder_id, supplier_id: self.supplier_id)
+        
+        if a 
+          a.processed = "1"
+          a.save 
+        end 
+      end
 
     if self.tipo =="0"
+      
 
     if(self.processed == "1" or self.processed == true  )
+      
 
       purchase_details =PurchaseDetail.where(purchase_id: self.id)
     
