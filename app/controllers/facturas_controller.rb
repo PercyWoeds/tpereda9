@@ -388,11 +388,11 @@ def reportes05
   
     if(@company.can_view(current_user))
 
-         @invoices = Factura.all.order('fecha DESC').paginate(:page => params[:page])
+         @invoices = Factura.all.order('fecha DESC',"code ").paginate(:page => params[:page])
         if params[:search]
-          @invoices = Factura.search(params[:search]).order('fecha DESC').paginate(:page => params[:page])
+          @invoices = Factura.search(params[:search]).order('fecha DESC',"code").paginate(:page => params[:page])
         else
-          @invoices = Factura.order('fecha DESC').paginate(:page => params[:page]) 
+          @invoices = Factura.order('fecha DESC',"code").paginate(:page => params[:page]) 
         end
 
     
