@@ -459,6 +459,8 @@ class ServiceordersController < ApplicationController
     
     @serviceorder[:code] = "#{generate_guid4()}"
     @serviceorder[:processed] = false
+    #@serviceorder[:fecha1] = Date.today.strftime("%d/%m/%Y").to_s
+    
     
     @company = Company.find(params[:company_id])
     @serviceorder.company_id = @company.id
@@ -472,6 +474,7 @@ class ServiceordersController < ApplicationController
 
     @ac_user = getUsername()
     @serviceorder[:user_id] = getUserId()
+    
   end
 
   # GET /serviceorders/1/edit
@@ -560,6 +563,14 @@ class ServiceordersController < ApplicationController
           @serviceorder[:detraccion] = 0
         end 
      end 
+    end 
+    puts "detracion" 
+    puts params[:cbox1]
+    
+    if  params[:cbox1] == "1"
+      
+    else 
+        @serviceorder[:detraccion] = 0
     end 
 
     

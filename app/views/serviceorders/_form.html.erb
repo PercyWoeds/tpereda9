@@ -32,7 +32,7 @@
         
     <div class="field">
       <%= f.label :fecha1, "Fecha Entrega*", :class => "bold" %><br />
-      <%= f.date_field :fecha1, value: Time.now.strftime("%d/%m/%Y") %>
+      <%= f.date_field :fecha1 , placeholder: "YYYY-MM-DD", value: (f.object.fecha1 || Date.today.to_s(:db)) %>
     </div>
 
     <div class="field">
@@ -59,7 +59,12 @@
       <%= f.label :division_id %><br />
       <%= f.select :division_id,options_from_collection_for_select(@divisions,'id','name') %>
     </div>
-
+     <div class="field">
+      
+      <%= check_box_tag("cbox1", value = "1", checked = true, options = {})  %> Detracción? 
+      
+     </div>
+     
   
     <%= hr() %>
     
