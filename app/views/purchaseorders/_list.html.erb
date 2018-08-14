@@ -51,7 +51,7 @@
           <td class="bordered_right bordered_bottom">
             <%= link_to "Ver", purchaseorder %>
           </td>
-         <% if purchaseorder.processed == "0" || @current_user.level == "admin"|| @current_user.level == "compras" %>
+         <% if  @current_user.level == "admin"|| @current_user.level == "compras" %>
           <td class="bordered_right bordered_bottom">
             <%= link_to 'Eliminar', purchaseorder, :confirm => 'Are you sure?', :method => :delete %>
           </td>
