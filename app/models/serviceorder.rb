@@ -171,7 +171,7 @@ end
         quantity = parts[1]
         price = parts[2]
         discount = parts[3]
-        
+         
         total = price.to_f * quantity.to_i
         total -= total * (discount.to_f / 100)
         
