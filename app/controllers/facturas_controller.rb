@@ -1458,6 +1458,7 @@ def newfactura2
                                           columns([3]).align=:left
                                           columns([4]).align=:left
                                           columns([5]).align=:left   
+                                          columns([5]).width = 100 
                                           columns([6]).align=:right
                                           columns([7]).align=:right
                                           columns([8]).align=:right
