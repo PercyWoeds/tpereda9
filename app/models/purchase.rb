@@ -100,6 +100,16 @@ TABLE_HEADERS2  = ["ITEM ",
                      "CANTIDAD",
                      "PRECIO",
                      "TOTAL "]
+TABLE_HEADERS30 = ["TD",
+                      "Documento",
+                     "Fecha",
+                     "Fec.Vmto",
+                     "Proveedor",
+                     "Moneda",  
+                     "SOLES",
+                     "DOLARES ",
+                     "OBSERV"]
+
 
   def get_vencido
 

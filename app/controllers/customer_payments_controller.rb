@@ -1438,7 +1438,7 @@ class CustomerPaymentsController < ApplicationController
             @total_mes01 = @total_mes01 + customerpayment_rpt.balance.round(2)        
           end   
 
-          if customerpayment_rpt.year_month.to_f <= 201802
+          if customerpayment_rpt.year_month.to_f >= 201801 and customerpayment_rpt.year_month.to_f <= 201802 
             @total_mes02 = @total_mes02 + customerpayment_rpt.balance.round(2)        
           end 
             
@@ -1553,7 +1553,7 @@ class CustomerPaymentsController < ApplicationController
             @total_mes01 = @total_mes01 + customerpayment_rpt.balance.round(2)        
           end   
 
-          if customerpayment_rpt.year_month == '201801' 
+          if customerpayment_rpt.year_month.to_f >= 201801 and customerpayment_rpt.year_month.to_f <= 201802 
             @total_mes02 = @total_mes02 + customerpayment_rpt.balance.round(2)        
           end 
             
