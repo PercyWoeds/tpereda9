@@ -60,6 +60,13 @@ class TipocambiosController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def import
+      Tipocambio.import(params[:file])
+       redirect_to root_url, notice: "Tipo cambio importadas."
+  end 
+  
+  
 
   private
     # Use callbacks to share common setup or constraints between actions.

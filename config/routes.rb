@@ -127,6 +127,10 @@
     collection { post :import }
   end 
   
+  resources :tipocambios  do
+    collection { post :import }
+  end 
+  
     
   resources :gastos  do
     collection { post :import }

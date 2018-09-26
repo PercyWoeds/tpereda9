@@ -29,3 +29,11 @@
 <br>
 
 <%= link_to 'New Tipocambio', new_tipocambio_path %>
+
+
+<h2>Importar Archivo Tipo Cambio "*.csv"</h2>
+
+<%= form_tag import_tipocambios_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>

@@ -1267,12 +1267,12 @@ def build_pdf_header(pdf)
              stock_product =  Stock.find_by(:product_id => ip.product_id)
 
             if stock_product 
-               $last_stock = stock_product.quantity + ip.quantity
+               @last_stock = stock_product.quantity + ip.quantity
                stock_product.unitary_cost = ip.price   
-               stock_product.quantity = $last_stock
+               stock_product.quantity = @last_stock
 
             else
-              $last_stock = 0
+              @last_stock = 0
               stock_product= Stock.new(:store_id=>1,:state=>"Lima",:unitary_cost=> ip.price ,
               :quantity=> ip.quantity,:minimum=>0,:user_id=>@user_id,:product_id=>ip.product_id,
               :document_id=>1,:documento=>"AJUSTE X ELIMINACION")           

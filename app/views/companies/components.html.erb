@@ -57,7 +57,7 @@
 
 <%= hr() %>
 
-     <% if @current_user.level = "admin" %>
+     <% if @current_user.level == "admin" %>
   <h3>
     <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
     <%= link_to "Ajustes Inventario", "/companies/ajusts/#{@company.id}" %>

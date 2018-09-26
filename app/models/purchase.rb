@@ -576,12 +576,12 @@ def get_tax3(items, supplier_id)
          stock_product =  Stock.find_by(:product_id => ip.product_id)
 
         if stock_product 
-           $last_stock = stock_product.quantity - ip.quantity      
-           stock_product.quantity = $last_stock
+           @last_stock = stock_product.quantity - ip.quantity      
+           stock_product.quantity = @last_stock
              
         else
 
-          $last_stock = 0
+          @last_stock = 0
           
         end 
 
