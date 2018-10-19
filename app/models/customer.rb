@@ -1,8 +1,10 @@
 class Customer < ActiveRecord::Base
   validates_presence_of :company_id, :name
-    validates_uniqueness_of :ruc
+  validates_uniqueness_of :ruc
   
   belongs_to :company
+  
+  belongs_to :quotation
   
   has_many :invoices
   has_many :manifests

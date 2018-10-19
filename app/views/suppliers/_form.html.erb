@@ -16,6 +16,7 @@
     <%= f.text_field :ruc %>
   </div>
   
+  
   <div class="field">
     <%= f.label :name, "Name*", :class => "bold" %><br />
     <%= f.text_field :name %>
@@ -74,4 +75,18 @@
     <%= f.submit %>
   </div>
 <% end %>
+<script type="text/javascript">
+
+#resultado, #existente {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+#resultado.ok, #existente.ok {
+    background-color: green;
+}
+</script>
+
 

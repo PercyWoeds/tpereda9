@@ -5,17 +5,17 @@
 
 <h1>
   <%= image_tag("invoice_48.png", :class => "vmiddle") %>
-  Documentos 
-  <% if @supplier  %>
-    for supplier: <%= @supplier.name %>
+  Facturas /Nota de compra 
+  <% if @purchase  %>
+    for supplier: <%= @purchase.name %>
   <% end %>
 </h1>
 
 <div class="small">
   <form method="get" action="/companies/purchases/<%= @company.id %>">
     <strong>Search:</strong>
-    <input type="text" name="search" value="<% if @q_org %><%= @q_org %><% end %>" class="small" onclick="$(this).select();" />
-    <input type="submit" value="Find" class="bold small_btn" />
+    <input type="text" name="Buscar" value="<% if @q_org %><%= @q_org %><% end %>" class="small" onclick="$(this).select();" />
+    <input type="submit" value="Buscar" class="bold small_btn" />
     <a href="/companies/purchases/<%= @company.id %>" class="small_btn">Clear</a>
   </form>
 </div>
@@ -27,10 +27,9 @@
 <br />
 
 <div class="button">
-  <%= link_to 'Nueva Factura', "/purchases/new/#{@company.id}" %>
+  <%= link_to 'Nueva Cotizacion ', "/purchases/new/#{@company.id}" %>
 
-  <%= link_to "Cargar Orden de servicio","/purchases/cargar2/#{@company.id}" %>
-  <%= link_to 'Cargar Orden de compra', "/purchases/cargar/#{@company.id}" %>
+  
   
 </div>
 

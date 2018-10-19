@@ -1,0 +1,46 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %>
+</div>
+
+<h1>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  Documentos 
+  <% if @quotation  %>
+    for supplier: <%= @quotation.name %>
+  <% end %>
+</h1>
+
+<div class="small">
+  <form method="get" action="/companies/quotations/<%= @company.id %>">
+    <strong>Search:</strong>
+    <input type="text" name="search" value="<% if @q_org %><%= @q_org %><% end %>" class="small" onclick="$(this).select();" />
+    <input type="submit" value="Find" class="bold small_btn" />
+    <a href="/companies/quotations/<%= @company.id %>" class="small_btn">Clear</a>
+  </form>
+</div>
+
+
+<br />
+<%= render "quotations/list" %>
+
+<br />
+
+<div class="button">
+  <%= link_to 'Nueva cotizacion', "/quotations/new/#{@company.id}" %>
+
+</div>
+
+<%= will_paginate @invoices %>
+
+<%= render 'layouts/autocomplete' %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#ac_suppliers").autocomplete("/quotations/ac_suppliers/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+  });
+</script>

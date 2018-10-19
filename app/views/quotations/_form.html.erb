@@ -28,7 +28,7 @@
     </div>  
       <div class="field">
       <%= f.label :fecha1, "Fecha Emision*", :class => "bold" %><br />
-      <%= f.date_field :fecha1, value: Time.now.strftime("%d/%m/%Y") %>
+      <%= f.date_field :fecha1 %>
     </div>
 
     <div class="field">  
@@ -65,10 +65,14 @@
       <%= f.text_area :tipo_unidad  %>
     </div>
   
-
+    <div class="field">
+      <%= f.label :moneda_id ,"  "%><br />
+      <%= f.select :moneda_id, options_from_collection_for_select(@monedas,'id','description'),selected: '1' %>
+    </div>
+    
     <div class="field">
       <%= f.label :importe,"Importe: " %><br />
-      <%= f.number_field :importe  %>
+      <%= f.number_field :importe , step: 0.01 %>
     </div>
     
 
@@ -95,7 +99,10 @@
   </div>
 
   <div class="form-actions">
-  
-    <%= f.button :submit %>
+   <%= f.hidden_field :company_id %>
+   
+    <%= f.button :submit  %>
   </div>
+  
+  
 <% end %>

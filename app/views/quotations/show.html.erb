@@ -1,74 +1,146 @@
-<p id="notice"><%= notice %></p>
+
+
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @quotation.company.name, @quotation.company %> &raquo;
+  <%= link_to "serviceorders", "/companies/quotations/#{@quotation.company.id}" %>
+</div>
+
+
+<h1>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  <%= @quotation.code  %>
+</h1>
+
+<%= hr() %>
+
+<% if @quotation.location %>
+  <p>
+    <b>Location:</b>
+    <%= link_to @quotation.location.name, @quotation.location %>
+  </p>
+<% end %>
+
+<% if @quotation.division %>
+  <p>
+    <b>Division:</b>
+    <%= link_to @quotation.division.name, @quotation.division %>
+  </p>
+<% end %>
+
 
 <p>
-  <strong>Fecha1:</strong>
-  <%= @quotation.fecha1 %>
-</p>
-
-<p>
-  <strong>Code:</strong>
+  <b>Code:</b>
   <%= @quotation.code %>
 </p>
 
-<p>
-  <strong>Customer:</strong>
-  <%= @customers.name %>
-</p>
+ <p>
+    <b>Moneda:</b>
+    <%= @quotation.moneda.description %>   
+ </p>
+
 
 <p>
-  <strong>Punto:</strong>
-  <%= @puntos.name  %>
+    <b>Fecha entrega:</b>
+    <%= @quotation.fecha1  %>   
 </p>
+ 
+<p>
+    <b>Estado: </b>
+    <%=   @quotation.get_processed   %>   
+</p>
+    
+<% if @quotation.dolar != nil %>
+<p>
+    <b>TipoCambio: </b>
+    <%=   @quotation.dolar   %>   
+</p>
+<% end %>
+
+<%= hr() %>
+
+<h3>
+  Informacion Cliente 
+</h3>
 
 <p>
-  <strong>Carga:</strong>
-  <%= @quotation.carga %>
+  <b>Name:</b>
+  <%= link_to @quotation.customer.name, @quotation  %>
 </p>
+
+
+<%= hr() %>
+
+<h3>
+  Details
+</h3>
+
+<table>
+  <thead>
+
+  </thead>
+  <tbody>
+    
+
+
+  </tbody>
+</table>
+<br />
+
+<%= hr() %>
+
+<% if @quotation.carga != "" %>
+  <div>
+    <b>Carga:</b>
+    <br />
+    <br />
+    <%= format_text(@quotation.carga) %>
+  </div>
+  <%= hr() %>
+<% end %>
+<% if @quotation.seguro != "" %>
+  <div>
+    <b>Seguro :</b>
+    <br />
+    <br />
+    <%= format_text(@quotation.seguro) %>
+  </div>
+  <%= hr() %>
+<% end %>
+
+<% if @quotation.importe   != nil %>
+<p>
+    <b>Importe : </b>
+    <%=   @quotation.importe     %>   
+</p>
+<% end %>
+<br />
+
+<div>
+  <strong><%= @quotation.get_processed %></strong>
+  <% if @quotation.processed == "1" and @quotation.date_processed %>
+    <%= @quotation.date_processed %>
+  <% end %>
+</div>
 
 <p>
-  <strong>Tipo unidad:</strong>
-  <%= @quotation.tipo_unidad %>
+  <strong>Seller:</strong>
+  <%= link_to @quotation.user.username, @quotation.user %>
 </p>
 
-<p>
-  <strong>Importe:</strong>
-  <%= @quotation.importe %>
-</p>
+<%= hr() %>
 
-<p>
-  <strong>Condiciones:</strong>
-  <%= @quotation.condiciones %>
-</p>
+<div class="button">
+  <%= link_to 'Exportar to PDF', "/quotations/pdf/#{@quotation.id}.pdf" %>  
+  <%= link_to 'Enviar via email', "/quotations/email/#{@quotation.id}" %>
 
-<p>
-  <strong>Respon:</strong>
-  <%= @quotation.respon %>
-</p>
+<% if @quotation.processed =="0" || @quotation.processed==nil %>
+  <%= link_to 'Aprobar', "/quotations/do_process/#{@quotation.id}" %>
+  <%= link_to 'Editar', edit_quotation_path(@quotation) %>  
+<% elsif @quotation.processed =="1" %>  
+  <%= link_to 'Anular', "/quotations/do_anular/#{@quotation.id}" %>
+<% end %>
 
-<p>
-  <strong>Seguro:</strong>
-  <%= @quotation.seguro %>
-</p>
-
-<p>
-  <strong>Firma:</strong>
-  <%= @quotation.firma_id %>
-</p>
-
-<p>
-  <strong>Company:</strong>
-  <%= @quotation.company_id %>
-</p>
-
-<p>
-  <strong>Location:</strong>
-  <%= @quotation.location_id %>
-</p>
-
-<p>
-  <strong>Division:</strong>
-  <%= @quotation.division_id %>
-</p>
-
-<%= link_to 'Edit', edit_quotation_path(@quotation) %> |
-<%= link_to 'Back', quotations_path %>
+  
+  <%= link_to 'Regresar', "/companies/quotations/#{@quotation.company.id}" %>
+</div>

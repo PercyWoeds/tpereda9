@@ -1,0 +1,46 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %>
+</div>
+
+<h1>
+  <%= image_tag("supplier_48.png", :class => "vmiddle") %>
+  Nuevo proveedor 
+</h1>
+
+  
+<%= form_tag(search_ruc_suppliers_path, :method => "get") do %>
+
+      
+<label>RUC:</label>
+<input type="text" id="input_ruc" style="width:100%;"
+       oninput="validarInput(this)"
+       placeholder="Ingrese su RUC">
+<pre id="resultado"></pre>
+<pre id="existente"></pre>
+  
+<br> 
+
+ <%= submit_tag "Buscar ", :name => "print" %>
+
+  
+<% end %>
+<script type="text/javascript">
+
+#resultado, #existente {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+#resultado.ok, #existente.ok {
+    background-color: green;
+}
+</script>
+
+
+
+<div class="button">
+  <%= link_to 'Regresar', "/companies/suppliers/#{@company.id}" %>
+</div>

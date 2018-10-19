@@ -604,8 +604,8 @@ def get_tax3(items, supplier_id)
     else
       return "red"
     end
-
   end
+  
   def get_categoria_name(codigo)  
     
     a=ProductsCategory.find(codigo)

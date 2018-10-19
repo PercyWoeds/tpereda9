@@ -6,12 +6,12 @@ include ProductsHelper
 class PurchaseordersController < ApplicationController
   before_filter :authenticate_user!, :checkProducts
 ##
-## REPORTE DE COMPRAS 
-##    
- 
+## REPORTE DE COMPRAS
+##
+
  def build_pdf_header1(pdf)
-    pdf.font "Helvetica" , :size => 6    
-     $lcCli  =  @company.name 
+    pdf.font "Helvetica" , :size => 6
+     $lcCli  =  @company.name
      $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
 
      $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
@@ -39,13 +39,13 @@ class PurchaseordersController < ApplicationController
         pdf.move_down 10
 
       end
-      
-      pdf 
-  end   
+
+      pdf
+  end
 
   def build_pdf_body1(pdf)
-    
-    pdf.text "Ordenes de compra Emitidas : Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
+
+    pdf.text "Ordenes de compra Emitidas : Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11
     pdf.text ""
     pdf.font_families.update("Open Sans" => {
           :normal => "app/assets/fonts/OpenSans-Regular.ttf",
@@ -53,7 +53,7 @@ class PurchaseordersController < ApplicationController
         })
 
         pdf.font "Open Sans",:size =>6
-  
+
 
       headers = []
       table_content = []
@@ -70,9 +70,9 @@ class PurchaseordersController < ApplicationController
 
       for ordencompra in @rpt_detalle_purchaseorder
 
-           $lcNumero = ordencompra.code    
+           $lcNumero = ordencompra.code
            $lcFecha = ordencompra.fecha1
-           $lcProveedor = ordencompra.supplier.name 
+           $lcProveedor = ordencompra.supplier.name
 
           @orden_compra1  = @company.get_orden_detalle(ordencompra.id)
 
@@ -80,9 +80,9 @@ class PurchaseordersController < ApplicationController
        for  orden in @orden_compra1
             row = []
             row << nroitem.to_s
-            row << $lcProveedor 
-            row << $lcNumero 
-            row << $lcFecha.strftime("%d/%m/%Y")        
+            row << $lcProveedor
+            row << $lcNumero
+            row << $lcFecha.strftime("%d/%m/%Y")
             row << orden.quantity.to_s
             row << orden.product.code
             row << orden.product.name
@@ -90,7 +90,7 @@ class PurchaseordersController < ApplicationController
             row << orden.discount.round(2).to_s
             row << orden.total.round(2).to_s
             table_content << row
-            puts nroitem.to_s 
+            puts nroitem.to_s
             nroitem=nroitem + 1
         end
 
@@ -100,7 +100,7 @@ class PurchaseordersController < ApplicationController
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
                                         :width => pdf.bounds.width
-                                        } do 
+                                        } do
                                           columns([0]).align=:center
                                           columns([1]).align=:left
                                           columns([2]).align=:center
@@ -113,7 +113,7 @@ class PurchaseordersController < ApplicationController
                                           columns([9]).align=:right
                                         end
 
-      pdf.move_down 10      
+      pdf.move_down 10
       pdf
 
     end
@@ -122,15 +122,15 @@ class PurchaseordersController < ApplicationController
     def build_pdf_footer1(pdf)
 
         pdf.text ""
-        pdf.text "" 
-        
+        pdf.text ""
+
 
      end
-    
+
 
   # Export purchaseorder to PDF
   def rpt_purchaseorder_all
-        
+
     @company =Company.find(1)
     @fecha1 =params[:fecha1]
     @fecha2 =params[:fecha2]
@@ -142,14 +142,14 @@ class PurchaseordersController < ApplicationController
         pdf = build_pdf_header1(pdf)
         pdf = build_pdf_body1(pdf)
         build_pdf_footer1(pdf)
-        $lcFileName =  "app/pdf_output/orden_1.pdf"      
-        
-    end     
+        $lcFileName =  "app/pdf_output/orden_1.pdf"
+
+    end
 
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
-                
+
     send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
-  
+
 
   end
 
@@ -165,8 +165,8 @@ def build_pdf_header(pdf)
      $lcdir2 =@purchaseorder.supplier.address2
      $lcdis  =@purchaseorder.supplier.city
      $lcProv = @purchaseorder.supplier.state
-     $lcFecha1= @purchaseorder.fecha1.strftime("%d/%m/%Y") 
-     $lcMon=@purchaseorder.moneda.description     
+     $lcFecha1= @purchaseorder.fecha1.strftime("%d/%m/%Y")
+     $lcMon=@purchaseorder.moneda.description
      $lcPay= @purchaseorder.payment.descrip
 
      $lcSubtotal=sprintf("%.2f",(@purchaseorder.subtotal).round(2))
@@ -174,12 +174,12 @@ def build_pdf_header(pdf)
      $lcTotal=sprintf("%.2f",(@purchaseorder.total).round(2))
 
      $lcDetracion=@purchaseorder.detraccion
-     $lcAprobado= @purchaseorder.get_processed 
-    
+     $lcAprobado= @purchaseorder.get_processed
+
       pdf.image "#{Dir.pwd}/public/images/logo2.png", :width => 270
-        
+
       pdf.move_down 6
-        
+
       pdf.move_down 4
       #pdf.text supplier.street, :size => 10
       #pdf.text supplier.district, :size => 10
@@ -194,15 +194,15 @@ def build_pdf_header(pdf)
           pdf.text "ORDEN DE COMPRA", :align => :center
           pdf.text "#{@purchaseorder.code}", :align => :center,
                                  :style => :bold
-          
+
         end
       end
       pdf.move_down 25
-      pdf 
-  end   
+      pdf
+  end
 
   def build_pdf_body(pdf)
-    
+
     pdf.text "__________________________________________________________________________", :size => 13, :spacing => 4
     pdf.text " ", :size => 13, :spacing => 4
     pdf.font "Helvetica" , :size => 8
@@ -246,7 +246,7 @@ def build_pdf_header(pdf)
 
        for  product in @purchaseorder.get_products()
             row = []
-            row << nroitem.to_s      
+            row << nroitem.to_s
             row << product.quantity.to_s
             row << product.code
             row << product.name
@@ -261,7 +261,7 @@ def build_pdf_header(pdf)
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
                                         :width => pdf.bounds.width
-                                        } do 
+                                        } do
                                           columns([0]).align=:center
                                           columns([1]).align=:right
                                           columns([2]).align=:center
@@ -269,10 +269,10 @@ def build_pdf_header(pdf)
                                           columns([4]).align=:right
                                           columns([5]).align=:right
                                           columns([6]).align=:right
-                                         
+
                                         end
 
-      pdf.move_down 10      
+      pdf.move_down 10
       pdf.table invoice_summary, {
         :position => :right,
         :cell_style => {:border_width => 1},
@@ -280,7 +280,7 @@ def build_pdf_header(pdf)
       } do
         columns([0]).font_style = :bold
         columns([1]).align = :right
-        
+
       end
       pdf
 
@@ -290,24 +290,24 @@ def build_pdf_header(pdf)
     def build_pdf_footer(pdf)
 
         pdf.text ""
-        pdf.text "" 
+        pdf.text ""
         pdf.text "Descripcion : #{@purchaseorder.description}", :size => 8, :spacing => 4
         pdf.text "Comentarios : #{@purchaseorder.comments}", :size => 8, :spacing => 4
-                
+
 
         data =[[{:content=> $lcEntrega4,:colspan=>2},"" ] ,
                [$lcEntrega1,{:content=> $lcEntrega3,:rowspan=>2}],
-               [$lcEntrega2]               
+               [$lcEntrega2]
                ]
 
            {:border_width=>0  }.each do |property,value|
             pdf.text " Instrucciones: "
             pdf.table(data,:cell_style=> {property =>value})
-            pdf.move_down 20          
-           end     
+            pdf.move_down 20
+           end
 
         pdf.bounding_box([0, 20], :width => 535, :height => 40) do
-        
+
         pdf.text "_________________               _____________________         ____________________      ", :size => 13, :spacing => 4
         pdf.text ""
         pdf.text "                  Realizado por                                                 V.B.Jefe Compras                                            V.B.Gerencia           ", :size => 10, :spacing => 4
@@ -315,7 +315,7 @@ def build_pdf_header(pdf)
 
       end
       pdf
-      
+
   end
 
 
@@ -338,31 +338,31 @@ def build_pdf_header(pdf)
         pdf = build_pdf_header(pdf)
         pdf = build_pdf_body(pdf)
         build_pdf_footer(pdf)
-        $lcFileName =  "app/pdf_output/#{@purchaseorder.id}.pdf"      
-        
-    end     
+        $lcFileName =  "app/pdf_output/#{@purchaseorder.id}.pdf"
 
-    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
+    end
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
     send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
-  
+
 
   end
 
  def client_data_headers
 
     #{@purchaseorder.description}
-      client_headers  = [["Proveedor: ", $lcCli ]] 
+      client_headers  = [["Proveedor: ", $lcCli ]]
       client_headers << ["Direccion : ", $lcdir1]
       client_headers << ["Distrito  : ",$lcdis]
-      client_headers << ["Provincia : ",$lcProv]     
+      client_headers << ["Provincia : ",$lcProv]
       client_headers
   end
 
-  def invoice_headers            
+  def invoice_headers
       invoice_headers  = [["Fecha de emisión : ",$lcFecha1]]
       invoice_headers <<  ["Tipo de moneda : ", $lcMon]
-      invoice_headers <<  ["Forma de pago : ",$lcPay ]    
-      invoice_headers <<  ["Estado  : ",$lcAprobado ]    
+      invoice_headers <<  ["Forma de pago : ",$lcPay ]
+      invoice_headers <<  ["Estado  : ",$lcAprobado ]
       invoice_headers
   end
 
@@ -371,15 +371,15 @@ def build_pdf_header(pdf)
       invoice_summary << ["SubTotal",  ActiveSupport::NumberHelper::number_to_delimited($lcSubtotal,delimiter:",",separator:".").to_s]
       invoice_summary << ["IGV",ActiveSupport::NumberHelper::number_to_delimited($lcIgv,delimiter:",",separator:".").to_s]
       invoice_summary << ["Total", ActiveSupport::NumberHelper::number_to_delimited($lcTotal ,delimiter:",",separator:".").to_s]
-      
+
       invoice_summary
     end
 
-           
+
   def populate_order
 
     for cart_item in @cart.cart_items
-    order_item = Item.new(  
+    order_item = Item.new(
     :product_id => cart_item.id,
     :description => cart_item.name,
     :quantity => cart_item.quantity,
@@ -393,10 +393,10 @@ def build_pdf_header(pdf)
 
 
   def do_grabar_ins
-    @purchaseorder = Purchaseorder.find(params[:id])    
+    @purchaseorder = Purchaseorder.find(params[:id])
 
     populate_order
-    
+
     flash[:notice] = "The purchaseorder order has been grabada."
     redirect_to @purchaseorder
   end
@@ -404,9 +404,9 @@ def build_pdf_header(pdf)
   def do_cerrar
     @purchaseorder = Purchaseorder.find(params[:id])
     @purchaseorder[:processed] = "3"
-    
+
     @purchaseorder.process
-    
+
     flash[:notice] = "The purchaseorder order has been processed closed"
     redirect_to @purchaseorder
   end
@@ -414,33 +414,33 @@ def build_pdf_header(pdf)
   def do_process
     @purchaseorder = Purchaseorder.find(params[:id])
     @purchaseorder[:processed] = "1"
-    
+
     @purchaseorder.process
-    
+
     flash[:notice] = "The purchaseorder order has been processed."
     redirect_to @purchaseorder
   end
-  
+
   # Do send purchaseorder via email
   def do_email
     @purchaseorder = Purchaseorder.find(params[:id])
     @email = params[:email]
-    
+
     Notifier.purchaseorder(@email, @purchaseorder).deliver
-    
+
     flash[:notice] = "The purchaseorder has been sent successfully."
     redirect_to "/purchaseorders/#{@purchaseorder.id}"
   end
-  
+
   # Send purchaseorder via email
   def email
     @purchaseorder = Purchaseorder.find(params[:id])
     @company = @purchaseorder.company
   end
-  
+
   # List items
   def list_items
-    
+
     @company = Company.find(params[:company_id])
     items = params[:items]
     items = items.split(",")
@@ -451,91 +451,91 @@ def build_pdf_header(pdf)
     for item in items
       if item != ""
         parts = item.split("|BRK|")
-        
+
         id = parts[0]
         quantity = parts[1]
         price = parts[2]
         discount = parts[3]
-        
+
         product = Product.find(id.to_i)
         product[:i] = i
         product[:quantity] = quantity.to_f
         product[:price] = price.to_f
         product[:discount] = discount.to_f
-        
+
         total = product[:price] * product[:quantity]
         total -= total * (product[:discount] / 100)
-        
+
         product[:CurrTotal] = total
-        
+
         @products.push(product)
       end
-      
+
       i += 1
    end
-    
+
     render :layout => false
   end
-  
-  
+
+
   # Autocomplete for products
   def ac_products
     @products = Product.where(["company_id = ? AND (code iLIKE ? OR name iLIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
-   
+
     render :layout => false
   end
-  
+
   # Autocomplete for users
   def ac_user
     company_users = CompanyUser.where(company_id: params[:company_id])
     user_ids = []
-    
+
     for cu in company_users
       user_ids.push(cu.user_id)
     end
-    
+
     @users = User.where(["id IN (#{user_ids.join(",")}) AND (email LIKE ? OR username LIKE ?)", "%" + params[:q] + "%", "%" + params[:q] + "%"])
     alr_ids = []
-    
+
     for user in @users
       alr_ids.push(user.id)
     end
-    
+
     if(not alr_ids.include?(getUserId()))
       @users.push(current_user)
     end
-   
+
     render :layout => false
   end
-  
+
   # Autocomplete for suppliers
   def ac_suppliers
     @suppliers = Supplier.where(["company_id = ? AND (ruc  iLIKE ? OR name iLIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
-   
+
     render :layout => false
   end
-  
+
   # Show purchaseorders for a company
   def list_purchaseorders
     @company = Company.find(params[:company_id])
     @pagetitle = "#{@company.name} - Orden Compra"
     @filters_display = "block"
-    
+
     @locations = Location.where(company_id: @company.id).order("name ASC")
     @divisions = Division.where(company_id: @company.id).order("name ASC")
-    
+
     if(params[:location] and params[:location] != "")
       @sel_location = params[:location]
     end
-    
+
     if(params[:division] and params[:division] != "")
       @sel_division = params[:division]
     end
-  
+
     if(@company.can_view(current_user))
       if(params[:ac_supplier] and params[:ac_supplier] != "")
         @supplier = supplier.find(:first, :conditions => {:company_id => @company.id, :name => params[:ac_supplier].strip})
-        
+
         if @supplier
           @purchaseorders = Purchaseorder.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :supplier_id => @supplier.id}, :order => "id DESC")
         else
@@ -544,7 +544,7 @@ def build_pdf_header(pdf)
         end
       elsif(params[:supplier] and params[:supplier] != "")
         @supplier = supplier.find(params[:supplier])
-        
+
         if @supplier
           @purchaseorders = Purchaseorder.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :supplier_id => @supplier.id}, :order => "id DESC")
         else
@@ -581,22 +581,22 @@ def build_pdf_header(pdf)
     @company = Company.find(params[:company_id])
     @pagetitle = "#{@company.name} - Orden Compra"
     @filters_display = "block"
-    
+
     @locations = Location.where(company_id: @company.id).order("name ASC")
     @divisions = Division.where(company_id: @company.id).order("name ASC")
-    
+
     if(params[:location] and params[:location] != "")
       @sel_location = params[:location]
     end
-    
+
     if(params[:division] and params[:division] != "")
       @sel_division = params[:division]
     end
-  
+
     if(@company.can_view(current_user))
       if(params[:ac_supplier] and params[:ac_supplier] != "")
         @supplier = supplier.find(:first, :conditions => {:company_id => @company.id, :name => params[:ac_supplier].strip})
-        
+
         if @supplier
           @purchaseorders = Purchaseorder.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :supplier_id => @supplier.id}, :order => "id DESC")
         else
@@ -605,7 +605,7 @@ def build_pdf_header(pdf)
         end
       elsif(params[:supplier] and params[:supplier] != "")
         @supplier = supplier.find(params[:supplier])
-        
+
         if @supplier
           @purchaseorders = Purchaseorder.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :supplier_id => @supplier.id}, :order => "id DESC")
         else
@@ -637,7 +637,7 @@ def build_pdf_header(pdf)
       errPerms()
     end
   end
-  
+
   # GET /purchaseorders
   # GET /purchaseorders.xml
   def index
@@ -651,7 +651,7 @@ def build_pdf_header(pdf)
   def show
     @purchaseorder = Purchaseorder.find(params[:id])
     @supplier = @purchaseorder.supplier
-    
+
   end
 
   def receive
@@ -663,26 +663,26 @@ def build_pdf_header(pdf)
 
   # GET /purchaseorders/new
   # GET /purchaseorders/new.xml
-  
+
   def new
     @pagetitle = "Nueva Orden Compra"
     @action_txt = "Create"
-    
+
     @purchaseorder = Purchaseorder.new
-    
+
     @purchaseorder[:code] = "#{generate_guid5()}"
     @purchaseorder[:processed] = false
-    
+
     @company = Company.find(params[:company_id])
     @purchaseorder.company_id = @company.id
-        
+
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @suppliers = @company.get_suppliers()
     @payments  = @company.get_payments()
     @monedas    = @company.get_monedas()
-    
-         
+
+
     @ac_user = getUsername()
     @purchaseorder[:user_id] = getUserId()
 
@@ -692,17 +692,17 @@ def build_pdf_header(pdf)
   def edit
     @pagetitle = "Editar Orden Compra"
     @action_txt = "Update"
-    
+
     @purchaseorder = Purchaseorder.find(params[:id])
     @company = @purchaseorder.company
     @ac_supplier = @purchaseorder.supplier.name
     @ac_user = @purchaseorder.user.username
     @suppliers = @company.get_suppliers()
-    @payments  = @company.get_payments()    
+    @payments  = @company.get_payments()
     @monedas  = @company.get_monedas()
-    
+
     @products_lines = @purchaseorder.products_lines
-    
+
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
   end
@@ -712,17 +712,17 @@ def build_pdf_header(pdf)
   def create
     @pagetitle = "Nueve Orden de Compra"
     @action_txt = "Create"
-    
+
     items = params[:items].split(",")
-    
+
     @purchaseorder = Purchaseorder.new(purchaseorder_params)
-    
+
     @company = Company.find(params[:purchaseorder][:company_id])
-    
+
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @suppliers = @company.get_suppliers()
-    @payments = @company.get_payments()    
+    @payments = @company.get_payments()
     @monedas  = @company.get_monedas()
 
     @tipodocumento = @purchaseorder[:document_id]
@@ -734,19 +734,19 @@ def build_pdf_header(pdf)
     @purchaseorder[:subtotal] = @purchaseorder.get_subtotal(items)
 
     end
-    
+
     begin
       if @tipodocumento == 3
       @purchaseorder[:tax] = @purchaseorder.get_tax(items, @purchaseorder[:supplier_id])*-1
       else
       @purchaseorder[:tax] = @purchaseorder.get_tax(items, @purchaseorder[:supplier_id])
-      end 
+      end
     rescue
       @purchaseorder[:tax] = 0
     end
-    
+
     @purchaseorder[:total] = @purchaseorder[:subtotal] + @purchaseorder[:tax]
-    
+
     if(params[:purchaseorder][:user_id] and params[:purchaseorder][:user_id] != "")
       curr_seller = User.find(params[:purchaseorder][:user_id])
       @ac_user = curr_seller.username
@@ -755,11 +755,11 @@ def build_pdf_header(pdf)
     respond_to do |format|
       if @purchaseorder.save
         # Create products for kit
-        @purchaseorder.add_products(items)        
+        @purchaseorder.add_products(items)
         # Check if we gotta process the purchaseorder
         @purchaseorder.correlativo
         @purchaseorder.process()
-        
+
         format.html { redirect_to(@purchaseorder, :notice => 'purchaseorder was successfully created.') }
         format.xml  { render :xml => @purchaseorder, :status => :created, :location => @purchaseorder }
       else
@@ -768,34 +768,34 @@ def build_pdf_header(pdf)
       end
     end
   end
-  
+
 
   # PUT /purchaseorders/1
   # PUT /purchaseorders/1.xml
   def update
     @pagetitle = "Editar Orden Compra"
     @action_txt = "Update"
-    
+
     items = params[:items].split(",")
-    
+
     @purchaseorder = Purchaseorder.find(params[:id])
     @company = @purchaseorder.company
-    
+
     if(params[:ac_supplier] and params[:ac_supplier] != "")
       @ac_supplier = params[:ac_supplier]
     else
       @ac_supplier = @purchaseorder.supplier.name
     end
-    
+
     @products_lines = @purchaseorder.products_lines
-    
+
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @suppliers = @company.get_suppliers()
-    @payments = @company.get_payments()    
-    
+    @payments = @company.get_payments()
+
     @monedas  = @company.get_monedas()
-    
+
     @purchaseorder[:subtotal] = @purchaseorder.get_subtotal(items)
     @purchaseorder[:tax]      = @purchaseorder.get_tax(items, @purchaseorder[:supplier_id])
     @purchaseorder[:total]    = @purchaseorder[:subtotal] + @purchaseorder[:tax]
@@ -807,7 +807,7 @@ def build_pdf_header(pdf)
         @purchaseorder.add_products(items)
         # Check if we gotta process the purchaseorder
         @purchaseorder.process()
-        
+
         format.html { redirect_to(@purchaseorder, :notice => 'purchaseorder was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -822,25 +822,25 @@ def build_pdf_header(pdf)
   def destroy
     @purchaseorder = Purchaseorder.find(params[:id])
     company_id = @purchaseorder[:company_id]
-    @purchase =  Purchase.find_by(purchaseorder_id: @purchaseorder.id) 
+    @purchase =  Purchase.find_by(purchaseorder_id: @purchaseorder.id)
     @company = @purchaseorder.company
-    
-    if @purchase  
-      
+
+    if @purchase
+
     else
     @purchaseorder.destroy
 
     respond_to do |format|
       format.html { redirect_to("/companies/purchaseorders/" + company_id.to_s) }
     end
-    end 
+    end
   end
 
-  #reporte de order de compra  
+  #reporte de order de compra
 
    def build_pdf_header2(pdf)
-    pdf.font "Helvetica" , :size => 6    
-     $lcCli  =  @company.name 
+    pdf.font "Helvetica" , :size => 6
+     $lcCli  =  @company.name
      $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
 
      $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
@@ -868,13 +868,13 @@ def build_pdf_header(pdf)
         pdf.move_down 10
 
       end
-      
-      pdf 
-  end   
+
+      pdf
+  end
 
   def build_pdf_body2(pdf)
-    
-    pdf.text "Ordenes de compra Emitidas : Fecha "+@fecha1.to_s+ " Hasta : "+@fecha2.to_s , :size => 11 
+
+    pdf.text "Ordenes de compra Emitidas : Fecha "+@fecha1.to_s+ " Hasta : "+@fecha2.to_s , :size => 11
     pdf.text ""
     pdf.font_families.update("Open Sans" => {
           :normal => "app/assets/fonts/OpenSans-Regular.ttf",
@@ -882,7 +882,7 @@ def build_pdf_header(pdf)
         })
 
         pdf.font "Open Sans",:size =>6
-  
+
 
       headers = []
       table_content = []
@@ -898,115 +898,115 @@ def build_pdf_header(pdf)
       nroitem=1
       lcmonedasoles   = 2
       lcmonedadolares = 1
-    
 
-      lcDoc='FT'      
+
+      lcDoc='FT'
 
        lcCliente = @rpt_purchaseorder.first.supplier_id
 
        for  product in @rpt_purchaseorder
-        
+
           if lcCliente == product.supplier_id
-            
-            fechas2 = product.fecha2 
-             
-            row = []          
-            row << nroitem.to_s 
+
+            fechas2 = product.fecha2
+
+            row = []
+            row << nroitem.to_s
             row << product.code
             row << product.fecha1.strftime("%d/%m/%Y")
             row << product.fecha2.strftime("%d/%m/%Y")
             row << product.supplier.name
-            row << product.moneda.symbol  
+            row << product.moneda.symbol
 
-            if product.moneda_id == 1 
+            if product.moneda_id == 1
                 row << "0.00 "
                 row << sprintf("%.2f",product.total.to_s)
             else
                 row << sprintf("%.2f",product.total.to_s)
                 row << "0.00 "
-            end 
+            end
             row << " "
-            
+
             table_content << row
 
             nroitem = nroitem + 1
 
           else
-            totals = []            
+            totals = []
             total_cliente_soles = 0
             total_cliente_soles = @company.get_purchases_by_day_value_supplier(@fecha1,@fecha2,lcmonedadolares,lcCliente)
             total_cliente_dolares = 0
             total_cliente_dolares = @company.get_purchases_by_day_value_supplier(@fecha1,@fecha2,lcmonedasoles,lcCliente)
-            
+
             row =[]
             row << ""
             row << ""
             row << ""
-            row << ""          
-            row << "TOTALES POR PROVEEDOR=> "            
+            row << ""
+            row << "TOTALES POR PROVEEDOR=> "
             row << ""
             row << sprintf("%.2f",total_cliente_dolares.to_s)
             row << sprintf("%.2f",total_cliente_soles.to_s)
             row << " "
-            
+
             table_content << row
 
             lcCliente = product.supplier_id
 
-            row = []          
+            row = []
             row << lcDoc
             row << product.code
             row << product.fecha1.strftime("%d/%m/%Y")
             row << product.fecha2.strftime("%d/%m/%Y")
             row << product.supplier.name
-            row << product.moneda.symbol  
+            row << product.moneda.symbol
 
-            if product.moneda_id == 1 
+            if product.moneda_id == 1
                 row << "0.00 "
                 row << sprintf("%.2f",product.total.to_s)
             else
                 row << sprintf("%.2f",product.total.to_s)
                 row << "0.00 "
-            end 
+            end
             row << " "
 
-            
+
             table_content << row
 
 
 
-          end 
-          
-         
+          end
+
+
         end
 
-            lcProveedor = @rpt_purchaseorder.last.supplier_id 
+            lcProveedor = @rpt_purchaseorder.last.supplier_id
 
-            totals = []            
+            totals = []
             total_cliente = 0
 
             total_cliente_soles   = 0
             total_cliente_soles   = @company.get_purchaseorders_day_value2(@fecha1,@fecha2, lcProveedor, lcmonedadolares,'total')
             total_cliente_dolares = 0
             total_cliente_dolares = @company.get_purchaseorders_day_value2(@fecha1,@fecha2, lcProveedor, lcmonedasoles,'total')
-    
-            
+
+
             row =[]
             row << ""
             row << ""
             row << ""
-            row << ""          
-            row << "TOTALES POR PROVEEDOR => "            
+            row << ""
+            row << "TOTALES POR PROVEEDOR => "
             row << ""
             row << sprintf("%.2f",total_cliente_dolares.to_s)
-            row << sprintf("%.2f",total_cliente_soles.to_s)                      
+            row << sprintf("%.2f",total_cliente_soles.to_s)
             row << " "
             table_content << row
-              
+
           total_soles   = @company.get_purchaseorders_totalday_value(@fecha1,@fecha2, "total",lcmonedasoles)
           total_dolares = @company.get_purchaseorders_totalday_value(@fecha1,@fecha2, "total",lcmonedadolares)
-      
-           if $lcxCliente == "0" 
+
+           if $lcxCliente == "0"
 
           row =[]
           row << ""
@@ -1016,31 +1016,31 @@ def build_pdf_header(pdf)
           row << "TOTALES => "
           row << ""
           row << sprintf("%.2f",total_soles.to_s)
-          row << sprintf("%.2f",total_dolares.to_s)                    
+          row << sprintf("%.2f",total_dolares.to_s)
           row << " "
           table_content << row
-          end 
+          end
 
           result = pdf.table table_content, {:position => :center,
                                         :header => true,
                                         :width => pdf.bounds.width
-                                        } do 
+                                        } do
                                           columns([0]).align=:center
                                           columns([1]).align=:left
                                           columns([2]).align=:left
                                           columns([3]).align=:left
                                           columns([4]).align=:left
-                                          columns([5]).align=:right  
+                                          columns([5]).align=:right
                                           columns([6]).align=:right
                                           columns([7]).align=:right
                                           columns([8]).align=:right
-                                        end                                          
-                                        
-      pdf.move_down 10      
+                                        end
 
-      #totales 
+      pdf.move_down 10
 
-      pdf 
+      #totales
+
+      pdf
 
     end
 
@@ -1048,15 +1048,15 @@ def build_pdf_header(pdf)
     def build_pdf_footer2(pdf)
 
         pdf.text ""
-        pdf.text "" 
-        
+        pdf.text ""
+
 
      end
-    
+
 
   # Export purchaseorder to PDF
   def rpt_purchaseorder2_all
-    $lcxCliente = "0" 
+    $lcxCliente = "0"
     @company =Company.find(1)
     @fecha1 =params[:fecha1]
     @fecha2 =params[:fecha2]
@@ -1068,22 +1068,22 @@ def build_pdf_header(pdf)
         pdf = build_pdf_header2(pdf)
         pdf = build_pdf_body2(pdf)
         build_pdf_footer2(pdf)
-        $lcFileName =  "app/pdf_output/orden_1.pdf"      
-        
-    end     
+        $lcFileName =  "app/pdf_output/orden_1.pdf"
+
+    end
 
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
-                
+
     send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
-  
+
 
   end
 
 ##
 ##
 
-  #fin reporte de orden de compra 
- 
+  #fin reporte de orden de compra
+
   private
   def purchaseorder_params
     params.require(:purchaseorder).permit(:company_id,:location_id,:division_id,:supplier_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:moneda_id,:fecha1,:fecha2,:payment_id)
@@ -1092,12 +1092,12 @@ def build_pdf_header(pdf)
 
     def client_data_headers_rpt
       client_headers  = [["Empresa  :", $lcCli ]]
-      client_headers << ["Direccion :", $lcdir1]      
+      client_headers << ["Direccion :", $lcdir1]
       client_headers
   end
 
-  def invoice_headers_rpt            
-      invoice_headers  = [["Fecha : ",$lcHora]]    
+  def invoice_headers_rpt
+      invoice_headers  = [["Fecha : ",$lcHora]]
       invoice_headers
   end
 

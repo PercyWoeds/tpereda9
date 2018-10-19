@@ -6,13 +6,9 @@ class QuotationsController < ApplicationController
   def index
 
 
-    @quotations = Quotation.all
-
-    @locations = Location.all
-    @divisions = Division.all
-    @puntos =Punto.all
-    @customers = Customer.all.order(:name)
-
+    @companies = Company.where(user_id: current_user.id).order("name")
+    @path = 'quotations'
+    @pagetitle = "Cotizaciones"
 
   end
 
@@ -26,25 +22,31 @@ class QuotationsController < ApplicationController
     @customers = Customer.find(@quotations.customer_id)
     @puntos = Punto.find(@quotations.punto_id)  
 
-    
-
+  
   end
 
   # GET /quotations/new
   def new
     @quotation = Quotation.new
-    @locations = Location.all
-    @divisions = Division.all
+    
     @puntos = Punto.all
     @customers = Customer.all.order(:name)
     @quotation[:code]="#{generate_guid7()}"
-    @employees = Employee.all.order(:full_name)    
+   
     @instruccions = Instruccion.find(2)
 
+    @company = Company.find(params[:company_id])
+    @quotation.company_id = @company.id
+    
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions
+    @monedas = Moneda.all 
+    
+    @employees = Employee.all.order(:full_name)    
     @quotation[:condiciones] = @instruccions.description1
     @quotation[:respon] = @instruccions.description2
     @quotation[:seguro] = @instruccions.description3
-
+    @quotation[:fecha1] =  Date.today
 
   end
 
@@ -54,7 +56,7 @@ class QuotationsController < ApplicationController
     @divisions = Division.all
     @puntos = Punto.all
     @customers = Customer.all.order(:name)
-    
+    @monedas = Moneda.all 
     @employees = Employee.all.order(:full_name)    
   
   end
@@ -63,13 +65,17 @@ class QuotationsController < ApplicationController
   # POST /quotations.json
   def create
     @quotation = Quotation.new(quotation_params)
-    @locations = Location.all
-    @divisions = Division.all
+    
     @puntos =Punto.all
     @customers = Customer.all.order(:name)
     @employees = Employee.all.order(:full_name)    
-  
-
+    @monedas = Moneda.all 
+    
+    @company = Company.find(params[:quotation][:company_id])
+    
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+   
     respond_to do |format|
       if @quotation.save
          @quotation.correlativo
@@ -90,7 +96,8 @@ class QuotationsController < ApplicationController
     @divisions = Division.all
     @puntos =Punto.all
     @customers = Customer.all.order(:name)
-    @employees = Employee.all.order(:full_name)    
+    @employees = Employee.all.order(:full_name) 
+    @monedas = Moneda.all 
 
     respond_to do |format|
       if @quotation.update(quotation_params)
@@ -112,7 +119,239 @@ class QuotationsController < ApplicationController
       format.json { head :no_content }
     end
   end
+# Show purchases for a company
+  def list_quotations
 
+    @company = Company.find(params[:company_id])
+    @pagetitle = "#{@company.name} - Cotizaciones"
+    @filters_display = "block"
+    
+    @locations = Location.where(company_id: @company.id).order("name ASC")
+    @divisions = Division.where(company_id: @company.id).order("name ASC")
+    
+
+    if(params[:search] and params[:search] != "")         
+  
+        @quotations = Quotation.where(["company_id = ? and (documento LIKE  ?)", @company.id,"%" + params[:search] + "%"]).order('id').paginate(:page => params[:page]) 
+       
+        else
+          @quotations = Quotation.where(company_id:  @company.id).order("id DESC").paginate(:page => params[:page])
+          @filters_display = "none"
+        end
+
+  end
+  
+   def get_services    
+    @itemservices = Quotation.where(self.id)
+    return @itemservices
+  end
+  
+   def pdf
+    @quotation  = Quotation.find(params[:id])
+    company =@quotation.company_id
+    @company =Company.find(company)
+
+
+    Prawn::Document.generate("app/pdf_output/#{@quotation.id}.pdf") do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header(pdf)
+        pdf = build_pdf_body(pdf)
+        build_pdf_footer(pdf)
+        $lcFileName =  "app/pdf_output/#{@quotation.id}.pdf"      
+        
+    end     
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
+    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+  
+
+  end
+  
+  
+
+def build_pdf_header(pdf)
+
+      pdf.image "#{Dir.pwd}/public/images/logo2.png", :width => 270
+        
+      pdf.move_down 6
+        
+      pdf.move_down 4
+      #pdf.text supplier.street, :size => 10
+      #pdf.text supplier.district, :size => 10
+      #pdf.text supplier.city, :size => 10
+      pdf.move_down 4
+
+      pdf.bounding_box([325, 725], :width => 200, :height => 80) do
+        pdf.stroke_bounds
+        pdf.move_down 15
+        pdf.font "Helvetica", :style => :bold do
+          pdf.text "R.U.C: 20424092941", :align => :center
+          pdf.text "COTIZACION", :align => :center
+          pdf.text "#{@quotation.code}", :align => :center,
+                                 :style => :bold
+          
+        end
+      end
+      pdf.move_down 25
+      pdf 
+  end   
+
+  def build_pdf_body(pdf)
+    
+    pdf.text "__________________________________________________________________________", :size => 13, :spacing => 4
+    pdf.text " ", :size => 13, :spacing => 4
+    pdf.font "Helvetica" , :size => 8
+
+    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers.length >= row ? client_data_headers[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers.length >= row ? invoice_headers[rows_index] : ['',''])
+      end
+
+      if rows.present?
+
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+        end
+
+        pdf.move_down 20
+
+      end
+
+      headers = []
+      table_content = []
+
+      Quotation::TABLE_HEADERS.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content << headers
+
+      nroitem=1
+
+       for  product in @quotation.get_products()
+            row = []
+           
+            row << product.carga
+            row << product.tipo_unidad
+            
+            table_content << row
+            nroitem=nroitem + 1
+        end
+
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:left
+                                          columns([1]).align=:left
+                                          
+                                         
+                                        end
+
+      pdf.move_down 10      
+      pdf.table invoice_summary, {
+        :position => :right,
+        :cell_style => {:border_width => 1},
+        :width => pdf.bounds.width/2
+      } do
+        columns([0]).font_style = :bold
+        columns([1]).align = :right
+        
+      end
+      pdf
+
+    end
+
+
+    def build_pdf_footer(pdf)
+
+        pdf.text ""
+        pdf.text ""  
+        pdf.move_down  20
+          
+
+        data =[[{:content=> @quotation.condiciones ,:colspan=>2},"" ] ,
+               [@quotation.respon,{:content=> @quotation.seguro,:rowspan=>2}],
+               [""]               
+               ]
+
+           {:border_width=>0  }.each do |property,value|
+            pdf.text " Instrucciones: "
+            pdf.table(data,:cell_style=> {property =>value})
+            pdf.move_down 20          
+           end     
+
+      
+        
+        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+        
+        pdf.text "_________________               _____________________         ____________________      ", :size => 13, :spacing => 4
+        pdf.text ""
+        pdf.text "                  Realizado por                                                 V.B.Jefe Compras                                            V.B.Gerencia           ", :size => 10, :spacing => 4
+        pdf.draw_text "Company: #{@quotation.company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+
+      end
+      pdf
+      
+  end
+
+  
+  
+ def client_data_headers
+
+  
+      client_headers  = [["Local: ", @quotation.location.name ]] 
+      client_headers << ["Solicitante : ", @quotation.division.name]
+      client_headers << ["Cliente : ", @quotation.customer.name ]    
+      
+      
+      client_headers
+  end
+
+  def invoice_headers   
+    
+      invoice_headers  = [["Fecha de emisión : ",@quotation.fecha1.strftime("%Y-%m-%d")  ]]
+      invoice_headers <<  ["Tipo de moneda : ", @quotation.moneda.symbol ]
+      invoice_headers <<  ["Lugar destino  : ", @quotation.punto.name ]    
+      invoice_headers <<  ["Estado  : ",@quotation.get_processed ]    
+      invoice_headers
+  end
+  
+  def invoice_summary
+      invoice_summary = []
+      invoice_summary << ["Importe",  ActiveSupport::NumberHelper::number_to_delimited(@quotation.importe,delimiter:",",separator:".").to_s]
+      invoice_summary
+    end
+   def do_process
+    @quotation = Quotation.find(params[:id])
+    @quotation[:processed] = "1"
+    @quotation.process
+    
+    flash[:notice] = "The serviceorder order has been processed."
+    redirect_to @quotation
+  end
+
+def do_anular
+    @quotation = Quotation.find(params[:id])
+    @quotation[:processed] = "2"
+    
+    @quotation.anular 
+    
+    flash[:notice] = "Documento a sido anulado."
+    redirect_to @quotation 
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_quotation
@@ -121,6 +360,6 @@ class QuotationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def quotation_params
-      params.require(:quotation).permit(:fecha1, :code, :customer_id, :punto_id, :carga, :tipo_unidad, :importe, :condiciones, :respon, :seguro, :firma_id, :company_id, :location_id, :division_id)
+      params.require(:quotation).permit(:fecha1, :code, :customer_id, :punto_id, :carga, :tipo_unidad, :importe, :condiciones, :respon, :seguro, :firma_id, :company_id, :location_id, :division_id,:company_id,:moneda_id )
     end
 end 

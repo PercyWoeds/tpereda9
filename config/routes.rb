@@ -191,7 +191,8 @@ end
   
   resources :suppliers do
     collection { post :import  }
-    
+    collection { post :new2  }
+    collection { post :search_ruc  }
   end 
 
   resources :orders do 
@@ -756,7 +757,17 @@ end
   match 'companies/purchases/:company_id' => 'purchases#list_purchases', via: [:get, :post]  
   
   resources :purchases
+  
+  match 'quotations/do_anular/:id' => 'quotations#do_anular', via: [:get, :post]
+  match 'quotations/do_process/:id' => 'quotations#do_process', via: [:get, :post]
+  match 'quotations/pdf/:id' => 'quotations#pdf', via: [:get, :post]
+  match 'companies/quotations/:company_id' => 'quotations#list_quotations', via: [:get, :post]  
+  match 'quotations/new/:company_id' => 'quotations#new', via: [:get, :post]  
+  
+  resources :quotations
 
+  match 'suppliers/new2/:id'   => 'suppliers#new2', via: [:get, :post]
+  resources :suppliers 
 
   match 'tranportorders/rpt_ost1_pdf/:company_id' => 'tranportorders#rpt_ost1_pdf', via: [:get, :post]
   match 'tranportorders/rpt_ost2_pdf/:company_id' => 'tranportorders#rpt_ost2_pdf', via: [:get, :post]

@@ -887,16 +887,32 @@ def newfactura2
     @payments = @company.get_payments()    
     @services = @company.get_services()
 
-    @invoice[:subtotal] = @invoice.get_subtotal(items)
+    if @invoice[:document_id] == 2
+        @invoice[:subtotal] = @invoice.get_subtotal(items)
+        
+        begin
+          @invoice[:tax] = @invoice.get_tax(items, @invoice[:customer_id])
+        rescue
+          @invoice[:tax] = 0
+        end
+        
+        @invoice[:total] = @invoice[:subtotal] + @invoice[:tax]
+        @invoice[:balance] = @invoice[:total]
+  else
+      @invoice[:subtotal] = @invoice.get_subtotal(items) * -1
+  
+        begin
+          @invoice[:tax] = @invoice.get_tax(items, @invoice[:customer_id]) * -1
+        rescue
+          @invoice[:tax] = 0
+        end
+        
+        @invoice[:total] = @invoice[:subtotal] + @invoice[:tax]
+        
+        @invoice[:balance] = @invoice[:total]
+  end 
+  
     
-    begin
-      @invoice[:tax] = @invoice.get_tax(items, @invoice[:customer_id])
-    rescue
-      @invoice[:tax] = 0
-    end
-    
-    @invoice[:total] = @invoice[:subtotal] + @invoice[:tax]
-    @invoice[:balance] = @invoice[:total]
     @invoice[:pago] = 0
     @invoice[:charge] = 0
     

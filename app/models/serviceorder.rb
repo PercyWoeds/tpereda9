@@ -195,7 +195,6 @@ end
 serviceorder_services.quantity,serviceorder_services.discount,serviceorder_services.total,
 servicebuys.name,servicebuys.id  from serviceorder_services INNER JOIN servicebuys ON
 serviceorder_services.servicebuy_id = servicebuys.id where serviceorder_services.serviceorder_id = ?', self.id ])
-    puts self.id
 
     return @itemservices
   end

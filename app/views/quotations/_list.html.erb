@@ -1,0 +1,78 @@
+<% if @quotations.count > 0 %>
+
+
+<table>
+  <thead>
+    <tr>
+     
+      <th>Fecha</th>
+      <th>Codigo</th>
+      <th>Cliente</th>
+      
+      <th>Importe </th>
+    
+      <th>Procesado </th>
+      
+    
+      
+      <th class="bordered_right bordered_bottom" colspan="3">
+          Opciones
+        </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @quotations.each do |quotation| %>
+      <tr>
+        <td><%= quotation.fecha1.strftime("%d/%m/%Y") %></td>
+        <td><%= quotation.code %></td>
+        <td><%= quotation.customer.name %></td>
+        <td><%= money(quotation.importe)  %></td>
+        
+        <td class="bordered_right bordered_bottom <%= quotation.processed_color %>">
+            <%= quotation.get_processed_short %>
+        </td>
+      <td class="bordered_right bordered_bottom">  
+           <%= link_to "Ver", quotation %>        
+          <% if quotation.processed =="" || quotation.processed == nil %>
+      
+
+          <%= link_to "Editar", edit_quotation_path(quotation) %>                      
+          <%= link_to 'Eliminar', quotation, :confirm => 'Esta seguro de eliminar ?', :method => :delete 
+          %>
+          <% elsif quotation.processed =="1"%>    
+          <%= "** Aprobado **" %>
+          <%= link_to 'Eliminar', quotation,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>
+          
+          <% elsif quotation.processed =="2"%>  
+          <%= "** Anulado **" %>
+          <%if current_user.level == 'admin'%>
+          <%= link_to 'Eliminar', quotation,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>
+          <%end %>
+          <% elsif quotation.processed =="3"%>  
+          <%= "** Cerrado **" %>                      
+          <% end %> 
+
+          </td>
+            
+        
+       
+        
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+ 
+<br>
+
+
+
+<% else %>
+  <p class="error">
+    Nosotros no podemos encontrar ninguna factura
+  </p>
+<% end %>
+
+
+
+

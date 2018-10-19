@@ -7,5 +7,7 @@ class Location < ActiveRecord::Base
   has_many :invoices
   has_many :purchases
   has_many :employees
+  has_many :quotations 
+  
   
 end

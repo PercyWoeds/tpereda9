@@ -119,13 +119,6 @@ class SuppliersController < ApplicationController
     
     @supplier = Supplier.find(params[:id])
     
-    # Erase supplier id for products from supplier
-    #products = Product.find( {:supplier_id => @supplier[:id]})
-    
-   # for product in products
-   #   product.supplier_id = nil
-   #   product.save
-   # end
     
     @company = @supplier.company
     
@@ -143,8 +136,7 @@ class SuppliersController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
-  
+
     # Create via ajax
   def create_ajax
     if(params[:name] and params[:name] != "" and params[:ruc] != "")
@@ -165,6 +157,26 @@ class SuppliersController < ApplicationController
       end
     else
       render :text => "error_empty"
+    end
+  end
+
+  def new2
+     @pagetitle = "Nuevo Datos desde Sunat "
+    
+    
+      @company = Company.find(1)
+    
+      if(@company.can_view(current_user))
+        @supplier = Supplier.new
+        @supplier.company_id = @company.id
+      else
+        errPerms()
+      end
+    
+    
+    if(params[:ajax])
+      @ajax = true
+      render :layout => false
     end
   end
 
