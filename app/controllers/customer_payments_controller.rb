@@ -500,7 +500,8 @@ class CustomerPaymentsController < ApplicationController
     @customerpayment = CustomerPayment.new
     @customerpayment[:code]="#{generate_guid8()}"  
     @customerpayment[:processed] = false
-      
+    @customerpayment[:fecha1] = Time.now 
+       
     @company = Company.find(params[:company_id])
     @customerpayment.company_id = @company.id
     

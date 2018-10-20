@@ -6,6 +6,10 @@
          Orden
         </th>
         <th class="bordered_right bordered_bottom">
+          Banco 
+        </th>
+        
+        <th class="bordered_right bordered_bottom">
           Cliente 
         </th>
         <th class="bordered_right bordered_bottom">
@@ -30,6 +34,11 @@
           <td class="bordered_right bordered_bottom">
             <%= link_to customerpayment.code, customerpayment, :title => "Ir a factura" %>
           </td>
+          
+          <td class="bordered_right bordered_bottom">
+            <%=  customerpayment.bank_acount.number  %>
+          </td>
+          
           <td class="bordered_right bordered_bottom ">
             <%=  customerpayment.get_cliente_customer_payment(customerpayment.id) %>            
           </td>

@@ -15,6 +15,8 @@ class Company < ActiveRecord::Base
   has_many :inventories
   has_many :company_users
   has_many :ajusts 
+  has_many :manifests 
+  
 
  def get_cliente(id)
    

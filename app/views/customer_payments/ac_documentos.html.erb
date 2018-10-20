@@ -1,5 +1,5 @@
 <% if @docs %>
   <% for factura in @docs %>
-    <%= factura.code %>|BRK|<%= factura.id %>|BRK| <%= factura.balance.round(2) %>
+    <%= factura.code %>|BRK|<%= factura.id %>|BRK| <%= factura.balance.round(2) %>|BRK| <%= factura.moneda_id %>
   <% end %>
 <% end %>

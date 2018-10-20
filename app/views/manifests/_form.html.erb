@@ -1,7 +1,29 @@
+ <% if @manifest.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@manifest.errors.count, "error") %> prohibited this invoice from being saved:</h2>
+
+    <ul>
+    <% @manifest.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>      
+
+
 <%= simple_form_for(@manifest) do |f| %>
   <%= f.error_notification %>
 
-
+    <div class="field">  
+        <%= f.label :location_id , "Local *", :class => "bold" %><br />
+        <%= f.select :location_id,options_from_collection_for_select(@locations,'id','name') %>
+    </div>  
+    
+    <div class="field">
+      <%= f.label :code, "Code*", :class => "bold"  %><br />
+      <%= f.text_field :code, :onclick => "$(this).select();" %>
+    </div>
+    
   
     <div class="field">  
         <%= f.label :customer_id , "Cliente*", :class => "bold" %><br />
@@ -11,7 +33,7 @@
 
     <div class="field">
       <%= f.label :fecha1, "Fecha Emision*", :class => "bold" %><br />
-      <%= f.date_field :fecha1, value: Time.now.strftime("%d/%m/%Y") %>
+      <%= f.date_field :fecha1  %>
     </div>
 
 
@@ -132,7 +154,7 @@
     </div>
     <div class="field">
       <%= f.label :fecha2, "Fecha Carga*", :class => "bold" %><br />
-      <%= f.date_field :fecha2, value: Time.now.strftime("%d/%m/%Y") %>
+      <%= f.date_field :fecha2 %>
     </div>
 
     <div class="field">  

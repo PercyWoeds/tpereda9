@@ -8,6 +8,7 @@ class Location < ActiveRecord::Base
   has_many :purchases
   has_many :employees
   has_many :quotations 
+  has_many :manifests  
   
   
 end

@@ -5,6 +5,8 @@
 <table>
   <thead>
     <tr>
+      
+      <th>Code </th>
       <th>Customer</th>
       <th>Solicitante</th>
       <th>Fecha1</th>
@@ -16,13 +18,15 @@
   <tbody>
     <% @manifests.each do |manifest| %>
       <tr>
+        
+        <td><%= manifest.code %></td>
         <td><%= manifest.name %></td>
         <td><%= manifest.solicitante %></td>
         <td><%= manifest.fecha1 %></td>
 
-        <td><%= link_to 'Show', manifest %></td>
-        <td><%= link_to 'Edit', edit_manifest_path(manifest) %></td>
-        <td><%= link_to 'Destroy', manifest, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Ver', manifest %></td>
+        <td><%= link_to 'Editar', edit_manifest_path(manifest) %></td>
+        <td><%= link_to 'Eliminar', manifest, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

@@ -1291,7 +1291,9 @@
   // Update price total for invoice
   function updateItemTotalCP() {
     var saldooriginal = $("#ac_item_total").val();
-
+    
+    var moneda  = $("#ac_item_moneda").val();
+    
     var price     = $("#ac_item_total").val();
 
     var factory  = $("#ac_item_factory").val();
@@ -1300,7 +1302,9 @@
 
     var compen   = $("#ac_item_compen").val();
 
+    $("#ac_item_moneda").html(moneda);
     $("#ac_item_total2").html(saldooriginal);
+    
 
     if( isNumeric(price) && isNumeric(factory) && isNumeric(ajuste) && isNumeric(saldooriginal) && isNumeric(compen))  {
       

@@ -763,8 +763,14 @@ end
   match 'quotations/pdf/:id' => 'quotations#pdf', via: [:get, :post]
   match 'companies/quotations/:company_id' => 'quotations#list_quotations', via: [:get, :post]  
   match 'quotations/new/:company_id' => 'quotations#new', via: [:get, :post]  
-  
+  match 'quotations/do_email/:id' => 'quotations#do_email', via: [:get, :post]
   resources :quotations
+  
+  match 'manifests/do_process/:id' => 'manifests#do_process', via: [:get, :post]
+  match 'manifests/do_anular/:id' => 'manifests#do_anular', via: [:get, :post]
+  match 'manifests/pdf/:id' => 'manifests#pdf', via: [:get, :post]
+  match 'manifests/do_email/:id' => 'manifests#do_email', via: [:get, :post]
+  resources :manifests 
 
   match 'suppliers/new2/:id'   => 'suppliers#new2', via: [:get, :post]
   resources :suppliers 

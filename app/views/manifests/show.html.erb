@@ -1,169 +1,216 @@
-<p id="notice"><%= notice %></p>
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @manifest.company.name, @manifest.company %> &raquo;
+  <%= link_to "manifests", "/companies/manifests/#{@manifest.company.id}" %>
+</div>
+
+
+<h1>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  <%= @manifest.code %>
+</h1>
+
+<%= hr() %>
+
+<% if @manifest.location %>
+  <p>
+    <b>Location:</b>
+    <%= link_to @manifest.location.name, @manifest.location %>
+  </p>
+<% end %>
+
+
+
 
 <p>
-  <strong>Customer:</strong>
-  <%= @manifest.customer_id %>
+  <b>Code:</b>
+  <%= @manifest.code %>
+</p>
+
+ 
+
+ <p>
+    <b> Cliente :</b>
+    <%= @manifest.customer.name %>   
+ </p>
+
+<p>
+    <b>Fecha emision :</b>
+    <%= @manifest.fecha1.strftime("%dd/%mm/%YY")  %>   
+</p>
+ 
+<p>
+    <b>Solicitante: </b>
+    <%=   @manifest.solicitante  %>   
+</p>
+    
+<p>
+    <b>Telefono : </b>
+    <%=   @manifest.telefono1    %>   
+</p>
+
+
+<%= hr() %>
+
+<h3>
+  Carga 
+</h3>
+
+<h5>
+  Unidades a utilizar  
+</h5>
+
+
+
+
+ <table style="width:100%">
+  <tr>
+    <th>Unidades</th>
+    <th>Cantidad</th>
+    <th>Capacidad</th>
+  </tr>
+  <tr>
+    <td>Camioneta </td>
+    <td> <%= @manifest.camionqty %> </td>
+    <td> <%= @manifest.camionpeso %></td>
+  </tr>
+  <tr>
+    <td>Semitrailer</td>
+     <td> <%= @manifest.semiqty %> </td>
+    <td> <%= @manifest.semipeso %></td>
+  </tr>
+  <tr>
+    <td>Extensible  </td>
+     <td> <%= @manifest.extenqty %> </td>
+    <td> <%= @manifest.extenpeso %></td>
+  </tr>
+  <tr>
+    <td>Cama Baja </td>
+     <td> <%= @manifest.camaqty %> </td>
+    <td> <%= @manifest.camapeso %></td>
+  </tr>
+  <tr>
+    <td>Modular   </td>
+     <td> <%= @manifest.modularqty %> </td>
+    <td> <%= @manifest.modularpeso %></td>
+  </tr    
+  >
+  
+</table> 
+<h3>
+  Del Transporte 
+</h3>
+
+<p>
+    <b>Punto de Partida: </b>
+    <%=   @manifest.punto.name   %>   
+</p>
+<p>
+    <b>Punto de llegada : </b>
+    <%=   @manifest.punto.name   %>   
 </p>
 
 <p>
-  <strong>Solicitante:</strong>
-  <%= @manifest.solicitante %>
+    <b>Fecha llegada :</b>
+    <%= @manifest.fecha2.strftime("%dd/%mm/%YY")  %>   
 </p>
 
 <p>
-  <strong>Fecha1:</strong>
-  <%= @manifest.fecha1 %>
+    <b> Contacto 1 : </b>
+    <%=   @manifest.contacto1  %>   
+</p>
+<p>
+    <b> Telefono  1 : </b>
+    <%=   @manifest.telefono1  %>   
 </p>
 
 <p>
-  <strong>Telefono1:</strong>
-  <%= @manifest.telefono1 %>
+    <b> Contacto 2 : </b>
+    <%=   @manifest.contacto2  %>   
 </p>
+<p>
+    <b> Telefono  2 : </b>
+    <%=   @manifest.telefono2  %>   
+</p>
+
+<%= hr() %>
+
+<h3>
+  Details
+</h3>
+
+</table>
+<br />
+
+<%= hr() %>
+
+<% if @manifest.especificacion != "" %>
+  <div>
+    <b> Especificacion :</b>
+    <br />
+    <br />
+    <%= format_text(@manifest.especificacion) %>
+  </div>
+  <%= hr() %>
+<% end %>
+<h5>
+  Carga
+</h5>
+
+
+ <table style="width:100%">
+  <tr>
+    <th>Largo</th>
+    <th><%=@manifest.largo  %></th>
+    <th>Ancho</th>
+    <th><%=@manifest.ancho %></th>
+    <th>Alto</th>
+    <th><%=@manifest.alto %></th>
+  </tr>
+  <tr>
+    <td>Peso</td>
+    <td><%=@manifest.peso %></td>
+    <td>Bultos</td>
+    <td><%=@manifest.bultos %></td>
+    <td>Otros</td>
+    <td<%=@manifest.otros %></td>
+    
+  </tr>
+  
+</table> 
 
 <p>
-  <strong>Camionetaqty:</strong>
-  <%= @manifest.camionetaqty %>
+    <b> Observaciones carga : </b>
+    <%=   @manifest.observa   %>   
 </p>
+<p>
+    <b> Observaciones  : </b>
+    <%=   @manifest.observa2  %>   
+</p>
+
+
+
+<br />
+
+<div>
+  <strong><%= @manifest.get_processed %></strong>
+  <% if @manifest.processed == "1" and @manifest.date_processed %>
+    <%= doDate(@manifest.date_processed) %>
+  <% end %>
+</div>
+
 
 <p>
-  <strong>Camionetapeso:</strong>
-  <%= @manifest.camionetapeso %>
+  <strong> Usuario :</strong>
+  <%= link_to @manifest.user.username, @manifest.user %>
 </p>
 
-<p>
-  <strong>Camionqty:</strong>
-  <%= @manifest.camionqty %>
-</p>
+<%= hr() %>
 
-<p>
-  <strong>Camionpeso:</strong>
-  <%= @manifest.camionpeso %>
-</p>
+<div class="button">
+  <%= link_to 'Exportar to PDF', "/manifests/pdf/#{@manifest.id}.pdf" %>  
 
-<p>
-  <strong>Semiqty:</strong>
-  <%= @manifest.semiqty %>
-</p>
 
-<p>
-  <strong>Semipeso:</strong>
-  <%= @manifest.semipeso %>
-</p>
-
-<p>
-  <strong>Extenqty:</strong>
-  <%= @manifest.extenqty %>
-</p>
-
-<p>
-  <strong>Extenpeso:</strong>
-  <%= @manifest.extenpeso %>
-</p>
-
-<p>
-  <strong>Camaqty:</strong>
-  <%= @manifest.camaqty %>
-</p>
-
-<p>
-  <strong>Camapeso:</strong>
-  <%= @manifest.camapeso %>
-</p>
-
-<p>
-  <strong>Modularqty:</strong>
-  <%= @manifest.modularqty %>
-</p>
-
-<p>
-  <strong>Modularpeso:</strong>
-  <%= @manifest.modularpeso %>
-</p>
-
-<p>
-  <strong>Punto:</strong>
-  <%= @manifest.punto_id %>
-</p>
-
-<p>
-  <strong>Punto2:</strong>
-  <%= @manifest.punto2_id %>
-</p>
-
-<p>
-  <strong>Fecha2:</strong>
-  <%= @manifest.fecha2 %>
-</p>
-
-<p>
-  <strong>Contacto1:</strong>
-  <%= @manifest.contacto1 %>
-</p>
-
-<p>
-  <strong>Telefono1:</strong>
-  <%= @manifest.telefono1 %>
-</p>
-
-<p>
-  <strong>Contacto2:</strong>
-  <%= @manifest.contacto2 %>
-</p>
-
-<p>
-  <strong>Telefono2:</strong>
-  <%= @manifest.telefono2 %>
-</p>
-
-<p>
-  <strong>Especificacion:</strong>
-  <%= @manifest.especificacion %>
-</p>
-
-<p>
-  <strong>Largo:</strong>
-  <%= @manifest.largo %>
-</p>
-
-<p>
-  <strong>Ancho:</strong>
-  <%= @manifest.ancho %>
-</p>
-
-<p>
-  <strong>Alto:</strong>
-  <%= @manifest.alto %>
-</p>
-
-<p>
-  <strong>Peso:</strong>
-  <%= @manifest.peso %>
-</p>
-
-<p>
-  <strong>Bultos:</strong>
-  <%= @manifest.bultos %>
-</p>
-
-<p>
-  <strong>Otros:</strong>
-  <%= @manifest.otros %>
-</p>
-
-<p>
-  <strong>Observa:</strong>
-  <%= @manifest.observa %>
-</p>
-
-<p>
-  <strong>Observa2:</strong>
-  <%= @manifest.observa2 %>
-</p>
-
-<p>
-  <strong>Company:</strong>
-  <%= @manifest.company_id %>
-</p>
-
-<%= link_to 'Edit', edit_manifest_path(@manifest) %> |
-<%= link_to 'Back', manifests_path %>
+  
+  <%= link_to 'Regresar', manifests_path %>
+</div>

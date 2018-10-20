@@ -20,7 +20,7 @@
       
         <div class="field">
           <%= f.label :fecha1, "Fecha*", :class => "bold" %><br />
-          <%= f.date_field :fecha1, value: Time.now.strftime("%d/%m/%Y") ,:class => "input.tf_short" %>
+          <%= f.date_field :fecha1  %>
         </div>
 
         </td>
@@ -50,7 +50,7 @@
 
     <div class="field">
       <%= f.label :total, "Importe Liquidacion ", :class => "bold" %><br />
-      <%= f.text_field :total %>
+      <%= f.number_field :total , :step => '0.01' %>
     </div>
   
     <%= hr() %>
@@ -118,6 +118,12 @@
     </div>
     <br />  
     <div>
+      <strong> Moneda :</strong><br />
+      <span id="ac_item_moneda">"  "</span>
+    </div>
+
+    
+    <div>
       <strong>Saldo Original:</strong><br />
       <span id="ac_item_total2">0.00</span>
     </div>
@@ -182,6 +188,7 @@
     $("#ac_item").result(function(event, data, formatted) {
       $("#ac_item_id").val(data[2]);
       $("#ac_item_total").val(data[4]);  
+      $("#ac_item_moneda").val(data[6]); 
       
       updateItemTotalCP();
     });
