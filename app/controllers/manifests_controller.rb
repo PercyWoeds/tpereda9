@@ -45,7 +45,7 @@ class ManifestsController < ApplicationController
     @manifest = Manifest.new(manifest_params)
     @customers = @manifest.get_customers()
     @puntos = @manifest.get_puntos()
-
+    @manifest[:company_id] = "1"
     respond_to do |format|
       if @manifest.save
         format.html { redirect_to @manifest, notice: 'Manifest was successfully created.' }

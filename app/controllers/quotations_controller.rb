@@ -75,7 +75,8 @@ class QuotationsController < ApplicationController
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
-   
+    @manifest[:user_id] = current_user.user_id
+    
     respond_to do |format|
       if @quotation.save
          @quotation.correlativo
@@ -360,6 +361,6 @@ def do_anular
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def quotation_params
-      params.require(:quotation).permit(:fecha1, :code, :customer_id, :punto_id, :carga, :tipo_unidad, :importe, :condiciones, :respon, :seguro, :firma_id, :company_id, :location_id, :division_id,:company_id,:moneda_id )
+      params.require(:quotation).permit(:fecha1, :code, :customer_id, :punto_id, :carga, :tipo_unidad, :importe, :condiciones, :respon, :seguro, :firma_id, :company_id, :location_id, :division_id,:company_id,:moneda_id ,:user_id)
     end
 end 
