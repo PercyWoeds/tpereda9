@@ -75,7 +75,7 @@ class QuotationsController < ApplicationController
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
-    @manifest[:user_id] = current_user.id
+    @quotation[:user_id] = current_user.id
     
     respond_to do |format|
       if @quotation.save
