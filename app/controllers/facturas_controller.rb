@@ -914,9 +914,9 @@ def newfactura2
         @invoice[:balance] = @invoice[:total]
         
         
-      end
+     end
       
-  end 
+
   
     
     @invoice[:pago] = 0
