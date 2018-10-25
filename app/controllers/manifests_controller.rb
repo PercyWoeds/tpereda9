@@ -48,6 +48,8 @@ class ManifestsController < ApplicationController
     @manifest[:company_id] = "1"
     respond_to do |format|
       if @manifest.save
+        @manifest.correlativo
+        
         format.html { redirect_to @manifest, notice: 'Manifest was successfully created.' }
         format.json { render :show, status: :created, location: @manifest }
       else
@@ -364,6 +366,6 @@ def do_anular
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def manifest_params
-      params.require(:manifest).permit(:customer_id, :solicitante, :fecha1, :telefono1, :camionetaqty, :camionetapeso, :camionqty, :camionpeso, :semiqty, :semipeso, :extenqty, :extenpeso, :camaqty, :camapeso, :modularqty, :modularpeso, :punto_id, :punto2_id, :fecha2, :contacto1, :telefono1, :contacto2, :telefono2, :especificacion, :largo, :ancho, :alto, :peso, :bultos, :otros, :observa, :observa2, :company_id,:code,:location_id)
+      params.require(:manifest).permit(:customer_id, :solicitante, :fecha1, :telefono1, :camionetaqty, :camionetapeso, :camionqty, :camionpeso, :semiqty, :semipeso, :extenqty, :extenpeso, :camaqty, :camapeso, :modularqty, :modularpeso, :punto_id, :punto2_id, :fecha2, :contacto1, :telefono1, :contacto2, :telefono2, :especificacion, :largo, :ancho, :alto, :peso, :bultos, :otros, :observa, :observa2, :company_id,:code,:location_id,:importe)
     end
 end

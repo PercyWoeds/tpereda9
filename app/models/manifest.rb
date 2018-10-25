@@ -51,5 +51,9 @@ def get_processed
            return "No existe "
         end 
    end 
-  
+   def correlativo      
+        numero = Voided.find(16).numero.to_i + 1
+        lcnumero = numero.to_s
+        Voided.where(:id=>'16').update_all(:numero =>lcnumero)        
+  end
 end

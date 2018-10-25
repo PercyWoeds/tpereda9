@@ -241,6 +241,20 @@
     </tbody>
   </table>
 
+<%= hr() %>
+    <h3>
+     Importe :
+    </h3>
+
+
+    <div class="field">  
+        <%= f.label :importe, "Importe *", :class => "bold" %><br />
+        <%= f.number_field :importe, class: :text_field, step: "0.01" %>
+        
+    </div>
+
+    <div class="field">  
+
     <div class="field">  
     
         <%= f.label :observa, "Observaciones carga", :class => "bold" %><br />

@@ -4,6 +4,7 @@ class Quotation < ActiveRecord::Base
   validates_presence_of :company_id, :customer_id, :punto_id,:fecha1,:division_id 
   validates_uniqueness_of :code
   
+  
   belongs_to :customer 
   belongs_to :company 
   belongs_to :location

@@ -337,7 +337,6 @@ def build_pdf_header(pdf)
   end
   
   def invoice_summary
-      
       invoice_summary = []
       invoice_summary << ["Costo Total " + @quotation.moneda.symbol ,  ActiveSupport::NumberHelper::number_to_delimited(@quotation.importe,delimiter:",",separator:".").to_s]
       invoice_summary
