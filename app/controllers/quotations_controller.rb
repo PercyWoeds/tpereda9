@@ -301,11 +301,12 @@ def build_pdf_header(pdf)
             pdf.move_down 20          
            end     
 
+        pdf.text "Agradecemos anticipadamente la atencion al presente , y a la espera de su pronta respuesta"
         
-        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+        pdf.bounding_box([0, 26], :width => 535, :height => 40) do
         pdf.text "_________________               _____________________         ____________________      ", :size => 13, :spacing => 4
-        pdf.text ""
-        pdf.text "                  Realizado por                                                 V.B.Jefe Compras                                            V.B.Gerencia           ", :size => 10, :spacing => 4
+        pdf.text " Vilma Vega Moreno"
+        pdf.text " Jefe Comercial   ", :size => 10, :spacing => 4
         pdf.draw_text "Company: #{@quotation.company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
 
       end
@@ -336,8 +337,9 @@ def build_pdf_header(pdf)
   end
   
   def invoice_summary
+      
       invoice_summary = []
-      invoice_summary << ["Costo Total ",  ActiveSupport::NumberHelper::number_to_delimited(@quotation.importe,delimiter:",",separator:".").to_s]
+      invoice_summary << ["Costo Total " + @quotation.moneda.symbol ,  ActiveSupport::NumberHelper::number_to_delimited(@quotation.importe,delimiter:",",separator:".").to_s]
       invoice_summary
     end
    def do_process
