@@ -3080,11 +3080,9 @@ def newfactura2
     @locations = Location.where(company_id: @company.id).order("name ASC")
     @divisions = Division.where(company_id: @company.id).order("name ASC")
     
-
-    if(params[:search] and params[:search] != "")         
-  
-        @purchases = Purchase.where(["company_id = ? and (documento LIKE  ?)", @company.id,"%" + params[:search] + "%"]).order('id').paginate(:page => params[:page]) 
-       
+        if(params[:search] )         
+          @purchases = Purchase.where(["company_id = ? and (documento iLIKE  ?)", @company.id,"%" + params[:search] + "%"]).order('id').paginate(:page => params[:page]) 
+          
         else
           @purchases = Purchase.where(company_id:  @company.id).order("id DESC").paginate(:page => params[:page])
           @filters_display = "none"
@@ -3105,29 +3103,7 @@ def newfactura2
  
   # GET /purchases/new
   # GET /purchases/new.xml
-  def search
-    @pagetitle = "Nueva Factura"
-    @action_txt = "search"
-    
-    @purchase = Purchase.new    
-    @company = Company.find(params[:id])
-    @purchase.company_id = @company.id
-    
-    @locations = @company.get_locations()
-    @divisions = @company.get_divisions()
-
-    @documents = @company.get_documents()    
-    @servicebuys  = @company.get_servicebuys()
-    @monedas  = @company.get_monedas()
-    @payments  = @company.get_payments()
-
-    
-    @ac_user = getUsername()
-    @purchase[:user_id] = getUserId()
-
-
-  end
-
+ 
   def new
     @pagetitle = "New purchase"
     @action_txt = "Create"

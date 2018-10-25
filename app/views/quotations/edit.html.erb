@@ -2,5 +2,6 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @quotation %> |
-<%= link_to 'Back', quotations_path %>
+<%= link_to 'Ver', @quotation %> |
+<%= link_to 'Regresar', "/companies/quotations/#{@quotation.company.id}" %>
+

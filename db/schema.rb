@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181020173009) do
+ActiveRecord::Schema.define(version: 20181025161154) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1742,6 +1742,9 @@ ActiveRecord::Schema.define(version: 20181020173009) do
     t.integer  "moneda_id"
     t.float    "dolar"
     t.integer  "user_id"
+    t.string   "op1"
+    t.string   "op2"
+    t.string   "op3"
   end
 
   create_table "remisions", force: :cascade do |t|

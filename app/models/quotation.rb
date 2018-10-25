@@ -11,8 +11,8 @@ class Quotation < ActiveRecord::Base
   belongs_to :moneda 
   belongs_to :user  
   belongs_to :punto 
-  TABLE_HEADERS = ["Carga",
-                      "Unidad"]
+  TABLE_HEADERS = ["Tipo de Unidad e Importe del Servicio",
+                      "Costo Total "]
 
   
   

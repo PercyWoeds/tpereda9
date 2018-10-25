@@ -88,7 +88,17 @@
 <br />
 
 <%= hr() %>
+<% if @quotation.tipo_unidad != "" %>
+  <div>
+    <b>Tipo Unidad:</b>
+    <br />
+    <br />
+    <%= format_text(@quotation.tipo_unidad) %>
+  </div>
+  <%= hr() %>
+<% end %>
 
+    
 <% if @quotation.carga != "" %>
   <div>
     <b>Carga:</b>
@@ -98,15 +108,39 @@
   </div>
   <%= hr() %>
 <% end %>
-<% if @quotation.seguro != "" %>
+
+<% if  @quotation.op1 != "0" %>
   <div>
-    <b>Seguro :</b>
+    <b>Condiciones :</b>
+    <br />
+    <br />
+    <%= format_text(@quotation.condiciones) %>
+  </div>
+  <%= hr() %>
+<% end %>
+
+<% if  @quotation.op2 != "0" %>
+  <div>
+    <b> Condiciones :</b>
+    <br />
+    <br />
+    <%= format_text(@quotation.respon) %>
+  </div>
+  <%= hr() %>
+<% end %>
+
+<% if  @quotation.op3 != "0" %>
+  <div>
+    <b> Condiciones  :</b>
+    
     <br />
     <br />
     <%= format_text(@quotation.seguro) %>
   </div>
   <%= hr() %>
 <% end %>
+
+
 
 <% if @quotation.importe   != nil %>
 <p>

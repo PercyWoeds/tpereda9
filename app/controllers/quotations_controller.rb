@@ -242,10 +242,9 @@ def build_pdf_header(pdf)
 
        for  product in @quotation.get_products()
             row = []
-           
-            row << product.carga
-            row << product.tipo_unidad
-            
+            row << product.tipo_unidad         
+            row << product.importe 
+  
             table_content << row
             nroitem=nroitem + 1
         end
@@ -264,7 +263,7 @@ def build_pdf_header(pdf)
       pdf.table invoice_summary, {
         :position => :right,
         :cell_style => {:border_width => 1},
-        :width => pdf.bounds.width/2
+        :width => pdf.bounds.width/3
       } do
         columns([0]).font_style = :bold
         columns([1]).align = :right
@@ -280,23 +279,30 @@ def build_pdf_header(pdf)
         pdf.text ""
         pdf.text ""  
         pdf.move_down  20
-          
-
-        data =[[{:content=> @quotation.condiciones ,:colspan=>2},"" ] ,
-               [@quotation.respon,{:content=> @quotation.seguro,:rowspan=>2}],
-               [""]               
+        
+        if @quotation.op1 != "0"
+          @detalle = @quotation.condiciones
+        end
+        
+        if @quotation.op2 != "0"
+          @detalle = @quotation.respon 
+        end
+        if @quotation.op3 != "0"
+          @detalle = @quotation.seguro 
+        end
+        
+        data =[[@detalle ],
+               [""]   
                ]
 
            {:border_width=>0  }.each do |property,value|
-            pdf.text " Instrucciones: "
+            pdf.text " Condiciones : "
             pdf.table(data,:cell_style=> {property =>value})
             pdf.move_down 20          
            end     
 
-      
         
         pdf.bounding_box([0, 20], :width => 535, :height => 40) do
-        
         pdf.text "_________________               _____________________         ____________________      ", :size => 13, :spacing => 4
         pdf.text ""
         pdf.text "                  Realizado por                                                 V.B.Jefe Compras                                            V.B.Gerencia           ", :size => 10, :spacing => 4
@@ -331,7 +337,7 @@ def build_pdf_header(pdf)
   
   def invoice_summary
       invoice_summary = []
-      invoice_summary << ["Importe",  ActiveSupport::NumberHelper::number_to_delimited(@quotation.importe,delimiter:",",separator:".").to_s]
+      invoice_summary << ["Costo Total ",  ActiveSupport::NumberHelper::number_to_delimited(@quotation.importe,delimiter:",",separator:".").to_s]
       invoice_summary
     end
    def do_process
@@ -361,6 +367,6 @@ def do_anular
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def quotation_params
-      params.require(:quotation).permit(:fecha1, :code, :customer_id, :punto_id, :carga, :tipo_unidad, :importe, :condiciones, :respon, :seguro, :firma_id, :company_id, :location_id, :division_id,:company_id,:moneda_id ,:user_id)
+      params.require(:quotation).permit(:fecha1, :code, :customer_id, :punto_id, :carga, :tipo_unidad, :importe, :condiciones, :respon, :seguro, :firma_id, :company_id, :location_id, :division_id,:company_id,:moneda_id ,:user_id,:op1,:op2,:op3)
     end
 end 
