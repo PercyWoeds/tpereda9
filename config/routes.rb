@@ -265,7 +265,7 @@ end
   
   resources :purchases do
      collection { post :datos  }
-     
+     collection { get :search } 
   end 
   
   resources :payrolls, only: [:index, :show] do

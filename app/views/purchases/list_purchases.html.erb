@@ -3,22 +3,16 @@
   <%= link_to @company.name, @company %>
 </div>
 
-<h1>
-  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
-  Facturas /Nota de compra 
-  <% if @purchase  %>
-    for supplier: <%= @purchase.name %>
-  <% end %>
-</h1>
 
 <div class="small">
   <form method="get" action="/companies/purchases/<%= @company.id %>">
-    <strong>Search:</strong>
-    <input type="text" name="Buscar" value="<% if @q_org %><%= @q_org %><% end %>" class="small" onclick="$(this).select();" />
-    <input type="submit" value="Buscar" class="bold small_btn" />
-    <a href="/companies/purchases/<%= @company.id %>" class="small_btn">Clear</a>
+    <strong>Buscar :</strong>
+    <input type="text" name="search" value="<% if @q_org %><%= @q_org %><% end %>" class="small" style="width: 250px;" onclick="$(this).select();" />
+    <input type="submit" value="Find" class="bold small_btn" />
+    <a href="/companies/purchases/<%= @company.id %>" > Limpiar</a>
   </form>
 </div>
+
 
 
 <br />
@@ -27,8 +21,8 @@
 <br />
 
 <div class="button">
-  <%= link_to 'Nueva Factura ', "/purchases/new/#{@company.id}" %>
-<%= link_to "Cargar Orden de servicio","/purchases/cargar2/#{@company.id}" %>
+  <%= link_to 'Nueva Factura/Nota', "/purchases/new/#{@company.id}" %>
+  <%= link_to "Cargar Orden de servicio","/purchases/cargar2/#{@company.id}" %>
   <%= link_to 'Cargar Orden de compra', "/purchases/cargar/#{@company.id}" %>
   
   

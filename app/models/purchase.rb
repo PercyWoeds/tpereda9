@@ -731,7 +731,9 @@ def get_tax3(items, supplier_id)
         return valor         
   end
   
-  
+  def self.search(search)
+    where("documento iLIKE ?", "%#{search}%") 
+  end  
   
   
 

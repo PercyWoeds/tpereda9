@@ -3074,19 +3074,26 @@ def newfactura2
   def list_purchases
 
     @company = Company.find(params[:company_id])
-    @pagetitle = "#{@company.name} - Purchases"
+    @pagetitle = "#{@company.name} - Facturas"
     @filters_display = "block"
     
     @locations = Location.where(company_id: @company.id).order("name ASC")
     @divisions = Division.where(company_id: @company.id).order("name ASC")
     
-        if(params[:search] )         
-          @purchases = Purchase.where(["company_id = ? and (documento iLIKE  ?)", @company.id,"%" + params[:search] + "%"]).order('id').paginate(:page => params[:page]) 
-          
+    if(@company.can_view(current_user))
+
+         @purchases = Purchase.all.order('date1 DESC',"documento  DESC").paginate(:page => params[:page])
+        if params[:search]
+          @purchases = Purchase.search(params[:search]).order("date1 DESC","documento DESC").paginate(:page => params[:page])
         else
-          @purchases = Purchase.where(company_id:  @company.id).order("id DESC").paginate(:page => params[:page])
-          @filters_display = "none"
+          @purchases = Purchase.order('date1 DESC',"documento DESC").paginate(:page => params[:page]) 
         end
+
+    
+    else
+      errPerms()
+    end
+
 
   end
   
@@ -3327,7 +3334,7 @@ def newfactura2
       :product_id,:unit_id,:price_with_tax,:price_without_tax,:price_public,:quantity,:other,:money_type,
       :discount,:tax1,:payable_amount,:tax_amount,:total_amount,:status,:pricestatus,:charge,:pago,
       :balance,:tax2,:supplier_id,:order1,:plate_id,:user_id,:company_id,:location_id,:division_id,:comments,
-      :processed,:return,:date_processed,:payment_id,:document_id,:documento,:moneda_id)
+      :processed,:return,:date_processed,:payment_id,:document_id,:documento,:moneda_id,:search)
   end
 
 end
