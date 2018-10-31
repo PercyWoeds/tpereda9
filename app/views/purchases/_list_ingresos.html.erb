@@ -8,7 +8,6 @@
       <th>Fec.Emision</th>
       <th>Fec.Vmto </th>
     
-      
       <th>Moneda</th>
       <th>Dscto</th>
       
@@ -31,19 +30,19 @@
   <tbody>
     <% @purchases.each do |purchase| %>
       <tr>
-        <td><%= purchase.document.description %></td>
-        <td><%= purchase.documento %></td>
-        <td><%= purchase.date1.strftime("%d/%m/%Y") %></td>
-        <td><%= purchase.date2.strftime("%d/%m/%Y") %></td>
-        <td><%= purchase.moneda.symbol %></td>            
+        <td class="bordered_bottom bordered_right"><%= purchase.document.description %></td>
+        <td class="bordered_bottom bordered_right"><%= purchase.documento %></td>
+        <td class="bordered_bottom bordered_right"><%= purchase.date1.strftime("%d/%m/%Y") %></td>
+        <td class="bordered_bottom bordered_right"><%= purchase.date2.strftime("%d/%m/%Y") %></td>
+        <td class="bordered_bottom bordered_right"><%= purchase.moneda.symbol %></td>            
 
-        <td><%= money(purchase.discount) %></td>      
-        <td><%= money(purchase.payable_amount) %></td>
+        <td class="bordered_bottom bordered_right"><%= money(purchase.discount) %></td>      
+        <td class="bordered_bottom bordered_right"><%= money(purchase.payable_amount) %></td>
         
-        <td><%= money(purchase.tax_amount) %></td>
-        <td><%= money(purchase.total_amount) %></td>
+        <td class="bordered_bottom bordered_right"><%= money(purchase.tax_amount) %></td>
+        <td class="bordered_bottom bordered_right"><%= money(purchase.total_amount) %></td>
 
-               <td class="bordered_right bordered_bottom <%= purchase.processed_color %>">
+        <td class="bordered_right bordered_bottom <%= purchase.processed_color %>">
             <%= purchase.get_processed_short %>
           </td>
     

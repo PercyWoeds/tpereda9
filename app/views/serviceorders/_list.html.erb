@@ -17,6 +17,10 @@
         <th class="bordered_right bordered_bottom">
           Aprobado 
         </th>
+        <th class="bordered_right bordered_bottom">
+          Aprobado 
+        </th>
+        
         <th class="bordered_right bordered_bottom" colspan="3">
           Opciones 
         </th>
@@ -26,25 +30,25 @@
     
       <% for serviceorder in @serviceorders %>
         <tr>
-          <td class="bordered_right bordered_bottom">
-            <%= link_to serviceorder.code, serviceorder, :title => "Ir a factura" %>
+          <td class="small bordered_bottom bordered_right">
+            <%= link_to serviceorder.code, serviceorder, :title => "Ir a orden" %>
           </td>
-          <td class="bordered_right bordered_bottom">
+         <td class="small bordered_bottom bordered_right">
             <%= link_to serviceorder.supplier.name, serviceorder.supplier, :title => "Go to customer" %>
           </td>
           <td class="bordered_right bordered_bottom right">
             <%= money(serviceorder.total) %>
           </td>
-          <td class="bordered_right bordered_bottom">
+         <td class="small bordered_bottom bordered_right">
             <%= doDate(serviceorder.created_at) %>
           </td>
-          <td class="bordered_right bordered_bottom <%= serviceorder.processed_color %>">
+           <td class="small bordered_bottom bordered_right <%= serviceorder.processed_color %>" >
             <%= serviceorder.get_processed_short %>
           </td>
-          <td class="bordered_right bordered_bottom">          
+         <td class="small bordered_bottom bordered_right">          
           <%= link_to "Ver", serviceorder %>                                 
           </td>
-          <td class="bordered_right bordered_bottom">  
+         <td class="small bordered_bottom bordered_right">  
 
             
           <% if serviceorder.processed =="" || serviceorder.processed == nil %>

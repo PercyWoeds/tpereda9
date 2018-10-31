@@ -2,25 +2,25 @@
   <table>
     <thead>
       <tr>
-        <th class="bordered_right bordered_bottom" style="width: 100px;">
+        <th class="small bordered_bottom bordered_right" style="width: 100px;">
           Orden Compra
         </th>
-        <th class="bordered_right bordered_bottom" style="width: 350px;">
-          supplier
+        <th class="small bordered_bottom bordered_right" style="width: 350px;">
+          Proveedor 
         </th>
-        <th class="bordered_right bordered_bottom">
+       <td class="small bordered_bottom bordered_right">
           Moneda
         </th>      
-        <th class="bordered_right bordered_bottom">
+       <td class="small bordered_bottom bordered_right">
           Total
         </th>
-        <th class="bordered_right bordered_bottom">
-          Date
+       <td class="small bordered_bottom bordered_right">
+          Fecha 
         </th>
-        <th class="bordered_right bordered_bottom">
+       <td class="small bordered_bottom bordered_right">
           Processed
         </th>
-        <th class="bordered_right bordered_bottom" colspan="3">
+        <th class="small bordered_bottom bordered_right" colspan="3">
           Options
         </th>
       </tr>
@@ -29,30 +29,30 @@
     
       <% for purchaseorder in @purchaseorders %>
         <tr>
-          <td class="bordered_right bordered_bottom">
+         <td class="small bordered_bottom bordered_right">
             <%= link_to purchaseorder.code, purchaseorder, :title => "Ir a factura" %>
           </td>
-          <td class="bordered_right bordered_bottom">
+         <td class="small bordered_bottom bordered_right">
             <%= link_to purchaseorder.supplier.name, purchaseorder.supplier, :title => "Go to supplier" %>
           </td>
-          <td class="bordered_right bordered_bottom right">
+          <td class="small bordered_bottom bordered_right">
             <%= purchaseorder.moneda.symbol %>
           </td>
           
-          <td class="bordered_right bordered_bottom right">
+          <td class="small bordered_bottom bordered_right">
             <%= money(purchaseorder.total) %>
           </td>
-          <td class="bordered_right bordered_bottom">
+         <td class="small bordered_bottom bordered_right">
             <%= doDate(purchaseorder.created_at) %>
           </td>
-          <td class="bordered_right bordered_bottom <%= purchaseorder.processed_color %>">
+          <td class="small bordered_bottom bordered_right <%= purchaseorder.processed_color %>" >
             <%= purchaseorder.get_processed_short %>
           </td>
-          <td class="bordered_right bordered_bottom">
+         <td class="small bordered_bottom bordered_right">
             <%= link_to "Ver", purchaseorder %>
           </td>
          <% if  @current_user.level == "admin"|| @current_user.level == "compras" %>
-          <td class="bordered_right bordered_bottom">
+         <td class="small bordered_bottom bordered_right">
             <%= link_to 'Eliminar', purchaseorder, :confirm => 'Are you sure?', :method => :delete %>
           </td>
          <% end %>

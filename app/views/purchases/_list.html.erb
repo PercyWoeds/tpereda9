@@ -30,21 +30,22 @@
   <tbody>
     <% @purchases.each do |purchase| %>
       <tr>
-        <td><%= purchase.document.description %></td>
-        <td><%= purchase.documento %></td>
-        <td><%= purchase.supplier.name  %></td>         
-        <td><%= purchase.date1.strftime("%d/%m/%Y") %></td>
-        <td><%= purchase.date3.strftime("%d/%m/%Y") %></td>
-        <td><%= purchase.moneda.symbol %></td>            
-        <td><%= money(purchase.discount) %></td>      
-        <td><%= money(purchase.payable_amount) %></td>      
-        <td><%= money(purchase.tax_amount) %></td>
-        <td><%= money(purchase.total_amount) %></td>
+         <td class="small bordered_bottom bordered_right"><%= purchase.document.description %></td>
+        <td class="small bordered_bottom bordered_right"><%= purchase.documento %></td>
+        <td class="small bordered_bottom bordered_right"><%= purchase.supplier.name  %></td>         
+        <td class="small bordered_bottom bordered_right"><%= purchase.date1.strftime("%d/%m/%Y") %></td>
+        <td class="small bordered_bottom bordered_right"><%= purchase.date3.strftime("%d/%m/%Y") %></td>
+        <td class="small bordered_bottom bordered_right"><%= purchase.moneda.symbol %></td>            
+        <td class="small bordered_bottom bordered_right"><%= money(purchase.discount) %></td>      
+        <td class="small bordered_bottom bordered_right"><%= money(purchase.payable_amount) %></td>      
+        <td class="small bordered_bottom bordered_right"><%= money(purchase.tax_amount) %></td>
+        <td class="small bordered_bottom bordered_right"><%= money(purchase.total_amount) %></td>
 
-        <td class="bordered_right bordered_bottom <%= purchase.processed_color %>">
-            <%= purchase.get_processed_short %>
+        <td class="small bordered_bottom bordered_right <%= purchase.processed_color %>">
+          <%= purchase.get_processed_short %>
         </td>
-        <td class="bordered_right bordered_bottom ">
+        
+        <td class="small bordered_bottom bordered_right">
             <%= purchase.get_purchaseorder %>
         </td>
             
