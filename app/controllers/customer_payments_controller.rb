@@ -1430,6 +1430,8 @@ class CustomerPaymentsController < ApplicationController
         if lcCli == customerpayment_rpt.customer_id 
 
           $lcCliName = customerpayment_rpt.customer.name  
+          
+          if customerpayment_rpt.year_month.balance.round(2) > 0.00
       
           if customerpayment_rpt.year_month.to_f <= 201712
             @total_anterior = @total_anterior + customerpayment_rpt.balance.round(2)
@@ -1473,7 +1475,7 @@ class CustomerPaymentsController < ApplicationController
           if customerpayment_rpt.year_month == '201905'     
             @total_mes12 = @total_mes12 + customerpayment_rpt.balance.round(2)
           end   
-          
+        end 
           
         else
           
@@ -1544,7 +1546,8 @@ class CustomerPaymentsController < ApplicationController
             @total_mes11 = 0
             @total_mes12 = 0
             @total_cliente = 0 
-            
+          if customerpayment_rpt.year_month.balance.round(2) > 0.00
+          
           if customerpayment_rpt.year_month.to_f <= 201712
             @total_anterior = @total_anterior + customerpayment_rpt.balance.round(2)
           end             
@@ -1591,7 +1594,9 @@ class CustomerPaymentsController < ApplicationController
           nroitem = nroitem + 1 
         end 
          @total_general = @total_general + customerpayment_rpt.balance.round(2)
+       end 
        end   
+       
 
       #fin for
           #ultimo cliente 
