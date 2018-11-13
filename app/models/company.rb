@@ -840,7 +840,7 @@ def get_customer_payments2(moneda,fecha1,fecha2)
    customer_id,
    SUM(balance) as balance   
    FROM facturas
-   WHERE moneda_id = ? and balance>0 and fecha >= ? and fecha  <= ? and document_id <> 2 
+   WHERE moneda_id = ? and round(cast(balance as numeric),2) > 0 and fecha >= ? and fecha  <= ? and document_id <> 2 
    GROUP BY 2,1
    ORDER BY 2,1 ", moneda,"#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])    
    
@@ -850,7 +850,7 @@ def get_customer_payments2(moneda,fecha1,fecha2)
    customer_id,
    SUM(balance) as balance   
    FROM facturas
-   WHERE moneda_id = ? and balance>0 and fecha >= ? and fecha  <= ? and document_id = 2 
+   WHERE moneda_id = ? and round(cast(balance as numeric),2) > 0 and fecha >= ? and fecha  <= ? and document_id = 2 
    GROUP BY 2,1
    ORDER BY 2,1 ", moneda,"#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])    
    
@@ -876,7 +876,7 @@ def get_customer_payments2(moneda,fecha1,fecha2)
        else
          lcbalance = c.balance * -1
          puts "cliente "
-         puts c.customerid 
+         puts c.customer_id 
          a= Tempfactura.new(:year_month=> c.year_month,:customer_id => c.customer_id,:balance=>lcBalance)
          a.save 
        end
