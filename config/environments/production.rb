@@ -71,6 +71,8 @@ Mnygo::Application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+  
+  config.exceptions_app = ->(env) { ExceptionsController.action(:show).call(env) }
 
   config.action_mailer.delivery_method = :smtp
   

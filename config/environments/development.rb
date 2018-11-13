@@ -12,7 +12,8 @@ Mnygo::Application.configure do
   config.whiny_nils = true
   config.assets.debug = false
   # Show full error reports and disable caching
-  config.consider_all_requests_local       = true
+  
+  config.consider_all_requests_local       = false
   #config.action_view.debug_rjs             = true
   config.action_controller.perform_caching = false
 
@@ -40,6 +41,9 @@ Mnygo::Application.configure do
   #BetterErrors::Middleware.allow_ip! "0.0.0.0/0"
   
   config.web_console.whitelisted_ips = ['10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16','148.102.0.0/16','167.250.205.154','190.8.128.0/16']
-    
+
+  
+  
+
 end
 

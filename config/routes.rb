@@ -231,6 +231,17 @@ end
     collection { get :update}
   end 
 
+  get '/404', :to => "errors#not_found"
+  get '/422', :to => "errors#unacceptable"
+  get '/500', :to => "errors#internal_error" 
+  
+  
+  if Rails.env.production?
+    get '404', to: 'application#page_not_found'
+    get '422', to: 'application#server_error'
+    get '500', to:  'application#server_error'
+end
+
   resources :carts
 
   devise_for :users, :controllers => { 
