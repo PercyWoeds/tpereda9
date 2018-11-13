@@ -1431,7 +1431,7 @@ class CustomerPaymentsController < ApplicationController
 
           $lcCliName = customerpayment_rpt.customer.name  
           
-          if customerpayment_rpt.year_month.balance.round(2) > 0.00
+          if customerpayment_rpt.balance.round(2) > 0.00
       
           if customerpayment_rpt.year_month.to_f <= 201712
             @total_anterior = @total_anterior + customerpayment_rpt.balance.round(2)
@@ -1546,7 +1546,8 @@ class CustomerPaymentsController < ApplicationController
             @total_mes11 = 0
             @total_mes12 = 0
             @total_cliente = 0 
-          if customerpayment_rpt.year_month.balance.round(2) > 0.00
+            
+          if customerpayment_rpt.balance.round(2) > 0.00
           
           if customerpayment_rpt.year_month.to_f <= 201712
             @total_anterior = @total_anterior + customerpayment_rpt.balance.round(2)
@@ -1592,8 +1593,9 @@ class CustomerPaymentsController < ApplicationController
           end   
           
           nroitem = nroitem + 1 
+      
+          @total_general = @total_general + customerpayment_rpt.balance.round(2)
         end 
-         @total_general = @total_general + customerpayment_rpt.balance.round(2)
        end 
        end   
        
