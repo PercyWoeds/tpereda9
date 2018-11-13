@@ -1530,7 +1530,6 @@ class CustomerPaymentsController < ApplicationController
             $lcCliName =customerpayment_rpt.customer.name
             lcCli = customerpayment_rpt.customer_id
 
-
             @total_anterior = 0
             @total_mes01 = 0
             @total_mes02 = 0
