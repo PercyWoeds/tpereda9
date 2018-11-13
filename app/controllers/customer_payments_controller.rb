@@ -1475,6 +1475,8 @@ class CustomerPaymentsController < ApplicationController
           if customerpayment_rpt.year_month == '201905'     
             @total_mes12 = @total_mes12 + customerpayment_rpt.balance
           end   
+            @total_general = @total_general + customerpayment_rpt.balance
+            
         end 
           
         else
