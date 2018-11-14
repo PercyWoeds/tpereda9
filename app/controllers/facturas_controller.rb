@@ -1303,6 +1303,13 @@ def newfactura2
       
        for  product in @facturas_rpt
        
+        if product.document_id == 2
+            balance_importe = product.balance.round(2) * -1
+        else
+            balance_importe = product.balance.round(2) 
+        end 
+         
+       
          if product.balance.round(2) > 0.00
            
           if lcCliente == product.customer_id
