@@ -1310,7 +1310,7 @@ def newfactura2
         end 
          
        
-         if product.balance.round(2) > 0.00
+         if balance_importe > 0.00
            
           if lcCliente == product.customer_id
 
