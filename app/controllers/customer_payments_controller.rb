@@ -8,6 +8,7 @@ class CustomerPaymentsController < ApplicationController
 
 
   before_filter :authenticate_user!, :checkServices
+  
 
   def new1
 
@@ -2988,6 +2989,10 @@ class CustomerPaymentsController < ApplicationController
   end
 
 
+  
+
+
+
   def rpt_ccobrar11_pdf
     @company=Company.find(params[:id])      
     @fecha1 = params[:fecha1]
@@ -3011,7 +3016,6 @@ class CustomerPaymentsController < ApplicationController
     end 
   end
 
-  
 
   #####
   private
@@ -3022,5 +3026,6 @@ class CustomerPaymentsController < ApplicationController
       :descrip,:comments,:user_id,:processed,:code,:concept_id)
 
   end
+  
 
 end 

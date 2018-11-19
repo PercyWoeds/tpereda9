@@ -87,6 +87,7 @@
     resources :viatico_details, except: [:index,:show], controller: "viaticos/viatico_details"
     
   end
+
   
   resources :facturas do 
     collection { get :reportes}
@@ -99,8 +100,9 @@
     collection { get :exportxls }
     collection { get :rpt_ccobrar3 }
     collection { get :rpt_ccobrar3_pdf }
+    collection { get :rpt_ccobrar5_pdf }
     collection { get :reportep01 }
-    
+    collection { get :rpt_cobranzas_pdf }
   end 
     
   
