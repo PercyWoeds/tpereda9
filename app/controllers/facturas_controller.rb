@@ -1331,34 +1331,20 @@ def newfactura2
             row << product.moneda.symbol  
 
             if product.moneda_id == 1 
-                if product.document_id   == 2
-                  row << "0.00 "
-                  row << sprintf("%.2f",(product.balance*-1).to_s)
-                    if(product.fecha2 < Date.today)   
-                      @totalvencido_dolar += product.balance*-1
-                    end  
-                else  
                   row << "0.00 "
                   row << sprintf("%.2f",product.balance.to_s)
                   if(product.fecha2 < Date.today)   
                       @totalvencido_dolar += product.balance
                   end  
-                end   
+                
             else
-                if product.document_id == 2
-                  row << sprintf("%.2f",(product.balance*-1).to_s)
-                  row << "0.00 "
-                  if(product.fecha2 < Date.today)   
-                      @totalvencido_soles += product.balance*-1
-                  end  
-                else                
                   row << sprintf("%.2f",product.balance.to_s)
                   row << "0.00 "
                   if(product.fecha2 < Date.today)   
                       @totalvencido_soles += product.balance
                   end  
                     
-                end 
+                
             end
             
             
