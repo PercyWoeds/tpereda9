@@ -481,7 +481,7 @@ class Factura < ActiveRecord::Base
     
     if self.moneda_id == 2
           if self.document_id   == 2
-                  valor = self.subtotal*-1
+                  valor = self.subtotal
                     
           else  
                   valor = self.subtotal 
@@ -497,7 +497,7 @@ class Factura < ActiveRecord::Base
     
     if self.moneda_id == 2
           if self.document_id   == 2
-                  valor = self.tax*-1
+                  valor = self.tax
                     
           else  
                   valor = self.tax 
@@ -513,7 +513,7 @@ class Factura < ActiveRecord::Base
     
     if self.moneda_id == 2
           if self.document_id   == 2
-                  valor = self.total*-1
+                  valor = self.total
                     
           else  
                   valor = self.total 
@@ -528,7 +528,7 @@ class Factura < ActiveRecord::Base
        valor = 0
        if self.moneda_id ==1
           if self.document_id   == 2
-                  valor = self.balance*-1
+                  valor = self.balance
                     
           else  
                   valor = self.balance
@@ -542,7 +542,7 @@ class Factura < ActiveRecord::Base
        valor = 0
        if self.moneda_id ==2
           if self.document_id   == 2
-                  valor = self.balance*-1
+                  valor = self.balance
                     
           else  
                   valor = self.balance
@@ -555,7 +555,7 @@ class Factura < ActiveRecord::Base
        valor = 0
        if self.moneda_id ==1
           if self.document_id   == 2
-                  valor = self.balance*-1
+                  valor = self.balance
                     
           else  
                   valor = self.balance
