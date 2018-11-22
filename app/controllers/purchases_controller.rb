@@ -3190,7 +3190,7 @@ def newfactura2
     @tipodocumento = @purchase[:document_id]
     
     if @tipodocumento == 2
-      @purchase[:payable_amount] = @purchase.get_subtotal(items) * -1
+      @purchase[:payable_amount] = @purchase.get_subtotal(items) 
     else
       @purchase[:payable_amount] = @purchase.get_subtotal(items)
     end    
@@ -3198,8 +3198,8 @@ def newfactura2
 
     begin
        if @tipodocumento == 2
-        @purchase[:tax_amount] = @purchase.get_tax(items, @purchase[:supplier_id]) * -1
-       else
+        @purchase[:tax_amount] = @purchase.get_tax(items, @purchase[:supplier_id])  
+        else
         @purchase[:tax_amount] = @purchase.get_tax(items, @purchase[:supplier_id])
        end 
     rescue
@@ -3269,10 +3269,12 @@ def newfactura2
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
+
       
     @purchase[:subtotal] = @purchase.get_subtotal(items)
     @purchase[:tax] = @purchase.get_tax(items, @purchase[:supplier_id])
     @purchase[:total] = @purchase[:subtotal] + @purchase[:tax]
+    
 
     respond_to do |format|
       if @purchase.update_attributes(params[:purchase])
