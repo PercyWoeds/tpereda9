@@ -554,15 +554,15 @@ def get_tax3(items, supplier_id)
 
     if self.tipo =="0"
 
-    if(self.processed == "1" or self.processed == true  )
+      if(self.processed == "1" or self.processed == true  )
 
         self.date_processed = Time.now
         self.save
     
 
       end
-    end   
-  end 
+     
+    end 
   end
   
   
