@@ -1387,7 +1387,7 @@ def newfactura2
 
 
             row = []          
-            row << lcDoc
+            row << product.document.descripshort 
             row << product.code
             row << product.fecha.strftime("%d/%m/%Y")
             row << product.fecha2.strftime("%d/%m/%Y")
@@ -1608,6 +1608,14 @@ def newfactura2
     @cliente = params[:customer_id]      
    
     @facturas_rpt = @company.get_pendientes_cliente(@fecha1,@fecha2,@cliente)  
+    
+    for f in @facturas_rpt
+      puts f.document.descripshort
+      puts f.code 
+      puts f.balance 
+      
+    end 
+    
     @dolares = 0
     @soles = 0 
 
