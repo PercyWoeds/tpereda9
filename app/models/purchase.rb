@@ -498,6 +498,7 @@ def get_tax3(items, supplier_id)
 
     if(self.processed == "1" or self.processed == true  )
 
+
       purchase_details =PurchaseDetail.where(purchase_id: self.id)
     
       for ip in purchase_details
@@ -548,6 +549,24 @@ def get_tax3(items, supplier_id)
     end   
   end 
   end
+  
+  def process_nota_credito
+
+    if self.tipo =="0"
+
+    if(self.processed == "1" or self.processed == true  )
+
+        self.date_processed = Time.now
+        self.save
+    
+
+      end
+    end   
+  end 
+  end
+  
+  
+  
   def process_documentos 
       if self.purchaseorder_id != nil 
         

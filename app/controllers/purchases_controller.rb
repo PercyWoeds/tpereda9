@@ -3224,12 +3224,14 @@ def newfactura2
 
         if @purchase.save     
           if @tipodocumento == 2
-            @purchase.add_products_menos(items)                    
+            @purchase.add_products_menos(items)   
+            @purchase.process_nota_credito
           else
             @purchase.add_products(items)                    
+            @purchase.process()
           end 
 
-          @purchase.process()
+
           
           format.html { redirect_to(@purchase, :notice => 'Factura fue grabada con exito .') }
           format.xml  { render :xml => @purchase, :status => :created, :location => @purchase}
