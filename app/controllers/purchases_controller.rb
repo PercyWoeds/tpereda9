@@ -2967,8 +2967,14 @@ def newfactura2
     @purchase = Purchase.find(params[:id])
     @purchase[:processed] = "1"
 
-    if @purchase.tipo == "0"    
-        @purchase.process
+    if @purchase.tipo == "0"  
+      
+        if @purrchase.document_id != 2
+          @purchase.process
+        else 
+          @purchase.process2
+        end 
+        
     else 
         @purchase.process2
     end 

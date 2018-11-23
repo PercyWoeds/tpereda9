@@ -64,6 +64,8 @@ class Sellvale < ActiveRecord::Base
          
           
         end
+       
+        
     end     
     
     
