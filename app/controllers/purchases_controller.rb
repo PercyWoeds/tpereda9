@@ -2969,7 +2969,7 @@ def newfactura2
 
     if @purchase.tipo == "0"  
       
-        if @purrchase.document_id != 2
+        if @purchase.document_id != 2
           @purchase.process
         else 
           @purchase.process2
