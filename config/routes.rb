@@ -606,9 +606,12 @@ end
   match 'deliveries/ac_unidads/:company_id' => 'deliveries#ac_unidads', via: [:get, :post]
   match 'deliveries/ac_user/:company_id' => 'deliveries#ac_user', via: [:get, :post]
   match 'deliveries/ac_customers/:company_id' => 'deliveries#ac_customers', via: [:get, :post]
-  match 'deliveries/ac_guiass/:company_id' => 'deliveries#ac_guias', via: [:get, :post]
+  match 'deliveries/ac_guias/:company_id' => 'deliveries#ac_guias', via: [:get, :post]
   match 'deliveries/new/:company_id' => 'deliveries#new', via: [:get, :post]
   match 'deliveries/do_unir/:company_id' => 'deliveries#do_unir', via: [:get, :post]
+  match 'deliveries/do_guias/:company_id' => 'deliveries#do_guias', via: [:get, :post]
+  match 'deliveries/newguia/:id' => 'deliveries#newguia', via: [:get, :post]
+  
   match 'companies/deliveries/unir/:company_id' => 'deliveries#unir', via: [:get, :post]
 
   match 'deliveries/do_email/:id' => 'deliveries#do_email', via: [:get, :post]

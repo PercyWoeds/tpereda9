@@ -567,6 +567,12 @@ def get_guias_2(fecha1,fecha2)
     
  end 
  
+ def get_facturas_day_usuario(fecha1,fecha2,moneda,user_id)
+
+    @facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ? and user_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",moneda,user_id ]).order(:id )
+    return @facturas
+    
+ end 
 
 
 ## REPORTES DE LIQUIDACION  DE COBRANZA

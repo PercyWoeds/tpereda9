@@ -96,6 +96,31 @@ end
   
   end 
   
+  def do_guias
+    @company = Company.find(params[:company_id])
+
+    @ost = Tranportorder.all.paginate(:page => params[:page])
+  
+  end 
+  
+  def newguia
+    @company = Company.find(1)
+    @purchaseorder = Tranportorder.find(params[:id])
+    @purchase = Delivery.new 
+
+    
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+
+    @documents = @company.get_documents()    
+    @servicebuys  = @company.get_servicebuys()
+    @monedas  = @company.get_monedas()
+    @payments  = @company.get_payments()
+    @suppliers = @company.get_suppliers()      
+
+  end 
+  
+  
 
   # Process an delivery
   def do_process
