@@ -36,7 +36,7 @@
 
   
   
-  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
       <% nroitem = 1%>
       <% total_1 =  0%>
       <% total_2 =  0%>
@@ -44,17 +44,12 @@
        <% for  detalle in @facturas_rpt  %>
        
                     <tr>
-                    <td width= "5%" ><%= detalle.document.descripshort  %></td>
-                    <td width= "10%" ><%=  detalle.code %>   </td>
+                    <td width= "4%" ><%= detalle.document.descripshort  %></td>
+                    <td width= "8%" ><%=  detalle.code %>   </td>
                     <td width = "12%" align ="center"><%= detalle.fecha.strftime("%d/%m/%Y")     %></td>
                     
                     <td width = "12%" align ="left"><%= detalle.customer.ruc   %> </td>
-                      
-                    
-                    
                     <td width = "25%" align ="left"><%= detalle.customer.name   %> </td>
-                    
-                    
                     <% if detalle.moneda_id == 1 %>
                     <td width = "5%" align ="center"> USD </td>
                     <% else %>
@@ -71,9 +66,11 @@
                   <% lctax =  detalle.tax %>
                   <% lctotal = detalle.total %>
                 <% end %>
-                <td width = "12%" align ="right"><%= sprintf("%.2f",lcsubtotal)   %></td>
-                <td width = "12%" align ="right"><%= sprintf("%.2f",lctax)   %></td>
-                <td width = "12%" align ="right"><%= sprintf("%.2f",lctotal)   %></td>
+                <td width = "10%" align ="right"><%= sprintf("%.2f",lcsubtotal)   %></td>
+                <td width = "10%" align ="right"><%= sprintf("%.2f",lctax)   %></td>
+                <td width = "10%" align ="right"><%= sprintf("%.2f",lctotal)   %></td>
+                <td width = "10%" align ="right"><%= detalle.user.email   %></td>
+                
                 </tr>
             
          <% end %>
