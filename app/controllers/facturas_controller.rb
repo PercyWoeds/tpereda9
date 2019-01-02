@@ -399,14 +399,25 @@ def reportes05
     end
   
     if(@company.can_view(current_user))
-
-         @invoices = Factura.all.order('fecha DESC',"code DESC").paginate(:page => params[:page])
-        if params[:search]
-          @invoices = Factura.search(params[:search]).order('fecha DESC',"code DESC").paginate(:page => params[:page])
+      
+        if current_user.email == 'gestor.comercial.1@tpereda.com.pe' || current_user.email =='gestor.comercial.2@tpereda.com.pe' || current_user.email =='gestor.comercial.3@tpereda.com.pe'
+        
+           @invoices = Factura.all.order('fecha DESC',"code DESC").paginate(:page => params[:page])
+            if params[:search]
+              @invoices = Factura.search(params[:search]).order('fecha DESC',"code DESC").paginate(:page => params[:page])
+            else
+              @invoices = Factura.order('fecha DESC',"code DESC").paginate(:page => params[:page]) 
+            end
         else
-          @invoices = Factura.order('fecha DESC',"code DESC").paginate(:page => params[:page]) 
+           @current_user_id = current_user.id 
+             @invoices = Factura.all.where(user_id: @current_user_id).order('fecha DESC',"code DESC").paginate(:page => params[:page])
+            if params[:search]
+              @invoices = Factura.where(user_id: @current_user_id).search(params[:search]).order('fecha DESC',"code DESC").paginate(:page => params[:page])
+            else
+              @invoices = Factura.where(user_id: @current_user_id).order('fecha DESC',"code DESC").paginate(:page => params[:page]) 
+            end
+        
         end
-
     
     else
       errPerms()
