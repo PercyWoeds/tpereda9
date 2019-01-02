@@ -19,16 +19,16 @@
   
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
   <tr bgcolor="#B4D7F7">
-    <td width="5%"> TD </td>
-    <td width="10%"> Numero  </td>
+    <td width="4%"> TD </td>
+    <td width="8%"> Numero  </td>
     <td width="12%"> Fecha </td>
     <td width="12%"> Ruc</td>
     <td width="25%"> Cliente </td>
     <td width="5%"> Mon. </td>
-    <td width="12%"> V.Venta</td>
-    <td width="12%"> IGV </td>
-    <td width="12%"> IMPORTE </td>
-    
+    <td width="10%"> V.Venta</td>
+    <td width="10%"> IGV </td>
+    <td width="10%"> IMPORTE </td>
+    <td width="10%"> Comercial </td>
     
     
   </tr>
@@ -86,10 +86,11 @@
      
      <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
      <tr bgcolor="#B4D7F7">
-          <td width = "70%" align ="center">Totales  </td>
+          <td width = "60%" align ="center">Totales  </td>
           <td width = "10%" align ="right"><%= sprintf("%.3f",subtotal)   %></td>
           <td width = "10%" align ="right"><%= sprintf("%.3f",tax)   %></td>
           <td width = "10%" align ="right"><%= sprintf("%.2f",total)   %></td>
+          <td width = "10%" align ="right"></td>
     </tr>
    </table>
 
