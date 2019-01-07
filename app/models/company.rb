@@ -853,7 +853,7 @@ def get_customer_payments_value_otros_moneda(fecha1,fecha2,value='factory',moned
             
           
               if(value == "ajuste")
-                ret += d.ajuste
+                ret += d.ajuste * -1
               elsif (value == "compen")
                 ret += d.compen 
               else         
