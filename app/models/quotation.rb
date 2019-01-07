@@ -12,6 +12,9 @@ class Quotation < ActiveRecord::Base
   belongs_to :moneda 
   belongs_to :user  
   belongs_to :punto 
+  
+  has_many :quotation_details, :dependent => :destroy
+  
   TABLE_HEADERS = ["Tipo de Unidad e Importe del Servicio",
                       "Costo Total "]
 

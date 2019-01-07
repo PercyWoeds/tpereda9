@@ -71,6 +71,7 @@
     </div>
     </td>
     </tr>
+    
       <tr>
         <td>
       <div class="field">
@@ -86,100 +87,60 @@
     </td>
     </tr>
   
-     <tr>
-       <td>
-    <div class="field">
-      <%= f.label :moneda_id ,"  "%><br />
-      <%= f.collection_select :moneda_id, @monedas, :id, :description, :prompt => true %>      
-      
-    </div>
-    </td>
+    <tr>
     <td>
-    <div class="field">
-      <%= f.label :importe,"Importe: " %><br />
-      <%= f.number_field :importe , step: 0.01 %>
-    </div>
+      <div class="field">
+      <%= f.label :moneda_id ,"  "%><br />
+      <%= f.collection_select :moneda_id, @monedas, :id, :description, :prompt => true %>        
+      </div>
     </td>
-    </tr>
-    </table>  
     
-    <table>
     <tr>
       <td>
-    <div class="field">
-      <%= f.label :condiciones,"Condiciones 1: " %><br />
-      <%= f.text_area :condiciones %>
-    </div>
+      <div class="field">
+        <%= f.label :instruccion_id ,"Opciones  : " %><br />
+        <%= f.collection_select :instruccion_id , @instruccions, :id, :condicion, :prompt => true %>      
+      </div>
     </td>
+    </tr>
     
+    <br>
+    <tr>
     <td>
-     <div class="field">
-      <%= f.check_box :op1 %>
-      <%= f.label :op1 ,"Seleccionado ?", :class => "bold" %>
-      <div class="small">
-        Condición seleccionada  ?
+      <div class="field">
+        <%= f.label :condiciones,"Condiciones  : " %><br />
+        <%= f.text_area :condiciones  %>      
       </div>
-      
+    </td>
+    <td>
+      <div class="field">
+        <%= f.label :respon  ,"Responsabilidad  : " %><br />
+        <%= f.text_area :respon   %>      
       </div>
       </td>
       </tr>
-    
-      <tr>
-      <td>
-    
-      <div class="field">
-        <%= f.label :respon," Condiciones 2:" %><br />
-        <%= f.text_area :respon %>
-      </div>
-    <td>
-     <div class="field">
-      <%= f.check_box :op2 %>
-      <%= f.label :op2 ,"Seleccionado ?", :class => "bold" %>
-      <div class="small">
-        Condición seleccionada  ?
-      </div>
-      
-      </div>
-      </td>
-      
       <tr>
       <td>
       <div class="field">
-        <%= f.label :seguro,"Condiciones 3:" %><br />
-        <%= f.text_area :seguro %>
+        <%= f.label :seguro  ,"Seguro  : " %><br />
+        <%= f.text_area :seguro  %>      
       </div>
-      
-      
-      </td>
-      <td>
-        
-     <div class="field">
-      <%= f.check_box :op3 %>
-      <%= f.label :op3 ,"Seleccionado ?", :class => "bold" %>
-      <div class="small">
-        Condición seleccionada  ?
-      </div>
-        </div>
-      </td>
-      </tr>
-      
-      
-  </table>
-    <div class="field">
-      <%= f.label :firma_id,"Firma " %><br />
-      <%= f.collection_select :firma_id, @employees, :id, :full_name, :prompt => true %>
-    </div>
-
-  
+    </td>
+    </tr>
+    
+    </table>  
+    
   </div>
 
   <div class="form-actions">
-   <%= f.hidden_field :company_id %>
-    <div > 
+     <%= f.hidden_field :company_id %>
+      
       <%= f.button :submit  %>
-    </div>
+
     
   </div>
   
-  
 <% end %>
+
+
+  

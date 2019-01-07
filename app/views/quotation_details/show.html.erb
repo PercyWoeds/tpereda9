@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Item:</strong>
+  <%= @quotation_detail.item %>
+</p>
+
+<p>
+  <strong>Descrip:</strong>
+  <%= @quotation_detail.descrip %>
+</p>
+
+<p>
+  <strong>Costo1:</strong>
+  <%= @quotation_detail.costo1 %>
+</p>
+
+<p>
+  <strong>Costo2:</strong>
+  <%= @quotation_detail.costo2 %>
+</p>
+
+<p>
+  <strong>Total:</strong>
+  <%= @quotation_detail.total %>
+</p>
+
+<p>
+  <strong>References:</strong>
+  <%= @quotation_detail.references %>
+</p>
+
+<p>
+  <strong>Quotations:</strong>
+  <%= @quotation_detail.quotations %>
+</p>
+
+<%= link_to 'Edit', edit_quotation_detail_path(@quotation_detail) %> |
+<%= link_to 'Back', quotation_details_path %>

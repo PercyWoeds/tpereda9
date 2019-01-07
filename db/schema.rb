@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181025175411) do
+ActiveRecord::Schema.define(version: 20190107181725) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -807,6 +807,7 @@ ActiveRecord::Schema.define(version: 20181025175411) do
     t.text     "description4"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.string   "condicion"
   end
 
   create_table "inventario_detalles", force: :cascade do |t|
@@ -1721,6 +1722,16 @@ ActiveRecord::Schema.define(version: 20181025175411) do
     t.float    "total_renta_anual"
   end
 
+  create_table "quotation_details", force: :cascade do |t|
+    t.string   "item"
+    t.string   "descrip"
+    t.float    "costo1"
+    t.float    "costo2"
+    t.float    "total"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "quotations", force: :cascade do |t|
     t.datetime "fecha1"
     t.string   "code"
@@ -1746,6 +1757,7 @@ ActiveRecord::Schema.define(version: 20181025175411) do
     t.string   "op1"
     t.string   "op2"
     t.string   "op3"
+    t.integer  "instruccion_id"
   end
 
   create_table "remisions", force: :cascade do |t|
@@ -2097,8 +2109,8 @@ ActiveRecord::Schema.define(version: 20181025175411) do
     t.integer  "company_id"
     t.integer  "location_id"
     t.integer  "division_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.integer  "user_id"
     t.integer  "i"
     t.string   "tm"
@@ -2108,6 +2120,7 @@ ActiveRecord::Schema.define(version: 20181025175411) do
     t.float    "CurrTotal"
     t.datetime "fecha"
     t.string   "estado"
+    t.datetime "date_processed"
   end
 
   create_table "transferencia_detalles", force: :cascade do |t|

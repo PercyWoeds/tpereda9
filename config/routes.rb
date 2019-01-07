@@ -1,5 +1,6 @@
   Mnygo::Application.routes.draw do
 
+  resources :quotation_details
   resources :horas_mes
   resources :tipofaltantes
   resources :faltantes
@@ -793,6 +794,11 @@ end
 
   match 'tranportorders/rpt_ost1_pdf/:company_id' => 'tranportorders#rpt_ost1_pdf', via: [:get, :post]
   match 'tranportorders/rpt_ost2_pdf/:company_id' => 'tranportorders#rpt_ost2_pdf', via: [:get, :post]
+  match 'tranportorders/do_process/:id' => 'tranportorders#do_process', via: [:get, :post]
+  match 'tranportorders/do_anular/:id' => 'tranportorders#do_anular', via: [:get, :post]
+  match 'tranportorders/pdf/:id' => 'tranportorders#pdf', via: [:get, :post]
+  match 'tranportorders/do_email/:id' => 'tranportorders#do_email', via: [:get, :post]
+  
 
   # supplier payments
   

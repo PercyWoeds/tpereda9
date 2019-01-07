@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Quotation Details</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Descrip</th>
+      <th>Costo1</th>
+      <th>Costo2</th>
+      <th>Total</th>
+      <th>References</th>
+      <th>Quotations</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @quotation_details.each do |quotation_detail| %>
+      <tr>
+        <td><%= quotation_detail.item %></td>
+        <td><%= quotation_detail.descrip %></td>
+        <td><%= quotation_detail.costo1 %></td>
+        <td><%= quotation_detail.costo2 %></td>
+        <td><%= quotation_detail.total %></td>
+        <td><%= quotation_detail.references %></td>
+        <td><%= quotation_detail.quotations %></td>
+        <td><%= link_to 'Show', quotation_detail %></td>
+        <td><%= link_to 'Edit', edit_quotation_detail_path(quotation_detail) %></td>
+        <td><%= link_to 'Destroy', quotation_detail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Quotation detail', new_quotation_detail_path %>

@@ -33,7 +33,7 @@ class QuotationsController < ApplicationController
     @customers = Customer.all.order(:name)
     @quotation[:code]="#{generate_guid7()}"
    
-    @instruccions = Instruccion.find(2)
+    @instruccions = Instruccion.all 
 
     @company = Company.find(params[:company_id])
     @quotation.company_id = @company.id
@@ -43,9 +43,8 @@ class QuotationsController < ApplicationController
     @monedas = Moneda.all 
     
     @employees = Employee.all.order(:full_name)    
-    @quotation[:condiciones] = @instruccions.description1
-    @quotation[:respon] = @instruccions.description2
-    @quotation[:seguro] = @instruccions.description3
+    
+    
     @quotation[:fecha1] =  Date.today
 
   end

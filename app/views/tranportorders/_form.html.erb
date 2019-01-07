@@ -23,23 +23,23 @@
     <%= hr() %>
 
     <div class="field">
-      <%= f.label :employee_id , "Empleado "%><br />
+      <%= f.label :employee_id , "Conductor :"%><br />
       <%= f.collection_select :employee_id, @employees, :id, :full_name, :prompt => true %>
     </div>
 
     <div class="field">
-      <%= f.label :employee2_id , "Empleado "%><br />
+      <%= f.label :employee2_id , "Copiloto :"%><br />
       <%= f.collection_select :employee2_id, @employees, :id, :full_name, :prompt => true %>
     </div>
 
 
     <div class="field">
-      <%= f.label :ubication_id , "De  "%><br />
+      <%= f.label :ubication_id , "De :  "%><br />
        <%= f.collection_select :ubication_id, @puntos, :id, :name, :prompt => true %>
     </div>
    
     <div class="field">
-      <%= f.label :ubication2_id , "Hasta  "%><br />
+      <%= f.label :ubication2_id , "Hasta :  "%><br />
       <%= f.collection_select :ubication2_id, @puntos, :id, :name, :prompt => true %>
     </div>
    
@@ -58,23 +58,23 @@
     <%= hr() %>
 
     <div class="field">
-      <%= f.label :fecha1, "Fecha Emision*", :class => "bold" %><br />
+      <%= f.label :fecha1, "Fecha Salida*", :class => "bold" %><br />
       <%= f.date_field :fecha1 %>
 
     </div>
 
     <div class="field">
-      <%= f.label :fecha2, "Fecha Traslado*", :class => "bold" %><br />
+      <%= f.label :fecha2, "Fecha Llegada*", :class => "bold" %><br />
       <%= f.date_field :fecha2 %>
     </div>
     
     <%= hr() %>
     <div class="field">
-      <%= f.label :description,"Descripcion " %><br />
+      <%= f.label :description,"Guias en blanco " %><br />
       <%= f.text_area :description %>
     </div>
     <div class="field">
-      <%= f.label :comments,"Comentarios  " %><br />
+      <%= f.label :comments,"Observaciones  " %><br />
       <%= f.text_area :comments %>
     </div>
 

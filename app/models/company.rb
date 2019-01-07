@@ -823,6 +823,8 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? and factur
           @detail = CustomerPaymentDetail.where(:customer_payment_id => factura.id)
 
           for d in @detail 
+          
+          
             if(value == "ajuste")
               ret += d.ajuste
             elsif (value == "compen")
@@ -831,6 +833,35 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? and factur
               ret += d.factory
             end
           end 
+
+        end    
+
+    return ret
+ end 
+
+def get_customer_payments_value_otros_moneda(fecha1,fecha2,value='factory',moneda )
+
+    facturas = CustomerPayment.where(["fecha1 >= ? and fecha1 <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])        
+        ret=0  
+        for factura in facturas
+        
+          if factura.bank_acount.moneda == moneda   
+
+          @detail = CustomerPaymentDetail.where(:customer_payment_id => factura.id)
+
+          for d in @detail 
+            
+          
+              if(value == "ajuste")
+                ret += d.ajuste
+              elsif (value == "compen")
+                ret += d.compen 
+              else         
+                ret += d.factory
+              end
+              
+          end 
+        end 
 
         end    
 

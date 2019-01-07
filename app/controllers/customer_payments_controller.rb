@@ -1849,22 +1849,29 @@ class CustomerPaymentsController < ApplicationController
 
         end
 
-        @total_factory = @company.get_customer_payments_value_otros(@fecha1,@fecha2,"factory") 
-        @total_ajuste  = @company.get_customer_payments_value_otros(@fecha1,@fecha2,"ajuste") 
-        @total_compen  = @company.get_customer_payments_value_otros(@fecha1,@fecha2,"compen") 
+        @total_factory = @company.get_customer_payments_value_otros_moneda(@fecha1,@fecha2,"factory","1") 
+        @total_ajuste  = @company.get_customer_payments_value_otros_moneda(@fecha1,@fecha2,"ajuste","1") 
+        @total_compen  = @company.get_customer_payments_value_otros_moneda(@fecha1,@fecha2,"compen","1") 
         @total_compen = @total_compen *-1 
+        
+        @total_factory2 = @company.get_customer_payments_value_otros_moneda(@fecha1,@fecha2,"factory","2") 
+        @total_ajuste2  = @company.get_customer_payments_value_otros_moneda(@fecha1,@fecha2,"ajuste","2") 
+        @total_compen2  = @company.get_customer_payments_value_otros_moneda(@fecha1,@fecha2,"compen","2") 
+        @total_compen2 = @total_compen *-1 
+        
+        
         row = []
         row << nroitem.to_s
         row << "FACTORY :"
         row << sprintf("%.2f",@total_factory.to_s)
-        row << " "
+        row << sprintf("%.2f",@total_factory2.to_s)
 
         table_content2 << row
         row = []
         row << nroitem.to_s
         row << "AJUSTE  :"
         row << sprintf("%.2f",@total_ajuste.to_s)
-        row << " "
+        row << sprintf("%.2f",@total_ajuste2.to_s)
 
         table_content2 << row
 
@@ -1874,12 +1881,12 @@ class CustomerPaymentsController < ApplicationController
         
         row << sprintf("%.2f",@total_compen.to_s)
         
-        row << " "
+        row << sprintf("%.2f",@total_compen2.to_s)
         table_content2 << row
 
 
         @totalgeneral_soles = @totalgeneral_soles  + @total_ajuste + @total_factory + @total_compen
-
+        @totalgeneral_dolar = @totalgeneral_dolar  + @total_ajuste2 + @total_factory2 + @total_compen2
         
           row = []
           row << nroitem.to_s

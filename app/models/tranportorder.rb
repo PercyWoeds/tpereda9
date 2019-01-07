@@ -49,6 +49,12 @@ TABLE_HEADERS2 = ["ITEM",
                      /FEC.PAGO",
                      "DIAS CREDITO"
                      ]
+ TABLE_HEADERS_OST = ["EMPRESA",
+                     "NRO.GUIA",
+                     "DESCRIPCION",
+                     "PESO",
+                     "PRECIO FACTURA"
+                     ]
 
 	def self.search(search)
 		  where("code LIKE ?", "%#{search}%") 

@@ -548,6 +548,216 @@ def client_data_headers
     
       invoice_headers
   end
+  
+ def client_ost_headers
+
+    #{@serviceorder.description}
+      client_headers  = [["Conductor :",@ost.employee.full_name ]]
+      client_headers << ["Vehiculo :",@ost.truck.placa  ]
+      client_headers << ["Vehiculo 2:",@ost.get_placa(@ost.truck2_id)  ]
+      client_headers << ["Copiloto :",@ost.get_empleado(@ost.employee2_id)]
+      
+      client_headers
+  end
+
+  def ost_headers            
+      ost_headers  = [["De : ",@ost.get_punto(@ost.ubication_id)]]
+      ost_headers << ["A :", @ost.get_punto(@ost.ubication2_id)]
+      ost_headers << ["Fecha Salida :", @ost.fecha1.strftime('%d-%m-%Y')]
+      ost_headers
+  end
+   def invoice_summary
+      lcTotal= 0.00
+      invoice_summary = []
+      invoice_summary << ["Total Facturado:", ActiveSupport::NumberHelper::number_to_delimited(lcTotal ,delimiter:",",separator:".").to_s]
+
+      invoice_summary
+    end
+  
+  
+  
+  # Export ost to PDF
+  def pdf
+    @ost = Tranportorder.find(params[:id])
+    company =@ost.company_id
+    @company =Company.find(company)
+
+    Prawn::Document.generate("app/pdf_output/#{@ost.id}.pdf") do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header_ost(pdf)
+        pdf = build_pdf_body_ost(pdf)
+        build_pdf_footer_ost(pdf)
+        $lcFileName =  "app/pdf_output/#{@ost.id}.pdf"
+
+    end
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+
+
+  end
+
+
+def build_pdf_header_ost(pdf)
+
+
+      pdf.image "#{Dir.pwd}/public/images/logo2.png", :width => 270
+
+      pdf.move_down 6
+
+      pdf.move_down 4
+      #pdf.text supplier.street, :size => 10
+      #pdf.text supplier.district, :size => 10
+      #pdf.text supplier.city, :size => 10
+      pdf.move_down 4
+
+      pdf.bounding_box([325, 725], :width => 200, :height => 80) do
+        pdf.stroke_bounds
+        pdf.move_down 15
+        pdf.font "Helvetica", :style => :bold do
+          pdf.text "R.U.C: 20424092941", :align => :center
+          pdf.text "ORDEN DE SERVICIO DE TRANSPORTE", :align => :center
+          pdf.text "#{@ost.code}", :align => :center,
+                                 :style => :bold
+
+        end
+      end
+      pdf.move_down 5
+      pdf
+  end
+
+  def build_pdf_body_ost(pdf)
+
+    pdf.text "__________________________________________________________________________", :size => 13, :spacing => 2
+    pdf.text " ", :size => 13, :spacing => 4
+    pdf.font "Helvetica" , :size => 8
+
+    max_rows = [client_ost_headers.length, ost_headers.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_ost_headers.length >= row ? client_ost_headers[rows_index] : ['',''])
+        rows[rows_index] += (ost_headers.length >= row ? ost_headers[rows_index] : ['',''])
+      end
+
+      if rows.present?
+
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+        end
+
+        pdf.move_down 5
+
+      end
+
+      headers = []
+      table_content = []
+
+      Tranportorder::TABLE_HEADERS_OST.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content << headers
+
+      nroitem=1
+      
+      ary = [1,2,3,4,5,6,7,8,9]
+      
+      ary.each do |i|
+      
+            row = []
+            row << " "
+            row << " "
+            row << " "
+            row << " "
+            row << " "
+            table_content << row
+
+            nroitem=nroitem + 1
+        end
+      
+
+       
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                              } do
+                                          columns([0]).align=:center
+                                          columns([1]).align=:right
+                                          columns([2]).align=:center
+                                          columns([3]).align=:center
+                                          columns([4]).align=:right
+                                          columns([5]).align=:right
+                                          columns([6]).align=:right
+
+                                        end
+
+      pdf.move_down 10
+      
+      pdf.table invoice_summary, {
+        :position => :right,
+        :cell_style => {:border_width => 1},
+        :width => pdf.bounds.width/2
+      } do
+        columns([0]).font_style = :bold
+        columns([1]).align = :right
+
+      end
+     
+      
+      
+      pdf.text "GUIAS EN BLANCO : "+  @ost.description
+      pdf.move_down 20
+      
+        data3=  [["-----------------------------------","-----------------------------------","-----------------------------------" ],
+        ["DESPACHADOR","CONDUCTOR","SUPERVISOR" ]]
+        pdf.table(data3,:column_widths => [180, 180, 180], :cell_style => { :border_width => 0 })
+        pdf.text " "
+
+      
+      pdf
+
+    end
+
+
+    def build_pdf_footer_ost(pdf)
+      
+      
+
+        pdf.text ""
+        pdf.text ""
+        
+        data2 = [["RUTA :"+ @ost.get_punto(@ost.ubication_id) + "  -  "+ @ost.get_punto(@ost.ubication2_id) ,   "   FECHA: "+ @ost.fecha1.strftime("%d-%m-%Y")],
+                 ["PLACA: " + @ost.truck.placa + " EJES:          ", " CONDUCTOR : " + @ost.employee.full_name],
+                 ["OBSERVACIONES: "+@ost.comments, " "],
+                 [" ", " "],
+                 ["................................ ", " ................................ "],
+                 ["V.B.Recepcion y Despacho ", "          V.B."],
+                 [" ", " Responsable"]]
+        
+        pdf.bounding_box([0, 200], :width => 535, :height => 200) do
+          
+          
+        pdf.text "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
+        pdf.text "FORMATO DE AUTORIZACION:  " + @ost.code , :size => 13
+        
+        
+        pdf.table(data2, :cell_style => { :border_width => 0 }, :column_widths => [267, 268] )
+        
+      end
+      
+      
+      pdf
+
+     end
 
 
 

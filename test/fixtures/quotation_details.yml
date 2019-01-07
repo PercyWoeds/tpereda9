@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  item: MyString
+  descrip: MyString
+  costo1: 1.5
+  costo2: 1.5
+  total: 1.5
+  references: MyString
+  quotations: MyString
+
+two:
+  item: MyString
+  descrip: MyString
+  costo1: 1.5
+  costo2: 1.5
+  total: 1.5
+  references: MyString
+  quotations: MyString

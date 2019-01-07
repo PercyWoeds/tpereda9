@@ -1,82 +1,170 @@
-<p id="notice"><%= notice %></p>
 
+
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @tranportorder.company.name, @tranportorder.company %> &raquo;
+  <%= link_to "tranports", "/companies/tranportorders/#{@tranportorder.company.id}" %>
+</div>
 
 <h1>
   <%= image_tag("invoice_48.png", :class => "vmiddle") %>
-  <%= @tranportorder.identifier %>
+  ORDEN DE SERVICIO DE TRANSPORTE <%= @tranportorder.code %>
+  
 </h1>
 
+<%= hr() %>
+
+<% if @tranportorder.location %>
+  <p>
+    <b>Location:</b>
+    <%= link_to @tranportorder.location.name, @tranportorder.location %>
+  </p>
+<% end %>
+
+<% if @tranportorder.division %>
+  <p>
+    <b>Division:</b>
+    <%= link_to @tranportorder.division.name, @tranportorder.division %>
+  </p>
+<% end %>
+
+
+
 <p>
-  <strong>Numero :</strong>
+  <b>Code:</b>
   <%= @tranportorder.code %>
 </p>
 
-<p>
-  <strong>Conductor:</strong>
-  <%= @tranportorder.employee.full_name %>
-</p>
+
+<%= hr() %>
+
+<table style="width:100%">
+  
+  <tr>
+    <td><strong>Conductor:</strong></td>
+    <td> <%= @tranportorder.employee.full_name %></td> 
+    <td><strong> De</strong></td>
+    <td> <%= @tranportorder.get_punto(@tranportorder.ubication_id) %></td>
+  </tr>
+  <tr>
+    <td>Vehiculo:</td>
+    <td> <%= @tranportorder.truck.placa %></td> 
+    <td>A : </td>
+    <td> <%= @tranportorder.get_punto(@tranportorder.ubication2_id) %></td> 
+  </tr>
+  <tr>
+    <td>Vehiculo 2 :</td>
+    <td> <%= @tranportorder.get_placa(@tranportorder.truck2_id) %></td> 
+    <td></td>
+    <td> </td> 
+  </tr>
+  
+  
+  <tr>
+    <td>Copiloto</td>
+    <td> <%= @tranportorder.get_empleado(@tranportorder.employee2_id) %></td> 
+    <td>Fecha/Hora Salida  </td>
+    <td><%= @tranportorder.fecha1.strftime('%d-%m-%Y') %> </td> 
+  </tr>
+  <tr>
+    <td>Placa</td>
+    <td></td> 
+    <td>Fecha/Hora Llegada  </td>
+    <td><%= @tranportorder.fecha2.strftime('%d-%m-%Y') %></td> 
+  </tr>
+  <tr>
+    <td>Ejes </td>
+    <td></td> 
+    <td></td>
+    <td></td> 
+  </tr>
+
+  
+  
+    
+  
+</table>
+
+
+<%= hr() %>
+
+
+  <div>
+    <b><strong>Guias en blanco </strong></b>
+    <br />
+    <br />
+    <%= format_text(@tranportorder.description) %>
+  </div>
+  <%= hr() %>
+
+
+
+<h1> FORMATO DE AUTORIZACION  <%= @tranportorder.code %></h1>
+
+
+<table  style="width:100%">
+  <tr>
+  <td><p><strong>RUTA : </strong>    <%= @tranportorder.get_punto(@tranportorder.ubication_id)%>  - <%= @tranportorder.get_punto(@tranportorder.ubication2_id) %> </p></td>
+  <td><strong>FECHA: </strong> <%= @tranportorder.fecha1.strftime('%d-%m-%Y') %> </td>
+  </tr>
+  <tr>
+    <td><strong>PLACA: </strong> <%= @tranportorder.truck.placa %> </td>
+    <td>EJES: </td>
+  </tr>
+  <tr>
+    <td><strong>CONDUCTOR:</strong> <%= @tranportorder.get_empleado(@tranportorder.employee_id) %> </td>
+    <td></td>
+  </tr>
+  
+  
+</table>
+
+
+  <div>
+    <b><trong> Observaciones :</trong></b>
+    <br />
+    <br />
+    <%= format_text(@tranportorder.comments) %>
+  </div>
+  <%= hr() %>
+
+
+<br />
+
+<div>
+  <strong><%= @tranportorder.get_processed %></strong>
+  <% if @tranportorder.processed == "1" and @tranportorder.date_processed %>
+    <%= doDate(@tranportorder.date_processed) %>
+  <% end %>
+</div>
+
 
 <p>
-  <strong>Copiloto:</strong>
-  <%= @tranportorder.get_empleado(@tranportorder.employee2_id) %>
+  <strong>Seller:</strong>
+  <%= link_to @tranportorder.user.username, @tranportorder.user %>
 </p>
 
-<p>
-  <strong>Vehiculo 1:</strong>
-  <%= @tranportorder.truck.placa %>
-</p>
+<%= hr() %>
 
 
-<p>
-  <strong>Vehiculo2 :</strong>
-  <%= @tranportorder.get_placa(@tranportorder.truck2_id) %>
-</p>
 
-<p>
-  <strong>De :</strong>
-  <%= @tranportorder.get_punto(@tranportorder.ubication_id) %>
-</p>
+<img src=<%="https://chart.googleapis.com/chart?chs=120x120&cht=qr&chl=#{@tranportorder.code}&choe=UTF-8"%> alt="QR code">
 
-<p>
-  <strong>A :</strong>
-  <%= @tranportorder.get_punto(@tranportorder.ubication2_id) %>
-</p>
+<%= hr() %>
+<div class="button">
+  
+   
+<%= link_to 'Export PDF', "/tranportorders/pdf/#{@tranportorder.id}" %>
+<%= link_to 'Enviar OST via email', "/tranportorders/email/#{@tranportorder.id}" %>
+  
+<% if @tranportorder.processed =="0" || @tranportorder.processed==nil %>
+  <%= link_to 'Procesar OST', "/tranportorders/do_process/#{@tranportorder.id}" %>
+  <%= link_to 'Editar', edit_tranportorder_path(@tranportorder) %>
+  
+<% elsif @tranportorder.processed =="1" and current_user.level =="admin" %>  
 
-<p>
-  <strong>Fecha1:</strong>
-  <%= @tranportorder.fecha1 %>
-</p>
-
-<p>
-  <strong>Fecha2:</strong>
-  <%= @tranportorder.fecha2 %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @tranportorder.description %>
-</p>
-
-<p>
-  <strong>Comments:</strong>
-  <%= @tranportorder.comments %>
-</p>
-
-<p>
-  <strong>Processed:</strong>
-  <%= @tranportorder.processed %>
-</p>
-
-
-<p>
-  <strong>Location:</strong>
-  <%= @tranportorder.location_id %>
-</p>
-
-<p>
-  <strong>Division:</strong>
-  <%= @tranportorder.division_id %>
-</p>
-
-<%= link_to 'Edit', edit_tranportorder_path(@tranportorder) %> |
-<%= link_to 'Back', tranportorders_path %>
+  <%= link_to 'Anular', "/tranportorders/do_anular/#{@tranportorder.id}" %>
+  
+<% end %>
+<%= link_to 'Regresar', "/companies/tranportorders/#{@tranportorder.company.id}" %>
+</div>
