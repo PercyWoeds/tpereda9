@@ -1885,8 +1885,8 @@ class CustomerPaymentsController < ApplicationController
         table_content2 << row
 
 
-        @totalgeneral_soles = @totalgeneral_soles  + @total_ajuste + @total_factory + @total_compen
-        @totalgeneral_dolar = @totalgeneral_dolar  + @total_ajuste2 + @total_factory2 + @total_compen2
+        @totalgeneral_soles = @totalgeneral_soles  + @total_ajuste2 + @total_factory2 + @total_compen2
+        @totalgeneral_dolar = @totalgeneral_dolar  + @total_ajuste + @total_factory + @total_compen
         
           row = []
           row << nroitem.to_s
