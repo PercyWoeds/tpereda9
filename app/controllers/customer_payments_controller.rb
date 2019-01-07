@@ -1849,14 +1849,14 @@ class CustomerPaymentsController < ApplicationController
 
         end
 
-        @total_factory = @company.get_customer_payments_value_otros_moneda(@fecha1,@fecha2,"factory","1") 
-        @total_ajuste  = @company.get_customer_payments_value_otros_moneda(@fecha1,@fecha2,"ajuste","1") 
-        @total_compen  = @company.get_customer_payments_value_otros_moneda(@fecha1,@fecha2,"compen","1") 
+        @total_factory = @company.get_customer_payments_value_otros_moneda(@fecha1,@fecha2,"factory",1) 
+        @total_ajuste  = @company.get_customer_payments_value_otros_moneda(@fecha1,@fecha2,"ajuste",1) 
+        @total_compen  = @company.get_customer_payments_value_otros_moneda(@fecha1,@fecha2,"compen",1) 
         @total_compen = @total_compen *-1 
         
-        @total_factory2 = @company.get_customer_payments_value_otros_moneda(@fecha1,@fecha2,"factory","2") 
-        @total_ajuste2  = @company.get_customer_payments_value_otros_moneda(@fecha1,@fecha2,"ajuste","2") 
-        @total_compen2  = @company.get_customer_payments_value_otros_moneda(@fecha1,@fecha2,"compen","2") 
+        @total_factory2 = @company.get_customer_payments_value_otros_moneda(@fecha1,@fecha2,"factory",2) 
+        @total_ajuste2  = @company.get_customer_payments_value_otros_moneda(@fecha1,@fecha2,"ajuste",2) 
+        @total_compen2  = @company.get_customer_payments_value_otros_moneda(@fecha1,@fecha2,"compen",2) 
         @total_compen2 = @total_compen *-1 
         
         
