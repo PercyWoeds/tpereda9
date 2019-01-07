@@ -1863,15 +1863,15 @@ class CustomerPaymentsController < ApplicationController
         row = []
         row << nroitem.to_s
         row << "FACTORY :"
-        row << sprintf("%.2f",@total_factory.to_s)
         row << sprintf("%.2f",@total_factory2.to_s)
+        row << sprintf("%.2f",@total_factory.to_s)
 
         table_content2 << row
         row = []
         row << nroitem.to_s
         row << "AJUSTE  :"
-        row << sprintf("%.2f",@total_ajuste.to_s)
         row << sprintf("%.2f",@total_ajuste2.to_s)
+        row << sprintf("%.2f",@total_ajuste.to_s)
 
         table_content2 << row
 
@@ -1879,9 +1879,9 @@ class CustomerPaymentsController < ApplicationController
         row << nroitem.to_s
         row << "COMPENSACION :"
         
-        row << sprintf("%.2f",@total_compen.to_s)
-        
         row << sprintf("%.2f",@total_compen2.to_s)
+        
+        row << sprintf("%.2f",@total_compen.to_s)
         table_content2 << row
 
 
