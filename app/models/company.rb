@@ -845,7 +845,7 @@ def get_customer_payments_value_otros_moneda(fecha1,fecha2,value='factory',moned
         ret=0  
         for factura in facturas
         
-          if factura.bank_acount.moneda == moneda   
+          if factura.bank_acount.moneda.id == moneda   
 
           @detail = CustomerPaymentDetail.where(:customer_payment_id => factura.id)
 
