@@ -49,16 +49,17 @@ wb.styles do |s|
             sheet.add_row [payment.document.descripshort, payment.code,payment.fecha,payment.fecha2,payment.customer.name,payment.moneda.symbol,payment.get_importe_balance_soles,payment.get_importe_balance_dolares,payment.detraccion,payment.get_vencido], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency,cadena]        
             
             total_cliente_soles += payment.get_importe_balance_soles
-            total_cliente_soles += payment.get_importe_balance_dolares
-            total_detraccion += payment.get_detraccion
+            total_cliente_dolares += payment.get_importe_balance_dolares
+            total_cliente_detraccion += payment.detraccion
             
 
          end
-         sheet.add_row ["","","","","Totales => ","",total_cliente_soles,total_cliente_dolares,total_cliente_detraccion], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency]
             
         
    end 
    
+   sheet.add_row ["","","","","Totales => ","",total_cliente_soles,total_cliente_dolares,total_cliente_detraccion], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency]
+         
    
 end
 end 
