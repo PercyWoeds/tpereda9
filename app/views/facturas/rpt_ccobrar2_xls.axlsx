@@ -33,9 +33,6 @@ wb.styles do |s|
    
    @facturas_rpt.each do |payment|
    
-        
-        
-        
         if payment.document_id == 2
             balance_importe = payment.balance.round(2) * -1
         else
@@ -45,26 +42,20 @@ wb.styles do |s|
        
          if balance_importe > 0.00
            
-          if lcCliente == payment.customer_id
+
 
             fechas2 = payment.fecha2 
 
             sheet.add_row [payment.document.descripshort, payment.code,payment.fecha,payment.fecha2,payment.customer.name,payment.moneda.symbol,payment.get_importe_balance_soles,payment.get_importe_balance_dolares,payment.detraccion,payment.get_vencido], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency,cadena]        
             
+            total_cliente_soles += payment.get_importe_balance_soles
+            total_cliente_soles += payment.get_importe_balance_dolares
+            total_detraccion += payment.get_detraccion
             
-          else
-            totals = []            
-            total_cliente_soles   = 0
-            total_cliente_soles   = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedasoles)
-            total_cliente_dolares = 0
-            total_cliente_dolares = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedadolares)
-            
-            sheet.add_row ["","","","","Totales => ","",total_cliente_soles,total_cliente_dolares,total_cliente_detraccion], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency]
-            lcCliente = payment.customer_id
 
-          end 
-          
-         end 
+         end
+         sheet.add_row ["","","","","Totales => ","",total_cliente_soles,total_cliente_dolares,total_cliente_detraccion], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency]
+            
         
    end 
    
