@@ -93,6 +93,7 @@ self.per_page = 20
 
  TABLE_HEADERS7 = [  "ITEM ",
                      "COMPRO",
+                     "FEC.COM.",
                      "CUENTA",
                      "BANCO ",
                      "FECHA",        

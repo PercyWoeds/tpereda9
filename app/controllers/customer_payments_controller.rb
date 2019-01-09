@@ -2200,10 +2200,12 @@ class CustomerPaymentsController < ApplicationController
 
               row << nroitem.to_s              
               row << d.code 
+              row << d.fecha1.strftime("%d/%m/%Y") 
               row << d.bank_acount.number
               row << d.get_banco(d.bank_acount.bank_id)  
               row << d.fecha.strftime("%d/%m/%Y") 
               row << d.nrofactura 
+              
               row << d.customer.name 
               
               row << sprintf("%.2f",d.total.to_s)

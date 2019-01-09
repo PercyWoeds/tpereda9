@@ -99,7 +99,9 @@
     collection { get :reportes04}
     collection { get :reportes05}
     collection { get :exportxls }
-    collection { get :rpt_ccobrar3 }
+    collection { get :rpt_ccobrar2 }
+    collection { get :rpt_ccobrar3}
+    collection { get :rpt_ccobrar2_pdf }
     collection { get :rpt_ccobrar3_pdf }
     collection { get :rpt_ccobrar5_pdf }
     collection { get :reportep01 }

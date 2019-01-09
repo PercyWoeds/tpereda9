@@ -1039,6 +1039,31 @@ def newfactura2
 
   end
   
+  def rpt_ccobrar2
+  
+    $lcxCliente ="1"
+    @company=Company.find(1)      
+    
+    lcmonedadolares ="1"
+    lcmonedasoles ="2"
+    
+    @fecha1 = params[:fecha1]  
+    @fecha2 = params[:fecha2]
+
+    @company.actualizar_fecha2
+    @company.actualizar_detraccion 
+
+    @facturas_rpt = @company.get_pendientes_day(@fecha1,@fecha2)  
+
+    case params[:print]
+      when "To PDF" then 
+           redirect_to :action => "rpt_ccobrar2_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2] ,locals: {:customers => @facturas_rpt}
+          
+      when "To Excel" then render xlsx: 'rpt_ccobrar2_xls'
+        
+      else render action: "index"
+    end
+  end
   def rpt_ccobrar3
   
     $lcxCliente ="1"
@@ -1594,11 +1619,13 @@ def newfactura2
   ###pendientes de pago 
   def rpt_ccobrar2_pdf
     $lcxCliente ="0"
-    @company=Company.find(params[:company_id])      
-    
-      @fecha1 = params[:fecha1]  
-      @fecha2 = params[:fecha2]
+    @company=Company.find(1)      
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]
 
+    lcmonedadolares ="1"
+    lcmonedasoles ="2"
+    
     @company.actualizar_fecha2
     @company.actualizar_detraccion 
 

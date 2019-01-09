@@ -20,11 +20,11 @@ totals = []
 
 <form method="get" action="/purchases/rpt_cpagar2_pdf/<%= @company.id %>">
  	<div class="field">
-      <input type="date" name="fecha1" value="2017-01-02" style = "width: 150px" >
+      <input type="date" name="fecha1" value="2007-01-02" style = "width: 150px" >
 
     </div>
 	<div class="field">
-		<input type="date" name="fecha2" value="2017-01-25" style = "width: 150px" >
+		<input type="date" name="fecha2" value="2018-01-31" style = "width: 150px" >
     </div>
 
     
@@ -36,5 +36,5 @@ totals = []
 
 
 <div class="button">
-  <%= link_to 'Back', "/companies/cpagar/#{@company.id}" %>
+  <%= link_to 'Regresar', "/companies/cpagar/#{@company.id}" %>
 </div>

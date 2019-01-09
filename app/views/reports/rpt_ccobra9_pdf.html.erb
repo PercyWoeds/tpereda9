@@ -22,11 +22,11 @@ totals = []
 
 <form method="get" action="/customer_payments/rpt_ccobrar9_pdf/<%= @company.id %>">
   <div class="field">
-      <input type="date" name="fecha1" value="2017-01-01" style = "width: 150px" >
+      <input type="date" name="fecha1" value="2018-01-01" style = "width: 150px" >
   </div>
   
   <div class="field">
-    <input type="date" name="fecha2" value="2017-01-31" style = "width: 150px" >
+    <input type="date" name="fecha2" value="2018-01-31" style = "width: 150px" >
   </div>
 
   <strong>Factura :</strong><br />
@@ -37,7 +37,8 @@ totals = []
         </div>
    <br />    
 
-  <input type="submit" value="Ver Reporte " />
+  <input type="submit" value="Generar PDF" />
+  
 
   <a href="/customer_payments/rpt_ccobrar9_pdf/<%= @company.id %>" class="small_btn"> </a>
 </form>
@@ -46,5 +47,5 @@ totals = []
 
 
 <div class="button">
-  <%= link_to 'Back', "/companies/ccobrar/#{@company.id}" %>
+  <%= link_to 'Regresar', "/companies/ccobrar/#{@company.id}" %>
 </div>
