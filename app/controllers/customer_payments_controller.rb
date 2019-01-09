@@ -2226,6 +2226,7 @@ class CustomerPaymentsController < ApplicationController
           row << " "        
           row << " "
           row << " "        
+          row << " "        
           row << " "          
           row << "TOTAL => "
           row << sprintf("%.2f",@totalgeneral_soles.to_s)
