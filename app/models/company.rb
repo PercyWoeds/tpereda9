@@ -565,7 +565,15 @@ def get_guias_2(fecha1,fecha2)
     @facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",moneda ]).order(:id )
     return @facturas
     
- end 
+ end
+ 
+ def get_facturas_day_month(moneda,mes,anio)
+   
+    @facturas = Factura.where([" company_id = ? AND (EXTRACT(MONTH FROM fecha))::integer = ? AND   (EXTRACT(YEAR FROM fecha))::integer = ? and moneda_id = ?", self.id,mes ,anio,moneda ]).order(:id )
+    return @facturas
+    
+ end
+ 
  
  def get_facturas_day_usuario(fecha1,fecha2,moneda,user_id)
 
@@ -3074,6 +3082,7 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
    
     return @contado
  end 
+ 
 def get_facturas_by_day_value(fecha1,fecha2,moneda,value='total')
   
     purchases = Factura.where([" company_id = ? AND fecha >= ? and fecha <= ? and moneda_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda , ]).order(:id,:moneda_id)    
@@ -3103,6 +3112,34 @@ def get_facturas_by_day_value(fecha1,fecha2,moneda,value='total')
 
   end 
   
+def get_facturas_by_day_value_month(fecha1,fecha2,value='total',moneda)
+  
+    purchases = Factura.where([" company_id = ? AND (EXTRACT(MONTH FROM fecha))::integer = ? AND   (EXTRACT(YEAR FROM fecha))::integer = ?  and moneda_id = ? ", self.id, fecha1,fecha2, moneda , ]).order(:id,:moneda_id)    
+
+    ret = 0
+    for purchase in purchases
+    
+      
+      if (value == "subtotal")
+        
+        
+        ret += purchase.get_importe_soles1
+        
+      elsif(value == "tax")
+      
+        ret += purchase.get_importe_soles2
+        
+      else
+        
+        ret += purchase.get_importe_soles
+      
+      end
+    end
+    
+    return ret
+
+
+  end 
   
   
   def  get_ventas_combustibles(fecha1,fecha2) 

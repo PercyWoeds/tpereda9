@@ -66,9 +66,7 @@ class Ventaislas::VentaislaDetailsController < ApplicationController
          
          $lcGalones = @ventaisla.get_importe_1("galones")
          $lcImporte = @ventaisla.get_importe_1("total")
-         puts "-------------------"
-         puts $lcGalones
-         puts $lcImporte
+         
          @ventaisla.update_attributes(galones:  $lcGalones ,importe: $lcImporte )
          
          @pump = Pump.find($lcpump_id)

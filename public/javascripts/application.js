@@ -2052,6 +2052,25 @@ function obtenerDatosSUNAT(ruc) {
 }
 
 
+  // Update price total for invoice
+  function updateItemQuotation() {
+    var quantity = $("#quotation_detail_qty").val();
+    var price = $("#quotation_detail_costo1").val();
+    
+    if(isNumeric(quantity) && isNumeric(price)) {
+      
+      var total = quantity * price ;
+      
+      
+      $("#quotation_detail_costo2").html(total);
+    } else {
+      $("#quotation_detail_costo2").html("0.00");
+    }
+  }
+
+
+
+
   // On ready
   $(document).ready(function() {
     documentReady();

@@ -78,9 +78,9 @@
 
 
     
-      <% subtotal = @company.get_facturas_day_value(@fecha1,@fecha2, "subtotal",@moneda) %>
-      <% tax = @company.get_facturas_day_value(@fecha1,@fecha2, "tax",@moneda)%>
-      <% total = @company.get_facturas_day_value(@fecha1,@fecha2, "total",@moneda) %>
+      <% subtotal = @company.get_facturas_by_day_value_month(@fecha1,@fecha2, "subtotal",@moneda) %>
+      <% tax = @company.get_facturas_by_day_value_month(@fecha1,@fecha2, "tax",@moneda)%>
+      <% total = @company.get_facturas_by_day_value_month(@fecha1,@fecha2, "total",@moneda) %>
       
       <hr>  
      </table>

@@ -11,12 +11,16 @@ class Quotation < ActiveRecord::Base
   belongs_to :division 
   belongs_to :moneda 
   belongs_to :user  
-  belongs_to :punto 
+  belongs_to :punto
+  belongs_to :instruccion 
   
   has_many :quotation_details, :dependent => :destroy
   
-  TABLE_HEADERS = ["Tipo de Unidad e Importe del Servicio",
-                      "Costo Total "]
+  TABLE_HEADERS = ["CANT.",
+  "DESCRIPCION",
+  "C.UNITARIO",
+  "",
+                "COSTO TOTAL"]
 
   
   

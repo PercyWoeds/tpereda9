@@ -110,6 +110,47 @@ def reportes4
     end
   end
   
+  def reportes5
+    $lcFacturasall = '1'
+
+    @company=Company.find(1)          
+    @fecha1 = params[:month].to_i    
+    @fecha2 = params[:year].to_i    
+    
+    puts "meses"
+    puts @fecha1
+    puts @fecha2
+    
+    @moneda = params[:moneda_id]    
+    
+    @current_user_id = current_user.id 
+    
+    @facturas_rpt = @company.get_facturas_day_month(@moneda,@fecha1,@fecha2)          
+    
+    
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Facturas ",template: "facturas/rventas_rpt.pdf.erb",locals: {:facturas => @facturas_rpt},
+         :orientation      => 'Landscape',
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               }
+               
+
+        end   
+      when "To Excel" then render xlsx: 'exportxls'
+      else render action: "index"
+    end
+  end
+  
+
+  
 def reportes03
 
 

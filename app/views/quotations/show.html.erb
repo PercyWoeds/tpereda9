@@ -74,29 +74,61 @@
 <h3>
   Details
 </h3>
+<div class="button">
+<%= link_to 'Agregar Item', new_quotation_quotation_detail_path(@quotation) %>
+</div> 
 
-<table>
-  <thead>
+<table style="width: 100%">
 
-  </thead>
-  <tbody>
+   <tbody>
+  <%  @quotation_details.each do |detalle| %>
     
+    <tr>
+          
+          <td>
+            <%= detalle.item %>
+          </td>
+          <td>
+            <%= detalle.qty  %>
+          </td>
+          
+          <td >
+            <%= detalle.descrip  %>              
+          </td>
+          <td >
+            <%= detalle.costo1  %>              
+          </td>
+          
+          <td >
+            <%= detalle.costo2  %>              
+          </td>
+          <td >
+            <%= detalle.total   %>              
+          </td>
+          
+          <td >
+            <%= detalle.total2   %>              
+          </td>
+          
+      <td><%= link_to 'Editar', edit_quotation_quotation_detail_path(quotation_id: @quotation.id,id: detalle.id ) %></td>              
+      <td><%= link_to 'Eliminar',[@quotation,detalle], method: :delete, data: { confirm: '¿ Esta seguro de eliminar ?' } %></td>
 
+      </tr>    
+          
+          
+          
+             <tr>
+  
+         
+     
+        </tr>
+    
+    <% end %>
 
-  </tbody>
+</tbody>
+
 </table>
 <br />
-
-<%= hr() %>
-<% if @quotation.tipo_unidad != "" %>
-  <div>
-    <b>Tipo Unidad:</b>
-    <br />
-    <br />
-    <%= format_text(@quotation.tipo_unidad) %>
-  </div>
-  <%= hr() %>
-<% end %>
 
     
 <% if @quotation.carga != "" %>
@@ -109,36 +141,36 @@
   <%= hr() %>
 <% end %>
 
-<% if  @quotation.op1 != "0" %>
+
   <div>
     <b>Condiciones :</b>
     <br />
     <br />
-    <%= format_text(@quotation.condiciones) %>
+    <%= format_text(@quotation.instruccion.description1) %>
   </div>
   <%= hr() %>
-<% end %>
 
-<% if  @quotation.op2 != "0" %>
+
+
   <div>
     <b> Condiciones :</b>
     <br />
     <br />
-    <%= format_text(@quotation.respon) %>
+    <%= format_text(@quotation.instruccion.description2) %>
   </div>
   <%= hr() %>
-<% end %>
 
-<% if  @quotation.op3 != "0" %>
+
+
   <div>
     <b> Condiciones  :</b>
     
     <br />
     <br />
-    <%= format_text(@quotation.seguro) %>
+    <%= format_text(@quotation.instruccion.description3) %>
   </div>
   <%= hr() %>
-<% end %>
+
 
 
 
@@ -165,6 +197,7 @@
 <%= hr() %>
 
 <div class="button">
+  
   <%= link_to 'Exportar to PDF', "/quotations/pdf/#{@quotation.id}.pdf" %>  
   <%= link_to 'Enviar via email', "/quotations/email/#{@quotation.id}" %>
 

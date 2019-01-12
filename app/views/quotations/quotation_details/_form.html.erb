@@ -1,0 +1,73 @@
+
+
+<%= simple_form_for [@quotation, @quotation_detail] do |f| %>
+  <%= f.error_notification %>
+
+<table style="width: 100%">
+
+   
+   <tr>
+     <td >
+    <div class="field">
+      <%= f.label :item, "Item " %><br />
+      <%= f.text_field :item  %>
+    </div>
+    </td>
+     <td >
+    <div class="field">
+      <%= f.label :qty , "Qty " %><br />
+      <%= f.text_field :qty  %>
+    </div>
+    </td>
+    
+    <td>
+    <div class="field">
+      <%= f.label :descrip, "Description  :*"%><br />
+      <%= f.text_field :descrip  %>
+    </div>
+    </td>
+    <td>
+    <div class="field">
+      <%= f.label :costo1 , "Costo 1  *", :class => "bold" %><br />
+      <%= f.number_field :costo1 ,:step => 0.1 %>
+    </div>
+    </td>
+    
+    <td>
+    <div class="field">
+      <%= f.label :costo2 , "Costo 2 *", :class => "bold" %><br />
+      <%= f.number_field :costo2 ,:step => 0.1 %>
+    </div>
+    </td>
+    <td>
+    <div class="field">
+      <%= f.label :total  , "Total  ", :class => "bold" %><br />
+      <%= f.number_field :total ,:step => 0.1 %>
+    </div>
+    </td>
+    </tr>
+  </table>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
+
+
+<%= render 'layouts/autocomplete' %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+$("#quotation_detail_qty").bind("keyup", function() {
+      updateItemQuotation();
+    });
+
+    // Update price total for invoice
+
+  });
+  
+
+</script>
+
+
+

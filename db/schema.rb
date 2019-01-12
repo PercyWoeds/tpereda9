@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190107181725) do
+ActiveRecord::Schema.define(version: 20190110204600) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1723,13 +1723,16 @@ ActiveRecord::Schema.define(version: 20190107181725) do
   end
 
   create_table "quotation_details", force: :cascade do |t|
-    t.string   "item"
     t.string   "descrip"
     t.float    "costo1"
     t.float    "costo2"
     t.float    "total"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "quotation_id"
+    t.float    "total2"
+    t.float    "qty"
+    t.integer  "item"
   end
 
   create_table "quotations", force: :cascade do |t|

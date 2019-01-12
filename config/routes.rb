@@ -95,6 +95,8 @@
     collection { get :reportes2}
     collection { get :reportes3}
     collection { get :reportes4} #Reporte ventas
+    collection { get :reportes5} #Reporte ventas
+    
     collection { get :reportes03}
     collection { get :reportes04}
     collection { get :reportes05}
@@ -111,8 +113,12 @@
   
   resources :ventaislas  do
     resources :ventaisla_details, except: [:index,:show], controller: "ventaislas/ventaisla_details"
-     
   end 
+  resources :quotations  do
+    resources :quotation_details, except: [:index,:show], controller: "quotations/quotation_details"
+  end 
+  
+  
    resources :facturas do
     resources :factura_details, except: [:index,:show], controller: "facturas/facturas_details"
     collection { post :discontinue }
@@ -493,11 +499,8 @@ end
   
   match 'bankdetails/list_items/:company_id' => 'bankdetails#list_items', via: [:get, :post]
   match 'bankdetails/new/:company_id' => 'bankdetails#new', via: [:get, :post]
-  
   match 'bankdetails/rpt_salidas_all_pdf/:id' => 'bankdetails#rpt_bankdetails_all_pdf', via: [:get, :post]
-  
   match 'companies/bankdetails/:company_id' => 'bankdetails#index', via: [:get, :post]
-  
   resources :bankdetails
 
 
@@ -589,9 +592,6 @@ end
   match 'facturas/generar5/:company_id' => 'facturas#generar5', via: [:get, :post]
   
   match 'facturas/newfactura2/:factura_id' => 'facturas#newfactura2', via: [:get, :post]
-  #match 'serviceorders/rpt_serviceorder_all_pdf/:id' => 'serviceorders#rpt_serviceorder_all_pdf', via: [:get, :post]
-
-  
   match 'facturas/do_anular/:id' => 'facturas#do_anular', via: [:get, :post]
   match 'facturas/do_email/:id' => 'facturas#do_email', via: [:get, :post]
   match 'facturas/do_process/:id' => 'facturas#do_process', via: [:get, :post]
@@ -695,7 +695,6 @@ end
   match 'ajusts/do_process/:id' => 'ajusts#do_process', via: [:get, :post]
   match 'ajusts/email/:id' => 'ajusts#email', via: [:get, :post]
   match 'ajusts/pdf/:id' => 'ajusts#pdf', via: [:get, :post]
-  
   match 'companies/ajusts/:company_id' => 'ajusts#list_ajusts', via: [:get, :post]
   resources :ajusts 
 
@@ -712,9 +711,7 @@ end
   match 'receiveorders/email/:id' => 'receiveorders#email', via: [:get, :post]
   match 'receiveorders/pdf/:id' => 'receiveorders#pdf', via: [:get, :post]
   match 'companies/receiveorders/:company_id' => 'receiveorders#list_receiveorders', via: [:get, :post]
-  
-
-    resources :receiveorders
+  resources :receiveorders
   
 
   match 'movements/list_items/:company_id' => 'movements#list_items', via: [:get, :post]
@@ -987,6 +984,7 @@ end
   match 'companies/planilla/:id' => 'companies#planilla', via: [:get, :post]
   match 'companies/mantenimiento/:id' => 'companies#mantenimiento', via: [:get, :post]
   match 'companies/bancos/:id' => 'companies#bancos', via: [:get, :post]
+  match 'companies/examens/:id' => 'companies#examens', via: [:get, :post]
   resources :companies
 
   # Users packages

@@ -18,12 +18,36 @@ totals = []
   Montly sales report - <%= @month_name %> <%= @year %>
 </h1>
 
-<form method="get" action="/deliveries/guias1/<%= @company.id %>">
+
+<%= form_tag(reportes5_facturas_path, :method => "get") do %>
+ 	
+ 	
   <%= select_tag(:year, options_for_select(@years, @year)) %>
+  
+  <p> 
+  
+  </p>
   <%= select_tag(:month, options_for_select(@months, @month)) %>
-  <input type="submit" value="Ver" class="small_btn" />
-  <a href="/deliveries/guias1/<%= @company.id %>" class="small_btn">Today</a>
-</form>
+  <p> 
+  
+  </p>
+  
+  
+  
+  <div class="field">    
+  <%= select_tag(:moneda_id, options_from_collection_for_select(@monedas,'id','description')) %>
+  </div>
+  
+  
+  <br>
+  <%= submit_tag "To PDF", :name => "print" %>
+  <%= submit_tag "To Excel", :name => "print" %>
+     
+<% end %>
+  
+  
+
+
 
 <br />
 

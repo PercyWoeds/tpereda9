@@ -29,7 +29,7 @@ before_action :set_loan, only: [:show, :edit, :update, :destroy]
   # POST /loans.json
   def create
     @loan = Loan.new(loan_params)
-  @payroll= Payroll.all 
+    @payroll= Payroll.all   
     respond_to do |format|
       if @loan.save
         format.html { redirect_to @loan, notice: 'Loan was successfully created.' }

@@ -706,7 +706,7 @@ class ReportsController < ApplicationController
   def report_monthly_sales
     
     @company = Company.find(params[:company_id])
-    
+    @monedas = Moneda.all 
     if(params[:year] and params[:year].numeric?)
       @year = params[:year].to_i
     else

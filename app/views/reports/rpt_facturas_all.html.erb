@@ -31,11 +31,12 @@ totals = []
   <%= select_tag(:moneda_id, options_from_collection_for_select(@monedas,'id','description')) %>
   </div>
   
-
 <br> 
+
+
  <%= submit_tag "To PDF", :name => "print" %>
  <%= submit_tag "To Excel", :name => "print" %>
-  
+
 <% end %>
 
 

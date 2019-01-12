@@ -21,7 +21,8 @@ class QuotationsController < ApplicationController
     @divisions = Division.find(@quotations.division_id)
     @customers = Customer.find(@quotations.customer_id)
     @puntos = Punto.find(@quotations.punto_id)  
-
+    
+    @quotation_details= @quotations.quotation_details.order(:item)
   
   end
 
@@ -57,6 +58,7 @@ class QuotationsController < ApplicationController
     @customers = Customer.all.order(:name)
     @monedas = Moneda.all 
     @employees = Employee.all.order(:full_name)    
+    @instruccions = Instruccion.all   
   
   end
 
@@ -150,7 +152,7 @@ class QuotationsController < ApplicationController
     @quotation  = Quotation.find(params[:id])
     company =@quotation.company_id
     @company =Company.find(company)
-
+    @quotation_details= @quotation.quotation_details.order(:item)  
 
     Prawn::Document.generate("app/pdf_output/#{@quotation.id}.pdf") do |pdf|
         pdf.font "Helvetica"
@@ -186,13 +188,13 @@ def build_pdf_header(pdf)
         pdf.move_down 15
         pdf.font "Helvetica", :style => :bold do
           pdf.text "R.U.C: 20424092941", :align => :center
-          pdf.text "COTIZACION", :align => :center
+          pdf.text "COTIZACION ", :align => :center
           pdf.text "#{@quotation.code}", :align => :center,
                                  :style => :bold
           
         end
       end
-      pdf.move_down 25
+      pdf.move_down 5
       pdf 
   end   
 
@@ -222,7 +224,7 @@ def build_pdf_header(pdf)
 
         end
 
-        pdf.move_down 20
+        pdf.move_down 10
 
       end
 
@@ -239,12 +241,15 @@ def build_pdf_header(pdf)
 
       nroitem=1
 
-       for  product in @quotation.get_products()
+       for  product in @quotation_details 
             row = []
-            row << product.tipo_unidad         
-            row << product.importe 
-  
-            table_content << row
+            row << product.qty
+            row << product.descrip
+            row << product.costo1 
+            row << product.costo2
+            row << product.total
+            
+            table_content << row 
             nroitem=nroitem + 1
         end
 
@@ -254,20 +259,22 @@ def build_pdf_header(pdf)
                                         } do 
                                           columns([0]).align=:left
                                           columns([1]).align=:left
-                                          
-                                         
+                                          columns([2]).align=:right
+                                          columns([3]).align=:right
+                                          columns([4]).align=:right
                                         end
 
       pdf.move_down 10      
-      pdf.table invoice_summary, {
-        :position => :right,
-        :cell_style => {:border_width => 1},
-        :width => pdf.bounds.width/3
-      } do
-        columns([0]).font_style = :bold
-        columns([1]).align = :right
+      
+      # pdf.table invoice_summary, {
+      #   :position => :right,
+      #   :cell_style => {:border_width => 1},
+      #   :width => pdf.bounds.width/3
+      # } do
+      #   columns([0]).font_style = :bold
+      #   columns([1]).align = :right
         
-      end
+      # end
       pdf
 
     end
@@ -279,32 +286,49 @@ def build_pdf_header(pdf)
         pdf.text ""  
         pdf.move_down  20
         
-        if @quotation.op1 != "0"
-          @detalle = @quotation.condiciones
-        end
         
-        if @quotation.op2 != "0"
-          @detalle = @quotation.respon 
-        end
-        if @quotation.op3 != "0"
-          @detalle = @quotation.seguro 
-        end
+          @detalle1 = @quotation.instruccion.description1
+          @detalle2 = @quotation.instruccion.description2
+          @detalle3 = @quotation.instruccion.description3
         
-        data =[[@detalle ],
+        
+        data =[[@detalle1 ],
                [""]   
                ]
 
            {:border_width=>0  }.each do |property,value|
             pdf.text " Condiciones : "
             pdf.table(data,:cell_style=> {property =>value})
-            pdf.move_down 20          
+            
            end     
+           
+        data =[[@detalle2 ],
+               [""]   
+               ]
+
+           {:border_width=>0  }.each do |property,value|
+            pdf.text " Responsabilidad : "
+            pdf.table(data,:cell_style=> {property =>value})
+            
+           end     
+           
+        data =[[@detalle3 ],
+               [""]   
+               ]
+
+           {:border_width=>0  }.each do |property,value|
+            pdf.text " Seguro : "
+            pdf.table(data,:cell_style=> {property =>value})
+
+           end     
+           
+           
 
         pdf.text "Agradecemos anticipadamente la atencion al presente , y a la espera de su pronta respuesta"
         
         pdf.bounding_box([0, 26], :width => 535, :height => 40) do
         pdf.text "_________________               _____________________         ____________________      ", :size => 13, :spacing => 4
-        pdf.text " Vilma Vega Moreno"
+        pdf.text ""
         pdf.text " Jefe Comercial   ", :size => 10, :spacing => 4
         pdf.draw_text "Company: #{@quotation.company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
 
@@ -367,6 +391,6 @@ def do_anular
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def quotation_params
-      params.require(:quotation).permit(:fecha1, :code, :customer_id, :punto_id, :carga, :tipo_unidad, :importe, :condiciones, :respon, :seguro, :firma_id, :company_id, :location_id, :division_id,:company_id,:moneda_id ,:user_id,:op1,:op2,:op3)
+      params.require(:quotation).permit(:fecha1, :code, :customer_id, :punto_id, :carga, :tipo_unidad, :importe, :condiciones, :respon, :seguro, :firma_id, :company_id, :location_id, :division_id,:company_id,:moneda_id ,:user_id,:op1,:op2,:op3,:instruccion_id)
     end
 end 

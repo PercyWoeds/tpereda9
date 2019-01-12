@@ -2,8 +2,7 @@ class Quotations::QuotationDetailsController < ApplicationController
   
 
   before_action :set_quotation
-  before_action :set_quotation_detail, only: [:show, :edit, :update, :destroy]
-  
+  before_action :set_quotation_detail, except: [:new, :create]  
   
   # GET /quotation_details
   # GET /quotation_details.json
@@ -20,14 +19,16 @@ class Quotations::QuotationDetailsController < ApplicationController
   def new
     @quotation_detail = QuotationDetail.new
     @employee = Employee.all.order(:full_name).where(active:"1")
-    @valor = Valor.all
+    @quotation_detail[:costo1]
+    @quotation_detail[:costo2]
+    @quotation_detail[:total]
+    @quotation_detail[:total2]
     
   end
 
   # GET /quotation_details/1/edit
   def edit
-    @employee = Employee.all 
-    @valor = Valor.all
+    
   end
 
   # POST /quotation_details
@@ -35,8 +36,7 @@ class Quotations::QuotationDetailsController < ApplicationController
   def create
     @quotation_detail = QuotationDetail.new(quotation_detail_params)
     @quotation_detail.quotation_id  = @quotation.id 
-    @employee = Employee.all 
-    @valor = Valor.all
+    
     respond_to do |format|
       if @quotation_detail.save
         format.html { redirect_to @quotation, notice: 'Quotation detail was successfully created.' }
@@ -68,6 +68,7 @@ class Quotations::QuotationDetailsController < ApplicationController
   # DELETE /quotation_details/1
   # DELETE /quotation_details/1.json
   def destroy
+    
     @quotation_detail.destroy
     
     respond_to do |format|
@@ -89,6 +90,6 @@ class Quotations::QuotationDetailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def quotation_detail_params
-      params.require(:quotation_detail).permit(:employee_id, :valor_id, :tm, :detalle,:total )
+      params.require(:quotation_detail).permit(:item, :descrip, :costo1, :costo2,:quotation_id,:total,:total2,:qty)
     end
 end
