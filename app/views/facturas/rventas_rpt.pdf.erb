@@ -73,14 +73,15 @@
                 <td width = "10%" align ="right"><%= detalle.user.email   %></td>
                 
                 </tr>
+                <% subtotal += lcsubtotal %>
+                <% tax += lctax %>
+                <% total += lctotal  %>
+      
             
          <% end %>
 
 
     
-      <% subtotal = @company.get_facturas_by_day_value_month(@fecha1,@fecha2, "subtotal",@moneda) %>
-      <% tax = @company.get_facturas_by_day_value_month(@fecha1,@fecha2, "tax",@moneda)%>
-      <% total = @company.get_facturas_by_day_value_month(@fecha1,@fecha2, "total",@moneda) %>
       
       <hr>  
      </table>
