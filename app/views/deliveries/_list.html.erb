@@ -128,7 +128,12 @@
           <% elsif delivery.processed =="0"%>            
           <%= link_to "Edit", edit_delivery_path(delivery) %>
           <%= link_to 'Eliminar', delivery,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>          
+          <% elsif delivery.processed =="4"%>            
+          
+          <%= link_to 'Eliminar', delivery,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>          
+          
           </tr>
+          
           <%end%>
       <% end %>
 
