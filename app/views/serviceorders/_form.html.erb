@@ -59,6 +59,18 @@
       <%= f.label :division_id %><br />
       <%= f.select :division_id,options_from_collection_for_select(@divisions,'id','name') %>
     </div>
+    
+    <div class="field">
+      <%= f.label :truck_id , "Placa " %><br />
+      <%= f.select :truck_id,options_from_collection_for_select(@trucks,'id','placa') %>
+    </div>
+    <div class="field">
+      <%= f.label :employee_id, "Empleado " %><br />
+      <%= f.select :employee_id,options_from_collection_for_select(@employees,'id','full_name') %>
+    </div>
+    
+    
+    
      <div class="field">
       
       <%= check_box_tag("cbox1", value = "1", checked = true, options = {})  %> Detracción? 
@@ -120,11 +132,18 @@
   
   <form method="get" action="/servicebuys" onsubmit="addItemToserviceorder(); return false;">
       
-    <strong>Product:</strong><br />
+    <strong>Servicio :</strong><br />
     <%= select_tag(:ac_item_id,options_from_collection_for_select(@servicebuys,'id','name') ) %>
 
     <div class="small">
-      Ingrese un termino de busqueda para encontrar un producto.
+      Ingrese un termino de busqueda para encontrar un servicio.
+    </div>
+    <br />
+<strong>Servicio Extension  :</strong><br />
+    <%= select_tag(:ac_service_ext_id,options_from_collection_for_select(@serviceexts,'id','name') ) %>
+
+    <div class="small">
+      Ingrese un termino de busqueda para encontrar una extension servicio 
     </div>
     <br />
 
@@ -171,6 +190,8 @@
 
 <script type="text/javascript">
 
+
+
   $(document).ready(function() {
     $("#ac_supplier").autocomplete("/serviceorders/ac_suppliers/<%= @company.id %>", {
 			matchSubset: 1,
@@ -206,6 +227,18 @@
     
     $("#ac_item_discount").bind("keyup", function() {
       updateItemTotal4();
+    });
+    
+    
+    
+    $('#ac_item_id').change(function() {
+      $.ajax({
+        url: "/servicebuys/update_serviceext",
+        data: {
+          servicebuy_id : $('#ac_item_id').val()
+        },
+        dataType: "script"
+      });
     });
     
     <% if @suppliers_lines %>

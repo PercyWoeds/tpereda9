@@ -748,7 +748,9 @@
       
       var quantity = $("#ac_item_quantity").val();
       var price = $("#ac_item_price").val();
-      var discount = $("#ac_item_discount").val();    
+      var discount = $("#ac_item_discount").val(); 
+       var service_ext_id  = $("#ac_service_ext_id").val(); 
+      
       var items_arr = $("#items").val().split(",");
 
       if(quantity == "" || !isNumeric(quantity)) {
@@ -758,12 +760,14 @@
       } else if(discount == "" || !isNumeric(discount)) {
         alert("Por favor ingrese un descuento valido");
       } else {
-        var item_line = item_id + "|BRK|" + quantity + "|BRK|" + price + "|BRK|" + discount;
+        var item_line = item_id + "|BRK|" + quantity + "|BRK|" + price + "|BRK|" + discount+ "|BRK|" + service_ext_id ;
         
         $("#items").val($("#items").val() + "," + item_line);
         listItemsserviceorder();
         
         $("#ac_item_id").val("");
+        $("#service_ext_id").val("");
+        
         $("#ac_item").val("");
         $("#ac_item_quantity").val("1");
         $("#ac_item_price").val("");

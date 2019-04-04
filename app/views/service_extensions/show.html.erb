@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @service_extension.code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @service_extension.name %>
+</p>
+
+<p>
+  <strong>Servicebuy:</strong>
+  <%= @service_extension.servicebuy %>
+</p>
+
+<%= link_to 'Edit', edit_service_extension_path(@service_extension) %> |
+<%= link_to 'Back', service_extensions_path %>

@@ -21,10 +21,11 @@ class Serviceorder < ActiveRecord::Base
   has_many :serviceorder_services
   
  TABLE_HEADERS = ["ITEM",
-                     "CANTIDAD",
-                     "DESCRIPCION",
-                     "PRECIO UNITARIO",
-                     "DSCTO",
+                     "CANT.",
+                     "SERVICIO",
+                     "SERVICIO-EXT",
+                     "PRE. 
+                     UNIT.",
                      "VALOR TOTAL"]
 
 
@@ -159,7 +160,7 @@ end
       ip.destroy
     end
   end
-  
+
   def add_services(items)
 
     for item in items
@@ -171,6 +172,10 @@ end
         quantity = parts[1]
         price = parts[2]
         discount = parts[3]
+        ext_id0   = parts[4]
+        name_ext0 = parts[5]
+        
+        
          
         total = price.to_f * quantity.to_i
         total -= total * (discount.to_f / 100)
@@ -178,7 +183,7 @@ end
         begin
           product = Servicebuy.find(id.to_i)          
 
-          new_invoice_product = ServiceorderService.new(:serviceorder_id => self.id, :servicebuy_id => product.id, :price => price.to_f, :quantity => quantity.to_i, :discount => discount.to_f, :total => total.to_f)
+          new_invoice_product = ServiceorderService.new(:serviceorder_id => self.id, :servicebuy_id => product.id, :price => price.to_f, :quantity => quantity.to_i, :discount => discount.to_f, :total => total.to_f,:ext_id=> ext_id0, :name_ext=> name_ext0)
           new_invoice_product.save
           
         end
@@ -191,9 +196,10 @@ end
   end
 
   def get_services    
-@itemservices = ServiceorderService.find_by_sql(['Select serviceorder_services.price,
+@itemservices = ServiceorderService.find_by_sql(['Select  serviceorder_services.price,
 serviceorder_services.quantity,serviceorder_services.discount,serviceorder_services.total,
-servicebuys.name,servicebuys.id  from serviceorder_services INNER JOIN servicebuys ON
+servicebuys.name,servicebuys.id, serviceorder_services.ext_id  
+from serviceorder_services INNER JOIN servicebuys ON
 serviceorder_services.servicebuy_id = servicebuys.id where serviceorder_services.serviceorder_id = ?', self.id ])
 
     return @itemservices
@@ -209,6 +215,8 @@ serviceorder_services.servicebuy_id = servicebuys.id where serviceorder_services
     invoice_services = ServiceorderService.where(serviceorder_id:  self.id)    
     return invoice_services
   end
+  
+  
   
   def services_lines
     services = []
@@ -297,6 +305,27 @@ serviceorder_services.servicebuy_id = servicebuys.id where serviceorder_services
       return "red"
     end
   end
+  def get_placa
+      if self.truck_id != nil 
+        a= Truck.find(self.truck_id) 
+        return a.placa 
+        
+      else
+        return "NINGUNO "
+      end
+        
+  end 
+  
+  def get_empleado
+    if self.employee_id != nil 
+      a = Employee.find(self.employee_id)
+      return a.full_name
+    else
+      return "NINGUNO"
+    end 
+    
+  end 
+
 
 end 
 

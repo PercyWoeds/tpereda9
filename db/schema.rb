@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190110204600) do
+ActiveRecord::Schema.define(version: 20190404195008) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1819,6 +1819,16 @@ ActiveRecord::Schema.define(version: 20190110204600) do
     t.string   "tipo"
   end
 
+  create_table "service_extensions", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.integer  "servicebuy_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "service_extensions", ["servicebuy_id"], name: "index_service_extensions_on_servicebuy_id", using: :btree
+
   create_table "servicebuys", force: :cascade do |t|
     t.string   "code"
     t.string   "name"
@@ -1840,6 +1850,8 @@ ActiveRecord::Schema.define(version: 20190110204600) do
     t.float    "total"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "ext_id"
+    t.string   "name_ext"
   end
 
   create_table "serviceorder_services", force: :cascade do |t|
@@ -1852,6 +1864,8 @@ ActiveRecord::Schema.define(version: 20190110204600) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.integer  "servicebuy_id"
+    t.integer  "ext_id"
+    t.string   "name_ext"
   end
 
   create_table "serviceorders", force: :cascade do |t|
@@ -1886,6 +1900,8 @@ ActiveRecord::Schema.define(version: 20190110204600) do
     t.string   "documento"
     t.integer  "purchase_id"
     t.float    "dolar"
+    t.integer  "truck_id"
+    t.integer  "employee_id"
   end
 
   create_table "services", force: :cascade do |t|
@@ -2361,6 +2377,7 @@ ActiveRecord::Schema.define(version: 20190110204600) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "service_extensions", "servicebuys"
   add_foreign_key "tanks", "companies"
   add_foreign_key "tanks", "products"
 end

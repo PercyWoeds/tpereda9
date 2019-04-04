@@ -48,6 +48,18 @@
 </p>
  
 <p>
+    <b>Placa :</b>
+    <%= @serviceorder.get_placa   %>   
+</p>
+ 
+ 
+<p>
+    <b>Chofer :</b>
+    <%= @serviceorder.get_empleado  %>   
+</p>
+ 
+ 
+<p>
     <b>Estado: </b>
     <%=   @serviceorder.get_processed   %>   
 </p>
@@ -82,11 +94,15 @@
   <thead>
     <tr>
       <th>
-        Product
+        Servicio 
       </th>
       <th>
-        Price
+        Servicio Ext.
       </th>
+      <th>
+        Precio 
+      </th>
+      
       <th>
         Quantity
       </th>
@@ -106,6 +122,10 @@
           <%= link_to productItem.name   %>
         </td>
         <td class="bordered_bottom bordered_right">
+          <%= productItem.get_name_ext(productItem.ext_id) %>
+        </td>
+        
+        <td class="bordered_bottom bordered_right">
           <%= money(productItem.price) %>
         </td>
         <td class="bordered_bottom bordered_right">
@@ -120,12 +140,12 @@
       </tr>
     <% end %>
     <tr>
-      <td colspan="5" class="bordered_bottom bordered_right">
+      <td colspan="6" class="bordered_bottom bordered_right">
         &nbsp;
       </td>
     </tr>
     <tr>
-      <td colspan="4" class="bordered_bottom bordered_right bold">
+      <td colspan="5" class="bordered_bottom bordered_right bold">
         Subtotal:
       </td>
       <td class="bordered_bottom bordered_right bold right">
@@ -133,15 +153,15 @@
       </td>
     </tr>
     <tr>
-      <td colspan="4" class="bordered_bottom bordered_right bold">
-        Tax:
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        IGV:
       </td>
       <td class="bordered_bottom bordered_right bold right">
         <%= money(@serviceorder.tax) %>
       </td>
     </tr>
     <tr>
-      <td colspan="4" class="bordered_bottom bordered_right bold">
+      <td colspan="5" class="bordered_bottom bordered_right bold">
         Total:
       </td>
       <td class="bordered_bottom bordered_right bold right">
@@ -150,7 +170,7 @@
     </tr>
 
         <tr>
-      <td colspan="4" class="bordered_bottom bordered_right bold">
+      <td colspan="5" class="bordered_bottom bordered_right bold">
         Detraccion :
       </td>
       <td class="bordered_bottom bordered_right bold right">
@@ -160,7 +180,7 @@
 
 
         <tr>
-      <td colspan="4" class="bordered_bottom bordered_right bold">
+      <td colspan="5" class="bordered_bottom bordered_right bold">
         Total a pagar :
       </td>
       <td class="bordered_bottom bordered_right bold right">

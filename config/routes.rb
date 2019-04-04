@@ -1,5 +1,6 @@
   Mnygo::Application.routes.draw do
 
+  resources :service_extensions
   resources :quotation_details
   resources :horas_mes
   resources :tipofaltantes
@@ -59,6 +60,7 @@
   resources :purchases
   resources :documents
   resources :servicebuys
+  
   resources :instruccions
   resources :puntos
   resources :manifests
@@ -89,6 +91,10 @@
     
   end
 
+  resources :serviceorders do
+     collection { get :update_serviceext }
+  end 
+  
   
   resources :facturas do 
     collection { get :reportes}
@@ -800,7 +806,7 @@ end
   
 
   # supplier payments
-  
+
   match 'supplier_payments/list_items/:company_id' => 'supplier_payments#list_items', via: [:get, :post]  
   match 'supplier_payments/ac_products/:company_id' => 'supplier_payments#ac_products', via: [:get, :post]
   match 'supplier_payments/ac_documentos/:company_id' => 'supplier_payments#ac_documentos', via: [:get, :post]

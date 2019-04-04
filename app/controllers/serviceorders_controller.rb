@@ -16,7 +16,10 @@ class ServiceordersController < ApplicationController
      $lcdis  =@serviceorder.supplier.city
      $lcProv = @serviceorder.supplier.state
      $lcFecha1= @serviceorder.fecha1.strftime("%d/%m/%Y") 
-     $lcMon=@serviceorder.moneda.description     
+     $lcPlaca  = @serviceorder.get_placa
+     $lcEmpleado  = @serviceorder.get_empleado 
+     
+      $lcMon=@serviceorder.moneda.description     
      $lcPay= @serviceorder.payment.descrip
      $lcSubtotal=sprintf("%.2f",@serviceorder.subtotal)
      $lcIgv=sprintf("%.2f",@serviceorder.tax)
@@ -77,7 +80,8 @@ class ServiceordersController < ApplicationController
           :width => pdf.bounds.width
         }) do
           columns([0, 2]).font_style = :bold
-
+          columns([1]).width = 300
+          
         end
 
         pdf.move_down 20
@@ -102,8 +106,8 @@ class ServiceordersController < ApplicationController
             row << nroitem.to_s
             row << product.quantity.to_s
             row << product.name
+            row << product.get_name_ext(product.ext_id) 
             row << product.price.round(2).to_s
-            row << product.discount.round(2).to_s
             row << product.total.round(2).to_s
             table_content << row
 
@@ -117,6 +121,7 @@ class ServiceordersController < ApplicationController
       row << ""                                  
       row << ""                                  
       row << ""                                  
+                         
       
       table_content << row
 
@@ -127,11 +132,16 @@ class ServiceordersController < ApplicationController
                                         } do 
                                           columns([0]).align=:center
                                           columns([1]).align=:right
+                                          columns([1]).width = 35 
+          
                                           columns([2]).align=:left
-                                          columns([3]).align=:right
+                                          columns([2]).width = 200
+                                          columns([3]).align=:left
+                                          columns([3]).width = 150
+                                          
                                           columns([4]).align=:right
                                           columns([5]).align=:right
-                                         
+                                        
                                         end
 
 
@@ -312,12 +322,17 @@ class ServiceordersController < ApplicationController
         quantity = parts[1]
         price = parts[2]
         discount = parts[3]
+        ext_id = parts[4]
         
         product = Servicebuy.find(id.to_i)
+        product2 = ServiceExtension.find(ext_id.to_i)
+        
         product[:i] = i
         product[:quantity] = quantity.to_i
         product[:price] = price.to_f
         product[:discount] = discount.to_f
+        product[:ext_id] = product2.id
+        product[:name_ext] = product2.name 
         
         total = product[:price] * product[:quantity]
         total -= total * (product[:discount] / 100)
@@ -469,7 +484,11 @@ class ServiceordersController < ApplicationController
     @divisions = @company.get_divisions()
     @suppliers = @company.get_suppliers()
     @payments = @company.get_payments()    
+    @employees = @company.get_employees()
+    @trucks = @company.get_trucks()
     @servicebuys  = @company.get_servicebuys()
+    @serviceexts  = ServiceExtension.where("servicebuy_id = ?",Servicebuy.first.id) 
+    
     @monedas  = @company.get_monedas()
 
     @ac_user = getUsername()
@@ -712,7 +731,9 @@ class ServiceordersController < ApplicationController
       client_headers  = [["Proveedor: ", $lcCli ]] 
       client_headers << ["Direccion : ", $lcdir1]
       client_headers << ["Distrito  : ",$lcdis]
-      client_headers << ["Provincia : ",$lcProv]     
+      client_headers << ["Provincia : ",$lcProv]   
+      client_headers << ["Empleado  : ",$lcEmpleado]   
+      
       client_headers
   end
 
@@ -720,7 +741,9 @@ class ServiceordersController < ApplicationController
       invoice_headers  = [["Fecha de emisión : ",$lcFecha1]]
       invoice_headers <<  ["Tipo de moneda : ", $lcMon]
       invoice_headers <<  ["Forma de pago : ",$lcPay ]    
-      invoice_headers <<  ["Estado  : ",$lcAprobado ]    
+      invoice_headers <<  ["Estado  : ",$lcAprobado ]  
+      invoice_headers <<  ["Placa  : ",$lcPlaca ]  
+      
       invoice_headers
   end
   def invoice_summary
@@ -759,7 +782,8 @@ class ServiceordersController < ApplicationController
           :width => pdf.bounds.width
         }) do
           columns([0, 2]).font_style = :bold
-
+          columns([1]).width = 320
+          
         end
 
         pdf.move_down 10
@@ -894,8 +918,6 @@ class ServiceordersController < ApplicationController
   def rpt_serviceorder_all_pdf
     @company=Company.find(params[:id])      
     
-    
-    
       @fecha1 = params[:fecha1]
       @fecha2 = params[:fecha2]
     
@@ -1011,7 +1033,7 @@ def list_receive_serviceorders
   
   private
   def serviceorder_params
-    params.require(:serviceorder).permit(:company_id,:location_id,:division_id,:supplier_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:detraccion,:payment_id,:moneda_id,:fecha1,:fecha2,:fecha3,:fecha4,:document_id,:documento,:dolar)
+    params.require(:serviceorder).permit(:company_id,:location_id,:division_id,:supplier_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:detraccion,:payment_id,:moneda_id,:fecha1,:fecha2,:fecha3,:fecha4,:document_id,:documento,:dolar,:truck_id,:employee_id)
   end
 
 end

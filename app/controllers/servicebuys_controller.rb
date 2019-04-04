@@ -61,6 +61,14 @@ class ServicebuysController < ApplicationController
     end
   end
 
+ def update_serviceext
+    # updates songs based on artist selected
+    @servicios = Servicebuy.find(params[:ac_item_id])
+    
+    @servicionexts = ServiceExtension.where(servicebuy_id: @servicios.last.id)
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_servicebuy
