@@ -286,7 +286,7 @@ class StocksController < ApplicationController
                                           columns([0]).align=:center
                                           columns([1]).align=:left
                                           columns([2]).align=:left  
-                                          columns([2]).width = 330
+                                          columns([2]).width = 280
                                           columns([3]).align=:left  
                                           columns([4]).align=:right
                                           columns([5]).align=:right 
