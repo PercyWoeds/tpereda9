@@ -749,7 +749,9 @@
       var quantity = $("#ac_item_quantity").val();
       var price = $("#ac_item_price").val();
       var discount = $("#ac_item_discount").val(); 
-       var service_ext_id  = $("#ac_service_ext_id").val(); 
+      var service_ext_id  = $("#ac_service_ext_id").val(); 
+      var truck_id  = $("#ac_truck_id").val(); 
+      var empleado_id  = $("#ac_employee_id").val(); 
       
       var items_arr = $("#items").val().split(",");
 
@@ -759,8 +761,15 @@
         alert("Por favor ingrese un precio valido");
       } else if(discount == "" || !isNumeric(discount)) {
         alert("Por favor ingrese un descuento valido");
+      } else if(truck_id == "" || !isNumeric(truck_id)) {
+        alert("Por favor seleccione una placa");
+      } else if(empleado_id == "" || !isNumeric(empleado_id)) {
+        alert("Por favor seleccione un empleado");
+      } else if(service_ext_id == "" || !isNumeric(service_ext_id)) {
+        alert("Por favor ingrese una extension valida.");
+        
       } else {
-        var item_line = item_id + "|BRK|" + quantity + "|BRK|" + price + "|BRK|" + discount+ "|BRK|" + service_ext_id ;
+        var item_line = item_id + "|BRK|" + quantity + "|BRK|" + price + "|BRK|" + discount+ "|BRK|" + service_ext_id + "|BRK|" + truck_id + "|BRK|" + empleado_id ;
         
         $("#items").val($("#items").val() + "," + item_line);
         listItemsserviceorder();
@@ -772,6 +781,7 @@
         $("#ac_item_quantity").val("1");
         $("#ac_item_price").val("");
         $("#ac_item_discount").val("0");
+        
         updateItemTotal4();
       }
     } else {

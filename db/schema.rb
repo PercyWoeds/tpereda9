@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190404195008) do
+ActiveRecord::Schema.define(version: 20190508151351) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1848,10 +1848,12 @@ ActiveRecord::Schema.define(version: 20190404195008) do
     t.float    "currtotal"
     t.integer  "i"
     t.float    "total"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.integer  "ext_id"
     t.string   "name_ext"
+    t.string   "truck_ext"
+    t.string   "empleado_ext"
   end
 
   create_table "serviceorder_services", force: :cascade do |t|
@@ -1866,6 +1868,8 @@ ActiveRecord::Schema.define(version: 20190404195008) do
     t.integer  "servicebuy_id"
     t.integer  "ext_id"
     t.string   "name_ext"
+    t.integer  "truck_id"
+    t.integer  "employee_id"
   end
 
   create_table "serviceorders", force: :cascade do |t|

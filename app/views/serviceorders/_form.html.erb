@@ -60,16 +60,6 @@
       <%= f.select :division_id,options_from_collection_for_select(@divisions,'id','name') %>
     </div>
     
-    <div class="field">
-      <%= f.label :truck_id , "Placa " %><br />
-      <%= f.select :truck_id,options_from_collection_for_select(@trucks,'id','placa') %>
-    </div>
-    <div class="field">
-      <%= f.label :employee_id, "Empleado " %><br />
-      <%= f.select :employee_id,options_from_collection_for_select(@employees,'id','full_name') %>
-    </div>
-    
-    
     
      <div class="field">
       
@@ -133,6 +123,7 @@
   <form method="get" action="/servicebuys" onsubmit="addItemToserviceorder(); return false;">
       
     <strong>Servicio :</strong><br />
+    
     <%= select_tag(:ac_item_id,options_from_collection_for_select(@servicebuys,'id','name') ) %>
 
     <div class="small">
@@ -147,6 +138,19 @@
     </div>
     <br />
 
+
+
+    <div class="field">
+      <strong>Placa  :</strong><br />
+      
+      <%= select_tag(:ac_truck_id,options_from_collection_for_select(@trucks,'id','placa')) %>
+    </div>
+    <div class="field">
+      <strong>Empleado :</strong><br />
+      <%= select_tag(:ac_employee_id,options_from_collection_for_select(@employees,'id','full_name')) %>
+    </div>
+    
+    
     
     <strong>Precio:</strong><br />
     <input type="text" name="ac_item_price" id="ac_item_price" value="" class="tf_short" />

@@ -323,9 +323,19 @@ class ServiceordersController < ApplicationController
         price = parts[2]
         discount = parts[3]
         ext_id = parts[4]
+        truck_id = parts[5]
+        empleado_id = parts[6]
+        
+        
+        puts "list items"
+        puts truck_id
+        puts empleado_id 
+        puts "fin list items "
         
         product = Servicebuy.find(id.to_i)
         product2 = ServiceExtension.find(ext_id.to_i)
+        truck2 = Truck.find(truck_id.to_i)
+        empleado2 = Truck.find(empleado_id.to_i)
         
         product[:i] = i
         product[:quantity] = quantity.to_i
@@ -333,6 +343,9 @@ class ServiceordersController < ApplicationController
         product[:discount] = discount.to_f
         product[:ext_id] = product2.id
         product[:name_ext] = product2.name 
+        product[:truck_ext] = truck2.name 
+        product[:empleado_ext] = empleado2.name 
+        
         
         total = product[:price] * product[:quantity]
         total -= total * (product[:discount] / 100)
