@@ -750,7 +750,7 @@
       var price = $("#ac_item_price").val();
       var discount = $("#ac_item_discount").val(); 
       var service_ext_id  = $("#ac_service_ext_id").val(); 
-      var truck_id  = $("#ac_truck_id").val(); 
+      var truck_id      =     $("#ac_truck_id").val(); 
       var empleado_id  = $("#ac_employee_id").val(); 
       
       var items_arr = $("#items").val().split(",");
