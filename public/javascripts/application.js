@@ -750,8 +750,9 @@
       var price = $("#ac_item_price").val();
       var discount = $("#ac_item_discount").val(); 
       var service_ext_id  = $("#ac_service_ext_id").val(); 
-      var truck_id      =     $("#ac_truck_id").val(); 
-      var empleado_id  = $("#ac_employee_id").val(); 
+      var truck_id        =   $("#ac_truck_id").val(); 
+      var empleado_id     =    $("#ac_employee_id").val(); 
+      alert(truck_id); 
       
       var items_arr = $("#items").val().split(",");
 
@@ -769,7 +770,8 @@
         alert("Por favor ingrese una extension valida.");
         
       } else {
-        var item_line = item_id + "|BRK|" + quantity + "|BRK|" + price + "|BRK|" + discount+ "|BRK|" + service_ext_id + "|BRK|" + truck_id + "|BRK|" + empleado_id ;
+        var item_line = item_id + "|BRK|" + quantity + "|BRK|" + price + "|BRK|" + discount+ "|BRK|" +
+        service_ext_id + "|BRK|" + truck_id + "|BRK|" + empleado_id ;
         
         $("#items").val($("#items").val() + "," + item_line);
         listItemsserviceorder();
