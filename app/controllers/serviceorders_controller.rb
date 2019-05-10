@@ -500,7 +500,7 @@ class ServiceordersController < ApplicationController
     @employees = @company.get_employees()
     @trucks = @company.get_trucks()
     @servicebuys  = @company.get_servicebuys()
-    @serviceexts  = ServiceExtension.where("servicebuy_id = ?",Servicebuy.first.id) 
+    @serviceexts  = ServiceExtension.all 
     
     @monedas  = @company.get_monedas()
 
