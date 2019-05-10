@@ -743,16 +743,14 @@
     var item = $("#ac_item").val();
     
     if(item != "") {
-      var company_id = $("#serviceorder_company_id").val();
-      var item_id = $("#ac_item_id").val();
-      
-      var quantity = $("#ac_item_quantity").val();
-      var price = $("#ac_item_price").val();
-      var discount = $("#ac_item_discount").val(); 
+      var company_id      = $("#serviceorder_company_id").val();
+      var item_id         = $("#ac_item_id").val();
+      var quantity        = $("#ac_item_quantity").val();
+      var price           = $("#ac_item_price").val();
+      var discount        = $("#ac_item_discount").val(); 
       var service_ext_id  = $("#ac_service_ext_id").val(); 
-      var truck_id        =   $("#ac_truck_id").val(); 
-      var empleado_id     =    $("#ac_employee_id").val(); 
-      alert(truck_id); 
+      var truck_id        = $("#ac_truck_id").val(); 
+      var empleado_id     = $("#ac_employee_id").val(); 
       
       var items_arr = $("#items").val().split(",");
 
@@ -770,8 +768,7 @@
         alert("Por favor ingrese una extension valida.");
         
       } else {
-        var item_line = item_id + "|BRK|" + quantity + "|BRK|" + price + "|BRK|" + discount+ "|BRK|" +
-        service_ext_id + "|BRK|" + truck_id + "|BRK|" + empleado_id ;
+        var item_line = item_id + "|BRK|" + quantity + "|BRK|" + price + "|BRK|" + discount+ "|BRK|" + service_ext_id + "|BRK|" + truck_id + "|BRK|" + empleado_id ;
         
         $("#items").val($("#items").val() + "," + item_line);
         listItemsserviceorder();
