@@ -59,6 +59,22 @@
       <%= f.label :division_id %><br />
       <%= f.select :division_id,options_from_collection_for_select(@divisions,'id','name') %>
     </div>
+    <strong>Placa  :</strong><br />
+      
+      <%= select_tag(:ac_truck_id,options_from_collection_for_select(@trucks,'id','placa')) %>
+    <div class="small">
+      Seleccione una placa 
+    </div>
+    
+    <br />
+    
+      <strong>Empleado :</strong><br />
+      <%= select_tag(:ac_employee_id,options_from_collection_for_select(@employees,'id','full_name')) %>
+    <div class="small">
+      Seleccione un empleado 
+    </div>
+    
+    <br />
     
     
      <div class="field">
@@ -141,23 +157,7 @@
 
 
     
-      <strong>Placa  :</strong><br />
       
-      <%= select_tag(:ac_truck_id,options_from_collection_for_select(@trucks,'id','placa')) %>
-    <div class="small">
-      Seleccione una placa 
-    </div>
-    
-    <br />
-    
-      <strong>Empleado :</strong><br />
-      <%= select_tag(:ac_employee_id,options_from_collection_for_select(@employees,'id','full_name')) %>
-    <div class="small">
-      Seleccione un empleado 
-    </div>
-    
-    <br />
-    
     
     
     
