@@ -313,6 +313,8 @@ class ServiceordersController < ApplicationController
     items_arr = []
     @products = []
     i = 0
+    puts "items "
+    puts items 
 
     for item in items
       if item != ""
