@@ -776,6 +776,8 @@
         
         $("#ac_item_id").val("");
         $("#service_ext_id").val("");
+        $("#truck_id").val("");
+        $("#empleado_id").val("");
         
         $("#ac_item").val("");
         $("#ac_item_quantity").val("1");

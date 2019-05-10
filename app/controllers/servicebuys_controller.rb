@@ -65,7 +65,8 @@ class ServicebuysController < ApplicationController
     # updates songs based on artist selected
     @servicios = Servicebuy.find(params[:ac_item_id])
     
-    @servicionexts = ServiceExtension.where(servicebuy_id: @servicios.last.id)
+    @serviceexts  = ServiceExtension.where(servicebuy_id: @servicios.last.id)
+    
   end
 
 
