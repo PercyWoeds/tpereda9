@@ -325,8 +325,6 @@ class ServiceordersController < ApplicationController
         price = parts[2]
         discount = parts[3]
         ext_id = parts[4]
-        truck_id = parts[5]
-        empleado_id = parts[6]
         
         
         puts "list items"
