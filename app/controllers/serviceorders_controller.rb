@@ -327,10 +327,6 @@ class ServiceordersController < ApplicationController
         ext_id = parts[4]
         
         
-        puts "list items"
-        puts truck_id
-        puts empleado_id 
-        puts "fin list items "
         
         product = Servicebuy.find(id.to_i)
         product2 = ServiceExtension.find(ext_id.to_i)
