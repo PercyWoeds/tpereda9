@@ -921,7 +921,7 @@ def get_customer_payments2(moneda,fecha1,fecha2)
        puts c.year_month
        puts c.balance
        
-       if tf 
+       if tf  
            tf.balance += c.balance 
            tf.save 
        else
