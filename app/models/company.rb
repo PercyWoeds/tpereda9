@@ -918,10 +918,10 @@ def get_customer_payments2(moneda,fecha1,fecha2)
          tf = Tempfactura.find_by(year_month: c.year_month, customer_id: c.customer_id)
        
        if tf 
-           tf.balance -= c.balance 
+           tf.balance += c.balance 
            tf.save 
        else
-         lcbalance = c.balance * -1
+         lcbalance = c.balance
          puts "cliente "
          puts c.customer_id 
          a= Tempfactura.new(:year_month=> c.year_month,:customer_id => c.customer_id,:balance=>lcBalance)
