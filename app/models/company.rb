@@ -916,6 +916,10 @@ def get_customer_payments2(moneda,fecha1,fecha2)
          lcBalance= 0 
          
          tf = Tempfactura.find_by(year_month: c.year_month, customer_id: c.customer_id)
+       puts "cliente nc"
+       puts c.customer_id
+       puts c.year_month
+       puts c.balance
        
        if tf 
            tf.balance += c.balance 
