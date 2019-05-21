@@ -2039,7 +2039,7 @@ end
 
           $lcCliName = customerpayment_rpt.customer.name  
           
-          .#customerpayment_rpt.balance.round(2) > 0.00
+          #customerpayment_rpt.balance.round(2) > 0.00
       
           if customerpayment_rpt.year_month.to_f <= 201712
             @total_anterior = @total_anterior + customerpayment_rpt.balance
