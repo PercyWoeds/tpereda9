@@ -897,7 +897,7 @@ def get_customer_payments2(moneda,fecha1,fecha2)
    customer_id,
    SUM(balance) as balance   
    FROM facturas
-   WHERE moneda_id = ? and round(cast(balance as numeric),2) > 0 and fecha >= ? and fecha  <= ? and document_id = 2 
+   WHERE moneda_id = ? and round(cast(balance as numeric),2) < 0 and fecha >= ? and fecha  <= ? and document_id = 2 
    GROUP BY 2,1
    ORDER BY 2,1 ", moneda,"#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])    
    
