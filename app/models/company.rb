@@ -928,7 +928,7 @@ def get_customer_payments2(moneda,fecha1,fecha2)
          lcbalance = c.balance
          puts "cliente "
          puts c.customer_id 
-         a= Tempfactura.new(:year_month=> c.year_month,:customer_id => c.customer_id,:balance=>lcBalance)
+         a= Tempfactura.new(:year_month=> c.year_month,:customer_id => c.customer_id,:balance=>lcbalance)
          a.save 
        end
        
