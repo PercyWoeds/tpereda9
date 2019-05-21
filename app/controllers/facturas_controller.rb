@@ -2157,7 +2157,7 @@ end
             @total_mes12 = 0
             @total_cliente = 0 
             
-          if customerpayment_rpt.balance.round(2) > 0.00
+          #if customerpayment_rpt.balance.round(2) > 0.00
           
           if customerpayment_rpt.year_month.to_f <= 201712
             @total_anterior = @total_anterior + customerpayment_rpt.balance
@@ -2205,7 +2205,7 @@ end
           nroitem = nroitem + 1 
       
           @total_general = @total_general + customerpayment_rpt.balance
-        end 
+        #end 
        end 
        end   
        
