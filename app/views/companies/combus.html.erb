@@ -16,7 +16,7 @@
 
    <h3>
     <%= image_tag("supplier_32.png", :class => "vmiddle") %>
-    <%= link_to "Productos", "/companies/products/#{@company.id}" %>
+    <%= link_to "Facturas ", "/companies/products/#{@company.id}" %>
   </h3>
 
   <p>
@@ -27,7 +27,7 @@
   
    <h3>
     <%= image_tag("supplier_32.png", :class => "vmiddle") %>
-    <%= link_to "Consulta Stock " , "/stocks/do_stocks/#{@company.id}" %>
+    <%= link_to "Detalle de consumos  " , "/stocks/do_stocks/#{@company.id}" %>
   </h3>
 
   <p>
@@ -36,31 +36,16 @@
   <%= hr() %>
   
   
-  
-  
-  
-  
 </div>
 
 <div class="mid_box">
-<%= hr() %>
-  <h3>
-        <div>
-    <%= image_tag("clients_32.png", :class => "vmiddle") %>
-    <%= link_to "Inventario", "/companies/inventarios/#{@company.id}" %>
-        </div>
-  </h3>
-  
-  <p>
-     Agregar, editar or eliminar ordenes de venta 
-  </p>
 
 <%= hr() %>
 
      <% if @current_user.level == "admin" %>
   <h3>
     <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
-    <%= link_to "Ajustes Inventario", "/companies/ajusts/#{@company.id}" %>
+    <%= link_to "Tipo carga", "/companies/ajusts/#{@company.id}" %>
   </h3>
 
   <p>
@@ -72,7 +57,7 @@
   
   <h3>
     <%= image_tag("divisions_32.png", :class => "vmiddle") %>
-    <%= link_to "Cierre almacen", cierres_path %>
+    <%= link_to "Estacion de servicio ", cierres_path %>
   </h3>
 
   <p>

@@ -1,5 +1,6 @@
   Mnygo::Application.routes.draw do
 
+  resources :lgcs
   resources :service_extensions
   resources :quotation_details
   resources :horas_mes
@@ -991,6 +992,7 @@ end
   match 'companies/mantenimiento/:id' => 'companies#mantenimiento', via: [:get, :post]
   match 'companies/bancos/:id' => 'companies#bancos', via: [:get, :post]
   match 'companies/examens/:id' => 'companies#examens', via: [:get, :post]
+  match 'companies/combus/:id' => 'companies#combus', via: [:get, :post]
   resources :companies
 
   # Users packages

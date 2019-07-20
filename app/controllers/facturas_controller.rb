@@ -19,8 +19,8 @@ class FacturasController < ApplicationController
     
     @parte_rpt = @company.get_parte_1(@fecha)
     
-    
     case params[:print]
+    
       when "To PDF" then 
         begin 
          render  pdf: "Ordenes ",template: "varillajes/parte_rpt.pdf.erb",locals: {:varillajes => @parte_rpt}
@@ -840,6 +840,7 @@ def reportes05
     
     @invoice[:processed] = false
     
+    @invoice[:contrato] = ""
     
     
     
@@ -2360,7 +2361,7 @@ def client_data_headers
   
   private
   def factura_params
-    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id,:detraccion,:factura2,:description,:document_id,:tipoventa_id)
+    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id,:detraccion,:factura2,:description,:document_id,:tipoventa_id,:contrato)
   end
 
 end

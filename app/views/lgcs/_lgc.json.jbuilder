@@ -1,0 +1,2 @@
+json.extract! lgc, :id, :employee_id, :placa_id, :placa_id2, :peso_ida, :peso_ret, :tipo_carga_id, :ruta, :viaje_salida_fecha, :viaje_retorno_fecha, :recorrido, :float, :salida_km, :retorno_km, :km_real, :total_gal, :ratio_fisico, :ratio_teorico, :idle_fuel, :idletime, :time_1, :margen, :dscto_gln, :monto, :rpm, :km, :abas_total, :monto_total, :obser, :user_id, :created_at, :updated_at
+json.url lgc_url(lgc, format: :json)

@@ -1,0 +1,63 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 1
+  placa_id: 1
+  placa_id2: 1
+  peso_ida: 1.5
+  peso_ret: 1.5
+  tipo_carga_id: 1
+  ruta: MyString
+  viaje_salida_fecha: 2019-07-05 17:04:29
+  viaje_retorno_fecha: 2019-07-05 17:04:29
+  recorrido: MyString
+  float: MyString
+  salida_km: 1.5
+  retorno_km: 1.5
+  km_real: 1.5
+  total_gal: 1.5
+  ratio_fisico: 1.5
+  ratio_teorico: 1.5
+  idle_fuel: 1.5
+  idletime: 2019-07-05 17:04:29
+  time_1: 1.5
+  margen: 1.5
+  dscto_gln: 1.5
+  monto: 1.5
+  rpm: 1.5
+  km: 1.5
+  abas_total: 1.5
+  monto_total: 1.5
+  obser: MyText
+  user_id: 1
+
+two:
+  employee_id: 1
+  placa_id: 1
+  placa_id2: 1
+  peso_ida: 1.5
+  peso_ret: 1.5
+  tipo_carga_id: 1
+  ruta: MyString
+  viaje_salida_fecha: 2019-07-05 17:04:29
+  viaje_retorno_fecha: 2019-07-05 17:04:29
+  recorrido: MyString
+  float: MyString
+  salida_km: 1.5
+  retorno_km: 1.5
+  km_real: 1.5
+  total_gal: 1.5
+  ratio_fisico: 1.5
+  ratio_teorico: 1.5
+  idle_fuel: 1.5
+  idletime: 2019-07-05 17:04:29
+  time_1: 1.5
+  margen: 1.5
+  dscto_gln: 1.5
+  monto: 1.5
+  rpm: 1.5
+  km: 1.5
+  abas_total: 1.5
+  monto_total: 1.5
+  obser: MyText
+  user_id: 1

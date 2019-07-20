@@ -483,6 +483,8 @@ class ServiceordersController < ApplicationController
     
     @serviceorder[:code] = "#{generate_guid4()}"
     @serviceorder[:processed] = false
+    @serviceorder[:detraccion_percent] = 12.00
+    
     #@serviceorder[:fecha1] = Date.today.strftime("%d/%m/%Y").to_s
     
     
@@ -561,7 +563,7 @@ class ServiceordersController < ApplicationController
 
       if @serviceorder[:total] >= 700.00
 
-        @serviceorder[:detraccion] = @serviceorder[:total] * 12/100
+        @serviceorder[:detraccion] = @serviceorder[:total] * @serviceorder[:detraccion_percent]/100
       else
         @serviceorder[:detraccion] = 0
       end 
@@ -573,7 +575,7 @@ class ServiceordersController < ApplicationController
       if @dolar1.compra != nil 
         if @serviceorder[:total]*@dolar1.compra >= 700.00
 
-          @serviceorder[:detraccion] = @serviceorder[:total] * 12/100
+          @serviceorder[:detraccion] = @serviceorder[:total] * @serviceorder[:detraccion_percent]/100
 
           @serviceorder[:dolar] = @dolar1.compra 
         else
@@ -584,7 +586,7 @@ class ServiceordersController < ApplicationController
           
         if  @serviceorder[:total]* 3.22 >= 700.00
 
-          @serviceorder[:detraccion] = @serviceorder[:total] * 12/100
+          @serviceorder[:detraccion] = @serviceorder[:total] * @serviceorder[:detraccion_percent]/100
 
           @serviceorder[:dolar] = 3.22
         else
@@ -599,6 +601,7 @@ class ServiceordersController < ApplicationController
       
     else 
         @serviceorder[:detraccion] = 0
+        
     end 
 
     

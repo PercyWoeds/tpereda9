@@ -1,0 +1,83 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Lgcs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Employee</th>
+      <th>Placa</th>
+      <th>Placa id2</th>
+      <th>Peso ida</th>
+      <th>Peso ret</th>
+      <th>Tipo carga</th>
+      <th>Ruta</th>
+      <th>Viaje salida fecha</th>
+      <th>Viaje retorno fecha</th>
+      <th>Recorrido</th>
+      <th>Float</th>
+      <th>Salida km</th>
+      <th>Retorno km</th>
+      <th>Km real</th>
+      <th>Total gal</th>
+      <th>Ratio fisico</th>
+      <th>Ratio teorico</th>
+      <th>Idle fuel</th>
+      <th>Idletime</th>
+      <th>Time 1</th>
+      <th>Margen</th>
+      <th>Dscto gln</th>
+      <th>Monto</th>
+      <th>Rpm</th>
+      <th>Km</th>
+      <th>Abas total</th>
+      <th>Monto total</th>
+      <th>Obser</th>
+      <th>User</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @lgcs.each do |lgc| %>
+      <tr>
+        <td><%= lgc.employee_id %></td>
+        <td><%= lgc.placa_id %></td>
+        <td><%= lgc.placa_id2 %></td>
+        <td><%= lgc.peso_ida %></td>
+        <td><%= lgc.peso_ret %></td>
+        <td><%= lgc.tipo_carga_id %></td>
+        <td><%= lgc.ruta %></td>
+        <td><%= lgc.viaje_salida_fecha %></td>
+        <td><%= lgc.viaje_retorno_fecha %></td>
+        <td><%= lgc.recorrido %></td>
+        <td><%= lgc.float %></td>
+        <td><%= lgc.salida_km %></td>
+        <td><%= lgc.retorno_km %></td>
+        <td><%= lgc.km_real %></td>
+        <td><%= lgc.total_gal %></td>
+        <td><%= lgc.ratio_fisico %></td>
+        <td><%= lgc.ratio_teorico %></td>
+        <td><%= lgc.idle_fuel %></td>
+        <td><%= lgc.idletime %></td>
+        <td><%= lgc.time_1 %></td>
+        <td><%= lgc.margen %></td>
+        <td><%= lgc.dscto_gln %></td>
+        <td><%= lgc.monto %></td>
+        <td><%= lgc.rpm %></td>
+        <td><%= lgc.km %></td>
+        <td><%= lgc.abas_total %></td>
+        <td><%= lgc.monto_total %></td>
+        <td><%= lgc.obser %></td>
+        <td><%= lgc.user_id %></td>
+        <td><%= link_to 'Show', lgc %></td>
+        <td><%= link_to 'Edit', edit_lgc_path(lgc) %></td>
+        <td><%= link_to 'Destroy', lgc, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Lgc', new_lgc_path %>
