@@ -49,6 +49,7 @@ class Factura < ActiveRecord::Base
                      "Fec.Vmto",
                      "Dias ",
                      "Cliente",
+                     "Contrato",                    
                      "Moneda",                                         
                      "SOLES",
                      "DOLARES ",

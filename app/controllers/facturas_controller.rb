@@ -1420,6 +1420,7 @@ def newfactura2
             
             row << dias 
             row << product.customer.name
+            row << product.contrato             
             row << product.moneda.symbol  
 
             if product.moneda_id == 1 
@@ -1465,7 +1466,8 @@ def newfactura2
             row << ""
             row << ""
             row << ""  
-            row << ""  
+            row << "" 
+            row << "" 
             row << "TOTALES POR CLIENTE=> "            
             row << ""
             row << sprintf("%.2f",total_cliente_dolares.to_s)
@@ -1487,6 +1489,8 @@ def newfactura2
             
             row << dias 
             row << product.customer.name
+            row << product.contrato
+            
             row << product.moneda.symbol  
 
             if product.moneda_id == 1 
@@ -1524,6 +1528,7 @@ def newfactura2
             row << ""
             row << ""
             row << ""  
+            row << ""
             row << ""          
             row << "TOTALES POR CLIENTE=> "            
             row << ""
@@ -1674,7 +1679,7 @@ def newfactura2
     @facturas_rpt = @company.get_pendientes_day(@fecha1,@fecha2)  
 
       
-    Prawn::Document.generate("app/pdf_output/rpt_pendientes.pdf") do |pdf|
+    Prawn::Document.generate("app/pdf_output/rpt_pendientes.pdf"), :page_layout => :landscape do |pdf|
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt2(pdf)
         pdf = build_pdf_body_rpt2(pdf)

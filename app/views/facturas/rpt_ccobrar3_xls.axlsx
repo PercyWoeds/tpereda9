@@ -19,15 +19,15 @@ wb.styles do |s|
     
     wb.add_worksheet(name: "Basic work sheet") do |sheet|
     
-    sheet.add_row ["Td", "Nro.Documento", "Fec.Emision", "Fec.Vmto","Cliente","Moneda", "Soles ","Dolares","Detracion","Observ." ], :style => title 
+    sheet.add_row ["Td", "Nro.Documento", "Fec.Emision", "Fec.Vmto","Cliente","Obra","Moneda", "Soles ","Dolares","Detracion","Observ." ], :style => title 
     
    @facturas_rpt.each do |payment|
         
-        sheet.add_row [payment.document.descripshort, payment.code,payment.fecha,payment.fecha2,payment.customer.name,payment.moneda.symbol,payment.get_importe_balance_soles,payment.get_importe_balance_dolares,payment.detraccion,payment.get_vencido], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency,cadena]
+        sheet.add_row [payment.document.descripshort, payment.code,payment.fecha,payment.fecha2,payment.customer.name,payment.contrato,payment.moneda.symbol,payment.get_importe_balance_soles,payment.get_importe_balance_dolares,payment.detraccion,payment.get_vencido], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency,cadena]
     
    end
    
-   sheet.add_row ["","","","","Totales => ","",@total_cliente_soles,@total_cliente_dolares,@total_cliente_detraccion], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency]
+   sheet.add_row ["","","","","Totales => ","","",@total_cliente_soles,@total_cliente_dolares,@total_cliente_detraccion], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency]
    
    
 end
