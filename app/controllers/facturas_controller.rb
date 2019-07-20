@@ -1679,7 +1679,7 @@ def newfactura2
     @facturas_rpt = @company.get_pendientes_day(@fecha1,@fecha2)  
 
       
-    Prawn::Document.generate("app/pdf_output/rpt_pendientes.pdf"), :page_layout => :landscape do |pdf|
+    Prawn::Document.generate("app/pdf_output/rpt_pendientes.pdf")  do |pdf|
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt2(pdf)
         pdf = build_pdf_body_rpt2(pdf)
@@ -1720,7 +1720,7 @@ def newfactura2
 
     if @facturas_rpt.size > 0 
 
-        Prawn::Document.generate("app/pdf_output/rpt_pendientes.pdf"), :page_layout => :landscape do |pdf|
+        Prawn::Document.generate("app/pdf_output/rpt_pendientes.pdf")  do |pdf|
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt2(pdf)
         pdf = build_pdf_body_rpt2(pdf)
