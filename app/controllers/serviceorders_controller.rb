@@ -563,7 +563,7 @@ class ServiceordersController < ApplicationController
 
       if @serviceorder[:total] >= 700.00
 
-        @serviceorder[:detraccion] = @serviceorder[:total] * @serviceorder[:detraccion_percent]/100
+        @serviceorder[:detraccion] = @serviceorder[:total] * @serviceorder[:detracion_percent]/100
       else
         @serviceorder[:detraccion] = 0
       end 
@@ -575,7 +575,7 @@ class ServiceordersController < ApplicationController
       if @dolar1.compra != nil 
         if @serviceorder[:total]*@dolar1.compra >= 700.00
 
-          @serviceorder[:detraccion] = @serviceorder[:total] * @serviceorder[:detraccion_percent]/100
+          @serviceorder[:detraccion] = @serviceorder[:total] * @serviceorder[:detracion_percent]/100
 
           @serviceorder[:dolar] = @dolar1.compra 
         else
@@ -586,7 +586,7 @@ class ServiceordersController < ApplicationController
           
         if  @serviceorder[:total]* 3.22 >= 700.00
 
-          @serviceorder[:detraccion] = @serviceorder[:total] * @serviceorder[:detraccion_percent]/100
+          @serviceorder[:detraccion] = @serviceorder[:total] * @serviceorder[:detracion_percent]/100
 
           @serviceorder[:dolar] = 3.22
         else
