@@ -88,6 +88,12 @@
       <%= check_box_tag("cbox1", value = "1", checked = true, options = {})  %> Detracción? 
       
      </div>
+
+
+     <div class="field">
+      <%= f.label :detracion_percent %><br />
+      <%= f.number_field :detracion_percent , step: :any  %>
+    </div>  
      
   
     <%= hr() %>
