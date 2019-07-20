@@ -483,7 +483,7 @@ class ServiceordersController < ApplicationController
     
     @serviceorder[:code] = "#{generate_guid4()}"
     @serviceorder[:processed] = false
-    @serviceorder[:detraccion_percent] = 12.00
+    @serviceorder[:detracion_percent] = 12.00
     
     #@serviceorder[:fecha1] = Date.today.strftime("%d/%m/%Y").to_s
     
