@@ -66,7 +66,7 @@ class Factura < ActiveRecord::Base
 def get_tipocambio(dia)
     @tipocambio = Tipocambio.find_by(dia: dia )
 
-    if @tipocambio.all.size >0 
+    if @tipocambio != nil  
       return @tipocambio.venta
     else
       return 0.00
