@@ -252,7 +252,7 @@ class StocksController < ApplicationController
               end
               row << sprintf("%.2f",@total.round(2).to_s)
                 if (stock.price == 0  and saldo > 0) ||  saldo < 0
-                    row << "*"
+                    row << "NX*"
                 else
                     row << ""
                 end 
