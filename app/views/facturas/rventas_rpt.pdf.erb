@@ -55,25 +55,30 @@
                     <td width= "4%" ><%= detalle.document.descripshort  %></td>
                     <td width= "8%" ><%=  detalle.code %>   </td>
                     <td width = "8%" align ="center"><%= detalle.fecha.strftime("%d/%m/%Y")     %></td>
+
                     
                     <td width = "10%" align ="left"><%= detalle.customer.ruc   %> </td>
                     <td width = "25%" align ="left"><%= detalle.customer.name   %> </td>
+
                     <% if detalle.moneda_id == 1 %>
-                    <td width = "5%" align ="center"> USD </td>
+                      <% tipocambio = detalle.get_tipocambio(detalle.fecha) %>
+                      <td width = "5%" align ="center"> USD </td>
                     <% else %>
-                    <td width = "5%" align ="center"> S/. </td>
+                      <% tipocambio = detalle.get_tipocambio(detalle.fecha) %>
+                      <td width = "5%" align ="center"> S/. </td>
                     <% end %>
                     
-                    
-                <% if detalle.document_id == 2 %>
-                  <% lcsubtotal = detalle.subtotal  %>
-                  <% lctax =  detalle.tax  %>
-                  <% lctotal = detalle.total %>
-                <% else %> 
-                  <% lcsubtotal = detalle.subtotal %>
-                  <% lctax =  detalle.tax %>
-                  <% lctotal = detalle.total %>
-                <% end %>
+                    <% if detalle.document_id == 2 %>
+                      <% lcsubtotal = detalle.subtotal * tipocambio %>
+                      <% lctax =  detalle.tax * tipocambio  %>
+                      <% lctotal = detalle.total*tipocambio %>
+                    <% else %> 
+                      <% lcsubtotal = detalle.subtotal*tipocambio %>
+                      <% lctax =  detalle.tax*tipocambio %>
+                      <% lctotal = detalle.total*tipocambio  %>
+                    <% end %>
+
+
                 <td width = "10%" align ="right"><%= sprintf("%.2f",lcsubtotal)   %></td>
                 <td width = "10%" align ="right"><%= sprintf("%.2f",lctax)   %></td>
                 <td width = "10%" align ="right"><%= sprintf("%.2f",lctotal)   %></td>

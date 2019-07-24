@@ -551,7 +551,7 @@ def get_guias_2(fecha1,fecha2)
     @facturas = Factura.where(["company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha1} 23:59:59"])
     return @facturas    
  end 
-
+ 
  ## generar archivo concar
  def get_facturas_year_month_day2(fecha1,fecha2)
     @facturas = Factura.where(["company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"])
@@ -563,6 +563,14 @@ def get_guias_2(fecha1,fecha2)
  def get_facturas_day(fecha1,fecha2,moneda)
 
     @facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",moneda ]).order(:id )
+    return @facturas
+    
+ end
+
+
+ def get_facturas_day_todos(fecha1,fecha2)
+
+    @facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:id )
     return @facturas
     
  end

@@ -76,14 +76,12 @@ def reportes4
     @company=Company.find(1)          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
-    @moneda = params[:moneda_id]    
+   
+
     @current_user_id = current_user.id 
     
-    if current_user.email == 'gestor.comercial.1@tpereda.com.pe' || current_user.email =='gestor.comercial.2@tpereda.com.pe' || current_user.email =='gestor.comercial.3@tpereda.com.pe'
-      @facturas_rpt = @company.get_facturas_day_usuario(@fecha1,@fecha2,@moneda,@current_user_id)          
-    else
-      @facturas_rpt = @company.get_facturas_day(@fecha1,@fecha2,@moneda)          
-    end 
+    @facturas_rpt = @company.get_facturas_day(@fecha1,@fecha2)          
+   
     
     @total1  = @company.get_facturas_by_day_value(@fecha1,@fecha2,@moneda,"subtotal")  
     @total2  = @company.get_facturas_by_day_value(@fecha1,@fecha2,@moneda,"tax")  

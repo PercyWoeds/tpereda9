@@ -63,6 +63,16 @@ class Factura < ActiveRecord::Base
   end
 
 
+def get_tipocambio(dia)
+    @tipocambio = Tipocambio.find_by(dia: dia )
+
+    if @tipocambio.all.size >0 
+      return @tipocambio.venta
+    else
+      return 0.00
+    end 
+ end 
+ 
 
   def self.to_csv(result)
     unless result.nil?
