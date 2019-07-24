@@ -142,7 +142,7 @@ class StocksController < ApplicationController
     @namecategoria= @company.get_categoria_name(@categoria)      
     @movements = @company.get_stocks_inventarios4(@categoria)
       
-    Prawn::Document.generate("app/pdf_output/stocks1.pdf") do |pdf|      
+    Prawn::Document.generate("app/pdf_output/ststovkocks1.pdf") do |pdf|      
 
         pdf.font_families.update("Open Sans" => {
           :normal => "app/assets/fonts/OpenSans-Regular.ttf",
@@ -254,7 +254,7 @@ class StocksController < ApplicationController
                 if (stock.price == 0  and saldo > 0) ||  saldo < 0
                     row << "NX*"
                 else
-                    row << ""
+                  
                 end 
               @cantidad1 += stock.stock_inicial 
               @cantidad2 += stock.ingreso 
