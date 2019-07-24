@@ -66,11 +66,11 @@
                       <% tipocambio = detalle.get_tipocambio(detalle.fecha) %>
 
                       <td width = "5%" align ="center"> USD </td>
-                      <td width = "5%" align ="center"> <%= sprintf("%.2f",tipocambio.to_s)   %> </td>
+                      <td width = "5%" align ="center"> <%= sprintf("%.4f",tipocambio.to_s)   %> </td>
                     <% else %>
                       <% tipocambio = detalle.get_tipocambio(detalle.fecha) %>
                       <td width = "5%" align ="center"> S/. </td>
-                      <td width = "5%" align ="center"> <%= sprintf("%.2f",tipocambio.to_s)   %> </td>
+                      <td width = "5%" align ="center">  </td>
                     <% end %>
                     
                     <% if detalle.document_id == 2 %>
