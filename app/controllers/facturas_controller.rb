@@ -80,7 +80,7 @@ def reportes4
 
     @current_user_id = current_user.id 
     
-    @facturas_rpt = @company.get_facturas_day(@fecha1,@fecha2)          
+    @facturas_rpt = @company.get_facturas_day_todos(@fecha1,@fecha2)          
    
     
     @total1  = @company.get_facturas_by_day_value(@fecha1,@fecha2,@moneda,"subtotal")  
