@@ -23,7 +23,9 @@
     <td width="8%"> Numero  </td>
     <td width="8%"> Fecha </td>
     <td width="10%"> Ruc</td>
-    <td width="25%"> Cliente </td>
+    <td width="20%"> Cliente </td>
+    <td width="5%"> T.C. </td>
+    
     <td width="5%"> Mon. </td>
     
     <td width="10%"> V.Venta</td>
@@ -57,15 +59,18 @@
                     <td width = "8%" align ="center"><%= detalle.fecha.strftime("%d/%m/%Y")     %></td>
 
                     
-                    <td width = "10%" align ="left"><%= detalle.customer.ruc   %> </td>
-                    <td width = "25%" align ="left"><%= detalle.customer.name   %> </td>
+                    <td width = "8%" align ="left"><%= detalle.customer.ruc   %> </td>
+                    <td width = "22%" align ="left"><%= detalle.customer.name   %> </td>
 
                     <% if detalle.moneda_id == 1 %>
                       <% tipocambio = detalle.get_tipocambio(detalle.fecha) %>
+
                       <td width = "5%" align ="center"> USD </td>
+                      <td width = "5%" align ="center"> <%= sprintf("%.2f",tipocambio.to_s)   %> </td>
                     <% else %>
                       <% tipocambio = detalle.get_tipocambio(detalle.fecha) %>
                       <td width = "5%" align ="center"> S/. </td>
+                      <td width = "5%" align ="center"> <%= sprintf("%.2f",tipocambio.to_s)   %> </td>
                     <% end %>
                     
                     <% if detalle.document_id == 2 %>
