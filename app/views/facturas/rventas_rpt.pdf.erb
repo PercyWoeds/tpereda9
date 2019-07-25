@@ -74,9 +74,9 @@
                     <% end %>
                     
                     <% if detalle.document_id == 2 %>
-                      <% lcsubtotal = detalle.subtotal * tipocambio %>
-                      <% lctax =  detalle.tax * tipocambio  %>
-                      <% lctotal = detalle.total*tipocambio %>
+                      <% lcsubtotal = detalle.subtotal  %>
+                      <% lctax =  detalle.tax  %>
+                      <% lctotal = detalle.total %>
                     <% else %> 
                       <% lcsubtotal = detalle.subtotal*tipocambio %>
                       <% lctax =  detalle.tax*tipocambio %>
