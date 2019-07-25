@@ -68,15 +68,15 @@
                       <td width = "5%" align ="center"> USD </td>
                       <td width = "5%" align ="center"> <%= sprintf("%.4f",tipocambio.to_s)   %> </td>
                     <% else %>
-                      <% tipocambio = detalle.get_tipocambio(detalle.fecha) %>
+                      <% tipocambio = 1 %>
                       <td width = "5%" align ="center"> S/. </td>
                       <td width = "5%" align ="center">  </td>
                     <% end %>
                     
                     <% if detalle.document_id == 2 %>
                       <% lcsubtotal = detalle.subtotal  %>
-                      <% lctax =  detalle.tax  %>
-                      <% lctotal = detalle.total %>
+                      <% lctax =  detalle.tax   %>
+                      <% lctotal = detalle.total  %>
                     <% else %> 
                       <% lcsubtotal = detalle.subtotal*tipocambio %>
                       <% lctax =  detalle.tax*tipocambio %>
