@@ -81,37 +81,14 @@ class Employee < ActiveRecord::Base
         self.flujo = 0
 	end 
 	
+
 	def self.import(file)
-      CSV.foreach(file.path, headers: true) do |row|
-          product_hash = row.to_hash # exclude the price field
-          
-          product = Employee.find_by(idnumber: product_hash["idnumber"])
-        
-          
-          if product   
-               
-             
-              
-             puts product_hash["cusspp"]
-             puts product_hash["carnet_seguro"]
-             puts product_hash["fecha_nacimiento"]
-             puts product_hash["cuenta_bancaria"]
-             
-            product.cusspp = product_hash["cusspp"]
-            product.carnet_seguro = product_hash["carnet_seguro"]
-            product.fecha_nacimiento =  product_hash["fecha_nacimiento"]
-            product.cuenta_bancaria =  product_hash["cuenta_bancaria"]
-            
-            product.save 
-            
-            else
-                 puts product_hash["idnumber"]
-                 
-          end     
-          
-        end # end CSV.foreach
-          
-    end
+  
+          CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
+          Employee.create! row.to_hash 
+        end        
+  end
+
     def self.search(search)
       # Title is for the above case, the OP incorrectly had 'name'
       where("idnumber LIKE ? or full_name ilike ? and active = ?", "%#{search}%","%#{search}%","1")

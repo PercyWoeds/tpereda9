@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Eesses</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Nombre</th>
+      <th>Address</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @eesses.each do |eess| %>
+      <tr>
+        <td><%= eess.code %></td>
+        <td><%= eess.nombre %></td>
+        <td><%= eess.address %></td>
+        <td><%= link_to 'Show', eess %></td>
+        <td><%= link_to 'Edit', edit_eess_path(eess) %></td>
+        <td><%= link_to 'Destroy', eess, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Eess', new_eess_path %>

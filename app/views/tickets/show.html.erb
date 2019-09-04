@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @ticket.fecha %>
+</p>
+
+<p>
+  <strong>Eess:</strong>
+  <%= @ticket.eess_id %>
+</p>
+
+<p>
+  <strong>Truck:</strong>
+  <%= @ticket.truck_id %>
+</p>
+
+<p>
+  <strong>Product:</strong>
+  <%= @ticket.product_id %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @ticket.quantity %>
+</p>
+
+<p>
+  <strong>Precioigv:</strong>
+  <%= @ticket.precioigv %>
+</p>
+
+<p>
+  <strong>Importe:</strong>
+  <%= @ticket.importe %>
+</p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @ticket.employee_id %>
+</p>
+
+<p>
+  <strong>Fecha fact:</strong>
+  <%= @ticket.fecha_fact %>
+</p>
+
+<p>
+  <strong>Factura:</strong>
+  <%= @ticket.factura_id %>
+</p>
+
+<p>
+  <strong>Supplier:</strong>
+  <%= @ticket.supplier_id %>
+</p>
+
+<p>
+  <strong>Card:</strong>
+  <%= @ticket.card_id %>
+</p>
+
+<%= link_to 'Edit', edit_ticket_path(@ticket) %> |
+<%= link_to 'Back', tickets_path %>

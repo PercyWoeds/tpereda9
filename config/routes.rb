@@ -1,5 +1,9 @@
   Mnygo::Application.routes.draw do
 
+  resources :tipocargues
+  resources :tickets
+  resources :tipocars
+  resources :eesses
   resources :lgcs
   resources :service_extensions
   resources :quotation_details
@@ -141,6 +145,7 @@
     collection { get :rpt_viatico_pdf    }
     collection { get :update_inicial}
   end 
+
   resources :sellvales  do
     collection { post :import }
   end 
@@ -151,6 +156,10 @@
   
     
   resources :gastos  do
+    collection { post :import }
+  end 
+    
+  resources :tickets  do
     collection { post :import }
   end 
   
@@ -375,6 +384,7 @@ end
   match 'companies/reports/reports_cpagar/:company_id' => 'reports#reports_cpagar', via: [:get, :post]
   match 'companies/reports/reports_cventas/:company_id' => 'reports#reports_cventas', via: [:get, :post]
   match 'companies/reports/reports_calmacen/:company_id' => 'reports#reports_calmacen', via: [:get, :post]
+  match 'companies/reports/reports_lgc/:company_id' => 'reports#reports_lgc', via: [:get, :post]
 
   match 'companies/reports/product_all/:company_id' => 'reports#product_all', via: [:get, :post]
   match 'companies/reports/rpt_serviceorder_all/:company_id' => 'reports#rpt_serviceorder_all', via: [:get, :post]

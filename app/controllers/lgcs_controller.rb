@@ -15,6 +15,14 @@ class LgcsController < ApplicationController
   # GET /lgcs/new
   def new
     @lgc = Lgc.new
+    @company = Company.find(1)
+
+    @eess     = @company.get_eess
+    @carros   = @company.get_placas
+    @products = @company.get_products
+    @employees= @company.get_employees
+
+
   end
 
   # GET /lgcs/1/edit

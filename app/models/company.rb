@@ -16,13 +16,27 @@ class Company < ActiveRecord::Base
   has_many :company_users
   has_many :ajusts 
   has_many :manifests 
-  
+ 
+
+ def get_eess
+   
+   @dato = Eess.all 
+      return @dato 
+ end 
+ 
+def get_placas
+   
+   @dato = Truck.all 
+      return @dato 
+ end 
+ 
 
  def get_cliente(id)
    
    @dato = Customer.find(id)
    return @dato 
  end 
+
  def get_pendientes_cliente(fecha1,fecha2,cliente)
 
     @facturas = Factura.where([" balance > 0  and  company_id = ? AND fecha >= ? and fecha<= ? and customer_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", cliente ]).order(:customer_id,:moneda_id,:fecha)

@@ -1,0 +1,62 @@
+<%= simple_form_for(@ticket) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+
+    
+    <div class="field">
+      <%= f.label :fecha, "Fecha *", :class => "bold" %><br />
+      <%= f.date_field :fecha %>
+    </div>
+  
+    <div class="field">
+      <%= f.label :eess_id, "EESS "%><br />
+      <%= f.collection_select :eess_id, @eess, :id, :nombre, :prompt => true %>
+    </div>
+
+    <div class="field">
+      <%= f.label :truck_id, "Placa "%><br />
+      <%= f.collection_select :truck_id, @carros, :id, :placa, :prompt => true %>
+    </div>
+
+    <div class="field">
+      <%= f.label :product_id, "Producto "%><br />
+      <%= f.collection_select :product_id, @products, :id, :name, :prompt => true %>
+    </div>
+
+ 
+    <div class="field">
+      <%= f.label :quantity, "Cantidad "%><br />
+      <%= f.number_field :quantity, class: :text_field, step: :any %>
+    </div>
+
+    <div class="field">
+      <%= f.label :precioigv , "Precio  "%><br />
+      <%= f.number_field :precioigv, class: :text_field, step: :any %>
+    </div>
+
+
+   
+    <div class="field">
+      <%= f.label :employee_id, "Empleado "%><br />
+      <%= f.collection_select :employee_id, @employees, :id, :name, :prompt => true %>
+    </div>
+    
+  
+    <div class="field">
+      <%= f.label :fecha_fact, "Fecha *", :class => "bold" %><br />
+      <%= f.date_field :fecha_fact %>
+    </div>  
+
+
+
+    <%= f.input :factura_id %>
+
+  
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

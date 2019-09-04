@@ -1,0 +1,61 @@
+<p id="notice"><%= notice %></p>
+
+<h1> Tickets</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Eess</th>
+      <th>Truck</th>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Precioigv</th>
+      <th>Importe</th>
+      <th>Employee</th>
+      <th>Fecha fact</th>
+      <th>Factura</th>
+      <th>Supplier</th>
+      <th>Card</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tickets.each do |ticket| %>
+      <tr>
+        <td><%= ticket.fecha %></td>
+        <td><%= ticket.eess_id %></td>
+        <td><%= ticket.truck_id %></td>
+        <td><%= ticket.product_id %></td>
+        <td><%= ticket.quantity %></td>
+        <td><%= ticket.precioigv %></td>
+        <td><%= ticket.importe %></td>
+        <td><%= ticket.employee_id %></td>
+        <td><%= ticket.fecha_fact %></td>
+        <td><%= ticket.factura_id %></td>
+        <td><%= ticket.supplier_id %></td>
+        <td><%= ticket.card_id %></td>
+        <td><%= link_to 'Show', ticket %></td>
+        <td><%= link_to 'Edit', edit_ticket_path(ticket) %></td>
+        <td><%= link_to 'Destroy', ticket, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Nuevo Ticket ', new_ticket_path %>
+
+
+
+
+<h2>Importar Archivo "*.csv"</h2>
+
+<%= form_tag import_tickets_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
+

@@ -8,12 +8,19 @@ belongs_to :location
 belongs_to :user 
 belongs_to :punto 
 
+belongs_to :tipocargue 
+
   def get_customers()
     customers = Customer.order(:name)
     return customers
   end
  def get_puntos()
     puntos = Punto.all 
+    return puntos
+  end
+
+ def get_cargas()
+    puntos = Tipocargue.all 
     return puntos
   end
 

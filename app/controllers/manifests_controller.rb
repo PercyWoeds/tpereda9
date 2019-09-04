@@ -21,6 +21,7 @@ class ManifestsController < ApplicationController
     @customers = @manifest.get_customers()
     @puntos = @manifest.get_puntos()
     @locations = @manifest.get_locations()
+    @cargas = @manifest.get_cargas()
     
     @manifest[:code] = "#{generate_guid12()}"
     
@@ -139,6 +140,7 @@ def build_pdf_header(pdf)
     pdf.text " ", :size => 13, :spacing => 4
     pdf.font "Helvetica" , :size => 8
 
+   
     max_rows = [client_data_headers.length, invoice_headers.length, 0].max
       rows = []
       (1..max_rows).each do |row|
@@ -159,73 +161,17 @@ def build_pdf_header(pdf)
 
         end
 
-        pdf.move_down 20
+        pdf.move_down 5
 
       end
 
-      headers = []
-      table_content = []
+       pdf.text "__________________________________________________________________________", :size => 13, :spacing => 4
 
-      max_rows = [manifest_1.length,manifest_1.length, 0].max
-      rows = []
-      (1..max_rows).each do |row|
-        rows_index = row - 1
-        rows[rows_index] = []
-        rows[rows_index] += (manifest_1.length >= row ? manifest_1[rows_index] : ['',''])
-        
-      end
-
-      if rows.present?
-
-        pdf.table(rows, {
-          :position => :center,
-          :cell_style => {:border_width => 1},
-          :width => pdf.bounds.width / 2
-        }) do
-          columns([0, 2]).font_style = :bold
-
-        end
-
-        pdf.move_down 20
-
-      end
-      
-      # detalle 
-      
-       max_rows = [manifest_3.length,manifest_3.length, 0].max
-      rows = []
-      (1..max_rows).each do |row|
-        rows_index = row - 1
-        rows[rows_index] = []
-        rows[rows_index] += (manifest_3.length >= row ? manifest_3[rows_index] : ['',''])
-        
-      end
-
-      if rows.present?
-
-        pdf.table(rows, {
-          :position => :center,
-          :cell_style => {:border_width => 0 },
-          :width => pdf.bounds.width 
-        }) do
-          columns([0, 2 , 4 ]).font_style = :bold
-
-        end
-
-        pdf.move_down 20
-
-      end
-      
-      # detalle 2
-      
-      pdf.text "Detalle " , :size => 16, :style => :bold
-      pdf.text "Especificacion", :size => 11, :style => :bold
-      pdf.move_down 5
-      
-      pdf.text @manifest.especificacion
-      pdf.move_down 10
-      
-      max_rows = [manifest_2.length,manifest_2.length, 0].max
+       pdf.text " "
+       pdf.text "Tipo Carga", :size => 8, :style => :bold
+       pdf.text @manifest.tipocargue.name 
+    
+     max_rows = [manifest_2.length,manifest_2.length, 0].max
       rows = []
       (1..max_rows).each do |row|
         rows_index = row - 1
@@ -247,15 +193,43 @@ def build_pdf_header(pdf)
 
         end
 
+        pdf.move_down 10
+
+      end
+    # detalle 
+      
+       max_rows = [manifest_3.length,manifest_3.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (manifest_3.length >= row ? manifest_3[rows_index] : ['',''])
+        
+      end
+
+      if rows.present?
+
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 1 },
+          :width => pdf.bounds.width 
+        }) do
+          columns([0, 2  ]).font_style = :bold
+
+        end
+
         pdf.move_down 20
 
       end
       
+      # detalle 2
       
-      
-      
-      
-      pdf.move_down 10    
+     pdf.text "Observaciones:  ", :size => 11, :style => :bold
+        pdf.text @manifest.observa
+         pdf.move_down  10
+          
+       
+       
       
       
       
@@ -266,19 +240,12 @@ def build_pdf_header(pdf)
 
     def build_pdf_footer(pdf)
 
-        pdf.text "Observaciones Carga :", :size => 11, :style => :bold
-        pdf.text @manifest.observa
-        pdf.text "Observaciones:  ", :size => 11, :style => :bold
-        pdf.text @manifest.observa2
         
-        pdf.move_down  20
-          
-        
-        pdf.bounding_box([0, 20], :width => 535, :height => 30) do
+        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
         
         pdf.text "_________________               _____________________         ____________________      ", :size => 13, :spacing => 4
         pdf.text ""
-        pdf.text "                  Realizado por                                                 V.B.Jefe Compras                                            V.B.Gerencia           ", :size => 10, :spacing => 4
+        pdf.text "                  Jefe Comercial                                                 Jefe de Operaciones                                            Recepcion y Despacho           ", :size => 10, :spacing => 4
         pdf.draw_text "Company: #{@manifest.company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
 
       end
@@ -292,8 +259,8 @@ def build_pdf_header(pdf)
 
   
       client_headers  = [["Local: ", @manifest.location.name ]] 
-      client_headers << ["Solicitante : ", @manifest.solicitante]
       client_headers << ["Cliente : ", @manifest.customer.name ]    
+      client_headers << ["OST.: ", @manifest.solicitante]
       
       
       client_headers
@@ -302,9 +269,9 @@ def build_pdf_header(pdf)
   def invoice_headers   
     
       invoice_headers  = [["Fecha de emisión : ",@manifest.fecha1.strftime("%Y-%m-%d")  ]]
-
-      invoice_headers <<  ["Telefono  : ", @manifest.telefono1 ]    
       invoice_headers <<  ["Estado  : ",@manifest.get_processed ]    
+      
+
       invoice_headers
   end
   
@@ -328,9 +295,16 @@ def build_pdf_header(pdf)
       manifest_2
   end
   def manifest_3   
-      manifest_3   = [["Punto de Partida : ",@manifest.punto.name ,"Punto de Llegada",@manifest.get_punto(@manifest.punto2_id) ,"Fecha : ",@manifest.fecha2.strftime("%d.%m.%Y") ]]
-      manifest_3 <<  ["Contacto 1  : ",@manifest.contacto1,"Telefono 1: ",@manifest.telefono1," ","" ]    
-      manifest_3 <<  ["Contacto 2  : ",@manifest.contacto2,"Telefono 2: ",@manifest.telefono2," ","" ] 
+      manifest_3   = [[ "Descripcion de la carga: ",@manifest.especificacion ,"Fecha de  carguio : ",@manifest.fecha2.strftime("%d.%m.%Y") ]]
+
+      manifest_3 <<  ["Punto de carguio : ",@manifest.punto.name , "Hora de carguio :",@manifest.hora ]
+
+      manifest_3 <<  ["Contacto de carga  : ",@manifest.contacto1,"Telefono : ",@manifest.telefono1 ]    
+       
+      manifest_3 <<  ["Punto de Descarga",@manifest.get_punto(@manifest.punto2_id),"","" ]
+
+      manifest_3 <<  ["Contacto de descarga  : ",@manifest.contacto2,"Telefono : ",@manifest.telefono2 ] 
+
       manifest_3
   end
     
@@ -366,6 +340,6 @@ def do_anular
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def manifest_params
-      params.require(:manifest).permit(:customer_id, :solicitante, :fecha1, :telefono1, :camionetaqty, :camionetapeso, :camionqty, :camionpeso, :semiqty, :semipeso, :extenqty, :extenpeso, :camaqty, :camapeso, :modularqty, :modularpeso, :punto_id, :punto2_id, :fecha2, :contacto1, :telefono1, :contacto2, :telefono2, :especificacion, :largo, :ancho, :alto, :peso, :bultos, :otros, :observa, :observa2, :company_id,:code,:location_id,:importe)
+      params.require(:manifest).permit(:customer_id, :solicitante, :fecha1, :telefono1, :camionetaqty, :camionetapeso, :camionqty, :camionpeso, :semiqty, :semipeso, :extenqty, :extenpeso, :camaqty, :camapeso, :modularqty, :modularpeso, :punto_id, :punto2_id, :fecha2, :contacto1, :telefono1, :contacto2, :telefono2, :especificacion, :largo, :ancho, :alto, :peso, :bultos, :otros, :observa, :observa2, :company_id,:code,:location_id,:importe,:hora,:tipocargue_id)
     end
 end

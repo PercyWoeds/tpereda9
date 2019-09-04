@@ -5,35 +5,25 @@
 
   <h3>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Liquidacion de gastos de Combustible ", "/companies/outputs/#{@company.id}" %>
+    <%= link_to "Liquidacion de gastos de Combustible ", lgcs_path %>
   </h3>
 
   <p>
-     Salidas de almacen
+     Liquidacion de gastos de combustible
   </p>
   
   <%= hr() %>
 
    <h3>
     <%= image_tag("supplier_32.png", :class => "vmiddle") %>
-    <%= link_to "Facturas ", "/companies/products/#{@company.id}" %>
+    <%= link_to "Ticket de consumo ", tickets_path %>
   </h3>
 
   <p>
-     Agregar, editar or eliminar proveedores para tu negocio.
+     Agregar, editar or eliminar tickets de consumo de combustible.
   </p>
   <%= hr() %>
 
-  
-   <h3>
-    <%= image_tag("supplier_32.png", :class => "vmiddle") %>
-    <%= link_to "Detalle de consumos  " , "/stocks/do_stocks/#{@company.id}" %>
-  </h3>
-
-  <p>
-     Agregar, editar or eliminar proveedores para tu negocio.
-  </p>
-  <%= hr() %>
   
   
 </div>
@@ -45,11 +35,11 @@
      <% if @current_user.level == "admin" %>
   <h3>
     <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
-    <%= link_to "Tipo carga", "/companies/ajusts/#{@company.id}" %>
+    <%= link_to "Estacion de servicio ", eesses_path  %>
   </h3>
 
   <p>
-   Agregar, editar or eliminar kits de productos (grupos of productos).
+   Agregar editar o elminar estacion de servicio .
   </p>
 
   <%= hr() %>
@@ -57,11 +47,11 @@
   
   <h3>
     <%= image_tag("divisions_32.png", :class => "vmiddle") %>
-    <%= link_to "Estacion de servicio ", cierres_path %>
+    <%= link_to "Tipo de vehiculo", tipocars_path %>
   </h3>
 
   <p>
-     Agregar, editar or eliminar divisiones de tu negocio(tablas, secciones, etc).
+     Agregar, editar or eliminar  tipo de vehiculo .
   </p>
    <% end %>
   
@@ -73,11 +63,11 @@
   
   <h3>
     <%= image_tag("divisions_32.png", :class => "vmiddle") %>
-    <%= link_to "Reportes", "/companies/reports/reports_calmacen/#{@company.id}" %>
+    <%= link_to "Reportes", "/companies/reports/reports_lgc/#{@company.id}" %>
   </h3>
 
   <p>
-    Reportes de tu negocio.
+    Reportes de liquidacion de gastos de combustible
   </p>
 
 </div>

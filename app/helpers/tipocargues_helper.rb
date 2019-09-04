@@ -1,0 +1,2 @@
+module TipocarguesHelper
+end

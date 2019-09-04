@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190705225407) do
+ActiveRecord::Schema.define(version: 20190904223015) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -545,6 +545,14 @@ ActiveRecord::Schema.define(version: 20190705225407) do
     t.string   "dsubdiario"
   end
 
+  create_table "eesses", force: :cascade do |t|
+    t.string   "code"
+    t.string   "nombre"
+    t.string   "address"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "employees", force: :cascade do |t|
     t.string   "firstname"
     t.string   "lastname"
@@ -654,6 +662,7 @@ ActiveRecord::Schema.define(version: 20190705225407) do
     t.integer  "tipoventa"
     t.integer  "tipoventa_id"
     t.string   "ruc"
+    t.string   "contrato"
   end
 
   create_table "faltantes", force: :cascade do |t|
@@ -1120,6 +1129,10 @@ ActiveRecord::Schema.define(version: 20190705225407) do
     t.datetime "date_processed"
     t.integer  "user_id"
     t.float    "importe"
+    t.integer  "tipocargue_id"
+    t.string   "references"
+    t.string   "manifest"
+    t.string   "hora"
   end
 
   create_table "marcas", force: :cascade do |t|
@@ -1866,8 +1879,8 @@ ActiveRecord::Schema.define(version: 20190705225407) do
     t.string   "processed"
     t.string   "return"
     t.integer  "user_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
     t.integer  "instruccion_id"
     t.string   "moneda"
     t.integer  "moneda_id"
@@ -1881,6 +1894,7 @@ ActiveRecord::Schema.define(version: 20190705225407) do
     t.float    "dolar"
     t.integer  "truck_id"
     t.integer  "employee_id"
+    t.float    "detracion_percent"
   end
 
   create_table "services", force: :cascade do |t|
@@ -2035,12 +2049,46 @@ ActiveRecord::Schema.define(version: 20190705225407) do
     t.string   "year_month"
   end
 
+  create_table "tickets", force: :cascade do |t|
+    t.datetime "fecha"
+    t.integer  "eess_id"
+    t.integer  "truck_id"
+    t.integer  "product_id"
+    t.float    "quantity"
+    t.float    "precioigv"
+    t.float    "importe"
+    t.integer  "employee_id"
+    t.datetime "fecha_fact"
+    t.integer  "factura_id"
+    t.integer  "supplier_id"
+    t.integer  "card_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "factu"
+    t.integer  "tipocar_id"
+  end
+
   create_table "tipocambios", force: :cascade do |t|
     t.datetime "dia"
     t.float    "compra"
     t.float    "venta"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "tipocargues", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tipocars", force: :cascade do |t|
+    t.string   "code"
+    t.string   "nombre"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "tipocar_id"
   end
 
   create_table "tipofacturas", force: :cascade do |t|

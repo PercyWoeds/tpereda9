@@ -1293,6 +1293,11 @@ def rpt_facturas_4
     @company = Company.find(params[:company_id])
     @pagetitle = "Almacen"    
   end
+  def reports_lgc
+    @company = Company.find(params[:company_id])
+    @pagetitle = "L.G.C."    
+  end
+  
   def rpt_calmacen1_pdf
     @company = Company.find(params[:company_id])    
     @pagetitle = "Listado de stocks "    
