@@ -2,7 +2,7 @@ class Company < ActiveRecord::Base
   validates_presence_of :user_id, :name
   
   belongs_to :user
-  belongs_to :company 
+  
   
   has_many :locations
   has_many :suppliers

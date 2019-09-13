@@ -5,6 +5,7 @@
 </div>
 
 
+
 <h1>
   <%= image_tag("invoice_48.png", :class => "vmiddle") %>
   <%= @manifest.code %>
@@ -103,11 +104,11 @@
 
 <p>
     <b>Punto de Partida: </b>
-    <%=   @manifest.punto.name   %>   
+    <%=   @manifest.direccion1   %>   
 </p>
 <p>
     <b>Punto de llegada : </b>
-    <%=   @manifest.punto.name   %>   
+    <%=   @manifest.direccion2   %>   
 </p>
 
 <p>
@@ -202,6 +203,7 @@
 
 <p>
   <strong> Usuario :</strong>
+  
  
 </p>
 
@@ -209,8 +211,20 @@
 
 <div class="button">
   <%= link_to 'Exportar to PDF', "/manifests/pdf/#{@manifest.id}.pdf" %>  
+  <% if @manifest.processed == "1" %>
+
+  <tr>
+
+    <%= link_to 'Enviar  via email', "/manifests/sendmail/#{@manifest.id}" %>
 
 
+    </tr>
+    
+
+  <% else %>
+  <%= link_to 'Procesar ST.', "/manifests/do_process/#{@manifest.id}" %>
+
+  <% end %>
   
   <%= link_to 'Regresar', manifests_path %>
 </div>

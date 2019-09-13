@@ -169,7 +169,7 @@
 
 <div class="button">
   <%= link_to 'Export to PDF', "/invoices/pdf/#{@invoice.id}.pdf" %>
-  <%= link_to 'Send invoice via email', "/invoices/email/#{@invoice.id}" %>
+  <%= link_to 'Enviar  via email', "/invoices/email/#{@invoice.id}" %>
   <%= link_to 'Process invoice', "/invoices/do_process/#{@invoice.id}" %>
   <%= link_to 'Edit', edit_invoice_path(@invoice) %>
   <%= link_to 'Back', "/companies/invoices/#{@invoice.company.id}" %>

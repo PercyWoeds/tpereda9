@@ -12,7 +12,7 @@ module ApplicationHelper
   end
   
   def getAppEmail()
-    return 'info@wds.com'
+    return 'percywoeds@gmail.com'
   end
   
   def getAppVersion()

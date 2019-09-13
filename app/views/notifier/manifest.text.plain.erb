@@ -1,0 +1,101 @@
+Hello <%= @to %>,
+
+<%= @manifest.company.name %> ha enviado el siguiente SOLICITUD DE TRANSPORTE :
+
+SOLICITUD DE TRANSPORTE : <%= @manifest.code %>
+
+<% if @manifest.location %>
+Location: <%= @manifest.location.name %>
+<% end %>
+
+
+<% if @manifest.customer %>
+================================================================================================
+Cliente 
+================================================================================================
+
+Nombre : <%= @manifest.customer.name %>
+<% if @manifest.customer.code %>
+Code: <%= @manifest.customer.code %>
+<% end %>
+<% if @manifest.customer.email %>
+Email: <%= @manifest.customer.email %>
+<% end %>
+<% if @manifest.customer.phone1 %>
+Phone 1: <%= @manifest.customer.phone1 %>
+<% end %>
+<% if @manifest.customer.phone2 %>
+Phone 2: <%= @manifest.customer.phone2 %>
+<% end %>
+<% if @manifest.customer.address1 %>
+Address 1: <%= @manifest.customer.address1 %>
+<% end %>
+<% if @manifest.customer.address2 %>
+Address 2: <%= @manifest.customer.address2 %>
+<% end %>
+<% if @manifest.customer.city %>
+City: <%= @manifest.customer.city %>
+<% end %>
+<% if @manifest.customer.state %>
+State: <%= @manifest.customer.state %>
+<% end %>
+<% if @manifest.customer.zip %>
+ZIP: <%= @manifest.customer.zip %>
+<% end %>
+<% if @manifest.customer.country %>
+Country: <%= @manifest.customer.country %>
+<% end %>
+<% if @customer.comments != "" %>
+
+Comments:
+<%= @manifest.customer.comments %>
+<% end %>
+
+<%= @customer.get_taxable %>
+
+Fecha de emision <%= doDate(@manifest.fecha1) %>
+Estado           <%= @manifest.get_processed %>
+
+<% end %>
+
+
+=================================================================================================
+Tipo de Carga  : <%= @manifest.tipocargue.name  %>
+=================================================================================================
+
+Largo : <%= @manifest.largo %> Ancho: <%= @manifest.ancho %> Alto <%= @manifest.alto  %> 
+Peso  : <%= @manifest.peso %> Ancho: <%= @manifest.bultos %> Alto <%= @manifest.otros %> 
+
+=================================================================================================
+Descripcion Carga   : <%=  @manifest.especificacion %>
+Fecha  Carga 		: <%=  @manifest.fecha2 %>
+Punto de carguio    : <%=  @manifest.direccion %>
+Hora  de carguio    : <%=  @manifest.hora %>
+Contacto de Carga   : <%=  @manifest.contacto1 %>
+Telefono            : <%=  @manifest.telefono1 %>
+=================================================================================================
+
+=================================================================================================
+Punto de descarga   : <%=  @manifest.direccion %>
+
+Contacto de Carga   : <%=  @manifest.contacto2 %>
+Telefono            : <%=  @manifest.telefono2 %>
+=================================================================================================
+
+
+<% if @manifest.description != "" %>
+
+Observaciones 
+<%= @manifest.observaciones  %>
+
+=================================================================================================
+<% end %>
+
+
+Processed:
+<%= @manifest.get_processed %>
+
+Return:
+<%= @manifest.get_return %>
+
+======================================fin=========================================================

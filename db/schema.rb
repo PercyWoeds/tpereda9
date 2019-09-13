@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190904223015) do
+ActiveRecord::Schema.define(version: 20190909195620) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1133,6 +1133,9 @@ ActiveRecord::Schema.define(version: 20190904223015) do
     t.string   "references"
     t.string   "manifest"
     t.string   "hora"
+    t.string   "address1"
+    t.string   "direccion1"
+    t.string   "direccion2"
   end
 
   create_table "marcas", force: :cascade do |t|

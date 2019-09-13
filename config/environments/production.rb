@@ -80,8 +80,8 @@ Mnygo::Application.configure do
     address:              'send.one.com',
     port:                 587,
     domain:               'one.com',
-    user_name:            'factura-electronica@valuemiperu.com',
-    password:             'Factura2016',
+    user_name:            'wds.tpereda@gmail.com',
+    password:             'ycrep2016',
     authentication:       'plain',
     enable_starttls_auto: true  }
 

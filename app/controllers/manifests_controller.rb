@@ -1,5 +1,7 @@
 class ManifestsController < ApplicationController
-  before_action :set_manifest, only: [:show, :edit, :update, :destroy]
+  before_action :set_manifest, only: [:show, :edit, :update, :destroy,:sendmail]
+
+
 
   # GET /manifests
   # GET /manifests.json
@@ -14,8 +16,31 @@ class ManifestsController < ApplicationController
   def show
     
   end
-
   # GET /manifests/new
+  
+  # Do send invoice via email
+  def do_email
+    @manifest = Manifest.find(params[:id])
+    @email = params[:email]
+    
+    Notifier.manifest(@email, @manifest).deliver
+    
+    flash[:notice] = "El documento ha sido enviado con exito ."
+    redirect_to "/manifests/#{@manifest.id}"
+  end
+
+  
+  # Send invoice via email
+  def sendmail
+    puts "send mail "
+    puts @manifest.code 
+
+    @company  = @manifest.company
+
+    ActionCorreo.st_email(@manifest).deliver_now 
+  end
+  
+
   def new
     @manifest = Manifest.new
     @customers = @manifest.get_customers()
@@ -102,41 +127,40 @@ def pdf
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
     send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
   
-
   end
   
   
-
 def build_pdf_header(pdf)
 
-      pdf.image "#{Dir.pwd}/public/images/logo2.png", :width => 270
-        
-      pdf.move_down 6
-        
-      pdf.move_down 4
-      #pdf.text supplier.street, :size => 10
-      #pdf.text supplier.district, :size => 10
-      #pdf.text supplier.city, :size => 10
-      pdf.move_down 4
+      pdf.font "Helvetica"  , :size => 8
 
-      pdf.bounding_box([325, 725], :width => 200, :height => 80) do
-        pdf.stroke_bounds
-        pdf.move_down 15
-        pdf.font "Helvetica", :style => :bold do
-          pdf.text "R.U.C: 20424092941", :align => :center
-          pdf.text "SOLICITUD DE TRANSPORTE", :align => :center
-          pdf.text "#{@manifest.code}", :align => :center,
-                                 :style => :bold
+     image_path = "#{Dir.pwd}/public/images/logo01.jpg"
+
+      two_dimensional_array0 = [["SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD "],["OCUPACIONAL "],["SOLICITUD DE TRANSPORTE DE CARGA NRO: "+@manifest.code ]]    
+      two_dimensional_array1 = [["CODIGO     "],["VERSION"],["PAGINA"]] 
+      two_dimensional_array2 = [["TP-CL-F-002    "],["03"],["1 DE 1 "]]
+       
+
+      table_content = ([ [{:image=> image_path, :width => 100 },{:content => two_dimensional_array0,:width=>320,},two_dimensional_array1,two_dimensional_array2 ]
+                ]) 
+
+      pdf.table(table_content, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
           
         end
-      end
-      pdf.move_down 25
+
+
+      pdf.move_down 2
       pdf 
   end   
 
   def build_pdf_body(pdf)
     
-    pdf.text "__________________________________________________________________________", :size => 13, :spacing => 4
     pdf.text " ", :size => 13, :spacing => 4
     pdf.font "Helvetica" , :size => 8
 
@@ -252,11 +276,9 @@ def build_pdf_header(pdf)
       pdf
       
   end
-
   
   
  def client_data_headers
-
   
       client_headers  = [["Local: ", @manifest.location.name ]] 
       client_headers << ["Cliente : ", @manifest.customer.name ]    
@@ -297,11 +319,11 @@ def build_pdf_header(pdf)
   def manifest_3   
       manifest_3   = [[ "Descripcion de la carga: ",@manifest.especificacion ,"Fecha de  carguio : ",@manifest.fecha2.strftime("%d.%m.%Y") ]]
 
-      manifest_3 <<  ["Punto de carguio : ",@manifest.punto.name , "Hora de carguio :",@manifest.hora ]
+      manifest_3 <<  ["Punto de carguio : ",@manifest.direccion1 , "Hora de carguio :",@manifest.hora ]
 
       manifest_3 <<  ["Contacto de carga  : ",@manifest.contacto1,"Telefono : ",@manifest.telefono1 ]    
        
-      manifest_3 <<  ["Punto de Descarga",@manifest.get_punto(@manifest.punto2_id),"","" ]
+      manifest_3 <<  ["Punto de Descarga",@manifest.direccion2,"","" ]
 
       manifest_3 <<  ["Contacto de descarga  : ",@manifest.contacto2,"Telefono : ",@manifest.telefono2 ] 
 
@@ -311,26 +333,24 @@ def build_pdf_header(pdf)
    def do_process
     @manifest  = Manifest.find(params[:id])
     @manifest[:processed] = "1"
+
+
     @manifest.process
     
-    flash[:notice] = "The serviceorder order has been processed."
+    flash[:notice] = "El documento ha sido procesado."
     redirect_to @manifest 
   end
 
-def do_anular
-    @manifest  = Manifest.find(params[:id])
-    @manifest[:processed] = "2"
-    
-    @manifest.anular 
-    
-    flash[:notice] = "Documento a sido anulado."
-    redirect_to @manifest  
+  def do_anular
+      @manifest  = Manifest.find(params[:id])
+      @manifest[:processed] = "2"
+      
+      @manifest.anular 
+      
+      flash[:notice] = "Documento a sido anulado."
+      redirect_to @manifest  
   end
   
-
-
-
-
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -340,6 +360,6 @@ def do_anular
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def manifest_params
-      params.require(:manifest).permit(:customer_id, :solicitante, :fecha1, :telefono1, :camionetaqty, :camionetapeso, :camionqty, :camionpeso, :semiqty, :semipeso, :extenqty, :extenpeso, :camaqty, :camapeso, :modularqty, :modularpeso, :punto_id, :punto2_id, :fecha2, :contacto1, :telefono1, :contacto2, :telefono2, :especificacion, :largo, :ancho, :alto, :peso, :bultos, :otros, :observa, :observa2, :company_id,:code,:location_id,:importe,:hora,:tipocargue_id)
+      params.require(:manifest).permit(:customer_id,:processed,:date_processed,:solicitante, :fecha1, :telefono1, :camionetaqty, :camionetapeso, :camionqty, :camionpeso, :semiqty, :semipeso, :extenqty, :extenpeso, :camaqty, :camapeso, :modularqty, :modularpeso, :punto_id, :punto2_id, :fecha2, :contacto1, :telefono1, :contacto2, :telefono2, :especificacion, :largo, :ancho, :alto, :peso, :bultos, :otros, :observa, :observa2, :company_id,:code,:location_id,:importe,:hora,:tipocargue_id,:direccion1,:direccion2)
     end
 end

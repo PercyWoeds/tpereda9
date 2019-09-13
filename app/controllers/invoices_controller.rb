@@ -43,7 +43,7 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.find(params[:id])
     @email = params[:email]
     
-    Notifier.invoice(@email, @invoice).deliver
+    Notifier.manifest(@email, @invoice).deliver
     
     flash[:notice] = "The invoice has been sent successfully."
     redirect_to "/invoices/#{@invoice.id}"

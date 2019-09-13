@@ -7,4 +7,10 @@ class Notifier < ActionMailer::Base
     @to = to
     mail(:to => to)
   end
+  def manifest(to, manifest)
+    @manifest = manifest
+    @to = to
+    mail(:to => to)
+  end
+  
 end

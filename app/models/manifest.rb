@@ -10,6 +10,10 @@ belongs_to :punto
 
 belongs_to :tipocargue 
 
+validates_presence_of :location_id, :code,:customer_id,:fecha1,:tipocargue_id,:especificacion,:fecha2,:direccion1,:direccion2,:contacto1,:telefono1,:contacto2,:telefono2
+validates_uniqueness_of :code
+
+
   def get_customers()
     customers = Customer.order(:name)
     return customers
@@ -63,4 +67,14 @@ def get_processed
         lcnumero = numero.to_s
         Voided.where(:id=>'16').update_all(:numero =>lcnumero)        
   end
+
+  def process
+    if(self.processed == "1" or self.processed == true)          
+      self.processed="1"
+      self.date_processed = Time.now
+      self.save
+    end
+  end
+
+  
 end

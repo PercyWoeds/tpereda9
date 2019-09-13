@@ -1,0 +1,32 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> 
+  <%= link_to @company.name, @company %> 
+  <%= link_to "Solicitud", "/companies/manifests/#{@company.id}" %> 
+  <%= link_to @manifest.code, @manifest %>
+</div>
+
+<h1>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  Enviar documento via email
+</h1>
+
+<%= hr() %>
+
+<h3>
+  <%= link_to @manifest.code , @manifest %>
+</h3>
+
+<%= hr() %>
+
+<form method="post" action="/manifests/do_email/<%= @manifest.id %>">
+  <strong>Email:</strong>
+  <input type="text" name="email" value="<%= @manifest.customer.email %>" onclick="$(this).select();" />
+  <input type="submit" value="Enviar" class="bold" />
+</form>
+
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Ver', @manifest %>
+  <%= link_to 'Regresar', "/companies/manifests/#{@company.id}" %>
+</div>

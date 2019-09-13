@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h3>Estimado Usuario  </h3>
+    <p>
+
+      Por la presente les comunicamos que el area de Opeaciones  ha enviado la siguiente SOLICITUD DE TRANSPORTE :
+    </br>
+ 
+        Location: <%= @manifest.location.name %>
+
+             <p> </p>
+
+        Cliente  : <%= @manifest.customer.name %>
+
+        <% if @manifest.customer.ruc %>
+        Code: <%= @manifest.customer.ruc %>
+        <% end %>
+        <% if @manifest.customer.email %>
+        Email: <%= @manifest.customer.email %>
+        <% end %>
+        <% if @manifest.customer.phone1 %>
+        Phone 1: <%= @manifest.customer.phone1 %>
+        <% end %>
+        <% if @manifest.customer.phone2 %>
+        Phone 2: <%= @manifest.customer.phone2 %>
+        <% end %>
+        <% if @manifest.customer.address1 %>
+        Address 1: <%= @manifest.customer.address1 %>
+        <% end %>
+        <% if @manifest.customer.address2 %>
+        Address 2: <%= @manifest.customer.address2 %>
+        <% end %>
+        <% if @manifest.customer.city %>
+        City: <%= @manifest.customer.city %>
+        <% end %>
+        <% if @manifest.customer.state %>
+        State: <%= @manifest.customer.state %>
+        <% end %>
+        <% if @manifest.customer.zip %>
+        ZIP: <%= @manifest.customer.zip %>
+        <% end %>
+        <% if @manifest.customer.country %>
+        Country: <%= @manifest.customer.country %>
+        <% end %>
+        
+
+        <%= @manifest.customer.get_taxable %>
+
+        Fecha de emision <%= doDate(@manifest.fecha1) %>
+        Estado           <%= @manifest.get_processed %>
+        <p>
+        Tipo de Carga  : <%= @manifest.tipocargue.name  %>
+         </p>
+
+      <table>
+        <tr>
+          <td>Largo  </td>
+          <td>  <%= @manifest.largo %>  </td>
+
+          <td>Ancho  </td>
+          <td>  <%= @manifest.ancho %>  </td>
+
+          <td>Alto  </td>
+          <td>  <%= @manifest.alto %>  </td>
+          
+        </tr>
+        <tr>
+          <td>Peso:</td>
+          <td><%= @manifest.peso  %></td>
+
+          <td>Bultos   :</td>
+          <td><%=@manifest.bultos%></td>
+
+          <td>Otros    :  </td>
+          <td><%= @manifest.otros  %></td>
+
+        </tr>
+      </table>
+   
+        <p>
+          Descripcion Carga   : <%=  @manifest.especificacion %>
+        </p>
+
+         <p>
+          Fecha  Carga    : <%=  @manifest.fecha2 %>
+        </p>
+        <p>
+          Punto de carguio    : <%=  @manifest.direccion1 %>
+        </p>
+        <p>
+          Hora  de carguio    : <%=  @manifest.hora %>
+        </p>
+
+        <p>
+          Punto de descarga   : <%=  @manifest.direccion2 %>
+
+        </p>
+        <p>
+          Contacto de Carga   : <%=  @manifest.contacto2 %>
+        </p>
+
+        <p>
+          Telefono            : <%=  @manifest.telefono2 %>
+
+        </p>
+         <p> 
+            <% if @manifest.observa != "" %>
+
+          Observaciones 
+          <%= @manifest.observa  %>
+
+          <% end %>
+
+
+          Processed:
+          <%= @manifest.get_processed %>
+
+        
+       
+        </p>
+
+         
+     
+    </p>
+    <p>  Atentamente,</p>
+    <p> </p>
+    <p> Área de Operaciones   </p>  
+  
+    
+    <p>
+
+    </p>
+    <p>.</p>
+    <p></p>
+  </body>
+</html>

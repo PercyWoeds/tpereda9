@@ -153,7 +153,7 @@
   resources :tipocambios  do
     collection { post :import }
   end 
-  
+    
     
   resources :gastos  do
     collection { post :import }
@@ -803,6 +803,7 @@ end
   match 'manifests/do_anular/:id' => 'manifests#do_anular', via: [:get, :post]
   match 'manifests/pdf/:id' => 'manifests#pdf', via: [:get, :post]
   match 'manifests/do_email/:id' => 'manifests#do_email', via: [:get, :post]
+  match 'manifests/sendmail/:id' => 'manifests#sendmail', via: [:get, :post]
   resources :manifests 
 
   match 'suppliers/new2/:id'   => 'suppliers#new2', via: [:get, :post]

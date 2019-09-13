@@ -118,8 +118,8 @@
     </div>
 
     <div class="field">  
-        <%= f.label :punto_id, "Punto de carguio *", :class => "bold" %><br />
-        <%= f.select :punto_id,options_from_collection_for_select(@puntos,'id','name') %>
+        <%= f.label :direccion1, "Punto de carguio *", :class => "bold" %><br />
+         <%= f.text_field :direccion1 %>
     </div>
    
    <div class="field">  
@@ -143,8 +143,9 @@
 
    
     <div class="field">  
-        <%= f.label :punto2_id, "Punto de descarga *", :class => "bold" %><br />
-        <%= f.select :punto2_id,options_from_collection_for_select(@puntos,'id','name') %>
+        <%= f.label :direccion2, "Punto de descarga *", :class => "bold" %><br />
+         <%= f.text_field :direccion2 %>        
+    </d
     </div>
     
     
