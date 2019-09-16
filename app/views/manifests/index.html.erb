@@ -25,8 +25,9 @@
         <td><%= manifest.fecha1 %></td>
 
         <td><%= link_to 'Ver', manifest %></td>
-         <% if current_user.level =="admin"%> 
+        
         <td><%= link_to 'Editar', edit_manifest_path(manifest) %></td>
+         <% if current_user.level =="admin"%> 
         <td><%= link_to 'Eliminar', manifest, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           <% end %>
       </tr>
