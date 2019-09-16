@@ -16,7 +16,9 @@
 
     <div class="field">  
         <%= f.label :location_id , "Local *", :class => "bold" %><br />
-        <%= f.select :location_id,options_from_collection_for_select(@locations,'id','name') %>
+
+       <%= f.collection_select :location_id, @locations, :id, :name, :prompt => true %>
+
     </div>  
     
     <div class="field">
@@ -27,7 +29,10 @@
   
     <div class="field">  
         <%= f.label :customer_id , "Cliente*", :class => "bold" %><br />
-        <%= f.select :customer_id,options_from_collection_for_select(@customers,'id','name') %>
+
+        
+         <%= f.collection_select :customer_id, @customers, :id, :name, :prompt => true %>
+   
     </div>  
     
 
@@ -44,7 +49,8 @@
 
       <div class="field">  
         <%= f.label :tipocargue_id , "Tipo carga*", :class => "bold" %><br />
-        <%= f.select :tipocargue_id,options_from_collection_for_select(@cargas,'id','name') %>
+        <%= f.collection_select :tipocargue_id, @cargas, :id, :name, :prompt => true %>
+
     </div>  
     
     

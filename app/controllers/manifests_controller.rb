@@ -62,6 +62,7 @@ class ManifestsController < ApplicationController
     @customers = @manifest.get_customers()
     @puntos = @manifest.get_puntos()
     @locations = @manifest.get_locations()
+    @cargas = @manifest.get_cargas()
     
   end
 
