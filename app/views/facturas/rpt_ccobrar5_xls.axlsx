@@ -76,8 +76,7 @@ wb.styles do |s|
 
                 @lcCliName = customerpayment_rpt.customer.name  
           
-                if customerpayment_rpt.balance.round(2) > 0.00
-      
+               
                       if customerpayment_rpt.year_month.to_f <= 201812
                         @total_anterior = @total_anterior + customerpayment_rpt.balance
                       end             
@@ -123,7 +122,7 @@ wb.styles do |s|
                       
                       @total_general = @total_general + customerpayment_rpt.balance
             
-                end 
+                
           
         else
           
@@ -178,7 +177,7 @@ wb.styles do |s|
                     @total_mes12 = 0
                     @total_cliente = 0 
             
-                    if customerpayment_rpt.balance.round(2) > 0.00
+                   
           
                           if customerpayment_rpt.year_month.to_f <= 201812
                             @total_anterior = @total_anterior + customerpayment_rpt.balance
@@ -226,7 +225,7 @@ wb.styles do |s|
                           nroitem = nroitem + 1 
                       
                           @total_general = @total_general + customerpayment_rpt.balance
-                end 
+                
             end 
         
        
