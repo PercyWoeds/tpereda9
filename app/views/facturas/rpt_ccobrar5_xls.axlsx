@@ -78,7 +78,7 @@ wb.styles do |s|
           
                 if customerpayment_rpt.balance.round(2) > 0.00
       
-                      if customerpayment_rpt.year_month.to_f <= 201803
+                      if customerpayment_rpt.year_month.to_f <= 201812
                         @total_anterior = @total_anterior + customerpayment_rpt.balance
                       end             
                       
