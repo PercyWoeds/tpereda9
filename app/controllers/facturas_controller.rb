@@ -566,7 +566,7 @@ def reportes05
     Invoicesunat.delete_all
     @company = Company.find(params[:company_id])
     
-    @facturas  = Factura.where(:tipo => 1)
+    @facturas  = Factura.where("fecha>=? and fecha<=? and tipo =?","2019-09-01 00:00:00","2025-12-31 23:59:59","1")
      a = ""
      
      lcGuia=""
