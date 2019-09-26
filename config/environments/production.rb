@@ -77,13 +77,14 @@ Mnygo::Application.configure do
   config.action_mailer.delivery_method = :smtp
   
  config.action_mailer.smtp_settings = {
-    address:              'send.one.com',
+    address:              'smtp.gmail.com',
     port:                 587,
-    domain:               'one.com',
+    domain:               'gmail.com',
     user_name:            'wds.tpereda@gmail.com',
     password:             'ycrep2016',
-    authentication:       'plain',
+    authentication:       :plain,
     enable_starttls_auto: true  }
 
-    
+   
+
 end

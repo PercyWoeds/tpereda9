@@ -10,7 +10,6 @@ class FacturasController < ApplicationController
  # before_filter :authenticate_user!
  
  
- 
 
   def reportes
   

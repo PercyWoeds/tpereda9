@@ -29,6 +29,7 @@ class ReportsController < ApplicationController
     c_year = curr_year
     c_month = 1
     
+
     @years = []
     @months = monthsArr
     @month_name = @months[@month - 1][0]
@@ -1292,6 +1293,7 @@ def rpt_facturas_4
   def reports_calmacen
     @company = Company.find(params[:company_id])
     @pagetitle = "Almacen"    
+
   end
   def reports_lgc
     @company = Company.find(params[:company_id])
@@ -1310,6 +1312,8 @@ def rpt_facturas_4
     @pagetitle = "Listado de stocks "    
     @products = @company.get_products()
     @categories = ProductsCategory.all 
+    @locations = @company.get_locations()
+    
     
   end
   def rpt_calmacen3_pdf

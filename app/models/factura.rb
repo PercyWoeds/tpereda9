@@ -345,7 +345,7 @@ def get_tipocambio(dia)
   
    
   def get_guias    
-    @itemguias = Deliveryship.find_by_sql(['Select deliveries.id,deliveries.code,deliveries.description 
+    @itemguias = Deliveryship.find_by_sql(['Select deliveries.id,deliveries.code,deliveries.description ,deliveries.fecha1 
      from deliveryships INNER JOIN deliveries ON deliveryships.delivery_id =  deliveries.id where deliveries.remision=2 and  deliveryships.factura_id = ?', self.id ])
     return @itemguias
   end

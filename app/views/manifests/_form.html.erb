@@ -14,12 +14,15 @@
 <%= simple_form_for(@manifest) do |f| %>
   <%= f.error_notification %>
 
+
+
     <div class="field">  
         <%= f.label :location_id , "Local *", :class => "bold" %><br />
 
        <%= f.collection_select :location_id, @locations, :id, :name, :prompt => true %>
 
     </div>  
+    
     
     <div class="field">
       <%= f.label :code, "Code*", :class => "bold"  %><br />

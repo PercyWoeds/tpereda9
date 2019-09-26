@@ -6,8 +6,10 @@ class ManifestsController < ApplicationController
   # GET /manifests
   # GET /manifests.json
   def index
-    @manifests = Manifest.find_by_sql(['Select  manifests.id,manifests.code, manifests.solicitante,manifests.fecha1,manifests.telefono1,
-    customers.name  from manifests INNER JOIN customers ON manifests.customer_id = customers.id order by code DESC'  ])
+    @manifests = Manifest.order(:code)
+
+    #Manifest.find_by_sql(['Select  manifests.id,manifests.code, manifests.solicitante,manifests.fecha1,manifests.telefono1,
+    #customers.name  from manifests INNER JOIN customers ON manifests.customer_id = customers.id order by code DESC'  ])
 
   end
 
