@@ -44,13 +44,25 @@
         <%= f.text_field :solicitante %>        
     </div>
 
-      <div class="field">  
+    <div class="field">  
         <%= f.label :tipocargue_id , "Tipo carga*", :class => "bold" %><br />
         <%= f.collection_select :tipocargue_id, @cargas, :id, :name, :prompt => true %>
 
     </div>  
     
-    
+    <div class="field">  
+        <%= f.label :importe  , "Importe Soles *", :class => "bold" %><br />
+        <%= f.number_field :importe, step: :any %>
+
+    </div>  
+        
+
+    <div class="field">  
+        <%= f.label :importe2  , "Importe Dolares *", :class => "bold" %><br />
+        <%= f.number_field :importe2, step: :any %>
+
+    </div>  
+
    <table>
     <thead>
       <tr>

@@ -55,6 +55,9 @@ class ManifestsController < ApplicationController
     @cargas = @manifest.get_cargas()
     
     @manifest[:code] = "#{generate_guid12()}"
+    @manifest[:importe] = 0.00
+    @manifest[:importe2] = 0.00
+    
     
     
     @manifest[:fecha1] = Time.now
@@ -94,7 +97,7 @@ class ManifestsController < ApplicationController
    puts @lcSerie
    
    @manifest[:code] = @manifest.generate_manifest_number(@lcSerie)  
-   
+
 
     respond_to do |format|
       if @manifest.save

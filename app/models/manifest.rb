@@ -78,9 +78,9 @@ def get_processed
 
   def generate_manifest_number(serie)
     if Manifest.where("cast(substring(code,1,3)  as int) = ?",serie).maximum("cast(substring(code,4,9)  as int)") == nil 
-      self.code = serie.to_s.rjust(3, '0') +"-001"
+      self.code = serie.to_s.rjust(3, '0') +"-000001"
     else
-    self.code = serie.to_s.rjust(3, '0')+"-"+Manifest.where("cast(substring(code,1,3)  as int) = ?",serie).maximum("cast(substring(code,4,10)  as int)").next.to_s.rjust(6, '0') 
+    self.code = serie.to_s.rjust(3, '0')+"-"+Manifest.where("cast(substring(code,1,3)  as int) = ?",serie).maximum("cast(substring(code,4,9)  as int)").next.to_s.rjust(6, '0') 
           
     end 
 
