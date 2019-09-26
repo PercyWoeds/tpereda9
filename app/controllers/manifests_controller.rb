@@ -1,12 +1,11 @@
 class ManifestsController < ApplicationController
   before_action :set_manifest, only: [:show, :edit, :update, :destroy,:sendmail]
 
-
-
   # GET /manifests
   # GET /manifests.json
   def index
-    @manifests = Manifest.order(:code)
+    @manifests = Manifest.order("CAST ( SUBSTRING(code,1,3) as int),CAST ( SUBSTRING(code,5,13) as int)")
+
 
     #Manifest.find_by_sql(['Select  manifests.id,manifests.code, manifests.solicitante,manifests.fecha1,manifests.telefono1,
     #customers.name  from manifests INNER JOIN customers ON manifests.customer_id = customers.id order by code DESC'  ])
@@ -16,6 +15,11 @@ class ManifestsController < ApplicationController
   # GET /manifests/1
   # GET /manifests/1.json
   def show
+   @customers = @manifest.get_customers()
+    @puntos = @manifest.get_puntos()
+    @locations = @manifest.get_locations()
+    @cargas = @manifest.get_cargas()
+
     
   end
   # GET /manifests/new
@@ -74,7 +78,24 @@ class ManifestsController < ApplicationController
     @manifest = Manifest.new(manifest_params)
     @customers = @manifest.get_customers()
     @puntos = @manifest.get_puntos()
+    @locations = @manifest.get_locations()
     @manifest[:company_id] = "1"
+    @cargas = @manifest.get_cargas()
+
+   if  @manifest[:location_id] == 1
+      @lcSerie =  1
+   end 
+   if  @manifest[:location_id] == 2
+      @lcSerie =  2
+   end 
+   if  @manifest[:location_id] == 3
+      @lcSerie =  2
+   end 
+   puts @lcSerie
+   
+   @manifest[:code] = @manifest.generate_manifest_number(@lcSerie)  
+   
+
     respond_to do |format|
       if @manifest.save
         @manifest.correlativo
@@ -91,6 +112,12 @@ class ManifestsController < ApplicationController
   # PATCH/PUT /manifests/1
   # PATCH/PUT /manifests/1.json
   def update
+    @customers = @manifest.get_customers()
+    @puntos = @manifest.get_puntos()
+    @locations = @manifest.get_locations()
+    @cargas = @manifest.get_cargas()
+     
+
     respond_to do |format|
       if @manifest.update(manifest_params)
         format.html { redirect_to @manifest, notice: 'Manifest was successfully updated.' }
@@ -115,8 +142,8 @@ class ManifestsController < ApplicationController
 def pdf
     @manifest  = Manifest.find(params[:id])
     company =@manifest.company_id
-    @company =Company.find(company)
-
+    @company =Company.find(company) 
+    
 
     Prawn::Document.generate("app/pdf_output/#{@manifest.id}.pdf") do |pdf|
         pdf.font "Helvetica"

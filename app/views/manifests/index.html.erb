@@ -10,6 +10,8 @@
       <th>Cliente </th>
       <th>Guia</th>
       <th>Fecha1</th>
+      <th>Estado </th>
+      
       
       <th colspan="3"></th>
     </tr>
@@ -23,7 +25,7 @@
         <td><%= manifest.customer.name %></td>
         <td><%= manifest.solicitante %></td>
         <td><%= manifest.fecha1.strftime("%Y-%m-%d") %></td>
-
+        <td><%= manifest.get_processed %></td>
         <td><%= link_to 'Ver', manifest %></td>
         
         <td><%= link_to 'Editar', edit_manifest_path(manifest) %></td>

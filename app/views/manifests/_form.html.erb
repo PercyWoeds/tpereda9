@@ -22,14 +22,8 @@
        <%= f.collection_select :location_id, @locations, :id, :name, :prompt => true %>
 
     </div>  
-    
-    
-    <div class="field">
-      <%= f.label :code, "Code*", :class => "bold"  %><br />
-      <%= f.text_field :code, :onclick => "$(this).select();" %>
-    </div>
-    
-  
+
+   
     <div class="field">  
         <%= f.label :customer_id , "Cliente*", :class => "bold" %><br />
 
