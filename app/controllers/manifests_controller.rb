@@ -85,14 +85,14 @@ class ManifestsController < ApplicationController
     @manifest[:company_id] = "1"
     @cargas = @manifest.get_cargas()
 
-   if  @manifest[:location_id] == 1
+   if  @manifest[:location_id] == 3
       @lcSerie =  1
    end 
-   if  @manifest[:location_id] == 2
+   if  @manifest[:location_id] == 1
       @lcSerie =  2
    end 
-   if  @manifest[:location_id] == 3
-      @lcSerie =  2
+   if  @manifest[:location_id] == 4
+      @lcSerie =  3
    end 
   
    
