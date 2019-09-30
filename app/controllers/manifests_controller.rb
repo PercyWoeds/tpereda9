@@ -92,7 +92,7 @@ class ManifestsController < ApplicationController
       @lcSerie =  2
    end 
    if  @manifest[:location_id] == 4
-      @lcSerie =  3
+      @lcSerie =  8
    end 
   
    
