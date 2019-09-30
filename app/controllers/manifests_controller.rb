@@ -94,7 +94,7 @@ class ManifestsController < ApplicationController
    if  @manifest[:location_id] == 3
       @lcSerie =  2
    end 
-   puts @lcSerie
+  
    
    @manifest[:code] = @manifest.generate_manifest_number(@lcSerie)  
 
@@ -393,6 +393,6 @@ def build_pdf_header(pdf)
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def manifest_params
-      params.require(:manifest).permit(:customer_id,:processed,:date_processed,:solicitante, :fecha1, :telefono1, :camionetaqty, :camionetapeso, :camionqty, :camionpeso, :semiqty, :semipeso, :extenqty, :extenpeso, :camaqty, :camapeso, :modularqty, :modularpeso, :punto_id, :punto2_id, :fecha2, :contacto1, :telefono1, :contacto2, :telefono2, :especificacion, :largo, :ancho, :alto, :peso, :bultos, :otros, :observa, :observa2, :company_id,:code,:location_id,:importe,:hora,:tipocargue_id,:direccion1,:direccion2)
+      params.require(:manifest).permit(:customer_id,:processed,:date_processed,:solicitante, :fecha1, :telefono1, :camionetaqty, :camionetapeso, :camionqty, :camionpeso, :semiqty, :semipeso, :extenqty, :extenpeso, :camaqty, :camapeso, :modularqty, :modularpeso, :punto_id, :punto2_id, :fecha2, :contacto1, :telefono1, :contacto2, :telefono2, :especificacion, :largo, :ancho, :alto, :peso, :bultos, :otros, :observa, :observa2, :company_id,:code,:location_id,:importe,:hora,:tipocargue_id,:direccion1,:direccion2,:importe,:importe2)
     end
 end

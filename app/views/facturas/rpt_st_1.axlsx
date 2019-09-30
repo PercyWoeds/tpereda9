@@ -1,0 +1,38 @@
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
+
+require 'axlsx'
+
+p = Axlsx::Package.new
+wb = xlsx_package.workbook
+wb.styles do |s|
+    date = s.add_style(:format_code => "yyyy-mm-dd", :border => Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+    padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
+    percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
+    title = s.add_style(:bg_color => "FFFF0000", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+
+    currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
+                              :border=>Axlsx::STYLE_THIN_BORDER)
+    red_negative = wb.styles.add_style :num_fmt => 8
+    comma = wb.styles.add_style :num_fmt => 3
+    super_funk = wb.styles.add_style :format_code => '[Green]#'
+    
+    wb.add_worksheet(name: "Basic work sheet") do |sheet|
+    
+    sheet.add_row ["Locacion", "Codigo", "Fec.Emision", "Cliente","Punto Carguio","Punto descarga", "Fec.Llegada","Tipo Carga","Importe S/.","Importe US$","Procesado" ], :style => title 
+
+
+
+
+   @facturas_rpt.each do |manifest|
+        
+        sheet.add_row [manifest.location.name, manifest.code,manifest.fecha1,manifest.customer.name,manifest.direccion1,manifest.direccion2,manifest.fecha2,
+        manifest.tipocargue.name,manifest.importe,manifest.importe2,manifest.get_processed], :style => [cadena,cadena,date,cadena,cadena,cadena,date,cadena,currency,currency,cadena]
+      
+   end
+   
+   
+end
+end 
+
+    

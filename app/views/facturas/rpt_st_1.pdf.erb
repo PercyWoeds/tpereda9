@@ -1,0 +1,95 @@
+<html>
+<body>
+    
+ 
+  <h4 ><center> Solicitud de Transporte  </center>   </h4>
+  
+  <h5><center> Desde: <%= @fecha1 %>  Hasta: <%= @fecha2 %>  </center></h5>
+  
+  
+  <font size="2" face="Courier New" >  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  
+  <tr bgcolor="#B4D7F7">
+    <td width="100%"> SOLICITUD DE TRANSPORTE *</td>
+  </tr>
+  
+  </table>
+
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <tr bgcolor="#B4D7F7">
+    <td width="4%"> Locacion </td>
+    <td width="8%"> Codigo  </td>
+    <td width="5%"> Fecha </td>
+    <td width="10%"> Cliente </td>
+    <td width="10%"> Punto Emision </td>
+    <td width="20%"> Punto Llegada </td>
+    <td width="8%"> Fecha Carguio </td>
+
+    <td width="10%"> Tipo Carga </td>
+    <td width="10%"> IMPORTE S/. </td>
+    <td width="10%"> IMPORTE US$ </td>
+    <td width="10%"> Procesado </td>
+    
+    
+  </tr>
+  </table>
+
+  
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
+      <% nroitem = 1%>
+      <% total_1 =  0%>
+      <% total_2 =  0%>
+      
+     
+      <% subtotal =  0%>
+
+      <% total =  0%>
+      
+       <% for  manifest in @facturas_rpt  %>
+
+          <tr>
+        
+          <td width= "4%" ><%=  manifest.location.name %>   </td>
+          <td width= "8%" ><%=  manifest.code  %></td>
+          <td width = "5%" align ="center"><%= manifest.fecha1.strftime("%d/%m/%Y") %></td>
+          <td width = "10%" align ="left"><%= manifest.customer.name   %> </td>
+               
+          <td width = "10%" align ="center"><%=  manifest.direccion1  %></td>
+          <td width = "10%" align ="center"> <%=  manifest.direccion2  %></td>
+          <td width = "5%" align ="center"><%=  manifest.fecha2.strftime("%d/%m/%Y") %> </td>
+
+          <td width = "10%" align ="center"><%=  manifest.tipocargue.name %> </td>
+          <td width = "10%" align ="right"><%= sprintf("%.2f",manifest.importe)   %></td>
+          <td width = "10%" align ="right"><%= sprintf("%.2f",manifest.importe2)   %></td>
+          <td width = "10%" align ="right"><%= manifest.get_processed  %></td>
+          
+          </tr>
+
+          <% subtotal += manifest.importe %>
+          <% total += manifest.importe2  %>
+            
+         <% end %>
+
+
+    
+      
+      <hr>  
+     </table>
+     
+     <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+     <tr bgcolor="#B4D7F7">
+          <td width = "80%" align ="center">Totales  </td>
+          <td width = "10%" align ="right"><%= sprintf("%.3f",subtotal)   %></td>
+          <td width = "10%" align ="right"><%= sprintf("%.2f",total)   %></td>
+    
+    </tr>
+   </table>
+
+    
+    </body>
+      
+      </html>
+      

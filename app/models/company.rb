@@ -589,6 +589,13 @@ def get_guias_2(fecha1,fecha2)
     
  end
  
+def get_st_day(fecha1,fecha2)
+
+    @facturas = Manifest.where([" company_id = ? AND fecha1 >= ? and fecha1 <= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:code )
+    return @facturas
+    
+ end
+
  def get_facturas_day_month(moneda,mes,anio)
    
     @facturas = Factura.where([" company_id = ? AND (EXTRACT(MONTH FROM fecha))::integer = ? AND   (EXTRACT(YEAR FROM fecha))::integer = ? and moneda_id = ?", self.id,mes ,anio,moneda ]).order(:id )

@@ -107,6 +107,40 @@ def reportes4
     end
   end
   
+
+def reportes_st_1 
+
+    $lcFacturasall = '1'
+
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+   
+
+    @current_user_id = current_user.id 
+    
+    @facturas_rpt = @company.get_st_day(@fecha1,@fecha2)          
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Facturas ",template: "facturas/rpt_st_1.pdf.erb",locals: {:facturas => @facturas_rpt},
+         :orientation      => 'Landscape',
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               }
+
+        end   
+      when "To Excel" then render xlsx: 'rpt_st_1'
+      else render action: "index"
+    end
+  end
+
+
   def reportes5
     $lcFacturasall = '1'
 
