@@ -1179,6 +1179,7 @@ def build_pdf_header(pdf)
     end
     
     
+    
     respond_to do |format|
       if @output.save 
         # Create products for kit
