@@ -58,8 +58,6 @@ class ManifestsController < ApplicationController
     @manifest[:importe] = 0.00
     @manifest[:importe2] = 0.00
     
-    
-    
     @manifest[:fecha1] = Time.now
     
     @manifest[:fecha2] = Time.now

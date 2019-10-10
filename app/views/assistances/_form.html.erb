@@ -1,0 +1,17 @@
+<%= simple_form_for(@assistance) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :departamento %>
+    <%= f.input :nombre %>
+    <%= f.input :nro %>
+    <%= f.input :fecha %>
+    <%= f.input :equipo %>
+    <%= f.input :cod_verificacion %>
+    <%= f.input :num_tarjeta %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

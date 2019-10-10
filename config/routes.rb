@@ -1,5 +1,6 @@
   Mnygo::Application.routes.draw do
 
+  resources :assistances
   resources :tipocargues
   resources :tickets
   resources :tipocars

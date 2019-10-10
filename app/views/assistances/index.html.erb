@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Assistances</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Departamento</th>
+      <th>Nombre</th>
+      <th>Nro</th>
+      <th>Fecha</th>
+      <th>Equipo</th>
+      <th>Cod verificacion</th>
+      <th>Num tarjeta</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @assistances.each do |assistance| %>
+      <tr>
+        <td><%= assistance.departamento %></td>
+        <td><%= assistance.nombre %></td>
+        <td><%= assistance.nro %></td>
+        <td><%= assistance.fecha %></td>
+        <td><%= assistance.equipo %></td>
+        <td><%= assistance.cod_verificacion %></td>
+        <td><%= assistance.num_tarjeta %></td>
+        <td><%= link_to 'Show', assistance %></td>
+        <td><%= link_to 'Edit', edit_assistance_path(assistance) %></td>
+        <td><%= link_to 'Destroy', assistance, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Assistance', new_assistance_path %>

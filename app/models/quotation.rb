@@ -1,7 +1,7 @@
 class Quotation < ActiveRecord::Base
   self.per_page = 20
   
-  validates_presence_of :company_id, :customer_id, :punto_id,:fecha1,:division_id 
+  validates_presence_of :company_id, :customer_id, :punto_id,:fecha1,:division_id ,:moneda_id,:location_id,:instruccion_id
   validates_uniqueness_of :code
   
   

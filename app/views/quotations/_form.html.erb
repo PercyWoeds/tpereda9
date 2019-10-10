@@ -93,33 +93,14 @@
       <td>
       <div class="field">
         <%= f.label :instruccion_id ,"Opciones  : " %><br />
-        <%= f.collection_select :instruccion_id , @instruccions, :id, :condicion, :prompt => true %>      
+        <%= f.collection_select :instruccion_id , @instruccions, :id, :description1, :prompt => true %>      
       </div>
     </td>
     </tr>
     
     <br>
     <tr>
-    <td>
-      <div class="field">
-        <%= f.label :condiciones,"Condiciones  : " %><br />
-        <%= f.text_area :condiciones  %>      
-      </div>
-    </td>
-    <td>
-      <div class="field">
-        <%= f.label :respon  ,"Responsabilidad  : " %><br />
-        <%= f.text_area :respon   %>      
-      </div>
-      </td>
-      </tr>
-      <tr>
-      <td>
-      <div class="field">
-        <%= f.label :seguro  ,"Seguro  : " %><br />
-        <%= f.text_area :seguro  %>      
-      </div>
-    </td>
+    
     </tr>
     
     </table>  
