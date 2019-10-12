@@ -1,6 +1,8 @@
   Mnygo::Application.routes.draw do
 
   resources :assistances
+
+
   resources :tipocargues
   resources :tickets
   resources :tipocars
@@ -125,6 +127,10 @@
     
   end 
     
+
+  resources :assistances do 
+   collection { post :import }
+  end  
   
   resources :ventaislas  do
     resources :ventaisla_details, except: [:index,:show], controller: "ventaislas/ventaisla_details"
@@ -591,11 +597,14 @@ end
   
   match 'facturas/list_items/:company_id' => 'facturas#list_items', via: [:get, :post]
   match 'facturas/list_items2/:company_id' => 'facturas#list_items2', via: [:get, :post] , :layout => false
+  match 'facturas/list_items3/:company_id' => 'facturas#list_items3', via: [:get, :post] , :layout => false
+  
   match 'facturas/ac_services/:company_id' => 'facturas#ac_services', via: [:get, :post]
   match 'facturas/ac_user/:company_id' => 'facturas#ac_user', via: [:get, :post]
   match 'facturas/ac_customers/:company_id' => 'facturas#ac_customers', via: [:get, :post]
   match 'facturas/ac_guias/:company_id' => 'facturas#ac_guias', via: [:get, :post]
-  
+  match 'facturas/ac_st/:company_id'    => 'facturas#ac_st', via: [:get, :post] 
+
   match 'facturas/new/:company_id' => 'facturas#new', via: [:get, :post]
   match 'facturas/new2/:company_id' => 'facturas#new2', via: [:get, :post]
   match 'facturas/export/:company_id' => 'facturas#export', via: [:get, :post]
@@ -822,7 +831,7 @@ end
   match 'tranportorders/do_anular/:id' => 'tranportorders#do_anular', via: [:get, :post]
   match 'tranportorders/pdf/:id' => 'tranportorders#pdf', via: [:get, :post]
   match 'tranportorders/do_email/:id' => 'tranportorders#do_email', via: [:get, :post]
-  
+ 
 
   # supplier payments
 

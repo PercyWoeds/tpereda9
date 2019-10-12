@@ -22,7 +22,7 @@
         <td><%= assistance.departamento %></td>
         <td><%= assistance.nombre %></td>
         <td><%= assistance.nro %></td>
-        <td><%= assistance.fecha %></td>
+        <td><%= Time.strptime(assistance.fecha.to_s,"%Y-%m-%d %H:%M:%S") %></td>
         <td><%= assistance.equipo %></td>
         <td><%= assistance.cod_verificacion %></td>
         <td><%= assistance.num_tarjeta %></td>
@@ -36,4 +36,13 @@
 
 <br>
 
-<%= link_to 'New Assistance', new_assistance_path %>
+<%= link_to 'Nueva asistencia', new_assistance_path %>
+
+
+
+<h2>Importar Archivo asistencia "*.csv"</h2>
+
+<%= form_tag import_assistances_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>

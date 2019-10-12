@@ -20,7 +20,7 @@ class Quotation < ActiveRecord::Base
   "DESCRIPCION",
   "C.UNITARIO",
   "",
-                "COSTO TOTAL"]
+  "COSTO TOTAL"]
 
   
   

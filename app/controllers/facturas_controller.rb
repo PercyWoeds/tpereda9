@@ -9,7 +9,13 @@ class FacturasController < ApplicationController
 
  # before_filter :authenticate_user!
  
- 
+
+
+  def ac_st 
+    procesado = '1'
+    @guias = Manifest.where([" (code LIKE ?)   ",  "%" + params[:q] + "%"])   
+    render :layout => false
+  end
 
   def reportes
   
@@ -370,6 +376,8 @@ def reportes05
     
     render :layout => false
   end
+
+
   
   def list_items2
     
@@ -400,6 +408,40 @@ def reportes05
 
     render :layout => false
   end 
+
+
+  def list_items3
+    
+    @company = Company.find(1)
+    items = params[:items2]
+    items = items.split(",")
+    items_arr = []
+    @guias = []
+    i = 0
+    puts "item list items3 "
+    puts items 
+    for item in items
+      if item != ""
+        parts = item.split("|BRK|")
+
+        puts parts
+
+        id = parts[0]      
+        product = Manifest.find(id.to_i)
+        product[:i] = i
+
+        @guias.push(product)
+
+
+      end
+      
+      i += 1
+    end
+
+    render :layout => false
+  end 
+
+
 
   def ac_facturas  
 

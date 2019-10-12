@@ -53,6 +53,7 @@ class ManifestsController < ApplicationController
     @puntos = @manifest.get_puntos()
     @locations = @manifest.get_locations()
     @cargas = @manifest.get_cargas()
+    @company =  Company.find(1)
     
     @manifest[:code] = "#{generate_guid12()}"
     @manifest[:importe] = 0.00
@@ -381,6 +382,9 @@ def build_pdf_header(pdf)
       flash[:notice] = "Documento a sido anulado."
       redirect_to @manifest  
   end
+
+
+
   
 
   private

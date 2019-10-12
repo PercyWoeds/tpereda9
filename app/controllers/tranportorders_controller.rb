@@ -38,6 +38,9 @@ class TranportordersController < ApplicationController
     
      @some_time1  = Time.now
     @some_time2  = Time.now
+
+     @company =  Company.find(1)
+     
   
   end
 
@@ -758,8 +761,6 @@ def build_pdf_header_ost(pdf)
       pdf
 
      end
-
-
 
 
   private

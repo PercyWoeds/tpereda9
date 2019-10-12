@@ -61,6 +61,16 @@ class AssistancesController < ApplicationController
     end
   end
 
+
+  def import
+      Time.zone = "America/Lima"
+      Assistance.import(params[:file])
+      Time.zone = "Lima"
+      
+       redirect_to root_url, notice: "Informacio  de asistencia  importadas."
+  end 
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_assistance
