@@ -59,6 +59,13 @@ class ManifestsController < ApplicationController
     @manifest[:importe] = 0.00
     @manifest[:importe2] = 0.00
     
+    @manifest[:empaletizado] = 0.00
+    @manifest[:montacarga] = 0.00
+    @manifest[:escolta] = 0.00
+    @manifest[:stand_by] = 0.00
+    
+
+    
     @manifest[:fecha1] = Time.now
     
     @manifest[:fecha2] = Time.now
@@ -395,6 +402,6 @@ def build_pdf_header(pdf)
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def manifest_params
-      params.require(:manifest).permit(:customer_id,:processed,:date_processed,:solicitante, :fecha1, :telefono1, :camionetaqty, :camionetapeso, :camionqty, :camionpeso, :semiqty, :semipeso, :extenqty, :extenpeso, :camaqty, :camapeso, :modularqty, :modularpeso, :punto_id, :punto2_id, :fecha2, :contacto1, :telefono1, :contacto2, :telefono2, :especificacion, :largo, :ancho, :alto, :peso, :bultos, :otros, :observa, :observa2, :company_id,:code,:location_id,:importe,:hora,:tipocargue_id,:direccion1,:direccion2,:importe,:importe2)
+      params.require(:manifest).permit(:customer_id,:processed,:date_processed,:solicitante, :fecha1, :telefono1, :camionetaqty, :camionetapeso, :camionqty, :camionpeso, :semiqty, :semipeso, :extenqty, :extenpeso, :camaqty, :camapeso, :modularqty, :modularpeso, :punto_id, :punto2_id, :fecha2, :contacto1, :telefono1, :contacto2, :telefono2, :especificacion, :largo, :ancho, :alto, :peso, :bultos, :otros, :observa, :observa2, :company_id,:code,:location_id,:importe,:hora,:tipocargue_id,:direccion1,:direccion2,:importe,:importe2,:empaletizado,:montacarga,:escolta,:stand_by)
     end
 end
