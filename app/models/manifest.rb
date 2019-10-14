@@ -10,6 +10,9 @@ belongs_to :punto
 
 belongs_to :tipocargue 
 
+belongs_to :manifestship  
+
+
 validates_presence_of :location_id, :code,:customer_id,:fecha1,:tipocargue_id,:especificacion,:fecha2,:direccion1,:direccion2,:contacto1,:telefono1,:contacto2,:telefono2
 validates_uniqueness_of :code
 
@@ -83,9 +86,15 @@ def get_processed
     self.code = serie.to_s.rjust(3, '0')+"-"+Manifest.where("cast(substring(code,1,3)  as int) = ?",serie).maximum("cast(substring(code,5,10)  as int)").next.to_s.rjust(6, '0') 
           
     end 
-
-
     
   end
+
+
+   def get_osts
+    @itemguias = Manifestship.find_by_sql(['Select tranportorders.id,tranportorders.code ,tranportorders.fecha1
+     from manifestships INNER JOIN tranportorders ON manifestships.tranportorder_id =  tranportorders.id where  manifestships.manifest_id = ?', self.id ])
+    return @itemguias
+  end
+
   
 end

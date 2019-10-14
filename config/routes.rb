@@ -279,6 +279,7 @@ end
     get '500', to:  'application#server_error'
 end
 
+
   resources :carts
 
   devise_for :users, :controllers => { 
@@ -359,6 +360,7 @@ end
 
   post 'add_friend', to: 'deliveries#add_friend'
   post 'items/update', to: 'items#update'
+
 
   # Reports
   match 'companies/reports/monthly_profits/:company_id' => 'reports#monthly_profits', via: [:get, :post]

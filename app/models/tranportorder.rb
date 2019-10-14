@@ -15,6 +15,8 @@ self.per_page = 20
 	belongs_to :truck
 	belongs_to :delivery
 	belongs_to :punto 
+
+	belongs_to :manifestship 
 	
 
  TABLE_HEADERS = ["ITEM",
@@ -97,6 +99,7 @@ TABLE_HEADERS2 = ["ITEM",
 	    customers = Customer.all
 	    return customers
 	  end
+	 
 
 	  def get_puntos()
 	    puntos = Punto.all.order(:name)
@@ -107,6 +110,7 @@ TABLE_HEADERS2 = ["ITEM",
 	    empleados = Employee.where(:active =>"1").order(:full_name)
 	    return empleados
 	  end
+
 
 		def correlativo		
 			numero=Voided.find(8).numero.to_i + 1
@@ -127,8 +131,38 @@ TABLE_HEADERS2 = ["ITEM",
 	    else 
 	      return "No Aprobado"
 	    end
+
+
+
 	  
     end
 
+
+
+  def add_guias(items)
+    for item in items
+      if(item and item != "")
+        parts = item.split("|BRK|")
+        
+        id = parts[0]
+        
+        begin
+          @guia = Manifest.find(id.to_i) 
+          
+          new_invoice_guia = Manifestship.new(:tranportorder_id => self.id, :manifest_id => @guia.id)          
+          new_invoice_guia.save
+           
+        rescue
+          
+        end
+      end
+    end
+  end
+
+   def get_sts
+    @itemguias = Manifestship.find_by_sql(['Select manifests.id,manifests.code,manifests.customer_id ,manifests.solicitante,manifests.fecha1 
+     from manifestships INNER JOIN manifests ON manifestships.manifest_id =  manifests.id where  manifestships.tranportorder_id = ?', self.id ])
+    return @itemguias
+  end
 
 end

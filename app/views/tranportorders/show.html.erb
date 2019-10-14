@@ -85,17 +85,66 @@
   
 </table>
 
+<%= hr() %>
 
+<div>
+   
+<table>
+  <thead>
+    <tr>
+      <th>
+        Solicitud de Transporte 
+       </th> 
+
+       <th>
+        Cliente 
+       </th> 
+      <th>
+        Guias     
+       </th> 
+
+      <th>
+        Fecha     
+       </th> 
+      
+    </tr>
+  </thead>
+
+    <tbody>
+    <% for productItem in @tranportorder.get_sts() %>
+      <tr>
+        <td><%= productItem.code %></td>
+        <td><%= productItem.get_customers(productItem.customer_id) %></td>
+        <td><%= productItem.solicitante %></td>
+        <td><%= productItem.fecha1.strftime("%Y-%m-%d") %></td>
+      
+      </tr>
+
+    <% end %>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right">
+        &nbsp;
+      </td>
+    </tr>
+    
+  </tbody>
+
+</table>
+<br />
+
+  </div>
 <%= hr() %>
 
 
-  <div>
+
+ <div>
     <b><strong>Guias en blanco </strong></b>
     <br />
     <br />
     <%= format_text(@tranportorder.description) %>
   </div>
-  <%= hr() %>
+<%= hr() %>
+
 
 
 
@@ -166,5 +215,5 @@
   <%= link_to 'Anular', "/tranportorders/do_anular/#{@tranportorder.id}" %>
   
 <% end %>
-<%= link_to 'Regresar', tranportorder_path %>
+<%= link_to 'Regresar', tranportorders_path %>
 </div>

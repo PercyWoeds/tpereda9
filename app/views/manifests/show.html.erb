@@ -51,6 +51,43 @@
 
 
 <%= hr() %>
+   
+<table>
+  <thead>
+    <tr>
+      <th>
+        OST  
+       </th> 
+
+      <th>
+        Fecha     
+       </th> 
+      
+    </tr>
+  </thead>
+
+    <tbody>
+    <% for productItem in @manifest.get_osts() %>
+      <tr>
+        <td><%= productItem.code %></td>
+    
+        <td><%= productItem.fecha1.strftime("%Y-%m-%d") %></td>
+      
+      </tr>
+
+    <% end %>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right">
+        &nbsp;
+      </td>
+    </tr>
+    
+  </tbody>
+
+</table>
+<br />
+
+
 
 <h3>
   Carga 

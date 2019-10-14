@@ -39,9 +39,10 @@ class TranportordersController < ApplicationController
      @some_time1  = Time.now
     @some_time2  = Time.now
 
-     @company =  Company.find(1)
-     
-  
+    @company =  Company.find(1)
+    @tranportorder.company_id = @company.id   
+    @tranportorder[:user_id] = getUserId()
+
   end
 
   # GET /tranportorders/1/edit
@@ -69,11 +70,13 @@ class TranportordersController < ApplicationController
     @tranportorder = Tranportorder.new(tranportorder_params)
     @customers = @tranportorder.get_customers()
     @puntos = @tranportorder.get_puntos()
-  @employees = @tranportorder.get_employees() 
+    @employees = @tranportorder.get_employees() 
     @trucks = Truck.all 
     @locations = Location.all
     @divisions = Division.all 
+    @company = @tranportorder.company
 
+    items2 = params[:items2].split(",")
     @tranportorder[:user_id] = @current_user.id
     @tranportorder[:company_id] = 1
     @tranportorder[:processed] = "1"
@@ -82,6 +85,8 @@ class TranportordersController < ApplicationController
       if @tranportorder.save
         
          @tranportorder.correlativo
+         @tranportorder.add_guias(items2)
+
 
         format.html { redirect_to @tranportorder, notice: 'Tranportorder was successfully created.' }
         format.json { render :show, status: :created, location: @tranportorder }

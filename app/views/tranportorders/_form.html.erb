@@ -90,7 +90,8 @@
 
     <div class="actions">
       <input type="hidden" name="items2" id="items2" value="<% if @guias_lines %><%= @guias_lines %><% end %>" />
-          <%= f.hidden_field :company_id %>     6
+          <%= f.hidden_field :company_id %>    
+          
       
       <%= f.submit %>
     </div>
@@ -112,8 +113,10 @@
   <h4>
     Agregar guias 
   </h4>
+
   
   <form method="get" action="/facturas" onsubmit="addItemToSt2(); return false;">
+
 
     <input type="hidden" name="ac_item_guia" id="ac_item_guia" value="" />
     <strong>Guia :</strong><br />
@@ -147,6 +150,8 @@
       matchContains: 1,
       selectFirst: false
     });
+
+
     
     $("#ac_item3").result(function(event, data, formatted) {
       $("#ac_item_guia").val(data[2]);    
