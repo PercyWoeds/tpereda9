@@ -21,20 +21,36 @@ totals = []
 <%= form_tag(reportes_st_2_facturas_path, :method => "get") do %>
 
   <div class="field">
-    <input type="date" name="fecha1" value="2019-07-19" style = "width: 150px" >
+    <input type="date" name="fecha1" value="2019-10-19" style = "width: 150px" >
   </div>
 	<div class="field">
-		<input type="date" name="fecha2" value="2019-07-31" style = "width: 150px" >
+		<input type="date" name="fecha2" value="2019-10-31" style = "width: 150px" >
   </div>
-
-  
 <br> 
+
+ 
+        <div class="field">
+            <input id="check_local" name="check_local" type="checkbox" value="true" checked />
+          
+            Todos los locales 
+        
+        </div>
+        
+      </td>
+      <td>
+      <div class="field">
+        <h5> Locales </h5>
+        <%= select_tag(:location_id,options_from_collection_for_select(@locations,'id','name'),:id => "location_select"  ) %>
+      </div>
+      
 
 
  <%= submit_tag "To PDF", :name => "print" %>
  <%= submit_tag "To Excel", :name => "print" %>
 
 <% end %>
+
+
 
 
 

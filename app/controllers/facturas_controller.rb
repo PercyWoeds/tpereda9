@@ -158,8 +158,24 @@ def reportes_st_2
    
 
     @current_user_id = current_user.id 
+    @locations = @company.get_locations
+
     
-    @facturas_rpt = @company.get_st_day(@fecha1,@fecha2)          
+
+    @local_check = params[:check_local]
+
+    if @local_check == "true"
+      @local = ""
+      @local_name = ""
+      @facturas_rpt = @company.get_st_day(@fecha1,@fecha2,"all") 
+
+    else
+      @local = params[:location_id]     
+      @local_name =  @company.get_local_name(@local)
+      @facturas_rpt = @company.get_st_day(@fecha1,@fecha2,@local) 
+    end 
+    
+
     
     case params[:print]
       when "To PDF" then 
@@ -169,7 +185,7 @@ def reportes_st_2
          :header => {
            :spacing => 5,
                            :html => {
-                     :template => 'layouts/pdf-header.html',
+                     :template => 'layouts/pdf-header2.html',
                            right: '[page] of [topage]'
                   }                  
                } ,
@@ -197,8 +213,22 @@ def reportes_st_3
 
     @current_user_id = current_user.id 
     
-    @facturas_rpt = @company.get_st_mes(@fecha1,@fecha2)          
+    #@facturas_rpt = @company.get_st_mes(@fecha1,@fecha2)  
+
+    @local_check = params[:check_local]
     
+    if @local_check == "true"
+      @local = ""
+      @local_name = ""
+      @facturas_rpt = @company.get_st_mes(@fecha1,@fecha2,"all") 
+
+    else
+      @local = params[:location_id]     
+      @local_name =  @company.get_local_name(@local)
+      @facturas_rpt = @company.get_st_mes(@fecha1,@fecha2,@local) 
+    end 
+    
+
     case params[:print]
       when "To PDF" then 
         begin 
@@ -207,7 +237,7 @@ def reportes_st_3
          :header => {
            :spacing => 5,
                            :html => {
-                     :template => 'layouts/pdf-header.html',
+                     :template => 'layouts/pdf-header2.html',
                            right: '[page] of [topage]'
                   }                  
                } ,

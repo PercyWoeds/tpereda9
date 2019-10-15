@@ -594,15 +594,29 @@ def get_guias_2(fecha1,fecha2)
     
  end
  
- def get_st_day(fecha1,fecha2)
+ def get_st_day(fecha1,fecha2,local)
 
-    @facturas = Manifest.where([" company_id = ? AND fecha1 >= ? and fecha1 <= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:code )
+  if local =="all"
+    @facturas = Manifest.where([" company_id = ? AND fecha1 >= ? and fecha1 <= ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:code )
     return @facturas
-    
+  else
+    @facturas = Manifest.where([" company_id = ? AND fecha1 >= ? and fecha1 <= ? and location_id=?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",local ]).order(:code )
+    return @facturas  
+  end 
+
  end
 
+ def get_local_name(local)
 
- def get_st_mes(fecha10,fecha20)
+   a= Location.find(local)
+   return a.name 
+
+ end 
+
+
+ def get_st_mes(fecha10,fecha20,local)
+
+  if local =="all"
 
     @facturas = Manifest.find_by_sql(["
    SELECT   customer_id,
@@ -617,6 +631,23 @@ def get_guias_2(fecha1,fecha2)
    GROUP BY 1
    ORDER BY 1 ", "#{fecha10} 00:00:00","#{fecha20} 23:59:59" ])
     return @facturas
+
+  else
+  @facturas = Manifest.find_by_sql(["
+   SELECT   customer_id,
+   SUM(importe) as importe1,
+   SUM(empaletizado) as importe2,
+   SUM(montacarga) as importe3,
+   SUM(importe2) as importe4,
+   SUM(escolta) as importe5,
+   SUM(stand_by) as importe6 
+   FROM manifests
+   WHERE fecha1 >= ? and fecha1 <= ? and location_id=?  
+   GROUP BY 1
+   ORDER BY 1 ", "#{fecha10} 00:00:00","#{fecha20} 23:59:59", "#{local}" ])
+    return @facturas
+
+  end
     
  end
 
