@@ -594,12 +594,32 @@ def get_guias_2(fecha1,fecha2)
     
  end
  
-def get_st_day(fecha1,fecha2)
+ def get_st_day(fecha1,fecha2)
 
     @facturas = Manifest.where([" company_id = ? AND fecha1 >= ? and fecha1 <= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:code )
     return @facturas
     
  end
+
+
+ def get_st_mes(fecha10,fecha20)
+
+    @facturas = Manifest.find_by_sql(["
+   SELECT   customer_id,
+   SUM(importe) as importe1,
+   SUM(empaletizado) as importe2,
+   SUM(montacarga) as importe3,
+   SUM(importe2) as importe4,
+   SUM(escolta) as importe5,
+   SUM(stand_by) as importe6 
+   FROM manifests
+   WHERE fecha1 >= ? and fecha1 <= ?  
+   GROUP BY 1
+   ORDER BY 1 ", "#{fecha10} 00:00:00","#{fecha20} 23:59:59" ])
+    return @facturas
+    
+ end
+
 
  def get_facturas_day_month(moneda,mes,anio)
    

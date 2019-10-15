@@ -125,6 +125,7 @@
     collection { get :rpt_cobranzas_pdf }
     collection { get :reportes_st_1} #Reporte ventas
     collection { get :reportes_st_2} #Reporte ventas
+    collection { get :reportes_st_3} #Reporte ventas
     
     
   end 
@@ -393,6 +394,7 @@ end
   match 'companies/reports_guias/:company_id' => 'reports#reports_guias', via: [:get, :post]
   match 'companies/reports/rpt_ost_1/:company_id' => 'reports#rpt_ost_1', via: [:get, :post]
   match 'companies/reports/rpt_ost_2/:company_id' => 'reports#rpt_ost_2', via: [:get, :post]
+  match 'companies/reports/rpt_ost_3/:company_id' => 'reports#rpt_ost_3 ', via: [:get, :post]
         
   match 'companies/reports_compras/:company_id' => 'reports#reports_compras', via: [:get, :post]
   match 'companies/reports/reports_cpagar/:company_id' => 'reports#reports_cpagar', via: [:get, :post]
@@ -468,6 +470,7 @@ end
 
   match 'companies/reports/rpt_st_all/:company_id' => 'reports#rpt_st_all', via: [:get, :post]    
   match 'companies/reports/rpt_st_all2/:company_id' => 'reports#rpt_st_all2', via: [:get, :post]    
+  match 'companies/reports/rpt_st_all3/:company_id' => 'reports#rpt_st_all3', via: [:get, :post]    
   
   # Company users
 
