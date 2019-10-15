@@ -124,6 +124,8 @@
     collection { get :reportep01 }
     collection { get :rpt_cobranzas_pdf }
     collection { get :reportes_st_1} #Reporte ventas
+    collection { get :reportes_st_2} #Reporte ventas
+    
     
   end 
     
@@ -465,6 +467,7 @@ end
   match 'companies/reports/rpt_parte_3/:company_id' => 'reports#rpt_parte_3', via: [:get, :post]    
 
   match 'companies/reports/rpt_st_all/:company_id' => 'reports#rpt_st_all', via: [:get, :post]    
+  match 'companies/reports/rpt_st_all2/:company_id' => 'reports#rpt_st_all2', via: [:get, :post]    
   
   # Company users
 
