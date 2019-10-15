@@ -160,7 +160,8 @@ def reportes_st_2
     @current_user_id = current_user.id 
     @locations = @company.get_locations
 
-    
+     @formato ="TP-CL-005/VERSION 1"
+   
 
     @local_check = params[:check_local]
 
@@ -210,7 +211,8 @@ def reportes_st_3
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
    
-
+   @formato ="TP-CL-004/VERSION 1"
+   
     @current_user_id = current_user.id 
     
     #@facturas_rpt = @company.get_st_mes(@fecha1,@fecha2)  
@@ -265,6 +267,7 @@ def reportes_st_3
     puts "meses"
     puts @fecha1
     puts @fecha2
+    @formato ="TP-CL-004/VERSION 1"
     
     @moneda = params[:moneda_id]    
     
