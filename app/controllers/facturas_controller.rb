@@ -922,7 +922,8 @@ def reportes05
     @deliveryships = @invoice.my_deliverys 
     @tipofacturas = @company.get_tipofacturas() 
     @monedas = @company.get_monedas()
-    @tipodocumento = @company.get_documents()
+    @tipodocumento = @company.get_documents_area("OPE")
+
 
     @ac_user = getUsername()
     @invoice[:user_id] = getUserId()
@@ -950,7 +951,7 @@ def reportes05
     @deliveryships = @invoice.my_deliverys 
     @tipofacturas = @company.get_tipofacturas() 
     @monedas = @company.get_monedas()
-    @tipodocumento = @company.get_documents()
+    @tipodocumento = @company.get_documents_area("OPE")
     @tipoventas = Tipoventum.all 
     @ac_user = getUsername()
     @invoice[:user_id] = getUserId()
@@ -992,7 +993,7 @@ def newfactura2
     @tipofacturas = @company.get_tipofacturas() 
     @products_lines = @invoice.products_lines
     @tipoventas = Tipoventum.all 
-    @tipodocumento = @company.get_documents()
+    @tipodocumento = @company.get_documents_area("OPE")
     @monedas = @company.get_monedas()
     @products = @company.get_products()
     

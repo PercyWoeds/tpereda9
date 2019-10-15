@@ -217,6 +217,11 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
     return documents
   end
 
+  def get_documents_area(dato)
+     documents = Document.where(company_id: self.id,area: dato).order(:descripshort)
+       
+    return documents
+  end
   def get_monedas()
      monedas = Moneda.where(company_id: self.id).order(:description)
        
