@@ -125,7 +125,7 @@ def reportes_st_1
 
     @current_user_id = current_user.id 
     
-    @facturas_rpt = @company.get_st_day(@fecha1,@fecha2)          
+    @facturas_rpt = @company.get_st_day(@fecha1,@fecha2,"all")          
     
     case params[:print]
       when "To PDF" then 
