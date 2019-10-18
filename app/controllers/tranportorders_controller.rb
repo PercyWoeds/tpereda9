@@ -560,10 +560,11 @@ def client_data_headers
  def client_ost_headers
 
     #{@serviceorder.description}
-      client_headers  = [["Conductor :",@ost.employee.full_name ]]
-      client_headers << ["Vehiculo :",@ost.truck.placa  ]
-      client_headers << ["Vehiculo 2:",@ost.get_placa(@ost.truck2_id)  ]
-      client_headers << ["Copiloto :",@ost.get_empleado(@ost.employee2_id)]
+      client_headers  = [["Conductor de carga :",@ost.employee.full_name ]]
+      client_headers << ["Conducto de ruta :",""  ]
+      client_headers << ["Supervisor/apoyo :",@ost.get_empleado(@ost.employee2_id)]
+      client_headers << ["Placa: Tracto/Carreta :",@ost.truck.placa + " " + @ost.get_placa(@ost.truck2_id)   ]
+      client_headers << ["Escolta:","" ]
       
       client_headers
   end
@@ -571,7 +572,9 @@ def client_data_headers
   def ost_headers            
       ost_headers  = [["De : ",@ost.get_punto(@ost.ubication_id)]]
       ost_headers << ["A :", @ost.get_punto(@ost.ubication2_id)]
-      ost_headers << ["Fecha Salida :", @ost.fecha1.strftime('%d-%m-%Y')]
+      ost_headers << ["Fecha/Hora Salida :", @ost.fecha1.strftime('%d-%m-%Y')]
+      ost_headers << ["Fecha/Hora de llegada:",""]
+      ost_headers << ["Placa: ","" ]
       ost_headers
   end
    def invoice_summary
@@ -589,15 +592,35 @@ def client_data_headers
     @ost = Tranportorder.find(params[:id])
     company =@ost.company_id
     @company =Company.find(company)
+    @cabecera ="Facturacion"
+    @abajo    ="Viatico"
+
 
     Prawn::Document.generate("app/pdf_output/#{@ost.id}.pdf") do |pdf|
         pdf.font "Helvetica"
+
         pdf = build_pdf_header_ost(pdf)
         pdf = build_pdf_body_ost(pdf)
         build_pdf_footer_ost(pdf)
+
+        @cabecera ="Conductor"
+        @abajo    ="Combustible"
+
+        pdf = build_pdf_header_ost(pdf)
+        pdf = build_pdf_body_ost(pdf)
+        build_pdf_footer_ost(pdf)
+        @cabecera ="Operaciones"
+        @abajo    ="Pre Uso"
+
+        pdf = build_pdf_header_ost(pdf)
+        pdf = build_pdf_body_ost(pdf)
+        build_pdf_footer_ost(pdf)
+
         $lcFileName =  "app/pdf_output/#{@ost.id}.pdf"
 
+
     end
+
 
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
     send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
@@ -608,36 +631,36 @@ def client_data_headers
 
 def build_pdf_header_ost(pdf)
 
+     pdf.font "Helvetica"  , :size => 8
+     image_path = "#{Dir.pwd}/public/images/logo01.jpg"
 
-      pdf.image "#{Dir.pwd}/public/images/logo2.png", :width => 270
+      two_dimensional_array0 = [["SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD "],["OCUPACIONAL "],["ORDEN DE SERVICIO DE TRANSPORTE : "+@ost.code ]]    
+      two_dimensional_array1 = [["CODIGO     "],["VERSION"],["PAGINA"]] 
+      two_dimensional_array2 = [["TP-RD-F-005"],["08"],["1 DE 1 "]]
+       
 
-      pdf.move_down 6
+      table_content = ([ [{:image=> image_path, :width => 100 },{:content => two_dimensional_array0,:width=>320,},two_dimensional_array1,two_dimensional_array2 ]
+                ]) 
 
-      pdf.move_down 4
-      #pdf.text supplier.street, :size => 10
-      #pdf.text supplier.district, :size => 10
-      #pdf.text supplier.city, :size => 10
-      pdf.move_down 4
+      pdf.table(table_content, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
 
-      pdf.bounding_box([325, 725], :width => 200, :height => 80) do
-        pdf.stroke_bounds
-        pdf.move_down 15
-        pdf.font "Helvetica", :style => :bold do
-          pdf.text "R.U.C: 20424092941", :align => :center
-          pdf.text "ORDEN DE SERVICIO DE TRANSPORTE", :align => :center
-          pdf.text "#{@ost.code}", :align => :center,
-                                 :style => :bold
-
+          
         end
-      end
-      pdf.move_down 5
-      pdf
+
+
+      pdf.move_down 2
+      pdf 
+
   end
 
   def build_pdf_body_ost(pdf)
 
     pdf.text "__________________________________________________________________________", :size => 13, :spacing => 2
-    pdf.text " ", :size => 13, :spacing => 4
     pdf.font "Helvetica" , :size => 8
 
     max_rows = [client_ost_headers.length, ost_headers.length, 0].max
@@ -657,6 +680,8 @@ def build_pdf_header_ost(pdf)
           :width => pdf.bounds.width
         }) do
           columns([0, 2]).font_style = :bold
+          columns([1]).width = 180 
+
 
         end
 
@@ -677,7 +702,7 @@ def build_pdf_header_ost(pdf)
 
       nroitem=1
       
-      ary = [1,2,3,4,5,6,7,8,9]
+      ary = [1,2,3,4,5,6,7]
       
       ary.each do |i|
       
@@ -722,15 +747,22 @@ def build_pdf_header_ost(pdf)
      
       
       
-      pdf.text "GUIAS EN BLANCO : "+  @ost.description
-      pdf.move_down 20
+      pdf.text "GUIAS EN BLANCO    : "+  @ost.description
+      pdf.text "CONTACTO           : "
+      pdf.text "DIRECCION CARGUIO  : "
+      pdf.text "DIRECCION DESCARGA : "
+      
+      pdf.move_down 10
       
         data3=  [["-----------------------------------","-----------------------------------","-----------------------------------" ],
         ["DESPACHADOR","CONDUCTOR","SUPERVISOR" ]]
         pdf.table(data3,:column_widths => [180, 180, 180], :cell_style => { :border_width => 0 })
         pdf.text " "
+        pdf.text "Este documento tiene valor de declaracion jurada el cual el conductor asume la responsabilidad de la carga y documentots (G.R./G.T. y otros)" , :size => 8
+        pdf.text " "
+        
+        pdf.text @cabecera , :align => :right 
 
-      
       pdf
 
     end
@@ -741,25 +773,27 @@ def build_pdf_header_ost(pdf)
       
 
         pdf.text ""
-        pdf.text ""
         
         data2 = [["RUTA :"+ @ost.get_punto(@ost.ubication_id) + "  -  "+ @ost.get_punto(@ost.ubication2_id) ,   "   FECHA: "+ @ost.fecha1.strftime("%d-%m-%Y")],
-                 ["PLACA: " + @ost.truck.placa + " EJES:          ", " CONDUCTOR : " + @ost.employee.full_name],
+                 ["PLACA: " + @ost.truck.placa + " EJES:          "+  "ESCOLTA:                   ", "PLACA :"+ @ost.get_placa(@ost.truck2_id)],
+                 [ " CONDUCTOR : " + @ost.employee.full_name,"SUPERVISOR/APOYO: "+@ost.get_empleado(@ost.employee2_id)],
+                 
+                 [ " CONDUCTOR DE CARGA : " ,"CLIENTE : " ],
+                 
                  ["OBSERVACIONES: "+@ost.comments, " "],
                  [" ", " "],
                  ["................................ ", " ................................ "],
-                 ["V.B.Recepcion y Despacho ", "          V.B."],
-                 [" ", " Responsable"]]
-        
-        pdf.bounding_box([0, 200], :width => 535, :height => 200) do
+                 ["V.B.Recepcion y Despacho ", "          V.B. Responsable"]]
+
+                         pdf.bounding_box([0, 200], :width => 535, :height => 200) do
           
           
         pdf.text "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
-        pdf.text "FORMATO DE AUTORIZACION:  " + @ost.code , :size => 13
+        pdf.text "FORMATO DE AUTORIZACION:  " + @ost.code , :size => 13 
         
         
         pdf.table(data2, :cell_style => { :border_width => 0 }, :column_widths => [267, 268] )
-        
+        pdf.text @abajo , :align => :right 
       end
       
       
