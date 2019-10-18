@@ -16,7 +16,7 @@ class ActionCorreo < ApplicationMailer
 		  email_add = ""
 
 
-		  mail(to: [email_with_copy] ,cc: [email_with_copia,email_with_copia1,email_with_copia2 ],  bcc: email_with_name, subject: 'Informacion Sistema : ' )
+		  mail(to: [email_with_copy] ,cc: [email_with_copia,email_with_copia1,email_with_copia2 ], subject: 'Informacion Sistema : ' )
 
 
 	  end
