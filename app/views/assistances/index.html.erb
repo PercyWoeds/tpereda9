@@ -22,7 +22,7 @@
         <td><%= assistance.departamento %></td>
         <td><%= assistance.nombre %></td>
         <td><%= assistance.nro %></td>
-        <td><%= Time.strptime(assistance.fecha.to_s,"%Y-%m-%d %H:%M:%S") %></td>
+        <td><%= Time.strptime(assistance.fecha.to_s,"%Y-%m-%d %H:%M:%S").in_time_zone('Lima') %></td>
         <td><%= assistance.equipo %></td>
         <td><%= assistance.cod_verificacion %></td>
         <td><%= assistance.num_tarjeta %></td>

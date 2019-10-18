@@ -49,6 +49,10 @@
     <%=   @manifest.telefono1    %>   
 </p>
 
+<p>
+    <b>Estado : </b>
+    <%=   @manifest.get_processed    %>   
+</p>
 
 <%= hr() %>
    
@@ -290,18 +294,23 @@
 
 <div class="button">
   <%= link_to 'Exportar to PDF', "/manifests/pdf/#{@manifest.id}.pdf" %>  
-  <% if @manifest.processed == "1" %>
 
+  <% if @manifest.processed == "1" %>
+   <%= link_to 'Anular', "/manifests/do_anular/#{@manifest.id}" %>
   <tr>
+
 
     <%= link_to 'Enviar  via email', "/manifests/sendmail/#{@manifest.id}" %>
 
-
-    </tr>
-    
+    </tr>  
 
   <% else %>
+
+  <% if @manifest.processed == "2" %>
+
+  <%else%> 
   <%= link_to 'Procesar ST.', "/manifests/do_process/#{@manifest.id}" %>
+  <%end %>
 
   <% end %>
   

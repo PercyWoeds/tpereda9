@@ -1,4 +1,4 @@
-<div class="breadcrumbs">
+ <div class="breadcrumbs">
   <%= link_to "My companies", "/companies" %> &raquo;
   <%= link_to @company.name, @company %>
 </div>
@@ -19,8 +19,6 @@
     <a href="/companies/deliveries/<%= @company.id %>" class="small_btn">Clear</a>
   </form>
 </div>
-
-
 
 <br />
 <%= render "deliveries/list" %>

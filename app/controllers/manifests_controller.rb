@@ -35,6 +35,27 @@ class ManifestsController < ApplicationController
     redirect_to "/manifests/#{@manifest.id}"
   end
 
+  def do_anular
+    @invoice = Manifest.find(params[:id])
+
+
+   a = Manifestship.find_by(:manifest_id=> @invoice.id)
+    if a 
+    flash[:notice] = "Solicitud de Transporte tiene OST asignadas, no se puede anular."
+    
+    else
+
+    @invoice[:processed] = "2"
+    @invoice.anular 
+    
+    flash[:notice] = "Documento a sido anulado."
+    end 
+    redirect_to @invoice 
+
+
+
+  end
+  
   
   # Send invoice via email
   def sendmail
