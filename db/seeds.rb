@@ -108,13 +108,31 @@
 @u.first_name= "percy"
 @u.last_name= "woeds",
 @u.email= "percywoeds@gmail.com"
-@u.encrypted_password= "ycrep2016"
+@u.password= "ycrep2016"
+@u.password_confirmation= "ycrep2016"
 @u.save
+
+@u=User.new
+@u.username= "arequipa"
+@u.level= "admin"
+@u.first_name= "arequipa"
+@u.last_name= ".",
+@u.email= "arequipa@tpereda.com.pe"
+@u.password= "arequipa2019"
+@u.password_confirmation= "arequipa2019"
+@u.save
+
+
+
 
 @c=CompanyUser.new
 @c.company_id= 1
 @c.user_id= 1
 @c.save
+
+a=CompanyUser.new(company_id: 1, user_id: 2 )
+a.save
+
 
 @gasto = Gasto.all
 
