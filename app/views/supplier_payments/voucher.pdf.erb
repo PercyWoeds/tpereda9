@@ -61,7 +61,7 @@
                     <tr>
                     <td width= "10%" >|<%= product.get_supplier_ruc(product.supplier_id)   %></td>
                     <td width= "35%" ><%=  product.get_supplier(product.supplier_id)  %>   </td>
-                    <td width = "20%" ><%= product.get_document_corto(product.supplier_id) + "-"+ product.documento        %></td>
+                    <td width = "20%" ><%= product.get_document_corto(product.document_id) + "-"+ product.documento        %></td>
                     <td width = "20%" > </td> 
                     
                     <td width = "15%" align ="right"><%= sprintf("%.2f",product.total)  %> </td>

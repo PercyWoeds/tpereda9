@@ -252,7 +252,8 @@ class OutputsController < ApplicationController
 
        for  product in @facturas_rpt
             puts "empleado"
-            puts producto,employee_id
+            puts product,employee_id
+            
             row = []         
             row << nroitem.to_s
             row << product.code
