@@ -1,4 +1,5 @@
 <div class="mid_box bordered_right">
+
   <%= form_for(@purchase) do |f| %>
     <h3>
        Informacion Factura 
@@ -9,9 +10,7 @@
       <label for="ac_supplier" class="bold">Proveedor*</label><br />
       <input type="text" name="ac_supplier" id="ac_supplier" value="<% if @ac_supplier %><%= @ac_supplier %><% end %>" />
       
-      <div class="small">
-      <a href="#" onclick="createSupplierPurchase(); return false;">+ Crear nuevo proveedor</a>
-      </div>
+    
 
       <div class="small">
         Ingrese una termino de busqueda para encontrar un proveedor
@@ -27,28 +26,29 @@
       </div>
     </div>
     <div class="field">
-      <%= f.label :document_id,"Documento" %><br />
-      <%= f.select :document_id, options_from_collection_for_select(@documents,'id','description')%>
-    </div>
-    <div class="field">
-      <%= f.label :tiponota,"Tipo Movimiento" %><br />
-      <%= select_tag(:tiponota, options_for_select([["Normal",1],["Anulacion Factura",2],["Descuento por item",3]], params[:option] ), class:"select") %>
-    </div>
+      <%= f.label :document_id,"Documento:" %><br />
+      <%= f.collection_select  :document_id, Document.all , :id, :description,{:selected => Document.first }%>
+
     
+
+    </div>
       
-    <div class="field">
+    <div class="field ">
       <%= f.label :documento, "Nro Documento *", :class => "bold" %><br />
       <%= f.text_field :documento %>
-    </div>
-    <div class="field">
-      <%= f.label :date1, "Fecha Emision*", :class => "bold" %><br />
-      <%= f.date_field :date1 , value: Date.today.strftime("%d/%m/%Y") , min: Date.new($yy, $mm, $dd) %>
+
     </div>
 
     <div class="field">
-      <%= f.label :date2, "Fecha Entrega*", :class => "bold" %><br />
-      <%= f.date_field :date2, value: Date.today.strftime("%d/%m/%Y") %>
+      <%= f.label :date2, "Fecha Registro*", :class => "bold" %><br />
+      <%= f.date_field :date2  %>
     </div>
+    <div class="field">
+      <%= f.label :date1, "Fecha Emision*", :class => "bold" %><br />
+      <%= f.date_field :date1  %>
+    </div>
+
+    
 
 
     <div class="field">
@@ -57,17 +57,16 @@
     </div>
     <div class="field">
       <%= f.label :date3, "Fecha Vmto*", :class => "bold" %><br />
-      <%= f.date_field :date3, value: Time.now.strftime("%d/%m/%Y")  %>
-    </div>quit    
+      <%= f.date_field :date3   %>
+    </div>
+
 
 
     <div class="field">
       <%= f.label :moneda_id ,"  "%><br />
-      <%= f.select :moneda_id, options_from_collection_for_select(@monedas,'id','description'),selected: '1' %>
-    </div>
-    <div class="field">
-      <%= f.label :participacion ,"  "%><br />
-      <%= f.number_field :participacion, class: :text_field, step: :any %>
+      <%= f.select :moneda_id, options_from_collection_for_select(@monedas,'id','description') %>
+
+
     </div>
     
       
@@ -77,6 +76,58 @@
       <p class="bold big">Productos:</p>
     </div>
     
+
+    <br />
+     <div class="field">
+    <strong>Op.Inafecta :</strong><br />
+    <%= f.number_field :inafecto, :value => (number_with_precision(f.object.inafecto, :precision => 2) || 0)  ,:step => 0.01 %>
+  </div>
+
+    <div class="small">
+      Importe Op.Inafecta  para agregar una factura.
+    </div>
+    <br />
+    
+    <strong>Op.Afecta :</strong><br />
+ <div class="field">
+    <%= f.number_field :payable_amount, :value => (number_with_precision(f.object.payable_amount, :precision => 2) || 0) ,:step => 0.01  %>
+</div>
+
+    <div class="small">
+      Importe Op.Afecta  para agregar una factura.
+    </div>
+    <br />
+
+    <br />
+    <div>
+      <strong>Total Op. Gravadas:</strong><br />
+      <span id="ac_item_subtotal">0.00</span>
+    </div>
+    
+    
+    <br />
+    <div>
+      <strong>Total Op.No  Gravadas:</strong><br />
+      <span id="ac_item_subtotal2">0.00</span>
+    </div>
+    
+    
+    
+    <br />
+    <div>
+      <strong>Impuesto (%):</strong><br />
+      <span id="ac_item_tax">0.00</span>
+    </div>
+    
+
+    <div>
+      <strong>Importe Total:</strong><br />
+      <span id="ac_item_total">0.00</span>
+    </div>
+
+    
+    <br />
+
     <%= hr() %>
   
     <div class="field">
@@ -119,81 +170,25 @@
       <input type="hidden" name="items" id="items" value="<% if @products_lines %><%= @products_lines %><% end %>" />
       <%= f.hidden_field :user_id, :id => "ac_user_id" %>
       <%= f.hidden_field :supplier_id, :id => "ac_supplier_id" %>
+      <%= f.hidden_field :status, value: "1" %>
+      
       <%= f.hidden_field :company_id %>
       <%= f.submit %>
     </div>
+
     
     <div class="small">
       Una vez que haya terminado la adición de productos , no olvide <strong><%= @action_txt %></strong> tu factura.
     </div>
+
   <% end %>
 </div>
 
-<div class="mid_box">
-  <h4>
-    Agregar Productos  a la factura 
 
-  </h4>
-  
-  <form method="get" action="/products" onsubmit="addItemToPurchase(); return false;">
-
-    <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />
-    
-    <strong>Producto:</strong><br />
-    <input type="text" name="ac_item" id="ac_item" value="" />
-    <div class="small">
-      Ingrese un termino de busqueda para encontrar un producto.
-    </div>
-    <br />
-    
-    <strong>Precio:</strong><br />
-    <input type="text" name="ac_item_price" id="ac_item_price" value="" class="tf_short" />
-    <div class="small">
-      Precio del  producto para agregar una factura.
-    </div>
-    <br />
-    
-    <div class="small">
-      Precio S/IGV del  producto para agregar una factura.
-    </div>
-
-    <br />
-    
-    <strong>Cantidad:</strong><br />
-    <input type="text" name="ac_item_quantity" id="ac_item_quantity" value="1" class="tf_short" />
-    <div class="small">
-     Cantidad del producto para agregar una factura.
-    </div>
-    <br />
-    
-    <strong>Discount %:</strong><br />
-    <input type="text" name="ac_item_discount" id="ac_item_discount" value="0" class="tf_short" />
-    <div class="small">
-      Descuento % del producto para agregar una factura.
-    </div>
-    <br />
-    
-
-    <div>
-      <strong>Total:</strong><br />
-      <span id="ac_item_total">0.00</span>
-    </div>
-
-    
-    <br />
-    <input type="submit" value="Agregar item a Factura" />
-  </form>
-  
-  <%= hr() %>
-    
-</div>
   </form>
   
   <%= hr() %>
   
-
-  
-
 
 <%= br() %>
 <br />
@@ -201,6 +196,7 @@
 <%= render 'layouts/autocomplete' %>
 
 <script type="text/javascript">
+
   $(document).ready(function() {
     $("#ac_supplier").autocomplete("/purchases/ac_suppliers/<%= @company.id %>", {
       matchSubset: 1,
@@ -230,27 +226,45 @@
       selectFirst: false
     });
     
-    $("#ac_item").result(function(event, data, formatted) {
-      $("#ac_item_id").val(data[2]);
-      $("#ac_item_price").val(data[4]);
-      updateItemTotal();
-    });
     
-    $("#ac_item_quantity").bind("keyup", function() {
-      updateItemTotal();
+    $("#purchase_inafecto").bind("keyup", function() {
+      calculoTotal();
     });
-    
-    $("#ac_item_price").bind("keyup", function() {
-      updateItemTotal();
+    $("#purchase_payable_amount").bind("keyup", function() {
+      calculoTotal();
+
+
     });
+
+
     
-    $("#ac_item_discount").bind("keyup", function() {
-      updateItemTotal();
-    });
+
     
-    <% if @products_lines %>
-    alert 'holas products_lines';
-      listItemsPurchase();
-    <% end %>
+      function calculoTotal()
+    {
+      var quantity = 1 ;
+      var price     = $("#purchase_payable_amount").val();
+      var inafecto  = $("#purchase_inafecto").val();
+      
+      
+      var vventa = round( price ,2);
+      var total = round(vventa  * 1.18,2 );
+      var igv = round(total - vventa ,2);
+      total += round(inafecto,2) ; 
+      
+      $("#ac_item_subtotal").html(price);
+      $("#ac_item_subtotal2").html(inafecto);
+      $("#ac_item_tax").html(igv);
+      $("#ac_item_total").html(total);
+
+      
+     
+    }
+    
+    function round(value, decimals) {
+      return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+  
+    }
+
   });
 </script>

@@ -10,9 +10,13 @@ self.per_page = 20
   belongs_to :user
   belongs_to :payment
   belongs_to :bank_acount
+  belongs_to :document 
+  
 
   has_many :supplier_payment_details
-  
+
+
+
   TABLE_HEADERS = ["ITEM",
                      "TIPO",
                      "DOCUMENTO",
@@ -252,4 +256,22 @@ new_purchase = SupplierPaymentDetail.new(:supplier_payment_id => self.id,
       return "red"
     end
   end
+
+
+   def textify
+
+    
+
+      number = self.total 
+      parts = number.to_s.split(".")
+      cents = parts.count > 1 ? parts[1].to_s : 0
+      importe = self.total.to_i
+    
+      text = I18n.with_locale("es") {importe.to_words}
+        
+      return "#{text} y #{cents.to_s.rjust(2,'0')}/100 "
+    end
+
+  
+
 end

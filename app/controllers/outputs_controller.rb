@@ -247,8 +247,12 @@ class OutputsController < ApplicationController
       @cantidad = 0
       nroitem = 1
 
+      
+
+
        for  product in @facturas_rpt
- 
+            puts "empleado"
+            puts producto,employee_id
             row = []         
             row << nroitem.to_s
             row << product.code
@@ -257,7 +261,15 @@ class OutputsController < ApplicationController
             row << product.nameproducto
             row << product.unidad 
             
+            if  product.employee.nil?
+
+             row << product.employee_id 
+              
+            else
             row << product.employee.full_name
+             
+
+            end  
             row << product.truck.placa            
             row << sprintf("%.2f",product.quantity.to_s)
             row << sprintf("%.2f",product.get_stock(product.product_id).to_s)

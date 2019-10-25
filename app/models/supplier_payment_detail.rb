@@ -22,5 +22,9 @@ class SupplierPaymentDetail < ActiveRecord::Base
     return a.description
 
   end 
-  
+   def get_document_corto(id)
+    a =Document.find(id)
+    return a.descripshort 
+
+  end 
 end

@@ -87,6 +87,7 @@ class CompaniesController < ApplicationController
     set_company(@company)    
     @pagetitle = @company[:name]
     @locations = Location.where(company_id: @company.id)
+    @status = 1
   end 
   def ccobrar
     @company = Company.find(params[:id])

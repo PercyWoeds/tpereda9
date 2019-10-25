@@ -50,6 +50,7 @@ gem 'simple_form', '~> 3.3', '>= 3.3.1'
 
 gem 'rails_autolink', '~> 1.1', '>= 1.1.6'
 
+gem 'numbers_and_words', '~> 0.11.6'
 
 # Use unicorn as the web server
 # gem 'unicorn'

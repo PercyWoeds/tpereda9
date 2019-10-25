@@ -1494,16 +1494,16 @@ def get_pendientes_day_customer_detraccion(fecha1,fecha2,cliente)
   end
   
     def get_purchases_5(fecha1,fecha2,proveedor)
-    @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ?  and supplier_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",proveedor ]).order(:supplier_id,:moneda_id,:date1)    
+    @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ?  and supplier_id = ? and status =?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",proveedor,nil ]).order(:supplier_id,:moneda_id,:date1)    
     return @purchases 
   end
 
 
   def get_purchases_day_tipo(fecha1,fecha2,tipo)
     if tipo =="2" 
-      @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? and processed = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1"]).order(:supplier_id,:moneda_id,:date1)    
+      @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? and processed = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1"]).order(:supplier_id,:moneda_id,:date1).where(status: nil)    
     else   
-      @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ?  AND tipo = ?  and processed = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", tipo, "1"]).order(:supplier_id,:moneda_id,:date1)
+      @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ?  AND tipo = ?  and processed = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", tipo, "1"]).order(:supplier_id,:moneda_id,:date1).where(status: nil) 
     end 
     return @purchases 
   end
@@ -1515,17 +1515,17 @@ def get_pendientes_day_customer_detraccion(fecha1,fecha2,cliente)
       from purchase_details   
       INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
       INNER JOIN products ON purchase_details.product_id = products.id
-      WHERE purchases.date1 >= ? and purchases.date1 <= ?  and purchases.moneda_id= ?  and purchases.tipo = ?
+      WHERE purchases.date1 >= ? and purchases.date1 <= ?  and purchases.moneda_id= ?  and purchases.tipo = ? and purchases.status =?
       GROUP BY products.products_category_id  
-      ORDER BY products.products_category_id  ' , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda,tipo ])
+      ORDER BY products.products_category_id  ' , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda,tipo ,nil])
     else
       @purchases = Purchase.find_by_sql(['Select servicebuys.code,SUM(purchase_details.total) AS TOTAL
       from purchase_details   
       INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
       INNER JOIN servicebuys ON purchase_details.product_id = servicebuys.id
-      WHERE purchases.date1 >= ? and purchases.date1 <= ?  and purchases.moneda_id= ?  and purchases.tipo = ?
+      WHERE purchases.date1 >= ? and purchases.date1 <= ?  and purchases.moneda_id= ?  and purchases.tipo = ? and purchases.status =?
       GROUP BY servicebuys.code
-      ORDER BY servicebuys.code ' , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda,tipo ])
+      ORDER BY servicebuys.code ' , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda,tipo,nil  ])
     
     end 
     return @purchases
@@ -1541,8 +1541,8 @@ def get_purchases_day_categoria2(fecha1,fecha2,moneda,tipo)
         from purchase_details   
         INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
         INNER JOIN products ON purchase_details.product_id = products.id
-        WHERE purchases.date1 >= ? and purchases.date1 <= ?  and purchases.moneda_id= ?  and purchases.tipo = ?
-        ORDER BY products.products_category_id,purchases.supplier_id,purchases.date1,purchases.document_id,purchases.documento' , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda,tipo ])
+        WHERE purchases.date1 >= ? and purchases.date1 <= ?  and purchases.moneda_id= ?  and purchases.tipo = ?  and purchases.status =?
+        ORDER BY products.products_category_id,purchases.supplier_id,purchases.date1,purchases.document_id,purchases.documento' , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda,tipo,nil  ])
     else  
         @purchases = Purchase.where(["  date1 >= ? and date1 <= ?  AND tipo = ?  and processed = ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59", tipo, "1"]).order(:supplier_id,:moneda_id,:date1)
     end 
@@ -3038,7 +3038,7 @@ def get_ingresos_day(fecha1,fecha2,product)
     from purchase_details   
 INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
 INNER JOIN products ON purchase_details.product_id = products.id
-WHERE purchase_details.product_id = ?  and purchases.date1 > ? and purchases.date1 < ? ' ,product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+WHERE purchase_details.product_id = ?  and purchases.date1 > ? and purchases.date1 < ? and status =? ' ,product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",nil ])
  
     return @purchases 
 end
@@ -3052,8 +3052,8 @@ def get_ingresos_day2(fecha1,fecha2,product)
     from purchase_details   
 INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
 INNER JOIN products ON purchase_details.product_id = products.id
-WHERE products.products_category_id = ?  and purchases.date1 >= ? and purchases.date1 <= ? and purchases.processed = ?
-ORDER BY products.code  ',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1" ])
+WHERE products.products_category_id = ?  and purchases.date1 >= ? and purchases.date1 <= ? and purchases.processed =  ? and purchases.status=?
+ORDER BY products.code  ',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1",nil  ])
   
     return @purchases 
 
@@ -3075,8 +3075,8 @@ def get_ingresos_day4(fecha1,fecha2)
     from purchase_details   
 INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
 INNER JOIN products ON purchase_details.product_id = products.id
-WHERE purchases.date1 >= ? and purchases.date1 <= ? and purchases.processed = ? 
-ORDER BY products.products_category_id,products.code  ', "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1" ])
+WHERE purchases.date1 >= ? and purchases.date1 <= ? and purchases.processed = ? and purchases.status=? 
+ORDER BY products.products_category_id,products.code  ', "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1",nil ])
   
     return @purchases 
 

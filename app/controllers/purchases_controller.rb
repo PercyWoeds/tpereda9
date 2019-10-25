@@ -30,6 +30,7 @@ class PurchasesController < ApplicationController
   
   def list_ingresos
         @company = Company.find(1)
+
         @purchases  = Purchase.find_by_sql(['Select purchases.* from purchase_details   
 INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
 WHERE purchase_details.product_id = ?',params[:id] ])
@@ -2800,7 +2801,7 @@ def newfactura2
     $lcFechaVmto     =  fechas2
     $lcDocumento     =  params[:documento]
     
-@purchase = Purchase.new(:company_id=>1,:supplier_id=>$lcProveedorId,:date1=>$lcFechaEmision,:date2=>$lcFechaEmision,:payment_id=>$lcFormaPagoId,:document_id=>$lcDocumentId,:documento=>$lcDocumento,
+    @purchase = Purchase.new(:company_id=>1,:supplier_id=>$lcProveedorId,:date1=>$lcFechaEmision,:date2=>$lcFechaEmision,:payment_id=>$lcFormaPagoId,:document_id=>$lcDocumentId,:documento=>$lcDocumento,
 :date3 => $lcFechaVmto,:moneda_id => $lcMonedaId,:user_id =>@current_user.id,:purchaseorder_id=>$lcPurchaseOrderId)
     
     @company = Company.find(1)
@@ -2907,6 +2908,9 @@ def newfactura2
         
       end
   end 
+
+
+  
 
   def cargar
     lcProcesado='1'
@@ -3080,20 +3084,34 @@ def newfactura2
   def list_purchases
 
     @company = Company.find(params[:company_id])
+    @status = params[:status_id]
+    
     @pagetitle = "#{@company.name} - Facturas"
     @filters_display = "block"
     
     @locations = Location.where(company_id: @company.id).order("name ASC")
     @divisions = Division.where(company_id: @company.id).order("name ASC")
-    
+    puts "status "
+    puts @status 
     if(@company.can_view(current_user))
 
-         @purchases = Purchase.all.order('date1 DESC',"documento  DESC").paginate(:page => params[:page])
+      if @status == "1"
+         @purchases = Purchase.all.order('date1 DESC',"documento  DESC").where(status: @status).paginate(:page => params[:page])
+
         if params[:search]
-          @purchases = Purchase.search(params[:search]).order("date1 DESC","documento DESC").paginate(:page => params[:page])
+          @purchases = Purchase.search(params[:search]).order("date1 DESC","documento DESC").where(status: @status).paginate(:page => params[:page])
         else
-          @purchases = Purchase.order('date1 DESC',"documento DESC").paginate(:page => params[:page]) 
+          @purchases = Purchase.order('date1 DESC',"documento DESC").where(status: @status).paginate(:page => params[:page]) 
         end
+      else
+        @purchases = Purchase.all.order('date1 DESC',"documento  DESC").where(status: nil).paginate(:page => params[:page])
+        if params[:search]
+          @purchases = Purchase.search(params[:search]).order("date1 DESC","documento DESC").where(status: nil).paginate(:page => params[:page])
+        else
+          @purchases = Purchase.order('date1 DESC',"documento DESC").where(status: nil).paginate(:page => params[:page]) 
+        end
+
+      end 
 
     
     else
@@ -3117,10 +3135,11 @@ def newfactura2
   # GET /purchases/new
   # GET /purchases/new.xml
  
+
   def new
     @pagetitle = "New purchase"
     @action_txt = "Create"
-     @cierre = Cierre.last 
+    @cierre = Cierre.last 
     parts0 = @cierre.fecha.strftime("%Y-%m-%d") 
     parts = parts0.split("-")
     
@@ -3149,6 +3168,44 @@ def newfactura2
     @purchase[:user_id] = getUserId()
   end
 
+ def new2
+
+    @pagetitle = "New purchase"
+    @action_txt = "Create"
+     @cierre = Cierre.last 
+    parts0 = @cierre.fecha.strftime("%Y-%m-%d") 
+    parts = parts0.split("-")
+    
+    $yy = parts[0].to_i
+    $mm = parts[1].to_i
+    $dd = parts[2].to_i 
+    
+    
+    @purchase = Purchase.new
+    
+    @purchase[:processed] = false
+    @purchase[:inafecto] = 0
+    @purchase[:payable_amount] = 0
+    
+    
+    
+    @company = Company.find(params[:company_id])
+    @purchase.company_id = @company.id
+    
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+
+    @documents = @company.get_documents()    
+    @servicebuys  = @company.get_servicebuys()
+    @monedas  = @company.get_monedas()
+    @payments  = @company.get_payments()
+
+    
+    @ac_user = getUsername()
+    @purchase[:user_id] = getUserId()
+  end
+
+
   # GET /purchases/1/Edit
   def edit
     @pagetitle = "Editar factura"
@@ -3169,6 +3226,123 @@ def newfactura2
   # POST /purchases
   # POST /purchases.xml
   def create
+
+    
+
+      @pagetitle = "Nueva Compra"
+    @action_txt = "Crear"
+    
+    @purchase = Purchase.new(purchase_params)
+    
+    if  params[:purchase][:status] == "1"
+    @company = Company.find(params[:purchase][:company_id])
+    
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+      
+    @documents = @company.get_documents()    
+    @servicebuys  = @company.get_servicebuys()
+    @monedas  = @company.get_monedas()
+    @payments  = @company.get_payments()  
+
+
+    @purchase[:total_amount] = @purchase[:payable_amount] * 1.18
+    @purchase[:tax_amount] =@purchase[:total_amount] - @purchase[:payable_amount]  
+    
+    @tipodocumento = @purchase[:document_id]
+    
+    begin 
+    if @tipodocumento == 7
+      @purchase[:payable_amount] = @purchase[:payable_amount]*-1
+    else
+      @purchase[:payable_amount] = @purchase[:payable_amount]
+    end   
+    rescue
+      @purchase[:payable_amount] = 0
+    end  
+
+    begin 
+
+    if @tipodocumento == 7
+      @purchase[:inafecto] = @purchase[:inafecto] *-1
+    else
+      @purchase[:inafecto] = @purchase[:inafecto]
+    end    
+    rescue
+      @purchase[:inafecto] = 0
+
+    end 
+
+    begin
+       if @tipodocumento == 7
+        @purchase[:tax_amount] = @purchase[:tax_amount]*-1
+       else
+        @purchase[:tax_amount] = @purchase[:tax_amount]
+       end 
+    rescue
+        @purchase[:tax_amount] = 0
+      
+    end
+
+
+    @purchase[:location_id] = 1
+    @purchase[:division_id] = 1
+    
+    @purchase[:date2]  =   @purchase[:date1] 
+    puts "acdddd"
+    puts @purchase[:payable_amount]
+    puts @purchase[:tax_amount]
+    puts @purchase[:inafecto]
+
+    @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]  + @purchase[:inafecto]
+    @purchase[:charge]  = 0
+    @purchase[:pago] = 0
+    @purchase[:balance] =   @purchase[:total_amount]
+    
+    
+    if(params[:purchase][:user_id] and params[:purchase][:user_id] != "")
+      curr_seller = User.find(params[:purchase][:user_id])
+
+      @ac_user = curr_seller.username
+    end    
+    
+      respond_to do |format|
+        if @purchase.save    
+
+          product = Product.find(1)
+          afecto  =  @purchase[:payable_amount] / 1.18
+          total1  =  @purchase[:payable_amount]
+          inafecto = @purchase[:inafect]
+          quantity = 1.0
+          discount = 0.0
+          total =   @purchase[:total_amount]
+          impuesto = 18.00
+          tax  =   @purchase[:tax_amount]
+          
+          new_pur_product = PurchaseDetail.new(:purchase_id => @purchase.id, :product_id => product.id,
+          :price_without_tax => afecto.to_f,:price_with_tax=>total1, :inafecto =>inafecto.to_f,
+          :quantity => quantity.to_i, :discount => discount.to_f,
+          :total => total ,:impuesto=> impuesto.to_f,:totaltax=>tax)
+          new_pur_product.save
+
+
+
+
+          @purchase.process()
+          puts @purchase[:total_amount]
+    
+
+          
+          format.html { redirect_to(@purchase, :notice => 'Factura fue grabada con exito .') }
+          format.xml  { render :xml => @purchase, :status => :created, :location => @purchase}
+        else
+          format.html { render :action => "new2" }
+          format.xml  { render :xml => @purchase.errors, :status => :unprocessable_entity }
+        end
+      end
+
+    else  
+
     @pagetitle = "Nueva Compra"
     @action_txt = "Crear"
      @cierre = Cierre.last 
@@ -3245,9 +3419,14 @@ def newfactura2
           format.html { render :action => "new" }
           format.xml  { render :xml => @purchase.errors, :status => :unprocessable_entity }
         end
+      end 
+
       end      
   end
   
+
+
+
 
   # PUT /purchases/1
   # PUT /purchases/1.xml
@@ -3344,7 +3523,7 @@ def newfactura2
       :product_id,:unit_id,:price_with_tax,:price_without_tax,:price_public,:quantity,:other,:money_type,
       :discount,:tax1,:payable_amount,:tax_amount,:total_amount,:status,:pricestatus,:charge,:pago,
       :balance,:tax2,:supplier_id,:order1,:plate_id,:user_id,:company_id,:location_id,:division_id,:comments,
-      :processed,:return,:date_processed,:payment_id,:document_id,:documento,:moneda_id,:search)
+      :processed,:return,:date_processed,:payment_id,:document_id,:documento,:moneda_id,:search,:inafecto)
   end
 
 end

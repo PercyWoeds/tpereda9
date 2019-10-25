@@ -22,6 +22,5 @@ module Mnygo
     config.time_zone ='Lima'
     config.exceptions = self.routes
     
-    
   end
 end

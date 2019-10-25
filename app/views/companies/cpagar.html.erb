@@ -1,7 +1,9 @@
 <div class="mid_box bordered_right">
+    <%= hr() %>
+    
     <h3>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Registrar documentos", "/companies/purchases/#{@company.id}" %>
+    <%= link_to "Registrar documentos", "/companies/purchases/#{@company.id}/#{@status}" %>
   </h3>
 
   <p>
@@ -19,14 +21,6 @@
   <%= hr() %>
   
   
-
-
-  <p>
-   Letras por pagar 
-  </p>
-
-  <%= hr() %>
-
 </div>
 
 <div class="mid_box">

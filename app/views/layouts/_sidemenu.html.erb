@@ -171,7 +171,7 @@
                                 <div class="icon-holder">
                                     <span aria-hidden="true" class="icon icon_drawer"></span>
                                 </div><!--//icon-holder-->
-                                <h3 class="title">Cuentas por pagar </h3>
+                                <h3 class="title">Bancos </h3>
                                 <p class="intro">Cuentas por pagar proveedores </p>
                                 <a><%= link_to "", "/companies/cpagar/#{@company.id}", class: "link" %><span></span></a>
                             </div><!--//item-inner-->
@@ -212,16 +212,7 @@
                     
                 <%if  @current_user.level == "admin"%> 
 
-                    <div class="item item-primary col-md-4 col-sm-6 col-xs-6">
-                        <div class="item-inner">
-                            <div class="icon-holder">
-                                <span aria-hidden="true" class="icon icon_wallet_alt"></span>
-                            </div><!--//icon-holder-->
-                            <h3 class="title">Bancos </h3>
-                            <p class="intro">Gestión de bancos </p>
-                            <a><%= link_to "", "/companies/bancos/#{@company.id}", class: "link" %><span></span></a>
-                        </div><!--//item-inner-->
-                    </div><!--//item-->
+            
 
                     <% end %>
                     

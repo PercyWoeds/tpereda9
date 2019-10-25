@@ -1,0 +1,160 @@
+<html>
+  <head>
+    <script>
+      function number_pages() {
+        var vars={};
+        var x=document.location.search.substring(1).split('&');
+        for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = decodeURIComponent(z[1]);}
+        var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+        for(var i in x) {
+          var y = document.getElementsByClassName(x[i]);
+          for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+        }
+      }
+    </script>
+  </head>
+  <body onload="number_pages()">
+     <hr>
+     <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      <th width="20%" align="left">| BANCO     </th>
+      <th width="25%" align="left"> NRO.CUENTA :</th>
+      <th width="15%" align="left"> CHEQUE/TX :  </th>
+      <th width="15%" align="left"> GIRADO : </th>
+      <th width="15%" align="right"> MONEDA : </th>
+      <th width="15%" align="right"> T/C.: </th>
+        
+          
+     <tr>   
+      <td width="20%" align="left">| <%= @supplierpayment.get_banco(@supplierpayment.bank_acount.bank_id)   %>   </td>
+      <td width="25%" align="left"> <%= @supplierpayment.bank_acount.number%>:</td>
+      <td width="15%" align="left"> <%= @supplierpayment.documento   %>  </td>
+      <td width="15%" align="left"> <%= @supplierpayment.fecha1.strftime("%d/%m/%Y") %> </td>
+      <td width="15%" align="right"> <%= @moneda %> </td>
+      <td width="15%" align="right"> 3.477 </td>
+     </tr>
+    
+     </table>
+     <hr> 
+
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <tr>
+    <td width="15%">| SON : </td>
+    <td width="85%"> <%= @supplierpayment.textify.upcase +  @moneda  %> </td>
+    <td width="15%"> <%= money(@supplierpayment.total)  %>  </td>
+  </tr>
+  
+  </table>
+  <hr> 
+
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <tr>
+    <td width="15%">| CONCEPTO : </td>
+    <td width="85%"> <%= @supplierpayment.descrip %> </td>
+    <td width="15%">  </td>
+  </tr>
+  
+  </table>
+  <hr> 
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <tr>
+    <td width="25%">| Procesado por : </td>
+    <td width="25%">| V.B.Contador </td>
+    <td width="25%">| V.B.Geente Fin. </td>
+    <td width="25%">| V.B.Gerente Gral. </td>
+  </tr>
+
+  <tr>
+    <td width="25%">| </td>
+    <td width="25%">| </td>
+    <td width="25%">| </td>
+    <td width="25%">| </td>
+  </tr>
+
+  <tr>
+    <td width="25%">| </td>
+    <td width="25%">| </td>
+    <td width="25%">| </td>
+    <td width="25%">| </td>
+  </tr>
+  <tr>
+    <td width="25%">|  </td>
+    <td width="25%">| </td>
+    <td width="25%">| </td>
+    <td width="25%">| </td>
+  </tr>  
+  </table>
+
+   <hr>
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <tr>
+    <td width="25%">| FECHA : ........../........../.......... </td>
+    <td width="25%">| FECHA : ........../........../.......... </td>
+    <td width="25%">| FECHA : ........../........../.......... </td>
+    <td width="25%">| FECHA : ........../........../.......... </td>
+    
+  </tr>
+  
+  </table>
+  <hr> 
+
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <tr>
+    
+    <th width="30%" align ="right">|</td>
+    <th width="35%" align ="right">RECIBI CONFORME </td>
+    <th width="35%" align ="right">| </td>
+  </tr>
+    
+  <tr>
+    <td width="30%" align ="right">| </td>
+    <td width="35%"> </td>
+    <td width="35%" align ="right">| </td>
+  </tr>
+  
+  <tr>
+    <td width="30%" align ="right">| </td>
+    <td width="35%" align ="left  ">FECHA:___________________________________  </td>
+    <td width="35%" align ="right">|  </td>
+  </tr>
+
+  <tr>
+    <td width="30%" align ="right">| </td>
+    <td width="35%"> </td>
+    <td width="35%" align ="right">| </td>
+  </tr>
+  <tr>
+    <td width="30%" align ="right">| </td>
+    <td width="35%" align ="left  ">  DNI:______________________________________   </td>
+    <td width="35%" align ="right" >FIRMA:__________________________________ |  </td>
+  </tr>
+  <tr>
+    <td width="30%" align ="right">| </td>
+    <td width="35%"> </td>
+    <td width="35%" align ="right">| </td>
+  </tr>
+  
+  <tr>
+    <td width="30%" align ="right">| </td>
+    <td width="35%"> </td>
+    <td width="35%" align ="right">| </td>
+  </tr>
+  <tr>
+    <td width="30%" align ="right">| </td>
+    <td width="35%" align ="left  "> Nombres y Apellidos :________________________ </td>
+    <td width="35%" align ="right" >_________________________________________ |</td>
+  </tr>
+  
+  </table>
+  <hr> 
+
+<table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <tr>
+    <td width="15%">| TOTAL VOUCHER : </td>
+    <td width="85%"> <%= money(@supplierpayment.total)  %> </td>
+    <td width="15%"> <%= @moneda %>  </td>
+  </tr>
+
+
+  </body>
+
+</html>

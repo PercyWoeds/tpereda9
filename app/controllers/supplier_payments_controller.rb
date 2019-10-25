@@ -1,6 +1,8 @@
 include UsersHelper
 include SuppliersHelper
 include ServicebuysHelper
+include SupplierPaymentsHelper
+
 
 class SupplierPaymentsController < ApplicationController
 
@@ -436,46 +438,26 @@ class SupplierPaymentsController < ApplicationController
   def build_pdf_header(pdf)
 
     
-      pdf.image "#{Dir.pwd}/public/images/logo.png", :width => 270
-        
-      pdf.move_down 6
-        
-      pdf.move_down 4
-      #pdf.text supplier.street, :size => 10
-      #pdf.text supplier.district, :size => 10
-      #pdf.text supplier.city, :size => 10
-      pdf.move_down 4
-
-      pdf.bounding_box([325, 725], :width => 200, :height => 80) do
-        pdf.stroke_bounds
-        pdf.move_down 15
-        pdf.font "Helvetica", :style => :bold do
-          pdf.text "R.U.C: 20424092941", :align => :center
-          pdf.text "COMPROBANTE DE PAGO", :align => :center
-          pdf.text "#{@supplierpayment.code}", :align => :center,
-                                 :style => :bold
+      
+      
+          pdf.text "COMPROBANTE DE PAGO", :align => :center,:size => 16 
+          pdf.text ""
+          pdf.text  "PAGUESE A LA ORDEN DE : " + @supplierpayment.supplier.name , :align => :left, :style => :bold
           
-        end
-      end
-      pdf.move_down 10
-      pdf 
+          pdf 
   end   
 
   def build_pdf_body(pdf)
-    
-    pdf.text "__________________________________________________________________________", :size => 13, :spacing => 4
-    pdf.text " ", :size => 13, :spacing => 4
+   
     pdf.font "Helvetica" , :size => 8
-
     
-          data =[  [$lcEntrega1,""],
-               [$lcEntrega3,$lcEntrega5],
-               [$lcEntrega4,$lcEntrega6]]
+          data =[ ["NOMBRE DEL PROVEEDOR ","FECHA :","COMPRO"],
+                  [$lcEntrega4,$lcEntrega6,"#{@supplierpayment.code}"]]
 
            
             pdf.text " "
-            pdf.table(data,:cell_style=> {:border_width=>0,:width=> 270,:height => 20 })
-            pdf.move_down 10          
+            pdf.table(data,:cell_style=> {:border_width=>1, :width=> (pdf.bounds.width/3) ,:height => 20 })
+            pdf.move_down 5          
           
 
 
@@ -493,21 +475,27 @@ class SupplierPaymentsController < ApplicationController
       nroitem=1
 
       row=[]
-      row<< "0"
-      row<< @supplierpayment.get_document(@supplierpayment.document_id)    
-      row<< @supplierpayment.documento    
-      row<< @supplierpayment.nrooperacion 
-      row<< @supplierpayment.operacion   
+      row<< @supplierpayment.supplier.ruc 
+
+    
+      row<< @supplierpayment.supplier.name 
+      row<< @supplierpayment.document.descripshort + "-" + @supplierpayment.documento  
+      row<< " "
+      row<< " "
+      
       row<< @supplierpayment.total.to_s    
       table_content << row     
 
        for  product in @supplierpayment.get_payments() 
             row = []
-            row << nroitem.to_s          
-            row << product.get_document(product.document_id)
-            row << product.documento    
-            row << product.get_supplier(product.supplier_id)
+            row << product.get_supplier_ruc(product.supplier_id) 
+            row << product.get_supplier(product.supplier_id) 
+            
+            row << product.get_document_corto(product.supplier_id) + "-"+ product.get_document(product.supplier_id)   
+
             row << "" 
+            row << "" 
+            
             row << product.total.to_s
 
             table_content << row
@@ -529,7 +517,7 @@ class SupplierPaymentsController < ApplicationController
                                           columns([5]).align=:right 
                                         end
 
-      pdf.move_down 10  
+      pdf.move_down 2 
       pdf
 
     end
@@ -545,14 +533,15 @@ class SupplierPaymentsController < ApplicationController
       data =[  ["BANCO","NRO.CUENTA","OPERACION :","GIRADO :","MONEDA : ","T/C."],
                [$lcBanco,$lcAccount,$lcCheque,$lcFecha1,$lcMon,"0.00"]]
 
-            pdf.move_down 100
+            pdf.move_down 280
             pdf.text " "
             pdf.table(data,:cell_style=> {:border_width=>1, :width=> 90,:height => 20 })
             pdf.move_down 10          
           
 
         pdf.text ""
-        pdf.text "" 
+
+        pdf.text "SON: " +@supplierpayment.total.to_words
         pdf.text "CONCEPTO : #{@supplierpayment.descrip}", :size => 8, :spacing => 4
 
         
@@ -564,18 +553,18 @@ class SupplierPaymentsController < ApplicationController
            
             pdf.text " "
             pdf.table(data,:cell_style=> {:border_width=>1} , :width => pdf.bounds.width)
-            pdf.move_down 10          
-   
-        
-        
-        pdf.table invoice_summary, {
-        :position => :right,
-        :cell_style => {:border_width => 1},
-        :width => pdf.bounds.width/2
-        } do
-        columns([0]).font_style = :bold
-        columns([1]).align = :right        
-        end
+            pdf.move_down 10   
+
+        pdf.text ": "
+        pdf.text ":                                                           :                                                                             RECIBI CONFORME                                                                   :"
+        pdf.text ":"
+        pdf.text ":                                                                                                                            : FECHA:....................................................................................................:"
+        pdf.text ":                                                           :                                                                                                                                                                "
+        pdf.text ":                                                                                                                            : D.N.I.:.......................................................................................................:"
+        pdf.text ":                                                           :                                                                                                                        Firma                                  "
+        pdf.text ":                                                           :                                                                                                                                                                "
+        pdf.text ":                                                           :                                                                : Nombre Apellidos :....................................................................................:"
+        pdf.text "TOTAL VOUCHER : " + @supplierpayment.total.to_s + " SOLES "    
     
 
         pdf.bounding_box([0, 20], :width => 538, :height => 50) do        
@@ -779,7 +768,7 @@ end
      $lcdir1 = @supplierpayment.supplier.address1
      
      $lcFecha1= @supplierpayment.fecha1.strftime("%d/%m/%Y") 
-     $lcMon   = @supplierpayment.get_moneda(@supplierpayment.bank_acount.bank_id)
+     @moneda   = @supplierpayment.get_moneda(@supplierpayment.bank_acount.moneda_id)
      $lcPay= ""
      $lcSubtotal=0
      $lcIgv=0
@@ -793,22 +782,42 @@ end
     $lcEntrega2 =  $lcCli
     $lcEntrega3 =  "NOMBRE DEL PROVEEDOR: "
     $lcEntrega4 =  $lcCli
-    $lcEntrega5 =  "FECHA COMPRO:"
+    $lcEntrega5 =  "FECHA :"
     $lcEntrega6 =  $lcFecha1
 
-    Prawn::Document.generate("app/pdf_output/#{@supplierpayment.id}.pdf") do |pdf|
-        pdf.font "Helvetica"
-        pdf = build_pdf_header(pdf)
-        pdf = build_pdf_body(pdf)
-        build_pdf_footer(pdf)
-        $lcFileName =  "app/pdf_output/#{@supplierpayment.id}.pdf"      
-        
-    end     
+    # Prawn::Document.generate("app/pdf_output/#{@supplierpayment.id}.pdf") do |pdf|
+    #     pdf.font "Helvetica"
+    #     pdf = build_pdf_header(pdf)
+    #     pdf = build_pdf_body(pdf)
+    #     build_pdf_footer(pdf)
+    #     $lcFileName =  "app/pdf_output/#{@supplierpayment.id}.pdf"      
+    # end     
 
-    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+
+    # $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
                 
-    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+    # send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
   
+    begin 
+         render  pdf: "VOUCHER",template: "supplier_payments/voucher.pdf.erb",locals: {:facturas => @facturas_rpt},
+         :orientation  => 'Portrait',
+         :page_size =>  'A4', 
+         :header => {    :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]',
+                    } 
+                   },
+
+         :footer => { :html => { template: 'layouts/pdf-footer2.html' }       }  ,
+         :margin => {bottom: 140} 
+           
+              
+
+    end   
+
+
+
 
   end
   
@@ -1219,9 +1228,13 @@ end
   def invoice_summary
       invoice_summary = []
       invoice_summary << ["RECIBI CONFORME ",""]
-      invoice_summary << ["Fecha  :",""]
-      invoice_summary << ["D.N.I. :","Firma"]
-      invoice_summary << ["Nombre y Apellidos :",""]
+      invoice_summary << [": Fecha :.......................................",""]
+      invoice_summary << [": "," "]
+      
+      invoice_summary << [":D.N.I. :.......................................",".............................................. "]
+      invoice_summary << [": "," "]
+      
+      invoice_summary << [":Nombre y Apellidos.","   Firma"]
       invoice_summary
   end
 

@@ -13,7 +13,7 @@ belongs_to :tipocargue
 belongs_to :manifestship  
 
 
-validates_presence_of :location_id, :code,:customer_id,:fecha1,:tipocargue_id,:especificacion,:fecha2,:direccion1,:direccion2,:contacto1,:telefono1,:contacto2,:telefono2
+validates_presence_of :location_id, :code,:customer_id,:fecha1,:tipocargue_id,:especificacion,:fecha2,:direccion1,:direccion2,:contacto1,:telefono1,:contacto2,:telefono2,:importe,:importe2,:empaletizado,:montacarga,:escolta,:stand_by 
 validates_uniqueness_of :code
 
 

@@ -28,6 +28,8 @@ Mnygo::Application.configure do
   
   config.action_mailer.delivery_method = :smtp
   
+  config.action_controller.include_all_helpers = false
+  
  config.action_mailer.smtp_settings = {
     address:              'send.one.com',
     port:                 587,

@@ -1,0 +1,84 @@
+<html>
+<body>
+    
+ 
+  <h4 ><center>COMPROBANTE DE PAGO  </center>   </h4>
+  
+  <h5><left> PAGUESE A LA ORDEN DE :  <%=  @supplierpayment.supplier.name %> </left ></h5>
+  <% if @supplierpayment.get_moneda(@supplierpayment.bank_acount.bank_id) == 2%>
+        <% @moneda= "SOLES" %>
+  <% else %>
+       <% @moneda= "DOLARES" %>
+  <% end %>
+  
+  <font size="2" face="Courier New" >  
+
+  <hr>
+
+  <table style='font-family:"Courier New", Courier, monospace; font-size:100% ;width:100%'>
+  <tr>
+    <td width="70%">| NOMBRE DEL PROVEEDOR </td>
+    <td width="15%">| FECHA COMPRO  </td>
+    <td width="15%">| NRO.VOUCHER</td>
+
+    
+  </tr>
+  <tr>
+    <td width="70%">| <%= @supplierpayment.supplier.name %> </td>
+    <td width="15%">| <%= @supplierpayment.fecha1.strftime("%d/%m/%Y") %>
+    <td width="15%">| <%= @supplierpayment.code %> </td>
+  </tr>
+  
+  </table>
+
+  
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:100% ;width:100%'>
+      <% nroitem = 1%>
+      <% total =  0%>
+      <% lctotal =  0%>
+      <% total_1 =  0%>
+      <% total_2 =  0%>
+
+        <th width="10%" align="left">| R.U.C.     </th>
+        <th width="35%" align="left"> PROVEEDOR  </th>
+        <th width="20%" align="left"> DOCUMENTO  </th>
+        <th width="20%" align="left"> REFERENCIA </th>
+        <th width="15%" align="right"> IMPORTE     </th>
+
+        <tr>
+        <td width="10%" align="left">|<%= @supplierpayment.supplier.ruc %>    </td>
+        <td width="35%" align="left"><%= @supplierpayment.supplier.name %>  </td>
+        <td width="20%" align="left"><%= @supplierpayment.document.descripshort + "-" + @supplierpayment.documento  %>  </td>
+        <td width="20%" align="left"> </td>
+        <td width="15%" align="right"> <%= money(@supplierpayment.total) %> </td>
+        </tr>
+
+          
+      
+       <% for  product in @supplierpayment.get_payments()   %>
+       
+                    <tr>
+                    <td width= "10%" >|<%= product.get_supplier_ruc(product.supplier_id)   %></td>
+                    <td width= "35%" ><%=  product.get_supplier(product.supplier_id)  %>   </td>
+                    <td width = "20%" ><%= product.get_document_corto(product.supplier_id) + "-"+ product.documento        %></td>
+                    <td width = "20%" > </td> 
+                    
+                    <td width = "15%" align ="right"><%= sprintf("%.2f",product.total)  %> </td>
+                    
+                  
+                
+                </tr>
+            
+         <% end %>
+
+
+      <hr>  
+     </table>
+    
+
+    
+    </body>
+      
+</html>
+      

@@ -1223,6 +1223,8 @@ def rpt_facturas_4
       
       i += 1
     end
+    @status = "1"
+
   end
  
 

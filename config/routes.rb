@@ -318,6 +318,7 @@ end
   resources :purchases do
      collection { post :datos  }
      collection { get :search } 
+
   end 
   
   resources :payrolls, only: [:index, :show] do
@@ -777,6 +778,8 @@ end
   match 'purchases/ac_user/:company_id' => 'purchases#ac_user', via: [:get, :post]
   match 'purchases/ac_suppliers/:company_id' => 'purchases#ac_suppliers', via: [:get, :post]
   match 'purchases/new/:company_id' => 'purchases#new', via: [:get, :post]  
+  match 'purchases/new2/:company_id' => 'purchases#new2', via: [:get, :post]  
+  
   match 'purchases/newfactura/:id' => 'purchases#newfactura', via: [:get, :post]  
   match 'purchases/newfactura2/:id' => 'purchases#newfactura2', via: [:get, :post]  
 
@@ -789,6 +792,7 @@ end
   match 'purchases/cargar2/:id'   => 'purchases#cargar2', via: [:get, :post]
 
   match 'purchases/do_crear/:id'   => 'purchases#do_crear', via: [:get, :post]
+  match 'purchases/do_crear2/:id'   => 'purchases#do_crear2', via: [:get, :post]
 
   match 'purchases/ingresos/:id'   => 'purchases#ingresos', via: [:get, :post]
   match 'purchases/list_ingresos/:id'   => 'purchases#list_ingresos', via: [:get, :post]
@@ -812,6 +816,7 @@ end
   match 'purchases/rpt_purchase4_all/:id' => 'purchases#rpt_purchase4_all', via: [:get, :post]
   
   match 'companies/purchases/:company_id' => 'purchases#list_purchases', via: [:get, :post]  
+  match 'companies/purchases/:company_id/:status_id' => 'purchases#list_purchases', via: [:get, :post]  
   
   resources :purchases
   

@@ -21,10 +21,14 @@
 <br />
 
 <div class="button">
+  <% if @status == "1" %>
+  <%= link_to 'Nueva Factura/Nota', "/purchases/new2/#{@company.id}" %>
+  
+  <% else %>
   <%= link_to 'Nueva Factura/Nota', "/purchases/new/#{@company.id}" %>
   <%= link_to "Cargar Orden de servicio","/purchases/cargar2/#{@company.id}" %>
   <%= link_to 'Cargar Orden de compra', "/purchases/cargar/#{@company.id}" %>
-  
+  <% end%>
   
 </div>
 
