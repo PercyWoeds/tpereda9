@@ -274,21 +274,35 @@
 
 
 
-<br />
+<%= hr() %>
 
 <div>
+    <b> ESTADO : </b>
+
+
   <strong><%= @manifest.get_processed %></strong>
   <% if @manifest.processed == "1" and @manifest.date_processed %>
-    <%= doDate(@manifest.date_processed) %>
+    Fecha Creacion <%= doDate(@manifest.date_processed) %>
   <% end %>
 </div>
+<p>
+    <% unless @manifest.motivo.nil?%>
+   <strong>  MOTIVO: </strong>  <%= @manifest.motivo  %>
+     <%end %>
+</p>
 
 
 <p>
   <strong> Usuario :</strong>
-  
- 
+
 </p>
+
+
+<p>
+  <strong> Fecha Modificacion :</strong>
+    <%= doDate(@manifest.updated_at) %>
+</p>
+
 
 <%= hr() %>
 
@@ -297,22 +311,20 @@
 
   <% if @manifest.processed == "1" %>
    <%= link_to 'Anular', "/manifests/do_anular/#{@manifest.id}" %>
+   <%= link_to 'Cancelar', "/manifests/sendcancelar/#{@manifest.id}" %>
   <tr>
-
-
     <%= link_to 'Enviar  via email', "/manifests/sendmail/#{@manifest.id}" %>
+  </tr>  
 
-    </tr>  
+  <%end %>
 
-  <% else %>
 
-  <% if @manifest.processed == "2" %>
+  <% if @manifest.processed.nil? %>
 
-  <%else%> 
   <%= link_to 'Procesar ST.', "/manifests/do_process/#{@manifest.id}" %>
   <%end %>
 
-  <% end %>
+
   
   <%= link_to 'Regresar', manifests_path %>
 </div>

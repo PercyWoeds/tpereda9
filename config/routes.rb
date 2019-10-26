@@ -1,5 +1,6 @@
   Mnygo::Application.routes.draw do
 
+  resources :cotizacions
   resources :assistances
 
 
@@ -643,6 +644,11 @@ end
   resources :facturas
 
 
+  match 'cotizacions/do_anular/:id' => 'cotizacions#do_anular', via: [:get, :post]
+  match 'cotizacions/do_cancelar/:id' => 'cotizacions#do_anular', via: [:get, :post]
+
+
+
 
 # Guias
   
@@ -830,9 +836,13 @@ end
   
   match 'manifests/do_process/:id' => 'manifests#do_process', via: [:get, :post]
   match 'manifests/do_anular/:id' => 'manifests#do_anular', via: [:get, :post]
+  match 'manifests/do_cancelar/:id' => 'manifests#do_cancelar', via: [:get, :post]
+  
   match 'manifests/pdf/:id' => 'manifests#pdf', via: [:get, :post]
   match 'manifests/do_email/:id' => 'manifests#do_email', via: [:get, :post]
   match 'manifests/sendmail/:id' => 'manifests#sendmail', via: [:get, :post]
+  match 'manifests/sendcancelar/:id' => 'manifests#sendcancelar', via: [:get, :post]
+
   resources :manifests 
 
   match 'suppliers/new2/:id'   => 'suppliers#new2', via: [:get, :post]

@@ -49,7 +49,7 @@ def get_processed
 
     elsif (self.processed == "3")
 
-      return "-Cerrado --"  
+      return "**Cancelado **"  
     else   
       return "Not yet processed"
         
@@ -96,7 +96,7 @@ def get_processed
     return @itemguias
   end
 
-   def anular
+  def anular
     if(self.processed == "2" )          
       self.processed="2"
       self.importe =0
@@ -110,5 +110,22 @@ def get_processed
       self.save
     end
   end
+
+def cancelar
+    if(self.processed == "3" )          
+      self.processed="3"
+      self.importe =0
+      self.empaletizado = 0
+      self.importe2 = 0
+      self.montacarga = 0
+      self.stand_by = 0
+      self.escolta  = 0
+      
+      self.date_processed = Time.now
+      self.save
+    end
+  end
+
+
 
 end

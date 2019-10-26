@@ -1,0 +1,57 @@
+<%= simple_form_for(@cotizacion) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+
+     <div class="field">
+      <%= f.label :fecha, "Fecha *", :class => "bold" %><br />
+      <%= f.date_field :fecha %>
+      </div>
+
+     <div class="field">  
+      <label for="ac_customer" class="bold"> CLIENTE  *</label><br />
+      <%= f.collection_select :customer_id, @customers, :id, :name, :prompt => true %>
+      
+      <div class="small">
+        Ingrese una termino de busqueda para encontrar un proveedor.
+      </div>
+    </div>
+
+    <div class="field">
+      <%= f.label :punto_id , "Lugar de Origen:  "%><br />
+      <%= f.collection_select :punto_id, @puntos, :id, :name, :prompt => true %>      
+      
+    </div>
+
+    <div class="field">
+      <%= f.label :punto2_id , "Lugar de Destino:  "%><br />
+      <%= f.collection_select :punto2_id, @puntos, :id, :name, :prompt => true %>      
+      
+    </div>
+
+    <div class="field">
+      <%= f.label :tipocargue_id , "Tipo carga:  "%><br />
+      <%= f.collection_select :tipocargue_id, @tipocarga, :id, :name, :prompt => true %>  
+      
+    </div>
+    <div class="field">  
+        <%= f.label :tarifa  , "Tarifa * " , :class => "bold" %><br />
+        <%= f.number_field :tarifa , step: :any %>
+
+    </div>  
+
+
+    <div class="field">  
+    
+        <%= f.label :comments, "Observaciones  ", :class => "bold" %><br />
+        <%= f.text_area :comments %>
+
+    </div>
+    
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

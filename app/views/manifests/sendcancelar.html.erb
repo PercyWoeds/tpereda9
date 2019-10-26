@@ -13,20 +13,20 @@
 <%= hr() %>
 
 <h3>
-  <%= link_to @manifest.identifier, @manifest %>
+  <%= link_to @manifest.code, @manifest %>
 </h3>
 
 <%= hr() %>
 
 <form method="post" action="/manifests/do_cancelar/<%= @manifest.id %>">
   <strong>Motivo de cancelacion :</strong>
-  <input type="text" name="observa" value="Ingrese motivo de cancelacion servicio " onclick="$(this).select();" />
-  <input type="submit" value="Send" class="bold" />
+  <input type="text" name="motivo" value="Ingrese motivo de cancelacion servicio " onclick="$(this).select();" />
+  <input type="submit" value="Grabar" class="bold" />
 </form>
 
 <%= hr() %>
 
 <div class="button">
-  <%= link_to 'Ver Solictud Transporte', @manifest %>
+
   <%= link_to 'Regresar', "/companies/manifests/#{@company.id}" %>
 </div>

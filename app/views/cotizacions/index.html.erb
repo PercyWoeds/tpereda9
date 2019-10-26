@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Cotizacions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Code</th>
+      <th>Customer</th>
+      <th>Punto</th>
+      <th>Punto2</th>
+      <th>Tipocargue</th>
+      <th>Tarifa</th>
+      <th>Processed</th>
+      <th>Comments</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cotizacions.each do |cotizacion| %>
+      <tr>
+        <td><%= cotizacion.fecha %></td>
+        <td><%= cotizacion.code %></td>
+        <td><%= cotizacion.customer.name  %></td>
+        <td><%= cotizacion.punto.name %></td>
+        <td><%= cotizacion.get_punto(cotizacion.punto2_id) %></td>
+        <td><%= cotizacion.tipocargue.name %></td>
+        <td><%= cotizacion.tarifa %></td>
+        <td><%= cotizacion.processed %></td>
+        <td><%= cotizacion.comments %></td>
+        <td><%= link_to 'Ver', cotizacion %></td>
+        <td><%= link_to 'Editar', edit_cotizacion_path(cotizacion) %></td>
+        <td><%= link_to 'Eliminar', cotizacion, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Cotizacion', new_cotizacion_path %>

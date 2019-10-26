@@ -1,10 +1,16 @@
+include UsersHelper
+
+include ServicesHelper
+
 class ManifestsController < ApplicationController
-  before_action :set_manifest, only: [:show, :edit, :update, :destroy,:sendmail]
+ before_action :set_manifest, only: [:show, :edit, :update, :destroy,:sendmail]
 
   # GET /manifests
   # GET /manifests.json
+
+  
   def index
-    @manifests = Manifest.order("CAST ( SUBSTRING(code,1,3) as int),CAST ( SUBSTRING(code,5,13) as int)")
+    @manifests = Manifest.order("CAST ( SUBSTRING(code,1,3) as int),CAST ( SUBSTRING(code,5,13) as int)").paginate(:page => params[:page])
 
 
     #Manifest.find_by_sql(['Select  manifests.id,manifests.code, manifests.solicitante,manifests.fecha1,manifests.telefono1,
@@ -34,6 +40,7 @@ class ManifestsController < ApplicationController
     flash[:notice] = "El documento ha sido enviado con exito ."
     redirect_to "/manifests/#{@manifest.id}"
   end
+
 
   def do_anular
     @invoice = Manifest.find(params[:id])
@@ -66,7 +73,39 @@ class ManifestsController < ApplicationController
 
     ActionCorreo.st_email(@manifest).deliver_now 
   end
+
+  def sendcancelar 
+    
+    @company  = Company.find(1)
+    @manifest = Manifest.find(params[:id])
+
+  end
+
+
+  def do_cancelar
+
+
+    @company =  Company.find(1)
+    @manifest = Manifest.find(params[:id])
+    @observa  = params[:motivo]
   
+    @manifest[:processed] = "3"
+
+     @manifest.update_attributes(:motivo => @observa,:processed =>"3") 
+     @manifest.cancelar
+    
+    
+    flash[:notice] = "Motivo grabado."
+    redirect_to "/manifests/#{@manifest.id}"
+
+  end
+
+  # Send invoice via email
+  def cancela
+    @manifest = Manifest.find(params[:id])
+    @company = @manifest.company
+  end
+
 
   def new
     @manifest = Manifest.new
@@ -121,9 +160,10 @@ class ManifestsController < ApplicationController
    if  @manifest[:location_id] == 4
       @lcSerie =  8
    end 
-  
    
+
    @manifest[:code] = @manifest.generate_manifest_number(@lcSerie)  
+  
 
 
     respond_to do |format|
@@ -146,7 +186,8 @@ class ManifestsController < ApplicationController
     @puntos = @manifest.get_puntos()
     @locations = @manifest.get_locations()
     @cargas = @manifest.get_cargas()
-     
+    @manifest[:user_id] =  current_user.id 
+
 
     respond_to do |format|
       if @manifest.update(manifest_params)

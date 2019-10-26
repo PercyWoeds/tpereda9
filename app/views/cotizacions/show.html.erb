@@ -1,0 +1,71 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @cotizacion.fecha %>
+</p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @cotizacion.code %>
+</p>
+
+<p>
+  <strong>Customer:</strong>
+  <%= @cotizacion.customer.name %>
+</p>
+
+<p>
+  <strong>Punto:</strong>
+  <%= @cotizacion.punto.name %>
+</p>
+
+<p>
+  <strong>Punto2:</strong>
+  <%= @cotizacion.get_punto(@cotizacion.punto2_id) %>
+</p>
+
+<p>
+  <strong>Tipocargue:</strong>
+  <%= @cotizacion.tipocargue.name  %>
+</p>
+
+<p>
+  <strong>Tarifa:</strong>
+  <%= @cotizacion.tarifa %>
+</p>
+
+
+<p>
+  <strong>Comments:</strong>
+  <%= @cotizacion.comments %>
+</p>
+
+
+
+
+<div>
+  <strong><%= @cotizacion.get_processed %></strong>
+  <% if @cotizacion.processed == "1" and @cotizacion.date_processed %>
+    <%= doDate(@cotizacion.date_processed) %>
+  <% end %>
+</div>
+
+
+<div class="button">
+<%= link_to 'Editar', edit_cotizacion_path(@cotizacion) %> 
+
+ <% if @cotizacion.processed != "2" %>
+   <%= link_to 'Anular', "/cotizacions/do_anular/#{@cotizacion.id}" %>
+  <tr>
+<% end %>
+ <% if @cotizacion.processed != "3" %>
+   <%= link_to 'Cancelar', "/cotizacions/do_cancelar/#{@cotizacion.id}" %>
+  <tr>
+
+<% end %>
+
+
+<%= link_to 'Regresar', cotizacions_path %>
+
+</div>
