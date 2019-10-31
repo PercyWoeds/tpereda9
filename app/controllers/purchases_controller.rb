@@ -4,11 +4,12 @@ include ProductsHelper
 include PurchasesHelper
 
 class PurchasesController < ApplicationController
+
   before_filter :authenticate_user!
-            
+ 
 
 
- def show
+  def show
     @purchase = Purchase.find(params[:id])
     @supplier = @purchase.supplier
      @cierre = Cierre.last 
@@ -2199,32 +2200,8 @@ def build_pdf_header_rpt48(pdf)
     send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')
   end
 
-  ###pendientes de pago 
-  def rpt_cpagar2_pdf
-    $lcxCliente ="0"
-    @company=Company.find(params[:company_id])      
-    
-      @fecha1 = params[:fecha1]
-    
-      @fecha2 = params[:fecha2]
-    
-    @company.actualizar_fecha2
-    @facturas_rpt = @company.get_purchases_pendientes_day(@fecha1,@fecha2)  
-      
-    Prawn::Document.generate("app/pdf_output/rpt_pendientes.pdf") do |pdf|
-        pdf.font "Helvetica"
-        pdf = build_pdf_header_rpt2(pdf)
-        pdf = build_pdf_body_rpt2(pdf)
-        build_pdf_footer_rpt2(pdf)
 
-        $lcFileName =  "app/pdf_output/rpt_pendientes.pdf"              
-    end     
 
-    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
-    send_file("app/pdf_output/rpt_pendientes.pdf", :type => 'application/pdf', :disposition => 'inline')
-  
-
-  end
   
   ###pendientes de pago 
   def rpt_cpagar3_pdf
@@ -3518,6 +3495,9 @@ def newfactura2
   
   
   private
+
+  
+
   def purchase_params
     params.require(:purchase).permit(:tank_id,:date1,:date2,:date3,:exchange,
       :product_id,:unit_id,:price_with_tax,:price_without_tax,:price_public,:quantity,:other,:money_type,

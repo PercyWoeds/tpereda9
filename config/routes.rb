@@ -128,7 +128,8 @@
     collection { get :reportes_st_2} #Reporte ventas
     collection { get :reportes_st_3} #Reporte ventas
     
-    
+    collection { get :rpt_cpagar2_pdf } 
+
   end 
     
 
@@ -319,7 +320,7 @@ end
   resources :purchases do
      collection { post :datos  }
      collection { get :search } 
-
+     
   end 
   
   resources :payrolls, only: [:index, :show] do
@@ -806,7 +807,7 @@ end
   match 'purchases/buscaringresos/:id'   => 'purchases#buscaringresos', via: [:get, :post]
   match 'purchases/search_ingresos/:id'   => 'purchases#search_ingresos', via: [:get, :post]
 
-  match 'purchases/rpt_cpagar2_pdf/:company_id' => 'purchases#rpt_cpagar2_pdf', via: [:get, :post]
+  match 'facturas/rpt_cpagar2_pdf/:company_id' => 'facturas#rpt_cpagar2_pdf', via: [:get, :post]
   match 'purchases/rpt_cpagar3_pdf/:company_id' => 'purchases#rpt_cpagar3_pdf', via: [:get, :post]
   match 'purchases/rpt_cpagar4_pdf/:company_id' => 'purchases#rpt_cpagar4_pdf', via: [:get, :post]
   match 'purchases/rpt_cpagar5_pdf/:id' => 'purchases#rpt_cpagar5_pdf', via: [:get, :post]

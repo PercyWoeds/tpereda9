@@ -257,6 +257,56 @@ def reportes_st_3
   end  
 
 
+  ###pendientes de pago 
+  def rpt_cpagar2_pdf
+
+
+    $lcxCliente ="0"
+
+    @company=Company.find(1)      
+    @purchase = Purchase.last 
+    
+    @fecha1 = params[:fecha1]
+    
+    @fecha2 = params[:fecha2]
+    
+    @company.actualizar_fecha2
+
+    @purchase_soles = @company.get_purchases_by_moneda_prov(@fecha1,@fecha2,"1")  
+    @purchase_dolar = @company.get_purchases_by_moneda_prov(@fecha1,@fecha2,"2")  
+
+   case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Proveedores ",template: "facturas/rpt_cpagar2.pdf.erb",locals: {:facturas => @purchase },
+         :orientation      => 'Portrait',
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header4.html',
+                           right: '[page] of [topage]'
+                  }                  
+               } ,
+
+          :footer => { :html => { template: 'layouts/pdf-footer3.html' }       }  ,   
+          :margin => {bottom: 25} 
+
+        end   
+
+
+
+      when "To Excel" then render xlsx: 'rpt_st_2'
+      else render action: "index"
+
+    end
+  
+
+  end
+
+
+
+
+
   def reportes5
     $lcFacturasall = '1'
 

@@ -15,22 +15,26 @@ totals = []
 
 <h3>
   <%= image_tag("reports_48.png", :class => "vmiddle") %>
- Reporte de cuentas clientes
+ Reporte de cuentas proveedores - Pendientes por pagar 
 </h3	>
 
-<form method="get" action="/purchases/rpt_cpagar2_pdf/<%= @company.id %>">
- 	<div class="field">
-      <input type="date" name="fecha1" value="2007-01-02" style = "width: 150px" >
+  <%= form_tag(rpt_cpagar2_pdf_facturas_path, :method => "get") do %>
 
-    </div>
-	<div class="field">
-		<input type="date" name="fecha2" value="2018-01-31" style = "width: 150px" >
-    </div>
+  <div class="field">
+    Desde <input type="date" name="fecha1" value="2007-01-01" style = "width: 150px" >
+  </div>
 
-    
-  <input type="submit" value="Ver" class="small_btn" />
-  <a href="/purchases/rpt_cpagar2_pdf/<%= @company.id %>" class="small_btn">Hoy</a>
-</form>
+  <div class="field">
+    Hasta <input type="date" name="fecha2" value="2019-10-30" style = "width: 150px" >
+  </div>
+
+  
+
+  <%= submit_tag  "To PDF", :name => "print"    %>
+
+  <%= submit_tag "Excel", :name => "print" %>
+     
+<% end %>
 
 <br />
 
