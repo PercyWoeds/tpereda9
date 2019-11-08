@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 1
+  fecha_inicio: 2019-10-31 18:25:26
+  fecha_fin: 2019-10-31 18:25:26
+  fecha_suscripcion: 2019-10-31 18:25:26
+  location_id: 1
+  division_id: 1
+  sueldo: 1.5
+  reingreso: MyString
+  comments: MyText
+  modalidad_id: 1
+  tipocontrato_id: 1
+  submodalidad_id: 1
+  moneda_id: 1
+  tiporemuneracion_id: 1
+
+two:
+  employee_id: 1
+  fecha_inicio: 2019-10-31 18:25:26
+  fecha_fin: 2019-10-31 18:25:26
+  fecha_suscripcion: 2019-10-31 18:25:26
+  location_id: 1
+  division_id: 1
+  sueldo: 1.5
+  reingreso: MyString
+  comments: MyText
+  modalidad_id: 1
+  tipocontrato_id: 1
+  submodalidad_id: 1
+  moneda_id: 1
+  tiporemuneracion_id: 1

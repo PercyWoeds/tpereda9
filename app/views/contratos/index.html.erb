@@ -1,0 +1,53 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Contratos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Employee</th>
+      <th>Fecha inicio</th>
+      <th>Fecha fin</th>
+      <th>Fecha suscripcion</th>
+      <th>Location</th>
+      <th>Division</th>
+      <th>Sueldo</th>
+      <th>Reingreso</th>
+      <th>Comments</th>
+      <th>Modalidad</th>
+      <th>Tipocontrato</th>
+      <th>Submodalidad</th>
+      <th>Moneda</th>
+      <th>Tiporemuneracion</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @contratos.each do |contrato| %>
+      <tr>
+        <td><%= contrato.employee_id %></td>
+        <td><%= contrato.fecha_inicio %></td>
+        <td><%= contrato.fecha_fin %></td>
+        <td><%= contrato.fecha_suscripcion %></td>
+        <td><%= contrato.location_id %></td>
+        <td><%= contrato.division_id %></td>
+        <td><%= contrato.sueldo %></td>
+        <td><%= contrato.reingreso %></td>
+        <td><%= contrato.comments %></td>
+        <td><%= contrato.modalidad_id %></td>
+        <td><%= contrato.tipocontrato_id %></td>
+        <td><%= contrato.submodalidad_id %></td>
+        <td><%= contrato.moneda_id %></td>
+        <td><%= contrato.tiporemuneracion_id %></td>
+        <td><%= link_to 'Show', contrato %></td>
+        <td><%= link_to 'Edit', edit_contrato_path(contrato) %></td>
+        <td><%= link_to 'Destroy', contrato, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Contrato', new_contrato_path %>

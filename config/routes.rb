@@ -1,5 +1,6 @@
   Mnygo::Application.routes.draw do
 
+  resources :contratos
   resources :cotizacions
   resources :assistances
 

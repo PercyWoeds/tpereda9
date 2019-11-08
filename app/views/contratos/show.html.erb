@@ -1,0 +1,74 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @contrato.employee_id %>
+</p>
+
+<p>
+  <strong>Fecha inicio:</strong>
+  <%= @contrato.fecha_inicio %>
+</p>
+
+<p>
+  <strong>Fecha fin:</strong>
+  <%= @contrato.fecha_fin %>
+</p>
+
+<p>
+  <strong>Fecha suscripcion:</strong>
+  <%= @contrato.fecha_suscripcion %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @contrato.location_id %>
+</p>
+
+<p>
+  <strong>Division:</strong>
+  <%= @contrato.division_id %>
+</p>
+
+<p>
+  <strong>Sueldo:</strong>
+  <%= @contrato.sueldo %>
+</p>
+
+<p>
+  <strong>Reingreso:</strong>
+  <%= @contrato.reingreso %>
+</p>
+
+<p>
+  <strong>Comments:</strong>
+  <%= @contrato.comments %>
+</p>
+
+<p>
+  <strong>Modalidad:</strong>
+  <%= @contrato.modalidad_id %>
+</p>
+
+<p>
+  <strong>Tipocontrato:</strong>
+  <%= @contrato.tipocontrato_id %>
+</p>
+
+<p>
+  <strong>Submodalidad:</strong>
+  <%= @contrato.submodalidad_id %>
+</p>
+
+<p>
+  <strong>Moneda:</strong>
+  <%= @contrato.moneda_id %>
+</p>
+
+<p>
+  <strong>Tiporemuneracion:</strong>
+  <%= @contrato.tiporemuneracion_id %>
+</p>
+
+<%= link_to 'Edit', edit_contrato_path(@contrato) %> |
+<%= link_to 'Back', contratos_path %>
