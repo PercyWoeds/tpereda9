@@ -1275,7 +1275,6 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
  end 
 
 
-
  ## Pendientes 
 
  def get_pendientes_day(fecha1,fecha2)

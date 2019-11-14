@@ -1294,6 +1294,7 @@ def newfactura2
       else render action: "index"
     end
   end
+  
   def rpt_ccobrar3
   
     $lcxCliente ="1"
@@ -1861,8 +1862,9 @@ def newfactura2
     lcmonedadolares ="1"
     lcmonedasoles ="2"
     
-    @company.actualizar_fecha2
-    @company.actualizar_detraccion 
+
+    #@company.actualizar_fecha2
+    #@company.actualizar_detraccion 
 
     @facturas_rpt = @company.get_pendientes_day(@fecha1,@fecha2)  
 
