@@ -144,6 +144,8 @@
       
     </div>
   </div>
+
+
   
   <%= hr() %>
   
@@ -160,7 +162,20 @@
     <%= f.label :comments %><br />
     <%= f.text_area :comments %>
   </div>
+  <div class="field">
+    <%= f.label :numparte %><br />
+    <%= f.text_area :numparte %>
+  </div>
   
+   <div class="field">
+      <%= f.check_box :active%>
+      <%= f.label :active ,"Activo?", :class => "bold" %>
+      <div class="small">
+         Producto activo ?
+      </div>
+    </div>
+    
+
   <%= hr() %>
   
   <div class="actions">

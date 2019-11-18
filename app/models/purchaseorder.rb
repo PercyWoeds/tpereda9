@@ -57,6 +57,19 @@ class Purchaseorder < ActiveRecord::Base
     end
 
 
+ def get_maximo
+
+    year = Date.today.year.to_s
+
+    a= Purchaseorder.where("SUBSTRING(code,1,4) = ? ", year).maximum("cast(substring(code,6,11) as int)")
+       if a.nil?
+        return  year.to_s + "-1"
+      else
+        return  year.to_s + "-"+ (a + 1).to_s.rjust(6, '0') 
+
+      end 
+ end 
+
   def get_subtotal(items)
     subtotal = 0
     

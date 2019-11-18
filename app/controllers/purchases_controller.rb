@@ -383,6 +383,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
     end 
     
     @tipo =params[:tiporeporte]
+    
 
     @rpt_detalle_purchase = @company.get_purchases_day_categoria(@fecha1,@fecha2,@moneda1,@tipo)
     Prawn::Document.generate("app/pdf_output/orden_1.pdf") do |pdf|
@@ -3262,15 +3263,11 @@ def newfactura2
        end 
     rescue
         @purchase[:tax_amount] = 0
-      
     end
 
-
     @purchase[:location_id] = 1
-    @purchase[:division_id] = 1
-    
+    @purchase[:division_id] documen= 1    
     @purchase[:date3]  =   @purchase[:date1] + @purchase.get_dias_vmto(@purchase[:payment_id]).days  
-
     
     @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]  + @purchase[:inafecto]
     @purchase[:charge]  = 0
@@ -3302,9 +3299,6 @@ def newfactura2
           :quantity => quantity.to_i, :discount => discount.to_f,
           :total => total ,:impuesto=> impuesto.to_f,:totaltax=>tax)
           new_pur_product.save
-
-
-
 
           @purchase.process()
           puts @purchase[:total_amount]

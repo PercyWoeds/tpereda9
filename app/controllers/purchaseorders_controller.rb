@@ -250,6 +250,8 @@ def build_pdf_header(pdf)
             row << product.quantity.to_s
             row << product.code
             row << product.name
+            row << product.numparte
+            
             row << product.price.round(2).to_s
             row << product.discount.round(2).to_s
             row << product.total.round(2).to_s
@@ -670,7 +672,7 @@ def build_pdf_header(pdf)
 
     @purchaseorder = Purchaseorder.new
 
-    @purchaseorder[:code] = "#{generate_guid5()}"
+    @purchaseorder[:code] = @purchaseorder.get_maximo()
     @purchaseorder[:processed] = false
 
     @company = Company.find(params[:company_id])
@@ -685,6 +687,10 @@ def build_pdf_header(pdf)
 
     @ac_user = getUsername()
     @purchaseorder[:user_id] = getUserId()
+    @purchaseorder[:fecha1] = Date.today 
+    @purchaseorder[:fecha2] = Date.today
+    @purchaseorder[:location_id ] = 3 
+
 
   end
 

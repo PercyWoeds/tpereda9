@@ -1514,17 +1514,17 @@ def get_pendientes_day_customer_detraccion(fecha1,fecha2,cliente)
       from purchase_details   
       INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
       INNER JOIN products ON purchase_details.product_id = products.id
-      WHERE purchases.date1 >= ? and purchases.date1 <= ?  and purchases.moneda_id= ?  and purchases.tipo = ? and purchases.status =?
+      WHERE purchases.date1 >= ? and purchases.date1 <= ?  and purchases.moneda_id= ?  and purchases.tipo = ? and purchases.status is null
       GROUP BY products.products_category_id  
-      ORDER BY products.products_category_id  ' , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda,tipo ,nil])
+      ORDER BY products.products_category_id  ' , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda,tipo])
     else
       @purchases = Purchase.find_by_sql(['Select servicebuys.code,SUM(purchase_details.total) AS TOTAL
       from purchase_details   
       INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
       INNER JOIN servicebuys ON purchase_details.product_id = servicebuys.id
-      WHERE purchases.date1 >= ? and purchases.date1 <= ?  and purchases.moneda_id= ?  and purchases.tipo = ? and purchases.status =?
+      WHERE purchases.date1 >= ? and purchases.date1 <= ?  and purchases.moneda_id= ?  and purchases.tipo = ? and purchases.status is null
       GROUP BY servicebuys.code
-      ORDER BY servicebuys.code ' , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda,tipo,nil  ])
+      ORDER BY servicebuys.code ' , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda,tipo  ])
     
     end 
     return @purchases
