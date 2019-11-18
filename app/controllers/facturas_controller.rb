@@ -17,7 +17,7 @@ class FacturasController < ApplicationController
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]
     
-    @product_id = params[:ac_item_id]
+    @product = params[:ac_item_id]
 
     @products = @company.get_products_dato(@product)        
 
