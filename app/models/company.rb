@@ -1756,6 +1756,7 @@ def get_purchases_pendientes_day_supplier(fecha1,fecha2,value,moneda)
   # Return products for company
   def get_products_dato(id)
     products = Product.find_by(company_id: self.id,id: id)    
+    
     if products.unidad == nil
     return products.name + " - "   
     else     
