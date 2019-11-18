@@ -321,7 +321,6 @@ end
   resources :purchases do
      collection { post :datos  }
      collection { get :search } 
-     collection { get :rpt_compras1_pdf }
 
   end 
   
@@ -824,6 +823,9 @@ end
   match 'purchases/rpt_purchase3_all/:id' => 'purchases#rpt_purchase3_all', via: [:get, :post]
   match 'purchases/rpt_purchase4_all/:id' => 'purchases#rpt_purchase4_all', via: [:get, :post]
   
+  match 'purchases/rpt_compras1_pdf/:company_id' => 'purchases#rpt_compras1_pdf', via: [:get, :post]
+
+
   match 'companies/purchases/:company_id' => 'purchases#list_purchases', via: [:get, :post]  
   match 'companies/purchases/:company_id/:status_id' => 'purchases#list_purchases', via: [:get, :post]  
   
