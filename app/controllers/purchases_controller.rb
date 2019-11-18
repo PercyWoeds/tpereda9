@@ -25,7 +25,7 @@ class PurchasesController < ApplicationController
     
       case params[:print]
         when "To PDF" then 
-            redirect_to :action => "rpt_ingresos_all_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2],:id=>"1", :ac_item_id=>=> params[:ac_item_id]
+            redirect_to :action => "rpt_ingresos_all_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2],:id=>"1", :ac_item_id=> params[:ac_item_id]
 
         when "To Excel" then render xlsx: 'rpt_ingresos_all_pdf'
           
