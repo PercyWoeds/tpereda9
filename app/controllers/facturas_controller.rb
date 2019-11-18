@@ -11,6 +11,67 @@ class FacturasController < ApplicationController
  
 
 
+  def rpt_compras1_pdf
+    @company=Company.find(1)      
+   
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]
+    
+    @product_id = params[:ac_item_id]
+
+    @products = @company.get_products_dato(@product)        
+
+    @facturas_rpt = @company.get_ingresos_day(@fecha1,@fecha2,@product)
+
+    
+    if @customerpayment_rpt != nil 
+    
+      case params[:print]
+        when "To PDF" then 
+            redirect_to :action => "rpt_ingresos_all_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2],:id=>"1", :ac_item_id=> params[:ac_item_id]
+
+        when "To Excel" then render xlsx: 'rpt_ingresos_all_pdf'
+          
+          
+        else render action: "index"
+      end
+    end 
+
+    
+  end
+
+
+
+
+  def rpt_ingresos_all_pdf
+  
+    @company=Company.find(params[:id])          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @product = params[:ac_item_id]    
+    
+    @products = @company.get_products_dato(@product)        
+
+    @facturas_rpt = @company.get_ingresos_day(@fecha1,@fecha2,@product)
+
+
+    Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header_rpt9(pdf)
+        pdf = build_pdf_body_rpt9(pdf)
+        build_pdf_footer_rpt9(pdf)
+        $lcFileName =  "app/pdf_output/rpt_factura.pdf"              
+    end     
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+    send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')
+
+  end
+
+
+
+
+
+
   def ac_st 
     procesado = '1'
     @guias = Manifest.where([" (code LIKE ?)   ",  "%" + params[:q] + "%"])   
