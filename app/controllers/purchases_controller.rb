@@ -3164,6 +3164,10 @@ def newfactura2
     @purchase[:inafecto] = 0
     @purchase[:payable_amount] = 0
     
+    @purchase[:date1] = Date.today
+    @purchase[:date2] = Date.today 
+    @purchase[:document_id] = 7  
+    
     
     
     @company = Company.find(params[:company_id])
@@ -3265,12 +3269,9 @@ def newfactura2
     @purchase[:location_id] = 1
     @purchase[:division_id] = 1
     
-    @purchase[:date2]  =   @purchase[:date1] 
-    puts "acdddd"
-    puts @purchase[:payable_amount]
-    puts @purchase[:tax_amount]
-    puts @purchase[:inafecto]
+    @purchase[:date3]  =   @purchase[:date1] + @purchase.get_dias_vmto(@purchase[:payment_id]).days  
 
+    
     @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]  + @purchase[:inafecto]
     @purchase[:charge]  = 0
     @purchase[:pago] = 0

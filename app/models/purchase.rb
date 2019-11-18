@@ -122,6 +122,14 @@ TABLE_HEADERS30 = ["TD",
 
   end 
 
+  def get_dias_vmto(id)
+
+    a =   Payment.find(id)
+    
+    return a.day 
+
+  end
+
 
   def not_purchase_with?()
     document_tipo = self.document_id
