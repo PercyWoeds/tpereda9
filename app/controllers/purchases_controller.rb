@@ -3229,7 +3229,7 @@ def newfactura2
     @tipodocumento = @purchase[:document_id]
     
     begin 
-    if @tipodocumento == 7
+    if @tipodocumento == 2
       @purchase[:payable_amount] = @purchase[:payable_amount]*-1
     else
       @purchase[:payable_amount] = @purchase[:payable_amount]
@@ -3240,7 +3240,7 @@ def newfactura2
 
     begin 
 
-    if @tipodocumento == 7
+    if @tipodocumento == 2
       @purchase[:inafecto] = @purchase[:inafecto] *-1
     else
       @purchase[:inafecto] = @purchase[:inafecto]
@@ -3251,7 +3251,7 @@ def newfactura2
     end 
 
     begin
-       if @tipodocumento == 7
+       if @tipodocumento == 2
         @purchase[:tax_amount] = @purchase[:tax_amount]*-1
        else
         @purchase[:tax_amount] = @purchase[:tax_amount]

@@ -270,7 +270,7 @@ def reportes_st_3
     
     @fecha2 = params[:fecha2]
     
-    @company.actualizar_fecha2
+   # @company.actualizar_fecha2
 
     @purchase_soles = @company.get_purchases_by_moneda_prov(@fecha1,@fecha2,"1")  
     @purchase_dolar = @company.get_purchases_by_moneda_prov(@fecha1,@fecha2,"2")  
