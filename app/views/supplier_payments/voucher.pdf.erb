@@ -5,7 +5,7 @@
   <h4 ><center>COMPROBANTE DE PAGO  </center>   </h4>
   
   <h5><left> PAGUESE A LA ORDEN DE :  <%=  @supplierpayment.supplier.name %> </left ></h5>
-  <% if @supplierpayment.get_moneda(@supplierpayment.bank_acount.bank_id) == 2%>
+  <% if @supplierpayment.get_moneda(@supplierpayment.bank_acount.moneda_id) == 2 %>
         <% @moneda= "SOLES" %>
   <% else %>
        <% @moneda= "DOLARES" %>
