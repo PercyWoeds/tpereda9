@@ -22,6 +22,7 @@ class Purchaseorder < ActiveRecord::Base
                      "CANTIDAD",
                      "CODIGO",
                      "DESCRIPCION",
+                     "NUM.PARTE",
                      "PRECIO UNITARIO",
                      "DSCTO",
                      "VALOR TOTAL"]
