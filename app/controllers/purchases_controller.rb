@@ -8,6 +8,35 @@ class PurchasesController < ApplicationController
   before_filter :authenticate_user!
  
 
+  def rpt_compras1_pdf
+    @company=Company.find(1)      
+   
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]
+    
+    @product_id = params[:ac_item_id]
+
+    @products = @company.get_products_dato(@product)        
+
+    @facturas_rpt = @company.get_ingresos_day(@fecha1,@fecha2,@product)
+
+    
+    if @customerpayment_rpt != nil 
+    
+      case params[:print]
+        when "To PDF" then 
+            redirect_to :action => "rpt_ingresos_all_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2],:id=>"1", :ac_item_id=>=> params[:ac_item_id]
+
+        when "To Excel" then render xlsx: 'rpt_ingresos_all_pdf'
+          
+          
+        else render action: "index"
+      end
+    end 
+
+    
+  end
+
 
   def show
     @purchase = Purchase.find(params[:id])
@@ -1522,6 +1551,8 @@ def build_pdf_header_rpt48(pdf)
       pdf
       
   end
+
+
 
   def rpt_ingresos_all_pdf
   

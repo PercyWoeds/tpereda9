@@ -321,7 +321,8 @@ end
   resources :purchases do
      collection { post :datos  }
      collection { get :search } 
-     
+     collection { get :rpt_compras1_pdf }
+
   end 
   
   resources :payrolls, only: [:index, :show] do
