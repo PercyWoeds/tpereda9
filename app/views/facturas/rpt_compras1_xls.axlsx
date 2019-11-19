@@ -19,19 +19,23 @@ wb.styles do |s|
     
     wb.add_worksheet(name: "Basic work sheet") do |sheet|
     
-    sheet.add_row ["Td", "Nro.Documento", "Fec.Emision", "Fec.Vmto","Cliente","Obra","Moneda", "Soles ","Dolares","Detracion","Observ." ], :style => title 
+
+
+    sheet.add_row ["Fecha","Code", "Codigo","Descripcion", "Unidad","Proveedor","Cantidad","Costo US$", "Costo S/ ","Total S/" ], :style => title 
     
    @facturas_rpt.each do |payment|
 
         lcPrice = 0
         lcValorcambio = 0
         valortotal = 0
+        @tipocambio = 1 
 
         if payment.price != nil 
 
               if payment.moneda_id == 1
 
                  if payment.fecha 
+
                 @tipocambio = payment.get_tipocambio(payment.fecha)
                 else
                   @tipocambio = 1
@@ -47,7 +51,7 @@ wb.styles do |s|
                  lcPrice = payment.price
                  lcValorcambio = valorcambio
                
-                 valortotal = payment.total*@tipocambio
+                 valortotal = payment.total * @tipocambio
               end 
 
             else
@@ -56,7 +60,7 @@ wb.styles do |s|
             end 
 
 
-        sheet.add_row [payment.code, payment.codigo,payment.nameproducto,payment.unidad,payment.supplier.name,payment.unidad,payment.supplier.name,payment.quantity,lcPrice,lcValorcambio,valortotal], :style => [cadena,cadena,cadena,cadena,cadena,cadena,cadena,currency,currency,currency,currency]
+        sheet.add_row [payment.fecha,payment.code, payment.codigo,payment.nameproducto,payment.unidad,payment.supplier.name,payment.quantity,lcPrice,lcValorcambio,valortotal], :style => [date,cadena,cadena,cadena,cadena,cadena,cadena,currency,currency,currency,currency]
     
    end
   

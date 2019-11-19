@@ -29,8 +29,8 @@ class FacturasController < ApplicationController
         when "To PDF" then 
             redirect_to :action => "rpt_ingresos_all_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2],:id=>"1", :ac_item_id=> params[:ac_item_id]
 
-        when "To Excel" then render xlsx: 'rpt_compras1_xls'
-          
+        when "Excel" then render xlsx: 'rpt_compras1_xls'
+    
           
         else render action: "index"
       end
@@ -38,7 +38,6 @@ class FacturasController < ApplicationController
 
     
   end
-
 
 
 
@@ -2331,7 +2330,8 @@ def rpt_cobranzas_pdf
         when "To PDF" then 
             redirect_to :action => "rpt_ccobrar5_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2], :moneda_id=> params[:moneda_id],:id=>"1"
         when "To Excel" then render xlsx: 'rpt_ccobrar5_xls'
-          
+      
+
           
         else render action: "index"
       end

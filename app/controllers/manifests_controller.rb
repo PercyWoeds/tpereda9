@@ -265,7 +265,14 @@ def build_pdf_header(pdf)
     pdf.text " ", :size => 13, :spacing => 4
     pdf.font "Helvetica" , :size => 8
 
-   
+    @texto_ost = " "
+
+      for productItem in @manifest.get_osts()
+      
+        @texto_ost = " " + productItem.code
+  
+      
+     end
     max_rows = [client_data_headers.length, invoice_headers.length, 0].max
       rows = []
       (1..max_rows).each do |row|
@@ -289,6 +296,8 @@ def build_pdf_header(pdf)
         pdf.move_down 5
 
       end
+     
+
 
        pdf.text "__________________________________________________________________________", :size => 13, :spacing => 4
 
@@ -383,7 +392,7 @@ def build_pdf_header(pdf)
   
       client_headers  = [["Local: ", @manifest.location.name ]] 
       client_headers << ["Cliente : ", @manifest.customer.name ]    
-      client_headers << ["OST.: ", @manifest.solicitante]
+      client_headers << ["OST.: ", @manifest.solicitante+ @texto_ost]
       
       
       client_headers

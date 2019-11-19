@@ -133,10 +133,9 @@
 
     collection {get :rpt_compras1_pdf }
     collection {get :rpt_ingresos_all_pdf}
-    
+  
 
-
-  end 
+ end 
     
 
   resources :assistances do 
