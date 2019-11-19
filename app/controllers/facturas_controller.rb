@@ -156,9 +156,9 @@ class FacturasController < ApplicationController
                 valortotal = product.total*@tipocambio
                
               else
-                
+                row << sprintf("%.2f",valorcambio.to_s)  
                 row << sprintf("%.2f",product.price.to_s)
-                row << sprintf("%.2f",valorcambio.to_s)
+              
                
                  valortotal = product.total*@tipocambio
               end 

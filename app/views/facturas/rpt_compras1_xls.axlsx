@@ -48,8 +48,8 @@ wb.styles do |s|
                  valortotal = payment.total*@tipocambio
                
               else
-                 lcPrice = payment.price
-                 lcValorcambio = valorcambio
+                 lcPrice = valorcambio 
+                 lcValorcambio = payment.price
                
                  valortotal = payment.total * @tipocambio
               end 
