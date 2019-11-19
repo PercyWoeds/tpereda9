@@ -7,8 +7,7 @@ class FacturasController < ApplicationController
   
     $: << Dir.pwd  + '/lib'
 
- # before_filter :authenticate_user!
- 
+ # before_filter :authenticate_user
 
 
   def rpt_compras1_pdf
@@ -128,6 +127,7 @@ class FacturasController < ApplicationController
       valortotal = 0
 
 
+
        for  product in @facturas_rpt
  
             row = []         
@@ -144,9 +144,8 @@ class FacturasController < ApplicationController
            
             if product.price != nil 
 
-             
-
               if product.moneda_id == 1
+
                  if product.fecha 
                 @tipocambio = product.get_tipocambio(product.fecha)
                 else

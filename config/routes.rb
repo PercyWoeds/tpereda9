@@ -130,7 +130,11 @@
     collection { get :reportes_st_3} #Reporte ventas
     
     collection { get :rpt_cpagar2_pdf } 
+
     collection {get :rpt_compras1_pdf }
+    collection {get :rpt_ingresos_all_pdf}
+    
+
 
   end 
     
