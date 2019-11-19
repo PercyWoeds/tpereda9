@@ -1032,6 +1032,7 @@ def build_pdf_header_rpt48(pdf)
       pdf 
   end   
 
+
   def build_pdf_body_rpt48(pdf)
     
     pdf.text "Listado de Ingresos desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 11

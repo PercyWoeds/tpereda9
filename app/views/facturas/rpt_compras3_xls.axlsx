@@ -1,0 +1,71 @@
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
+
+require 'axlsx'
+
+p = Axlsx::Package.new
+wb = xlsx_package.workbook
+wb.styles do |s|
+    date = s.add_style(:format_code => "yyyy-mm-dd", :border => Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+    padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
+    percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
+    title = s.add_style(:bg_color => "FFFF0000", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+
+    currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
+                              :border=>Axlsx::STYLE_THIN_BORDER)
+    red_negative = wb.styles.add_style :num_fmt => 8
+    comma = wb.styles.add_style :num_fmt => 3
+    super_funk = wb.styles.add_style :format_code => '[Green]#'
+    
+    wb.add_worksheet(name: "Basic work sheet") do |sheet|
+    
+
+
+    sheet.add_row ["Categoria","Fecha","Code", "Codigo","Descripcion", "Unidad","Proveedor","Cantidad","Costo US$", "Costo S/ ","Total S/" ], :style => title 
+    
+   @facturas_rpt.each do |payment|
+
+        lcPrice = 0
+        lcValorcambio = 0
+        valortotal = 0
+        @tipocambio = 1 
+
+        if payment.price != nil 
+
+              if payment.moneda_id == "1"
+
+                 if payment.fecha 
+
+                @tipocambio = payment.get_tipocambio(payment.fecha)
+                else
+                  @tipocambio = 1
+                  end 
+                   valorcambio =payment.price * @tipocambio
+
+                 lcPrice = payment.price
+                 lcValorcambio = valorcambio
+
+                 valortotal = payment.total*@tipocambio
+               
+              else
+                 lcPrice = valorcambio 
+                 lcValorcambio = payment.price
+               
+                 valortotal = payment.total * @tipocambio
+              end 
+
+            else
+              lcPrice = 0
+              lcValorcambio = 0
+            end 
+
+
+        sheet.add_row [payment.get_categoria_name(payment.products_category_id),payment.fecha,payment.code, payment.codigo,payment.nameproducto,payment.unidad,payment.supplier.name,payment.quantity,lcPrice,lcValorcambio,valortotal], :style => [cadena,date,cadena,cadena,cadena,cadena,cadena,cadena,currency,currency,currency,currency]
+    
+   end
+  
+   
+end
+end 
+
+    

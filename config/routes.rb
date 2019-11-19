@@ -134,6 +134,11 @@
     collection {get :rpt_compras1_pdf }
     collection {get :rpt_ingresos_all_pdf}
   
+    collection {get :rpt_compras2_pdf }
+    collection {get :rpt_ingresos2_all_pdf}
+
+    collection {get :rpt_compras3_pdf }
+    collection {get :rpt_ingresos3_all_pdf}
 
  end 
     

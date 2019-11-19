@@ -240,6 +240,623 @@ class FacturasController < ApplicationController
 
 #fin reporte de ingresos x producto 
 
+  def rpt_compras2_pdf
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @categoria = params[:products_category_id]    
+    @namecategoria = @company.get_categoria_name(@categoria)      
+
+    @facturas_rpt = @company.get_ingresos_day2(@fecha1,@fecha2,@categoria)
+
+    
+    if @facturas_rpt != nil 
+    
+      case params[:print]
+        when "To PDF" then 
+            redirect_to :action => "rpt_ingresos2_all_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2],:id=>"1", :products_category_id=> params[:products_category_id]
+
+        when "Excel" then render xlsx: 'rpt_compras2_xls'
+    
+          
+        else render action: "index"
+      end
+    end 
+
+    
+  end
+
+
+
+
+def rpt_ingresos2_all_pdf
+  
+    @company=Company.find(params[:id])          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @categoria = params[:products_category_id]    
+    @namecategoria = @company.get_categoria_name(@categoria)      
+
+    @facturas_rpt = @company.get_ingresos_day2(@fecha1,@fecha2,@categoria)
+
+
+    Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header_rpt6(pdf)
+        pdf = build_pdf_body_rpt6(pdf)
+        build_pdf_footer_rpt6(pdf)
+        $lcFileName =  "app/pdf_output/rpt_factura.pdf"              
+    end     
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+    send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')
+
+  end
+
+
+
+# reporte completo
+  def build_pdf_header_rpt6(pdf)
+      pdf.font "Helvetica" , :size => 8
+     $lcCli  =  @company.name 
+     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+
+     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
+     $lcHora  = Time.now.to_s
+
+    max_rows = [client_data_headers_rpt.length, invoice_headers_rpt.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
+      end
+
+      if rows.present?
+
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+        end
+
+        pdf.move_down 10
+      end      
+      pdf 
+  end   
+
+  def build_pdf_body_rpt6(pdf)
+    
+    pdf.text "Listado de Ingresos desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 11
+    pdf.text "Categoria  : "+@namecategoria  , :size => 11
+    pdf.font "Helvetica" , :size => 6
+
+      headers = []
+      table_content = []
+
+      Purchase::TABLE_HEADERS4.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content << headers
+
+      nroitem=1
+
+      @totales1 = 0
+      @totales2 = 0
+      @cantidad = 0
+      nroitem = 1
+      @tipocambio = 1
+      valorcambio = 0
+      valortotal = 0
+
+       for  product in @facturas_rpt
+ 
+            row = []         
+            row << nroitem.to_s
+            row << product.code
+            row << product.fecha.strftime("%d/%m/%Y")
+            row << product.codigo
+            row << product.nameproducto
+            row << product.unidad 
+            row << product.supplier.name  
+             
+            row << sprintf("%.2f",product.quantity.to_s)
+       
+           
+            if product.price != nil 
+            
+              if product.moneda_id == "1"
+                 if product.fecha 
+                @tipocambio = product.get_tipocambio(product.fecha)
+                else
+                  @tipocambio = 1
+                end 
+                   valorcambio =product.price * @tipocambio
+                row << sprintf("%.2f",product.price.to_s)
+                row << sprintf("%.2f",valorcambio.to_s)
+                if product.products_category_id == 2
+                valortotal = product.total*@tipocambio / 1.18
+               else
+                 valortotal = product.total*@tipocambio 
+               end 
+              else
+                row << sprintf("%.2f",valorcambio.to_s)
+                
+                row << product.price 
+                
+               if product.products_category_id == 2
+                 valortotal = product.total*@tipocambio / 1.18
+                else
+                  valortotal = product.total*@tipocambio 
+                end 
+              end 
+
+            else
+              row << "0.00 "
+              row << "0.00 "
+            end 
+             
+            row << sprintf("%.2f",valortotal.to_s)
+            @totales1 += valortotal   
+            table_content << row          
+            @cantidad += product.quantity
+
+            nroitem=nroitem + 1
+            valorcambio = 0
+            valortotal = 0 
+            @tipocambio = 1
+        end
+      
+      row =[]
+      row << ""
+      row << ""
+      row << ""
+      row << ""
+      row << ""
+      row << ""
+     
+      row << "TOTALES => "
+      row << sprintf("%.2f",@cantidad.to_s)
+      row << " "
+      row << " "
+      row << sprintf("%.2f",@totales1.to_s)
+
+
+      table_content << row
+      
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:left
+                                          columns([3]).align=:left
+                                          columns([4]).align=:left
+                                          columns([5]).align=:center  
+                                          columns([6]).align=:right
+                                          columns([7]).align=:right
+                                          columns([8]).align=:right
+                                        end                                          
+      pdf.move_down 10      
+      #totales 
+      pdf 
+
+    end
+
+    def build_pdf_footer_rpt6(pdf)
+            data =[ ["Procesado por Almacen ","V.B.Almacen","V.B.Compras ","V.B. Gerente ."],
+               [":",":",":",":"],
+               [":",":",":",":"],
+               ["Fecha:","Fecha:","Fecha:","Fecha:"] ]
+
+           
+            pdf.text " "
+            pdf.table(data,:cell_style=> {:border_width=>1} , :width => pdf.bounds.width)
+            pdf.move_down 10          
+
+                        
+      pdf.text "" 
+      pdf.bounding_box([0, 30], :width => 535, :height => 40) do
+      pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+
+      end
+
+      pdf
+      
+  end
+
+
+
+  def rpt_compras3_pdf
+    @company=Company.find(1)          
+           
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    
+    @facturas_rpt = @company.get_ingresos_day4(@fecha1,@fecha2)
+    
+
+    
+    if @facturas_rpt != nil 
+    
+      case params[:print]
+        when "To PDF" then 
+            redirect_to :action => "rpt_ingresos3_all_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2],:id=>"1"
+
+        when "Excel" then render xlsx: 'rpt_compras3_xls'
+    
+          
+        else render action: "index"
+      end
+    end 
+
+    
+  end
+
+
+
+
+
+  def rpt_ingresos3_all_pdf
+  
+    @company=Company.find(params[:id])          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    
+    @facturas_rpt = @company.get_ingresos_day4(@fecha1,@fecha2)
+    
+   
+      Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
+          pdf.font "Helvetica"
+          pdf = build_pdf_header_rpt48(pdf)
+          pdf = build_pdf_body_rpt48(pdf)
+          build_pdf_footer_rpt48(pdf)
+          $lcFileName =  "app/pdf_output/rpt_factura.pdf"              
+      end     
+      $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+    send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')
+    end
+
+
+
+
+# reporte de ingresos x producto x familia 
+
+# reporte completo
+def build_pdf_header_rpt48(pdf)
+      pdf.font "Helvetica" , :size => 8
+     $lcCli  =  @company.name 
+     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+
+     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
+     $lcHora  = Time.now.to_s
+
+    max_rows = [client_data_headers_rpt.length, invoice_headers_rpt.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
+      end
+
+      if rows.present?
+
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+        end
+
+        pdf.move_down 10
+      end      
+      pdf 
+  end   
+
+
+  def build_pdf_body_rpt48(pdf)
+    
+    pdf.text "Listado de Ingresos desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 11
+   
+    pdf.font "Helvetica" , :size => 6
+
+      headers = []
+      table_content = []
+
+      Purchase::TABLE_HEADERS2.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content << headers
+
+      nroitem=1
+
+      @totales1 = 0
+      @totales2 = 0
+      @totaldolares = 0
+      @totaldolares2 = 0
+      @cantidad = 0
+      @cantidad2 = 0
+      
+      total_qty = 0
+      total_soles = 0
+      total_dolares = 0
+      nroitem = 1
+      @tipocambio = 1
+      valorcambio = 0
+      valortotal = 0
+      lcCategoria = @facturas_rpt.first.products_category_id 
+      
+       for  product in @facturas_rpt
+       
+         if lcCategoria == product.products_category_id
+            row = []         
+            row << nroitem.to_s
+            row << product.get_categoria_name(product.products_category_id)
+            row << product.code
+            row << product.fecha.strftime("%d/%m/%Y")
+            row << product.codigo
+            row << product.nameproducto
+            row << product.unidad 
+            row << sprintf("%.2f",product.quantity.to_s)
+           
+            if product.price != nil 
+              if product.moneda_id == 1
+                if product.fecha 
+                   puts product.fecha 
+                  @tipocambio = product.get_tipocambio(product.fecha)
+                else
+                  @tipocambio = 1
+                end 
+                valorcambio =product.price * @tipocambio
+                row << sprintf("%.2f",product.price.to_s)
+                row << sprintf("%.2f",valorcambio.to_s)
+                
+                valortotal = product.total*@tipocambio
+              else
+                row << "0.00 "
+                
+                row << sprintf("%.2f",product.price.to_s)
+                
+                valortotal = product.total*@tipocambio
+                
+              end 
+            else
+              row << "0.00 "
+              row << "0.00 "
+              
+            end 
+            if product.moneda_id == 1
+              row << sprintf("%.2f",product.quantity * product.price )
+                @totaldolares2 += product.quantity * product.price     
+            else
+              row << "0.00"  
+            end 
+            
+            
+            if product.products_category_id == 2
+              
+              valortotal_sigv=valortotal / 1.18
+              row << sprintf("%.2f",valortotal_sigv.to_s)
+              
+              @totales2  += valortotal / 1.18   
+            else  
+              row << sprintf("%.2f",valortotal.to_s)
+              
+              @totales2  += valortotal   
+            end 
+            
+            
+            @cantidad2 += product.quantity
+            
+            
+            table_content << row          
+            nroitem=nroitem + 1
+            valorcambio = 0
+            valortotal = 0 
+            @tipocambio = 1
+            
+          else
+            total_qty    += @cantidad2   
+            total_soles  += @totales2
+            total_dolares += @totaldolares2
+            
+            @totales1 += @totales2 
+            @cantidad += @cantidad2 
+            @cantidad2 = 0
+            @totales2  =0
+            @totaldolares2  =0
+            
+            row =[]
+            row << ""
+            row << ""
+            row << ""
+            row << ""
+            row << ""
+            row << "TOTALES  => "
+            row << ""
+            row << sprintf("%.2f",total_qty.to_s)
+            row << " "
+            row << " "
+            row << sprintf("%.2f",total_dolares.to_s)
+            row << sprintf("%.2f",total_soles.to_s)
+            
+            
+            total_qty   = 0
+            total_soles = 0
+            total_dolares = 0
+            
+            table_content << row
+            lcCategoria = product.products_category_id
+
+            row = []         
+            row << nroitem.to_s
+            row << product.get_categoria_name(product.products_category_id)
+            row << product.code
+            row << product.fecha.strftime("%d/%m/%Y")
+            row << product.codigo
+            row << product.nameproducto
+            row << product.unidad 
+            
+            row << sprintf("%.2f",product.quantity.to_s)
+       
+           
+            if product.price != nil 
+              if product.moneda_id == 1
+                 if product.fecha 
+                  @tipocambio = product.get_tipocambio(product.fecha)
+                else
+                  @tipocambio = 1
+                end 
+                valorcambio =product.price * @tipocambio
+                row << sprintf("%.2f",product.price.to_s)
+                row << sprintf("%.2f",valorcambio.to_s)
+              
+                valortotal = product.total*@tipocambio
+              else
+                row << "0.00 "
+                row << sprintf("%.2f",product.price.to_s)
+              
+                valortotal = product.total*@tipocambio
+              end 
+            else
+              row << "0.00 "
+              row << "0.00 "
+              
+              
+            end 
+            
+            if product.moneda_id == 1
+              row << sprintf("%.2f",product.quantity * product.price )
+                @totaldolares2 += product.quantity * product.price     
+            else
+              row << "0.00"  
+            end 
+            
+             
+            if product.products_category_id == 2
+              valortotal_sigv=valortotal / 1.18
+              row << sprintf("%.2f",valortotal_sigv.to_s)
+              @totales2  += valortotal / 1.18   
+            else  
+              row << sprintf("%.2f",valortotal.to_s)
+              @totales2  += valortotal   
+            end 
+            
+            
+            @cantidad2 += product.quantity
+            
+            
+            table_content << row          
+            
+
+          end 
+        end
+        
+      
+      total_qty    += @cantidad2   
+      total_soles  += @totales2
+      total_dolares += @totaldolares2
+      
+      @totales1 += @totales2 
+      @cantidad += @cantidad2 
+      
+      @cantidad2 = 0
+      @totales2  =0
+      row =[]
+      row << ""
+      row << ""
+      row << ""
+      row << ""
+      row << ""
+      row << "TOTALES  => "
+      row << ""
+      row << sprintf("%.2f",total_qty.to_s)
+      row << " "
+      row << " "
+      row << sprintf("%.2f",total_dolares.to_s)
+      row << sprintf("%.2f",total_soles.to_s)
+      
+      
+        table_content << row
+      row =[]
+      row << ""
+      row << ""
+      row << ""
+      row << ""
+      row << ""
+      row << "TOTAL GENERAL  => "
+      row << ""
+      row << sprintf("%.2f",@cantidad.to_s)
+      row << " "
+      row << " "
+      row << sprintf("%.2f",@totaldolares2.to_s)
+      row << sprintf("%.2f",@totales1.to_s)
+      
+
+      table_content << row
+      
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([1]).width = 50
+                                          columns([2]).align=:left
+                                          columns([2]).width = 50
+                                          columns([3]).align=:left
+                                          columns([3]).width = 40
+                                          columns([4]).align=:right
+                                          columns([4]).width = 35
+                                          columns([5]).align=:left
+                                          columns([6]).align=:right
+                                          columns([7]).align=:right
+                                          columns([7]).width = 40
+                                          columns([8]).align=:right
+                                          columns([9]).align=:right
+                                          columns([10]).align=:right
+                                          columns([10]).width = 40
+                                          columns([11]).align=:right
+                                          columns([11]).width = 40
+                                        end                                          
+      pdf.move_down 10      
+      #totales 
+      pdf 
+
+    end
+
+    def build_pdf_footer_rpt48(pdf)
+            data =[ ["Procesado por Almacen ","V.B.Almacen","V.B.Compras ","V.B. Gerente ."],
+               [":",":",":",":"],
+               [":",":",":",":"],
+               ["Fecha:","Fecha:","Fecha:","Fecha:"] ]
+
+           
+            pdf.text " "
+            pdf.table(data,:cell_style=> {:border_width=>1} , :width => pdf.bounds.width)
+            pdf.move_down 10          
+            pdf.text "" 
+            pdf.bounding_box([0, 30], :width => 535, :height => 40) do
+            pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+
+      end
+
+      pdf
+      
+  end
 
 
 

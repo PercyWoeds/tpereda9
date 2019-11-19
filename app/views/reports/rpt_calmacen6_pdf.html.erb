@@ -18,14 +18,16 @@ totals = []
   Reporte de Ingresos por familia 
 </h1>
 
-<form method="get" action="/purchases/rpt_ingresos2_all_pdf/<%= @company.id %>" >   
+
+ <%= form_tag(rpt_compras2_pdf_facturas_path, :method => "get") do %>
+
   <div class="field">
-      <input type="date" name="fecha1" value="2017-03-01" style = "width: 150px" >
+      <input type="date" name="fecha1" value="2019-11-01" style = "width: 150px" >
     </div>
 
 
 	<div class="field">
-		<input type="date" name="fecha2" value="2017-03-31" style = "width: 150px" >
+		<input type="date" name="fecha2" value="2019-11-30" style = "width: 150px" >
   </div>
 
   <div class="field">
@@ -33,9 +35,10 @@ totals = []
   </div>
   
 
-  <input type="submit" value="Ver Reporte " />
   
-</form>
+ <%= submit_tag  "To PDF", :name => "print"  %>
+  <%= submit_tag "Excel", :name => "print" %>
+<% end %>
 
 <br />
 
