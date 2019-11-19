@@ -143,7 +143,7 @@ class FacturasController < ApplicationController
            
             if product.price != nil 
 
-              if product.moneda_id == 1
+              if product.moneda_id == "1"
 
                  if product.fecha 
                 @tipocambio = product.get_tipocambio(product.fecha)

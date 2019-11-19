@@ -32,7 +32,7 @@ wb.styles do |s|
 
         if payment.price != nil 
 
-              if payment.moneda_id == 1
+              if payment.moneda_id == "1"
 
                  if payment.fecha 
 
