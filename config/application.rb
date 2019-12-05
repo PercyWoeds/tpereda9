@@ -12,6 +12,7 @@ module Mnygo
     
     
     config.assets.precompile += %w( *.js *.css )
+    config.assets.precompile = ['.js', '.css', '*.css.erb']
     
     config.encoding = "utf-8"
     config.assets.initialize_on_precompile = false

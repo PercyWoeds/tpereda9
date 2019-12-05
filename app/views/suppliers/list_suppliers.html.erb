@@ -30,6 +30,8 @@
   
 </div>
 
+
+
 <h2>Importar Archivo proveedores "*.csv"</h2>
 
 <%= form_tag import_suppliers_path, multipart: true do %>
@@ -38,4 +40,9 @@
 <% end %>
 
 
+ Download:
+ 
+  <%= link_to "CSV", suppliers_path(format: "csv"), multipart: true  %> 
+ 
 <%= will_paginate @suppliers %>
+

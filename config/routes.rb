@@ -1,5 +1,7 @@
   Mnygo::Application.routes.draw do
 
+  resources :cpagar_details
+  resources :cpagars
   resources :contratos
   resources :cotizacions
   resources :assistances
@@ -98,8 +100,10 @@
 
   resources :viaticos do
     resources :viatico_details, except: [:index,:show], controller: "viaticos/viatico_details"
-    
   end
+
+
+  
 
   resources :serviceorders do
      collection { get :update_serviceext }
@@ -649,6 +653,8 @@ end
   match 'facturas/do_anular/:id' => 'facturas#do_anular', via: [:get, :post]
   match 'facturas/do_email/:id' => 'facturas#do_email', via: [:get, :post]
   match 'facturas/do_process/:id' => 'facturas#do_process', via: [:get, :post]
+  match 'facturas/print/:id' => 'facturas#print', via: [:get, :post]
+  match 'facturas/sendmail/:id' => 'facturas#sendmail', via: [:get, :post]
   match 'facturas/email/:id' => 'facturas#email', via: [:get, :post]
   match 'facturas/pdf/:id' => 'facturas#pdf', via: [:get, :post]
   match 'companies/facturas/:company_id' => 'facturas#list_invoices', via: [:get, :post]
@@ -713,6 +719,10 @@ end
   match 'companies/serviceorders/receive_orderservice/:company_id' => 'serviceorders#list_receive_serviceorders', via: [:get, :post]  
   match 'companies/serviceorders/:company_id' => 'serviceorders#list_serviceorders', via: [:get, :post]
   resources :serviceorders
+  
+  match 'cpagars/ac_user/:company_id' => 'cpagars#ac_user', via: [:get, :post]
+  match 'cpagars/ac_purchases/:company_id' => 'cpagars#ac_purchases', via: [:get, :post]
+  match 'cpagars/ac_suppliers/:company_id' => 'cpagars#ac_suppliers', via: [:get, :post]
 
 
   match 'purchaseorders/list_items/:company_id' => 'purchaseorders#list_items', via: [:get, :post]

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191118161834) do
+ActiveRecord::Schema.define(version: 20191203161027) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -313,6 +313,43 @@ ActiveRecord::Schema.define(version: 20191118161834) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.datetime "date_processed"
+  end
+
+  create_table "cpagar_details", force: :cascade do |t|
+    t.integer  "document_id"
+    t.string   "documento"
+    t.integer  "supplier_id"
+    t.string   "tm"
+    t.float    "total"
+    t.text     "descrip"
+    t.integer  "cpagar_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "cpagar_details", ["cpagar_id"], name: "index_cpagar_details_on_cpagar_id", using: :btree
+
+  create_table "cpagars", force: :cascade do |t|
+    t.integer  "company_id"
+    t.integer  "location_id"
+    t.integer  "division_id"
+    t.integer  "bank_acount_id"
+    t.integer  "document_id"
+    t.string   "documento"
+    t.integer  "supplier_id"
+    t.string   "tm"
+    t.float    "total"
+    t.datetime "fecha1"
+    t.datetime "fecha2"
+    t.string   "nrooperacion"
+    t.string   "operacion"
+    t.string   "comments"
+    t.integer  "user_id"
+    t.string   "processed"
+    t.datetime "date_processed"
+    t.string   "code"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "creditos", force: :cascade do |t|
@@ -897,6 +934,7 @@ ActiveRecord::Schema.define(version: 20191118161834) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.float    "preciocigv"
+    t.integer  "factura_id"
   end
 
   create_table "invoiceitems", force: :cascade do |t|
@@ -2472,5 +2510,6 @@ ActiveRecord::Schema.define(version: 20191118161834) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "cpagar_details", "cpagars"
   add_foreign_key "service_extensions", "servicebuys"
 end

@@ -1,0 +1,61 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listar Cancelaciones </h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Company</th>
+      <th>Location</th>
+      <th>Division</th>
+      <th>Bank acount</th>
+      <th>Document</th>
+      <th>Documento</th>
+      <th>Supplier</th>
+      <th>Tm</th>
+      <th>Total</th>
+      <th>Fecha1</th>
+      <th>Fecha2</th>
+      <th>Nrooperacion</th>
+      <th>Operacion</th>
+      <th>Comments</th>
+      <th>User</th>
+      <th>Processed</th>
+      <th>Date processed</th>
+      <th>Code</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cpagars.each do |cpagar| %>
+      <tr>
+        <td><%= cpagar.company_id %></td>
+        <td><%= cpagar.location_id %></td>
+        <td><%= cpagar.division_id %></td>
+        <td><%= cpagar.bank_acount_id %></td>
+        <td><%= cpagar.document_id %></td>
+        <td><%= cpagar.documento %></td>
+        <td><%= cpagar.supplier_id %></td>
+        <td><%= cpagar.tm %></td>
+        <td><%= cpagar.total %></td>
+        <td><%= cpagar.fecha1 %></td>
+        <td><%= cpagar.fecha2 %></td>
+        <td><%= cpagar.nrooperacion %></td>
+        <td><%= cpagar.operacion %></td>
+        <td><%= cpagar.comments %></td>
+        <td><%= cpagar.user_id %></td>
+        <td><%= cpagar.processed %></td>
+        <td><%= cpagar.date_processed %></td>
+        <td><%= cpagar.code %></td>
+        <td><%= link_to 'Show', cpagar %></td>
+        <td><%= link_to 'Edit', edit_cpagar_path(cpagar) %></td>
+        <td><%= link_to 'Destroy', cpagar, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Nueva cancelacion', new_cpagar_path %>

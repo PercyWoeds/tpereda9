@@ -35,8 +35,14 @@ class SuppliersController < ApplicationController
   def index
     @pagetitle = "Suppliers"
     
-    @companies = Company.find(:all, :conditions => {:user_id => getUserId()}, :order => "name")
     @path = 'suppliers'
+
+    @customercsv = Supplier.all 
+    respond_to do |format|
+      format.html
+      format.csv { send_data @customercsv.to_csv }
+    
+    end
   end
 
   # GET /suppliers/1

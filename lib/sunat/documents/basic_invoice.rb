@@ -82,7 +82,14 @@ require 'active_support/number_helper'
     end
 
     def build_pdf_body(pdf)
-      pdf.font "Helvetica", :size => 8
+      
+       pdf.font_families.update("Open Sans" => {
+          :normal => "app/assets/fonts/OpenSans-Regular.ttf",
+          :italic => "app/assets/fonts/OpenSans-Italic.ttf",
+          :bold   => "app/assets/fonts/OpenSans-Bold.ttf",
+      } )
+      
+       pdf.font "Open Sans",:size => 8
 
       max_rows = [client_data_headers.length, invoice_headers.length, 0].max
       rows = []
@@ -101,6 +108,7 @@ require 'active_support/number_helper'
           :width => pdf.bounds.width
         }) do
           columns([0, 2]).font_style = :bold
+          columns([1]).width = 320
 
         end
 
@@ -113,7 +121,6 @@ require 'active_support/number_helper'
 
       InvoiceLine::TABLE_HEADERS.each do |header|
         cell = pdf.make_cell(:content => header)
-        cell.background_color = "FFFFCC"
         headers << cell
       end
 
@@ -123,30 +130,53 @@ require 'active_support/number_helper'
         table_content << line.build_pdf_table_row(pdf)
       end
 
+      
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
                                         :width => pdf.bounds.width
                                         } do 
                                           columns([0]).align=:center
                                           columns([1]).align=:right
-                                          columns([2]).align=:center
+                                          columns([2]).align=:left 
+                                          columns([2]).width= 300 
+                                          columns([3]).align=:right
                                           columns([4]).align=:right
-                                          columns([5]).align=:right
-                                          columns([6]).align=:right
+                                        
                                         end
 
       pdf.move_down 10
 
+  
+
       pdf.table invoice_summary, {
         :position => :right,
         :cell_style => {:border_width => 1},
-        :width => pdf.bounds.width/2
+        :width => 260
       } do
         columns([0]).font_style = :bold
         columns([1]).align = :right
+
+        columns([0]).higth = 20
+        columns([1]).higth = 20
+        
+    
+      end
+      #pdf.image open("https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=#{$lcCodigoBarra}&choe=UTF-8")
+      
+      pdf.move_down 20
+      
+      pdf.table letras, {
+        :position => :right,
+        :cell_style => {:border_width => 0},
+        :width => pdf.bounds.width
+      } do
+        columns([0]).font_style = :bold
+        columns([1]).align = :left
+        columns([0]).width = 50
+        
         
       end
-       pdf.image open("https://chart.googleapis.com/chart?chs=120x120&cht=qr&chl=#{$lcCodigoBarra}&choe=UTF-8")
+      pdf.move_down 10
       pdf
 
     end
@@ -162,10 +192,10 @@ require 'active_support/number_helper'
     private
 
     def client_data_headers
-      client_headers = [["Cliente   :", customer.party.party_legal_entity.registration_name]]
+      client_headers = [["Señor(es)  :", customer.party.party_legal_entity.registration_name]]
       #client_headers << ["Direccion", customer.party.postal_addresses.first.to_s]
       client_headers << ["Dirección :",$lcDirCli]
-      client_headers << ["Distrito  :",$lcDisCli]
+
       client_headers << [customer.type_as_text, customer.account_id]
       client_headers
     end
@@ -174,11 +204,24 @@ require 'active_support/number_helper'
       invoice_headers = [["Fecha de emisión :", issue_date]]
       #invoice_headers = [["Fecha de emisión :", "2015-12-09"]]
       invoice_headers << ["Tipo de moneda : ", Currency.new(document_currency_code).singular_name.upcase]
-      invoice_headers << ["Guia Remision :", $lcGuiaRemision]
-      invoice_headers << ["Placa :", $lcPlaca]
+      invoice_headers << ["Forma de pago :", $lcFormapago]
 
       invoice_headers
     end
+
+
+    def letras
+       letras  = []
+       if get_additional_property_by_id(SUNAT::ANNEX::CATALOG_15[0])
+        total = get_additional_property_by_id(SUNAT::ANNEX::CATALOG_15[0]).value
+      else
+        total = legal_monetary_total.textify.upcase
+      end
+      letras  << ["SON : ", ActiveSupport::NumberHelper::number_to_delimited(total,delimiter:",",separator:".")]
+      
+      letras
+    end 
+
 
     def invoice_summary
       invoice_summary = []
@@ -202,13 +245,9 @@ require 'active_support/number_helper'
 
       invoice_summary << ["Total", ActiveSupport::NumberHelper::number_to_delimited(legal_monetary_total,delimiter:",",separator:".").to_s]
 
-      if get_additional_property_by_id(SUNAT::ANNEX::CATALOG_15[0])
-        total = get_additional_property_by_id(SUNAT::ANNEX::CATALOG_15[0]).value
-      else
-        total = legal_monetary_total.textify.upcase
-      end
-      invoice_summary << ["Monto del total", ActiveSupport::NumberHelper::number_to_delimited(total,delimiter:",",separator:".")]
       invoice_summary
+
+
     end
 
     def get_line_number

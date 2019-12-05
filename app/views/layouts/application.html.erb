@@ -11,12 +11,15 @@
     <%= stylesheet_link_tag "app", :media => "all" %>
     <%= stylesheet_link_tag "print", :media => "print" %>
         
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+
     <%= javascript_include_tag "jquery-1.6.1.min" %>
     <%= javascript_include_tag "supersleight.plugin" %>
     <%= javascript_include_tag "jquery_rails" %>
     <%= javascript_include_tag "jquery.bgiframe.min" %>
     <%= javascript_include_tag "jquery.centerinclient" %>
-    <%= javascript_include_tag "application.js" %>  
+    <%= javascript_include_tag "app.js" %>  
     <%= javascript_include_tag "tranportorder.js" %>  
     
 
@@ -43,6 +46,9 @@
           <%= msg %>
         </div>
       <%- end -%>
+
+      <div id="modal-holder"></div>
+      
     
       <%= yield %>
 

@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Document:</strong>
+  <%= @cpagar_detail.document_id %>
+</p>
+
+<p>
+  <strong>Documento:</strong>
+  <%= @cpagar_detail.documento %>
+</p>
+
+<p>
+  <strong>Supplier:</strong>
+  <%= @cpagar_detail.supplier_id %>
+</p>
+
+<p>
+  <strong>Tm:</strong>
+  <%= @cpagar_detail.tm %>
+</p>
+
+<p>
+  <strong>Total:</strong>
+  <%= @cpagar_detail.total %>
+</p>
+
+<p>
+  <strong>Descrip:</strong>
+  <%= @cpagar_detail.descrip %>
+</p>
+
+<p>
+  <strong>Cpagar:</strong>
+  <%= @cpagar_detail.cpagar %>
+</p>
+
+<%= link_to 'Edit', edit_cpagar_detail_path(@cpagar_detail) %> |
+<%= link_to 'Back', cpagar_details_path %>

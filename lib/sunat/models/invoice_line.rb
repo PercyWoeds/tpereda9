@@ -52,10 +52,8 @@ module SUNAT
 
     TABLE_HEADERS = ["ITEM",
                      "CANTIDAD",
-                     "UNIDAD",
                      "DESCRIPCION",
                      "PRECIO UNITARIO",
-                     "VALOR UNITARIO",
                      "VALOR TOTAL"]
 
     def initialize(*args)
@@ -107,10 +105,8 @@ module SUNAT
       row = []
       row << self.id
       row << self.quantity.quantity
-      row << self.quantity.unit_code
       row << "#{self.item.description} - #{self.item.id}"
       row << "#{self.pricing_reference.alternative_condition_price.price_amount.to_s}"
-      row << "#{self.price.to_s}"
       row << "#{self.line_extension_amount.to_s}"
     end
 

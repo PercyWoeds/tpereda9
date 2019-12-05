@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Cpagar Details</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Document</th>
+      <th>Documento</th>
+      <th>Supplier</th>
+      <th>Tm</th>
+      <th>Total</th>
+      <th>Descrip</th>
+      <th>Cpagar</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cpagar_details.each do |cpagar_detail| %>
+      <tr>
+        <td><%= cpagar_detail.document_id %></td>
+        <td><%= cpagar_detail.documento %></td>
+        <td><%= cpagar_detail.supplier_id %></td>
+        <td><%= cpagar_detail.tm %></td>
+        <td><%= cpagar_detail.total %></td>
+        <td><%= cpagar_detail.descrip %></td>
+        <td><%= cpagar_detail.cpagar %></td>
+        <td><%= link_to 'Show', cpagar_detail %></td>
+        <td><%= link_to 'Edit', edit_cpagar_detail_path(cpagar_detail) %></td>
+        <td><%= link_to 'Destroy', cpagar_detail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Cpagar detail', new_cpagar_detail_path %>

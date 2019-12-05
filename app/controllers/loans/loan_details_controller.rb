@@ -34,8 +34,10 @@ class Loans::LoanDetailsController < ApplicationController
   # POST /loan_details
   # POST /loan_details.json
   def create
+
     @loan_detail = LoanDetail.new(loan_detail_params)
     @loan_detail.loan_id  = @loan.id 
+    
     @employee = Employee.all 
     @valor = Valor.all
     respond_to do |format|

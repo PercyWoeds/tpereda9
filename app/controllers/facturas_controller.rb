@@ -5,9 +5,12 @@ require "open-uri"
  
 class FacturasController < ApplicationController
   
+   
     $: << Dir.pwd  + '/lib'
+    before_action :authenticate_user!
+    
+    require "open-uri"
 
- # before_filter :authenticate_user
 
 
   def rpt_compras1_pdf
@@ -158,7 +161,6 @@ class FacturasController < ApplicationController
               else
                 row << sprintf("%.2f",valorcambio.to_s)  
                 row << sprintf("%.2f",product.price.to_s)
-              
                
                  valortotal = product.total*@tipocambio
               end 
@@ -2864,47 +2866,7 @@ def newfactura2
      
   end   
 
-def print
-          lib = File.expand_path('../../../lib', __FILE__)
-        $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-        puts "ruta******"
-        puts lib 
-        
-        
-        
-        require 'sunat'
-        require './config/config'
-        require './app/generators/invoice_generator'
-        require './app/generators/credit_note_generator'
-        require './app/generators/debit_note_generator'
-        require './app/generators/receipt_generator'
-        require './app/generators/daily_receipt_summary_generator'
-        require './app/generators/voided_documents_generator'
 
-        SUNAT.environment = :test 
-
-        files_to_clean = Dir.glob("*.xml") + Dir.glob("./app/pdf_output/*.pdf") + Dir.glob("*.zip")
-        files_to_clean.each do |file|
-          File.delete(file)
-        end         
-    
-       if $lcMoneda == "D"  
-            $lcFileName=""
-            case_49 = InvoiceGenerator.new(1,3,1,$lg_serie_factura).with_different_currency2
-          #  puts $lcFileName 
-       else
-            case_3  = InvoiceGenerator.new(1,3,1,$lg_serie_factura).with_igv2(true)
-       end 
-    
-        
-        $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
-                
-        send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
-
-        
-        @@document_serial_id =""
-        $aviso=""
-    end 
 def reportep01 
     
       @company=Company.find(1)          
@@ -3405,6 +3367,141 @@ def client_data_headers
   end
 
 
+
+ ## imprimir pdf facturas
+
+    def print
+        @invoice = Factura.find(params[:id])
+        
+        lib = File.expand_path('../../../lib', __FILE__)
+        $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+        
+        require 'sunat'
+        require './config/config'
+        require './app/generators/invoice_generator'
+        require './app/generators/credit_note_generator'
+        require './app/generators/debit_note_generator'
+        require './app/generators/receipt_generator'
+        require './app/generators/daily_receipt_summary_generator'
+        require './app/generators/voided_documents_generator'
+
+        SUNAT.environment = :production 
+
+        files_to_clean = Dir.glob("*.xml") + Dir.glob("./app/pdf_output/*.pdf") + Dir.glob("*.zip")
+        files_to_clean.each do |file|
+          File.delete(file)
+        end         
+       ###################################
+        @serie_factura =  "FF"+@invoice.code[1..2].rjust(2,"0")
+        puts "serie factura : "
+        puts @serie_factura
+       if @invoice.document_id == 13
+           if @invoice.moneda_id == 1
+                case_96 = ReceiptGenerator.new(12, 96, 1,@serie_factura,@invoice.id).with_different_currency2(true)
+            else        
+                case_52 = ReceiptGenerator.new(8, 52, 1,@serie_factura,@invoice.id).with_igv2(true)
+            end 
+       else        
+           if @invoice.moneda_id == 1  
+                $lcFileName=""
+                case_49 = InvoiceGenerator.new(1,3,1,@serie_factura,@invoice.id).with_different_currency2(true)
+              #  puts $lcFileName 
+           else
+               
+                case_3  = InvoiceGenerator.new(1,3,1,@serie_factura,@invoice.id).with_igv2(true)
+           end        
+        end 
+    
+        $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+        send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+        @@document_serial_id =""
+        $aviso=""
+    end 
+
+        
+    def sendmail      
+        @invoice = Factura.find(params[:id])
+        
+        lib = File.expand_path('../../../lib', __FILE__)
+        $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
+        require 'sunat'
+        require './config/config'
+        require './app/generators/invoice_generator'
+        require './app/generators/credit_note_generator'
+        require './app/generators/debit_note_generator'
+        require './app/generators/receipt_generator'
+        require './app/generators/daily_receipt_summary_generator'
+        require './app/generators/voided_documents_generator'
+
+        SUNAT.environment = :production 
+
+        files_to_clean = Dir.glob("*.xml") + Dir.glob("./app/pdf_output/*.pdf") + Dir.glob("*.zip")
+        files_to_clean.each do |file|
+          File.delete(file)
+        end 
+
+          @serie_factura =  "FF"+@invoice.code[2..3]
+
+        if @invoice.moneda_id == "1"
+            case_49 = InvoiceGenerator.new(7,49,5,@serie_factura,@invoice.id).with_different_currency2(true)
+        else
+            case_3 = InvoiceGenerator.new(1, 3, 1,@serie_factura,@invoice.id).with_igv3(true)
+        end 
+    
+        $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName        
+        $lcFile2    =File.expand_path('../../../', __FILE__)+ "/"+$lcFilezip
+        
+        ActionCorreo.bienvenido_email(@invoice).deliver
+         $lcGuiaRemision =""
+             
+
+    end
+
+
+    def download
+        extension = File.extname(@asset.file_file_name)
+        send_data open("#{@asset.file.expiring_url(10000, :original)}").read, filename: "original_#{@asset.id}#{extension}", type: @asset.file_content_type
+    end
+
+    def xml
+        
+        lib = File.expand_path('../../../lib', __FILE__)
+        $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
+        require 'sunat'
+        require './config/config'
+        require './app/generators/invoice_generator'
+        require './app/generators/credit_note_generator'
+        require './app/generators/debit_note_generator'
+        require './app/generators/receipt_generator'
+        require './app/generators/daily_receipt_summary_generator'
+        require './app/generators/voided_documents_generator'
+
+        SUNAT.environment = :production 
+        files_to_clean = Dir.glob("*.xml") + Dir.glob("./app/pdf_output/*.pdf") + Dir.glob("*.zip")
+
+        files_to_clean.each do |file|
+          File.delete(file)
+        end         
+
+        @serie_factura =  "FF"+@invoice.code[2..3]
+
+         if @invoice.moneda_id == "1"
+            case_49 = InvoiceGenerator.new(7,49,5,@serie_factura).with_different_currency2
+        else
+            case_3  = InvoiceGenerator.new(1, 3, 1,@serie_factura).with_igv3(true)
+        end 
+        $lcFile2 =File.expand_path('../../../', __FILE__)+ "/"+$lcFilezip    
+    
+        send_file("#{$lcFile2}",:type =>'application/zip', :disposition => 'inline') 
+        @@document_serial_id =""
+        $aviso=""
+    end 
+
+
+
+ ##fin imprimir pdf facturas
 
   
   private

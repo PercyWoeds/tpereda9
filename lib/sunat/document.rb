@@ -56,18 +56,12 @@ module SUNAT
     end
 
     def build_pdf_header(pdf)
-      if self.accounting_supplier_party.logo_path.present?
-        pdf.image "#{self.accounting_supplier_party.logo_path}", :width => 100
+     if self.accounting_supplier_party.logo_path.present?
+        pdf.image "#{self.accounting_supplier_party.logo_path}", :width => 200
         pdf.move_down 6
       end
-      pdf.text "#{self.accounting_supplier_party.party.party_legal_entity.registration_name}", :size => 12,
-                                                                                               :style => :bold
-      pdf.move_down 4
-      pdf.text supplier.street, :size => 10
-      pdf.text supplier.district, :size => 10
-      pdf.text supplier.city, :size => 10
-      pdf.move_down 4
-
+#     
+                                                                                
       pdf.bounding_box([325, 725], :width => 200, :height => 80) do
         pdf.stroke_bounds
         pdf.move_down 15
@@ -93,12 +87,28 @@ module SUNAT
 
 
     def build_pdf_footer(pdf)
+      
+      
+      pdf.bounding_box([0, 120], :width => 535, :height => 120) do
 
-      pdf.bounding_box([0, 140], :width => 535, :height => 140) do
       pdf.stroke_bounds
-      pdf.text  $lcAutorizacion1 ,:align => :center,:valign => :center, :style => :bold    
-      end
+      pdf.stroke_horizontal_rule
+     
+      image_path = open("https://chart.googleapis.com/chart?chs=90x90&cht=qr&chl=#{$lcCodigoBarra}&choe=UTF-8")
+    
+     pdf.table([[ {:image => image_path,:position => :center}  , "
+      El pago del documento sera necesariamente efectuado mediante deposito en cualquiera de las siguientes cuentas bancarias:  
+  Banco SCOTIABANK Cuenta Corriente soles   : 4256085         CCI : 009-237-000004256085-94
+  Banco SCOTIABANK Cuenta Corriente dolares : 1836766     CCI : 009-237-000001836766-94
+  Banco de CREDITO Cuenta Corriente soles   : 191-1204755-0-41 
+  Banco de CREDITO Cuenta Corriente dolares : 191-1403434-1-10 
+  Banco de la NACION Cuenta Detracción      : 00000459879
+  OPERACION SUJETA AL SISTEMA DE PAGO DE OBLIGACIONES TRIBUTARIAS CON EL GOBIERNO CENTRAL D-LEG.NRO 940 "]],:cell_style => { :border_width => 0 } )
 
+      end 
+
+  
+     
       pdf
       
     end

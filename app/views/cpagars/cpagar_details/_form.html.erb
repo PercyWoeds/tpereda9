@@ -1,0 +1,17 @@
+<%= simple_form_for(@cpagar_detail) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :document_id %>
+    <%= f.input :documento %>
+    <%= f.input :supplier_id %>
+    <%= f.input :tm %>
+    <%= f.input :total %>
+    <%= f.input :descrip %>
+    <%= f.association :cpagar %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

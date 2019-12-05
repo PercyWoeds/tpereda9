@@ -1,0 +1,120 @@
+<%= simple_form_for(@cpagar) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+
+
+    <div class="field">
+          <%= f.label :fecha1, "Fecha*", :class => "bold" %><br />
+          <%= f.date_field :fecha1, :class => "input.tf_short" %>
+        </div>
+
+        </td>
+        <td>  
+        <div class="field">
+          <%= f.label :code, "Code*", :class => "bold" %><br />
+          <%= f.text_field :code, :onclick => "$(this).select();" %>
+        </div>
+
+
+    <div class="field">
+      <%= f.label :bank_acount_id %><br />
+      <%= f.select :bank_acount_id,options_from_collection_for_select(@bank_acounts,'id','number') %>
+    </div>
+
+
+    <div class="field">
+      <%= f.label  :document_id %><br />
+      <%= f.select :document_id,options_from_collection_for_select(@documents,'id','description') %>
+    </div>
+
+    <div class="field">
+      <%= f.label :documento, "Documento ", :class => "bold" %><br />
+      <%= f.text_field :documento %>
+    </div>
+
+        <label for="ac_supplier" class="bold">Girado : *</label><br />
+        
+        <input type="text" name="ac_supplier" id="ac_supplier" value="<% if @ac_supplier %><%= @ac_supplier %><% end %>" />
+              
+        <div class="small">
+          Ingrese una termino de busqueda para encontrar un proveedor
+        </div>
+        <br />
+
+        <div class="small">
+          <strong>Seleccionar proveedor:</strong>
+          <span id="selected_supplier"><% if @ac_supplier %><%= @ac_supplier %><% else %><!-- i --><% end %></span>
+        </div>
+      
+
+    <div class="field">
+      <%= f.label :total, "Importe ", :class => "bold" %><br />
+      <%= f.number_field :total ,:step => 0.01 %>
+    </div>
+  
+   
+  </div>
+
+  <div class="form-actions">
+     <%= f.hidden_field :supplier_id, :id => "ac_supplier_id" %>
+    <%= f.button :submit %>
+  </div>
+<% end %>
+
+
+
+<%= render 'layouts/autocomplete' %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    $("#ac_item").autocomplete("/cpagars/ac_documentos/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_item").result(function(event, data, formatted) {
+      $("#ac_item_id").val(data[2]);
+      $("#ac_item_total").val(data[4]);  
+      updateItemTotal6();
+    });
+    
+    
+    $("#ac_supplier").autocomplete("/cpagars/ac_suppliers/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_supplier").result(function(event, data, formatted) {
+      $("#ac_supplier_id").val(data[2]);
+      $("#selected_seller").html(data[0]);
+    });    
+    
+    
+    $("#ac_user").autocomplete("/cpagars/ac_user/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_user").result(function(event, data, formatted) {
+      $("#ac_user_id").val(data[2]);
+      $("#selected_seller").html(data[0]);
+    });    
+    
+    
+    $("#ac_item_price").bind("keyup", function() {
+      updateItemTotal6();
+    });
+    
+    
+    <% if @suppliers_lines %>
+  
+      listItemsSupplierPayment();
+    <% end %>
+  });
+</script>
+
