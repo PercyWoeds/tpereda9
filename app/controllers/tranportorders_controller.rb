@@ -632,10 +632,10 @@ def client_data_headers
 def build_pdf_header_ost(pdf)
 
      pdf.font "Helvetica"  , :size => 8
-     image_path = "#{Dir.pwd}/public/images/logo01.jpg"
+     image_path = "#{Dir.pwd}/public/images/tpereda2.png"
 
       two_dimensional_array0 = [["SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD "],["OCUPACIONAL "],["ORDEN DE SERVICIO DE TRANSPORTE : "+@ost.code ]]    
-      two_dimensional_array1 = [["CODIGO     "],["VERSION"],["PAGINA"]] 
+      two_dimensional_array1 = [["CODIGO png "],["VERSION"],["PAGINA"]] 
       two_dimensional_array2 = [["TP-RD-F-005"],["08"],["1 DE 1 "]]
        
 
