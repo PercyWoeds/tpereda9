@@ -148,7 +148,8 @@
 
     collection {get :rpt_facturas1_all }
     
-
+    collection {get :rpt_purchase2_all }
+    
  end 
     
 

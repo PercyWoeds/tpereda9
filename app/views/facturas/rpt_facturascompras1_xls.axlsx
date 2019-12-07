@@ -18,67 +18,78 @@ wb.styles do |s|
     super_funk = wb.styles.add_style :format_code => '[Green]#'
     
 
-    wb.add_worksheet(name: "Basic work sheet") do |sheet|
+    wb.add_worksheet(name: "Facturas Soles") do |sheet|
     
 
-    sheet.add_row ["Fecha","Code", "Codigo","Descripcion", "Unidad","Proveedor","Cantidad","Costo US$", "Costo S/ ","Total S/" ], :style => title 
+    sheet.add_row ["Proveedor","Code", "Fecha","Cantidad", "Codigo","Descrip","","Pre.Costo", "Total" ], :style => title 
     
    @rpt_detalle_purchase_sol.each do |payment|
         
-            if payment.product 
-              code1 = orden.product.code
+            
+        @orden_compra1  = @company.get_purchase_detalle(payment.id)
+
+       for  orden in @orden_compra1
+
+           if orden.product 
+              code1 =  orden.product.code
               name1 =  orden.product.name
             else
-              a = payment.get_service( payment.product_id)
+              a = orden.get_service( orden.product_id)
               code1 = a.code 
               name1 = a.name 
             end 
 
-            if payment.price_without_tax != nil
-            precio1 = payment.price_without_tax.round(4).to_s
+            if orden.price_without_tax != nil
+                precio1 = orden.price_without_tax.round(4).to_s
             else 
-            preciu1 = 0.00
+                precio1 = 0.00
             end  
-
-
-        sheet.add_row [payment.supplier.name,payment.code,payment.date1,
-        payment.quantity,code1,name1,precio1,payment.total ], 
-        :style => [cadena,cadena,date,currency,cadena,cadena,currency,currency]
     
+    
+        sheet.add_row [payment.supplier.name,payment.documento,payment.date1,
+        orden.quantity,code1,name1,precio1,orden.total,payment.tipo ], 
+        :style => [cadena,cadena,date,currency,cadena,cadena,currency,currency,cadena]
+        end 
    end   
     end
 
 
-    wb.add_worksheet(name: "Basic work sheet") do |sheet|
+    wb.add_worksheet(name: "Facturas Dolares") do |sheet|
     
 
-    sheet.add_row ["Fecha","Code", "Codigo","Descripcion", "Unidad","Proveedor","Cantidad","Costo US$", "Costo S/ ","Total S/" ], :style => title 
+
+    sheet.add_row ["Proveedor","Code", "Fecha","Cantidad", "Codigo","Descrip","","Pre.Costo US$", "Total US$"  ], :style => title 
     
    @rpt_detalle_purchase_dol.each do |payment|
-        
-            if payment.product 
-              code1 = orden.product.code
+
+        @orden_compra1  = @company.get_purchase_detalle(payment.id)
+
+       for  orden in @orden_compra1
+
+           if orden.product 
+              code1 =  orden.product.code
               name1 =  orden.product.name
             else
-              a = payment.get_service( payment.product_id)
+              a = orden.get_service( orden.product_id)
               code1 = a.code 
               name1 = a.name 
             end 
 
-            if payment.price_without_tax != nil
-            precio1 = payment.price_without_tax.round(4).to_s
+            if orden.price_without_tax != nil
+                precio1 = orden.price_without_tax.round(4).to_s
             else 
-            preciu1 = 0.00
+                precio1 = 0.00
             end  
-
-
-        sheet.add_row [payment.supplier.name,payment.code,payment.date1,
-        payment.quantity,code1,name1,precio1,payment.total ], 
-        :style => [cadena,cadena,date,currency,cadena,cadena,currency,currency]
     
-   end   
-    end
+    
+        sheet.add_row [payment.supplier.name,payment.documento,payment.date1,
+        orden.quantity,code1,name1,precio1,orden.total,payment.tipo ], 
+        :style => [cadena,cadena,date,currency,cadena,cadena,currency,currency,cadena]
+        end 
+    end 
+    end 
 
+  ##
 end 
 
     
