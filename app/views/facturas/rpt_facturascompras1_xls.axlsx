@@ -21,7 +21,7 @@ wb.styles do |s|
     wb.add_worksheet(name: "Facturas Soles") do |sheet|
     
 
-    sheet.add_row ["Proveedor","Code", "Fecha","Cantidad", "Codigo","Descrip","Pre.Costo", "Total","Tipo Orden " ], :style => title 
+    sheet.add_row ["Proveedor","Code", "Fecha","Cantidad", "Codigo","Descrip","Pre.Costo", "Total","Tipo Orden ","Condicion Pago" ], :style => title 
     
    @rpt_detalle_purchase_sol.each do |payment|
                     
@@ -46,9 +46,9 @@ wb.styles do |s|
     
     
         sheet.add_row [payment.supplier.name,payment.documento,payment.date1,
-        orden.quantity,code1,name1,precio1,orden.total,payment.tipo ], 
+        orden.quantity,code1,name1,precio1,orden.total,payment.tipo,payment.payment.descrip ], 
     :style => 
-        [cadena,cadena,date,currency,cadena,cadena,currency,currency,cadena]
+        [cadena,cadena,date,currency,cadena,cadena,currency,currency,cadena,cadena]
         end 
    end   
     end
@@ -58,7 +58,7 @@ wb.styles do |s|
     
 
 
-    sheet.add_row ["Proveedor","Code", "Fecha","Cantidad", "Codigo","Descrip","Pre.Costo US$", "Total US$","Tipo Orden"  ], :style => title 
+    sheet.add_row ["Proveedor","Code", "Fecha","Cantidad", "Codigo","Descrip","Pre.Costo US$", "Total US$","Tipo Orden","Condicion pago"  ], :style => title 
     
    @rpt_detalle_purchase_dol.each do |payment|
 
@@ -82,8 +82,8 @@ wb.styles do |s|
             end  
 
         sheet.add_row [payment.supplier.name,payment.documento,payment.date1,
-        orden.quantity,code1,name1,precio1,orden.total,payment.tipo ], 
-        :style => [cadena,cadena,date,currency,cadena,cadena,currency,currency,cadena]
+        orden.quantity,code1,name1,precio1,orden.total,payment.tipo,payment.payment.descrip ], 
+        :style => [cadena,cadena,date,currency,cadena,cadena,currency,currency,cadena,cadena]
         end 
     end 
     end 
