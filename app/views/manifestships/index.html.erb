@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Manifestships</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tranportorder</th>
+      <th>Manifest</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @manifestships.each do |manifestship| %>
+      <tr>
+        <td><%= manifestship.tranportorder_id %></td>
+        <td><%= manifestship.manifest_id %></td>
+        <td><%= link_to 'Show', manifestship %></td>
+        <td><%= link_to 'Edit', edit_manifestship_path(manifestship) %></td>
+        <td><%= link_to 'Destroy', manifestship, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Manifestship', new_manifestship_path %>

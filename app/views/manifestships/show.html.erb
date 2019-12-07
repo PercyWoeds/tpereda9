@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Tranportorder:</strong>
+  <%= @manifestship.tranportorder_id %>
+</p>
+
+<p>
+  <strong>Manifest:</strong>
+  <%= @manifestship.manifest_id %>
+</p>
+
+<%= link_to 'Edit', edit_manifestship_path(@manifestship) %> |
+<%= link_to 'Back', manifestships_path %>

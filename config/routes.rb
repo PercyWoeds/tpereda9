@@ -1,5 +1,6 @@
   Mnygo::Application.routes.draw do
 
+  resources :manifestships
   resources :cpagar_details
   resources :cpagars
   resources :contratos
@@ -859,7 +860,7 @@ end
   match 'quotations/do_email/:id' => 'quotations#do_email', via: [:get, :post]
   resources :quotations
   
-  match 'manifests/do_process/:id' => 'Manifiestos#do_process', via: [:get, :post]
+  match 'manifests/do_process/:id' => 'manifests#do_process', via: [:get, :post]
   match 'manifests/do_anular/:id' => 'manifests#do_anular', via: [:get, :post]
   match 'manifests/do_cancelar/:id' => 'manifests#do_cancelar', via: [:get, :post]
   
