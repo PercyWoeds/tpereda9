@@ -233,9 +233,11 @@ WHERE purchase_details.product_id = ?',params[:id] ])
      end
     
 
+
+
   # Export purchaseorder to PDF
   def rpt_purchase2_all
-        
+
     @company =Company.find(1)
     @fecha1 =params[:fecha1]
     @fecha2 =params[:fecha2]

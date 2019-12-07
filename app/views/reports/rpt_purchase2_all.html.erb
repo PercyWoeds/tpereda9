@@ -18,7 +18,8 @@ totals = []
  Reporte de Facturas emitidas 
 </h3	>
 
-<form method="get" action="/purchases/rpt_purchase2_all/<%= @company.id %>">
+
+<%= form_tag(_facturas_path, :method => "get") do %>
 
   <div class="field">
       <input type="date" name="fecha1" value="2018-03-01" style = "width: 150px" >
@@ -42,9 +43,12 @@ totals = []
 </p>
 
 
-  <input type="submit" value="Generar"  />
-  
-</form>
+<br> 
+ <%= submit_tag "PDF", :name => "print" %>
+ <%= submit_tag "Excel", :name => "print" %>
+</br>
+
+<% end %>
 
 <br />
 

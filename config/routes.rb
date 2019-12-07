@@ -146,6 +146,9 @@
     collection {get :rpt_compras3_pdf }
     collection {get :rpt_ingresos3_all_pdf}
 
+    collection {get :rpt_facturas1_all }
+    
+
  end 
     
 

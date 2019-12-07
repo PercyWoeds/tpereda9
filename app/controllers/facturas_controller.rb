@@ -26,6 +26,7 @@ class FacturasController < ApplicationController
     @facturas_rpt = @company.get_ingresos_day(@fecha1,@fecha2,@product)
 
     
+
     if @facturas_rpt != nil 
     
       case params[:print]
@@ -240,7 +241,203 @@ class FacturasController < ApplicationController
       
   end
 
-#fin reporte de ingresos x producto 
+#fin reporte de ingresos x product
+
+
+
+  def rpt_facturas1_all
+
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @tiporeporte =params[:tiporeporte]
+
+    @rpt_detalle_purchase_sol = @company.get_purchases_day_tipo_moneda(@fecha1,@fecha2,@tiporeporte,"2")
+    @rpt_detalle_purchase_dol = @company.get_purchases_day_tipo_moneda(@fecha1,@fecha2,@tiporeporte,"1")
+
+
+    if @rpt_detalle_purchase_sol != nil  or @rpt_detalle_purchase_dol != nil 
+    
+      case params[:print]
+        when "PDF" then 
+            redirect_to :action => "rpt_purchase2_all", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2], :tiporeporte => params[:tiporeporte]
+
+        when "Excel" then render xlsx: 'rpt_facturascompras1_xls'
+    
+          
+        else render action: "index"
+      end
+    end 
+
+    
+  end
+
+
+## Reporte de factura detallado
+def rpt_purchase2_all
+
+    @company =Company.find(1)
+    @fecha1 =params[:fecha1]
+    @fecha2 =params[:fecha2]
+    @tiporeporte =params[:tiporeporte]
+
+    @rpt_detalle_purchase = @company.get_purchases_day_tipo(@fecha1,@fecha2,@tiporeporte)
+
+    Prawn::Document.generate("app/pdf_output/orden_1.pdf") do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header9(pdf)
+        pdf = build_pdf_body9(pdf)
+        build_pdf_footer9(pdf)
+        $lcFileName =  "app/pdf_output/orden_1.pdf"      
+        
+    end     
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+                
+    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+  
+
+  end
+
+ def build_pdf_header9(pdf)
+    pdf.font "Helvetica" , :size => 6    
+     $lcCli  =  @company.name 
+     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+
+     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
+     $lcHora  = Time.zone.now.to_s
+
+    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
+      end
+
+      if rows.present?
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+      end
+
+        pdf.move_down 10
+
+      end
+      
+      pdf 
+  end   
+
+  def build_pdf_body9(pdf)
+    
+    pdf.text "Facturas  de compra Emitidas : Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
+    pdf.text ""
+    pdf.font_families.update("Open Sans" => {
+          :normal => "app/assets/fonts/OpenSans-Regular.ttf",
+          :italic => "app/assets/fonts/OpenSans-Italic.ttf",
+        })
+
+        pdf.font "Open Sans",:size =>6
+  
+
+      headers = []
+      table_content = []
+
+      Purchaseorder::TABLE_HEADERS1.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content << headers
+
+      nroitem=1
+
+      for ordencompra in @rpt_detalle_purchase
+
+           $lcNumero    = ordencompra.documento     
+           $lcFecha     = ordencompra.date1
+           $lcProveedor = ordencompra.supplier.name 
+           
+           $lcBalance    = ordencompra.balance.round(2).to_s 
+
+        @orden_compra1  = @company.get_purchase_detalle(ordencompra.id)
+
+
+       for  orden in @orden_compra1
+            row = []
+            row << nroitem.to_s
+            row << $lcProveedor 
+            row << $lcNumero 
+            row << $lcFecha.strftime("%d/%m/%Y")        
+            row << orden.quantity.to_s
+
+            if orden.product 
+              row << orden.product.code
+              row << orden.product.name
+            else
+              a = orden.get_service(orden.product_id)
+              row << a.code 
+              row << a.name 
+            end 
+
+            if orden.price_without_tax != nil
+            row << orden.price_without_tax.round(4).to_s
+            else 
+            row << "0.00"
+            end  
+            row << " "
+            row << orden.total.round(2).to_s
+            row << $lcPercepcion
+            row << $lcBalance
+            table_content << row
+        
+            nroitem=nroitem + 1
+        end
+        
+
+      end
+
+
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:center
+                                          columns([3]).align=:center
+                                          columns([4]).align=:left
+                                          columns([5]).align=:left
+                                          columns([6]).align=:left
+                                          columns([7]).align=:right
+                                          columns([8]).align=:right
+                                          columns([9]).align=:right
+                                          columns([10]).align=:right
+                                          columns([11]).align=:right
+                                        end
+
+      pdf.move_down 10      
+      pdf
+
+    end
+
+
+    def build_pdf_footer9(pdf)
+
+        pdf.text ""
+        pdf.text "" 
+        
+
+     end
+    
+
+
 
   def rpt_compras2_pdf
     @company=Company.find(1)          
