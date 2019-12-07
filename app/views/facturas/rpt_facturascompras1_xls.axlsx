@@ -9,7 +9,7 @@ wb.styles do |s|
     padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
     percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
     title = s.add_style(:bg_color => "FFFF0000", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
-    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :left})
 
     currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
                               :border=>Axlsx::STYLE_THIN_BORDER)
@@ -21,11 +21,10 @@ wb.styles do |s|
     wb.add_worksheet(name: "Facturas Soles") do |sheet|
     
 
-    sheet.add_row ["Proveedor","Code", "Fecha","Cantidad", "Codigo","Descrip","","Pre.Costo", "Total" ], :style => title 
+    sheet.add_row ["Proveedor","Code", "Fecha","Cantidad", "Codigo","Descrip","Pre.Costo", "Total","Tipo Orden " ], :style => title 
     
    @rpt_detalle_purchase_sol.each do |payment|
-        
-            
+                    
         @orden_compra1  = @company.get_purchase_detalle(payment.id)
 
        for  orden in @orden_compra1
@@ -48,7 +47,8 @@ wb.styles do |s|
     
         sheet.add_row [payment.supplier.name,payment.documento,payment.date1,
         orden.quantity,code1,name1,precio1,orden.total,payment.tipo ], 
-        :style => [cadena,cadena,date,currency,cadena,cadena,currency,currency,cadena]
+    :style => 
+        [cadena,cadena,date,currency,cadena,cadena,currency,currency,cadena]
         end 
    end   
     end
@@ -58,7 +58,7 @@ wb.styles do |s|
     
 
 
-    sheet.add_row ["Proveedor","Code", "Fecha","Cantidad", "Codigo","Descrip","","Pre.Costo US$", "Total US$"  ], :style => title 
+    sheet.add_row ["Proveedor","Code", "Fecha","Cantidad", "Codigo","Descrip","Pre.Costo US$", "Total US$","Tipo Orden"  ], :style => title 
     
    @rpt_detalle_purchase_dol.each do |payment|
 
@@ -80,8 +80,7 @@ wb.styles do |s|
             else 
                 precio1 = 0.00
             end  
-    
-    
+
         sheet.add_row [payment.supplier.name,payment.documento,payment.date1,
         orden.quantity,code1,name1,precio1,orden.total,payment.tipo ], 
         :style => [cadena,cadena,date,currency,cadena,cadena,currency,currency,cadena]
