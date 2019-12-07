@@ -97,6 +97,7 @@
   resources :customer_payments
   resources :gastos 
   resources :cierres 
+  resources :manifestships
 
   resources :viaticos do
     resources :viatico_details, except: [:index,:show], controller: "viaticos/viatico_details"
@@ -858,7 +859,7 @@ end
   match 'quotations/do_email/:id' => 'quotations#do_email', via: [:get, :post]
   resources :quotations
   
-  match 'manifests/do_process/:id' => 'manifests#do_process', via: [:get, :post]
+  match 'manifests/do_process/:id' => 'Manifiestos#do_process', via: [:get, :post]
   match 'manifests/do_anular/:id' => 'manifests#do_anular', via: [:get, :post]
   match 'manifests/do_cancelar/:id' => 'manifests#do_cancelar', via: [:get, :post]
   
