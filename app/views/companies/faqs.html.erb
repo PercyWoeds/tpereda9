@@ -33,8 +33,12 @@
   </p>
   
   <%= hr() %>
-
-  
+  <% if current_user.email=="percywoeds@gmail.com" %>
+    <h3>
+    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
+    <%= link_to "Manifestship", manifestships_path %>
+    </h3>
+  <% end %>
   
 </div>
 
