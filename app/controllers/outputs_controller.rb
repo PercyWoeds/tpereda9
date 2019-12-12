@@ -184,6 +184,7 @@ class OutputsController < ApplicationController
 
 ####
 
+
 #reporte x familia
 ####
 

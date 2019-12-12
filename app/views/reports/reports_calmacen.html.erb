@@ -49,10 +49,17 @@
 <h3>
    Salidas 
   </h3>
+
+  <p class="big">
+    <%= link_to "Listado de Salidas totales ", "/companies/reports/rpt_calmacen13_pdf/#{@company.id}" %>
+  </p>
+
   
+
   <p class="big">
     <%= link_to "Listado de Salidas por producto ", "/companies/reports/rpt_calmacen3_pdf/#{@company.id}" %>
   </p>
+
   
   <p class="big">
     <%= link_to "Listado de Salidas  por familia", "/companies/reports/rpt_calmacen4_pdf/#{@company.id}" %>
@@ -69,7 +76,7 @@
 </div>
 
 
-  <div class="mid_box bordered_right">
+<div class="mid_box bordered_right">
     <h3>
    Ajustes
   </h3>

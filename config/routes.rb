@@ -149,7 +149,10 @@
     collection {get :rpt_facturas1_all }
     
     collection {get :rpt_purchase2_all }
-    
+
+    collection {get :rpt_salidas_pdf }
+    collection {get :rpt_salidas_all_pdf}
+
  end 
     
 
@@ -467,6 +470,7 @@ end
   match 'companies/reports/rpt_calmacen10_pdf/:company_id' => 'reports#rpt_calmacen10_pdf', via: [:get, :post]
   match 'companies/reports/rpt_calmacen11_pdf/:company_id' => 'reports#rpt_calmacen11_pdf', via: [:get, :post]
   match 'companies/reports/rpt_calmacen12_pdf/:company_id' => 'reports#rpt_calmacen12_pdf', via: [:get, :post]
+  match 'companies/reports/rpt_calmacen13_pdf/:company_id' => 'reports#rpt_calmacen13_pdf', via: [:get, :post]
   
   match 'companies/reports/rpt_cajust1_pdf/:company_id' => 'reports#rpt_cajust1_pdf', via: [:get, :post]
   match 'companies/reports/rpt_viatico_pdf/:company_id' => 'reports#rpt_viatico_pdf', via: [:get, :post]

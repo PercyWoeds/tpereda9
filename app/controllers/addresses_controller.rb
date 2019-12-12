@@ -1,4 +1,4 @@
-class AddressesController < ApplicationController
+pclass AddressesController < ApplicationController
 
 before_action :find_address 
 

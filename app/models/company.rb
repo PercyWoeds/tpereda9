@@ -2978,19 +2978,34 @@ WHERE products.products_category_id = ? ORDER BY products.code  ',categoria ])
 
     return @movements
  end
+
+ 
 def get_salidas_day(fecha1,fecha2,product)
   
-    @purchases = Output.find_by_sql(['Select outputs.*,output_details.quantity,output_details.product_id,
-    output_details.price,output_details.total,products.name as nameproducto,products.code as codigo,products.unidad
-    from output_details   
-INNER JOIN outputs ON output_details.output_id = outputs.id
-INNER JOIN products ON output_details.product_id = products.id
-WHERE output_details.product_id = ?  and outputs.fecha > ? and outputs.fecha < ?',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
- 
+      @purchases = Output.find_by_sql(['Select outputs.*,output_details.quantity,output_details.product_id,
+      output_details.price,output_details.total,products.name as nameproducto,products.code as codigo,products.unidad
+      from output_details   
+  INNER JOIN outputs ON output_details.output_id = outputs.id
+  INNER JOIN products ON output_details.product_id = products.id
+  WHERE output_details.product_id = ?  and outputs.fecha > ? and outputs.fecha < ?',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+   
     return @purchases 
 
 end
 
+def get_salidas_day0(fecha1,fecha2)
+  
+      @purchases = Output.find_by_sql(['Select outputs.*,output_details.quantity,output_details.product_id,
+      output_details.price,output_details.total,products.name as nameproducto,products.code as codigo,products.unidad
+      from output_details   
+      INNER JOIN outputs ON output_details.output_id = outputs.id
+      INNER JOIN products ON output_details.product_id = products.id
+      WHERE  outputs.fecha > ? and outputs.fecha < ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+   
+     return @purchases 
+
+end
+ 
 def get_salidas_day2(fecha1,fecha2,product)
   
     @purchases = Output.find_by_sql(['Select outputs.*,output_details.quantity,output_details.product_id,
@@ -2998,7 +3013,7 @@ def get_salidas_day2(fecha1,fecha2,product)
     from output_details   
 INNER JOIN outputs ON output_details.output_id = outputs.id
 INNER JOIN products ON output_details.product_id = products.id
-WHERE products.products_category_id = ?  and outputs.fecha >= ? and outputs.fecha <= ?',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+WHERE products.id = ?  and outputs.fecha >= ? and outputs.fecha <= ?',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
  
     return @purchases 
 
