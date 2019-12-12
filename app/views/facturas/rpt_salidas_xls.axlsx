@@ -27,8 +27,13 @@ wb.styles do |s|
                   
   
             xtotal = payment.price*payment.quantity 
+            if payment.employee.nil?
+              xemployee = ""
+            else
+              xemployee = payment.employee.full_name 
+            end 
         sheet.add_row [payment.code,payment.fecha,
-          payment.nameproducto,payment.unidad,payment.supplier.name,payment.employee.full_name,payment.truck.placa, payment.quantity,payment.price,xtotal ], 
+          payment.nameproducto,payment.unidad,payment.supplier.name,xemployee,payment.truck.placa, payment.quantity,payment.price,xtotal ], 
     :style => 
         [cadena,date,cadena,cadena,cadena,cadena,cadena,currency,currency,currency]
         
