@@ -21,7 +21,7 @@ wb.styles do |s|
     wb.add_worksheet(name: "Facturas Soles") do |sheet|
     
 
-    sheet.add_row ["Nro.Salida","Fecha", "Producto","Unidad", "Proveedor","Empleado","Placa", "Cantidad","Precio","Total" ], :style => title 
+    sheet.add_row ["Nro.Salida","Fecha", "Codigo","Producto","Unidad", "Proveedor","Empleado","Placa", "Cantidad","Precio","Total" ], :style => title 
     
    @facturas_rpt.each do |payment|
                   
@@ -30,12 +30,12 @@ wb.styles do |s|
             if payment.employee.nil?
               xemployee = ""
             else
-              xemployee = payment.employee.full_name 
+              xemployee = payment.employee.full_name.strip 
             end 
         sheet.add_row [payment.code.strip,payment.fecha,payment.codigo,
-          payment.nameproducto,payment.unidad,payment.unidad,payment.supplier.name,xemployee,payment.truck.placa, payment.quantity,payment.price,xtotal ], 
+          payment.nameproducto,payment.unidad,payment.supplier.name,xemployee,payment.truck.placa, payment.quantity,payment.price,xtotal ], 
     :style => 
-        [cadena,date,cadena,cadena,cadena,cadena,cadena,currency,currency,currency]
+        [cadena,date,cadena,cadena,cadena,cadena,cadena,cadena,currency,currency,currency]
         
    end   
     end
