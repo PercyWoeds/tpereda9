@@ -32,7 +32,7 @@ wb.styles do |s|
             else
               xemployee = payment.employee.full_name 
             end 
-        sheet.add_row [payment.code,payment.fecha,
+        sheet.add_row [payment.code.strip,payment.fecha,
           payment.nameproducto,payment.unidad,payment.supplier.name,xemployee,payment.truck.placa, payment.quantity,payment.price,xtotal ], 
     :style => 
         [cadena,date,cadena,cadena,cadena,cadena,cadena,currency,currency,currency]
