@@ -21,7 +21,10 @@ class PurchasesController < ApplicationController
     $dd = parts[2].to_i 
   end
 
-
+  def import
+      Purchase.import(params[:file])
+       redirect_to root_url, notice: "Facturas  importadas."
+  end 
 
 
   def ingresos

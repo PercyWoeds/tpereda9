@@ -111,6 +111,36 @@ TABLE_HEADERS30 = ["TD",
                      "OBSERV"]
 
 
+
+    def self.import(file)
+          CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
+
+            #falta hacer validacion ingreso
+           proveedor =  row['supplier_id']
+           doc1 =  row['documento'].strip
+           doc2 =  row['document_id']
+           saldo = row['balance']
+           moneda = row['moneda_id']
+
+           
+            a =Purchase.find_by(supplier_id: proveedor, documento: doc1, document_id: doc2 , moneda_id: moneda)
+
+            if a.nil?
+
+               Purchase.create! row.to_hash 
+          
+
+            else  
+                a.balance = saldo 
+                a.save
+            end 
+
+            
+           
+
+           end
+    end     
+
   def get_vencido
 
       if(self.date3 < Date.today)   
@@ -366,6 +396,7 @@ def get_tax3(items, supplier_id)
         
         
           product = Product.find(id.to_i)
+
           
           new_pur_product = PurchaseDetail.new(:purchase_id => self.id, :product_id => product.id,
           :price_with_tax => lcprice_tax, :price_without_tax=>price.to_f,:quantity => quantity_1, :discount => discount.to_f,

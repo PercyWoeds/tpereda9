@@ -343,6 +343,8 @@ end
   resources :purchases do
      collection { post :datos  }
      collection { get :search } 
+     collection { post :import }
+     
 
   end 
   
