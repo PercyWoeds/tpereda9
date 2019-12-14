@@ -2,7 +2,8 @@ class Purchase < ActiveRecord::Base
   self.per_page = 20
   
   validates_presence_of :company_id, :supplier_id, :documento,:document_id,:date1,:date2,:date3
-  validates_uniqueness_of :documento, scope: :document_id
+  validates_uniqueness_of :documento, :scope => :supplier_id,:document_id
+  
 
   belongs_to :company
   belongs_to :location
@@ -122,14 +123,13 @@ TABLE_HEADERS30 = ["TD",
            saldo = row['balance']
            moneda = row['moneda_id']
 
-           
+
             a =Purchase.find_by(supplier_id: proveedor, documento: doc1, document_id: doc2 , moneda_id: moneda)
 
             if a.nil?
 
                Purchase.create! row.to_hash 
           
-
             else  
                 a.balance = saldo 
                 a.save
