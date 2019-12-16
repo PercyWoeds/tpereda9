@@ -5,9 +5,7 @@ class Assistance < ActiveRecord::Base
           	
           	str = row['fecha']
 
-          	
-
-          	
+        
           	 if str.include?"a. m."		
           		row['fecha'] = Time.zone.parse(str.sub('a. m.','a.m.'))
           	else
