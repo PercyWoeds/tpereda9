@@ -26,12 +26,24 @@
       
         <td><%= assistance.nro %></td>
         <td><%= assistance.full_name %></td>
+        <%if assistance.fecha.nil? %>
+        <td></td>
         
+        <% else %> 
         <td><%= assistance.fecha.strftime("%F") %></td>
+         <% end%>
+        <% if assistance.hora1.nil? %>
+        <td></td>
         
+         <% else %>   
         <td ><%= assistance.hora1.strftime("%I:%M%p") %> </td> 
+        <% end %>
+        <% if assistance.hora2.nil? %>
+        <td></td>
+        
+        <% else %>
         <td><%= assistance.hora2.strftime("%I:%M%p") %> </td> 
-
+        <% end %>
 
         <td><%= link_to 'Eliminar', assistance, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 
