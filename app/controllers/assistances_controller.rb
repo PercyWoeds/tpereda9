@@ -27,6 +27,8 @@ class AssistancesController < ApplicationController
 
   # GET /assistances/1/edit
   def edit
+    @employees = @company.get_employees
+
   end
 
   # POST /assistances
@@ -55,6 +57,7 @@ class AssistancesController < ApplicationController
   # PATCH/PUT /assistances/1
   # PATCH/PUT /assistances/1.json
   def update
+@employees = @company.get_employees
 
     respond_to do |format|
       if @assistance.update(assistance_params)
