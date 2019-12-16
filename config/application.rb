@@ -22,6 +22,8 @@ module Mnygo
     config.filter_parameters += [:password]
     config.time_zone ='Lima'
     config.exceptions = self.routes
+    config.enable_dependency_loading= true
+    config.autoload_paths << Rails.root.join('lib')
     
   end
 end
