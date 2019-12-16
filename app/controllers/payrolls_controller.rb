@@ -262,7 +262,7 @@ class PayrollsController < ApplicationController
         
        
       texto = "PLANILLA : " << @payroll.code
-       pdf.table([["TRANSPORTES PEREDA SRL ","","", "","DS.Nro.020 -2008"],
+       pdf.table([["TRANSPORTES PEREDA SRL ","","", "","DS.Nro.001-98TR"],
        ["RUC: 20424092941", "BOLETAS  DE REMUNERACIONES ","",""," ",texto ]], {
           :position => :center,
           :cell_style => {:border_width => 0},

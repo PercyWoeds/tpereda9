@@ -1,4 +1,4 @@
-class Quinto < ActiveRecord::Base
+ddclass Quinto < ActiveRecord::Base
     before_save :calcular
     before_update :calcular
     

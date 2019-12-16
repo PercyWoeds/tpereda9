@@ -1,42 +1,54 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Assistances</h1>
+<h1>Listado asistencia </h1>
 
-<table>
-  <thead>
+<table class ="table">
+  <thead class="thead-dark">
     <tr>
-      <th>Departamento</th>
-      <th>Nombre</th>
-      <th>Nro</th>
-      <th>Fecha</th>
-      <th>Equipo</th>
-      <th>Cod verificacion</th>
-      <th>Num tarjeta</th>
+      <th scope="col">Departamento</th>
+    
+      <th scope="col">Empleado</th>
+      
+      <th scope="col">Nro</th>
+      <th scope="col">Fecha</th>
+      <th scope="col">Hora Ingreso</th>
+      <th scope="col">Hora Salida </th>
+      
+      
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @assistances.each do |assistance| %>
-      <tr>
+      <tr scope="row">
         <td><%= assistance.departamento %></td>
-        <td><%= assistance.nombre %></td>
+      
         <td><%= assistance.nro %></td>
-        <td><%= Time.strptime(assistance.fecha.to_s,"%Y-%m-%d %H:%M:%S").in_time_zone('Lima') %></td>
-        <td><%= assistance.equipo %></td>
-        <td><%= assistance.cod_verificacion %></td>
-        <td><%= assistance.num_tarjeta %></td>
-        <td><%= link_to 'Show', assistance %></td>
-        <td><%= link_to 'Edit', edit_assistance_path(assistance) %></td>
-        <td><%= link_to 'Destroy', assistance, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= assistance.full_name %></td>
+        
+        <td><%= assistance.fecha.strftime("%F") %></td>
+        
+        <td ><%= assistance.hora1.strftime("%I:%M%p") %> </td> 
+        <td><%= assistance.hora2.strftime("%I:%M%p") %> </td> 
+
+
+        <td><%= link_to 'Eliminar', assistance, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
+<%= will_paginate @assistances %>
 
+
+<div class="button">
 <%= link_to 'Nueva asistencia', new_assistance_path %>
+
+<div> 
+
 
 
 

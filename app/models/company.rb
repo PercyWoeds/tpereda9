@@ -716,6 +716,12 @@ customer_payments.bank_acount_id = ?',
     return facturas 
  end
 
+ def get_asistencia_personal
+  personal = Assistance.find_by_sql(['Select departamento,nro,nombre,fecha,employees.full_name  INNER JOIN assistances ON assistances.nro = employees.idnumber order by fecha,employess.full_name'])
+   return personal 
+   
+ end
+
 #total ingreos x banco abierto por  factura 
 def get_customer_payments_value_customer3(code)
 

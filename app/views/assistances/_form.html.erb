@@ -2,13 +2,35 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :departamento %>
-    <%= f.input :nombre %>
-    <%= f.input :nro %>
-    <%= f.input :fecha %>
-    <%= f.input :equipo %>
-    <%= f.input :cod_verificacion %>
-    <%= f.input :num_tarjeta %>
+
+  <div class="field">
+    <%= f.label :departamento, "Departamento:", :class => "bold" %><br />
+    <%= f.text_field :departamento %>
+  </div>
+  
+
+
+  <div class="field">
+      <%= f.label :nro %><br />
+      <%= f.select :nro, options_from_collection_for_select(@employees,'idnumber','full_name') %>
+    </div>
+  
+  <div class="field">
+    <%= f.label :fecha , "Fecha *", :class => "bold" %><br />
+    <%= f.date_field :fecha %>
+  </div>
+
+  <div class="field">
+    <%= f.label :hora1, "Hora ingreso*", :class => "bold" %><br />
+    <%= f.time_field :hora1, value: "%H:%M" %>
+  </div> 
+  <div class="field">
+    <%= f.label :hora2, "Hora Salida*", :class => "bold" %><br />
+    <%= f.time_field :hora2,  value: "%H:%M"%>
+  </div>
+
+  
+
   </div>
 
   <div class="form-actions">

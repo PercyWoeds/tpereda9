@@ -4,10 +4,10 @@ class AssistancesController < ApplicationController
   # GET /assistances
   # GET /assistances.json
   def index
-    @assistances = Assistance.all
+    @assistances = Assistance.find_by_sql(['Select assistances.id,departamento,nro,nombre,fecha,employees.full_name,hora1,hora2 from assistances  INNER JOIN employees ON assistances.nro = employees.idnumber order by fecha,employees.full_name']).paginate(:page => params[:page])
   end
 
-  # GET /assistances/1
+  # GET /join
   # GET /assistances/1.json
   def show
   end
@@ -15,6 +15,14 @@ class AssistancesController < ApplicationController
   # GET /assistances/new
   def new
     @assistance = Assistance.new
+
+    @company = Company.find(1)
+    @employees = @company.get_employees
+
+    @assistance['fecha'] = Date.today
+   
+
+
   end
 
   # GET /assistances/1/edit
@@ -24,11 +32,18 @@ class AssistancesController < ApplicationController
   # POST /assistances
   # POST /assistances.json
   def create
+
+    
+
     @assistance = Assistance.new(assistance_params)
+
+    @assistance[:equipo] ="1"
+    @assistance[:cod_verificacion] ="FP"
+    @assistance[:num_tarjeta] =""
 
     respond_to do |format|
       if @assistance.save
-        format.html { redirect_to @assistance, notice: 'Assistance was successfully created.' }
+        format.html { redirect_to @assistance, notice: 'Registro creado con exito.' }
         format.json { render :show, status: :created, location: @assistance }
       else
         format.html { render :new }
@@ -40,9 +55,10 @@ class AssistancesController < ApplicationController
   # PATCH/PUT /assistances/1
   # PATCH/PUT /assistances/1.json
   def update
+
     respond_to do |format|
       if @assistance.update(assistance_params)
-        format.html { redirect_to @assistance, notice: 'Assistance was successfully updated.' }
+        format.html { redirect_to @assistance, notice: 'Registro actualizado con exito ' }
         format.json { render :show, status: :ok, location: @assistance }
       else
         format.html { render :edit }
@@ -54,7 +70,9 @@ class AssistancesController < ApplicationController
   # DELETE /assistances/1
   # DELETE /assistances/1.json
   def destroy
+
     @assistance.destroy
+
     respond_to do |format|
       format.html { redirect_to assistances_url, notice: 'Assistance was successfully destroyed.' }
       format.json { head :no_content }
@@ -79,6 +97,6 @@ class AssistancesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def assistance_params
-      params.require(:assistance).permit(:departamento, :nombre, :nro, :fecha, :equipo, :cod_verificacion, :num_tarjeta)
+      params.require(:assistance).permit(:departamento, :nombre, :nro, :fecha, :equipo, :cod_verificacion, :num_tarjeta,:hora1,:hora2)
     end
 end
