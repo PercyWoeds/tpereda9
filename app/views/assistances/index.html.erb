@@ -45,7 +45,7 @@
         <td><%= assistance.hora2.strftime("%I:%M%p") %> </td> 
         <% end %> 
 
-        <%= link_to "Editar", edit_assistance_path(assistance) %> &#183;
+        <td><%= link_to "Editar", edit_assistance_path(assistance) %> &#183; </td>
 
 
         <td><%= link_to 'Eliminar', assistance, method: :delete, data: { confirm: 'Are you sure?' } %></td>
