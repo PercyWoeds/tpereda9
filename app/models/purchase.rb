@@ -122,11 +122,16 @@ TABLE_HEADERS30 = ["TD",
            doc2 =  row['document_id']
            saldo = row['balance']
            moneda = row['moneda_id']
-
+           puts proveedor
+           puts doc1
+           puts doc2
+           puts saldo
+           puts moneda 
 
             a =Purchase.find_by(supplier_id: proveedor, documento: doc1, document_id: doc2 , moneda_id: moneda)
 
             if a.nil?
+
 
                Purchase.create! row.to_hash 
           
