@@ -70,19 +70,19 @@ TABLE_HEADERS2  = ["ITEM ",
                      ]                     
   TABLE_HEADERS6 = ["ITEM",
                      "CLIENTE",   
-                     "=<2016",                  
-                    "Ene-2017",
-                    "Feb-2017",             
-                    "Mar-2017",
-                    "Abr-2017",
-                    "May-2017",
-                    "Jun-2017",
-                    "Jul-201",             
-                    "Ago-2017",
-                    "Sep-2017",
-                    "Oct-2017",
-                    "Nov-2017",              
-                    "Dic-2017",
+                     "al 2017",                  
+                    "2018",
+                    "2019",             
+                    "2020",
+                    "2021",
+                    "2022",
+                    "2023",
+                    "General",            
+                    "Cant.Facturas",
+                    "Compras",
+                    "Cant.Facturas",
+                    "Tot.Gral",              
+                    "Cant.Facturas",
                     "TOTAL   "]
 
 
@@ -110,6 +110,45 @@ TABLE_HEADERS30 = ["TD",
                      "SOLES",
                      "DOLARES ",
                      "OBSERV"]
+
+
+    def get_general(fecha1,fecha2,proveedor)
+      a =  Purchase.find_by_sql(["
+   SELECT  supplier_id,
+   SUM(balance) as balance,
+   COUNT(documento) as compras 
+   FROM purchases
+   WHERE date1 >= ? and date2 <= ?  and supplier_id =? 
+   GROUP BY 1
+   ORDER BY 1 ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59", proveedor ])
+
+        if a.nil?
+          return nil 
+        else
+
+          return a 
+
+        end
+    end
+
+    def get_general2(fecha1,fecha2,proveedor)
+      a =  Purchase.find_by_sql(["
+   SELECT  supplier_id,
+   SUM(balance) as balance,
+   COUNT(documento) as Compras 
+   FROM purchases
+   WHERE date1 >= ? and date2 <= ?  and supplier_id =? 
+   GROUP BY 1
+   ORDER BY 1 ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59", proveedor ])
+
+        if a.nil?
+          return nil 
+        else
+
+          return a 
+
+        end
+    end
 
 
 

@@ -364,9 +364,14 @@ class FacturasController < ApplicationController
             row << product.codigo
             row << product.nameproducto
             row << product.unidad 
-            row << product.supplier.name  
+            row << product.supplier.name
+            if product.employee
+
             row << product.employee.full_name
-            row << product.truck.placa            
+          else  
+            row << Product.employee_id 
+          end
+            row << product.truck.placa             
             row << sprintf("%.2f",product.quantity.to_s)
             row << sprintf("%.2f",product.get_stock(product.product_id).to_s)
             row << sprintf("%.2f",product.price.to_s)

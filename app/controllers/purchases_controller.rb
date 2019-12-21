@@ -2246,51 +2246,44 @@ def build_pdf_header_rpt48(pdf)
 ##-------------------------------------------------------------------------------------
   
   def build_pdf_header_rpt5(pdf)
-     pdf.font "Helvetica" , :size => 6
-      
-     $lcCli  = @company.name 
-     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
 
-     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
-     $lcHora  = Time.now.to_s
 
-    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
-      rows = []
-      (1..max_rows).each do |row|
-        rows_index = row - 1
-        rows[rows_index] = []
-        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
-        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
-      end
+    if @tipomoneda == "1"
+       @tipomoneda_name ="DOLARES"  
+    else
+       @tipomoneda_name ="SOLES "  
+    end 
+     
+     
+      pdf.font "Helvetica"  , :size => 8
 
-      if rows.present?
-        pdf.table(rows, {
+     image_path = "#{Dir.pwd}/public/images/tpereda2.png"
+
+      two_dimensional_array0 = [["SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD "],["OCUPACIONAL "],["CUENTAS POR PAGAR SOLES " ]]    
+      two_dimensional_array1 = [["CODIGO     "],["VERSION"],["PAGINA"]] 
+      two_dimensional_array2 = [["TP-CL-F-002    "],["03"],["1 DE 1 "]]
+       
+
+      table_content = ([ [{:image=> image_path, :width => 100 },{:content => two_dimensional_array0,:width=>320,},two_dimensional_array1,two_dimensional_array2 ]
+                ]) 
+
+      pdf.table(table_content, {
           :position => :center,
           :cell_style => {:border_width => 0},
           :width => pdf.bounds.width
         }) do
           columns([0, 2]).font_style = :bold
 
-      end
+          
+        end
 
-        pdf.move_down 10
 
-      end
-      
+      pdf.move_down 2
       pdf 
   end   
 
   def build_pdf_body_rpt5(pdf)
-    
-    if @tipomoneda == "1"
-       @tipomoneda_name ="DOLARES"  
-    else
-       @tipomoneda_name ="SOLES "  
-    end 
-    pdf.text "Resumen Proveedores  Moneda : "+@tipomoneda_name  + " Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
-    pdf.text ""
-    pdf.font "Helvetica" , :size => 6
-
+   
       headers = []
       table_content = []
       total_general = 0
@@ -2337,7 +2330,7 @@ def build_pdf_header_rpt48(pdf)
       @total_mes11_column = 0
       @total_mes12_column = 0
       
-
+      @fecha3= @fecha2.to_date  - 7.days
 
       lcCli = @customerpayment_rpt.first.supplier_id
       $lcCliName = ""
@@ -2349,48 +2342,65 @@ def build_pdf_header_rpt48(pdf)
 
           $lcCliName = customerpayment_rpt.supplier.name  
       
-          if customerpayment_rpt.year_month.to_f <= 201612
+          if customerpayment_rpt.year_month.to_f <= 201712
             @total_anterior = @total_anterior + customerpayment_rpt.balance.round(2)          
           end             
 
-          if customerpayment_rpt.year_month == '201701'
+          if customerpayment_rpt.year_month.to_f >= 201701 and  customerpayment_rpt.year_month.to_f <= 201712
             @total_mes01 = @total_mes01 + customerpayment_rpt.balance.round(2)        
           end   
 
-          if customerpayment_rpt.year_month == '201702' 
+          if customerpayment_rpt.year_month.to_f >= 201801 and  customerpayment_rpt.year_month.to_f <= 201812
             @total_mes02 = @total_mes02 + customerpayment_rpt.balance.round(2)        
           end 
             
-          if customerpayment_rpt.year_month == '201703'   
+          if customerpayment_rpt.year_month.to_f >= 201901 and  customerpayment_rpt.year_month.to_f <= 201912
             @total_mes03 = @total_mes03 + customerpayment_rpt.balance.round(2)        
           end 
-          if customerpayment_rpt.year_month == '201704'     
+        
+         if customerpayment_rpt.year_month.to_f >= 202001 and  customerpayment_rpt.year_month.to_f <= 202012
             @total_mes04 = @total_mes04 + customerpayment_rpt.balance.round(2)        
           end 
-          if customerpayment_rpt.year_month == '201705'       
+         if customerpayment_rpt.year_month.to_f >= 202101 and  customerpayment_rpt.year_month.to_f <= 202112
             @total_mes05 = @total_mes05 + customerpayment_rpt.balance.round(2)        
           end 
-          if customerpayment_rpt.year_month == '201706'
+         if customerpayment_rpt.year_month.to_f >= 202201 and  customerpayment_rpt.year_month.to_f <= 202212
             @total_mes06 = @total_mes06 + customerpayment_rpt.balance.round(2)        
           end 
-          if customerpayment_rpt.year_month == '201707' 
+          if customerpayment_rpt.year_month.to_f >= 202301 and  customerpayment_rpt.year_month.to_f <= 202312
             @total_mes07 = @total_mes07 + customerpayment_rpt.balance.round(2)        
           end 
-          if customerpayment_rpt.year_month == '201708'   
-            @total_mes08 = @total_mes08 + customerpayment_rpt.balance.round(2)        
-          end 
-          if customerpayment_rpt.year_month == '201709'     
-            @total_mes09 = @total_mes09 + customerpayment_rpt.balance.round(2)        
-          end 
-          if customerpayment_rpt.year_month == '201710'       
-            @total_mes10 = @total_mes10 + customerpayment_rpt.balance.round(2)        
-          end 
-          if customerpayment_rpt.year_month == '201711'   
-            @total_mes11 = @total_mes11 + customerpayment_rpt.balance.round(2)        
-          end 
-          if customerpayment_rpt.year_month == '201712'     
-            @total_mes12 = @total_mes12 + customerpayment_rpt.balance.round(2)        
-          end   
+
+          totqty = 0
+          totcompras = 0 
+          general1 = customerpayment_rpt.get_general(@fecha1,@fecha3,customerpayment_rpt.supplier_id)
+          if general1.first != nil 
+              totqty = general1.first.balance
+              totcompras = general1.first.compras
+          end
+
+         
+            @total_mes08 = @total_mes08  + totqty 
+          
+            @total_mes09 = @total_mes09  + totcompras      
+          
+          totqty = 0
+          totcompras = 0 
+          general2 = customerpayment_rpt.get_general2(@fecha3,@fecha2,customerpayment_rpt.supplier_id)
+
+          if general2.first != nil 
+              totqty = general2.first.balance
+              totcompras = general2.first.compras
+          end
+
+
+           
+            @total_mes10 = @total_mes10 + totqty       
+            @total_mes11 = @total_mes11 + totcompras        
+          
+            @total_mes12 = @total_mes12         
+       
+
         else
           
             @total_cliente = @total_anterior+
@@ -2400,12 +2410,7 @@ def build_pdf_header_rpt48(pdf)
             @total_mes04+
             @total_mes05+
             @total_mes06+
-            @total_mes07+
-            @total_mes08+
-            @total_mes09+
-            @total_mes10+
-            @total_mes11+
-            @total_mes12
+            
             
             row = []
             row << nroitem.to_s        
@@ -2462,48 +2467,68 @@ def build_pdf_header_rpt48(pdf)
             @total_mes12 = 0
             @total_cliente = 0 
 
-          if customerpayment_rpt.year_month.to_f <= 201612
+         
+          if customerpayment_rpt.year_month.to_f <= 201712
             @total_anterior = @total_anterior + customerpayment_rpt.balance.round(2)          
           end             
 
-          if customerpayment_rpt.year_month == '201701'
+          if customerpayment_rpt.year_month.to_f >= 201701 and  customerpayment_rpt.year_month.to_f <= 201712
             @total_mes01 = @total_mes01 + customerpayment_rpt.balance.round(2)        
           end   
 
-          if customerpayment_rpt.year_month == '201702' 
+          if customerpayment_rpt.year_month.to_f >= 201801 and  customerpayment_rpt.year_month.to_f <= 201812
             @total_mes02 = @total_mes02 + customerpayment_rpt.balance.round(2)        
           end 
             
-          if customerpayment_rpt.year_month == '201703'   
+          if customerpayment_rpt.year_month.to_f >= 201901 and  customerpayment_rpt.year_month.to_f <= 201912
             @total_mes03 = @total_mes03 + customerpayment_rpt.balance.round(2)        
           end 
-          if customerpayment_rpt.year_month == '201704'     
+        
+         if customerpayment_rpt.year_month.to_f >= 202001 and  customerpayment_rpt.year_month.to_f <= 202012
             @total_mes04 = @total_mes04 + customerpayment_rpt.balance.round(2)        
           end 
-          if customerpayment_rpt.year_month == '201705'       
+         if customerpayment_rpt.year_month.to_f >= 202101 and  customerpayment_rpt.year_month.to_f <= 202112
             @total_mes05 = @total_mes05 + customerpayment_rpt.balance.round(2)        
           end 
-          if customerpayment_rpt.year_month == '201706'
+         if customerpayment_rpt.year_month.to_f >= 202201 and  customerpayment_rpt.year_month.to_f <= 202212
             @total_mes06 = @total_mes06 + customerpayment_rpt.balance.round(2)        
           end 
-          if customerpayment_rpt.year_month == '201707' 
+          if customerpayment_rpt.year_month.to_f >= 202301 and  customerpayment_rpt.year_month.to_f <= 202312
             @total_mes07 = @total_mes07 + customerpayment_rpt.balance.round(2)        
           end 
-          if customerpayment_rpt.year_month == '201708'   
-            @total_mes08 = @total_mes08 + customerpayment_rpt.balance.round(2)        
-          end 
-          if customerpayment_rpt.year_month == '201709'     
-            @total_mes09 = @total_mes09 + customerpayment_rpt.balance.round(2)        
-          end 
-          if customerpayment_rpt.year_month == '201710'       
-            @total_mes10 = @total_mes10 + customerpayment_rpt.balance.round(2)        
-          end 
-          if customerpayment_rpt.year_month == '201711'   
-            @total_mes11 = @total_mes11 + customerpayment_rpt.balance.round(2)        
-          end 
-          if customerpayment_rpt.year_month == '201712'     
-            @total_mes12 = @total_mes12 + customerpayment_rpt.balance.round(2)        
-          end   
+ 
+          totqty = 0
+          totcompras = 0 
+          general1 = customerpayment_rpt.get_general(fecha1,fecha3,customerpayment_rpt.supplier_id)
+
+          if genera1 != 0
+
+              totqty = general1.first.balance
+              totcompras = general1.first.compras
+          end
+
+         
+            @total_mes08 = @total_mes08  + totqty 
+          
+            @total_mes09 = @total_mes09  + totcompras      
+           totqty = 0
+          totcompras = 0 
+          general2 = customerpayment_rpt.get_general2(fecha3,fecha2,customerpayment_rpt.supplier_id)
+
+          if general2 != 0
+              totqty = general2.first.balance
+              totcompras = general2.first.compras
+          end
+
+
+           
+            @total_mes10 = @total_mes10 + totqty       
+            @total_mes11 = @total_mes11 + totcompras    
+
+
+        
+            @total_mes12 = @total_mes12       
+        
 
           nroitem = nroitem + 1 
 
@@ -2656,6 +2681,7 @@ def build_pdf_header_rpt48(pdf)
         build_pdf_footer_rpt5(pdf)
         $lcFileName =  "app/pdf_output/rpt_customerpayment2.pdf"      
         
+
     end     
 
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
@@ -3284,8 +3310,6 @@ def newfactura2
           @purchase.process()
           puts @purchase[:total_amount]
     
-
-          
           format.html { redirect_to(@purchase, :notice => 'Factura fue grabada con exito .') }
           format.xml  { render :xml => @purchase, :status => :created, :location => @purchase}
         else
@@ -3369,7 +3393,7 @@ def newfactura2
           format.html { redirect_to(@purchase, :notice => 'Factura fue grabada con exito .') }
           format.xml  { render :xml => @purchase, :status => :created, :location => @purchase}
         else
-          format.html { render :action => "new" }
+          format.html { render :action => "new"  }
           format.xml  { render :xml => @purchase.errors, :status => :unprocessable_entity }
         end
       end 

@@ -1198,7 +1198,7 @@ def get_supplier_payments2(moneda,fecha1,fecha2)
    @facturas = Purchase.find_by_sql(["
   SELECT   yearmonth as year_month,
    supplier_id,
-   SUM(balance) as balance   
+   SUM(balance) as balance  
    FROM purchases 
    WHERE moneda_id = ? and balance>0 and date1 >= ? and date1  <= ?
    GROUP BY 2,1
@@ -1209,7 +1209,7 @@ def get_supplier_payments2(moneda,fecha1,fecha2)
  end 
 
 
-#reporte de cancelaciones detallado x proveedor
+#reporte de cancelaciones detaludo x proveedor
 
 def get_supplier_payments0(fecha1,fecha2)
     @vouchers = SupplierPayment.where([" company_id = ? AND fecha1 >= ? and fecha1<= ?  ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:id)
