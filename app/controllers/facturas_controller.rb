@@ -365,11 +365,11 @@ class FacturasController < ApplicationController
             row << product.nameproducto
             row << product.unidad 
             row << product.supplier.name
-            if product.employee.full_name.nil?
+            #if product.employee.full_name.nil?
               row << product.employee_id    
-            else 
-              row << product.employee.full_name 
-            end
+            #else 
+             # row << product.employee.full_name 
+            #end
             row << product.truck.placa             
             row << sprintf("%.2f",product.quantity.to_s)
             row << sprintf("%.2f",product.get_stock(product.product_id).to_s)
