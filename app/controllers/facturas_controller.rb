@@ -366,7 +366,7 @@ class FacturasController < ApplicationController
             row << product.unidad 
             row << product.supplier.name
             #if product.employee.full_name.nil?
-              row << product.employee_id    
+              row << ""    
             #else 
              # row << product.employee.full_name 
             #end
