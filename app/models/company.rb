@@ -2176,6 +2176,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
             movdetail.save           
           else     
           
+
             #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
             #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
             #detail.save 
@@ -2281,10 +2282,13 @@ def get_purchaseorder_detail2(fecha1,fecha2)
           if movdetail
 
             if detail.quantity == nil
-            
+               
               movdetail.stock_inicial += 0   
             else
               if detail.quantity > 0
+                if detail.product_id == 6685   
+               movdetail.price = 9.04 
+              end 
                 movdetail.stock_inicial += detail.quantity
               else
                 movdetail.stock_inicial -= detail.quantity*-1
@@ -2426,6 +2430,9 @@ def get_purchaseorder_detail2(fecha1,fecha2)
               movdetail.ingreso += 0  
             else
               if detail.quantity > 0
+                if detail.product_id == 6685   
+               movdetail.price = 9.04 
+              end 
                 movdetail.ingreso += detail.quantity
               else
                 movdetail.salida  += detail.quantity*-1
