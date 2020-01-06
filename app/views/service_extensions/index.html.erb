@@ -17,7 +17,13 @@
       <tr>
         <td><%= service_extension.code %></td>
         <td><%= service_extension.name %></td>
+        <% if service_extension.servicebuy  == nil %>
+        <td> - </td>
+        <% else %>
         <td><%= service_extension.servicebuy.name %></td>
+        
+        <% end %>
+
         <td><%= link_to 'Show', service_extension %></td>
         <td><%= link_to 'Edit', edit_service_extension_path(service_extension) %></td>
         <td><%= link_to 'Destroy', service_extension, method: :delete, data: { confirm: 'Are you sure?' } %></td>

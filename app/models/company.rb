@@ -3128,7 +3128,7 @@ def get_ajust_detail(fecha1,fecha2,product)
     from ajust_details   
     INNER JOIN ajusts ON ajust_details.ajust_id = ajusts.id
     INNER JOIN products ON ajust_details.product_id = products.id
-    WHERE ajust_details.product_id = ?  and ajusts.fecha1 > ? and ajusts.fecha1 < ?',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+    WHERE ajust_details.product_id = ?  and ajusts.fecha1 > ? and ajusts.fecha1 < ? and ajusts.id >= 483',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
     return @ajustes 
 
 end

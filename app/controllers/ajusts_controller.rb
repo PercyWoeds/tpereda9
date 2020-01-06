@@ -395,9 +395,12 @@ class AjustsController < ApplicationController
 
           query = str_sql_search(q, fields)
 
-          @ajusts = Ajust.paginate(:page => params[:page], :order => 'id DESC', :conditions => ["company_id = ? AND (#{query})", @company.id])
+         # @ajusts = Ajust.paginate(:page => params[:page], :order => 'id DESC', :conditions => ["company_id = ? AND (#{query})", @company.id])
+
+          @ajusts =  Ajust.where("company_id =?  and id >=?",@company.id, 483 ).order("id DESC").paginate(:page => params[:page])
+       
         else
-          @ajusts = Ajust.where(company_id:  @company.id).order("id DESC").paginate(:page => params[:page])
+          @ajusts = Ajust.where("company_id =?  and id >=?",@company.id, 483 ).order("id DESC").paginate(:page => params[:page])
           @filters_display = "none"
         end
       end

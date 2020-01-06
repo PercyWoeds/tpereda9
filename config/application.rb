@@ -26,4 +26,15 @@ module Mnygo
     config.autoload_paths << Rails.root.join('lib')
     
   end
+
+  class String
+  def to_d
+    begin
+      BigDecimal(self)
+    rescue ArgumentError
+      BigDecimal(0)
+    end
+  end
+end
+
 end
