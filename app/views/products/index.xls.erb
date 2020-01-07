@@ -8,6 +8,8 @@
     <Table>
       <Row>
         <Cell><Data ss:Type="String">ID</Data></Cell>
+        <Cell><Data ss:Type="String">Code</Data></Cell>
+        
         <Cell><Data ss:Type="String">Nombre</Data></Cell>
         <Cell><Data ss:Type="String">Unidad</Data></Cell>
         <Cell><Data ss:Type="String">Ubicacion</Data></Cell>
@@ -29,6 +31,7 @@
             <%  $lcCliName = product.products_category.category %>
 
           <Row>
+            <Cell><Data ss:Type="String"><%= product.id %></Data></Cell>
             <Cell><Data ss:Type="String"><%= product.code %></Data></Cell>
             <Cell><Data ss:Type="String"><%= product.name %></Data></Cell>
             <Cell><Data ss:Type="String"><%= product.unidad %></Data></Cell>

@@ -47,11 +47,12 @@
           <td class="bordered_right bordered_bottom">
             <%= link_to "Ver...", ajust %>
           </td>
-         
+          
+          <% if current_user.level = "admin" %>
           <td class="bordered_right bordered_bottom">
-            <%= link_to 'Delete', ajust, :data=> {:confirm => 'Esta seguro ?'}, :method => :delete  %> 
+            <%= link_to 'Eliminar', ajust, :data=> {:confirm => 'Esta seguro ?'}, :method => :delete  %> 
           </td>
-
+          <% end %>    
         </tr>
       <% end %>
     </tbody>

@@ -178,8 +178,10 @@ class AjustsController < ApplicationController
 ##
 
 
-
-
+ def import
+      AjustDetail.import(params[:file])
+       redirect_to root_url, notice: "Archivo importado."
+  end 
 
  def client_data_headers
 

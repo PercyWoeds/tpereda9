@@ -50,7 +50,7 @@ class ProductsController < ApplicationController
     @path = 'products'
     @pagetitle = "Products"
 
-    @company = Company.find_by(user_id: current_user.id)
+    @company = Company.find(1)
     @products = @company.get_products2
     
   respond_to do |format|

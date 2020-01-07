@@ -167,3 +167,13 @@
 </div>
 
 
+
+
+
+<h3>Importar Archivo "*.csv"</h3>
+
+<%= form_tag import_ajusts_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+

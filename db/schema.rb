@@ -936,7 +936,6 @@ ActiveRecord::Schema.define(version: 20191216161702) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.float    "preciocigv"
-    t.integer  "factura_id"
   end
 
   create_table "invoiceitems", force: :cascade do |t|
@@ -1222,7 +1221,6 @@ ActiveRecord::Schema.define(version: 20191216161702) do
     t.string   "references"
     t.string   "manifest"
     t.string   "hora"
-    t.string   "address1"
     t.string   "direccion1"
     t.string   "direccion2"
     t.float    "importe2"

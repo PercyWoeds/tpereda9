@@ -201,6 +201,9 @@
     collection { post :import }
   end 
   
+  resources :ajust_details  do
+    collection { post :import }
+  end 
   
   resources :inventarios  do
     collection { post :import }

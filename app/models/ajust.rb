@@ -52,6 +52,14 @@ class Ajust < ActiveRecord::Base
                      "COSTO ",
                      "TOTAL"]    
 
+
+
+  def self.import(file)
+        CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
+        AjustDetail.create! row.to_hash 
+      end
+  end     
+
   def get_subtotal(items)
     subtotal = 0
     
