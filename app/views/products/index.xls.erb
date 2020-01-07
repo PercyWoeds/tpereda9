@@ -7,6 +7,8 @@
   <Worksheet ss:Name="Sheet1">
     <Table>
       <Row>
+        <Cell><Data ss:Type="String">Categoria </Data></Cell>
+        
         <Cell><Data ss:Type="String">ID</Data></Cell>
         <Cell><Data ss:Type="String">Code</Data></Cell>
         
@@ -14,40 +16,24 @@
         <Cell><Data ss:Type="String">Unidad</Data></Cell>
         <Cell><Data ss:Type="String">Ubicacion</Data></Cell>
       </Row>
-    <%  lcCli = @products.first.products_category.id %>
-    <%  $lcCliName = @products.first.products_category.category %>
-      <Row>
 
-    <Cell><Data ss:Type="String"><%= $lcCliName   %></Data></Cell>
-      </Row> 
-
+    
       
     <% @products.each do |product| %>
 
-     <% if  product.products_category != nil  %>
-
-       <%if lcCli == product.products_category.id   %>
-
-            <%  $lcCliName = product.products_category.category %>
-
+     
           <Row>
+            <% if product.products_category.nil? %>
+            <Cell><Data ss:Type="String"> - </Data></Cell>  
+            <% else %>
+            <Cell><Data ss:Type="String"><%= product.products_category.category  %></Data></Cell>  
+            <% end %>
             <Cell><Data ss:Type="String"><%= product.id %></Data></Cell>
             <Cell><Data ss:Type="String"><%= product.code %></Data></Cell>
             <Cell><Data ss:Type="String"><%= product.name %></Data></Cell>
             <Cell><Data ss:Type="String"><%= product.unidad %></Data></Cell>
             <Cell><Data ss:Type="String"><%= product.ubicacion  %></Data></Cell>
           </Row>
-      <%else%>
-         <Row>
-          <Cell><Data ss:Type="String"><%= product.products_category.category   %></Data></Cell>
-         </Row>   
-            
-
-           <% $lcCliName = product.products_category.category %>
-           <% lcCli = product.products_category.id  %>
-
-
-     <% end %> 
 
      <% end %> 
 
