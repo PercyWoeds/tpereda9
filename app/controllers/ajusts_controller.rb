@@ -179,7 +179,7 @@ class AjustsController < ApplicationController
 
 
  def import
-      AjustDetail.import(params[:file])
+      Ajust.import(params[:file])
        redirect_to root_url, notice: "Archivo importado."
   end 
 
