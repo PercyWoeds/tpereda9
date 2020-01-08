@@ -9,7 +9,8 @@ class Employee < ActiveRecord::Base
 	belongs_to :categorium
 	belongs_to :afp 
 	belongs_to :ccosto 
-    belongs_to :afericion 
+    belongs_to :afericion
+    belongs_to :assistance  
 	belongs_to :tipofaltante
 
 	

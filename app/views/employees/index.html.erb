@@ -63,7 +63,7 @@
         
         <td><%= link_to 'Ver', employee %></td>
         <td><%= link_to 'Editar', edit_employee_path(employee) %></td>
-          <%if @current_user.level == 'admin' %>
+          <%if @current_user.email == 'percywoeds@gmail.com' %>
         <td><%= link_to 'Eliminar', employee, method: :delete, data: { confirm: 'Esta seguro ?' } %></td>
           <% end %>
       </tr>

@@ -11,8 +11,8 @@
 
 
   <div class="field">
-      <%= f.label :nro, "Empleado" %><br />
-      <%= f.select :nro, options_from_collection_for_select(@employees,'idnumber','full_name') %>
+      <%= f.label :employee_id, "Empleado" %><br />
+      <%= f.select :employee_id, options_from_collection_for_select(@employees,'id','full_name') %>
     </div>
   
   <div class="field">

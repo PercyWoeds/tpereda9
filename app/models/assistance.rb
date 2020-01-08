@@ -1,5 +1,11 @@
 class Assistance < ActiveRecord::Base
 
+    belongs_to :inasist
+    belongs_to :employee
+
+    validates_uniqueness_of :idnumber
+    validates_presence_of :company_id, :idnumber, :firstname,:lastname,:fecha_ingreso,:fecha_nacimiento,:sueldo,:categoria_id,:division_id,:ccosto_id,:ocupacion_id,:comision_flujo,:asignacion,:location_id
+   
     def self.import(file)
           CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
           	
@@ -33,7 +39,7 @@ class Assistance < ActiveRecord::Base
          hora10 = fecha_asistencia.in_time_zone.change( hour: 8) 
          hora20 = fecha_asistencia.in_time_zone.change( hour: 17)
         
-        a=  Assistance.new(departamento: "", nombre:"", nro:ip.idnumber , fecha:  fecha_asistencia, equipo:"", cod_verificacion: "",
+        a=  Assistance.new(departamento: "", nombre:"", employee_id:ip.id  , fecha:  fecha_asistencia, equipo:"", cod_verificacion: "",
           num_tarjeta:"",hora1: hora10 ,hora2: hora20, hora_efectivo: hora10 )
         
         a.save
