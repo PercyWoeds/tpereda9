@@ -123,6 +123,13 @@ def generar
 
 end 
 
+def generar1
+        
+    @company = Company.find(1)
+    @users = @company.get_users()
+
+end 
+
 
 # Process an invoice
   def do_process
@@ -138,6 +145,8 @@ end
     
   end
 
+    
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_assistance

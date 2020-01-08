@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br">
+  <head>
+      
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    
+     <script>
+      function number_pages() {
+        var vars={};
+        var x=document.location.search.substring(1).split('&');
+        for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = decodeURIComponent(z[1]);}
+        var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+        for(var i in x) {
+          var y = document.getElementsByClassName(x[i]);
+          for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+        }
+      }
+    </script>
+    
+  </head>
+
+  <body style="margin-top: 70px;" onload="number_pages()">
+      
+
+
+
+<table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
+
+            <tr bgcolor="#B4D7F7">
+        <th width="80%" align="center">   SISTEMA DE GESTION DE CALIDAD Y SEGURIDAD VIAL  
+        </th>
+        <th width="10%"> Codigo</th>
+        <th width="10%"> TR-RHF-F-054</th>
+        
+         <tr bgcolor="#B4D7F7">
+
+        <th width="80%" align="center">   SEGURIDAD Y SALUD OCUPACIONAL 
+        </th>
+        <th width="10%"> Version</th>
+        <th  width="10%"> 02 </th>
+        
+      </tr>
+
+         <tr bgcolor="#B4D7F7">
+        <th width="80%" align="center">   INFORME DIARIO DE ASISTENCIA DEL PERSONAL 
+         </th> 
+        <th width="10%"> Pagina.</th>
+        <th width="10%">  <span class="page"></span> </th>
+        
+        </tr> 
+
+        
+     
+    </table>
+ 
+   
+
+  
+  
+
+
+  </body>
+  
+  
+</html>

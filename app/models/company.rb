@@ -600,6 +600,9 @@ def get_guias_2(fecha1,fecha2)
     
  end
  
+ 
+
+
  def get_st_day(fecha1,fecha2,local)
 
   if local =="all"
@@ -611,6 +614,21 @@ def get_guias_2(fecha1,fecha2)
   end 
 
  end
+
+ def get_inasists
+
+  @inasists = Inasist.all.order(:id)
+
+ end
+
+
+ def get_asistencia_day(fecha1,fecha2)
+
+    @facturas = Assistance.where([" fecha1 >= ? and fecha1 <= ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:inasist_id )
+    return @facturas
+  
+ end
+
 
  def get_local_name(local)
 

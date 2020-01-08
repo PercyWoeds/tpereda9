@@ -3906,6 +3906,43 @@ def client_data_headers
 
 
 
+
+
+ #Process an invoice
+  def reporte_asistencia1
+  
+
+    $lcFacturasall = '1'
+
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+   
+
+    @current_user_id = current_user.id 
+    
+    @conceptos  = @company.get_inasists          
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Facturas ",template: "assistances/reporte_1.pdf.erb",locals: {:facturas => @conceptos},
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header5.html',
+                           right: '[page] of [topage]'
+                  }
+               }
+
+        end   
+      when "To Excel" then render xlsx: 'rpt_st_1'
+      else render action: "index"
+    end
+  end
+
+
+
  ##fin imprimir pdf facturas
 
   

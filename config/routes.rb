@@ -153,12 +153,15 @@
 
     collection {get :rpt_salidas_pdf }
     collection {get :rpt_salidas_all_pdf}
+    collection { get  :reporte_asistencia1 }
 
  end 
     
 
   resources :assistances do 
    collection { post :import }
+  
+
   end  
   
   resources :ventaislas  do
@@ -685,6 +688,8 @@ end
   match 'cotizacions/do_cancelar/:id' => 'cotizacions#do_anular', via: [:get, :post]
 
   match 'assistances/generar/:id' => 'assistances#generar', via: [:get, :post]
+  match 'assistances/generar1/:id' => 'assistances#generar1', via: [:get, :post]
+
 
   match 'assistances/do_process/:id' => 'assistances#do_process', via: [:get, :post]
   resources :assistances

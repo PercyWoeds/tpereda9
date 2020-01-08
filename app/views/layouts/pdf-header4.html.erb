@@ -30,26 +30,32 @@
         <th widht="50%" align= "right">Fecha:  <%= Date.today.strftime("%d/%m/%Y") %>  </th>
         
      </tr>
-   </table> 
+   </table>
 <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
           <tr>
-        <td width="80%" align="center">   <h4 ><center> CUENTAS PROVEEDORES   </center>   </h4>
+        <td width="80%" align="center">   <h4 ><center> CONTROL DE VENTAS SEMANALES DEL MES DE <%=  I18n.l(@fecha1.to_date, format: '%B',locale: :es  ) %>  </center>   </h4>
         </td>  
-
+        
         <td width="20%" align="right">  Page <span class="page"></span> of <span class="topage"></span></td>
 
       </tr>
 
-     
+
+      <tr>
+              <td width="80%" align="right"  > Local : <%= @local_name %></td>
+      
+              <td width="20%" align="right"  > <%=@formato%> </td>
+      </tr>      
+
     </table>
  
     
   
   <font size="2" face="Courier New" >  
-  <table style='font-family:"Courier New", Courier, monospace; font-size:90% ;width:100%'>
+  <table style='font-family:"Courier New", Courier, monospace; font-size:120% ;width:100%'>
   
   <tr bgcolor="#B4D7F7">
-    <td width="80%"   ><center> <strong> Pendiende de Pago Desde : <%= @fecha1 %>  Hasta: <%= @fecha2 %> </strong></center> </td>
+    <td width="80%"   ><center> <strong> Servicios del : <%= @fecha1 %>  al: <%= @fecha2 %> </strong></center> </td>
     <td width="20%"   > </td>
     
   </tr>
@@ -58,23 +64,25 @@
   </table>
 
   
-  <table style='font-family:"Courier New", Courier, monospace; font-size:90% ;width:100%'>
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
   <tr bgcolor="#B4D7F7">
     <td width="4%"> Item </td>
-    <td width="8%"> Fecha  </td>
-    <td width="8%"> Recepcion </td>
-    <td width="8%"> Vence </td>
-    <td width="8%">  </td>
-    
-    <td width="24%"> Documento </td>
+    <td width="5%"> Fecha  </td>
+    <td width="5%"> Registro </td>
+    <td width="18%"> Cliente </td>
+    <td width="10%"> Origen </td>
+    <td width="10%"> Destino </td>
+    <td width= "5%"> IMPORTE S/. </td>
 
-    <td width="10%"> Total </td>
-    <td width="10%"> Cargos </td>
-    <td width="10%"> Pagos </td>
-    <td width="10%"> Saldo  </td>
+    <td width="5%"> Empaletizado </td>
+    <td width="5%"> Montacarga </td>
+    <td width="5%"> IMPORTE US$ </td>
+    <td width="5%"> Escolta </td>
+    <td width="5%"> Stand by </td>
+    <td width="5%"> OST </td>
+    <td width="5%"> Procesado  </td>
   </tr>
   </table>
-
 
   </body>
   

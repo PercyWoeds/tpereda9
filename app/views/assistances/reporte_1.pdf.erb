@@ -1,0 +1,99 @@
+<html>
+<body>
+    
+     <font size="2" face="Courier New" >  
+
+    <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
+ 
+ <tr>
+  <td>
+   Para : Gerencia  
+ </td>
+ </tr>
+ <td> 
+   Asunto : Inasistencia,permisos a cuenta de vacaciones y domingos trabajados  
+ </td>
+  </tr>
+  <tr>
+  <td>
+   Fecha: <%= @fecha1 %>  Hasta: <%= @fecha2 %> 
+ </td>
+</tr>
+<td>
+   Por medio del presente se remite el siguiente reporte del mes 
+ </td>
+  </tr>
+
+</table>  
+  
+ 
+
+  
+  
+      <% nroitem = 1%>
+      <% total_1 =  0%>
+      <% total_2 =  0%>
+      
+     
+      <% subtotal =  0%>
+
+      <% total =  0%>
+      
+       <% for  concepto in @conceptos  %>
+
+        <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
+
+
+           <tr bgcolor="#B4D7F7">
+        
+          <th align="center" ><%=  concepto.name %>   </th>
+          </tr>
+       </table>
+
+            <% @detalle = Assistance.where("inasist_id=? and fecha>=? and fecha<=?", concepto.id ,"#{@fecha1} 00:00:00","#{@fecha2} 23:59:59") %>
+
+          <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
+             <tr> 
+              <th> Nro. </th>
+              <th> Colaborador </th>
+              <th> Cargo </th>
+              <th> Observaciones </th>                      
+             </tr> 
+             <% nro_item = 1 %> 
+
+            <% for detalle in @detalle %>
+
+               <tr> 
+                <td width = "5%" ><%=  nro_item   %></td>
+                <td width = "35%" ><%=  detalle.employee.full_name  %></td>
+                <td width = "30%" align ="center"><%= detalle.employee.ocupacion.name  %></td>
+                <td width = "30%" align ="left">  <%= detalle.observacion   %> </td>
+                     
+                </tr>
+
+               <% nro_item += 1 %>  
+
+            <% end %> 
+            </table>
+       <% end %>
+           
+
+
+    
+      
+      <hr>  
+     
+     <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+     <tr bgcolor="#B4D7F7">
+          <td width = "80%" align ="center">Totales  </td>
+          <td width = "10%" align ="right">  </td>
+          <td width = "10%" align ="right">   </td>
+    
+    </tr>
+   </table>
+
+    
+    </body>
+      
+      </html>
+      
