@@ -4,7 +4,7 @@ class AssistancesController < ApplicationController
   # GET /assistances
   # GET /assistances.json
   def index
-    @assistances = Assistance.find_by_sql(['Select assistances.id,departamento,nro,nombre,fecha,employees.full_name,hora1,hora2 from assistances  INNER JOIN employees ON assistances.nro = employees.idnumber order by fecha,employees.full_name']).paginate(:page => params[:page])
+    @assistances = Assistance.all.order(:fecha ).paginate(:page => params[:page])
   end
 
   # GET /join
@@ -121,6 +121,7 @@ def generar
     @users = @company.get_users()
 
 end 
+
 
 # Process an invoice
   def do_process

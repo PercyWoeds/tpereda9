@@ -24,8 +24,8 @@
       <tr scope="row">
         <td><%= assistance.departamento %></td>
       
-        <td><%= assistance.nro %></td>
-        <td><%= assistance.full_name %></td>
+        <td><%= assistance.employee.idnumber %></td>
+        <td><%= assistance.employee.full_name %></td>
         <%if assistance.fecha.nil? %>
         <td></td>
         
