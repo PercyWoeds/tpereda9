@@ -127,10 +127,16 @@ end
   
     fecha_asistencia = params[:fecha1]
 
-    @assistance.process
+    @assistance = Assistance.last 
+    if @assistance.nil? 
+      flash[:notice] = "Tiene que ingresar al menos una asistencia para poder generar "
+      
+    else  
+      @assistance.process(fecha_asistencia)
+      flash[:notice] = "The invoice order has been processed."
+      redirect_to @assistance
+    end 
     
-    flash[:notice] = "The invoice order has been processed."
-    redirect_to @assistance
   end
 
   private
