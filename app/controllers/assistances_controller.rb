@@ -18,16 +18,28 @@ class AssistancesController < ApplicationController
 
     @company = Company.find(1)
     @employees = @company.get_employees
+    @inasists = @company.get_inasists
+
+
+    now = Time.now.in_time_zone.change( hour: 8)
+    puts "horaxxxxxxx"
+    puts now.to_s 
 
     @assistance['fecha'] = Date.today
-   
-
+    @assistance['hora1'] = Time.now.in_time_zone.change( hour: 8) 
+    @assistance['hora2'] = Time.now.in_time_zone.change( hour: 17)
+    @assistance['hora_efectivo'] = Time.now.in_time_zone.change( hour: 8)
+    
 
   end
 
   # GET /assistances/1/edit
   def edit
+    @company = Company.find(1)
+
     @employees = @company.get_employees
+    
+    @inasists = @company.get_inasists
 
   end
 
@@ -35,7 +47,11 @@ class AssistancesController < ApplicationController
   # POST /assistances.json
   def create
 
+    @company = Company.find(1)
+
+    @employees = @company.get_employees
     
+    @inasists = @company.get_inasists    
 
     @assistance = Assistance.new(assistance_params)
 
@@ -57,7 +73,13 @@ class AssistancesController < ApplicationController
   # PATCH/PUT /assistances/1
   # PATCH/PUT /assistances/1.json
   def update
-@employees = @company.get_employees
+
+    @company = Company.find(1)
+
+    @employees = @company.get_employees
+    
+    @inasists = @company.get_inasists
+
 
     respond_to do |format|
       if @assistance.update(assistance_params)
@@ -100,6 +122,6 @@ class AssistancesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def assistance_params
-      params.require(:assistance).permit(:departamento, :nombre, :nro, :fecha, :equipo, :cod_verificacion, :num_tarjeta,:hora1,:hora2)
+      params.require(:assistance).permit(:departamento, :nombre, :nro, :fecha, :equipo, :cod_verificacion, :num_tarjeta,:hora1,:hora2,:hora_efectivo, :inasist_id,:observacion)
     end
 end

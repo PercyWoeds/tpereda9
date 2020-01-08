@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191216161702) do
+ActiveRecord::Schema.define(version: 20200108152747) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -146,7 +146,12 @@ ActiveRecord::Schema.define(version: 20191216161702) do
     t.datetime "updated_at",       null: false
     t.datetime "hora1"
     t.datetime "hora2"
+    t.datetime "hora_efectivo"
+    t.string   "observacion"
+    t.integer  "inasist_id"
   end
+
+  add_index "assistances", ["inasist_id"], name: "index_assistances_on_inasist_id", using: :btree
 
   create_table "bank_acounts", force: :cascade do |t|
     t.string   "number"
@@ -837,6 +842,13 @@ ActiveRecord::Schema.define(version: 20191216161702) do
     t.integer  "employee_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "inasists", force: :cascade do |t|
+    t.string   "name"
+    t.string   "code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "instruccions", force: :cascade do |t|
@@ -2510,6 +2522,7 @@ ActiveRecord::Schema.define(version: 20191216161702) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "assistances", "inasists"
   add_foreign_key "cpagar_details", "cpagars"
   add_foreign_key "service_extensions", "servicebuys"
 end

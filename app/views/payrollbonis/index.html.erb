@@ -19,14 +19,28 @@
   <tbody>
     <% @payrollbonis.each do |payrollboni| %>
       <tr>
-      
+      <% if payrollboni.payroll.nil? %>
+        <td> - </td> 
+        <td> - </td> 
+        <td> - </td> 
+        
+      <% else %>
         <td><%= payrollboni.payroll.code %></td> 
+
         <td><%= payrollboni.payroll.fecha_inicial.strftime("%d/%m/%Y") %></td>
+
         <% if payrollboni.payroll.fecha_final %>
+
         <td><%= payrollboni.payroll.fecha_final.strftime("%d/%m/%Y") %></td>
+
         <%else%>
+
         <td> </td>
         <%end %>
+
+      <%end %>
+
+
         <td><%= payrollboni.employee.full_name %></td>
         <td><%= payrollboni.tm.descrip %></td>
         <td><%= payrollboni.valor.name %></td>

@@ -1,0 +1,2 @@
+module InasistsHelper
+end

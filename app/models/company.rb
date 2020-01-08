@@ -18,6 +18,12 @@ class Company < ActiveRecord::Base
   has_many :manifests 
  
 
+ def get_inasists
+   
+   @inasists = Inasist.all 
+      return @inasists 
+ end 
+ 
  def get_eess
    
    @dato = Eess.all 

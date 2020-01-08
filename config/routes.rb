@@ -1,5 +1,6 @@
   Mnygo::Application.routes.draw do
 
+  resources :inasists
   resources :manifestships
   resources :cpagar_details
   resources :cpagars

@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Inasists</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Code</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @inasists.each do |inasist| %>
+      <tr>
+        <td><%= inasist.name %></td>
+        <td><%= inasist.code %></td>
+        <td><%= link_to 'Show', inasist %></td>
+        <td><%= link_to 'Edit', edit_inasist_path(inasist) %></td>
+        <td><%= link_to 'Destroy', inasist, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+
+<%= link_to 'Nuevo concepto', new_inasist_path %>
+
+<%= link_to 'Regresar', "/companies/planilla/1" %>
