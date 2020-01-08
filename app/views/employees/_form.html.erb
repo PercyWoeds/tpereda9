@@ -90,10 +90,21 @@
     <%= f.text_field :email2 %>
   </div>
   <div class="field">
+    <%= f.label :cod_interno , "Cod.interno"%><br>
+    <%= f.text_field :cod_interno %>
+  </div>
+  
+
+  <div class="field">
     <%= f.label :sueldo, "Sueldo:" %><br>
     <%= f.number_field :sueldo,:step => 0.5 %>
   </div>
   
+  
+  <div class="field">
+    <%= f.label :efectivo, "Efectivo:" %><br>
+    <%= f.number_field :efectivo,:step => 0.5 %>
+  </div>
   
   <div class="field">
       <%= f.label :afp_id , "Afp  "%><br />

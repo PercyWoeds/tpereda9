@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200108200949) do
+ActiveRecord::Schema.define(version: 20200108210429) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -150,6 +150,7 @@ ActiveRecord::Schema.define(version: 20200108200949) do
     t.string   "observacion"
     t.integer  "inasist_id"
     t.integer  "employee_id"
+    t.datetime "hora_efectivo2"
   end
 
   add_index "assistances", ["inasist_id"], name: "index_assistances_on_inasist_id", using: :btree
@@ -703,6 +704,7 @@ ActiveRecord::Schema.define(version: 20200108200949) do
     t.string   "cuenta_bancaria"
     t.string   "interasistence"
     t.string   "cod_interno"
+    t.float    "efectivo"
   end
 
   create_table "factura_details", force: :cascade do |t|

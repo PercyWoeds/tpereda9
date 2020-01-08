@@ -27,9 +27,10 @@ class AssistancesController < ApplicationController
 
     @assistance['fecha'] = Date.today
     @assistance['hora1'] = Time.now.in_time_zone.change( hour: 8) 
-    @assistance['hora2'] = Time.now.in_time_zone.change( hour: 17)
+    @assistance['hora2'] = Time.now.in_time_zone.change( hour: 17, min: 45)
     @assistance['hora_efectivo'] = Time.now.in_time_zone.change( hour: 8)
-    
+    @assistance['hora_efectivo2'] = Time.now.in_time_zone.change( hour: 18, min: 30)
+        
 
   end
 
@@ -128,15 +129,12 @@ end
   
     fecha_asistencia = params[:fecha1]
 
-    @assistance = Assistance.last 
-    if @assistance.nil? 
-      flash[:notice] = "Tiene que ingresar al menos una asistencia para poder generar "
-      
-    else  
+    @assistance = Assistance.first 
+    
       @assistance.process(fecha_asistencia)
       flash[:notice] = "The invoice order has been processed."
-      redirect_to @assistance
-    end 
+      redirect_to assistances_path
+   
     
   end
 
@@ -148,6 +146,6 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def assistance_params
-      params.require(:assistance).permit(:departamento, :nombre, :nro, :fecha, :equipo, :cod_verificacion, :num_tarjeta,:hora1,:hora2,:hora_efectivo, :inasist_id,:observacion)
+      params.require(:assistance).permit(:departamento, :nombre, :nro, :fecha, :equipo, :cod_verificacion, :num_tarjeta,:hora1,:hora2,:hora_efectivo, :inasist_id,:observacion,:hora_efectivo2,:employee_id)
     end
 end
