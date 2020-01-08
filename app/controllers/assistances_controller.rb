@@ -114,6 +114,25 @@ class AssistancesController < ApplicationController
   end 
 
 
+
+def generar
+        
+    @company = Company.find(1)
+    @users = @company.get_users()
+
+end 
+
+# Process an invoice
+  def do_process
+  
+    fecha_asistencia = params[:fecha1]
+
+    @assistance.process
+    
+    flash[:notice] = "The invoice order has been processed."
+    redirect_to @assistance
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_assistance

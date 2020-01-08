@@ -21,4 +21,27 @@ class Assistance < ActiveRecord::Base
         end
     end     
 
+ # Process the invoice
+  def process
+
+      planilla  =Employee.where(planilla: "1")
+      
+
+
+      for ip in planilla
+ 
+         hora10 = fecha_asistencia.in_time_zone.change( hour: 8) 
+         hora20 = fecha_asistencia.in_time_zone.change( hour: 17)
+        
+        a=  Assistance.new(departamento: "", nombre:"", nro:"", fecha:  fecha_asistencia, equipo:"", cod_verificacion: "",
+          num_tarjeta:"",hora1: hora10 ,hora2: hora20, hora_efectivo: hora10 )
+        
+        a.save
+
+        self.save
+    
+
+      end 
+  end 
+
 end

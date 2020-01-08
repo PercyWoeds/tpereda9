@@ -684,8 +684,10 @@ end
   match 'cotizacions/do_anular/:id' => 'cotizacions#do_anular', via: [:get, :post]
   match 'cotizacions/do_cancelar/:id' => 'cotizacions#do_anular', via: [:get, :post]
 
+  match 'assistances/generar/:id' => 'assistances#generar', via: [:get, :post]
 
-
+  match 'assistances/do_process/:id' => 'assistances#do_process', via: [:get, :post]
+  resources :assistances
 
 # Guias
   
