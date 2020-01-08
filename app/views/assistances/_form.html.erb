@@ -12,7 +12,7 @@
 
   <div class="field">
       <%= f.label :employee_id, "Empleado" %><br />
-      <%= f.select :employee_id, options_from_collection_for_select(@employees,'id','full_name') %>
+      <%= f.collection_select :employee_id, @employees, :id, :full_name, :prompt => true %>
     </div>
   
   <div class="field">
@@ -41,7 +41,7 @@
 
   <div class="field">
       <%= f.label :inasist_id , "Concepto Asistencia "%><br />
-      <%= f.select :inasist_id, options_from_collection_for_select(@inasists,'id','name') %>
+      <%= f.collection_select :inasist_id, @inasists, :id, :name, :prompt => true %>
   </div>
 
   <div class="field">
