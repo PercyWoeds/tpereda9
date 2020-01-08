@@ -29,9 +29,14 @@ class Assistance < ActiveRecord::Base
  # Process the invoice
   def process(fecha)
 
+      Assistance.delete_all 
+      Payrollboni.delete_all 
+
+
       planilla  =Employee.where(planilla: "1")
       
       fecha_asistencia = fecha 
+
 
       for ip in planilla
  

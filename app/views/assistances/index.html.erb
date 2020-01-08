@@ -23,9 +23,11 @@
     <% @assistances.each do |assistance| %>
       <tr scope="row">
         <td><%= assistance.departamento %></td>
-      
+      <% if assistance.employee.nil?%>
+      <%else %>
         <td><%= assistance.employee.idnumber %></td>
         <td><%= assistance.employee.full_name %></td>
+      <%end %>  
         <%if assistance.fecha.nil? %>
         <td></td>
         
