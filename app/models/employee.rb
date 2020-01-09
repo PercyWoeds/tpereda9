@@ -95,9 +95,10 @@ class Employee < ActiveRecord::Base
               a.fecha_ingreso = row['fecha_ingreso']
               a.fecha_cese = row['fecha_cese']
               a.afp_id = row['afp_id']
-              a.onp_id = row['onp_id']
+              a.onp  = row['onp_id']
               a.sueldo = row['sueldo']
               a.asignacion = row['asignacion']
+              a.planilla = "1"
               a.save
 
           else
