@@ -99,6 +99,9 @@ class Employee < ActiveRecord::Base
               a.sueldo = row['sueldo']
               a.asignacion = row['asignacion']
               a.planilla = "1"
+              a.cod_interno = row['item']
+              a.efectivo = 0 
+              
               a.save
 
           else
