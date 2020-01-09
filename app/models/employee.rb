@@ -86,7 +86,25 @@ class Employee < ActiveRecord::Base
 	def self.import(file)
   
           CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
-          Employee.create! row.to_hash 
+
+
+           a = Employee.find_by(idnumber: row['dni'])
+           
+           if a 
+
+              a.fecha_ingreso = row['fecha_ingreso']
+              a.fecha_cese = row['fecha_cese']
+              a.afp_id = row['afp_id']
+              a.onp_id = row['onp_id']
+              a.sueldo = row['sueldo']
+              a.asignacion = row['asignacion']
+              a.save
+
+          else
+
+              puts row['idnumber']
+           end
+
         end        
   end
 
