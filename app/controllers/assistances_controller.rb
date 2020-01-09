@@ -12,6 +12,7 @@ class AssistancesController < ApplicationController
   def show
   end
 
+
   # GET /assistances/new
   def new
     @assistance = Assistance.new
@@ -59,6 +60,9 @@ class AssistancesController < ApplicationController
     @assistance[:equipo] ="1"
     @assistance[:cod_verificacion] ="FP"
     @assistance[:num_tarjeta] =""
+    
+
+
 
     respond_to do |format|
       if @assistance.save

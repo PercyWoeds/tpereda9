@@ -11,6 +11,7 @@ gem 'rails', '4.2.8'
 # Added
 gem 'bluecloth'
 
+gem 'time_difference'
 
 gem 'htmlentities'
 gem 'will_paginate'
