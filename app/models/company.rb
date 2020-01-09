@@ -616,12 +616,6 @@ def get_guias_2(fecha1,fecha2)
 
  end
 
- def get_inasists
-
-  @inasists = Inasist.all.order(:id)
-
- end
-
 
  def get_asistencia_day(fecha1,fecha2)
 
