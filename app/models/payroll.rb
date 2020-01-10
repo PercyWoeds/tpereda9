@@ -169,7 +169,7 @@ class Payroll < ActiveRecord::Base
             pl.dias = pl.totaldia + pl.falta + pl.vaca 
             #Remuneracion neta
             
-            pl.remneta = pl.remuneracion / 30 * (pl.totaldia + pl.falta) 
+            pl.remneta = pl.remuneracion / 30 * (pl.totaldia ) 
             pl.hextra0 = 0
             pl.calc4 = 0 
             pl.calc7 = 0 
