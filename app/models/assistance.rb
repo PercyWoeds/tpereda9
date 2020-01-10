@@ -64,7 +64,7 @@ class Assistance < ActiveRecord::Base
   hours = seconds_diff / 3600
   seconds_diff -= hours * 3600
 
-  minutes = seconds_diff / 60
+  minutes = seconds_diff / 60 
   seconds_diff -= minutes * 60
 
   seconds = seconds_diff

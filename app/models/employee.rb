@@ -21,7 +21,7 @@ class Employee < ActiveRecord::Base
 	has_many :assistances  
     
     validates_uniqueness_of :idnumber,:cod_interno
-    validates_presence_of :company_id, :idnumber, :firstname,:lastname,:fecha_ingreso,:fecha_nacimiento,:sueldo,:categoria_id,:division_id,:ccosto_id,:ocupacion_id,:comision_flujo,:asignacion,:location_id,:efectivo
+    validates_presence_of :company_id, :idnumber, :firstname,:lastname,:fecha_ingreso,:fecha_nacimiento,:sueldo,:categoria_id,:division_id,:ccosto_id,:ocupacion_id,:comision_flujo,:asignacion,:location_id,:efectivo,:hora_ex,:cod_interno
     
     def get_afpname
         ret = ""
@@ -101,6 +101,8 @@ class Employee < ActiveRecord::Base
               a.planilla = "1"
               a.cod_interno = row['item']
               a.efectivo = 0 
+              a.hora_ex = row['hora_ex'] 
+              
               
               a.save
 

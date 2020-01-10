@@ -97,14 +97,21 @@
 
   <div class="field">
     <%= f.label :sueldo, "Sueldo:" %><br>
-    <%= f.number_field :sueldo,:step => 0.5 %>
+    <%= f.number_field :sueldo,:step => 0.1 %>
   </div>
   
   
   <div class="field">
     <%= f.label :efectivo, "Efectivo:" %><br>
-    <%= f.number_field :efectivo,:step => 0.5 %>
+    <%= f.number_field :efectivo,:step => 0.1 %>
   </div>
+
+  <div class="field">
+    <%= f.label :hora_ex, "Hora extra:" %><br>
+    <%= f.number_field :hora_ex,:step => 0.1 %>
+  </div>
+
+
   
   <div class="field">
       <%= f.label :afp_id , "Afp  "%><br />
@@ -124,10 +131,6 @@
     </div>
    
   
-  <div class="field">
-    <%= f.label :company_id %><br>
-    <%= f.number_field :company_id %>
-  </div>
   
    <div class="field">
       <%= f.check_box :active%>

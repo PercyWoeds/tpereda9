@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200108210429) do
+ActiveRecord::Schema.define(version: 20200110164940) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -705,6 +705,7 @@ ActiveRecord::Schema.define(version: 20200108210429) do
     t.string   "interasistence"
     t.string   "cod_interno"
     t.float    "efectivo"
+    t.float    "hora_ex"
   end
 
   create_table "factura_details", force: :cascade do |t|

@@ -39,6 +39,11 @@ end
     @divisions =Division.all 
     @ocupacions = Ocupacion.all 
     @ccostos = Ccosto.all
+    @employee[:company_id]=1
+    @employee[:hora_ex]=0
+    @employee[:efectivo]=0
+
+    
   end
 
   # GET /employees/1/edit
@@ -118,6 +123,6 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_params
-      params.require(:employee).permit(:firstname, :lastname, :address1, :address2, :city, :state, :zip, :country, :phone1, :phone2, :email1, :email2, :company_id,:licencia,:idnumber,:active,:afp_id,:onp,:sueldo,:file_nro,:fecha_nacimiento,:fecha_ingreso,:fecha_cese,:sexo_id,:estado_civil_id,:asignacion,:comision_flujo,:ocupacion_id,:planilla,:division_id,:location_id,:carnet_seguro,:cusspp,:ccosto_id,:categoria_id,:interasistence,:cod_interno,:efectivo)
+      params.require(:employee).permit(:firstname, :lastname, :address1, :address2, :city, :state, :zip, :country, :phone1, :phone2, :email1, :email2, :company_id,:licencia,:idnumber,:active,:afp_id,:onp,:sueldo,:file_nro,:fecha_nacimiento,:fecha_ingreso,:fecha_cese,:sexo_id,:estado_civil_id,:asignacion,:comision_flujo,:ocupacion_id,:planilla,:division_id,:location_id,:carnet_seguro,:cusspp,:ccosto_id,:categoria_id,:interasistence,:cod_interno,:efectivo,:hora_ex)
     end
 end
