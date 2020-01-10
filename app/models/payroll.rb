@@ -273,7 +273,7 @@ class Payroll < ActiveRecord::Base
             lcSubsidio = pl.remuneracion/30 * pl.subsidio
             pl.subsidio0 = lcSubsidio.round(2)
             
-            lcBasico = pl.remuneracion/30 * (pl.totaldia + pl.falta )
+            lcBasico = pl.remuneracion/30 * (pl.totaldia  )
             pl.basico =lcBasico.round(2)
             
             lctotingreso = pl.basico+pl.calc1+lcHextra1+pl.vacaciones+pl.desmedico+pl.reintegro+pl.subsidio0 
@@ -317,6 +317,7 @@ class Payroll < ActiveRecord::Base
             mes_quinto  = parts_quinto[0]
             anio_quinto = parts_quinto[1]
             
+
             
             @quinta =  Quinto.find_by(employee_id: pl.employee_id,anio: anio_quinto,mes: mes_quinto)
             if @quinta != nil
@@ -329,7 +330,7 @@ class Payroll < ActiveRecord::Base
             pl.total2 = pl.calc4+pl.calc5 + pl.calc7+ pl.faltas + pl.otros+pl.aporte+pl.seguro+pl.comision
             pl.remneta = pl.totingreso - pl.total2 
                 
-            if pl.total1 > 850.00 
+            if pl.total1 > 930.00 
                 lcValor = pl.total1 * (lcAporte/100 )
             else
                 lcValor = 76.50
