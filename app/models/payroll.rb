@@ -273,7 +273,12 @@ class Payroll < ActiveRecord::Base
             lcSubsidio = pl.remuneracion/30 * pl.subsidio
             pl.subsidio0 = lcSubsidio.round(2)
             
+
             lcBasico = pl.remuneracion/30 * (pl.totaldia  )
+            if lcBasico < 930
+                lcBasico = 930 
+            end 
+
             pl.basico =lcBasico.round(2)
             
             lctotingreso = pl.basico+pl.calc1+lcHextra1+pl.vacaciones+pl.desmedico+pl.reintegro+pl.subsidio0 
@@ -293,7 +298,7 @@ class Payroll < ActiveRecord::Base
             end 
             lcAporteAfp = pl.employee.get_afp(self.parameter_id,"aporte")
             
-            if pl.total1 < 9321.52
+            if pl.total1 < 9707.03
              lcSeguroAfp = pl.employee.get_afp(self.parameter_id,"seguro")
             else
              lcSeguroAfp = 0   
