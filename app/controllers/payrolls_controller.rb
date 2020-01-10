@@ -609,7 +609,7 @@ class PayrollsController < ApplicationController
                     row << "FLUJO MIXTA"
                   else
                      row << "NINGUNO"  
-                     row << ""
+                
                   end 
               else
                 row << "null"
