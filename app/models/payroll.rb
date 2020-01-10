@@ -338,7 +338,7 @@ class Payroll < ActiveRecord::Base
             if pl.total1 > 930.00 
                 lcValor = pl.total1 * (lcAporte/100 )
             else
-                lcValor = 76.50
+                lcValor = 83.70
             end 
                     
             pl.calc8  = lcValor.round(2)

@@ -22,7 +22,13 @@
   <tbody>
     <% @horas_mes.each do |horas_me| %>
       <tr>
+        <% if horas_me.payroll.nil? %>
+        <td> - </td>
+        
+        <%else %>
         <td><%= horas_me.payroll.code %></td>
+        
+        <%end %>
         <td><%= horas_me.employee.full_name %></td>
         
         <td><%= horas_me.dt %></td>
