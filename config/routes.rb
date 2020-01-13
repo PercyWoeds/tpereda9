@@ -641,6 +641,7 @@ end
   match 'companies/invoices/:company_id' => 'invoices#list_invoices', via: [:get, :post]
   resources :invoices
 
+ match 'assistances/index/1' => 'assistances#index', via: [:get, :post]
   
   # Facturas Ventas
   

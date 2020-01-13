@@ -54,6 +54,7 @@ end
     @divisions =Division.all 
     @ocupacions = Ocupacion.all 
     @ccostos = Ccosto.all
+      @employee[:company_id]=1
   end
 
   # POST /employees
@@ -65,7 +66,7 @@ end
     @divisions =Division.all 
     @ocupacions = Ocupacion.all 
     @ccostos = Ccosto.all
-    
+      @employee[:company_id]=1
     @afps = Afp.all
     respond_to do |format|
       if @employee.save
@@ -81,7 +82,7 @@ end
   # PATCH/PUT /employees/1
   # PATCH/PUT /employees/1.json
   def update
-   
+     @employee[:company_id]=1
     
     respond_to do |format|
       if @employee.update(employee_params)
