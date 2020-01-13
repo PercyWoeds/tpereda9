@@ -8,6 +8,8 @@ class AssistancesController < ApplicationController
 
     @employees = @company.get_employees
 
+    
+
     fecha1= params[:fecha1]
     fecha2= params[:fecha2]
     empleado_id = params[:employee_id]
