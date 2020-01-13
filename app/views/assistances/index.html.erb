@@ -7,7 +7,10 @@
 <%= form_tag assistances_path, :method => 'get'  do %>
    <%= text_field_tag :search, params[:search]%>
 
-   <%= date_field_tag :fecha, params[:fecha]%>
+   <%= date_field_tag :fecha1, params[:fecha1]%>
+   <%= date_field_tag :fecha2, params[:fecha2]%>
+
+
    <%= submit_tag "Search", :name => nil  %>
  <% end %>
 

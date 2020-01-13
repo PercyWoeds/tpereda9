@@ -4,7 +4,16 @@ class AssistancesController < ApplicationController
   # GET /assistances
   # GET /assistances.json
   def index
-    @assistances = Assistance.all.order(:fecha ).paginate(:page => params[:page])
+
+    fecha1= params[:fecha1]
+    fecha2= params[:fecha2]
+
+    if search != nil
+
+      @assistances = Assistance.all.where("fecha >= and fecha <=?","%#{fecha1}% 00:00:00","%#{fecha2}% 23:59:59").order(:fecha ).paginate(:page => params[:page])
+    else  
+      @assistances = Assistance.all.order(:fecha ).paginate(:page => params[:page])
+    end 
   end
 
   # GET /join
