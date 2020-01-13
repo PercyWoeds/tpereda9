@@ -143,7 +143,7 @@ end
     @assistance = Assistance.first 
     
       @assistance.process(fecha_asistencia)
-      flash[:notice] = "The invoice order has been processed."
+      flash[:notice] = "Asistencia generada ..."
       redirect_to assistances_path
    
     

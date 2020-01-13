@@ -28,12 +28,14 @@ class Assistance < ActiveRecord::Base
 
  # Process the invoice
   def process(fecha)
+     rango_fecha = "2019-12-01 00:00:00"
+      planilla  =Employee.where("planilla>=? and fecha_ingreso >= ?  and fecha_cese <=?","1",rango_fecha,fecha)
 
-   
+      fecha_dic="2019-12-01 00:00:00"
+
+      Assistance.where("fecha <= ?","#{fecha_dic}").delete_all 
 
 
-      planilla  =Employee.where(planilla: "1")
-      
       fecha_asistencia = fecha 
         Assistance.where("fecha >= ? and fecha <= ?", "#{fecha_asistencia}  00:00:00","#{fecha_asistencia} 23:59:59 ").delete_all 
         
@@ -73,6 +75,15 @@ class Assistance < ActiveRecord::Base
   # or, as hagello suggested in the comments:
   # '%02d:%02d:%02d' % [hours, minutes, seconds]
   end
+
+
+    def self.search(search, id)
+     if search
+       where(['idnumber iLIKE ? and AND fecha >= ? and fecha<= ? ', "%#{search}%" ,  "#{fecha} 00:00:00","#{fecha} 23:59:59"])
+     else
+      scoped
+     end
+    end
 
 
 end

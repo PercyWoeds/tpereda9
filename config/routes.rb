@@ -105,8 +105,9 @@
     resources :viatico_details, except: [:index,:show], controller: "viaticos/viatico_details"
   end
 
-
-  
+  resources :assistances do 
+       collection { get :search }
+  end 
 
   resources :serviceorders do
      collection { get :update_serviceext }
