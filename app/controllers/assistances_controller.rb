@@ -4,15 +4,18 @@ class AssistancesController < ApplicationController
   # GET /assistances
   # GET /assistances.json
   def index
+    @company = Company.find(1)
+
+    @employees = @company.get_employees
 
     fecha1= params[:fecha1]
     fecha2= params[:fecha2]
+    empleado_id = params[:employee_id]
 
-    if search != nil
-
-      @assistances = Assistance.all.where("fecha >= and fecha <=?","%#{fecha1}% 00:00:00","%#{fecha2}% 23:59:59").order(:fecha ).paginate(:page => params[:page])
+    if fecha1 != nil
+      @assistances = Assistance.where("employee_id = ? and fecha >= ? and fecha <=?",empleado_id,"#{fecha1} 00:00:00","#{fecha2} 23:59:59").order(:fecha ).paginate(:page => params[:page])
     else  
-      @assistances = Assistance.all.order(:fecha ).paginate(:page => params[:page])
+      @assistances = Assistance.order(:fecha ).paginate(:page => params[:piage])
     end 
   end
 
@@ -20,7 +23,6 @@ class AssistancesController < ApplicationController
   # GET /assistances/1.json
   def show
   end
-
 
   # GET /assistances/new
   def new

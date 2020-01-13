@@ -5,7 +5,9 @@
 
 
 <%= form_tag assistances_path, :method => 'get'  do %>
-   <%= text_field_tag :search, params[:search]%>
+
+    <%= select_tag :employee_id, options_from_collection_for_select(@employees, "id", "full_name") %>
+    
 
    <%= date_field_tag :fecha1, params[:fecha1]%>
    <%= date_field_tag :fecha2, params[:fecha2]%>
