@@ -244,11 +244,15 @@ class StocksController < ApplicationController
               row << sprintf("%.2f",stock.salida.round(2).to_s)
               saldo = stock.stock_inicial  + stock.ingreso - stock.salida       
               row << sprintf("%.2f",saldo.round(2).to_s)
+              if stock.price = 0
+                stock.price = 1.0
+
+              end 
 
               if stock.price 
               @total = saldo * stock.price                         
               else
-              @total = 0  
+              @total = 0.0
               end
               row << sprintf("%.2f",@total.round(2).to_s)
                 if (stock.price == 0  and saldo > 0) ||  saldo < 0
