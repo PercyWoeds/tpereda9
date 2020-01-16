@@ -105,6 +105,7 @@ gem 'rubyzip'
 gem 'bootstrap'
 gem 'rails-ujs', '~> 0.1.0'
 
+gem 'consulta_sunat'
 
 
 group :development, :test do

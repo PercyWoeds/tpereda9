@@ -15,8 +15,8 @@ class SuppliersController < ApplicationController
 
     ruc_number = params[:input_ruc]
 
-    result = result = PeruSunatRuc.info_from ruc_number
-
+     data = ConsultaSunat.by_ruc(ruc_number)
+     puts data.razon_social 
 
 
   end
