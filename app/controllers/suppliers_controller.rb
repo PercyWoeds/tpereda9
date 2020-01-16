@@ -1,6 +1,6 @@
 include UsersHelper
 include CompaniesHelper
-
+require 'peru_sunat_ruc'
 
 class SuppliersController < ApplicationController
   before_filter :authenticate_user!
@@ -11,8 +11,16 @@ class SuppliersController < ApplicationController
        redirect_to root_url, notice: "Proveedor  importadas."
   end 
   
+  def search_ruc
+
+    ruc_number = params[:input_ruc]
+
+    result = result = PeruSunatRuc.info_from ruc_number
 
 
+
+  end
+ 
   # Show suppliers for a company
   def list_suppliers
     @company = Company.find(params[:company_id])
