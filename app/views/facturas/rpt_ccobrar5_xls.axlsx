@@ -183,7 +183,7 @@ wb.styles do |s|
                             @total_anterior = @total_anterior + customerpayment_rpt.balance
                           end             
                           
-                          if customerpayment_rpt.year_month.to_f >= 201901 and  customerpayment_rpt.year_month.to_f <= 201912 
+                      if customerpayment_rpt.year_month.to_f >= 201901 and  customerpayment_rpt.year_month.to_f <= 201912 
                             @total_mes01 = @total_mes01 + customerpayment_rpt.balance
                           end   
                 
