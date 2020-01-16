@@ -185,7 +185,7 @@ wb.styles do |s|
                           
                           if customerpayment_rpt.year_month.to_f >= 201901 and  customerpayment_rpt.year_month.to_f <= 201912 
                             @total_mes01 = @total_mes01 + customerpayment_rpt.balance
-                          end   3
+                          end   
                 
                           if customerpayment_rpt.year_month == '202001'
                             @total_mes02 = @total_mes02 + customerpayment_rpt.balance
