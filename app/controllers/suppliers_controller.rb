@@ -14,9 +14,10 @@ class SuppliersController < ApplicationController
   def search_ruc
 
     ruc_number = params[:input_ruc]
+     puts ruc_number
 
-     data = ConsultaSunat.by_ruc(ruc_number)
-     puts data.razon_social 
+     @data = ConsultaSunat.by_ruc(ruc_number)
+     puts @data[:razon_social] 
 
 
   end

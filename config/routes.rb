@@ -265,7 +265,7 @@ end
   resources :suppliers do
     collection { post :import  }
     collection { post :new2  }
-    collection { post :search_ruc  }
+    collection { get :search_ruc  }
   end 
 
   resources :orders do 

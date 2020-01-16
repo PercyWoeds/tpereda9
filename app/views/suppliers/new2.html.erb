@@ -3,6 +3,7 @@
   <%= link_to @company.name, @company %>
 </div>
 
+
 <h1>
   <%= image_tag("supplier_48.png", :class => "vmiddle") %>
   Nuevo proveedor 
@@ -13,7 +14,7 @@
 
       
 <label>RUC:</label>
-<input type="text" id="input_ruc" style="width:100%;"
+<input type="text" id="input_ruc" name="input_ruc" style="width:100%;"
        oninput="validarInput(this)"
        placeholder="Ingrese su RUC">
 <pre id="resultado"></pre>
@@ -25,6 +26,7 @@
 
   
 <% end %>
+
 <script type="text/javascript">
 
 #resultado, #existente {
