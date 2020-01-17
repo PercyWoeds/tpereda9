@@ -31,7 +31,7 @@ class Assistance < ActiveRecord::Base
      rango_fecha = "2019-12-01 00:00:00"
 
 
-      planilla  =Employee.where("planilla>=? and fecha_ingreso >= ? ","1","#{fecha} 00:00:00")
+      planilla  =Employee.where("planilla = ? and fecha_ingreso >= ? ","1","#{fecha} 00:00:00")
 
       fecha_dic="2019-12-01 00:00:00"
 
