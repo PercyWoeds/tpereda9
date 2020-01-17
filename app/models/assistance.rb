@@ -29,19 +29,22 @@ class Assistance < ActiveRecord::Base
  # Process the invoice
   def process(fecha)
      rango_fecha = "2019-12-01 00:00:00"
-      planilla  =Employee.where("planilla>=? and fecha_ingreso >= ?  and fecha_cese <=?","1","#{rango_fecha}","#{fecha} 23:59:59 ")
+
+
+      planilla  =Employee.where("planilla>=? and fecha_ingreso >= ? ","1","#{rango_fecha}")
 
       fecha_dic="2019-12-01 00:00:00"
 
       
 
-      fecha_asistencia = fecha 
+        fecha_asistencia = fecha 
         Assistance.where("fecha >= ? and fecha <= ?", "#{fecha_asistencia}  00:00:00","#{fecha_asistencia} 23:59:59 ").delete_all 
         
 puts fecha_asistencia
 
       for ip in planilla
- 
+         puts ip.employee.full_name
+
          hora10 = fecha_asistencia.in_time_zone.change( hour: 8) 
          hora20 = fecha_asistencia.in_time_zone.change( hour: 17 , min: 45 )
          hora30 = fecha_asistencia.in_time_zone.change( hour: 18 ,  min: 30 )
