@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @egreso.code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @egreso.name %>
+</p>
+
+<%= link_to 'Edit', edit_egreso_path(@egreso) %> |
+<%= link_to 'Back', egresos_path %>

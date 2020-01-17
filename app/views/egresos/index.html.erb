@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Egresos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @egresos.each do |egreso| %>
+      <tr>
+        <td><%= egreso.code %></td>
+        <td><%= egreso.name %></td>
+        <td><%= link_to 'Show', egreso %></td>
+        <td><%= link_to 'Edit', edit_egreso_path(egreso) %></td>
+        <td><%= link_to 'Destroy', egreso, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Egreso', new_egreso_path %>

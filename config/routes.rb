@@ -1,5 +1,6 @@
   Mnygo::Application.routes.draw do
 
+  resources :egresos
   resources :inasists
   resources :manifestships
   resources :cpagar_details

@@ -42,6 +42,21 @@
     Gastos 
   </p>
 
+
+<% if current_user.level =="admin"%>
+  <h3>
+      <div>
+        <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
+        <%= link_to "Egresos", egresos_path  %>
+      </div>
+  </h3>
+  <p>
+    Egresos
+  </p>
+
+<% end %>
+
+
   <h3>
         <div>
           <%= image_tag("locations_32.png", :class => "vmiddle") %>
