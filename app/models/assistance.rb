@@ -29,7 +29,7 @@ class Assistance < ActiveRecord::Base
  # Process the invoice
   def process(fecha)
      rango_fecha = "2019-12-01 00:00:00"
-      planilla  =Employee.where("planilla>=? and fecha_ingreso >= ?  and fecha_cese <=?","1","#{rango_fecha} 00:00:00","#{fecha} 23:59:59 ")
+      planilla  =Employee.where("planilla>=? and fecha_ingreso >= ?  and fecha_cese <=?","1","#{rango_fecha}","#{fecha} 23:59:59 ")
 
       fecha_dic="2019-12-01 00:00:00"
 
