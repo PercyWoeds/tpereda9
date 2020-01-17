@@ -175,10 +175,11 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     @viatico_detail.viatico_id  = @viatico.id 
     @viatico_detail.fecha = params[:viatico_detail][:fecha]
     @viatico_detail.employee_id = params[:ac_employee_id]
+
     
     respond_to do |format|
       if @viatico_detail.update_attributes(employee_id: params[:viatico_detail][:employee_id],fecha: params[:viatico_detail][:fecha],importe: params[:viatico_detail][:importe],
-        gasto_id: params[:viatico_detail][:gasto_id],destino_id: params[:viatico_detail][:destino_id],tm:params[:viatico_detail][:tm],numero: params[:viatico_detail][:numero],detalle: params[:viatico_detail][:detalle],document_id: params[:viatico_detail][:tm])
+        gasto_id: params[:viatico_detail][:gasto_id],destino_id: params[:viatico_detail][:destino_id],tm:params[:viatico_detail][:tm],numero: params[:viatico_detail][:numero],detalle: params[:viatico_detail][:detalle],document_id: params[:viatico_detail][:tm],egreso_id: params[:viatico_detail][:egreso_id])
    begin
       @viatico[:inicial] = @viatico.get_total_inicial
     rescue
