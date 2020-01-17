@@ -2433,6 +2433,7 @@ def build_pdf_header_rpt48(pdf)
           
             
             
+            
             row = []
             row << nroitem.to_s        
             row << $lcCliName

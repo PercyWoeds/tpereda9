@@ -21,6 +21,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     @documents = @company.get_documents()
     @cajas = Caja.all      
     @employees = @company.get_employees 
+     @egresos = Egreso.order(:code)
   end
 
   # GET /viatico_details/new
@@ -44,6 +45,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
 
   # GET /viatico_details/1/edit
   def edit
+
     @gastos = Gasto.order(:codigo)
     @company = Company.find(1)
     @locations = @company.get_locations()
@@ -53,6 +55,8 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     @destinos = Destino.all
     @employees = @company.get_employees 
     
+     @egresos = Egreso.order(:code)
+
     @transporte = Tranportorder.find(@viatico_detail.tranportorder_id)
     @ac_item = @transporte.code 
     @ac_item_id = @transporte.id
@@ -86,6 +90,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     @cajas = Caja.all      
     @destinos = Destino.all
     @employees = @company.get_employees 
+     @egresos = Egreso.order(:code)
     
     @viatico_detail = ViaticoDetail.new(viatico_detail_params)    
     @viatico_detail.viatico_id  = @viatico.id 
@@ -161,8 +166,11 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     @employees = @company.get_employees()
     
     @cajas = Caja.all      
+
     @destinos = Destino.all
     
+    @egresos = Egreso.order(:code)
+
     @viatico_detail = ViaticoDetail.find(params[:id]) 
     @viatico_detail.viatico_id  = @viatico.id 
     @viatico_detail.fecha = params[:viatico_detail][:fecha]
