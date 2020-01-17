@@ -43,7 +43,7 @@ class Assistance < ActiveRecord::Base
 puts fecha_asistencia
 
       for ip in planilla
-         puts ip.employee.full_name
+        
 
          hora10 = fecha_asistencia.in_time_zone.change( hour: 8) 
          hora20 = fecha_asistencia.in_time_zone.change( hour: 17 , min: 45 )
