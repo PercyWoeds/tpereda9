@@ -30,26 +30,52 @@
     
     <br />
 
+
     <div class="small">
       <strong>Seleccionar proveedor:</strong>
       <span id="selected supplier"><% if @ac_supplier %><%= @ac_supplier %><% else %><!-- i --><% end %></span>
 
+
     </div>
     <%= hr() %>
-    
+
     <div >
+
+    
+   
     <strong>Destino  :</strong>
     <br />
       <%= f.collection_select :destino_id, @destinos , :id, :name , :prompt => true %>
     <br />
-    <p>
+  
+      
+      <br/>
+  
+
+    <strong>Tipo Ingreso/Egreso  :</strong>
+
+
+    <br />
+      <%= f.collection_select :egreso_id, @egresos , :id, :name , :prompt => true %>
+    <br />
+  
+      
+    <td>
+      <div class="field">
+      <strong> Fecha :</strong><br /> 
+          <%= f.date_field :fecha ,:style=> 'width: 180px'%>
+      </div>
+      
+    </td>
+
       <strong>Gasto :</strong>
     </p>
       <%= f.collection_select :gasto_id, @gastos , :id, :fullcuenta, :prompt => true %>
     <br />
     </div>
     <td>
-    
+    <br>
+
       <label for="ac_supplier" class="bold">Proveedor/Empleado*</label><br />
           
     <table> 
@@ -67,6 +93,7 @@
     </td> 
     
   </tr>
+
   <tr>
     <td><input type="radio" name="tipoproveedor" value="2"> Empleado<br></td>
     <td>
@@ -109,15 +136,7 @@
     </div>
     
     
-      
-    <td>
-      <div class="field">
-      <strong> Fecha :</strong><br />
-          <%= f.date_field :fecha ,:style=> 'width: 180px'%>
-      </div>
-      
-    </td>
-    
+  
     
     
     <br />  

@@ -3,6 +3,8 @@ class CreateEgresos < ActiveRecord::Migration
     create_table :egresos do |t|
       t.string :code
       t.string :name
+	  t.string :extension 
+
 
       t.timestamps null: false
     end

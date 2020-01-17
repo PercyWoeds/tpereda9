@@ -27,6 +27,8 @@ class Viaticos::ViaticoDetailsController < ApplicationController
   def new
     @viatico_detail = ViaticoDetail.new
     @gastos = Gasto.order(:codigo)
+    @egresos = Egreso.order(:code)
+    
     @company = Company.find(1)
     
     @locations = @company.get_locations()

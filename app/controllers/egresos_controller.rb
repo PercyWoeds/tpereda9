@@ -69,6 +69,6 @@ class EgresosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def egreso_params
-      params.require(:egreso).permit(:code, :name)
+      params.require(:egreso).permit(:code, :name,:extension)
     end
 end
