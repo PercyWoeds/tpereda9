@@ -1786,7 +1786,10 @@ def get_purchases_pendientes_day_supplier(fecha1,fecha2,value,moneda)
   # Return products for company
 
   def get_products2()
-    products = Product.joins(:stocks).where(company_id: self.id).order(:products_category_id,:code)    
+    products = Product.find_by_sql(['Select products.*,
+      stocks.quantity  
+      from products 
+      INNER JOIN stocks ON products.id = stocks.product_id order by products.code '])
     return products
   end
 
