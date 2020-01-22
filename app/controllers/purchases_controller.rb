@@ -2189,7 +2189,7 @@ def build_pdf_header_rpt48(pdf)
   def rpt_cpagar3_pdf
 
     $lcxCliente ="1"
-    @company=Company.find(params[:id])          
+    @company=Company.find(1)          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
     @categoria = params[:products_category_id]    
