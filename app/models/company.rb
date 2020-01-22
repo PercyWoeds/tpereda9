@@ -3123,6 +3123,23 @@ ORDER BY products.code  ',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1"
 end
 
 
+
+
+def get_ingresos_day3(fecha1,fecha2,cliente)
+
+   @purchases = Purchase.find_by_sql(['Select purchases.*,purchase_details.quantity,
+    purchase_details.price_without_tax as price,purchases.date1 as fecha, products.name as nameproducto,
+    products.code as codigo ,purchases.documento as code ,products.unidad,purchase_details.total,purchases.moneda_id,products.products_category_id
+    from purchase_details   
+INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
+INNER JOIN products ON purchase_details.product_id = products.id
+WHERE products.products_customer_id = ?  and purchases.date1 >= ? and purchases.date1 <= ? and purchases.processed =  ? and purchases.status is null
+ORDER BY products.code  ',cliente, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1" ])
+  
+    return @purchases 
+
+end
+
 def get_ingresos_day3(fecha1,fecha2)  
     @purchases = Purchaseorder.where(["fecha1 >= ? and fecha1 <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
     return @purchases 

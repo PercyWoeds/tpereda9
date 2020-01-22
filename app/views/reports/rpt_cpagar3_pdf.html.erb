@@ -30,15 +30,15 @@ totals = []
     <%= select_tag(:supplier_id,options_from_collection_for_select(@suppliers,'id','name') ) %>
   </div>
     
-  <input type="submit" value="Ver" class="small_btn" />
-  <a href="/purchases/rpt_cpagar3_pdf/<%= @company.id %>" class="small_btn">Hoy</a>
+  <input type="submit" value="Generar" class="small_btn" />
+  
 </form>
 
 <br />
 
 
 <div class="button">
-  <%= link_to "Excel", products_path(format: "xls") %>
+  <%=
   
   <%= link_to 'Back', "/companies/cpagar/#{@company.id}" %>
 </div>

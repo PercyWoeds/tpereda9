@@ -2193,9 +2193,9 @@ def build_pdf_header_rpt48(pdf)
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
     @categoria = params[:products_category_id]    
-    @namecategoria = @company.get_categoria_name(@categoria)      
+    #@namecategoria = @company.get_categoria_name(@categoria)      
 
-    @facturas_rpt = @company.get_ingresos_day2(@fecha1,@fecha2,@categoria)
+    @facturas_rpt = @company.get_ingresos_day3(@fecha1,@fecha2,@categoria)
 
 
     if @facturas_rpt.size > 0 
