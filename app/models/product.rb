@@ -3,13 +3,16 @@ class Product < ActiveRecord::Base
   
 
   
-  validates_presence_of :name, :company_id,:products_category_id,:price 
+  validates_presence_of :name, :company_id,:products_category_id,:products_lines_id,:products_grupos_id
   validates_numericality_of  :tax1, :tax2, :tax3
   validates_uniqueness_of :code
 
   belongs_to :company
   belongs_to :supplier
   belongs_to :products_category
+  belongs_to :products_line
+  belongs_to :products_grupo
+  
   belongs_to :stock 
   belongs_to :product  
 

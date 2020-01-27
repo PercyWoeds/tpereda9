@@ -1298,6 +1298,19 @@ def rpt_facturas_4
     @pagetitle = "Almacen"    
 
   end
+
+  def reports_basedatos
+    @company = Company.find(params[:company_id])
+    @pagetitle = "Almacen"    
+
+  end
+  def reports_iconsultas
+    @company = Company.find(params[:company_id])
+    @pagetitle = "Almacen"    
+
+  end
+
+
   def reports_lgc
     @company = Company.find(params[:company_id])
     @pagetitle = "L.G.C."    

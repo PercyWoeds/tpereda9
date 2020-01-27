@@ -87,6 +87,11 @@ class ProductsController < ApplicationController
     @modelos    = @company.get_modelos()
     @categories = @company.get_categories()
 
+    @lineas = ProductsLine.all
+    @grupos = ProductsGrupo.all
+    @unidads = Unidad.all
+
+
     @product[:tax1_name] = @company.get_last_tax_name(1)
     @product[:tax2_name] = @company.get_last_tax_name(2)
     @product[:tax2_name] = @company.get_last_tax_name(3)
@@ -117,7 +122,10 @@ class ProductsController < ApplicationController
   # GET /products/1/edit
   def edit
     @pagetitle = "Edit product"
-    
+    @lineas = ProductsLine.all
+    @grupos = ProductsGrupo.all
+    @unidads = Unidad.all
+
     @product = Product.find(params[:id])
     @company = @product.company
     @suppliers = @company.get_suppliers()
@@ -137,6 +145,17 @@ class ProductsController < ApplicationController
     @suppliers = @company.get_suppliers()
     @marcas = @company.get_marcas()
     @modelos = @company.get_modelos()
+
+    @categories = @company.get_categories()
+    
+    @lineas = ProductsLine.all
+    @grupos = ProductsGrupo.all
+    @unidads = Unidad.all
+
+    @product[:tax1] = 18.00
+    @product[:tax2] = 0.00
+    @product[:tax2] = 0.00
+    @product[:price] = 0.00
     
     if(@product[:tax1] == nil)
       @product[:tax1] = 0
@@ -178,6 +197,13 @@ class ProductsController < ApplicationController
     @marcas = @company.get_marcas()
     @modelos = @company.get_modelos()
     @categories = @company.get_categories() 
+    @product[:price] = 0.00
+
+    @lineas = ProductsLine.all
+    @grupos = ProductsGrupo.all
+    @unidads = Unidad.all
+
+
 
     respond_to do |format|
       if @product.update_attributes(products_params)
@@ -196,11 +222,11 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
     
     # Erase from product kits
-    kits_products = KitsProduct.where(product_id:  @product[:id])
+    kits_products = PurchaseDetail.where(product_id:  @product[:id])
     
-    for product in kits_products
-      product.destroy
-    end
+    if kits_products
+        return 
+    end 
     
     company_id = @product[:company_id]
     @product.destroy
@@ -394,7 +420,7 @@ def build_pdf_header(pdf)
 
   private
   def products_params
-    params.require(:product).permit(:code, :name, :category, :cost,:price,:price2,:tax1_name, :tax1,:tax2_name,:tax2, :tax3_name,:tax3 ,:quantity,:reorder,:description,:comments,:company_id,:marca_id,:modelo_id,:products_category_id,:unidad,:ubicacion,:active,:numparte)
+    params.require(:product).permit(:code, :name, :category, :cost,:price,:price2,:tax1_name, :tax1,:tax2_name,:tax2, :tax3_name,:tax3 ,:quantity,:reorder,:description,:comments,:company_id,:marca_id,:modelo_id,:products_category_id,:unidad,:ubicacion,:active,:numparte,:products_lines_id,:products_grupos_id,:unidad_id)
   end
   
 

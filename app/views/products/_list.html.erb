@@ -14,14 +14,12 @@
           Categoria
         </th>
         <th class="bordered_right bordered_bottom">
-          Supplier
+          Linea
         </th>
         <th class="bordered_right bordered_bottom">
-          Quantity
+          Grupo
         </th>
-        <th class="bordered_right bordered_bottom">
-          Reorder
-        </th>
+       
         <th class="bordered_right bordered_bottom">
           Price
         </th>
@@ -44,33 +42,30 @@
             <% end %>
           </td>
           <td class="bordered_right bordered_bottom">
-            <% if product.category and product.category != "" %>
-              <%= product.category %>
+            <% if product.products_category  %>
+              <%= product.products_category.category  %>
             <% else %>
               &nbsp;
             <% end %>
           </td>
+
           <td class="bordered_right bordered_bottom">
-            <% if product.supplier %>
-              <%= link_to product.supplier.name, product.supplier, :title => "Go to supplier" %>
+            <% if product.products_line %>
+             <%= product.products_line.name  %>
             <% else %>
               &nbsp;
             <% end %>
           </td>
+
           <td class="bordered_right bordered_bottom right">
-            <% if product.quantity %>
-              <%= product.quantity %>
+          
+            <% if product.products_grupo %>
+               <%= product.products_grupo.name  %>
             <% else %>
               &nbsp;
             <% end %>
           </td>
-          <td class="bordered_right bordered_bottom right">
-            <% if product.reorder %>
-              <%= product.reorder %>
-            <% else %>
-              &nbsp;
-            <% end %>
-          </td>
+          
           <td><%= link_to 'Ver', product %></td>
            <% if @current_user.level == "admin"%>
         <td><%= link_to 'Editar', edit_product_path(product) %></td>

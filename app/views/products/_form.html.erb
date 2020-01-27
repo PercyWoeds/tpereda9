@@ -45,82 +45,30 @@
   
   
   <div class="field">
-    <%= f.label :marca_id %><br />
-    <%= f.collection_select :marca_id, @marcas, :id, :descrip, :prompt => true %>
+    <%= f.label :products_lines_id %><br />
+    <%= f.collection_select :products_lines_id, @lineas, :id, :name, :prompt => true %>
     
     <div class="small">
-      Marca del producto.
+      Linea productos
     </div>
   </div>
   
-      <%= link_to 'Create marca', new_marca_path, data: { behavior: 'modal' } %>
+
       
   <div class="field">
-    <%= f.label :modelo_id %><br />
-    <%= f.collection_select :modelo_id, @modelos, :id, :descrip, :prompt => true %>
+    <%= f.label :products_grupos_id %><br />
+    <%= f.collection_select :products_grupos_id, @grupos, :id, :name, :prompt => true %>
     <div class="small">
-      Modelo del producto.
+        Grupo productos 
     </div>
   </div>
-  
-  <div class="field">
-    <%= f.label :cost, "Costo*", :class => "bold" %><br />
-    <%= f.text_field :cost %>
-    <div class="small">
-      How much does the product cost you?  If it doesn't cost you anything, you<br />
-      can enter the number 0.
-    </div>
-  </div>
-  <div class="field">
-    <%= f.label :price, "Precio *", :class => "bold" %><br />
-    <%= f.text_field :price %>
-    <div class="small">
-      The price of the product.
-    </div>
-  </div>
+ 
 
   
   <%= hr() %>
   
-  <div class="field">
-    <strong>Impuestos</strong>
-    <div class="small">
-      Campos opcionales para el control de impuestos       
-    </div>
-  </div>
   
-  <div class="field">
-    <%= f.label :tax1_name, "Impuesto 1 nombre:" %>
-    <%= f.text_field :tax1_name, :class => "tf_short" %>
-    <%= f.label :tax1, "Impuesto  1 %" %>
-    <%= f.text_field :tax1, :class => "tf_short" %>
-    <div class="small">
-
-      Usually the sales tax.  For example: "Sales tax" : "7"<br />
-      Enter the percentage of the tax without the "%" sign.
-    </div>
-  </div>
   
-  <div class="field">
-    <%= f.label :tax2_name, "Impuesto 2 nombre:" %>
-    <%= f.text_field :tax2_name, :class => "tf_short" %>
-    <%= f.label :tax2, "Impuesto 2 %" %>
-    <%= f.text_field :tax2, :class => "tf_short" %>
-    <div class="small">
-      Impuesto adicional para el producto
-      
-    </div>
-  </div>
-  
-  <div class="field">
-    <%= f.label :tax3_name, "Tax 3 name:" %>
-    <%= f.text_field :tax3_name, :class => "tf_short" %>
-    <%= f.label :tax3, "Tax 3 %" %>
-    <%= f.text_field :tax3, :class => "tf_short" %>
-    <div class="small">
-      Impuesto adicional para el producto
-    </div>
-  </div>
   
   <%= hr() %>
   
@@ -129,12 +77,12 @@
   </div>
   
   
+  
   <div class="field">
-    <%= f.label :unidad %><br />
-    <%= f.text_field :unidad %>
-    <div class="small">
-      Unidad del producto 
-    </div>
+    <%= f.label :unidad_id %><br />
+    <%= f.collection_select :unidad_id, @unidads, :id, :descrip, :prompt => true %>
+    
+  
   </div>
   
   <div class="field">
@@ -159,16 +107,7 @@
     <strong>Informacion adicional </strong>
   </div>
   
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
-  </div>
-  
-  <div class="field">
-    <%= f.label :comments %><br />
-    <%= f.text_area :comments %>
-  </div>
-
+ 
   
    <div class="field">
       <%= f.check_box :active%>

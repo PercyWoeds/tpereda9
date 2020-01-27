@@ -143,6 +143,36 @@ class Payroll < ActiveRecord::Base
     end   
    
     def actualizar
+
+
+        @registrodiario = Assistance.select("employee_id,inasist_id,COUNT('employee_id') as dias_lab").where("fecha>=? and fecha<=?","#{self.fecha_inicial} 00:00:00","#{self.fecha_final} 23:59:59").group(:employee_id,:inasist_id)
+
+        horas = HorasMe.new
+        
+
+        for asistencias in @registrodiario
+
+                
+                    case asistencia.inasist_id 
+                        when 1
+                            horas.dt =  asistencia.dias_lab
+
+                        when 1
+                            horas.dt =  asistencia.dias_lab
+                        when 1
+                            horas.dt =  asistencia.dias_lab
+                        when 1
+                            horas.dt =  asistencia.dias_lab
+                        when 1
+                            horas.dt =  asistencia.dias_lab
+                                
+                        
+                    end
+
+                
+        end 
+
+
         
          @horasplanilla = HorasMe.where(payroll_id: self.id)    
          

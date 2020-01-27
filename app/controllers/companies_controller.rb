@@ -111,6 +111,15 @@ class CompaniesController < ApplicationController
     @pagetitle = @company[:name]
     @locations = Location.where(company_id: @company.id)
   end 
+
+def components2
+    @company = Company.find(params[:id])
+    set_company(@company)
+    
+    @pagetitle = @company[:name]
+    @locations = Location.where(company_id: @company.id)
+  end 
+
   def showcase 
     @company = Company.find(params[:id])
     set_company(@company)

@@ -620,7 +620,7 @@ class SupplierPaymentsController < ApplicationController
 
  def build_pdf_body_rpt3(pdf)
     
-    pdf.text "Listado de Cancelaciones Proveedores:    Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
+    pdf.text "Cuentas  Proveedores:    Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
     pdf.text ""
     pdf.font "Helvetica" , :size => 6
 
@@ -640,7 +640,7 @@ class SupplierPaymentsController < ApplicationController
        for  customerpayment_rpt in @customerpayment_rpt
 
         #@fechacobro = customerpayment_rpt.fecha1
-        $lcDocumento = customerpayment_rpt.nrooperacion << customerpayment_rpt.operacion   
+          $lcDocumento = ""   
         row = []
          row << nroitem.to_s
          row << customerpayment_rpt.code
@@ -740,6 +740,7 @@ end
     @total_dolares = @company.get_paymentsC_day_value(@fecha1,@fecha2,"total")
       
     Prawn::Document.generate("app/pdf_output/rpt_supplierpayment2.pdf") do |pdf|        
+
 
         
         pdf.font "Helvetica"
@@ -1128,9 +1129,10 @@ end
     @monedas     = @company.get_monedas()
     @documents  = @company.get_documents()
 
-    @supplierpayment.processed='1'
+    @supplierpayment.[:processed] ='1'
         
-    @supplierpayment.user_id=@current_user.id 
+    @supplierpayment[:user_id] = @current_user.id 
+    
 
     respond_to do |format|
       if @supplierpayment.save

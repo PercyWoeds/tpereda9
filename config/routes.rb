@@ -1,5 +1,7 @@
   Mnygo::Application.routes.draw do
 
+  resources :products_grupos
+  resources :products_lines
   resources :egresos
   resources :inasists
   resources :manifestships
@@ -441,6 +443,10 @@ end
   match 'companies/reports/reports_cpagar/:company_id' => 'reports#reports_cpagar', via: [:get, :post]
   match 'companies/reports/reports_cventas/:company_id' => 'reports#reports_cventas', via: [:get, :post]
   match 'companies/reports/reports_calmacen/:company_id' => 'reports#reports_calmacen', via: [:get, :post]
+  match 'companies/reports/reports_basedatos/:company_id' => 'reports#reports_basedatos', via: [:get, :post]
+  match 'companies/reports/reports_iconsultas/:company_id' => 'reports#reports_iconsultas', via: [:get, :post]
+  
+  
   match 'companies/reports/reports_lgc/:company_id' => 'reports#reports_lgc', via: [:get, :post]
 
   match 'companies/reports/product_all/:company_id' => 'reports#product_all', via: [:get, :post]
@@ -525,6 +531,7 @@ end
   match 'compros/ac_products/:company_id' => 'compros#ac_products', via: [:get, :post]
   
   match 'compros/ac_unidads/:company_id' => 'compros#ac_unidads', via: [:get, :post]
+
   match 'compros/ac_user/:company_id' => 'compros#ac_user', via: [:get, :post]
   match 'compros/ac_purchases/:company_id' => 'compros#ac_purchases', via: [:get, :post]
   match 'compros/ac_suppliers/:company_id' => 'compros#ac_suppliers', via: [:get, :post]
@@ -1019,10 +1026,15 @@ end
 
   # Products Categories
   match 'products_categories/ac_categories/:company_id' => 'products_categories#ac_categories', via: [:get, :post]
+
   match 'products_categories/new/:company_id' => 'products_categories#new', via: [:get, :post]
   match 'companies/products_categories/:company_id' => 'products_categories#list_products_categories', via: [:get, :post]
+
   resources :products_categories
 
+
+  match 'companies/products_lines/:company_id' => 'products_lines#index', via: [:get, :post]
+  
   # Products
   match 'products/ac_products/:company_id' => 'products#ac_products', via: [:get, :post]
   match 'products/rpt_product_all/:company_id' => 'products#rpt_product_all', via: [:get, :post]
@@ -1044,8 +1056,12 @@ end
   match 'companies/modelos/:company_id' => 'modelos#index', via: [:get, :post]
   resources :modelos
 
-  match 'companies/unidads/:company_id' => 'unidads#index', via: [:get, :post]
+  match 'companies/unidads/:company_id' => 'unidads#index', via: [:get, :post]  
   resources :unidads
+
+
+  match 'companies/almacens/:company_id' => 'almacens#index', via: [:get, :post]  
+  resources :almacens
 
   match 'companies/instruccions/:company_id' => 'instruccions#index', via: [:get, :post]
   resources :unidads
@@ -1088,6 +1104,8 @@ end
   match 'companies/charts/:id' => 'companies#charts', via: [:get, :post]
   match 'companies/license/:id' => 'companies#license', via: [:get, :post]
   match 'companies/components/:id' => 'companies#components', via: [:get, :post]
+  match 'companies/components2/:id' => 'companies#components2', via: [:get, :post]
+  
   match 'companies/cpagar/:id' => 'companies#cpagar', via: [:get, :post]
   match 'companies/parte/:id' => 'companies#parte', via: [:get, :post]
   match 'companies/ccobrar/:id' => 'companies#ccobrar', via: [:get, :post]

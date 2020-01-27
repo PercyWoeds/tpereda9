@@ -1,0 +1,54 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %>
+</div>
+
+<h1>
+  <%= image_tag("reports_48.png", :class => "vmiddle") %>
+  Consultas 
+</h1>
+
+<div class="mid_box bordered_right">
+  <h3>
+  
+   <%= image_tag("products_32.png", :class => "vmiddle") %>
+   <%= link_to "Consulta Stock " , "/stocks/do_stocks/#{@company.id}" %>
+
+  </h3>
+   <p>
+     Agregar, editar or eliminar  para stock.
+  </p>
+
+
+  
+
+
+ 
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("product_category_32.png", :class => "vmiddle") %>
+    <%= link_to "Kardex articulos ", "/companies/almacens/#{@company.id}" %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar almacenes.
+  </p>
+
+ 
+
+</div>
+
+
+
+<div class="mid_box bordered_right">
+   
+
+
+   
+    
+  </div>
+
+
+
+<%= br() %>

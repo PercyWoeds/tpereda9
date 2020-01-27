@@ -1,0 +1,108 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %>
+</div>
+
+<h1>
+  <%= image_tag("reports_48.png", :class => "vmiddle") %>
+  Base de datos 
+</h1>
+
+<div class="mid_box bordered_right">
+  <h3>
+  
+   <%= image_tag("products_32.png", :class => "vmiddle") %>
+    <%= link_to "Articulos", "/companies/products/#{@company.id}" %>
+  </h3>
+   <p>
+     Agregar, editar or eliminar  para articulos.
+  </p>
+
+
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("product_category_32.png", :class => "vmiddle") %>
+    <%= link_to "Familias", "/companies/products_categories/#{@company.id}" %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar las categorias para tus productos.
+  </p>
+
+
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("product_category_32.png", :class => "vmiddle") %>
+    <%= link_to "Lineas",products_lines_path %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar las lineas.
+  </p>
+
+
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("product_category_32.png", :class => "vmiddle") %>
+    <%= link_to "Grupos", products_grupos_path %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar grupos.
+  </p>
+  
+
+ 
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("product_category_32.png", :class => "vmiddle") %>
+    <%= link_to "Unidad", "/companies/unidads/#{@company.id}" %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar las categorias para tus productos.
+  </p>
+
+
+ 
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("product_category_32.png", :class => "vmiddle") %>
+    <%= link_to "Almacenes", almacens_path %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar almacenes.
+  </p>
+
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("product_category_32.png", :class => "vmiddle") %>
+    <%= link_to "Centro de Costos", "/companies/ccostos/#{@company.id}" %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar centro de costos.
+  </p>
+
+</div>
+
+
+
+<div class="mid_box bordered_right">
+   
+
+
+   
+    
+  </div>
+
+
+
+<%= br() %>

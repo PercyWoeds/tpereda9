@@ -1,0 +1,157 @@
+<div class="mid_box bordered_right">
+    
+  
+
+  <%= hr() %>
+
+  <h3>
+
+  
+  <h3>
+    <%= image_tag("divisions_32.png", :class => "vmiddle") %>
+    <%= link_to "Base de datos", "/companies/reports/reports_basedatos/#{@company.id}" %>
+  </h3>
+
+  <p>
+    Base de datos
+  </p>
+
+
+
+  <%= hr() %>
+
+
+    <h3>
+    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
+    <%= link_to "Nota de Ingreso", "/companies/purchases/#{@company.id}" %>
+    </h3>
+  <p>
+     Agregar, editar or eliminar orden de compra para tu negocio.
+  </p>
+
+  <%= hr() %>
+
+
+    <h3>
+    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
+    <%= link_to "Nota de Salida", "/companies/purchases/#{@company.id}" %>
+    </h3>
+  <p>
+     Agregar, editar or eliminar orden de compra para tu negocio.
+  </p>
+
+  <%= hr() %>
+
+
+
+    <h3>
+    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
+    <%= link_to "Ingreso por orden de compra", "/companies/purchases/#{@company.id}" %>
+    </h3>
+  <p>
+     Agregar, editar or eliminar orden de compra para tu negocio.
+  </p>
+
+
+
+
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
+    <%= link_to "Guias de Salida  ", "/companies/outputs/#{@company.id}" %>
+  </h3>
+  <p>
+     Agregar, editar or eliminar guias de salida.
+  </p>
+  <%= hr() %>
+ 
+
+  
+   <h3>
+    <%= image_tag("supplier_32.png", :class => "vmiddle") %>
+    <%= link_to "Consultas", "/companies/reports/reports_iconsultas/#{@company.id}" %>
+
+    
+    
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar proveedores para tu negocio.
+  </p>
+  <%= hr() %>
+  
+  
+</div>
+
+
+
+<div class="mid_box">
+
+
+  <%= hr() %>
+  <h3>
+        <div>
+    <%= image_tag("clients_32.png", :class => "vmiddle") %>
+    <%= link_to "Requerimiento", "/companies/inventarios/#{@company.id}" %>
+        </div>
+  </h3>
+  
+  <p>
+     Agregar, editar or eliminar requerimientos 
+  </p>
+
+
+<%= hr() %>
+  <h3>
+        <div>
+    <%= image_tag("clients_32.png", :class => "vmiddle") %>
+    <%= link_to "Solicitud Compra", "/companies/inventarios/#{@company.id}" %>
+        </div>
+  </h3>
+  
+  <p>
+     Agregar, editar or eliminar solicitar compra 
+  </p>
+
+<%= hr() %>
+
+     <% if @current_user.level == "admin"  || @current_user.level == "compras" %>
+  <h3>
+    <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
+    <%= link_to "Nota de Ajuste ", "/companies/ajusts/#{@company.id}" %>
+  </h3>
+
+  <p>
+   Agregar, editar or eliminar ajustes de articulos.
+  </p>
+ 
+  <%= hr() %>
+ 
+  
+  <h3>
+    <%= image_tag("divisions_32.png", :class => "vmiddle") %>
+    <%= link_to "Cierre almacen", cierres_path %>
+  </h3>
+
+  <p>
+     Agregar cierre de almacen 
+  </p>
+   <% end %>
+  
+  
+  <%= hr() %>
+  
+  <h3>
+
+  
+  <h3>
+    <%= image_tag("divisions_32.png", :class => "vmiddle") %>
+    <%= link_to "Reportes", "/companies/reports/reports_calmacen/#{@company.id}" %>
+  </h3>
+
+  <p>
+    Reportes de tu negocio.
+  </p>
+
+</div>
