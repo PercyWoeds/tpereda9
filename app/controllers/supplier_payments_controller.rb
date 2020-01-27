@@ -720,9 +720,9 @@ class SupplierPaymentsController < ApplicationController
 
     def build_pdf_footer_rpt3(pdf)      
 
+         table_content = []
 
-      
-        pdf.table_content = []
+    
 
         row = "   " 
         row = "   " 
