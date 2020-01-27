@@ -3313,7 +3313,7 @@ def newfactura2
       respond_to do |format|
         if @purchase.save    
 
-          product = Product.find(1)
+          product = Product.find(8992)
           afecto  =  @purchase[:payable_amount] / 1.18
           total1  =  @purchase[:payable_amount]
           inafecto = @purchase[:inafect]
