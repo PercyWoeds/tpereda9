@@ -1129,10 +1129,10 @@ end
     @monedas     = @company.get_monedas()
     @documents  = @company.get_documents()
 
-    @supplierpayment.[:processed] ='1'
+    @supplierpayment[:processed] ='1'
         
     @supplierpayment[:user_id] = @current_user.id 
-    
+
 
     respond_to do |format|
       if @supplierpayment.save
