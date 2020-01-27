@@ -702,6 +702,7 @@ class SupplierPaymentsController < ApplicationController
                                           columns([0]).align=:center
                                           columns([1]).align=:left
                                           columns([2]).align=:left
+
                                           columns([3]).align=:left
                                           columns([4]).align=:left  
                                           columns([5]).align=:left
@@ -724,45 +725,48 @@ class SupplierPaymentsController < ApplicationController
 
     
         row =[]  
-        row = "   " 
-        row = "   " 
-        row = "   " 
-        row = "   " 
+        row << "   " 
+        row << "   " 
+        row << "   " 
+        row << "   " 
         table_content2 << row
 
-        row=[] 
+       
 
-        row = "Procesado por: "
-        row = "V.B.Contador : "
-        row = "V.B.Administracion : "
-        row = "V.B.Gerencia : "
-
-    
-        table_content2 << row
+      
 
           row =[]  
-        row = "   " 
-        row = "   " 
-        row = "   " 
-        row = "   " 
+        row << "---------------------------------------------------   " 
+        row << "---------------------------------------------------   " 
+        row << "---------------------------------------------------   " 
+        row << "---------------------------------------------------  " 
         table_content2 << row
-    
 
+         row =[] 
+    
+        row << "Procesado por: "
+        row << "V.B.Contador : "
+        row << "V.B.Administracion : "
+        row << "V.B.Gerencia : "
+
+    
+        table_content2 << row
 
 
           result = pdf.table table_content2, {:position => :center,
-                                        :header => true,
+                                        :header => true,  :cell_style => {:border_width => 0},
                                         :width => pdf.bounds.width
                                         } do 
                                           columns([0]).align=:center
-                                          columns([0]).width = 137
+                                          columns([0]).width = 135
+                                        
                                           
                                           columns([1]).align=:center
-                                           columns([1]).width = 137
+                                           columns([1]).width = 135
                                           columns([2]).align=:center
-                                           columns([2]).width = 137
+                                           columns([2]).width = 135
                                           columns([3]).align=:center
-                                           columns([3]).width = 137
+                                           columns([3]).width = 135
                                         end                            
           
       
