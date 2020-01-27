@@ -39,11 +39,11 @@ self.per_page = 20
   TABLE_HEADERS2 = ["ITEM",
                      "NRO.",
                      "FECHA",
-                     "TD",
+                     "MONEDA",
                      "DOC.",
-                     "FEC.DOC.",
+                     "NUMERO.",
                      "RUC",
-                     "CLIENTE",                    
+                     "PROVEEDOR",                    
                      "DEBE  ",
                      "HABER  "]                      
 
