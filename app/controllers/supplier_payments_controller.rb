@@ -647,7 +647,7 @@ class SupplierPaymentsController < ApplicationController
          row << customerpayment_rpt.fecha1.strftime("%d/%m/%Y")         
          row << customerpayment_rpt.get_moneda(customerpayment_rpt.bank_acount.moneda_id)   
          row << customerpayment_rpt.get_document(customerpayment_rpt.document_id)    
-         row << $lcDocumento 
+         row << customerpayment_rpt.supplier.documento 
          row << customerpayment_rpt.supplier.ruc
          row << customerpayment_rpt.supplier.name    
          row << " "
@@ -714,14 +714,48 @@ class SupplierPaymentsController < ApplicationController
       pdf.move_down 10      
       pdf
       
+
     end
 
 
     def build_pdf_footer_rpt3(pdf)      
-        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
-        pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
-    end
-    pdf
+
+
+      
+        pdf.table_content = []
+
+        row = "   " 
+        row = "   " 
+        row = "   " 
+        row = "   " 
+        table_content << row
+     
+        row = "Procesado por: "
+        row = "V.B.Contador : "
+        row = "V.B.Administracion : "
+        row = "V.B.Gerencia : "
+    
+        table_content << row
+
+
+          result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([0]).width = 137
+                                          
+                                          columns([1]).align=:center
+                                           columns([1]).width = 137
+                                          columns([2]).align=:center
+                                           columns([2]).width = 137
+                                          columns([3]).align=:center
+                                           columns([3]).width = 137
+                                        end                            
+          
+      
+    
+        pdf
       
 end
 
