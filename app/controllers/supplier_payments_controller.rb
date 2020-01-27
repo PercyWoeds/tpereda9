@@ -723,19 +723,31 @@ class SupplierPaymentsController < ApplicationController
          table_content = []
 
     
-
+        row =[]  
         row = "   " 
         row = "   " 
         row = "   " 
         row = "   " 
         table_content << row
-     
+
+        row=[] 
+
         row = "Procesado por: "
         row = "V.B.Contador : "
         row = "V.B.Administracion : "
         row = "V.B.Gerencia : "
+
     
         table_content << row
+
+          row =[]  
+        row = "   " 
+        row = "   " 
+        row = "   " 
+        row = "   " 
+        table_content << row
+    
+
 
 
           result = pdf.table table_content, {:position => :center,
