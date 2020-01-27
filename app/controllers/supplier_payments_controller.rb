@@ -720,7 +720,7 @@ class SupplierPaymentsController < ApplicationController
 
     def build_pdf_footer_rpt3(pdf)      
 
-         table_content = []
+         table_content2 = []
 
     
         row =[]  
@@ -728,7 +728,7 @@ class SupplierPaymentsController < ApplicationController
         row = "   " 
         row = "   " 
         row = "   " 
-        table_content << row
+        table_content2 << row
 
         row=[] 
 
@@ -738,19 +738,19 @@ class SupplierPaymentsController < ApplicationController
         row = "V.B.Gerencia : "
 
     
-        table_content << row
+        table_content2 << row
 
           row =[]  
         row = "   " 
         row = "   " 
         row = "   " 
         row = "   " 
-        table_content << row
+        table_content2 << row
     
 
 
 
-          result = pdf.table table_content, {:position => :center,
+          result = pdf.table table_content2, {:position => :center,
                                         :header => true,
                                         :width => pdf.bounds.width
                                         } do 
