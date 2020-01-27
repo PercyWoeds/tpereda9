@@ -647,7 +647,7 @@ class SupplierPaymentsController < ApplicationController
          row << customerpayment_rpt.fecha1.strftime("%d/%m/%Y")         
          row << customerpayment_rpt.get_moneda(customerpayment_rpt.bank_acount.moneda_id)   
          row << customerpayment_rpt.get_document(customerpayment_rpt.document_id)    
-         row << customerpayment_rpt.supplier.documento 
+         row << customerpayment_rpt.documento 
          row << customerpayment_rpt.supplier.ruc
          row << customerpayment_rpt.supplier.name    
          row << " "
