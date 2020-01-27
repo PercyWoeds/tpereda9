@@ -620,7 +620,7 @@ class SupplierPaymentsController < ApplicationController
 
  def build_pdf_body_rpt3(pdf)
     
-    pdf.text "Cuentas  Proveedores:    Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
+    pdf.text "Emision de Cheques :    Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
     pdf.text ""
     pdf.font "Helvetica" , :size => 6
 
