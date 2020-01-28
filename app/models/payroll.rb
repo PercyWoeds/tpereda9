@@ -144,8 +144,10 @@ class Payroll < ActiveRecord::Base
    
     def actualizar
 
+        fecha1 = self.fecha_inicial.to_date
+        fecha2 = self.fecha_final.to_date 
 
-        @registrodiario = Assistance.select("employee_id,inasist_id,COUNT('employee_id') as dias_lab").where("fecha>=? and fecha<=?","#{self.fecha_inicial} 00:00:00","#{self.fecha_final} 23:59:59").group(:employee_id,:inasist_id)
+        @registrodiario = Assistance.select("employee_id,inasist_id,COUNT('employee_id') as dias_lab").where("fecha>=? and fecha<=?","#{self.fecha1} 00:00:00","#{self.fecha2} 23:59:59").group(:employee_id,:inasist_id)
 
         horas = HorasMe.new
         
@@ -155,22 +157,36 @@ class Payroll < ActiveRecord::Base
                 
                     case asistencia.inasist_id 
                         when 1
-                            horas.dt =  asistencia.dias_lab
-
-                        when 1
-                            horas.dt =  asistencia.dias_lab
-                        when 1
-                            horas.dt =  asistencia.dias_lab
-                        when 1
-                            horas.dt =  asistencia.dias_lab
-                        when 1
-                            horas.dt =  asistencia.dias_lab
-                                
+                            horas.dt +=  asistencia.dias_lab
+                        when 2
+                            horas.dt +=  asistencia.dias_lab
+                        when 3
+                            horas.vac +=  asistencia.dias_lab
+                        when 4
+                            horas.dt  += asistencia.dias_lab
+                        when 5
+                            horas.fal +=  asistencia.dias_lab
+                        when 6
+                            horas.dt +=  asistencia.dias_lab
+                        when 7
+                            horas.dm +=  asistencia.dias_lab                                
+                        when 8
+                            horas.vtavac +=  asistencia.dias_lab
+                        when 9
+                            horas.lsg +=  asistencia.dias_lab
+                        when 10
+                            horas.pat +=  asistencia.dias_lab
+                        when 11
+                            horas.dt +=  0
+                        when 12
+                            horas.otros += asistencia.dias_lab
                         
                     end
 
                 
-        end 
+        end
+
+        horas.save
 
 
         
@@ -179,13 +195,19 @@ class Payroll < ActiveRecord::Base
          for horas in @horasplanilla
                 detalle = PayrollDetail.find_by(payroll_id: self.id,employee_id: horas.employee_id)
                 if detalle 
+
+                    detalle.dt = horas.dt 
+
                     detalle.falta = horas.fal
                     detalle.vaca = horas.vac
                     detalle.desmed = horas.dm
                     detalle.subsidio = horas.sub 
-                    detalle.otros = horas.pat 
+                    detalle.vtavac = horas.vtavac
+                    detalle.lsg = horas.lsg
+                    detalle.pat = horas.pat
+                    detalle.otros = horas.otros 
                     detalle.dias  = horas.tot 
-                    detalle.totaldia = 30 - detalle.falta - detalle.vaca - detalle.desmed - detalle.subsidio - detalle.otros 
+                    detalle.totaldia = detalle.dt  - detalle.falta - detalle.vaca - detalle.desmed - detalle.subsidio - detalle.otros -detalle.vtavac -detalle.pat- detalle.lsg
                     detalle.save 
                 end 
          end 
