@@ -207,7 +207,7 @@ class Payroll < ActiveRecord::Base
                     detalle.pat = horas.pat
                     detalle.otros = horas.otros 
                     detalle.dias  = horas.tot 
-                    detalle.totaldia = detalle.dt  - detalle.falta - detalle.vaca - detalle.desmed - detalle.subsidio - detalle.otros -detalle.vtavac -detalle.pat- detalle.lsg
+                    detalle.totaldia = detalle.dt  - detalle.falta - detalle.vaca - detalle.desmed - detalle.subsidio - detalle.otros - detalle.vtavac - detalle.pat -  detalle.lsg
                     detalle.save 
                 end 
          end 
