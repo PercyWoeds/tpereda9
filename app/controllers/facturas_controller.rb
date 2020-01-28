@@ -1542,7 +1542,7 @@ def reportes_st_3
          :header => {
            :spacing => 5,
                            :html => {
-                     :template => 'layouts/pdf-header4.html',
+                     :template => 'layouts/pdf-header6.html',
                            right: '[page] of [topage]'
                   }                  
                } ,
