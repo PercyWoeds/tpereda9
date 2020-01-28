@@ -147,7 +147,7 @@ class Payroll < ActiveRecord::Base
         fecha1 = self.fecha_inicial.to_date
         fecha2 = self.fecha_final.to_date 
 
-        @registrodiario = Assistance.select("employee_id,inasist_id,COUNT('employee_id') as dias_lab").where("fecha>=? and fecha<=?","#{self.fecha1} 00:00:00","#{self.fecha2} 23:59:59").group(:employee_id,:inasist_id)
+        @registrodiario = Assistance.select("employee_id,inasist_id,COUNT('employee_id') as dias_lab").where("fecha>=? and fecha<=?","#{fecha1} 00:00:00","#{fecha2} 23:59:59").group(:employee_id,:inasist_id)
 
         horas = HorasMe.new
         
