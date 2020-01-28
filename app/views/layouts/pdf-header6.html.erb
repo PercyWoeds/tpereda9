@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br">
+  <head>
+      
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    
+     <script>
+      function number_pages() {
+        var vars={};
+        var x=document.location.search.substring(1).split('&');
+        for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = decodeURIComponent(z[1]);}
+        var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+        for(var i in x) {
+          var y = document.getElementsByClassName(x[i]);
+          for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+        }
+      }
+    </script>
+    
+  </head>
+
+  <body style="margin-top: 70px;" onload="number_pages()">
+      
+    <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
+      <tr>
+        <th width="50%"  align="left">Tranportes Pereda SRL</th>
+
+        
+        <th widht="50%" align= "right">Fecha:  <%= Date.today.strftime("%d/%m/%Y") %>  </th>
+        
+     </tr>
+   </table>
+<table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+          <tr>
+        <td width="80%" align="center">   <h4 ><center> CONTROL DE VENTAS SEMANALES DEL MES DE <%=  I18n.l(@fecha1.to_date, format: '%B',locale: :es  ) %>  </center>   </h4>
+        </td>  
+        
+        <td width="20%" align="right">  Page <span class="page"></span> of <span class="topage"></span></td>
+
+      </tr>
+
+
+      <tr>
+              <td width="80%" align="right"  > Local :</td>
+      
+              <td width="20%" align="right"  > Lima </td>
+      </tr>      
+
+    </table>
+ 
+    
+  
+  <font size="2" face="Courier New" >  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:120% ;width:100%'>
+  
+  <tr bgcolor="#B4D7F7">
+    <td width="80%"   ><center> <strong> Pendientes de pago : <%= @fecha1 %>  al: <%= @fecha2 %> </strong></center> </td>
+    <td width="20%"   > </td>
+    
+  </tr>
+
+  
+  </table>
+
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <tr bgcolor="#B4D7F7">
+    <td width="4%"> Item </td>
+    <td width="8%"> Fec.Emision  </td>
+    <td width="8%"> Fec.Recepcion </td>
+    <td width="8%"> Fec.Vmto</td>
+    <td width="8%"> Dias</td>
+    <td width="24%"> Documento </td>
+    <td width= "10%"> IMPORTE  </td>
+
+    <td width="10%"> Cargos </td>
+    <td width="10%"> Abonos </ctd>
+    <td width="10%"> Saldo </td>
+
+    
+  </tr>
+  </table>
+
+  </body>
+  
+  
+</html>

@@ -152,7 +152,7 @@ class Payroll < ActiveRecord::Base
         horas = HorasMe.new
         
 
-        for asistencias in @registrodiario
+        for asistencia in @registrodiario
 
                 
                     case asistencia.inasist_id 
