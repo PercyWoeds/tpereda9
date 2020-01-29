@@ -177,7 +177,9 @@ TABLE_HEADERS30 = ["TD",
                Purchase.create! row.to_hash 
           
             else  
-                a.balance = saldo 
+                a.date2 = row['date2'] 
+                a.date3 = row['date3']
+                #a.balance = saldo 
                 a.save
             end 
 
