@@ -1,5 +1,7 @@
   Mnygo::Application.routes.draw do
 
+  resources :telecredito_details
+  resources :telecreditos
   resources :products_grupos
   resources :products_lines
   resources :egresos

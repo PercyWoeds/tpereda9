@@ -1,0 +1,15 @@
+<%= simple_form_for(@telecredito) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :fecha1 %>
+    <%= f.input :fecha2 %>
+    <%= f.input :code %>
+    <%= f.input :bank_acount_id %>
+    <%= f.input :importe %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

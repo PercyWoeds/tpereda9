@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fecha: 2020-01-29 09:13:33
+  nro: MyString
+  operacion: MyString
+  purchase_id: 1
+  beneficiario: MyString
+  documento: MyString
+  moneda: MyString
+  importe: 1.5
+  egreso: 1.5
+  aprueba: MyString
+  observacion: MyString
+  telecredito_id: 1
+
+two:
+  fecha: 2020-01-29 09:13:33
+  nro: MyString
+  operacion: MyString
+  purchase_id: 1
+  beneficiario: MyString
+  documento: MyString
+  moneda: MyString
+  importe: 1.5
+  egreso: 1.5
+  aprueba: MyString
+  observacion: MyString
+  telecredito_id: 1

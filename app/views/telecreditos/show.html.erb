@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Fecha1:</strong>
+  <%= @telecredito.fecha1 %>
+</p>
+
+<p>
+  <strong>Fecha2:</strong>
+  <%= @telecredito.fecha2 %>
+</p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @telecredito.code %>
+</p>
+
+<p>
+  <strong>Bank acount:</strong>
+  <%= @telecredito.bank_acount_id %>
+</p>
+
+<p>
+  <strong>Importe:</strong>
+  <%= @telecredito.importe %>
+</p>
+
+<%= link_to 'Edit', edit_telecredito_path(@telecredito) %> |
+<%= link_to 'Back', telecreditos_path %>

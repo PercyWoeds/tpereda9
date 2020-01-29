@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fecha1: 2020-01-29 09:03:38
+  fecha2: 2020-01-29 09:03:38
+  code: MyString
+  bank_acount_id: 1
+  importe: 1.5
+
+two:
+  fecha1: 2020-01-29 09:03:38
+  fecha2: 2020-01-29 09:03:38
+  code: MyString
+  bank_acount_id: 1
+  importe: 1.5
