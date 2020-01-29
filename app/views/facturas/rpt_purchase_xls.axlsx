@@ -21,7 +21,10 @@ wb.styles do |s|
     
     sheet.add_row ["Nro.", "Fec.Emision", "Fec.Recepcion","Fec.Vmto.", "Ruc","Proveedor","Dias","Documento","Importe", "Cargos","Abonos","Saldo"],  :style => title 
 
- sheet.add_row ["MONEDA : SOLES "]
+
+     if @moneda_id == 2
+
+     sheet.add_row ["MONEDA : SOLES "]
 
 
      nroitem= 1 
@@ -38,7 +41,7 @@ wb.styles do |s|
          @purchase_soles.each do |compra1|
               
                  moneda_valor = 2  
-                 @detalle = @company.get_purchases_by_moneda_prov2(@fecha1,@fecha2,moneda_valor,compra1.supplier_id )            
+              @detalle = @company.get_purchases_by_moneda_prov2(@fecha1,@fecha2,moneda_valor,compra1.supplier_id )            
                   
                    @detalle.each do |compra| 
 
@@ -55,7 +58,6 @@ wb.styles do |s|
 
                    end 
 
-                     sheet.add_row [espacio,espacio,espacio,espacio,espacio,espacio,espacio,"TOTAL PROVEEDOR",tot_1,tot_2,tot_3,tot_4], :style => [ cadena,date,date,date,currency,cadena,currency,currency,currency,currency]
 
                      totg1 += tot_1                  
                      totg2 += tot_2  
@@ -74,7 +76,66 @@ wb.styles do |s|
          totg2 += tot_2  
          totg3 += tot_3                   
          totg4 += tot_4  
-       sheet.add_row [espacio,espacio,espacio,espacio,espacio,espacio,espacio,"TOTAL SOLES",totg1,totg2,totg3,totg4], :style => [ cadena,date,date,date,currency,cadena,currency,currency,currency,currency]
+       sheet.add_row [espacio,espacio,espacio,espacio,espacio,espacio,espacio,"TOTAL SOLES",totg1,totg2,totg3,totg4], :style => [ cadena,date,date,date,currency,cadena,currency,currency,currency,currency,currency,currency]
+
+
+      else
+
+      sheet.add_row ["MONEDA : DOLARES "]
+
+
+     nroitem= 1 
+     totg1 = 0 
+     totg2 = 0 
+     totg3 = 0 
+     totg4 = 0 
+     tot_1 = 0 
+     tot_2 = 0 
+     tot_3  = 0 
+     tot_4 = 0
+     espacio =" "
+
+         @purchase_soles.each do |compra1|
+              
+                 moneda_valor = 1
+                 @detalle = @company.get_purchases_by_moneda_prov2(@fecha1,@fecha2,moneda_valor,compra1.supplier_id )            
+                  
+                   @detalle.each do |compra| 
+
+                   dias = (compra.date3.to_date - compra.date2.to_date).to_i 
+                   documento0 = compra.document.descripshort + "-" + compra.documento
+
+                   sheet.add_row [nroitem,compra.date1,compra.date2,compra.date3,compra1.supplier.ruc,compra1.supplier.name,dias,documento0,compra.total_amount,compra.charge,compra.pago,compra.balance], :style => [ currency,date,date,date,cadena,cadena,currency,cadena,currency,cadena,currency,currency,currency,currency]
+
+                     nroitem = nroitem + 1 
+                      tot_1 += compra.total_amount 
+                      tot_2 += compra.charge 
+                      tot_3 += compra.pago 
+                      tot_4 += compra.balance 
+
+                   end 
+
+
+                     totg1 += tot_1                  
+                     totg2 += tot_2  
+                     totg3 += tot_3        
+                     totg4 += tot_4
+                     tot_1 = 0  
+                     tot_2 = 0 
+                     tot_3 = 0 
+                     tot_4 = 0 
+
+            
+         end
+
+
+         totg1 += tot_1                   
+         totg2 += tot_2  
+         totg3 += tot_3                   
+         totg4 += tot_4  
+       sheet.add_row [espacio,espacio,espacio,espacio,espacio,espacio,espacio,"TOTAL DOLARES",totg1,totg2,totg3,totg4], :style => [ cadena,date,date,date,currency,cadena,currency,currency,currency,currency,currency,currency]
+
+      end 
 
    
    
