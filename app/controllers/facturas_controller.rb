@@ -12,7 +12,6 @@ class FacturasController < ApplicationController
     require "open-uri"
 
 
-
   def rpt_compras1_pdf
     @company=Company.find(1)      
    
@@ -1528,33 +1527,55 @@ def reportes_st_3
     @fecha1 = params[:fecha1]
     
     @fecha2 = params[:fecha2]
+
+      @moneda_id = params[:moneda_id]
     
    # @company.actualizar_fecha2
 
     @purchase_soles = @company.get_purchases_by_moneda_prov(@fecha1,@fecha2,"1")  
     @purchase_dolar = @company.get_purchases_by_moneda_prov(@fecha1,@fecha2,"2")  
 
-   case params[:print]
+   case params[:print] 
       when "To PDF" then 
-        begin 
-         render  pdf: "Proveedores ",template: "facturas/rpt_cpagar2.pdf.erb",locals: {:facturas => @purchase },
-         :orientation      => 'Portrait',
-         :header => {
-           :spacing => 5,
-                           :html => {
-                     :template => 'layouts/pdf-header6.html',
-                           right: '[page] of [topage]'
-                  }                  
-               } ,
+        if @moneda_id == "2"
+            begin 
+             render  pdf: "Proveedores ",template: "facturas/rpt_cpagar2.pdf.erb",locals: {:facturas => @purchase },
+             :orientation      => 'Portrait',
+             :header => {
+               :spacing => 5,
+                               :html => {
+                         :template => 'layouts/pdf-header6.html',
+                               right: '[page] of [topage]'
+                      }                  
+                   } ,
 
-          :footer => { :html => { template: 'layouts/pdf-footer3.html' }       }  ,   
-          :margin => {bottom: 25} 
+              :footer => { :html => { template: 'layouts/pdf-footer3.html' }       }  ,   
+              :margin => {bottom: 25} 
 
-        end   
+            end   
+        else
+            begin 
+             render  pdf: "Proveedores ",template: "facturas/rpt_cpagar2dolar.pdf.erb",locals: {:facturas => @purchase },
+             :orientation      => 'Portrait',
+             :header => {
+               :spacing => 5,
+                               :html => {
+                         :template => 'layouts/pdf-header6.html',
+                               right: '[page] of [topage]'
+                      }                  
+                   } ,
+
+              :footer => { :html => { template: 'layouts/pdf-footer3.html' }       }  ,   
+              :margin => {bottom: 25} 
+
+            end   
+
+        end 
 
 
+      when "Excel"   then render xlsx: 'rpt_purchase_xls'
+    
 
-      when "To Excel" then render xlsx: 'rpt_st_2'
       else render action: "index"
 
     end

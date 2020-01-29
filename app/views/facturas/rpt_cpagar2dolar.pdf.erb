@@ -1,0 +1,130 @@
+<html>
+<body>  
+    
+      <% nroitem= 1 %>
+      <% totg1 = 0 %>
+      <% totg2 = 0 %>
+      <% totg3 = 0 %>
+      <% totg4 = 0 %>
+
+      <table style=  'font-size:80% ;width:100%'>    
+
+          <tr style="font-weight:bold">
+          <td width="8%" > MONEDA: </td>
+          <td width="20%"align="left"> DOLARES  </td>
+          <td width="72%"> </td>    
+          </tr>
+
+      </table>
+
+                 
+            <% tot_1 = 0 %>
+            <% tot_2 = 0 %>
+            <% tot_3   = 0 %>
+            <% tot_4 = 0 %>
+
+            <%  @purchase_soles.each do |compra1| %>
+
+            <table style=  'font-size:80% ;width:100%'>       
+            <tr>
+            <td width="4%"> </td>
+
+            <td width="8%"><%= compra1.supplier.ruc %> </td>
+            <td width="30%"><%= compra1.supplier.name %> </td>
+            <td width="8%" align="left"> </td>
+            <td width="24%" align="right"> </td>
+            <td width="10%" align="right"> </td>
+            </tr>       
+            </table>
+
+            <% moneda_valor = 1 %> 
+             <% @detalle = @company.get_purchases_by_moneda_prov2(@fecha1,@fecha2,moneda_valor,compra1.supplier_id )  %>
+            
+            
+            <% @detalle.each do |compra| %>
+ 
+            <table style=  'font-size:80% ;width:100%'>       
+            <tr>
+            <td width="4%"><%= nroitem %> </td>
+            <td width="8%"><%= compra.date1.strftime("%d/%m/%Y") %> </td>
+            <td width="8%"><%= compra.date2.strftime("%d/%m/%Y") %> </td>
+            <td width="8%" align="left"> <%= compra.date3.strftime("%d/%m/%Y") %> </td>
+            <td width="8%" align="right"> <%= (compra.date3.to_date - compra.date2.to_date).to_i  %> </td>
+    <td width="24%" align="left"> <%= compra.document.descripshort + "-" + compra.documento  %> </td>
+            
+            <td width="10%" align="right"><%=sprintf("%.2f",compra.total_amount.to_s) %> </td>
+            <td width="10%" align="right"><%=sprintf("%.2f",compra.charge.to_s) %></td>
+            <td width="10%" align="right"><%=sprintf("%.2f",compra.pago.to_s) %>  </td>
+            <td width="10%" align="right"><%= sprintf("%.2f",compra.balance.to_s) %> </td>
+            </tr>       
+            </table>
+
+
+            <%  nroitem = nroitem + 1 %>
+             <% tot_1 += compra.total_amount %> 
+             <% tot_2 += compra.charge %>
+             <% tot_3 += compra.pago %>
+             <% tot_4 += compra.balance %>
+
+            <%end %>
+
+
+            <table style=  'font-size:80% ;width:100%'>       
+            <tr>
+            <td width="4%"> </td>
+            <td width="8%"> </td>
+            <td width="8%"></td>
+            <td width="8%" align="left">  </td>
+            <td width="8%" align="right"></td>
+            <td width="24%" align="left"> TOTAL PROVEEDOR </td>
+            
+            <td width="10%" align="right"><%= money(tot_1) %> </td>
+            <td width="10%" align="right"><%= money(tot_2) %></td>
+            <td width="10%" align="right"><%= money(tot_3) %>  </td>
+            <td width="10%" align="right"><%= money(tot_4) %> </td>
+            </tr>       
+            </table>
+              <%  totg1 += tot_1 %>                  
+               <%  totg2 += tot_2 %> 
+               <%  totg3 += tot_3 %>                  
+               <%  totg4 += tot_4 %> 
+             <% tot_1 = 0 %> 
+             <% tot_2 = 0 %>
+             <% tot_3 = 0 %>
+             <% tot_4 = 0 %>
+
+
+            <% end %>      
+             
+            
+               <%  totg1 += tot_1 %>                  
+               <%  totg2 += tot_2 %> 
+               <%  totg3 += tot_3 %>                  
+               <%  totg4 += tot_4 %> 
+     
+                 <table style=  'font-size:80% ;width:100%'>       
+                      <tr style="font-weight:bold">
+                      <td width="8%"> </td>
+                      <td width="8%">  </td>
+                      <td width="30%"> Total Dolares :</td>
+                      <td width="10%" align="right"> </td>
+                      <td width="5%" align="right"> </td>
+            <td width="10%" align="right"> <%= sprintf("%.2f",totg1.to_s) %></td>
+            <td width="10%" align="right"> <%= sprintf("%.2f",totg2.to_s) %></td>
+            <td width="10%" align="right"> <%= sprintf("%.2f",totg3.to_s) %></td>
+            <td width="10%" align="right"> <%= sprintf("%.2f",totg4.to_s) %> </td>
+            
+
+                      </tr>
+                 </table>
+      
+
+
+
+        </table>
+        
+        
+        <hr>
+        
+      </body>
+      </html>
