@@ -38,10 +38,10 @@ wb.styles do |s|
      tot_4 = 0
      espacio =" "
 
-         @purchase_soles.each do |compra1|
+         @purchase_dolar.each do |compra1|
               
                  moneda_valor = 2  
-              @detalle = @company.get_purchases_by_moneda_prov2(@fecha1,@fecha2,moneda_valor,compra1.supplier_id )            
+          @detalle = @company.get_purchases_by_moneda_prov2(@fecha1,@fecha2,moneda_valor,compra1.supplier_id )            
                   
                    @detalle.each do |compra| 
 
