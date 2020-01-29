@@ -22,7 +22,7 @@ wb.styles do |s|
     sheet.add_row ["Nro.", "Fec.Emision", "Fec.Recepcion","Fec.Vmto.", "Ruc","Proveedor","Dias","Documento","Importe", "Cargos","Abonos","Saldo"],  :style => title 
 
 
-     if @moneda_id == 2
+     if @moneda_id == "2"
 
      sheet.add_row ["MONEDA : SOLES "]
 
