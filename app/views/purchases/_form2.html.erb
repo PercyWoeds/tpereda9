@@ -27,7 +27,7 @@
     </div>
     <div class="field">
       <%= f.label :document_id,"Documento:" %><br />
-      <%= f.collection_select  :document_id, Document.all , :id, :description,{:selected => Document.first }%>
+      <%= f.collection_select  :document_id, Document.all , :id, :description,{:selected => Document.first } %>
 
     
 

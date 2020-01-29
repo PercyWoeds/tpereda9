@@ -3225,10 +3225,16 @@ def newfactura2
     @purchase = Purchase.find(params[:id])
     @company = @purchase.company
     @ac_supplier = @purchase.supplier.name
-    @ac_user = @purchase.user.username
+
+    @ac_user = "admin"
     
     @purchase_details = @purchase.purchase_details
-    
+     
+      @documents = @company.get_documents()    
+    @servicebuys  = @company.get_servicebuys()
+    @monedas  = @company.get_monedas()
+    @payments  = @company.get_payments()  
+
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
 
@@ -3435,7 +3441,7 @@ def newfactura2
     
     items = params[:items].split(",")
     
-    @purchase = purchase.find(params[:id])
+    @purchase = Purchase.find(params[:id])
     @company = @purchase.company
     
     @documents = @company.get_documents()    
@@ -3443,21 +3449,51 @@ def newfactura2
     @monedas  = @company.get_monedas()
     @payments  = @company.get_payments()
 
-    if(params[:ac_supplier] and params[:ac_supplier] != "")
-      @ac_supplier = params[:ac_supplier]
+    @purchase[:total_amount] = @purchase[:payable_amount] * 1.18
+    @purchase[:tax_amount] =@purchase[:total_amount] - @purchase[:payable_amount]  
+    
+    @tipodocumento = @purchase[:document_id]
+    
+    begin 
+    if @tipodocumento == 2
+      @purchase[:payable_amount] = @purchase[:payable_amount]*-1
     else
-      @ac_supplier = @purchase.supplier.name
-    end
-    
-    @purchase_details = @purchase.purchase_details
-    
-    @locations = @company.get_locations()
-    @divisions = @company.get_divisions()
+      @purchase[:payable_amount] = @purchase[:payable_amount]
+    end   
+    rescue
+      @purchase[:payable_amount] = 0
+    end  
 
-      
-    @purchase[:subtotal] = @purchase.get_subtotal(items)
-    @purchase[:tax] = @purchase.get_tax(items, @purchase[:supplier_id])
-    @purchase[:total] = @purchase[:subtotal] + @purchase[:tax]
+    begin 
+
+    if @tipodocumento == 2
+      @purchase[:inafecto] = @purchase[:inafecto] *-1
+    else
+      @purchase[:inafecto] = @purchase[:inafecto]
+    end    
+    rescue
+      @purchase[:inafecto] = 0
+
+    end 
+
+    begin
+       if @tipodocumento == 2
+        @purchase[:tax_amount] = @purchase[:tax_amount]*-1
+       else
+        @purchase[:tax_amount] = @purchase[:tax_amount]
+       end 
+    rescue
+        @purchase[:tax_amount] = 0
+    end
+
+    @purchase[:location_id] = 1
+    @purchase[:division_id] = 1    
+    @purchase[:date3]  =   @purchase[:date1] + @purchase.get_dias_vmto(@purchase[:payment_id]).days  
+    
+    @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]  + @purchase[:inafecto]
+    @purchase[:charge]  = 0
+    @purchase[:pago] = 0
+    @purchase[:balance] =   @purchase[:total_amount]
     
 
     respond_to do |format|

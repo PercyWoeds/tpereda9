@@ -845,6 +845,8 @@ end
   match 'purchases/ac_suppliers/:company_id' => 'purchases#ac_suppliers', via: [:get, :post]
   match 'purchases/new/:company_id' => 'purchases#new', via: [:get, :post]  
   match 'purchases/new2/:company_id' => 'purchases#new2', via: [:get, :post]  
+  match 'purchases/edit/:company_id' => 'purchases#edit', via: [:get, :post]  
+  
   
   match 'purchases/newfactura/:id' => 'purchases#newfactura', via: [:get, :post]  
   match 'purchases/newfactura2/:id' => 'purchases#newfactura2', via: [:get, :post]  

@@ -53,6 +53,8 @@
          
          <%if  @current_user.level == "admin"  %> 
                       <td>
+          <%= link_to 'Editar',edit_purchase_path(purchase)   %>
+                        
           <%= link_to 'Eliminar', purchase, method: :delete, data: { confirm: 'Are you sure?' } %>
            </td>
         <%end %>

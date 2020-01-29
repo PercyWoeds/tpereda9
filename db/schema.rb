@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200127223527) do
+ActiveRecord::Schema.define(version: 20200129150409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -368,6 +368,32 @@ ActiveRecord::Schema.define(version: 20200127223527) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "csubdia", force: :cascade do |t|
+    t.string   "ccompro"
+    t.string   "cfeccom"
+    t.string   "ccodmon"
+    t.string   "csitua"
+    t.float    "ctipcam"
+    t.string   "cglosa"
+    t.float    "ctotal"
+    t.string   "ctipo"
+    t.string   "cflag"
+    t.datetime "cdate"
+    t.string   "chora"
+    t.string   "cfeccam"
+    t.string   "cuser"
+    t.string   "corig"
+    t.string   "cform"
+    t.string   "cextor"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "csubdia"
+    t.float    "factory"
+    t.float    "ajuste"
+    t.float    "compen"
+    t.float    "total1"
+  end
+
   create_table "csubdiarios", force: :cascade do |t|
     t.string   "csubdia"
     t.string   "ccompro"
@@ -604,6 +630,37 @@ ActiveRecord::Schema.define(version: 20200127223527) do
     t.string   "tiposunat"
     t.string   "fullname"
     t.string   "area"
+  end
+
+  create_table "dsubdia", force: :cascade do |t|
+    t.string   "dcompro"
+    t.string   "dsecue"
+    t.string   "dfeccom"
+    t.string   "dcuenta"
+    t.string   "dcodane"
+    t.string   "dcencos"
+    t.string   "dcodmon"
+    t.string   "ddh"
+    t.float    "dimport"
+    t.string   "dtipdoc"
+    t.string   "dnumdoc"
+    t.string   "dfecdoc"
+    t.string   "dfecven"
+    t.string   "darea"
+    t.string   "dflag"
+    t.string   "dxglosa"
+    t.datetime "ddate"
+    t.string   "dcodane2"
+    t.float    "dusimpor"
+    t.float    "dmnimpor"
+    t.string   "dcodarc"
+    t.string   "dtidref"
+    t.string   "dndoref"
+    t.datetime "dfecref"
+    t.datetime "dbimref"
+    t.float    "digvref"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "dsubdiarios", force: :cascade do |t|
@@ -1812,6 +1869,7 @@ ActiveRecord::Schema.define(version: 20200127223527) do
     t.string   "tiponota"
     t.float    "inafecto"
     t.float    "pagos"
+    t.datetime "date4"
   end
 
   create_table "purchaseships", force: :cascade do |t|
@@ -2193,6 +2251,17 @@ ActiveRecord::Schema.define(version: 20200127223527) do
     t.string   "account"
   end
 
+  create_table "tanks", force: :cascade do |t|
+    t.string   "comments"
+    t.integer  "product_id"
+    t.integer  "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "tanks", ["company_id"], name: "index_tanks_on_company_id", using: :btree
+  add_index "tanks", ["product_id"], name: "index_tanks_on_product_id", using: :btree
+
   create_table "tanques", force: :cascade do |t|
     t.string   "code"
     t.integer  "product_id"
@@ -2200,6 +2269,33 @@ ActiveRecord::Schema.define(version: 20200127223527) do
     t.float    "varilla"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+  end
+
+  create_table "telecredito_details", force: :cascade do |t|
+    t.datetime "fecha"
+    t.string   "nro"
+    t.string   "operacion"
+    t.integer  "purchase_id"
+    t.string   "beneficiario"
+    t.string   "documento"
+    t.string   "moneda"
+    t.float    "importe"
+    t.float    "egreso"
+    t.string   "aprueba"
+    t.string   "observacion"
+    t.integer  "telecredito_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  create_table "telecreditos", force: :cascade do |t|
+    t.datetime "fecha1"
+    t.datetime "fecha2"
+    t.string   "code"
+    t.integer  "bank_acount_id"
+    t.float    "importe"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "tempcps", force: :cascade do |t|
@@ -2570,4 +2666,6 @@ ActiveRecord::Schema.define(version: 20200127223527) do
   add_foreign_key "cpagar_details", "cpagars"
   add_foreign_key "products", "stocks"
   add_foreign_key "service_extensions", "servicebuys"
+  add_foreign_key "tanks", "companies"
+  add_foreign_key "tanks", "products"
 end
