@@ -25,11 +25,11 @@
 
       </div>
     </div>
+
     <div class="field">
       <%= f.label :document_id,"Documento:" %><br />
-      <%= f.collection_select  :document_id, Document.all , :id, :description,{:selected => Document.first } %>
 
-    
+       <%= f.collection_select :document_id, @documents, :id, :description, :prompt => true %>
 
     </div>
       
@@ -53,14 +53,14 @@
 
     <div class="field">
       <%= f.label :payment_id,"Forma de Pago " %><br />
-      <%= f.select :payment_id, options_from_collection_for_select(@payments,'id','descrip')%>
+      <%= f.collection_select :payment_id, @payments, :id, :descrip, :prompt => true %>
     </div>
   
 
 
     <div class="field">
       <%= f.label :moneda_id ,"  "%><br />
-      <%= f.select :moneda_id, options_from_collection_for_select(@monedas,'id','description') %>
+      <%= f.collection_select :moneda_id, @monedas, :id, :description, :prompt => true %>
 
 
     </div>

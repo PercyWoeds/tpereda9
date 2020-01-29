@@ -14,7 +14,12 @@ class TelecreditosController < ApplicationController
 
   # GET /telecreditos/new
   def new
+
+    @company = Company.find(1)
+    
     @telecredito = Telecredito.new
+    @bank_acounts = @company.get_bank_acounts()        
+
   end
 
   # GET /telecreditos/1/edit

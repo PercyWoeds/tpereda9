@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200129150409) do
+ActiveRecord::Schema.define(version: 20200129231520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -860,6 +860,30 @@ ActiveRecord::Schema.define(version: 20200129150409) do
     t.float    "tasa6"
     t.float    "tasa7"
     t.float    "tasa8"
+  end
+
+  create_table "freepagars", force: :cascade do |t|
+    t.integer  "supplier_id"
+    t.float    "anio01"
+    t.float    "anio02"
+    t.float    "anio03"
+    t.float    "anio04"
+    t.float    "anio05"
+    t.float    "anio06"
+    t.float    "anio07"
+    t.float    "general"
+    t.float    "cantidad"
+    t.float    "compras"
+    t.float    "compras_cant"
+    t.float    "total_gral"
+    t.float    "cant_fact"
+    t.float    "vmto"
+    t.float    "xpagar"
+    t.float    "detraccion"
+    t.float    "saldo"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.float    "anio00"
   end
 
   create_table "gastos", force: :cascade do |t|

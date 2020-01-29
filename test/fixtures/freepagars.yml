@@ -1,0 +1,41 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  supplier_id: 1
+  anio01: 1.5
+  anio02: 1.5
+  anio03: 1.5
+  anio04: 1.5
+  anio05: 1.5
+  anio06: 1.5
+  anio07: 1.5
+  general: 1.5
+  cantidad: 1.5
+  compras: 1.5
+  compras_cant: 1.5
+  total_gral: 1.5
+  cant_fact: 1.5
+  vmto: 1.5
+  xpagar: 1.5
+  detraccion: 1.5
+  saldo: 1.5
+
+two:
+  supplier_id: 1
+  anio01: 1.5
+  anio02: 1.5
+  anio03: 1.5
+  anio04: 1.5
+  anio05: 1.5
+  anio06: 1.5
+  anio07: 1.5
+  general: 1.5
+  cantidad: 1.5
+  compras: 1.5
+  compras_cant: 1.5
+  total_gral: 1.5
+  cant_fact: 1.5
+  vmto: 1.5
+  xpagar: 1.5
+  detraccion: 1.5
+  saldo: 1.5

@@ -1214,18 +1214,299 @@ def get_customer_payments_detail_value(fecha1,fecha2,value="total")
 
 def get_supplier_payments2(moneda,fecha1,fecha2)
 
-   @facturas = Purchase.find_by_sql(["
+   @customerpayment_rpt= Purchase.find_by_sql(["
   SELECT   yearmonth as year_month,
    supplier_id,
    SUM(balance) as balance  
    FROM purchases 
-   WHERE moneda_id = ? and balance>0 and date1 >= ? and date1  <= ?
+   WHERE moneda_id = ? and balance<>0 and date1 >= ? and date1  <= ? 
    GROUP BY 2,1
    ORDER BY 2,1 ", moneda,fecha1,fecha2 ])    
 
-  return @facturas
+
+
+   total_general = 0
+      total_factory = 0
+
+      
+      nroitem = 1
+
+      # tabla pivoteadas
+      # hash of hashes
+        # pad columns with spaces and bars from max_lengths
+
+      @total_general = 0
+      @total_anterior = 0
+      @total_cliente = 0 
+      @total_mes01 = 0
+      @total_mes02 = 0
+      @total_mes03 = 0
+      @total_mes04 = 0
+      @total_mes05 = 0
+      @total_mes06 = 0
+      @total_mes07 = 0
+      @total_mes08 = 0
+      @total_mes09 = 0
+      @total_mes10 = 0
+      @total_mes11 = 0
+      @total_mes12 = 0
+      @total_anterior_column = 0
+      @total_mes01_column = 0
+      @total_mes02_column = 0
+      @total_mes03_column = 0
+      @total_mes04_column = 0
+      @total_mes05_column = 0
+      @total_mes06_column = 0
+      @total_mes07_column = 0
+      @total_mes08_column = 0
+      @total_mes09_column = 0
+      @total_mes10_column = 0
+      @total_mes11_column = 0
+      @total_mes12_column = 0
+      
+     
+
+       
+
+      lcCli = @customerpayment_rpt.first.supplier_id
+      $lcCliName = ""
+    
+
+     for  customerpayment_rpt in @customerpayment_rpt
+
+        if lcCli == customerpayment_rpt.supplier_id 
+
+          $lcCliName = customerpayment_rpt.supplier.name  
+      
+          if customerpayment_rpt.year_month.to_f <= 201712
+            @total_anterior = @total_anterior + customerpayment_rpt.balance.round(2)          
+          end             
+
+          if customerpayment_rpt.year_month.to_f >= 201801 and  customerpayment_rpt.year_month.to_f <= 201812
+            @total_mes01 = @total_mes01 + customerpayment_rpt.balance.round(2)        
+          end   
+
+          if customerpayment_rpt.year_month.to_f >= 201901 and  customerpayment_rpt.year_month.to_f <= 201912
+            @total_mes02 = @total_mes02 + customerpayment_rpt.balance.round(2)        
+          end 
+            
+          if customerpayment_rpt.year_month.to_f >= 202001 and  customerpayment_rpt.year_month.to_f <= 202012
+            @total_mes03 = @total_mes03 + customerpayment_rpt.balance.round(2)        
+          end 
+        
+         if customerpayment_rpt.year_month.to_f >= 202101 and  customerpayment_rpt.year_month.to_f <= 202112
+            @total_mes04 = @total_mes04 + customerpayment_rpt.balance.round(2)        
+          end 
+         if customerpayment_rpt.year_month.to_f >= 202201 and  customerpayment_rpt.year_month.to_f <= 202212
+            @total_mes05 = @total_mes05 + customerpayment_rpt.balance.round(2)        
+          end 
+         if customerpayment_rpt.year_month.to_f >= 202301 and  customerpayment_rpt.year_month.to_f <= 202312
+            @total_mes06 = @total_mes06 + customerpayment_rpt.balance.round(2)        
+          end 
+          if customerpayment_rpt.year_month.to_f >= 202401 and  customerpayment_rpt.year_month.to_f <= 202412
+            @total_mes07 = @total_mes07 + customerpayment_rpt.balance.round(2)        
+          end 
+
+          totqty = 0
+          totcompras = 0 
+        
+
+         
+            @total_mes08 = @total_mes08  + totqty 
+          
+            @total_mes09 = @total_mes09  + totcompras      
+          
+          totqty = 0
+          totcompras = 0 
+
+         
+              
+           totqty = 0
+          totcompras = 0 
+
+
+           
+            @total_mes10 = @total_mes10 + totqty       
+            @total_mes11 = @total_mes11 + totcompras        
+          
+            @total_mes12 = @total_mes12         
+       
+
+        else
+          
+            
+          @total_cliente = @total_anterior+
+          @total_mes01+
+          @total_mes02+
+          @total_mes03+
+          @total_mes04+
+          @total_mes05+
+          @total_mes06+
+          @total_mes07+
+          @total_mes08+
+          @total_mes09+
+          @total_mes10+
+          @total_mes11+
+          @total_mes12
+            @total_anterior_column = @total_anterior_column + @total_anterior
+            @total_mes01_column = @total_mes01_column +@total_mes01
+            @total_mes02_column = @total_mes02_column +@total_mes02
+            @total_mes03_column = @total_mes03_column +@total_mes03
+            @total_mes04_column = @total_mes04_column +@total_mes04
+            @total_mes05_column = @total_mes05_column +@total_mes05
+            @total_mes06_column = @total_mes06_column +@total_mes06
+            @total_mes07_column = @total_mes07_column +@total_mes07
+            @total_mes08_column = @total_mes08_column +@total_mes08
+            @total_mes09_column = @total_mes09_column +@total_mes09
+            @total_mes10_column = @total_mes10_column +@total_mes10
+            @total_mes11_column = @total_mes11_column +@total_mes11
+            @total_mes12_column = @total_mes12_column +@total_mes12
+          
+            
+          
+
+            a = Freepagar.new(supplier_id: lcCli ,anio00:@total_cliente ,anio01: @total_mes01, anio02:  @total_mes02,anio03: @total_mes03,anio04:  @total_mes04, anio05: @total_mes05,anio06: @total_mes06,anio07: @total_mes07,general: 0,compras: 0,compras_cant: 0 ,total_gral: @total_cliente,cant_fact: 0,vmto: 0,xpagar: 0,detraccion: 0 ,saldo: 0 )
+              a.save
+
+            ## TOTAL XMES GENERAL
+            @total_anterior_column = @total_anterior_column + @total_anterior
+            @total_mes01_column = @total_mes01_column +@total_mes01
+            @total_mes02_column = @total_mes02_column +@total_mes02
+            @total_mes03_column = @total_mes03_column +@total_mes03
+            @total_mes04_column = @total_mes04_column +@total_mes04
+            @total_mes05_column = @total_mes05_column +@total_mes05
+            @total_mes06_column = @total_mes06_column +@total_mes06
+            @total_mes07_column = @total_mes07_column +@total_mes07
+            @total_mes08_column = @total_mes08_column +@total_mes08
+            @total_mes09_column = @total_mes09_column +@total_mes09
+            @total_mes10_column = @total_mes10_column +@total_mes10
+            @total_mes11_column = @total_mes11_column +@total_mes11
+            @total_mes12_column = @total_mes12_column +@total_mes12
+            @total_cliente = 0 
+            ## TOTAL XMES GENERAL
+
+            $lcCliName =customerpayment_rpt.supplier.name
+            lcCli = customerpayment_rpt.supplier_id
+
+
+            @total_anterior = 0
+            @total_mes01 = 0
+            @total_mes02 = 0
+            @total_mes03 = 0
+            @total_mes04 = 0
+            @total_mes05 = 0
+            @total_mes06 = 0
+            @total_mes07 = 0
+            @total_mes08 = 0
+            @total_mes09 = 0
+            @total_mes10 = 0
+            @total_mes11 = 0
+            @total_mes12 = 0
+            @total_cliente = 0 
+
+          if customerpayment_rpt.year_month.to_f <= 201712
+            @total_anterior = @total_anterior + customerpayment_rpt.balance.round(2)          
+          end             
+
+          if customerpayment_rpt.year_month.to_f >= 201801 and  customerpayment_rpt.year_month.to_f <= 201812
+            @total_mes01 = @total_mes01 + customerpayment_rpt.balance.round(2)        
+          end   
+
+          if customerpayment_rpt.year_month.to_f >= 201901 and  customerpayment_rpt.year_month.to_f <= 201912
+            @total_mes02 = @total_mes02 + customerpayment_rpt.balance.round(2)        
+          end 
+            
+          if customerpayment_rpt.year_month.to_f >= 202001 and  customerpayment_rpt.year_month.to_f <= 202012
+            @total_mes03 = @total_mes03 + customerpayment_rpt.balance.round(2)        
+          end 
+        
+         if customerpayment_rpt.year_month.to_f >= 202101 and  customerpayment_rpt.year_month.to_f <= 202112
+            @total_mes04 = @total_mes04 + customerpayment_rpt.balance.round(2)        
+          end 
+         if customerpayment_rpt.year_month.to_f >= 202201 and  customerpayment_rpt.year_month.to_f <= 202212
+            @total_mes05 = @total_mes05 + customerpayment_rpt.balance.round(2)        
+          end 
+         if customerpayment_rpt.year_month.to_f >= 202301 and  customerpayment_rpt.year_month.to_f <= 202312
+            @total_mes06 = @total_mes06 + customerpayment_rpt.balance.round(2)        
+          end 
+          if customerpayment_rpt.year_month.to_f >= 202401 and  customerpayment_rpt.year_month.to_f <= 202412
+            @total_mes07 = @total_mes07 + customerpayment_rpt.balance.round(2)        
+          end 
+
+ 
+          totqty = 0
+          totcompras = 0 
+          
+
+
+            @total_mes08 = @total_mes08  + totqty 
+          
+            @total_mes09 = @total_mes09  + totcompras     
+
+
+           totqty = 0
+          totcompras = 0 
+        
+           
+            @total_mes10 = @total_mes10 + totqty       
+            @total_mes11 = @total_mes11 + totcompras            
+            @total_mes12 = @total_mes12       
+        
+
+          nroitem = nroitem + 1 
+
+
+
+        end 
+         @total_general = @total_general + customerpayment_rpt.balance.round(2)
+       end   
+
+      #fin for
+          #ultimo cliente 
+
+          @total_cliente = @total_anterior+
+          @total_mes01+
+          @total_mes02+
+          @total_mes03+
+          @total_mes04+
+          @total_mes05+
+          @total_mes06+
+          @total_mes07+
+          @total_mes08+
+          @total_mes09+
+          @total_mes10+
+          @total_mes11+
+          @total_mes12
+            @total_anterior_column = @total_anterior_column + @total_anterior
+            @total_mes01_column = @total_mes01_column +@total_mes01
+            @total_mes02_column = @total_mes02_column +@total_mes02
+            @total_mes03_column = @total_mes03_column +@total_mes03
+            @total_mes04_column = @total_mes04_column +@total_mes04
+            @total_mes05_column = @total_mes05_column +@total_mes05
+            @total_mes06_column = @total_mes06_column +@total_mes06
+            @total_mes07_column = @total_mes07_column +@total_mes07
+            @total_mes08_column = @total_mes08_column +@total_mes08
+            @total_mes09_column = @total_mes09_column +@total_mes09
+            @total_mes10_column = @total_mes10_column +@total_mes10
+            @total_mes11_column = @total_mes11_column +@total_mes11
+            @total_mes12_column = @total_mes12_column +@total_mes12
+          
+           
+            a = Freepagar.new(supplier_id: lcCli ,anio00:@total_cliente ,anio01: @total_mes01, anio02:  @total_mes02,anio03: @total_mes03,anio04:  @total_mes04, anio05: @total_mes05,anio06: @total_mes06,anio07: @total_mes07,general: 0,compras: 0,compras_cant: 0 ,total_gral: @total_cliente,cant_fact: 0,vmto: 0,xpagar: 0,detraccion: 0 ,saldo: 0 )
+            a.save
+
+
+
+              b =Freepagar.all.joins(:supplier).order("suppliers.ruc ")
+
+
+  return b 
     
  end 
+
+
+
+ 
 
 
 #reporte de cancelaciones detaludo x proveedor

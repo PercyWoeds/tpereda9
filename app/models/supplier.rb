@@ -12,6 +12,8 @@ class Supplier < ActiveRecord::Base
   has_many :purchaseorders
   has_many :supplier_payments
   has_many :outputs
+  has_many :freepagars
+  
   
 
   def self.to_csv(options = {})

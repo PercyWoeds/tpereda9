@@ -2,10 +2,31 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :fecha1 %>
-    <%= f.input :fecha2 %>
-    <%= f.input :code %>
-    <%= f.input :bank_acount_id %>
+
+    <div class="field">
+    <%= f.label :fecha1, "Fecha Emision" %><br>
+    <%= f.date_field :fecha1 %>
+  </div>
+
+ 
+    
+  <div class="field">
+    <%= f.label :code, "Code" %><br>
+    <%= f.text_field :code %>
+  </div>
+  
+<div class="field">
+      <%= f.label  :bank_acount_id,"Cuenta Bancaria:  " , :class => "bold"%><br />
+      <%= f.select :bank_acount_id,options_from_collection_for_select(@bank_acounts,'id','number') %>
+
+    </div>
+    
+
+    <div class="field">
+    <%= f.label :importe, "Importe" %><br>
+    <%= f.number_field :importe %>
+  </div>
+
     <%= f.input :importe %>
   </div>
 
