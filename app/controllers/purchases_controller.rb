@@ -39,7 +39,7 @@ class PurchasesController < ApplicationController
 
         @purchases  = Purchase.find_by_sql(['Select purchases.* from purchase_details   
 INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
-WHERE purchase_details.product_id = ?',params[:id] ])
+WHERE purchase_details.product_id = ? ',params[:id] ])
         
 
   end 
@@ -2590,8 +2590,13 @@ def newfactura2
     @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]
     @purchase[:charge]  = 0
     @purchase[:pago] = 0
-    @purchase[:balance] =   @purchase[:total_amount] 
-    
+
+    if @purchase[:document_id] == 1
+      @purchase[:balance] =  0.0
+    else
+        @purchase[:balance] =   @purchase[:total_amount] 
+    end 
+
       curr_seller = User.find(@current_user.id)
       @ac_user = curr_seller.username
     
@@ -2811,9 +2816,10 @@ def newfactura2
     @divisions = Division.where(company_id: @company.id).order("name ASC")
     puts "status "
     puts @status 
+
     if(@company.can_view(current_user))
 
-      if @status == "1"
+      if @status == "1" 
          @purchases = Purchase.all.order('date1 DESC',"documento  DESC").where(status: @status).paginate(:page => params[:page])
 
         if params[:search]
@@ -2963,43 +2969,43 @@ def newfactura2
     @purchase = Purchase.new(purchase_params)
     
     if  params[:purchase][:status] == "1"
-    @company = Company.find(params[:purchase][:company_id])
-    
-    @locations = @company.get_locations()
-    @divisions = @company.get_divisions()
-      
-    @documents = @company.get_documents()    
-    @servicebuys  = @company.get_servicebuys()
-    @monedas  = @company.get_monedas()
-    @payments  = @company.get_payments()  
+          @company = Company.find(params[:purchase][:company_id])
+          
+          @locations = @company.get_locations()
+          @divisions = @company.get_divisions()
+            
+          @documents = @company.get_documents()    
+          @servicebuys  = @company.get_servicebuys()
+          @monedas  = @company.get_monedas()
+          @payments  = @company.get_payments()  
 
 
-    @purchase[:total_amount] = @purchase[:payable_amount] * 1.18
-    @purchase[:tax_amount] =@purchase[:total_amount] - @purchase[:payable_amount]  
-    
-    @tipodocumento = @purchase[:document_id]
-    
-    begin 
-    if @tipodocumento == 2
-      @purchase[:payable_amount] = @purchase[:payable_amount]*-1
-    else
-      @purchase[:payable_amount] = @purchase[:payable_amount]
-    end   
-    rescue
-      @purchase[:payable_amount] = 0
-    end  
+          @purchase[:total_amount] = @purchase[:payable_amount] * 1.18
+          @purchase[:tax_amount] =@purchase[:total_amount] - @purchase[:payable_amount]  
+          
+          @tipodocumento = @purchase[:document_id]
+          
+          begin 
+          if @tipodocumento == 2
+            @purchase[:payable_amount] = @purchase[:payable_amount]*-1
+          else
+            @purchase[:payable_amount] = @purchase[:payable_amount]
+          end   
+          rescue
+            @purchase[:payable_amount] = 0
+          end  
 
-    begin 
+          begin 
 
-    if @tipodocumento == 2
-      @purchase[:inafecto] = @purchase[:inafecto] *-1
-    else
-      @purchase[:inafecto] = @purchase[:inafecto]
-    end    
-    rescue
-      @purchase[:inafecto] = 0
+          if @tipodocumento == 2
+            @purchase[:inafecto] = @purchase[:inafecto] *-1
+          else
+            @purchase[:inafecto] = @purchase[:inafecto]
+          end    
+          rescue
+            @purchase[:inafecto] = 0
 
-    end 
+          end 
 
     begin
        if @tipodocumento == 2
@@ -3017,8 +3023,17 @@ def newfactura2
     
     @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]  + @purchase[:inafecto]
     @purchase[:charge]  = 0
-    @purchase[:pago] = 0
-    @purchase[:balance] =   @purchase[:total_amount]
+
+
+    if @purchase[:payment_id]  == 1 
+      @purchase[:pago] = @purchase[:total_amount]
+      @purchase[:balance] =  0.00 
+    
+    else 
+      @purchase[:pago] = 0
+      @purchase[:balance] =   @purchase[:total_amount]
+    end 
+
     
     
     if(params[:purchase][:user_id] and params[:purchase][:user_id] != "")

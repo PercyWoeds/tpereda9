@@ -160,6 +160,8 @@
     collection {get :rpt_salidas_pdf }
     collection {get :rpt_salidas_all_pdf}
     collection { get  :reporte_asistencia1 }
+    collection {get :rpt_ost_3 }
+    
 
  end 
     
@@ -185,6 +187,7 @@
       put :discontinue 
     end 
     collection { post :print }
+
     
   end 
     
@@ -233,6 +236,7 @@
 
 resources :tranportorders do
   collection { get :search   }
+  collection { post :rpt_ost_3 }        
   
 end 
 
@@ -439,7 +443,7 @@ end
   match 'companies/reports_guias/:company_id' => 'reports#reports_guias', via: [:get, :post]
   match 'companies/reports/rpt_ost_1/:company_id' => 'reports#rpt_ost_1', via: [:get, :post]
   match 'companies/reports/rpt_ost_2/:company_id' => 'reports#rpt_ost_2', via: [:get, :post]
-  match 'companies/reports/rpt_ost_3/:company_id' => 'reports#rpt_ost_3 ', via: [:get, :post]
+  match 'companies/reports/rpt_ost_3/:company_id' => 'reports#rpt_ost_3', via: [:get, :post]
         
   match 'companies/reports_compras/:company_id' => 'reports#reports_compras', via: [:get, :post]
   match 'companies/reports/reports_cpagar/:company_id' => 'reports#reports_cpagar', via: [:get, :post]
@@ -503,6 +507,7 @@ end
   match 'companies/reports/rpt_facturas_3/:company_id' => 'reports#rpt_facturas_3', via: [:get, :post]
   match 'companies/reports/rpt_facturas_4/:company_id' => 'reports#rpt_facturas_4', via: [:get, :post]
   match 'companies/reports/rpt_facturas_5/:company_id' => 'reports#rpt_facturas_5', via: [:get, :post]
+
   
   match 'companies/reports/rpt_purchase_all/:company_id' => 'reports#rpt_purchase_all', via: [:get, :post]
   match 'companies/reports/rpt_product_all/:company_id' => 'reports#rpt_product_all', via: [:get, :post]
@@ -683,6 +688,8 @@ end
   match 'companies/facturas/generar3/:company_id' => 'facturas#generar3', via: [:get, :post]
   match 'facturas/generar4/:company_id' => 'facturas#generar4', via: [:get, :post]
   match 'facturas/generar5/:company_id' => 'facturas#generar5', via: [:get, :post]
+  match 'facturas/rpt_ost_3/:company_id' => 'facturas#rpt_ost_3', via: [:get, :post]
+  
   
   match 'facturas/newfactura2/:factura_id' => 'facturas#newfactura2', via: [:get, :post]
   match 'facturas/do_anular/:id' => 'facturas#do_anular', via: [:get, :post]
@@ -915,6 +922,8 @@ end
 
   match 'tranportorders/rpt_ost1_pdf/:company_id' => 'tranportorders#rpt_ost1_pdf', via: [:get, :post]
   match 'tranportorders/rpt_ost2_pdf/:company_id' => 'tranportorders#rpt_ost2_pdf', via: [:get, :post]
+  match 'tranportorders/rpt_ost3_pdf/:company_id' => 'tranportorders#rpt_ost3_pdf', via: [:get, :post]
+  
   match 'tranportorders/do_process/:id' => 'tranportorders#do_process', via: [:get, :post]
   match 'tranportorders/do_anular/:id' => 'tranportorders#do_anular', via: [:get, :post]
   match 'tranportorders/pdf/:id' => 'tranportorders#pdf', via: [:get, :post]
@@ -975,7 +984,6 @@ end
   match 'companies/reports/rpt_ordenes1_pdf/:company_id' => 'reports#rpt_ordenes1_pdf', via: [:get, :post]
   
   resources :customer_payments
-
   match 'inventories_detaisl/additems/:company_id' => 'additems#list', via: [:get, :post]  
   resources :inventory_details
    # Marca

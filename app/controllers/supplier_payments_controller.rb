@@ -986,15 +986,12 @@ end
 
   # Autocomplete for documents
   def ac_documentos
-    @docs = Purchase.where(["company_id = ? AND (documento iLIKE ? )", params[:company_id], "%" + params[:q] + "%"])   
+    @docs = Purchase.where(["company_id = ? AND (documento iLIKE ? ) ", params[:company_id], "%" + params[:q] + "%"])   
     render :layout => false
   end
   
   # Autocomplete for products
-  def ac_suppliers
-    @supplier = Supplier.where(["company_id = ? AND (ruc iLIKE ? OR name iLIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])   
-    render :layout => false
-  end
+  
   
   # Autocomplete for users
   def ac_user
@@ -1021,7 +1018,7 @@ end
   
   # Autocomplete for suppliers
   def ac_suppliers
-    @suppliers = Supplier.where(["company_id = ? AND  (ruc LIKE ? ) ", params[:company_id],  "%" + params[:q] + "%"])
+    @suppliers = Supplier.where(["company_id = ? AND  (ruc iLIKE ?  or name iLIKE ? ) ", params[:company_id],  "%" + params[:q] + "%", "%" + params[:q] + "%"])
 
     render :layout => false
   end
@@ -1257,6 +1254,22 @@ end
   def destroy
     @supplierpayment = SupplierPayment.find(params[:id])
     company_id = @supplierpayment[:company_id]
+
+
+    items = SupplierPaymentDetail.where(:supplier_payment_id => @supplierpayment.id)
+    for f in items
+          importe = f.total
+          ajuste = 0        
+          compen =  0
+          factura = Purchase.find(f.purchase_id)            
+          #@newbalance= factura.balance + importe -ajuste +compen  cambiado x solicutd andrea 3-6-17
+          @newbalance= factura.balance + importe
+          factura.balance = @newbalance
+          factura.save
+          
+    end 
+
+
     @supplierpayment.destroy
 
     respond_to do |format|

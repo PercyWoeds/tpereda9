@@ -528,6 +528,7 @@ class TranportordersController < ApplicationController
         
     end     
 
+
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
     #send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
     send_file("app/pdf_output/ost2.pdf", :type => 'application/pdf', :disposition => 'inline')
@@ -800,6 +801,7 @@ def build_pdf_header_ost(pdf)
       pdf
 
      end
+
 
 
   private

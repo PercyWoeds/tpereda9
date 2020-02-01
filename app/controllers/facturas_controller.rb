@@ -12,6 +12,9 @@ class FacturasController < ApplicationController
     require "open-uri"
 
 
+
+
+
   def rpt_compras1_pdf
     @company=Company.find(1)      
    
@@ -3965,6 +3968,43 @@ def client_data_headers
 
 
  ##fin imprimir pdf facturas
+
+
+
+
+
+  def rpt_ost_3
+
+
+    @company=Company.find(1)      
+   
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]
+    @tipo =  1
+
+   
+   
+     @orden_transporte = @company.get_ordertransporte_day(@fecha1,@fecha2,@tipo)  
+      
+
+    
+
+    if @facturas_rpt != nil 
+    
+      case params[:print]
+        when "To PDF" then 
+            redirect_to :action => "rpt_ost_3", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2]
+        when "Excel" then render xlsx: 'rpt_compras1_xls'
+    
+          
+        else render action: "index"
+      end
+    end 
+
+    
+  end
+
+
 
   
   private
