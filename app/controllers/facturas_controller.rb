@@ -1522,6 +1522,7 @@ def reportes_st_3
   def rpt_cpagar2_pdf
 
 
+
     $lcxCliente ="0"
 
     @company=Company.find(1)      
