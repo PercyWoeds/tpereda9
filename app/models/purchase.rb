@@ -121,7 +121,6 @@ TABLE_HEADERS30 = ["TD",
 
     def get_general(fecha1,fecha2,proveedor,moneda)
 
-      
       a =  Purchase.find_by_sql(["
    SELECT   SUM(balance) as balance
    FROM purchases
@@ -175,6 +174,42 @@ TABLE_HEADERS30 = ["TD",
         end
     end
 
+
+
+
+    def get_general_compras(fecha1,fecha2,proveedor,moneda)
+
+      a =  Purchase.find_by_sql(["
+   SELECT   SUM(balance) as balance
+   FROM purchases
+   WHERE date3 >= ? and date3 <= ?  and supplier_id =? and balance <> 0 and moneda_id = ? and company_id=?
+   ORDER BY 1 ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59", proveedor,moneda,"1" ])
+
+        if (a.first.balance == nil) 
+          puts "aaa************"
+          puts proveedor 
+          return 0
+        else
+          return a.first.balance  
+        end
+         
+    end
+
+ def get_general_contar_compras(fecha1,fecha2,proveedor,moneda)
+      a =  Purchase.find_by_sql(["
+   SELECT   count(*) as balance 
+   FROM purchases
+   WHERE date3 >= ? and date3 <= ?  and supplier_id =? and balance <> 0 and moneda_id = ? and company_id = ?
+   ORDER BY 1 ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59", proveedor,moneda ,"1"])
+
+         if (a.first.balance == nil) 
+          return 0  
+        else
+
+          return a.first.balance  
+
+        end
+    end
 
 
     def self.import(file)

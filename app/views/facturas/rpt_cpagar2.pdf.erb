@@ -68,9 +68,9 @@
             <td width="8%" align="right"> <%= (compra.date3.to_date - compra.date1.to_date).to_i  %> </td>
             <td width="24%" align="left"> <%= compra.document.descripshort + "-" + compra.documento  %> </td>
             
-            <td width="10%" align="right"><%=sprintf("%.2f",compra.total_amount.to_s) %> </td>
-            <td width="10%" align="right"><%=sprintf("%.2f",compra.charge.to_s) %></td>
-            <td width="10%" align="right"><%=sprintf("%.2f",compra.pago.to_s) %>  </td>
+            <td width="10%" align="right"></td>
+            <td width="10%" align="right"></td>
+            <td width="10%" align="right"> </td>
             <td width="10%" align="right"><%= sprintf("%.2f",compra.balance.to_s) %> </td>
             </tr>       
             </table>
@@ -93,9 +93,9 @@
             <td width="8%" align="right"></td>
             <td width="24%" align="left"> TOTAL PROVEEDOR </td>
             
-            <td width="10%" align="right"><%= money(tot_1) %> </td>
-            <td width="10%" align="right"><%= money(tot_2) %></td>
-            <td width="10%" align="right"><%= money(tot_3) %>  </td>
+            <td width="10%" align="right"> </td>
+            <td width="10%" align="right"></td>
+            <td width="10%" align="right">  </td>
             <td width="10%" align="right"><%= money(tot_4) %> </td>
             </tr>       
             </table>
@@ -130,9 +130,9 @@
                       <td width="30%"> Total Soles  :</td>
                       <td width="10%" align="right"> </td>
                       <td width="5%" align="right"> </td>
-            <td width="10%" align="right"> <%= sprintf("%.2f",totg1.to_s) %></td>
-            <td width="10%" align="right"> <%= sprintf("%.2f",totg2.to_s) %></td>
-            <td width="10%" align="right"> <%= sprintf("%.2f",totg3.to_s) %></td>
+            <td width="10%" align="right"> </td>
+            <td width="10%" align="right"> </td>
+            <td width="10%" align="right"> </td>
             <td width="10%" align="right"> <%= sprintf("%.2f",totg4.to_s) %> </td>
             
 
