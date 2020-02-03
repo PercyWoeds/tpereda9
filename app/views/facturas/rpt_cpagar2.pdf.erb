@@ -65,7 +65,7 @@
             <td width="8%"><%= compra.date1.strftime("%d/%m/%Y") %> </td>
             <td width="8%"><%= compra.date2.strftime("%d/%m/%Y") %> </td>
             <td width="8%" align="left"> <%= compra.date3.strftime("%d/%m/%Y") %> </td>
-            <td width="8%" align="right"> <%= (compra.date3.to_date - compra.date1.to_date).to_i  %> </td>
+            <td width="8%" align="right"> <%= (compra.date3.to_date - compra.date2.to_date).to_i  %> </td>
             <td width="24%" align="left"> <%= compra.document.descripshort + "-" + compra.documento  %> </td>
             
             <td width="10%" align="right"></td>
