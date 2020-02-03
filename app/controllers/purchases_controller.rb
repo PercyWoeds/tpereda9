@@ -2321,14 +2321,14 @@ def build_pdf_header_rpt48(pdf)
           row << sprintf("%.2f",product.anio05.to_s)
           row << sprintf("%.2f",product.anio06.to_s)
           row << sprintf("%.2f",product.anio07.to_s)
-          row << sprintf("%.2f",product.general.to_s)
-          row << sprintf("%.2f",product.compras.to_s)
-          row << sprintf("%.2f",product.compras.to_s)
-          
+          row << sprintf("%.2f",product.total_gral.to_s)
+          row << sprintf("%.2f",a.get_general_contar(@fecha1,@fecha2,product.supplier_id,@tipomoneda).to_s)
+          row << sprintf("%.2f",a.get_general_contar_compras(@fecha1,@fecha2,product.supplier_id,@tipomoneda).to_s)
+
           row << sprintf("%.2f",product.compras_cant.to_s)
           row << sprintf("%.2f",product.total_gral.to_s)
          
-          row << sprintf("%.2f",a.get_general_contar(@fecha1,@fecha2,product.supplier_id,@tipomoneda).to_s)
+          row << ""
            row << sprintf("%.2f",a.get_general(@fecha1,@fecha3,product.supplier_id,@tipomoneda).to_s)
           row << sprintf("%.2f",product.xpagar.to_s)
           row << sprintf("%.2f",product.detraccion.to_s)
@@ -2829,14 +2829,14 @@ def newfactura2
          @purchases = Purchase.all.order('date1 DESC',"documento  DESC").where(status: @status).paginate(:page => params[:page])
 
         if params[:search]
-          @purchases = Purchase.search(params[:search]).order("date1 DESC","documento DESC").where(status: @status).paginate(:page => params[:page])
+          @purchases = Purchase.search(params[:search]).order("date1 DESC","documento DESC").paginate(:page => params[:page])
         else
           @purchases = Purchase.order('date1 DESC',"documento DESC").where(status: @status).paginate(:page => params[:page]) 
         end
       else
         @purchases = Purchase.all.order('date1 DESC',"documento  DESC").where(status: nil).paginate(:page => params[:page])
         if params[:search]
-          @purchases = Purchase.search(params[:search]).order("date1 DESC","documento DESC").where(status: nil).paginate(:page => params[:page])
+          @purchases = Purchase.search(params[:search]).order("date1 DESC","documento DESC").paginate(:page => params[:page])
         else
           @purchases = Purchase.order('date1 DESC',"documento DESC").where(status: nil).paginate(:page => params[:page]) 
         end
