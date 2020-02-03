@@ -32,8 +32,10 @@ wb.styles do |s|
             else
               xemployee = payment.employee.full_name.strip 
             end 
+            categoria = payment.get_categoria(payment.product_id)
+
         sheet.add_row [payment.code.strip,payment.fecha,payment.codigo,
-          payment.nameproducto,payment.unidad,payment.supplier.name,xemployee,payment.truck.placa, payment.quantity,payment.price,xtotal,payment.products_category.name  ], 
+          payment.nameproducto,payment.unidad,payment.supplier.name,xemployee,payment.truck.placa, payment.quantity,payment.price,xtotal,categoria  ], 
     :style => 
         [cadena,date,cadena,cadena,cadena,cadena,cadena,cadena,currency,currency,currency,cadena]
         
