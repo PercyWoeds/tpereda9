@@ -2324,6 +2324,7 @@ def build_pdf_header_rpt48(pdf)
           row << sprintf("%.2f",product.general.to_s)
           row << sprintf("%.2f",product.compras.to_s)
           row << sprintf("%.2f",product.compras.to_s)
+          
           row << sprintf("%.2f",product.compras_cant.to_s)
           row << sprintf("%.2f",product.total_gral.to_s)
          
