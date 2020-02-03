@@ -3319,7 +3319,7 @@ def get_salidas_day0(fecha1,fecha2)
       from output_details   
       INNER JOIN outputs ON output_details.output_id = outputs.id
       INNER JOIN products ON output_details.product_id = products.id
-      WHERE  outputs.fecha > ? and outputs.fecha < ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+      WHERE  outputs.fecha >= ? and outputs.fecha <= ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
    
      return @purchases 
 

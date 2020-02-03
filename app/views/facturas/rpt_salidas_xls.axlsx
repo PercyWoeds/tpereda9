@@ -33,9 +33,9 @@ wb.styles do |s|
               xemployee = payment.employee.full_name.strip 
             end 
         sheet.add_row [payment.code.strip,payment.fecha,payment.codigo,
-          payment.nameproducto,payment.unidad,payment.supplier.name,xemployee,payment.truck.placa, payment.quantity,payment.price,xtotal ], 
+          payment.nameproducto,payment.unidad,payment.supplier.name,xemployee,payment.truck.placa, payment.quantity,payment.price,xtotal,payment.products_category.name  ], 
     :style => 
-        [cadena,date,cadena,cadena,cadena,cadena,cadena,cadena,currency,currency,currency]
+        [cadena,date,cadena,cadena,cadena,cadena,cadena,cadena,currency,currency,currency,cadena]
         
    end   
     end

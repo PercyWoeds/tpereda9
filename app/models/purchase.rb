@@ -182,7 +182,7 @@ TABLE_HEADERS30 = ["TD",
       a =  Purchase.find_by_sql(["
    SELECT   SUM(balance) as balance
    FROM purchases
-   WHERE date1 >= ? and date1 <= ?  and supplier_id =? and balance <> 0 and moneda_id = ? and company_id=?
+   WHERE date1 >= ? and date1 <= ?  and supplier_id =? and balance <> 0 and moneda_id = ? and company_id=? and payment_id <> 1
    ORDER BY 1 ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59", proveedor,moneda,"1" ])
 
         if (a.first.balance == nil) 
@@ -199,7 +199,7 @@ TABLE_HEADERS30 = ["TD",
       a =  Purchase.find_by_sql(["
    SELECT   count(*) as balance 
    FROM purchases
-   WHERE date1 >= ? and date1 <= ?  and supplier_id =? and balance <> 0 and moneda_id = ? and company_id = ?
+   WHERE date1 >= ? and date1 <= ?  and supplier_id =? and balance <> 0 and moneda_id = ? and company_id = ? and payment_id <> 1
    ORDER BY 1 ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59", proveedor,moneda ,"1"])
 
          if (a.first.balance == nil) 

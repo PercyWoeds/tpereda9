@@ -2305,6 +2305,8 @@ def build_pdf_header_rpt48(pdf)
 
       a = Purchase.first
 
+      tot_gral10 = 0
+      tot_gral20 = 0
 
 
       for  product in @customerpayment_rpt
@@ -2321,23 +2323,42 @@ def build_pdf_header_rpt48(pdf)
           row << sprintf("%.2f",product.anio05.to_s)
           row << sprintf("%.2f",product.anio06.to_s)
           row << sprintf("%.2f",product.anio07.to_s)
-          row << sprintf("%.2f",product.total_gral.to_s)
-          row << sprintf("%.2f",a.get_general_contar(@fecha1,@fecha2,product.supplier_id,@tipomoneda).to_s)
-          row << sprintf("%.2f",a.get_general_contar_compras(@fecha1,@fecha2,product.supplier_id,@tipomoneda).to_s)
 
-          row << sprintf("%.2f",product.compras_cant.to_s)
-          row << sprintf("%.2f",product.total_gral.to_s)
+          
+           tot_gral3 =product.total_gral
+           tot_gral4 =a.get_general_contar(@fecha1,@fecha2,product.supplier_id,@tipomoneda)
+               
+           tot_gral1 =     a.get_general_compras(@fecha4,@fecha3,product.supplier_id,@tipomoneda)
+           tot_gral2 =    a.get_general_contar_compras(@fecha4,@fecha3,product.supplier_id,@tipomoneda)
+          
+          row << sprintf("%.2f",tot_gral3.to_s)
+          row << sprintf("%.2f",tot_gral4.to_s)
+ 
+          row << sprintf("%.2f",tot_gral1.to_s)
+          row << sprintf("%.2f",tot_gral2.to_s)
+
+          tot_gral10 = tot_gral3 -tot_gral1 
+          tot_gral20 = tot_gral4 - tot_gral2 
+
+
+          row << sprintf("%.2f",tot_gral10.to_s)
          
-          row << ""
+          row << sprintf("%.2f",tot_gral20.to_s)
            row << sprintf("%.2f",a.get_general(@fecha1,@fecha3,product.supplier_id,@tipomoneda).to_s)
           row << sprintf("%.2f",product.xpagar.to_s)
           row << sprintf("%.2f",product.detraccion.to_s)
           row << sprintf("%.2f",product.saldo.to_s)
 
 
+          tot_gral10 = 0
+          tot_gral20 = 0
+          tot_gral30 = 0
+          tot_gral40 = 0
+
 
           
-       
+         nroitem += 1
+
           table_content << row
 
 
@@ -2350,6 +2371,8 @@ def build_pdf_header_rpt48(pdf)
                                           columns([0]).align=:center
                                           columns([1]).align=:left
                                           columns([2]).align=:left 
+                                          columns([2]).width = 130  
+                                          
                                           columns([3]).align=:right 
                                           columns([4]).align=:right
                                           columns([5]).align=:right 

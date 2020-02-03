@@ -14,7 +14,6 @@ class FacturasController < ApplicationController
 
 
 
-
   def rpt_compras1_pdf
     @company=Company.find(1)      
    
