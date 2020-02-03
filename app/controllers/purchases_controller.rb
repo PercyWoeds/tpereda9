@@ -2263,9 +2263,9 @@ def build_pdf_header_rpt48(pdf)
 
      image_path = "#{Dir.pwd}/public/images/tpereda2.png"
 
-      two_dimensional_array0 = [["SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD "],["OCUPACIONAL "],["CUENTAS POR PAGAR SOLES " ]]    
+      two_dimensional_array0 = [["SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD "],["OCUPACIONAL "],["CUENTAS POR PAGAR  "+@tipomoneda_name ]]    
       two_dimensional_array1 = [["CODIGO     "],["VERSION"],["PAGINA"]] 
-      two_dimensional_array2 = [["TP-CL-F-002    "],["03"],["1 DE 1 "]]
+      two_dimensional_array2 = [["TP-FZ-F-029    "],["01"],["1 DE 1 "]]
        
 
       table_content = ([ [{:image=> image_path, :width => 100 },{:content => two_dimensional_array0,:width=>320,},two_dimensional_array1,two_dimensional_array2 ]
