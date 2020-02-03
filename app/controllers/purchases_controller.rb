@@ -2226,6 +2226,8 @@ def build_pdf_header_rpt48(pdf)
       @company=Company.find(params[:company_id])          
       @fecha1 = params[:fecha1]  
       @fecha2 = params[:fecha2]  
+
+      
       @facturas_rpt = @company.get_purchases_pendientes_day(@fecha1,@fecha2)  
       
       Prawn::Document.generate("app/pdf_output/rpt_pendientes4.pdf") do |pdf|
@@ -2286,7 +2288,6 @@ def build_pdf_header_rpt48(pdf)
 
   def build_pdf_body_rpt5(pdf)
    
-    @fecha3= Date.today.to_date
 
       @fecha4= @fecha3.to_date  - 7.days
       headers = []
@@ -2303,6 +2304,7 @@ def build_pdf_header_rpt48(pdf)
       nroitem = 1
 
       a = Purchase.first
+
 
 
       for  product in @customerpayment_rpt
@@ -2324,8 +2326,9 @@ def build_pdf_header_rpt48(pdf)
           row << sprintf("%.2f",product.compras.to_s)
           row << sprintf("%.2f",product.compras_cant.to_s)
           row << sprintf("%.2f",product.total_gral.to_s)
+         
           row << sprintf("%.2f",a.get_general_contar(@fecha1,@fecha2,product.supplier_id,@tipomoneda).to_s)
-          row << sprintf("%.2f",product.vmto.to_s)
+           row << sprintf("%.2f",a.get_general(@fecha1,@fecha3,product.supplier_id,@tipomoneda).to_s)
           row << sprintf("%.2f",product.xpagar.to_s)
           row << sprintf("%.2f",product.detraccion.to_s)
           row << sprintf("%.2f",product.saldo.to_s)
@@ -2394,6 +2397,8 @@ def build_pdf_header_rpt48(pdf)
     @company=Company.find(params[:id])      
     @fecha1 = params[:fecha1]
     @fecha2 = params[:fecha2]
+    @fecha3 = params[:fecha3]
+    
     @tipomoneda = params[:moneda_id]
 
     @company.actualizar_purchase_fecha2

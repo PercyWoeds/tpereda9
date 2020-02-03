@@ -1219,7 +1219,7 @@ def get_supplier_payments2(moneda,fecha1,fecha2)
    supplier_id,
    SUM(balance) as balance  
    FROM purchases 
-   WHERE moneda_id = ? and balance<>0 and date1 >= ? and date1  <= ? 
+   WHERE moneda_id = ? and balance<>0 and date3 >= ? and date3  <= ? 
    GROUP BY 2,1
    ORDER BY 2,1 ", moneda,fecha1,fecha2 ])    
 
@@ -1492,10 +1492,12 @@ def get_supplier_payments2(moneda,fecha1,fecha2)
             @total_mes12_column = @total_mes12_column +@total_mes12
           
            
-            a = Freepagar.new(supplier_id: lcCli ,anio00:@total_cliente ,anio01: @total_mes01, anio02:  @total_mes02,anio03: @total_mes03,anio04:  @total_mes04, anio05: @total_mes05,anio06: @total_mes06,anio07: @total_mes07,general: 0,compras: 0,compras_cant: 0 ,total_gral: @total_cliente,cant_fact: 0,vmto: 0,xpagar: 0,detraccion: 0 ,saldo: 0 )
+            a = Freepagar.new(supplier_id: lcCli ,anio00:@total_anterior ,anio01: @total_mes01, anio02:  @total_mes02,anio03: @total_mes03,anio04:  @total_mes04, anio05: @total_mes05,anio06: @total_mes06,anio07: @total_mes07,general: 0,compras: 0,compras_cant: 0 ,total_gral: @total_cliente,cant_fact: 0,vmto: 0,xpagar: 0,detraccion: 0 ,saldo: 0 )
             a.save
 
 
+
+                Freepagar.where(supplier_id: nil).delete_all 
 
               b =Freepagar.all.joins(:supplier).order("suppliers.ruc ")
 
