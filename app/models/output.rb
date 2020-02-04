@@ -62,8 +62,9 @@ class Output < ActiveRecord::Base
 
   def get_categoria(product)
 
-    a=Product.find_by(product)
-    return a.products_category.name 
+    a = Product.find(product)
+
+    return a.products_category.category
 
   end
   def get_subtotal(items)
