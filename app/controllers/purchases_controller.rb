@@ -2263,23 +2263,46 @@ def build_pdf_header_rpt48(pdf)
 
      image_path = "#{Dir.pwd}/public/images/tpereda2.png"
 
-      two_dimensional_array0 = [["SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD "],["OCUPACIONAL "],["CUENTAS POR PAGAR  "+@tipomoneda_name ]]    
+      two_dimensional_array0 = [["SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD OCUPACIONAL"],["CUENTA POR PAGAR "]]    
       two_dimensional_array1 = [["CODIGO     "],["VERSION"],["PAGINA"]] 
       two_dimensional_array2 = [["TP-FZ-F-029    "],["01"],["1 DE 1 "]]
-       
 
-      table_content = ([ [{:image=> image_path, :width => 100 },{:content => two_dimensional_array0,:width=>320,},two_dimensional_array1,two_dimensional_array2 ]
-                ]) 
 
-      pdf.table(table_content, {
-          :position => :center,
-          :cell_style => {:border_width => 0},
-          :width => pdf.bounds.width
-        }) do
-          columns([0, 2]).font_style = :bold
+      
 
+       table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD OCUPACIONAL",:rowspan => 2},"CODIGO ","TP-FZ-F-029 "], 
+          ["VERSION: ","2"], 
+          ["CUENTAS POR PAGAR ","PAGINA:","1 de 1 "] 
           
-        end
+          ])
+
+       pdf.table(table_content  ,{
+           :position => :center,
+           :width => pdf.bounds.width
+         })do
+            columns([0]).width = 118.55
+            columns([1]).width = 800
+            columns([1]).align = :center
+            
+            columns([2]).width = 100
+          
+            columns([3]).width = 100
+      
+         end
+       
+#table_content = ([ [{:image=> image_path, :width => 100 },{:content => two_dimensional_array0,:width=>320,},two_dimensional_array1,two_dimensional_array2 ]
+ #               ]) 
+   
+
+      # pdf.table(table_content, {
+      #     :position => :center,
+      #     :cell_style => {:border_width => 1},
+      #     :width => pdf.bounds.width
+      #   }) do
+      #     columns([0, 2]).font_style = :bold
+
+      
+      #   end
 
 
       pdf.move_down 2
@@ -2369,23 +2392,67 @@ def build_pdf_header_rpt48(pdf)
                                         :width => pdf.bounds.width
                                         } do 
                                           columns([0]).align=:center
+                                          columns([2]).width = 15  
+                                          
                                           columns([1]).align=:left
+                                          columns([2]).width = 20  
+                                          
                                           columns([2]).align=:left 
                                           columns([2]).width = 130  
                                           
                                           columns([3]).align=:right 
+                                          columns([3]).width = 50  
+                                          
                                           columns([4]).align=:right
+                                          columns([4]).width = 50  
+                                          
                                           columns([5]).align=:right 
+                                          columns([5]).width = 50  
+                                          
                                           columns([6]).align=:right
+                                          columns([6]).width = 50  
+                                          
                                           columns([7]).align=:right 
+                                          columns([7]).width = 50  
+                                          
                                           columns([8]).align=:right
+                                          columns([8]).width = 50  
+                                          
                                           columns([9]).align=:right 
+                                          columns([9]).width = 50  
+                                          
                                           columns([10]).align=:right
+                                          columns([10]).width = 50  
+                                          
                                           columns([11]).align=:right 
+                                          columns([11]).width = 50  
+                                          
                                           columns([12]).align=:right
+                                          columns([12]).width = 50  
+                                          
                                           columns([13]).align=:right 
+                                          columns([13]).width = 50  
+                                          
                                           columns([14]).align=:right 
+                                          columns([14]).width = 50  
+                                          
                                           columns([15]).align=:right
+                                          columns([15]).width = 50  
+                                          
+                                          columns([16]).align=:right 
+                                          columns([16]).width = 50  
+
+                                          columns([17]).align=:right
+                                          columns([17]).width = 50  
+                                          
+                                          columns([18]).align=:right 
+                                          columns([18]).width = 50  
+                                                                                    
+                                          columns([19]).align=:right 
+                                          columns([19]).width = 50  
+                                          
+                                          columns([20]).align=:right
+                                          columns([20]).width = 50  
                                           
                                         end                                          
       pdf.move_down 10      
