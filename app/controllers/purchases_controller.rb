@@ -9,7 +9,7 @@ class PurchasesController < ApplicationController
 
   before_filter :authenticate_user!
  
-
+ 
 
   def show
     @purchase = Purchase.find(params[:id])
@@ -2231,6 +2231,7 @@ def build_pdf_header_rpt48(pdf)
       @facturas_rpt = @company.get_purchases_pendientes_day(@fecha1,@fecha2)  
       
       Prawn::Document.generate("app/pdf_output/rpt_pendientes4.pdf") do |pdf|
+
           pdf.font "Helvetica"
           pdf = build_pdf_header_rpt4(pdf)
           pdf = build_pdf_body_rpt4(pdf)
@@ -2251,7 +2252,7 @@ def build_pdf_header_rpt48(pdf)
   
   def build_pdf_header_rpt5(pdf)
 
-
+  @fecha4= @fecha3.to_date  - 7.days
     if @tipomoneda == "1"
        @tipomoneda_name ="DOLARES"  
     else
@@ -2272,7 +2273,7 @@ def build_pdf_header_rpt48(pdf)
 
        table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD OCUPACIONAL",:rowspan => 2},"CODIGO ","TP-FZ-F-029 "], 
           ["VERSION: ","2"], 
-          ["CUENTAS POR PAGAR ","PAGINA:","1 de 1 "] 
+          ["CUENTAS POR PAGAR "+ @tipomoneda_name +" SEMANAL " ,"PAGINA:","1 de 1 "] 
           
           ])
 
@@ -2280,6 +2281,7 @@ def build_pdf_header_rpt48(pdf)
            :position => :center,
            :width => pdf.bounds.width
          })do
+           columns([1,2]).font_style = :bold
             columns([0]).width = 118.55
             columns([1]).width = 800
             columns([1]).align = :center
@@ -2289,7 +2291,21 @@ def build_pdf_header_rpt48(pdf)
             columns([3]).width = 100
       
          end
-       
+        
+         table_content2 = ([["Fecha : ",Date.today.strftime("%d/%M/%Y")]])
+
+         pdf.table(table_content2,{:position=>:right }) do
+
+            columns([0, 1]).font_style = :bold
+            columns([0, 1]).width = 100
+            
+         end 
+
+         pdf.text "(1) "+@fecha2
+         pdf.text "(2) del "+@fecha4.strftime("%d/%m/%Y")+" al "+@fecha3
+         pdf.text "(3) "+@fecha3
+
+
 #table_content = ([ [{:image=> image_path, :width => 100 },{:content => two_dimensional_array0,:width=>320,},two_dimensional_array1,two_dimensional_array2 ]
  #               ]) 
    
@@ -2310,13 +2326,20 @@ def build_pdf_header_rpt48(pdf)
   end   
 
   def build_pdf_body_rpt5(pdf)
+
+
+
    
 
-      @fecha4= @fecha3.to_date  - 7.days
+    
       headers = []
       table_content = []
       total_general = 0
       total_factory = 0
+
+
+
+
 
       Purchase::TABLE_HEADERS6.each do |header|
         cell = pdf.make_cell(:content => header)
@@ -2330,6 +2353,23 @@ def build_pdf_header_rpt48(pdf)
 
       tot_gral10 = 0
       tot_gral20 = 0
+
+      tg1 = 0
+      tg2 = 0
+      tg3 = 0
+      tg4 = 0
+      tg5 = 0
+      tg6 = 0
+      tg7 = 0
+      tg8 = 0
+      tg9 = 0
+      tg10 = 0
+      tg11 = 0
+      tg12 = 0
+      tg13 = 0
+      tg14 = 0
+      tg15 = 0
+
 
 
       for  product in @customerpayment_rpt
@@ -2367,7 +2407,8 @@ def build_pdf_header_rpt48(pdf)
           row << sprintf("%.2f",tot_gral10.to_s)
          
           row << sprintf("%.2f",tot_gral20.to_s)
-           row << sprintf("%.2f",a.get_general(@fecha1,@fecha3,product.supplier_id,@tipomoneda).to_s)
+          tot_gral30 =a.get_general(@fecha1,@fecha3,product.supplier_id,@tipomoneda)
+          row << sprintf("%.2f",tot_gral30.to_s)
           row << sprintf("%.2f",product.xpagar.to_s)
           row << sprintf("%.2f",product.detraccion.to_s)
           row << sprintf("%.2f",product.saldo.to_s)
@@ -2378,14 +2419,30 @@ def build_pdf_header_rpt48(pdf)
           tot_gral30 = 0
           tot_gral40 = 0
 
+          tg1 += product.anio00
+          tg2 += product.anio01
+          tg3 += product.anio02
+          tg4 += product.anio03
+          tg5 += product.anio04
+          tg6 += product.anio05
+          tg7 += product.anio06
+          tg8 += product.anio07
+          tg9 += tot_gral3
+          tg10 += tot_gral4
+          tg11 += tot_gral1
+          tg12 += tot_gral2
+          tg13 += tot_gral10
+          tg14 += tot_gral20
+          tg15 += tot_gral30
 
           
-         nroitem += 1
+          nroitem += 1
 
           table_content << row
 
 
       end 
+
 
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
@@ -2455,7 +2512,106 @@ def build_pdf_header_rpt48(pdf)
                                           columns([20]).width = 50  
                                           
                                         end                                          
-      pdf.move_down 10      
+      pdf.move_down 10    
+
+      table_content3 =[] 
+
+       row =[]
+       row << ""
+       row << ""
+       row << "TOTAL GENERAL :"
+       row << sprintf("%.2f",tg1.to_s)
+       row << sprintf("%.2f",tg2.to_s)
+       row << sprintf("%.2f",tg3.to_s)
+       row << sprintf("%.2f",tg4.to_s)
+       row << sprintf("%.2f",tg5.to_s)
+       row << sprintf("%.2f",tg6.to_s)
+       row << sprintf("%.2f",tg7.to_s)
+       row << sprintf("%.2f",tg8.to_s)
+       row << sprintf("%.2f",tg9.to_s)
+       row << sprintf("%.2f",tg10.to_s)
+       row << sprintf("%.2f",tg11.to_s)
+       row << sprintf("%.2f",tg12.to_s)
+       row << sprintf("%.2f",tg13.to_s)
+       row << sprintf("%.2f",tg14.to_s)
+       row << sprintf("%.2f",tg15.to_s)
+       row << ""
+       row << ""
+       row << ""
+       
+        table_content3 << row
+
+result = pdf.table table_content3, {:position => :center,
+                                        :header => false,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([2]).width = 15  
+                                          
+                                          columns([1]).align=:left
+                                          columns([2]).width = 20  
+                                          
+                                          columns([2]).align=:left 
+                                          columns([2]).width = 130  
+                                          
+                                          columns([3]).align=:right 
+                                          columns([3]).width = 50  
+                                          
+                                          columns([4]).align=:right
+                                          columns([4]).width = 50  
+                                          
+                                          columns([5]).align=:right 
+                                          columns([5]).width = 50  
+                                          
+                                          columns([6]).align=:right
+                                          columns([6]).width = 50  
+                                          
+                                          columns([7]).align=:right 
+                                          columns([7]).width = 50  
+                                          
+                                          columns([8]).align=:right
+                                          columns([8]).width = 50  
+                                          
+                                          columns([9]).align=:right 
+                                          columns([9]).width = 50  
+                                          
+                                          columns([10]).align=:right
+                                          columns([10]).width = 50  
+                                          
+                                          columns([11]).align=:right 
+                                          columns([11]).width = 50  
+                                          
+                                          columns([12]).align=:right
+                                          columns([12]).width = 50  
+                                          
+                                          columns([13]).align=:right 
+                                          columns([13]).width = 50  
+                                          
+                                          columns([14]).align=:right 
+                                          columns([14]).width = 50  
+                                          
+                                          columns([15]).align=:right
+                                          columns([15]).width = 50  
+                                          
+                                          columns([16]).align=:right 
+                                          columns([16]).width = 50  
+
+                                          columns([17]).align=:right
+                                          columns([17]).width = 50  
+                                          
+                                          columns([18]).align=:right 
+                                          columns([18]).width = 50  
+                                                                                    
+                                          columns([19]).align=:right 
+                                          columns([19]).width = 50  
+                                          
+                                          columns([20]).align=:right
+                                          columns([20]).width = 50  
+                                          
+                                        end                                          
+      pdf.move_down 10     
+
+
       pdf
 
     end
@@ -2501,9 +2657,8 @@ def build_pdf_header_rpt48(pdf)
 
     
 
-    Prawn::Document.generate("app/pdf_output/rpt_customerpayment2.pdf") do |pdf|        
+    Prawn::Document.generate "app/pdf_output/rpt_customerpayment2.pdf", :page_layout => :landscape ,:page_size=>"A3"  do |pdf|        
 
-        pdf.start_new_page(:size => "A3", :layout => :landscape)
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt5(pdf)
         pdf = build_pdf_body_rpt5(pdf)

@@ -1,0 +1,92 @@
+<html>
+<body>
+
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
+      <% nroitem = 1%>
+      <% total_1 =  0%>
+      <% total_2 =  0%>
+      <% total_3 =  0%>
+      <% total_4 =  0%>
+      <% total_5 =  0%>
+      <% total_6 =  0%>
+      <% total_soles =  0%>
+      <% total_dolares  =  0%>
+     
+      
+       <% for  ost  in @orden_transporte  %>
+
+          <tr>
+        
+          <td width= "4%" ><%=  nroitem  %>   </td>
+          <td width= "5%" ><%= ost.code %></td>
+          <td width= "5%" ><%= %></td>
+          <td width= "5%" ><%= %></td>
+          <td width= "5%" ><%=  %></td>
+          
+          <td width= "5%" ><%= ost.get_placa(ost.truck_id) %></td>
+
+          <td width= "5%" ><%= ost.get_placa(ost.truck2_id) %></td>
+          
+          <td width = "18%" align ="left"><%= ost.get_empleado(ost.employee_id )   %> </td>
+          <td width = "18%" align ="left"><%= ost.get_empleado(ost.employee2_id)   %> </td>
+          
+               
+          <td width = "10%" align ="center"> <%=  %></td>
+          <td width = "10%" align ="center"> <%=  %></td>
+          <td width = "10%" align ="center"> <%=  %></td>
+          <td width = "10%" align ="center"> <%=  %></td>
+
+
+          <td width = "5%" align ="center"><%=  ost.fecha1.strftime("%d/%m/%Y") %> </td>
+
+          <% if ost.customer.nil? %> 
+          <td width = "5%" align ="center"> </td>
+          
+          <% else %>  
+          <td width = "5%" align ="center"><%=  ost.customer.name  %> </td>
+          <% end %>
+          <td width = "5%" align ="center"><%=  ost.comments %> </td>
+          <td width = "5%" align ="center"><%=  %> </td>
+          <td width = "5%" align ="center"><%=  %> </td>
+          
+
+          <td width = "5%" align ="right"><%= ost.get_punto(ost.ubication_id)    %></td>
+          <td width = "5%" align ="right"><%= ost.get_punto(ost.ubication2_id)  %></td>
+          <td width = "5%" align ="right"><%=    %></td>
+          <td width = "5%" align ="right"><%= ost.description   %></td>
+          <td width = "5%" align ="right"><%=    %></td>
+          <td width = "5%" align ="right"><%=    %></td>
+          
+          <td width = "5%" align ="right"><%=    %></td>
+          <td width = "5%" align ="right"><%=    %></td>
+          
+         nrooitem += 1
+          
+            
+         <% end %>
+
+      <hr>  
+     </table>
+     
+     <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+     <tr bgcolor="#B4D7F7">
+          <td width = "57%" align ="center">Totales  </td>
+          <td width = "5%" align ="right"><%= sprintf("%.2f",total_1)   %></td>
+          <td width = "5%" align ="right"><%= sprintf("%.2f",total_2)   %></td>
+          <td width = "5%" align ="right"><%= sprintf("%.2f",total_3)   %></td>
+          <td width = "5%" align ="right"><%= sprintf("%.2f",total_4)   %></td>
+          <td width = "5%" align ="right"><%= sprintf("%.2f",total_5)   %></td>
+          <td width = "5%" align ="right"><%= sprintf("%.2f",total_6)   %></td>
+          <td width = "13%" align ="center"> </td>
+          
+                
+    
+     </tr>
+     </table>
+
+    
+    </body>
+      
+      </html>
+      

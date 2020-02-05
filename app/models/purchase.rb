@@ -1,7 +1,7 @@
 class Purchase < ActiveRecord::Base
   self.per_page = 20
   
-  validates_presence_of :company_id, :supplier_id, :documento,:document_id,:date1,:date2,:date3
+  validates_presence_of :company_id, :supplier_id, :documento,:document_id,:date1,:date2,:date3, :moneda_id
   validates :documento , uniqueness:{ scope:[:supplier_id, :document_id,:moneda_id]}
 
 
@@ -70,7 +70,8 @@ TABLE_HEADERS2  = ["ITEM ",
                      "COSTO S/.",
                      "TOTAL S/."
                      ]                     
-  TABLE_HEADERS6 = ["ITEM",
+ 
+TABLE_HEADERS6 = ["ITEM",
                      "RUC" ,
                      "CLIENTE",   
                      "al 2017",                  
@@ -81,17 +82,16 @@ TABLE_HEADERS2  = ["ITEM ",
                     "2022",
                     "2023",
                     "2024",
-                    "General",            
+                    "General (1)" ,            
                     "Cant.Fact.",
-                    "Compras",
+                    "Compras (2) " ,
                     "Cant.Fact.",
-                    "Tot.Gral",     
+                    "Tot.Gral ",     
                     "Cant.Fact.",     
-                    "Vmto.",
+                    "Vmto. (3)",
                     "Por Pagar " ,
                     "Pago Detrac. ",
                     "SALDO   "]
-
 
   TABLE_HEADERS7  = ["ITEM ",
                       "CATEGORIA",

@@ -77,9 +77,13 @@ TABLE_HEADERS2 = ["ITEM",
     
 	  def get_empleado(id)
 	  	if id != nil || id !="" || id.blank? ==false || id.empty? == false 
-		  	empleado = Employee.find(id)
-		  	return empleado.full_name 	
-		else
+		  	empleado = Employee.find_by(id: id)
+		  	begin 
+				return empleado.full_name
+		  		rescue
+		  			return ""
+		  	end 
+	  else
 			return ""  	
 	  	end	
 	  end 	
