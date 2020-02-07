@@ -1,4 +1,4 @@
-class telecreditos::telecreditoDetailsController < ApplicationController
+class Telecreditos::TelecreditoDetailsController < ApplicationController
   
 
   before_action :set_telecredito
