@@ -14,17 +14,43 @@ class ContratosController < ApplicationController
 
   # GET /contratos/new
   def new
+    company = Company.find(1)
     @contrato = Contrato.new
+    @employees = company.get_employees()
+    @locations = company.get_locations()
+    @divisions = company.get_divisions()
+    @monedas = company.get_monedas() 
+    @contrato[:fecha_inicio] = Date.today
+    @contrato[:fecha_fin] = Date.today
+    
+    @contrato[:fecha_suscripcion] = Date.today
+    
   end
 
   # GET /contratos/1/edit
   def edit
+     company = Company.find(1)
+     @employees = company.get_employees()
+    @locations = company.get_locations()
+    @divisions = company.get_divisions()
+    @monedas = company.get_monedas() 
   end
 
   # POST /contratos
   # POST /contratos.json
   def create
+     company = Company.find(1)
     @contrato = Contrato.new(contrato_params)
+    @employees = company.get_employees()
+    @locations = company.get_locations()
+    @divisions = company.get_divisions()
+    @monedas = company.get_monedas() 
+
+    @contrato[:reingreso] =1
+    @contrato[:modalidad_id] =1
+    @contrato[:tipocontrato_id] =1
+    @contrato[:tiporemuneracion_id] =1
+
 
     respond_to do |format|
       if @contrato.save
@@ -40,6 +66,12 @@ class ContratosController < ApplicationController
   # PATCH/PUT /contratos/1
   # PATCH/PUT /contratos/1.json
   def update
+     company = Company.find(1)
+     @employees = company.get_employees()
+    @locations = company.get_locations()
+    @divisions = company.get_divisions()
+    @monedas = company.get_monedas() 
+
     respond_to do |format|
       if @contrato.update(contrato_params)
         format.html { redirect_to @contrato, notice: 'Contrato was successfully updated.' }

@@ -8,13 +8,8 @@
     <%= f.date_field :fecha1 %>
   </div>
 
- 
-    
-  <div class="field">
-    <%= f.label :code, "Code" %><br>
-    <%= f.text_field :code %>
-  </div>
   
+
 <div class="field">
       <%= f.label  :bank_acount_id,"Cuenta Bancaria:  " , :class => "bold"%><br />
       <%= f.select :bank_acount_id,options_from_collection_for_select(@bank_acounts,'id','number') %>
@@ -27,9 +22,9 @@
     <%= f.number_field :importe %>
   </div>
 
-    <%= f.input :importe %>
-  </div>
+   
 
+</div>
   <div class="form-actions">
     <%= f.button :submit %>
   </div>

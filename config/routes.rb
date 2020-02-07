@@ -110,6 +110,10 @@
     resources :viatico_details, except: [:index,:show], controller: "viaticos/viatico_details"
   end
 
+  resources :telecreditos do
+    resources :telecredito_details, except: [:index,:show], controller: "telecreditos/telecredito_details"
+  end
+
   resources :assistances do 
        collection { get :search }
   end 

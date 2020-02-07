@@ -20,11 +20,11 @@
         <td><%= telecredito.fecha1 %></td>
         <td><%= telecredito.fecha2 %></td>
         <td><%= telecredito.code %></td>
-        <td><%= telecredito.bank_acount_id %></td>
+        <td><%= telecredito.bank_acount.bank.name %></td>
         <td><%= telecredito.importe %></td>
-        <td><%= link_to 'Show', telecredito %></td>
-        <td><%= link_to 'Edit', edit_telecredito_path(telecredito) %></td>
-        <td><%= link_to 'Destroy', telecredito, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Ver', telecredito %></td>
+        <td><%= link_to 'Editar', edit_telecredito_path(telecredito) %></td>
+        <td><%= link_to 'Anular', telecredito, method: :delete, data: { confirm: 'Esta seguro de anular ?' } %></td>
       </tr>
     <% end %>
   </tbody>

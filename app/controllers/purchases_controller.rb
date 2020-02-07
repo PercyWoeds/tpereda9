@@ -2407,6 +2407,7 @@ def build_pdf_header_rpt48(pdf)
           row << sprintf("%.2f",tot_gral10.to_s)
          
           row << sprintf("%.2f",tot_gral20.to_s)
+          
           tot_gral30 =a.get_general(@fecha1,@fecha3,product.supplier_id,@tipomoneda)
           row << sprintf("%.2f",tot_gral30.to_s)
           row << sprintf("%.2f",product.xpagar.to_s)
@@ -2414,10 +2415,7 @@ def build_pdf_header_rpt48(pdf)
           row << sprintf("%.2f",product.saldo.to_s)
 
 
-          tot_gral10 = 0
-          tot_gral20 = 0
-          tot_gral30 = 0
-          tot_gral40 = 0
+         
 
           tg1 += product.anio00
           tg2 += product.anio01
@@ -2427,7 +2425,7 @@ def build_pdf_header_rpt48(pdf)
           tg6 += product.anio05
           tg7 += product.anio06
           tg8 += product.anio07
-          tg9 += tot_gral3
+          tg9  += tot_gral3
           tg10 += tot_gral4
           tg11 += tot_gral1
           tg12 += tot_gral2
@@ -2435,7 +2433,10 @@ def build_pdf_header_rpt48(pdf)
           tg14 += tot_gral20
           tg15 += tot_gral30
 
-          
+          tot_gral10 = 0
+          tot_gral20 = 0
+          tot_gral30 = 0
+          tot_gral40 = 0
           nroitem += 1
 
           table_content << row

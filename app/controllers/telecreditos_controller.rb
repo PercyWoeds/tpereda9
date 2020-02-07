@@ -18,8 +18,10 @@ class TelecreditosController < ApplicationController
     @company = Company.find(1)
     
     @telecredito = Telecredito.new
-    @bank_acounts = @company.get_bank_acounts()        
+    @bank_acounts = @company.get_bank_acounts()     
 
+    @telecredito[:fecha1] =Date.today
+    @telecredito[:fecha2] =Date.today
   end
 
   # GET /telecreditos/1/edit
