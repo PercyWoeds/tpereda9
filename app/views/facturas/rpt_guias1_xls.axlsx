@@ -99,7 +99,7 @@ wb.styles do |s|
               t3 = " "
             end 
           
-        sheet.add_row [nroitem,@fecha10,@fecha20,@fecha40,product.get_remision,product.code,lcOrigen,product.customer.name , product.description,t1,t2,t3,product.get_processed ], :style => [ currency,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena]
+        sheet.add_row [nroitem,@fecha10,product.created_at,@fecha20,@fecha40,product.get_remision,product.code,lcOrigen,product.customer.name , product.description,t1,t2,t3,product.get_processed ], :style => [ currency,cadena,date,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena]
       
         nroitem += 1
 
