@@ -2558,7 +2558,18 @@ def newfactura2
     @fecha1 =params[:fecha1]
     @fecha2 =params[:fecha2]
     @tiporeporte = params[:tiporeporte]
-   
+     if @tiporeporte == "0"  
+      @delivery = @company.get_guias_day(@fecha1,@fecha2)  
+    end 
+    if @tiporeporte == "1"  
+      @delivery = @company.get_guias_day1(@fecha1,@fecha2)  
+    end 
+    if @tiporeporte == "2"
+      @delivery = @company.get_guias_day2(@fecha1,@fecha2)  
+    end 
+    if @tiporeporte == "3"
+      @delivery = @company.get_guias_day3(@fecha1,@fecha2)  
+    end 
 
     case params[:print]
       when "To PDF" then 

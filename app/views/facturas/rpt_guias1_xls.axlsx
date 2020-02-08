@@ -56,7 +56,7 @@ wb.styles do |s|
               @fecha10 = product.fecha1.strftime("%d/%m/%Y")
             end 
 
-            row << product.created_at.strftime("%d/%m/%Y")
+         
             if product.fecha3 == nil
               @fecha20 = "-"
             else 
