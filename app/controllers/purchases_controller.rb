@@ -1985,6 +1985,7 @@ def build_pdf_header_rpt48(pdf)
             row << product.date2.strftime("%d/%m/%Y")
             row << product.supplier.name
             row << product.moneda.symbol  
+            row << ""
 
             if product.moneda_id == 1 
                 row << "0.00 "
@@ -2013,6 +2014,7 @@ def build_pdf_header_rpt48(pdf)
             row << ""
             row << ""          
             row << "TOTALES POR PROVEEDOR=> "            
+            row << ""
             row << ""
             row << sprintf("%.2f",total_cliente_dolares.to_s)
             row << sprintf("%.2f",total_cliente_soles.to_s)
@@ -2070,6 +2072,7 @@ def build_pdf_header_rpt48(pdf)
             row << ""          
             row << "TOTALES POR PROVEEDOR=> "            
             row << ""
+            row << ""
             row << sprintf("%.2f",total_cliente_dolares.to_s)
             row << sprintf("%.2f",total_cliente_soles.to_s)                      
             row << " "
@@ -2086,6 +2089,7 @@ def build_pdf_header_rpt48(pdf)
           row << ""
           row << ""
           row << "TOTALES => "
+          row << ""
           row << ""
           row << sprintf("%.2f",total_soles.to_s)
           row << sprintf("%.2f",total_dolares.to_s)                    
@@ -2194,11 +2198,12 @@ def build_pdf_header_rpt48(pdf)
     @company=Company.find(1)          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
-    @categoria = params[:products_category_id]    
+    @proveedor = params[:supplier_id]    
+    @moneda = params[:moneda_id]    
+    
     #@namecategoria = @company.get_categoria_name(@categoria)      
 
-    @facturas_rpt = @company.get_ingresos_day3(@fecha1,@fecha2,@categoria)
-
+    @facturas_rpt = @company.get_ingresos_day3(@fecha1,@fecha2,@proveedor,@moneda )
 
     if @facturas_rpt.size > 0 
 
@@ -2843,11 +2848,17 @@ def newfactura2
     @purchase[:charge]  = 0
     @purchase[:pago] = 0
 
-    if @purchase[:document_id] == 1
-      @purchase[:balance] =  0.0
-    else
-        @purchase[:balance] =   @purchase[:total_amount] 
+    
+    if @purchase[:payment_id]  == 1 
+      @purchase[:pago] = @purchase[:total_amount]
+      @purchase[:balance] =  0.00 
+    
+    else 
+      @purchase[:pago] = 0
+      @purchase[:balance] =   @purchase[:total_amount]
     end 
+
+    
 
       curr_seller = User.find(@current_user.id)
       @ac_user = curr_seller.username
@@ -3081,8 +3092,14 @@ def newfactura2
         end
       else
         @purchases = Purchase.all.order('date1 DESC',"documento  DESC").where(status: nil).paginate(:page => params[:page])
-        if params[:search]
-          @purchases = Purchase.search(params[:search]).order("date1 DESC","documento DESC").paginate(:page => params[:page])
+        puts "else " 
+        puts params[:search]
+        
+        if  params[:search] != ""
+
+           @purchases = Purchase.where("documento ilike ? ",  "%#{params[:search]}%").order("date1 DESC","documento DESC").paginate(:page => params[:page])
+           puts "else 2 "
+
         else
           @purchases = Purchase.order('date1 DESC',"documento DESC").where(status: nil).paginate(:page => params[:page]) 
         end
@@ -3372,8 +3389,18 @@ def newfactura2
     
     @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]
     @purchase[:charge]  = 0
-    @purchase[:pago] = 0
-    @purchase[:balance] =   @purchase[:total_amount]
+
+
+    
+    if @purchase[:payment_id]  == 1 
+      @purchase[:pago] = @purchase[:total_amount]
+      @purchase[:balance] =  0.00 
+    
+    else 
+      @purchase[:pago] = 0
+      @purchase[:balance] =   @purchase[:total_amount]
+    end 
+
     @purchase[:tipo]    = 0
     
     

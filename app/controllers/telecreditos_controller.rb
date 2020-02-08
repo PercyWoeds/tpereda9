@@ -1,5 +1,7 @@
 class TelecreditosController < ApplicationController
+  
   before_action :set_telecredito, only: [:show, :edit, :update, :destroy]
+
 
   # GET /telecreditos
   # GET /telecreditos.json

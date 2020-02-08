@@ -986,7 +986,7 @@ end
 
   # Autocomplete for documents
   def ac_documentos
-    @docs = Purchase.where(["company_id = ? AND (documento iLIKE ? ) ", params[:company_id], "%" + params[:q] + "%"])   
+    @docs = Purchase.where(["company_id = ? AND (documento iLIKE ? )  and balance <> 0", params[:company_id], "%" + params[:q] + "%"])   
     render :layout => false
   end
   
