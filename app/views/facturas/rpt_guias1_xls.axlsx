@@ -46,6 +46,13 @@ wb.styles do |s|
 
 
       nroitem=1
+      fecha10= "-"
+      fecha20= "-"
+      fecha40= "-"
+      t1=""
+      t2=""
+      t3=""
+      
    @delivery.each do |product|
         
            lcOrigen = product.get_origen(product.remite_id)
@@ -94,7 +101,7 @@ wb.styles do |s|
             nroitem += 1
 
 
-        sheet.add_row [nroitem,fecha10,fecha20,fecha40,product.get_remision,product.code,lcOrigen,product.customer.name , product.description,t1,t2,t3,product.get_processed ], :style => [ currency,date,date,date,date,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena]
+        sheet.add_row [nroitem,fecha10,fecha20,fecha40,product.get_remision,product.code,lcOrigen,product.customer.name , product.description,t1,t2,t3,product.get_processed ], :style => [ currency,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena]
       
    end
 
