@@ -9,7 +9,7 @@ wb.styles do |s|
     padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
     percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
     title = s.add_style(:bg_color => "FFFF0000", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
-    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :left})
 
     currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
                               :border=>Axlsx::STYLE_THIN_BORDER)
@@ -46,9 +46,9 @@ wb.styles do |s|
 
 
       nroitem=1
-      fecha10= "-"
-      fecha20= "-"
-      fecha40= "-"
+      @fecha10= "-"
+      @fecha20= "-"
+      @fecha40= "-"
       t1=""
       t2=""
       t3=""
@@ -98,11 +98,11 @@ wb.styles do |s|
               t2 = " "
               t3 = " "
             end 
-            nroitem += 1
-
-
-        sheet.add_row [nroitem,fecha10,fecha20,fecha40,product.get_remision,product.code,lcOrigen,product.customer.name , product.description,t1,t2,t3,product.get_processed ], :style => [ currency,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena]
+          
+        sheet.add_row [nroitem,@fecha10,@fecha20,@fecha40,product.get_remision,product.code,lcOrigen,product.customer.name , product.description,t1,t2,t3,product.get_processed ], :style => [ currency,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena]
       
+        nroitem += 1
+
    end
 
   
