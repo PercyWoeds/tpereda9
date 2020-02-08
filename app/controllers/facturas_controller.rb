@@ -2553,22 +2553,16 @@ def newfactura2
   def guias1
   
     $lcxCliente ="1"
-    @company=Company.find(1)      
-    
-    lcmonedadolares ="1"
-    lcmonedasoles ="2"
-    
-    @fecha1 = params[:fecha1]  
-    @fecha2 = params[:fecha2]
-
-    @company.actualizar_fecha2
-    @company.actualizar_detraccion 
-
-    @facturas_rpt = @company.get_pendientes_day(@fecha1,@fecha2)  
+   
+   @company=Company.find(1)      
+    @fecha1 =params[:fecha1]
+    @fecha2 =params[:fecha2]
+    @tiporeporte = params[:tiporeporte]
+   
 
     case params[:print]
       when "To PDF" then 
-           redirect_to :action => "guias1_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2] ,locals: {:customers => @facturas_rpt}
+           redirect_to :action => "guias1_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2] ,:tiporeporte => @tiporeporte, locals: {:suppliers => @delivery }
           
       when "To Excel" then render xlsx: 'rpt_guias1_xls'
         
@@ -2582,11 +2576,14 @@ def newfactura2
 
   # Export serviceorder to PDF
   def guias1_pdf
-    @company=Company.find(1)      
-    @fecha1 =params[:fecha1]
+    
+    
+      @company=Company.find(1)  
+         @tiporeporte = params[:tiporeporte]   
+      puts @tiporeporte
+ @fecha1 =params[:fecha1]
     @fecha2 =params[:fecha2]
-    @tiporeporte = params[:tiporeporte]
-      
+    
     if @tiporeporte == "0"  
       @delivery = @company.get_guias_day(@fecha1,@fecha2)  
     end 
@@ -2599,8 +2596,6 @@ def newfactura2
     if @tiporeporte == "3"
       @delivery = @company.get_guias_day3(@fecha1,@fecha2)  
     end 
-    
-    
       
     Prawn::Document.generate("app/pdf_output/guias1.pdf") do |pdf|      
 
@@ -2753,7 +2748,7 @@ def newfactura2
               row << " "
             end 
 
-            
+
             row << product.get_processed
 
 
