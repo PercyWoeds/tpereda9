@@ -1,0 +1,185 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "telecredito", telecreditos_path %>
+</div>
+
+<h3>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  Nueva telecredito 
+</h3>
+
+<p>
+  Para crear una nueva orden de compra, por favor llenar el siguiente formulario. Los campos marcados con <strong>*</strong> son obligatorios
+  
+</p>
+
+<% if @telecredito.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@telecredito.errors.count, "error") %> prohibited this purchaseorder from being saved:</h2>
+
+    <ul>
+    <% @telecredito.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+  <%= hr() %>
+
+<div >
+  
+    <h4>
+       Informacion telecredito 
+    </h4>
+
+    <div class="field">
+      <label for="ac_supplier" class="bold"> Codigo Cuenta Cliente *</label><br />
+      
+      <%= @supplier_name %>
+
+      
+    </div>
+
+
+   <%= hr() %>
+
+    <p class="bold big">
+      Detalle de documentos pendientes de pago
+    </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th class="small bordered_bottom bordered_right">
+          Fecha Vmto
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Cod.Emp
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Turno
+        </th>        
+        <th class="small bordered_bottom bordered_right">
+          Serie 
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Número 
+        </th>        
+        <th class="small bordered_bottom bordered_right">
+          Placa
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Producto
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Nombre 
+        </th>
+        
+        <th class="small bordered_bottom bordered_right">
+          Cant.
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Precio
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Importe
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Importe Pre.Lista
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Seleccionar
+        </th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      
+      <%=  form_tag discontinue_telecreditos_path(telecredito_id: @telecredito.id),method: :post  %>
+      
+    
+<button type="button" id = "check_all" class="btw"> <%= "Marcar todos / Desmarcar todos "%> </button>
+
+
+
+      <% for item in @detalleitems %>
+        <tr>
+
+          <td class="small bordered_bottom bordered_right" style="width: 50px;">
+            <%= item.date1.strftime("%d/%m/%Y") %>
+          </td>
+        <td class="small bordered_bottom bordered_right" style="width: 50px;">
+            <%= item.date2.strftime("%d/%m/%Y") %>
+          </td>
+              
+
+          <td class="small bordered_bottom bordered_right" style="width: 50px;">
+            <%= item.nro %>
+          </td>
+          <td class="small bordered_bottom bordered_right" style="width: 50px;">
+            <%= item.operacion %>
+          </td>
+          <td class="small bordered_bottom bordered_right" style="width: 50px;">
+            <%= item.purchase.name  %>
+          </td>
+          <td class="small bordered_bottom bordered_right" style="width: 50px;">
+            <%= item.total_amount %>
+          </td>
+          <td class="small bordered_bottom bordered_right" style="width: 50px;">
+            <%= item.balance %>
+          </td>
+
+          
+         
+           <td class="bordered_right bordered_bottom right">
+            <%= check_box_tag "products_ids[]", item.id %> 
+
+          </td>          
+
+        </tr>
+      <% end %>
+
+    </tbody>
+  </table>
+
+
+    <%= hr() %>
+    <div class="field">
+     <strong>Observaciones:</strong><br />
+     <input type="text_area" name="comments" value="" style = "width: 80px" >         
+    </div> 
+    <%= hr() %>
+  
+    
+   <%=  submit_tag "Grabar detalle "%>
+
+  
+
+</div>
+
+
+<%= br() %>
+<br />
+
+<%= render 'layouts/autocomplete' %>
+
+
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Regresar', "/companies/facturas/#{@company.id}" %>
+</div>
+
+<script type="text/javascript"> 
+
+$('#check_all').change(function() {
+  var is_checked = this.checked;
+  $('.selectable-checkbox').each(function() {
+    this.checked = is_checked;
+  });
+});
+
+
+</script>

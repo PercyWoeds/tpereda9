@@ -112,6 +112,7 @@
 
   resources :telecreditos do
     resources :telecredito_details, except: [:index,:show], controller: "telecreditos/telecredito_details"
+     collection { post :newtelecredito }
   end
 
   resources :assistances do 
@@ -165,6 +166,9 @@
     collection {get :rpt_salidas_all_pdf}
     collection { get  :reporte_asistencia1 }
     collection {get :rpt_ost_3 }
+    collection {get :guias1_pdf }
+    collection {get :guias1 }
+    
     
 
  end 

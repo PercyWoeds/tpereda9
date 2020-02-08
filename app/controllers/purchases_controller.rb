@@ -3094,7 +3094,7 @@ def newfactura2
         @purchases = Purchase.all.order('date1 DESC',"documento  DESC").where(status: nil).paginate(:page => params[:page])
         puts "else " 
         puts params[:search]
-        
+
         if  params[:search] != ""
 
            @purchases = Purchase.where("documento ilike ? ",  "%#{params[:search]}%").order("date1 DESC","documento DESC").paginate(:page => params[:page])
@@ -3213,8 +3213,13 @@ def newfactura2
     @ac_supplier = @purchase.supplier.name
 
     @ac_user = "admin"
+
+    
     
     @purchase_details = @purchase.purchase_details
+
+
+
      
       @documents = @company.get_documents()    
     @servicebuys  = @company.get_servicebuys()

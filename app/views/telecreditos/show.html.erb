@@ -20,5 +20,215 @@
   <%= @telecredito.importe %>
 </p>
 
+
+
+<% if @telecredito.processed  != "1" %>
+
+<%= form_tag(newtelecredito_telecreditos_path, method: "get") do %>
+
+ <div class="field">
+      <input type="date" name="fecha1" value="2019-11-01" style = "width: 150px" >
+    </div>
+
+  <div class="field">
+    <input type="date" name="fecha2" value="2019-11-30" style = "width: 150px" >
+  </div>
+
+
+<div>
+  <%= select_tag(:supplier_id,options_from_collection_for_select(@suppliers,'id','name') ) %>
+</div>
+
+
+  <%= hidden_field_tag "telecredito_id" , @telecredito.id %>
+
+
+  
+  <%= submit_tag("Agregar Facturas por pagar") %>
+<% end %>
+
+
+ 
+  <tbody>
+    <table>
+      
+      <tr>
+        <th> Id</th>
+        <th> Codigo</th>
+        <th> Descripcion</th>
+        <th> Precio 
+        Cliente  </th>
+        <th> Precio </th>
+        <th> Cantidad</th>
+        <th> Total </th>
+      </tr>
+      
+    <%  @telecredito_details.each do |quote| %>
+      <tr>
+        <td class="bordered_bottom bordered_right">
+          <%=  quote.id  %>
+        </td>
+        
+        <td class="bordered_bottom bordered_right">
+          <%= quote.fecha    %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= quote.nro  %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= quote.operacion %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= quote.purchase.name  %>
+        </td>
+       
+        <td class="bordered_bottom bordered_right">
+          <%= quote.beneficiario %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= quote.documento  %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= quote.moneda_id  %>
+        </td>
+        
+        <td class="bordered_bottom bordered_right">
+          <%= money(quote.importe) %>
+        </td>
+        
+        <td class="bordered_bottom bordered_right">
+          <%= money(quote.egreso) %>
+        </td>
+
+       
+        <td class="bordered_bottom bordered_right">
+          <%= quote.aprueba %>
+        </td>
+        
+          <% if @telecredito.processed  != "1" %>
+  <td><%= link_to 'Eliminar',[@telecredito,quote], method: :delete, data: { confirm: 'Are you sure?' } %></td>        
+          <% end %>
+          
+      </tr>
+    <% end %>
+    
+    <tr>
+      <td colspan="6" class="bordered_bottom bordered_right">
+        &nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        Total :
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@telecredito.importe) %>
+      </td>
+    </tr>
+    
+   
+    
+</table>
+</tbody>
+
+
+<br />
+
+<div>
+  <strong><%= @telecredito.get_processed %></strong>
+  <% if @telecredito.processed == "1" and @telecredito.date_processed %>
+    <%= doDate(@telecredito.date_processed) %>
+  <% end %>
+</div>
+
+
+<%= hr() %>
+
+
+
+
+ 
+  <tbody>
+    <table>
+      
+      <tr>
+        <th> Id</th>
+        <th> Codigo</th>
+        <th> Descripcion</th>
+        <th> Precio 
+        Cliente  </th>
+        <th> Precio </th>
+        <th> Cantidad</th>
+        <th> Total </th>
+      </tr>
+      
+    <%  @telecredito_details.each do |quote| %>
+      <tr>
+        <td class="bordered_bottom bordered_right">
+          <%=  quote.id   %>
+        </td>
+        
+        <td class="bordered_bottom bordered_right">
+          <%= quote.product.code   %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= quote.product.name  %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= quote.price_discount %>
+        </td>
+        
+        <td class="bordered_bottom bordered_right">
+          <%= money(quote.price) %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= money(quote.quantity) %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= money(quote.total) %>
+        </td>
+        
+          <% if @telecredito.processed  != "1" %>
+          <td><%= link_to 'Eliminar',[@telecredito,quote], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          
+          <% end %>
+          
+      </tr>
+    <% end %>
+    
+    <tr>
+      <td colspan="6" class="bordered_bottom bordered_right">
+        &nbsp;
+      </td>
+    </tr>
+    
+      
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        Total:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@telecredito.importe) %>
+      </td>
+    </tr>
+    
+</table>
+</tbody>
+
+
+<% end %>
+
+
+
+<br />
+
+
+
+
+<%= hr() %>
+
+
+
+
 <%= link_to 'Editar', edit_telecredito_path(@telecredito) %> |
 <%= link_to 'Regresar', telecreditos_path %>

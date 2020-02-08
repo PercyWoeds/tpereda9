@@ -1,0 +1,106 @@
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
+
+require 'axlsx'
+
+p = Axlsx::Package.new
+wb = xlsx_package.workbook
+wb.styles do |s|
+    date = s.add_style(:format_code => "yyyy-mm-dd", :border => Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+    padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
+    percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
+    title = s.add_style(:bg_color => "FFFF0000", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+
+    currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
+                              :border=>Axlsx::STYLE_THIN_BORDER)
+    red_negative = wb.styles.add_style :num_fmt => 8
+    comma = wb.styles.add_style :num_fmt => 3
+    super_funk = wb.styles.add_style :format_code => '[Green]#'
+
+  
+
+    
+    wb.add_worksheet(name: "Guias") do |sheet|
+
+    sheet.add_row ["Guias Emitidas Desde : ", @fecha1, " Hasta: ", @fecha2], 
+    :style => [cadena,date,cadena,date ]
+
+     if @tiporeporte == "0"  
+      @texto = "POR FECHA DE GUIA"
+    end 
+    if @tiporeporte == "1"  
+          @texto = "POR FECHA DE INGRESO"
+        end 
+    if @tiporeporte == "2"  
+          @texto =  "POR FECHA DE OPERACIONES"
+        end 
+    if @tiporeporte == "3"  
+         @texto =  "POR FECHA DE CONTABILIDAD"
+    end 
+
+    sheet.add_row [@texto], :style => [cadena  ]
+    
+
+    sheet.add_row ["Item", "Fecha", "Fec.Ing", "Fec.Ope","Fec.Cont.","TD", "Numero","Cliente","Destino","Descrip","Orden","Origen","Destino","Estado"], 
+    :style => title 
+
+
+      nroitem=1
+   @delivery.each do |product|
+        
+           lcOrigen = product.get_origen(product.remite_id)
+            
+            if product.fecha1 == nil
+              @fecha10 =  "-"
+            else
+              @fecha10 = product.fecha1.strftime("%d/%m/%Y")
+            end 
+
+            row << product.created_at.strftime("%d/%m/%Y")
+            if product.fecha3 == nil
+              @fecha20 = "-"
+            else 
+              @fecha20 =  product.fecha3.strftime("%d/%m/%Y")
+            end
+            if product.fecha4 == nil
+              @fecha40 =  "-"
+            else
+              @fecha40 =  product.fecha4.strftime("%d/%m/%Y")
+            end 
+
+             if    product.tranportorder_id != nil 
+
+              if   product.tranportorder == nil  
+                t1 = product.code 
+              else
+                t1 = product.tranportorder.code
+              end 
+
+              if product.tranportorder != nil  
+              @ost= product.get_ost(product.tranportorder.id)
+
+              t2 = product.get_punto(@ost.ubication_id)
+              t3 = product.get_punto(@ost.ubication2_id)
+              else
+                t2 =  " "
+                t3 =  " "
+              end 
+
+            else
+              t1 = "No asignado" 
+              t2 = " "
+              t3 = " "
+            end 
+            nroitem += 1
+
+
+        sheet.add_row [nroitem,fecha10,fecha20,fecha40,product.get_remision,product.code,lcOrigen,product.customer.name , product.description,t1,t2,t3,product.get_processed ], :style => [ currency,date,date,date,date,cadena,,cadena,cadena,,cadena,cadena,cadena,cadena,cadena,,cadena]
+      
+   end
+
+   
+   
+end
+end 
+
+    

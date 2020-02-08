@@ -12,7 +12,33 @@ class TelecreditosController < ApplicationController
   # GET /telecreditos/1
   # GET /telecreditos/1.json
   def show
+      company = Company.find(1)
+      @suppliers = company.get_suppliers
+      @telecredito_details = @telecredito.telecredito_details
+
   end
+
+ 
+def newtelecredito 
+    
+    @company = Company.find(1)
+    @factura = Telecredito.find(params[:factura_id])
+    @supplier  = Supplier.find(params[:supplier_id]) 
+
+    @fecha1 = params[:fecha1]
+    @fecha2 = params[:fecha2]
+    
+    @supplier_name = @customer.name
+
+    @telecredito_details = Telecredito.new
+  
+    @detalleitems =  Purchase.where("date2 >=? and date2 <=? and balance <> 0 and supplier_id = ? 
+     ","#{@fecha1} 00:00:00","#{@fecha2} 23:59:59","0",@supplier).order(:fecha)
+    
+  
+  end 
+
+
 
   # GET /telecreditos/new
   def new

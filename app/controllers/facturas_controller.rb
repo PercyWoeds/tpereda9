@@ -12,8 +12,6 @@ class FacturasController < ApplicationController
     require "open-uri"
 
 
-
-
   def rpt_compras1_pdf
     @company=Company.find(1)      
    
@@ -2551,6 +2549,291 @@ def newfactura2
     end
 
   end
+
+  def guias1
+  
+    $lcxCliente ="1"
+    @company=Company.find(1)      
+    
+    lcmonedadolares ="1"
+    lcmonedasoles ="2"
+    
+    @fecha1 = params[:fecha1]  
+    @fecha2 = params[:fecha2]
+
+    @company.actualizar_fecha2
+    @company.actualizar_detraccion 
+
+    @facturas_rpt = @company.get_pendientes_day(@fecha1,@fecha2)  
+
+    case params[:print]
+      when "To PDF" then 
+           redirect_to :action => "guias1_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2] ,locals: {:customers => @facturas_rpt}
+          
+      when "To Excel" then render xlsx: 'rpt_guias1_xls'
+        
+      else render action: "index"
+    end
+  end
+
+
+
+
+
+  # Export serviceorder to PDF
+  def guias1_pdf
+    @company=Company.find(1)      
+    @fecha1 =params[:fecha1]
+    @fecha2 =params[:fecha2]
+    @tiporeporte = params[:tiporeporte]
+      
+    if @tiporeporte == "0"  
+      @delivery = @company.get_guias_day(@fecha1,@fecha2)  
+    end 
+    if @tiporeporte == "1"  
+      @delivery = @company.get_guias_day1(@fecha1,@fecha2)  
+    end 
+    if @tiporeporte == "2"
+      @delivery = @company.get_guias_day2(@fecha1,@fecha2)  
+    end 
+    if @tiporeporte == "3"
+      @delivery = @company.get_guias_day3(@fecha1,@fecha2)  
+    end 
+    
+    
+      
+    Prawn::Document.generate("app/pdf_output/guias1.pdf") do |pdf|      
+
+        pdf.start_new_page(:size => "A4", :layout => :landscape)
+        pdf.font_families.update( "Helvetica" => { normal: Rails.root.join('app', 'assets/fonts', 'HelveticaNeueW01-65Medium.ttf').to_s, bold: Rails.root.join('app', 'assets/fonts', 'HelveticaNeueW01-65Medium.ttf').to_s, italic: Rails.root.join('app', 'assets/fonts', 'HelveticaNeueW01-65Medium.ttf').to_s, bold_italic: Rails.root.join('app', 'assets/fonts', 'HelveticaNeueW01-65Medium.ttf').to_s } )
+        pdf.font "Helvetica",:size =>6
+  
+        pdf = build_pdf_header(pdf)
+        pdf = build_pdf_body(pdf)
+        build_pdf_footer(pdf)
+        $lcFileName =  "app/pdf_output/guias1.pdf"      
+        
+    end     
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+    #send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+    send_file("app/pdf_output/guias1.pdf", :type => 'application/pdf', :disposition => 'inline')
+  
+
+  end
+
+
+  ##-----------------------------------------------------------------------------------
+## REPORTE DE GUIAS EMITIDAS
+##-----------------------------------------------------------------------------------
+  def build_pdf_header(pdf)
+      pdf.font "Helvetica" , :size => 8
+     $lcCli  =  @company.name 
+     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+
+     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
+     $lcHora  = Time.now.to_s
+
+    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers.length >= row ? client_data_headers[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers.length >= row ? invoice_headers[rows_index] : ['',''])
+      end
+
+      if rows.present?
+
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+        end
+
+        pdf.move_down 10
+
+      end
+
+
+      pdf.move_down 25
+      pdf 
+  end   
+
+  def build_pdf_body(pdf)
+    
+    pdf.text "Guias EMITIDAS  : Desde "+@fecha1.to_s  + "Hasta : "+ @fecha2.to_s, :size => 11 
+    if @tiporeporte == "0"  
+      pdf.text "POR FECHA DE GUIA"
+    end 
+    if @tiporeporte == "1"  
+          pdf.text "POR FECHA DE INGRESO"
+        end 
+    if @tiporeporte == "2"  
+          pdf.text "POR FECHA DE OPERACIONES"
+        end 
+    if @tiporeporte == "3"  
+          pdf.text "POR FECHA DE CONTABILIDAD"
+    end 
+
+    pdf.font "Helvetica" , :size => 6
+
+      headers = []
+      table_content = []
+
+      Delivery::TABLE_HEADERS.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content << headers
+
+      nroitem=1
+
+       for  product in @delivery
+
+            lcOrigen = product.get_origen(product.remite_id)
+
+            row = []
+            row << nroitem.to_s
+
+            if product.fecha1 == nil
+              row << "-"
+            else
+            row << product.fecha1.strftime("%d/%m/%Y")
+            end 
+
+            row << product.created_at.strftime("%d/%m/%Y")
+            if product.fecha3 == nil
+              row << "-"
+            else 
+              row << product.fecha3.strftime("%d/%m/%Y")
+            end
+            if product.fecha4 == nil
+              row << "-"
+            else
+              row << product.fecha4.strftime("%d/%m/%Y")
+            end 
+
+
+            row << product.get_remision
+            row << product.code
+            row << lcOrigen
+            row << product.customer.name      
+
+            row << product.description
+
+
+            
+            if    product.tranportorder_id != nil 
+
+              if   product.tranportorder == nil  
+                row << product.code 
+              else
+                row << product.tranportorder.code
+              end 
+
+              if product.tranportorder != nil  
+              @ost= product.get_ost(product.tranportorder.id)
+
+              row << product.get_punto(@ost.ubication_id)
+              row << product.get_punto(@ost.ubication2_id)
+              else
+                row << " "
+                row << " "
+              end 
+
+            else
+              row << "No asignado" 
+              row << " "
+              row << " "
+            end 
+
+            
+            row << product.get_processed
+
+
+            table_content << row
+
+            nroitem=nroitem + 1
+             
+        end
+
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([1]).width= 40    
+                                          columns([2]).align=:left
+                                          columns([2]).width= 40    
+                                          columns([3]).align=:left
+                                          columns([3]).width= 40    
+                                          columns([4]).align=:left  
+                                          columns([5]).align=:right
+                                          columns([6]).align=:left 
+                                          columns([7]).align=:left
+                                          columns([8]).align=:left
+                                          columns([9]).align=:left 
+                                          columns([9]).width= 100 
+                                          columns([10]).align=:left
+                                          columns([10]).width= 80
+                                          columns([11]).align=:left
+                                          columns([12]).align=:left
+                                          columns([13]).align=:left
+                                        end                                          
+      pdf.move_down 10      
+      pdf
+
+    end
+
+
+    def build_pdf_footer(pdf)
+
+      if @tiporeporte == "2" 
+
+       data =[ ["RECEPCION Y DES.","MONITOREO","IRMA LOBO ","VILMA VEGA","ASIS.GERENCIA","RUTH VEGA","PAUL PEREDA"],
+               [" "],
+               [" "],
+               ["Fecha:"] ]
+      elsif  @tiporeporte == "3"
+        
+         data =[ ["RECEPCION Y DES.","IRMA LOBO ","VILMA VEGA","ASIS.GERENCIA","CONTABILIDAD","PAUL PEREDA"],
+               [" "],
+               [" "],
+               ["Fecha:"] ]
+        
+      else  
+          data =[ ["RECEPCION Y DES.","IRMA LOBO ","VILMA VEGA","ASIS.GERENCIA","RUTH VEGA","PAUL PEREDA"],
+               [" "],
+               [" "],
+               ["Fecha:"] ]
+      end          
+           
+            pdf.text " "
+            pdf.table(data,:cell_style=> {:border_width=>0} , :width => pdf.bounds.width)
+            pdf.move_down 10          
+
+
+        pdf.text ""
+        pdf.text "" 
+
+        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+        pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+
+      end
+
+      pdf
+      
+  end
+
+
+
   
   def rpt_ccobrar2
   

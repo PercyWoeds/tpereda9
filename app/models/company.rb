@@ -1812,9 +1812,9 @@ def get_pendientes_day_customer_detraccion(fecha1,fecha2,cliente)
   def get_purchases_day_tipo(fecha1,fecha2,tipo)
 
     if tipo =="2" 
-      @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? and processed = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1"]).order(:supplier_id,:moneda_id,:date1).where(status: nil)    
+      @purchases = Purchase.where([" company_id = ? AND date3 >= ? and date3 <= ? and processed = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1"]).order(:supplier_id,:moneda_id,:date1).where(status: nil)    
     else 
-      @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ?  AND tipo = ?  and processed = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", tipo, "1"]).order(:supplier_id,:moneda_id,:date1).where(status: nil) 
+      @purchases = Purchase.where([" company_id = ? AND date3 >= ? and date3 <= ?  AND tipo = ?  and processed = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", tipo, "1"]).order(:supplier_id,:moneda_id,:date1).where(status: nil) 
     end 
 
     return @purchases 
