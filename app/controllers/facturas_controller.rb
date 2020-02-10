@@ -4365,7 +4365,7 @@ def client_data_headers
 
        for  product in @facturas_rpt
         
-        if product.payment_id != 1 and product.supplier_id != 1731 and product.payment_id != 12 
+        if product.payment_id != 1 and product.supplier_id != 1731 and (product.payment_id != 12 || product.payment_id != 16 )
         
             fechas2 = product.date2 
              
