@@ -4361,6 +4361,7 @@ def client_data_headers
       lcDoc='FT'      
 
        lcCliente = @facturas_rpt.first.supplier_id
+       row = []
 
        for  product in @facturas_rpt
         
@@ -4378,13 +4379,13 @@ def client_data_headers
 
             if product.moneda_id == 1 
                 row << "0.00 "
-                row << sprintf("%.2f",product.balance.to_s)
-                total_dolares  += product.balance  
+                row << sprintf("%.2f",product.total_amount.to_s)
+                total_dolares  += product.total_amount 
            
             else
-                row << sprintf("%.2f",product.balance.to_s)
+                row << sprintf("%.2f",product.total_amount.to_s)
                 row << "0.00 "
-                total_soles += product.balance 
+                total_soles += product.total_amount  
 
             end 
             row << product.get_destino 
@@ -4406,7 +4407,7 @@ def client_data_headers
             
             
          
-            table_content << row
+        
               
           
           row =[]
@@ -4421,6 +4422,13 @@ def client_data_headers
           row << sprintf("%.2f",total_dolares.to_s)                    
           row << " "
           row << " "
+          row << " "
+          row << " "
+          row << " "
+
+
+
+          
           table_content << row
           
 
@@ -4445,10 +4453,11 @@ def client_data_headers
                                           columns([9]).align=:right
                                         end                                          
                                         
-      pdf.move_down 10      
+      pdf.move_down 50
 
-      #totales 
 
+
+     
       pdf 
 
     end
