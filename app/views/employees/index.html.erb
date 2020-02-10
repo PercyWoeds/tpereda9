@@ -76,8 +76,16 @@
 <br>
 <%= will_paginate @employees %>
     
-    
+<div class="button" >    
 <%= link_to 'Nuevo empleado ', new_employee_path %>
+
+</div>
+
+<bt>
+
+
+<%= link_to "Descargar Excel", employees_path(format: "xls") %>
+  
 
 
 <h2>Importar Archivo "*.csv"</h2>

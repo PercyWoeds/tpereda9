@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">Centro Costo </Data></Cell>
+        <Cell><Data ss:Type="String">Seccion </Data></Cell>
+        <Cell><Data ss:Type="String">Ocupacion Costo </Data></Cell>
+        
+        
+        <Cell><Data ss:Type="String">ID</Data></Cell>
+        <Cell><Data ss:Type="String">Code</Data></Cell>
+        
+        <Cell><Data ss:Type="String">Nombre</Data></Cell>
+
+        <Cell><Data ss:Type="String">Fec.Ingreso</Data></Cell>
+        <Cell><Data ss:Type="String">Fec.Nacimiento</Data></Cell>
+        <Cell><Data ss:Type="String">Fec.Cese</Data></Cell>
+
+        <Cell><Data ss:Type="String">Cusspp</Data></Cell>
+        <Cell><Data ss:Type="String">carnet seguro</Data></Cell>
+        <Cell><Data ss:Type="String">Activo?</Data></Cell>
+        <Cell><Data ss:Type="String">Planilla?</Data></Cell>
+        
+        
+      </Row>
+
+    
+      
+    <% @employees.each do |employee| %>
+
+     
+          <Row>
+            <Cell><Data ss:Type="String"><%= employee.ccosto.name  %></Data></Cell>  
+            <Cell><Data ss:Type="String"><%= employee.division.name  %></Data></Cell>  
+            <Cell><Data ss:Type="String"><%= employee.ocupacion.name  %></Data></Cell>  
+            
+            <Cell><Data ss:Type="String"><%= employee.idnumber %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= employee.code %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= employee.full_name %></Data></Cell>
+
+            <% if employee.fecha_ingreso.nil? %>
+              <Cell><Data ss:Type="String"> NINGUNO</Data></Cell>
+
+            <%else %>
+
+            <Cell><Data ss:Type="String"><%= employee.fecha_ingreso.strftime("%d/%m/%Y")%></Data></Cell>
+
+            <% end %>
+
+            <% if employee.fecha_nacimiento.nil? %>
+              <Cell><Data ss:Type="String"> NINGUNO</Data></Cell>
+
+            <%else %>
+
+
+            <Cell><Data ss:Type="String"><%= employee.fecha_nacimiento.strftime("%d/%m/%Y")   %></Data></Cell>
+            <% end %>
+
+            <% if employee.fecha_cese.nil? %>
+              <Cell><Data ss:Type="String"> NINGUNO</Data></Cell>
+
+            <%else %>
+
+              <Cell><Data ss:Type="String"><%= employee.fecha_cese.strftime("%d/%m/%Y")  %></Data></Cell>
+            <% end %>          
+
+        <% if employee.cusspp != nil %>
+         <Cell><Data ss:Type="String"><%= employee.cusspp %></Data></Cell>
+        <%else%>
+          <Cell><Data ss:Type="String">NINGUNO</Data></Cell>
+       
+        <% end %>
+        <% if employee.carnet_seguro != nil %>
+          <Cell><Data ss:Type="String"><%= employee.carnet_seguro %></Data></Cell>
+       
+        <%else%>
+          <Cell><Data ss:Type="String">NINGUNO </Data></Cell>
+       
+        <% end %>
+        
+
+            <Cell><Data ss:Type="String"><%= employee.active  %></Data></Cell>
+
+
+
+             <%if employee.planilla =="0"%>
+              <Cell><Data ss:Type="String"> NO</Data></Cell>
+        
+            <%else %>
+              <Cell><Data ss:Type="String"> SI</Data></Cell>
+            <% end %>
+
+            
+            
+          </Row>
+
+
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

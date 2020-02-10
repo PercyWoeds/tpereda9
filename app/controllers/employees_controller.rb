@@ -20,6 +20,11 @@ class EmployeesController < ApplicationController
       @employees = Employee.paginate(:page => params[:page], :per_page => 20).where(active: "1",planilla:"1").order('lastname ')
     end
         
+ respond_to do |format|
+    format.html
+    format.xls # { send_data @products.to_csv(col_sep: "\t") }
+  end
+
 
 end 
   # GET /employees/1
