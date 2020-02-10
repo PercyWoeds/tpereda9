@@ -2269,12 +2269,6 @@ def build_pdf_header_rpt48(pdf)
 
      image_path = "#{Dir.pwd}/public/images/tpereda2.png"
 
-      two_dimensional_array0 = [["SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD OCUPACIONAL"],["CUENTA POR PAGAR "]]    
-      two_dimensional_array1 = [["CODIGO     "],["VERSION"],["PAGINA"]] 
-      two_dimensional_array2 = [["TP-FZ-F-029    "],["01"],["1 DE 1 "]]
-
-
-      
 
        table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD OCUPACIONAL",:rowspan => 2},"CODIGO ","TP-FZ-F-029 "], 
           ["VERSION: ","2"], 

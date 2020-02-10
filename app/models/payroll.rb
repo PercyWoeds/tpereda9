@@ -148,11 +148,14 @@ class Payroll < ActiveRecord::Base
         fecha2 = self.fecha_final.to_date 
 
         @registrodiario = Assistance.select("employee_id,inasist_id,COUNT('employee_id') as dias_lab").where("fecha>=? and fecha<=?","#{fecha1} 00:00:00","#{fecha2} 23:59:59").group(:employee_id,:inasist_id)
-
+       
         horas = HorasMe.new
-        
+        puts "actualizar... "
 
         for asistencia in @registrodiario
+
+                puts "sss"
+                puts asistencia.dias_lab 
 
                 
                     case asistencia.inasist_id 

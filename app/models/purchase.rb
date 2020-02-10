@@ -119,6 +119,21 @@ TABLE_HEADERS30 = ["TD",
                      "OBSERV"]
 
 
+TABLE_HEADERS31= ["ITEM","PROVEEDOR",
+                      "Nro.Factura",
+                     "DESCRIPCION",
+                     "FECHA",
+                     "FECHA 
+                     RECEPCION",
+                     "S/.",  
+                     "US$",  
+                     "DESTINO",
+                     "COMPRADOR ",
+                     "OBSERVACION",
+                     "METODO DE PAGO",
+                     "V.B. ENTREGA"]
+
+
     def get_general(fecha1,fecha2,proveedor,moneda)
 
       a =  Purchase.find_by_sql(["
@@ -247,6 +262,8 @@ TABLE_HEADERS30 = ["TD",
            end
     end     
 
+
+
   def get_vencido
 
       if(self.date3 < Date.today)   
@@ -266,6 +283,68 @@ TABLE_HEADERS30 = ["TD",
 
   end
 
+  def get_descrip0
+
+    a = PurchaseDetail.find_by(purchase_id: self.id)
+    if a.nil? 
+      return " "
+    else 
+      return  a.product.name  
+    end 
+  end 
+
+  def get_destino
+    
+    if self.tipo == "1" 
+
+       a =  Purchaseorder.where(id: self.purchaseorder_id)
+
+
+      if a.first.nil?
+            return " "
+           else
+
+             return a.first.description 
+          end
+      
+      
+
+    else
+           a =  Serviceorder.where(id: self.purchaseorder_id) 
+           if a.first.nil?
+            return " "
+           else 
+             return a.first.description 
+          end
+      
+    end 
+  end 
+def get_observacion
+    
+    if self.tipo == "1" 
+
+       a =  Purchaseorder.where(id: self.purchaseorder_id)
+
+
+      if a.first.nil?
+            return " "
+           else
+
+             return a.first.comments 
+          end
+      
+      
+
+    else
+           a =  Serviceorder.where(id: self.purchaseorder_id) 
+           if a.first.nil?
+            return " "
+           else 
+             return a.first.comments  
+          end
+      
+    end 
+  end 
 
   def not_purchase_with?()
     document_tipo = self.document_id

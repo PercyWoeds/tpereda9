@@ -1462,7 +1462,14 @@ def rpt_facturas_4
     
   end
 
-  
+  def rpt_purchase6_all
+      @company = Company.find(params[:company_id])    
+    @pagetitle = "Facturas por proveedor "    
+    @products = @company.get_products()
+    @suppliers = @company.get_suppliers()
+    
+  end
+
   def rpt_caja2_pdf
     @company = Company.find(params[:company_id])    
     @pagetitle = "Listado de vueltos y fletes "    

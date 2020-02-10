@@ -4287,8 +4287,209 @@ def client_data_headers
 
     
   end
+###################################################################################################
+##REPORTE DE COMPRAS FACTURAS CREDITOS
+###################################################################################################
 
 
+  def build_pdf_header_rpt8(pdf)
+      pdf.font "Helvetica" , :size => 8
+      image_path = "#{Dir.pwd}/public/images/tpereda2.png"
+
+    
+       table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD OCUPACIONAL",:rowspan => 2},"CODIGO ","TP-CM-F-015 "], 
+          ["VERSION: ","3"], 
+          ["REPORTE DE FACTURAS CREDITO - LIMA ","Pagina: ","1 de 1 "] 
+         
+          ])
+
+       pdf.table(table_content  ,{
+           :position => :center,
+           :width => pdf.bounds.width
+         })do
+           columns([1,2]).font_style = :bold
+            columns([0]).width = 118.55
+            columns([1]).width = 451.34
+            columns([1]).align = :center
+            
+            columns([2]).width = 100
+          
+            columns([3]).width = 100
+      
+         end
+        
+         table_content2 = ([["Fecha : ",Date.today.strftime("%d/%m/%Y")]])
+
+         pdf.table(table_content2,{:position=>:right }) do
+
+            columns([0, 1]).font_style = :bold
+            columns([0, 1]).width = 100
+            
+         end 
+
+     
+         pdf.text "(1) del "+@fecha1+" al "+@fecha2
+         
+         pdf.move_down 2
+      
+      pdf 
+  end   
+
+  def build_pdf_body_rpt8(pdf)
+    
+    
+    pdf.font "Helvetica" , :size => 6
+
+      headers = []
+      table_content = []
+
+      Purchase::TABLE_HEADERS31.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content << headers
+
+      nroitem=1
+      lcmonedasoles   = 2
+      lcmonedadolares = 1
+      @total1=0
+      @total2=0
+      total_soles = 0
+      total_dolares =  0
+      lcDoc='FT'      
+
+       lcCliente = @facturas_rpt.first.supplier_id
+
+       for  product in @facturas_rpt
+        
+        if product.payment_id != 1 and product.supplier_id != 1731 and product.payment_id != 12 
+        
+            fechas2 = product.date2 
+             
+            row = []          
+            row << nroitem.to_s 
+            row << product.supplier.name 
+            row << product.documento 
+            row << product.get_descrip0 
+            row << product.date1.strftime("%d/%m/%Y")
+            row << product.date3.strftime("%d/%m/%Y")
+
+            if product.moneda_id == 1 
+                row << "0.00 "
+                row << sprintf("%.2f",product.balance.to_s)
+                total_dolares  += product.balance  
+           
+            else
+                row << sprintf("%.2f",product.balance.to_s)
+                row << "0.00 "
+                total_soles += product.balance 
+
+            end 
+            row << product.get_destino 
+            row << product.user.username 
+            row << product.comments
+            row << product.payment.descrip 
+            row << "   "
+            
+            table_content << row
+
+            nroitem = nroitem + 1
+
+           
+        end
+      end 
+
+        lcProveedor = @facturas_rpt.last.supplier_id 
+
+            
+            
+         
+            table_content << row
+              
+          
+          row =[]
+          row << ""
+          row << ""
+          row << ""
+          row << ""
+          row << "TOTALES => "
+          
+          row << ""
+          row << sprintf("%.2f",total_soles.to_s)
+          row << sprintf("%.2f",total_dolares.to_s)                    
+          row << " "
+          row << " "
+          table_content << row
+          
+
+          result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:left
+                                          columns([3]).align=:left
+         
+                                          columns([4]).align=:left
+                                          columns([4]).width = 60
+                                          
+                                          columns([5]).align=:left  
+                                          columns([5]).width =60
+                                          
+                                          columns([6]).align=:right
+                                          columns([7]).align=:right
+                                          columns([8]).align=:right
+                                          columns([9]).align=:right
+                                        end                                          
+                                        
+      pdf.move_down 10      
+
+      #totales 
+
+      pdf 
+
+    end
+
+    def build_pdf_footer_rpt8(pdf)      
+                  
+      pdf.text "" 
+      pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+      pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+    end
+    pdf      
+  end
+
+  # Export serviceorder to PDF
+  def rpt_purchase6
+
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+  
+    
+    @facturas_rpt = @company.get_purchases_day(@fecha1,@fecha2)
+
+     
+
+        Prawn::Document.generate "app/pdf_output/TP_CM_F_015.pdf" , :page_layout => :landscape ,:page_size=>"A4"  do |pdf|
+            pdf.font "Helvetica"
+            pdf = build_pdf_header_rpt8(pdf)
+            pdf = build_pdf_body_rpt8(pdf)
+            build_pdf_footer_rpt8(pdf)
+            $lcFileName =  "app/pdf_output/TP_CM_F_015.pdf"              
+        end     
+        $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+        send_file("app/pdf_output/TP_CM_F_015.pdf", :type => 'application/pdf', :disposition => 'inline')    
+ 
+  end
+
+
+
+
+#####################################################################################################
 
   
   private

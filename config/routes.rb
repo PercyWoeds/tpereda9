@@ -169,7 +169,7 @@
     collection {get :guias1_pdf }
     collection {get :guias1 }
     
-    
+    collection {get :rpt_purchase6  }
 
  end 
     
@@ -298,6 +298,7 @@ end
     collection { get :generar  }
     collection { post :import }
     collection { get :excel }
+
 
     collection do 
       put :discontinue 
@@ -470,6 +471,7 @@ end
   match 'companies/reports/rpt_purchase3_all/:company_id' => 'reports#rpt_purchase3_all', via: [:get, :post]
   match 'companies/reports/rpt_purchase4_all/:company_id' => 'reports#rpt_purchase4_all', via: [:get, :post]
   match 'companies/reports/rpt_purchase5_all/:company_id' => 'reports#rpt_purchase5_all', via: [:get, :post]
+  match 'companies/reports/rpt_purchase6_all/:company_id' => 'reports#rpt_purchase6_all', via: [:get, :post]
   
   match 'companies/reports/rpt_purchaseorder_all/:company_id' => 'reports#rpt_purchaseorder_all', via: [:get, :post]
   match 'companies/reports/rpt_purchaseorder2_all/:company_id' => 'reports#rpt_purchaseorder2_all', via: [:get, :post]

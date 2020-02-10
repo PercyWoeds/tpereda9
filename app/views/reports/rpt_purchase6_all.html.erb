@@ -8,23 +8,23 @@
 
 <h3>
   <%= image_tag("reports_48.png", :class => "vmiddle") %>
- Reporte de cuentas proveedores - 
+ Reporte de cuentas proveedores - Documentos Creditos
  <br/>
  
 </h3	>
-<h5>Detallado  * Solo facturas procesadas </h5>
+<h5>Detallado  *  </h5>
 <br>
 
   
-<%= form_tag(rpt_purchase5_facturas_path, :method => "get") do %>
+<%= form_tag(rpt_purchase6_facturas_path, :method => "get") do %>
 
     <div class="field">
         Desde
-        <input type="date" name="fecha1" value="2020-01-01" style = "width: 150px" >
+        <input type="date" name="fecha1" value="2020-02-01" style = "width: 150px" >
     </div>
     <div class="field">
         Hasta
-        <input type="date" name="fecha2" value="2020-01-31" style = "width: 150px" >
+        <input type="date" name="fecha2" value="2020-02-28" style = "width: 150px" >
     </div>
     
 
