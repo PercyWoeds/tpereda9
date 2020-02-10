@@ -30,8 +30,8 @@
       </Row>
 
     
-      
-    <% @employees.each do |employee| %>
+    <% @employees0 = Employee.where(active: "1",planilla:"1").order('ccosto_id,division_id,location_id,lastname ')%>  
+    <% @employees0.each do |employee| %>
 
      
           <Row>
