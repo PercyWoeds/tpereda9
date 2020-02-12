@@ -3461,8 +3461,8 @@ def newfactura2
 
     $lcxCliente ="1"
     @company=Company.find(1)      
-    @company.actualizar_fecha2
-    @company.actualizar_detraccion 
+    #@company.actualizar_fecha2
+    #@company.actualizar_detraccion 
     
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]
