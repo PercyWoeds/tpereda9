@@ -411,40 +411,11 @@ class CustomerPaymentsController < ApplicationController
     end
   
     if(@company.can_view(current_user))
-      if(params[:ac_documentos] and params[:ac_documentos] != "")
-        @customer = customer.find(:first, :conditions => {:company_id => @company.id, :name => params[:ac_customer].strip})
-        
-        if @customer
-          @customerpayments = customerpayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :customer_id => @customer.id}, :order => "id DESC")
-        else
-          flash[:error] = "We couldn't find any customerpayments for that customer."
-          redirect_to "/companies/customerpayments/#{@company.id}"
-        end
-      elsif(params[:customer] and params[:customer] != "")
-        @customer = Customer.find(params[:customer])
-        
-        if @customer
-          @customerpayments = CustomerPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :customer_id => @customer.id}, :order => "id DESC")
-        else
-          flash[:error] = "We couldn't find any customerpayments for that customer."
-          redirect_to "/companies/customerpayments/#{@company.id}"
-        end
-      elsif(params[:location] and params[:location] != "" and params[:division] and params[:division] != "")
-        @customerpayments = CustomerPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :location_id => params[:location], :division_id => params[:division]}, :order => "code DESC")
-      elsif(params[:location] and params[:location] != "")
-        @customerpayments = CustomerrPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :location_id => params[:location]}, :order => "code DESC")
-      elsif(params[:division] and params[:division] != "")
-        @customerpayments = CustomerPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :division_id => params[:division]}, :order => "code DESC")
-      else
-        if(params[:q] and params[:q] != "")
-          fields = ["description", "comments", "code"]
+      
+        if(params[:search] and params[:search] != "")
+          
 
-          q = params[:q].strip
-          @q_org = q
-
-          query = str_sql_search(q, fields)
-
-          @customerpayments = CustomerPayment.paginate(:page => params[:page], :order => 'code DESC', :conditions => ["company_id = ? AND (#{query})", @company.id])
+          @customerpayments = CustomerPayment.where([" code iLIKE ?","%#{params[:search]}%"]).order("id DESC").paginate(:page => params[:page])
         else
 
           @customerpayments = CustomerPayment.where(company_id:  @company.id).order("id DESC").paginate(:page => params[:page])
@@ -453,10 +424,11 @@ class CustomerPaymentsController < ApplicationController
               format.html
               format.csv { send_data @customerpayments.to_csv }
               
-            end         
+            end        
           @filters_display = "none"
         end
-      end
+
+      
     else
       errPerms()
     end

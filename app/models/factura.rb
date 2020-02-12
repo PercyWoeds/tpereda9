@@ -58,7 +58,7 @@ class Factura < ActiveRecord::Base
   
 
   def self.search(search)
-      where("code LIKE ?", "%#{search}%") 
+      where("code iLIKE ?", "%#{search}%") 
         
   end
 
