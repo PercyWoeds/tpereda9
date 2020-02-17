@@ -81,7 +81,7 @@ Mnygo::Application.configure do
     port:                 587,
     domain:               'gmail.com',
     user_name:            'wds.tpereda@gmail.com',
-    password:             'Ycrep2018',
+    password:             'dkwrazizunwrkiwm',
     authentication:       :plain,
     enable_starttls_auto: true  }
 

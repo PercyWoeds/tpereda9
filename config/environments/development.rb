@@ -35,7 +35,7 @@ Mnygo::Application.configure do
     port:                 587,
     domain:               'one.com',
     user_name:            'wds.tpereda@gmail.com',
-    password:             'dkwrazizunwrkiwm',
+    password:             'wjdogrbgagsvdpjk',
     authentication:       'plain',
     enable_starttls_auto: true  }
 
