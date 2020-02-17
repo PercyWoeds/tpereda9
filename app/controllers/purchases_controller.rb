@@ -678,7 +678,7 @@ WHERE purchase_details.product_id = ? ',params[:id] ])
           else
             totals = []            
             total_cliente_soles = 0
-            total_cliente_soles = @company.get_purchases_by_day_value_supplier2(@fecha1,@fecha2,lcmonedasoles,"total_amount",lcCliente,@tiporeporte)
+            total_cliente_soles   = @company.get_purchases_by_day_value_supplier2(@fecha1,@fecha2,lcmonedasoles,"total_amount",lcCliente,@tiporeporte)
             total_cliente_dolares = 0
             total_cliente_dolares = @company.get_purchases_by_day_value_supplier2(@fecha1,@fecha2, lcmonedadolares,"total_amount",lcCliente,@tiporeporte)
             
