@@ -710,6 +710,7 @@ WHERE purchase_details.product_id = ? ',params[:id] ])
             row << " "
             end 
             row << product.moneda.symbol  
+            row << " "
             
 
             if product.moneda_id == 1 
