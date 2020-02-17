@@ -150,6 +150,16 @@ class Payroll < ActiveRecord::Base
         @registrodiario = Assistance.select("employee_id,inasist_id,COUNT('employee_id') as dias_lab").where("fecha>=? and fecha<=?","#{fecha1} 00:00:00","#{fecha2} 23:59:59").group(:employee_id,:inasist_id)
        
         horas = HorasMe.new
+        
+        horas.dt = 0
+        horas.vac = 0
+        horas.fal = 0
+        horas.vtavac = 0
+        horas.lsg = 0
+        horas.pat = 0
+        horas.otros = 0
+        horas.dm = 0 
+
         puts "actualizar... "
 
         for asistencia in @registrodiario

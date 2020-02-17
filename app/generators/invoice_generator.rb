@@ -152,7 +152,7 @@ class InvoiceGenerator < DocumentGenerator
     
     
         $lg_fecha   = @invoice.fecha.to_date
-         lcCode = @invoice.code.split("-")
+        lcCode = @invoice.code.split("-")
 
          a =  "FF"+@invoice.code[1..2].rjust(2,"0")
 
@@ -173,8 +173,12 @@ class InvoiceGenerator < DocumentGenerator
         $lcSerie = a 
         $lcDocument_serial_id =@lg_serial_id 
         $lcRuc          = @invoice.customer.ruc
-        $lcFormapago    = @invoice.payment.descrip 
-        
+        $lcFormapago    = @invoice.payment.descrip
+
+        puts "Forma pago" 
+        puts $lcFormapago
+
+
         $lcTd           = @invoice.document.descripshort
         
         $lcMail         = @invoice.customer.email
@@ -203,11 +207,13 @@ class InvoiceGenerator < DocumentGenerator
         lcGuia = ""
         lcComments = ""
         lcDes1 = ""
-        lcDes  = ""
+        lcDes = " " << @invoice.description
         
         lcRazon = @invoice.customer.name 
         
         for productItem in @invoice.get_products2(@invoice.id)
+
+
 
         lcPsigv= productItem.price
         lcPsigv1= lcPsigv*1.18
@@ -219,20 +225,29 @@ class InvoiceGenerator < DocumentGenerator
         a = ""        
         lcDes1 = ""
 
+        puts "get_products2"
+        puts productItem.name 
+        puts lcDes 
+
         begin
           a << " "
               for guia in @invoice.get_guias2(@invoice.id)
+
+                puts "giuias"
+                puts guia.code
+
               a << " GT: " <<  guia.code << " "
               if guia.description == nil
                 
               else  
                   a << " " << guia.description                   
-              end   
-              existe1 = f.get_guias_remision(guia.id)
+              end 
+
+              existe1 = guia.get_guias_remision(guia.id)
 
                 if existe1.size > 0 
                   a<<  "\n GR:" 
-                  for guias in  f.get_guias_remision(guia.id)    
+                  for guias in  guia.get_guias_remision(guia.id)    
                      a<< guias.delivery.code<< ", " 
                   end     
                 end      
@@ -240,7 +255,7 @@ class InvoiceGenerator < DocumentGenerator
               existe2 = @invoice.get_guiasremision2(@invoice.id)
               if existe2.size > 0
               a << "\n GR : "
-                for guia in f.get_guiasremision2(@invoice.id)
+                for guia in guia.get_guiasremision2(@invoice.id)
                   a << guia.code << "  "            
                 end
               end 
@@ -299,7 +314,7 @@ class InvoiceGenerator < DocumentGenerator
       
         for detalle_item in @invoiceitems
         
-        lcDes1   = detalle_item.service.name 
+        lcDes1   = detalle_item.service.name << lcDes << a 
         $lcUnidad20 = "ZZ"
           
         

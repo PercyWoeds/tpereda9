@@ -170,8 +170,16 @@
     collection {get :guias1 }
     
     collection {get :rpt_purchase6  }
+   
+
 
  end 
+
+  resources :voideds do
+    collection { post :anular }  
+   
+   end 
+   
     
 
   resources :assistances do 

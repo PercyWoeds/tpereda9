@@ -2259,7 +2259,7 @@ def reportes05
     
    
     
-    $lcruc = "20555691263" 
+    $lcruc = "20424092941" 
     
     $lcTipoDocumento = @invoice.document.descripshort
     parts1 = @invoice.code.split("-")
@@ -2287,6 +2287,8 @@ def reportes05
       $lcNroDocCli  = @invoice.customer.ruc 
 
       
+
+
       
       $lcCodigoBarra = $lcruc << "|" << $lcTipoDocumento << "|" << $lcSerie << "|" << $lcNumero << "|" <<$lcIgv<< "|" << $lcTotal << "|" << $lcFecha0 << "|" << $lcTipoDocCli << "|" << $lcNroDocCli
       
@@ -4152,7 +4154,7 @@ def client_data_headers
         require './app/generators/daily_receipt_summary_generator'
         require './app/generators/voided_documents_generator'
 
-        SUNAT.environment = :production 
+        SUNAT.environment = :test 
 
         files_to_clean = Dir.glob("*.xml") + Dir.glob("./app/pdf_output/*.pdf") + Dir.glob("*.zip")
         files_to_clean.each do |file|
@@ -4161,6 +4163,9 @@ def client_data_headers
 
           @serie_factura =  "FF"+@invoice.code[2..3]
 
+           lcMail         = @invoice.customer.email
+       
+
         if @invoice.moneda_id == "1"
             case_49 = InvoiceGenerator.new(7,49,5,@serie_factura,@invoice.id).with_different_currency2(true)
         else
@@ -4168,9 +4173,15 @@ def client_data_headers
         end 
     
         $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName        
-        $lcFile2    =File.expand_path('../../../', __FILE__)+ "/"+$lcFilezip
+        $lcFile2    = File.expand_path('../../../',__FILE__)+ $lcFilezip
         
-        ActionCorreo.bienvenido_email(@invoice).deliver
+        puts "file zip"        
+        puts $lcFilezip
+        puts "file 2"        
+        
+        puts $lcFile2
+
+        ActionCorreo.bienvenido_email(@invoice,$lcFileName1,$lcFileName,$lcFile2,$lcFilezip,lcMail).deliver_now
          $lcGuiaRemision =""
              
 

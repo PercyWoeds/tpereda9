@@ -273,11 +273,9 @@
 <img src=<%="https://chart.googleapis.com/chart?chs=120x120&cht=qr&chl=#{@invoice.code}&choe=UTF-8"%> alt="QR code">
 
 <%= hr() %>
-<div class="button">
+<div class="button">   
   
-   
-  
-  <%= link_to 'Enviar factura via email', "/facturas/email/#{@invoice.id}" %>
+  <%= link_to 'Enviar factura via email', "/facturas/sendmail/#{@invoice.id}" %>
   
 <% if @invoice.processed =="0" || @invoice.processed==nil %>
   <%= link_to 'Procesar factura', "/facturas/do_process/#{@invoice.id}" %>
@@ -289,3 +287,23 @@
 <% end %>
 <%= link_to 'Regresar', "/companies/facturas/#{@invoice.company.id}" %>
 </div>
+   
+    
+    <tr>
+        </tr>
+    
+  </table>
+
+
+
+<%= hr() %>
+<div class="button">
+  
+
+<%= link_to 'Regresar', "/companies/facturas/#{@invoice.company.id}" %>
+</div>
+
+
+
+</body>
+</html>

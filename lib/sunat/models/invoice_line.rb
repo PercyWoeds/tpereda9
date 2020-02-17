@@ -105,7 +105,7 @@ module SUNAT
       row = []
       row << self.id
       row << self.quantity.quantity
-      row << "#{self.item.description} - #{self.item.id}"
+      row << "#{self.item.description}"
       row << "#{self.pricing_reference.alternative_condition_price.price_amount.to_s}"
       row << "#{self.line_extension_amount.to_s}"
     end

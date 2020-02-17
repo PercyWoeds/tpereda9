@@ -20,4 +20,31 @@ class ActionCorreo < ApplicationMailer
 
 
 	  end
+
+
+	  
+	  def bienvenido_email(invoice,file1,file2,file3,file4,mail)
+		  @invoices=invoice 			
+		   @url  = 'http://www.tpereda.com.pe'
+		  #attachments["Factura"] = File.read("#{$lcFileName1}")
+		  #attachments['Factura'] = File.read($lcFileName1)
+
+		  #  $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName        
+          #  $lcFile2    =File.expand_path('../../../', __FILE__)+ "/"+$lcFilezip
+        
+
+		  email_with_name = "Factura Enviada <facturaselectronicas@tpereda.com.pe>"	
+		  email_with_copy = "Operaciones <operaciones@tpereda.com.pe>"	
+
+		   attachments[file2] =  open(file1).read
+		
+		  if file3 != ""	
+		  attachments[file4] =  open(file3).read
+		  end 
+
+
+
+		  mail(to: [mail], cc: email_with_copy,   bcc:email_with_name, subject: 'Factura Electrónica : '+$lcFileNameIni )
+
+	  end
 end

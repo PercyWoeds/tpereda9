@@ -1047,6 +1047,7 @@ ActiveRecord::Schema.define(version: 20200208154308) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.float    "preciocigv"
+    t.integer  "factura_id"
   end
 
   create_table "invoiceitems", force: :cascade do |t|
@@ -1711,6 +1712,7 @@ ActiveRecord::Schema.define(version: 20200208154308) do
     t.integer  "marca_id"
     t.integer  "modelo_id"
     t.integer  "products_category_id"
+    t.integer  "Category_id"
     t.integer  "category_id"
     t.integer  "ubica_id"
     t.string   "unidad"
