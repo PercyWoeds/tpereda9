@@ -659,6 +659,7 @@ WHERE purchase_details.product_id = ? ',params[:id] ])
             row << product.date2.strftime("%d/%m/%Y")
             row << product.supplier.name
             row << product.moneda.symbol  
+            row << ""
 
 
             if product.moneda_id == 1 
