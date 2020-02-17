@@ -678,9 +678,9 @@ WHERE purchase_details.product_id = ? ',params[:id] ])
           else
             totals = []            
             total_cliente_soles = 0
-            total_cliente_soles = @company.get_purchases_by_day_value_supplier(@fecha1,@fecha2,lcmonedadolares,"total_amount",lcCliente)
+            total_cliente_soles = @company.get_purchases_by_day_value_supplier2(@fecha1,@fecha2,lcmonedasoles,"total_amount",lcCliente,@tiporeporte)
             total_cliente_dolares = 0
-            total_cliente_dolares = @company.get_purchases_by_day_value_supplier(@fecha1,@fecha2, lcmonedasoles,"total_amount",lcCliente)
+            total_cliente_dolares = @company.get_purchases_by_day_value_supplier2(@fecha1,@fecha2, lcmonedadolares,"total_amount",lcCliente,@tiporeporte)
             
             row =[]
             row << ""
@@ -690,13 +690,13 @@ WHERE purchase_details.product_id = ? ',params[:id] ])
             row << "TOTALES POR PROVEEDOR=> "            
             row << ""
             row << ""
-            row << sprintf("%.2f",total_cliente_dolares.to_s)
             row << sprintf("%.2f",total_cliente_soles.to_s)
+            row << sprintf("%.2f",total_cliente_dolares.to_s)
             row << " "
             
             table_content << row
-            @total1 +=total_cliente_dolares
-            @total2 +=total_cliente_soles
+            @total1 +=total_cliente_soles
+            @total2 +=total_cliente_dolares
             lcCliente = product.supplier_id
 
             row = []          
@@ -713,7 +713,7 @@ WHERE purchase_details.product_id = ? ',params[:id] ])
             row << " "
             
 
-            if product.moneda_id == 1 
+            if product.moneda_id == 1
                 row << "0.00 "
                 row << sprintf("%.2f",product.total_amount.to_s)
             else
@@ -731,9 +731,9 @@ WHERE purchase_details.product_id = ? ',params[:id] ])
             total_cliente = 0
   
             total_cliente_soles = 0
-            total_cliente_soles = @company.get_purchase_day_value2(@fecha1,@fecha2, lcProveedor, lcmonedadolares,"total_amount")
+            total_cliente_soles =  @company.get_purchases_by_day_value_supplier2(@fecha1,@fecha2,lcmonedasoles,"total_amount",lcCliente,@tiporeporte)
             total_cliente_dolares = 0
-            total_cliente_dolares = @company.get_purchase_day_value2(@fecha1,@fecha2, lcProveedor, lcmonedasoles,"total_amount")
+            total_cliente_dolares = @company.get_purchases_by_day_value_supplier2(@fecha1,@fecha2,lcmonedadolares,"total_amount",lcCliente,@tiporeporte)
     
             
             row =[]
@@ -744,17 +744,17 @@ WHERE purchase_details.product_id = ? ',params[:id] ])
             row << "TOTALES POR PROVEEDOR => "            
             row << ""
             row << ""
-            row << sprintf("%.2f",total_cliente_dolares.to_s)
-            row << sprintf("%.2f",total_cliente_soles.to_s)                      
+            row << sprintf("%.2f",total_cliente_soles.to_s)
+            row << sprintf("%.2f",total_cliente_dolares.to_s)                      
             row << " "
             
-            @total1 +=total_cliente_dolares
-            @total2 +=total_cliente_soles
+            @total1 +=total_cliente_soles
+            @total2 +=total_cliente_dolares 
             
             table_content << row
               
-          total_soles   = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcmonedasoles,"total_amount")
-          total_dolares = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcmonedadolares,"total_amount")
+          total_soles   = @company.get_purchases_by_day_value2(@fecha1,@fecha2, lcmonedasoles,"total_amount","2")
+          total_dolares = @company.get_purchases_by_day_value2(@fecha1,@fecha2, lcmonedadolares,"total_amount","1")
       
            if $lcxCliente == "0" 
 

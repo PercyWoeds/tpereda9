@@ -1904,7 +1904,32 @@ def get_purchases_day_categoria2(fecha1,fecha2,moneda,tipo)
 
 
   end
+  def get_purchases_by_day_value2(fecha1,fecha2,moneda,value='total_amount',tipo )
   
+    purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? and moneda_id = ? and tipo = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda ,tipo ]).order(:id,:moneda_id)    
+
+    ret = 0
+    for purchase in purchases
+      
+      if(value == "subtotal")
+        ret += purchase.subtotal
+      elsif(value == "tax")
+        ret += purchase.tax
+        
+      elsif(value == "balance")
+        ret += purchase.balance
+      
+      else
+        ret += purchase.total_amount
+      end
+    end
+    
+    return ret
+
+
+  end
+
+
  def get_purchases_by_day_value_supplier(fecha1,fecha2,moneda,value='total_amount',supplier)
   
     purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? and moneda_id = ? and supplier_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda , supplier ]).order(:id,:moneda_id)    
@@ -1925,6 +1950,56 @@ def get_purchases_day_categoria2(fecha1,fecha2,moneda,tipo)
     end
     
     return ret
+
+  end 
+
+
+
+ def get_purchases_by_day_value_supplier2(fecha1,fecha2,moneda,value='total_amount',supplier,tipo)
+
+  if tipo == "2"
+  
+    purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? and moneda_id = ? and supplier_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda , supplier ]).order(:id,:moneda_id)    
+
+    ret = 0
+    for purchase in purchases
+      
+      if(value == "subtotal")
+        ret += purchase.subtotal
+      elsif(value == "tax")
+        ret += purchase.tax
+      elsif(value == "balance")
+        ret += purchase.balance 
+      
+      else
+        ret += purchase.total_amount
+      end
+    end
+    
+    return  ret 
+
+  else
+        purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? and moneda_id = ? and supplier_id = ? and tipo = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda , supplier,tipo ]).order(:id,:moneda_id)    
+
+    ret = 0
+    for purchase in purchases
+      
+      if(value == "subtotal")
+        ret += purchase.subtotal
+      elsif(value == "tax")
+        ret += purchase.tax
+      elsif(value == "balance")
+        ret += purchase.balance 
+      
+      else
+        ret += purchase.total_amount
+      end
+    end
+    
+    return  ret 
+
+
+  end  
 
   end 
 
