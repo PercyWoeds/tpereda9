@@ -8,7 +8,7 @@
 
 <h3>
   <%= image_tag("reports_48.png", :class => "vmiddle") %>
- Reporte de cuentas proveedores - Documentos Creditos
+ Reporte de cuentas proveedores - Documentos de compra 
  <br/>
  
 </h3	>
@@ -26,7 +26,18 @@
         Hasta
         <input type="date" name="fecha2" value="2020-02-28" style = "width: 150px" >
     </div>
+      
+
+<p>
+  <label for="tiporeporte"> Tipo Compra:</label><br>
+  <select id="tiporeporte" name="tiporeporte" >
+
+
+    <option value="0" selected> Contado </option>
+    <option value="1" selected> Credito </option>
     
+  </select>
+</p>
 
 
 <br> 

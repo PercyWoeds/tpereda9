@@ -4308,11 +4308,22 @@ def client_data_headers
       image_path = "#{Dir.pwd}/public/images/tpereda2.png"
 
     
+      if @tipo == "1"
        table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD OCUPACIONAL",:rowspan => 2},"CODIGO ","TP-CM-F-015 "], 
           ["VERSION: ","3"], 
           ["REPORTE DE FACTURAS CREDITO - LIMA ","Pagina: ","1 de 1 "] 
          
           ])
+      else
+       table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD OCUPACIONAL",:rowspan => 2},"CODIGO ","TP-CM-F-015 "], 
+          ["VERSION: ","3"], 
+          ["REPORTE DE FACTURAS CONTADO - LIMA ","Pagina: ","1 de 1 "] 
+         
+          ])
+        
+      end 
+
+
 
        pdf.table(table_content  ,{
            :position => :center,
@@ -4347,7 +4358,9 @@ def client_data_headers
   end   
 
   def build_pdf_body_rpt8(pdf)
-    
+
+    puts "tipo "
+    puts @tipo 
     
     pdf.font "Helvetica" , :size => 6
 
@@ -4375,42 +4388,91 @@ def client_data_headers
        row = []
 
        for  product in @facturas_rpt
-        
-        if product.payment_id != 1 and product.supplier_id != 1731 and (product.payment_id != 12 || product.payment_id != 16 )
-        
-            fechas2 = product.date2 
-             
-            row = []          
-            row << nroitem.to_s 
-            row << product.supplier.name 
-            row << product.documento 
-            row << product.get_descrip0 
-            row << product.date1.strftime("%d/%m/%Y")
-            row << product.date3.strftime("%d/%m/%Y")
 
-            if product.moneda_id == 1 
-                row << "0.00 "
-                row << sprintf("%.2f",product.total_amount.to_s)
-                total_dolares  += product.total_amount 
-           
-            else
-                row << sprintf("%.2f",product.total_amount.to_s)
-                row << "0.00 "
-                total_soles += product.total_amount  
+        case @tipo 
+         when "1"
+          begin 
+
+            puts "11111"
+        
+            if product.payment_id != 1 and product.supplier_id != 1731 and (product.payment_id != 12 || product.payment_id != 16 )
+            
+                fechas2 = product.date2 
+                 
+                row = []          
+                row << nroitem.to_s 
+                row << product.supplier.name 
+                row << product.documento 
+                row << product.get_descrip0 
+                row << product.date1.strftime("%d/%m/%Y")
+                row << product.date3.strftime("%d/%m/%Y")
+
+                if product.moneda_id == 1 
+                    row << "0.00 "
+                    row << sprintf("%.2f",product.total_amount.to_s)
+                    total_dolares  += product.total_amount 
+               
+                else
+                    row << sprintf("%.2f",product.total_amount.to_s)
+                    row << "0.00 "
+                    total_soles += product.total_amount  
+
+                end 
+                row << product.get_destino 
+                row << product.user.username 
+                row << product.comments
+                row << product.payment.descrip 
+                row << "   "
+                
+                table_content << row
+
+                nroitem = nroitem + 1
 
             end 
-            row << product.get_destino 
-            row << product.user.username 
-            row << product.comments
-            row << product.payment.descrip 
-            row << "   "
-            
-            table_content << row
 
-            nroitem = nroitem + 1
+           end 
 
-           
-        end
+      when "0" 
+        begin 
+
+          if  product.payment_id == 1 and product.supplier_id != 1731 
+
+            fechas2 = product.date2 
+               
+              row = []          
+              row << nroitem.to_s 
+              row << product.supplier.name 
+              row << product.documento 
+              row << product.get_descrip0 
+              row << product.date1.strftime("%d/%m/%Y")
+              row << product.date3.strftime("%d/%m/%Y")
+
+              if product.moneda_id == 1 
+                  row << "0.00 "
+                  row << sprintf("%.2f",product.total_amount.to_s)
+                  total_dolares  += product.total_amount 
+             
+              else
+                  row << sprintf("%.2f",product.total_amount.to_s)
+                  row << "0.00 "
+                  total_soles += product.total_amount  
+
+              end 
+              row << product.get_destino 
+              row << product.user.username 
+              row << product.comments
+              row << product.payment.descrip 
+              row << "   "
+              
+              table_content << row
+
+              nroitem = nroitem + 1
+             
+          end
+      end 
+    end 
+
+
       end 
 
         lcProveedor = @facturas_rpt.last.supplier_id 
@@ -4488,7 +4550,9 @@ def client_data_headers
     @company=Company.find(1)          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
-  
+    @tipo   = params[:tiporeporte]    
+
+
     
     @facturas_rpt = @company.get_purchases_day(@fecha1,@fecha2)
 

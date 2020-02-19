@@ -1791,6 +1791,7 @@ def get_pendientes_day_customer_detraccion(fecha1,fecha2,cliente)
     
     return ret
   end
+  
 
   def get_purchases_year_month( year,month)
   

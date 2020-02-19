@@ -286,11 +286,16 @@ TABLE_HEADERS31= ["ITEM","PROVEEDOR",
   def get_descrip0
 
     a = PurchaseDetail.find_by(purchase_id: self.id)
-    if a.product.nil? 
-      return " "
+    if a.nil?
+        return ""
     else 
-      return  a.product.name  
-    end 
+        if a.product.nil? 
+          return " "
+        else 
+          return  a.product.name  
+        end 
+    end
+
   end 
 
   def get_destino
