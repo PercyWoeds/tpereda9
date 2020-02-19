@@ -374,9 +374,11 @@ class Payroll < ActiveRecord::Base
             
 
             lcBasico = pl.remuneracion/30 * (pl.totaldia  )
-            if lcBasico < 930
-                lcBasico = 930 
-            end 
+
+            #consutlaar 
+            #if lcBasico < 930
+            #    lcBasico = 930 
+            #end 
 
             pl.basico =lcBasico.round(2)
             
