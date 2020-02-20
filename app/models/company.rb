@@ -20,7 +20,7 @@ class Company < ActiveRecord::Base
 
  def get_inasists
    
-   @inasists = Inasist.where(" id > 1")
+   @inasists = Inasist.all
    return @inasists 
  end 
 
