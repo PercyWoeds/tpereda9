@@ -296,9 +296,9 @@ end
              factura.pago = 0 
           end 
           if factura.document_id != 2   
-          @last_payment = factura.pago + factura.balance.to_f.round(2) 
+          @last_payment = factura.pago - factura.balance.to_f.round(2) 
           @last_balance = factura.balance 
-          @newbalance = @last_balance - balance.to_f.round(2)
+          @newbalance = @last_balance + balance.to_f.round(2)
           else
           @last_payment = factura.pago - factura.balance.to_f.round(2) 
           @last_balance = factura.balance 
