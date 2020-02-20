@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 1
+  fecha1: 2020-02-20 16:04:03
+  fecha2: 2020-02-20 16:04:03
+  observa: MyText
+
+two:
+  employee_id: 1
+  fecha1: 2020-02-20 16:04:03
+  fecha2: 2020-02-20 16:04:03
+  observa: MyText

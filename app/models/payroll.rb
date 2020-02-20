@@ -172,8 +172,6 @@ class Payroll < ActiveRecord::Base
 
 
 
-
-
         @registrodiario = Assistance.select("employee_id,inasist_id,COUNT('employee_id') as dias_lab").where("fecha>=? and fecha<=?","#{fecha1} 00:00:00","#{fecha2} 23:59:59").group(:employee_id,:inasist_id)
        
         

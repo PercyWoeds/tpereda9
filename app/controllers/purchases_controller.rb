@@ -3289,7 +3289,7 @@ def newfactura2
 
     @purchase[:location_id] = 1
     @purchase[:division_id] = 1    
-    @purchase[:date3]  =   @purchase[:date1] + @purchase.get_dias_vmto(@purchase[:payment_id]).days  
+    @purchase[:date3]  =   @purchase[:date2] + @purchase.get_dias_vmto(@purchase[:payment_id]).days  
     
     @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]  + @purchase[:inafecto]
     @purchase[:charge]  = 0
@@ -3367,6 +3367,9 @@ def newfactura2
     @servicebuys  = @company.get_servicebuys()
     @monedas  = @company.get_monedas()
     @payments  = @company.get_payments()
+
+      @purchase[:date3]  =   @purchase[:date2] + @purchase.get_dias_vmto(@purchase[:payment_id]).days  
+  
 
     @tipodocumento = @purchase[:document_id]
     
@@ -3494,7 +3497,7 @@ def newfactura2
 
     @purchase[:location_id] = 1
     @purchase[:division_id] = 1    
-    @purchase[:date3]  =   @purchase[:date1] + @purchase.get_dias_vmto(@purchase[:payment_id]).days  
+    @purchase[:date3]  =   @purchase[:date2] + @purchase.get_dias_vmto(@purchase[:payment_id]).days  
     
     @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]  + @purchase[:inafecto]
     @purchase[:charge]  = 0
