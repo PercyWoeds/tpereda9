@@ -3226,7 +3226,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 
      # AGREGA LOS QUE NO TIENEN MOVIMIENTO 
     
-      @inv = MovementDetail.all.order(:product_id,:fecha)
+      @inv = MovementDetail.all.order(:product_id,:fecha).where("stock_inicial <> ?  or ingreso <> ? or  salida <>  ?",0,0,0)
     return @inv 
 
  end
