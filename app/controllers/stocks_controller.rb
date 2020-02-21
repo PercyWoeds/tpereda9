@@ -206,7 +206,7 @@ class StocksController < ApplicationController
 
   def build_pdf_body2(pdf)
     
-    pdf.text "Stocks de Productos :" +" Desde : "+@fecha1.to_s + " Hasta: "+@fecha2.to_s   , :size => 11 
+    pdf.text "Stocks de Productos :"+@local_name  +" Desde : "+@fecha1.to_s + " Hasta: "+@fecha2.to_s   , :size => 11 
     pdf.text " Categoria : " + @namecategoria , :size => 11 
     pdf.font "Helvetica" , :size => 6
 
@@ -354,9 +354,16 @@ class StocksController < ApplicationController
     @fecha2 = params[:fecha2] 
     @categoria =params[:products_category_id]
     @estado = params[:estado]
+
+    @local = params[:location_id]
     
-    @namecategoria= @company.get_categoria_name(@categoria)            
-    @movements = @company.get_stocks_inventarios2(@fecha1,@fecha2,@categoria,@estado)   
+    @namecategoria= @company.get_categoria_name(@categoria) 
+    @local_name= @company.get_local_name(@local) 
+     
+    ## separado por destino 
+    #@movements = @company.get_stocks_inventarios2(@fecha1,@fecha2,@categoria,@estado)   
+    @movements = @company.get_stocks_inventarios20(@fecha1,@fecha2,@categoria,@estado,@local)   
+
       
     Prawn::Document.generate("app/pdf_output/stocks2.pdf") do |pdf|            
         pdf.font_families.update("Open Sans" => {
