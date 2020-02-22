@@ -252,7 +252,7 @@ class Payroll < ActiveRecord::Base
                     detalle.pat = horas.pat
                     detalle.otros = horas.otros 
                     detalle.dias  = horas.tot 
-                    detalle.totaldia = detalle.dt  - detalle.falta - detalle.vaca - detalle.desmed - detalle.subsidio - detalle.otros - detalle.vtavac - detalle.pat -  detalle.lsg
+                    detalle.totaldia = detalle.dt  + detalle.falta + detalle.vaca + detalle.desmed + detalle.subsidio + detalle.otros + detalle.vtavac + detalle.pat +  detalle.lsg
                     detalle.save 
                 end 
          end 
@@ -263,7 +263,8 @@ class Payroll < ActiveRecord::Base
             
         for pl in @planilla
         
-            pl.dias = pl.totaldia + pl.falta + pl.vaca 
+           # pl.dias = pl.totaldia + pl.falta + pl.vaca 
+            pl.dias = pl.dt 
             #Remuneracion neta
             
             pl.remneta = pl.remuneracion / 30 * (pl.totaldia ) 
@@ -370,8 +371,15 @@ class Payroll < ActiveRecord::Base
             lcSubsidio = pl.remuneracion/30 * pl.subsidio
             pl.subsidio0 = lcSubsidio.round(2)
             
+            if pl.employee_id == 487
 
-            lcBasico = pl.remuneracion/30 * (pl.totaldia  )
+                puts "sssss"
+
+                puts pl.totaldia
+                puts pl.vaca
+
+             end    
+            lcBasico = pl.remuneracion/30 * (pl.totaldia-pl.vaca )
 
             #consutlaar 
             #if lcBasico < 930
@@ -380,13 +388,23 @@ class Payroll < ActiveRecord::Base
 
             pl.basico =lcBasico.round(2)
             
-            lctotingreso = pl.basico+pl.calc1+lcHextra1+pl.vacaciones+pl.desmedico+pl.reintegro+pl.subsidio0 
+            lctotingreso = pl.basico + pl.calc1 + lcHextra1 + pl.desmedico+pl.reintegro+pl.subsidio0 + pl.vacaciones  
             pl.totingreso = lctotingreso.round(2)
             
             lcFaltas = pl.remuneracion/30 * pl.falta
             pl.faltas = lcFaltas.round(2)
+                if pl.employee_id == 487
+
+                puts "sssss"
+
+                puts pl.remuneracion
+                puts pl.faltas
+                puts pl.falta 
+
+             end    
+
             
-            lcRemBruta = pl.totingreso - pl.faltas - pl.subsidio0
+            lcRemBruta = pl.totingreso - pl.faltas - pl.subsidio0  
             pl.total1 = lcRemBruta.round(2)
             
             if pl.employee.onp == "1"
