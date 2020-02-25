@@ -4397,6 +4397,8 @@ def client_data_headers
 
        for  product in @facturas_rpt
 
+        if user_id != 3
+
         case @tipo 
          when "1"
           begin 
@@ -4439,6 +4441,7 @@ def client_data_headers
                 nroitem = nroitem + 1
 
             end 
+           end  
 
            end 
 
