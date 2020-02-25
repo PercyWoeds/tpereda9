@@ -4261,7 +4261,7 @@ def client_data_headers
                      :template => 'layouts/pdf-header5.html',
                            right: '[page] of [topage]'
                   }
-                  
+
                },
 
                :footer => { :html => { template: 'layouts/pdf-footers.html' }       }  ,   
@@ -4410,6 +4410,8 @@ def client_data_headers
                 row = []          
                 row << nroitem.to_s 
                 row << product.supplier.name 
+                row << product.document.descripshort 
+                
                 row << product.documento 
                 row << product.get_descrip0 
                 row << product.date1.strftime("%d/%m/%Y")
@@ -4450,6 +4452,7 @@ def client_data_headers
               row = []          
               row << nroitem.to_s 
               row << product.supplier.name 
+              row << product.document.descripshort
               row << product.documento 
               row << product.get_descrip0 
               row << product.date1.strftime("%d/%m/%Y")
@@ -4496,6 +4499,8 @@ def client_data_headers
           row << ""
           row << ""
           row << ""
+          row << ""
+          
           row << "TOTALES => "
           
           row << ""
@@ -4506,6 +4511,8 @@ def client_data_headers
           row << " "
           row << " "
           row << " "
+
+
 
 
 
@@ -4521,20 +4528,23 @@ def client_data_headers
                                           columns([1]).align=:left
                                           columns([2]).align=:left
                                           columns([3]).align=:left
-         
+                                          
                                           columns([4]).align=:left
-                                          columns([4]).width = 60
-                                          
-                                          columns([5]).align=:left  
-                                          columns([5]).width =60
-                                          
-                                          columns([6]).align=:right
+                                          columns([6]).width = 40                                                                           
+         
                                           columns([7]).align=:right
-                                          columns([8]).align=:right
+                                          columns([7]).width = 60
+                                          
+                                          columns([8]).align=:right 
+                                          columns([8]).width =60
+                                          
                                           columns([9]).align=:right
+                                          columns([10]).align=:right
                                         end                                          
                                         
       pdf.move_down 50
+
+
 
 
 
@@ -4544,12 +4554,33 @@ def client_data_headers
     end
 
     def build_pdf_footer_rpt8(pdf)      
-                  
-      pdf.text "" 
-      pdf.bounding_box([0, 20], :width => 535, :height => 40) do
-      pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
-    end
-    pdf      
+
+      table_content3 =[]
+      row = []
+      row << "--------------------------------------------"
+      row << "--------------------------------------------"
+      row << "--------------------------------------------"
+      
+      table_content3 << row 
+      row = []
+      row << "V.B.COMPRAS"
+      row << "V.B.GERENCIA"
+      row << "V.B.CONTABILIDAD"
+      
+      table_content3 << row 
+
+      
+          result = pdf.table table_content3, {:position => :center,
+                                        :header => true,  :cell_style => {:border_width => 0},
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:center
+                                          columns([2]).align=:center 
+                                          
+                                        end                             
+
+      pdf      
   end
 
   # Export serviceorder to PDF

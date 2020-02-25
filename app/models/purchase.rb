@@ -119,8 +119,8 @@ TABLE_HEADERS30 = ["TD",
                      "OBSERV"]
 
 
-TABLE_HEADERS31= ["ITEM","PROVEEDOR",
-                      "Nro.Factura",
+TABLE_HEADERS31= ["ITEM","PROVEEDOR","TD",
+                      "Nro.Docmto.",
                      "DESCRIPCION",
                      "FECHA",
                      "FECHA 
