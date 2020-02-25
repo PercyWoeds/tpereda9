@@ -4397,7 +4397,7 @@ def client_data_headers
 
        for  product in @facturas_rpt
 
-        if user_id != 3
+        
 
         case @tipo 
          when "1"
@@ -4443,7 +4443,7 @@ def client_data_headers
             end 
            end  
 
-           end 
+          
 
       when "0" 
         begin 
@@ -4502,9 +4502,10 @@ def client_data_headers
           row << ""
           row << ""
           row << ""
-          row << ""
           
           row << "TOTALES => "
+          row << ""
+          
           
           row << ""
           row << sprintf("%.2f",total_soles.to_s)
