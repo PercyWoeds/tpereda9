@@ -4398,12 +4398,10 @@ def client_data_headers
        for  product in @facturas_rpt
 
         
-
+          if product.user_id != 3 
         case @tipo 
          when "1"
           begin 
-
-            puts "11111"
         
             if product.payment_id != 1 and product.supplier_id != 1731 and (product.payment_id != 12 || product.payment_id != 16 )
             
@@ -4484,6 +4482,7 @@ def client_data_headers
              
           end
       end 
+    end 
     end 
 
 
@@ -4567,7 +4566,8 @@ def client_data_headers
       
       table_content3 << row 
       row = []
-      row << "V.B.COMPRAS"
+      row << "V.B.COMPRAS 
+              RAUL ARMANDO DIESTRA JARAMILLO"
       row << "V.B.GERENCIA"
       row << "V.B.CONTABILIDAD"
       
