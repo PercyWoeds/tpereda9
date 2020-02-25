@@ -2854,14 +2854,15 @@ def newfactura2
     @fecha1 = params[:fecha1]  
     @fecha2 = params[:fecha2]
 
-    #@company.actualizar_fecha2
-    #@company.actualizar_detraccion 
+
+    @company.actualizar_fecha2
+    @company.actualizar_detraccion 
 
     @facturas_rpt = @company.get_pendientes_day(@fecha1,@fecha2)  
 
     case params[:print]
       when "To PDF" then 
-           redirect_to :action => "rpt_ccobrar2_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2] ,locals: {:customers => @facturas_rpt}
+           redirect_to :action => "rpt_ccobrar2_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2] 
           
       when "To Excel" then render xlsx: 'rpt_ccobrar2_xls'
         
@@ -2874,6 +2875,10 @@ def newfactura2
     $lcxCliente ="1"
     @company=Company.find(1)      
     
+     @company.actualizar_fecha2
+    @company.actualizar_detraccion 
+
+
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]
     @cliente = params[:customer_id]      
@@ -3463,8 +3468,7 @@ def newfactura2
 
     $lcxCliente ="1"
     @company=Company.find(1)      
-    #@company.actualizar_fecha2
-    #@company.actualizar_detraccion 
+   
     
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]
@@ -4245,7 +4249,7 @@ def client_data_headers
 
     @current_user_id = current_user.id 
     
-    @conceptos  = @company.get_inasists          
+    @conceptos  = @company.get_inasists2         
     
     case params[:print]
       when "To PDF" then 
@@ -4257,7 +4261,11 @@ def client_data_headers
                      :template => 'layouts/pdf-header5.html',
                            right: '[page] of [topage]'
                   }
-               }
+                  
+               },
+
+               :footer => { :html => { template: 'layouts/pdf-footers.html' }       }  ,   
+               :margin => {bottom: 35} 
 
         end   
       when "To Excel" then render xlsx: 'rpt_st_1'

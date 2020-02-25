@@ -15,12 +15,29 @@ class Inasist < ActiveRecord::Base
 
         for detalle in @detalle
 
-          horas =  detalle.time_diff(detalle.hora1,detalle.hora2)
+
+          if detalle.inasist_id == 4 ||  detalle.inasist_id == 2 || detalle.inasist_id == 6  
+ 
+           fecha_hora = fecha1
+          fechas = fecha_hora.to_time
+
+          a=fechas.in_time_zone.change( hour: 8 )  
+
+          puts "horas xxx"
+          puts a 
+
+          b = detalle.hora_efectivo.in_time_zone.change( day: fechas.day,month:fechas.month )
+       
+
+          puts b 
+
+
+          horas =  detalle.time_diff( a , b )
+
           parts = horas.split(":")  
           hora_1   =  parts[0].to_f
           minuto_1 =  parts[1].to_f
-          puts "horas "
-
+         
           puts horas 
           puts hora_1
           puts minuto_1
@@ -28,6 +45,16 @@ class Inasist < ActiveRecord::Base
           total_horas +=  hora_1 
           total_minutos += minuto_1
 
+          else   
+          horas =  detalle.time_diff(detalle.hora1,detalle.hora2)
+          parts = horas.split(":")  
+          hora_1   =  parts[0].to_f
+          minuto_1 =  parts[1].to_f
+        
+
+          total_horas +=  hora_1 
+          total_minutos += minuto_1
+          end 
         end 
 
         return total_horas + total_minutos / 60 

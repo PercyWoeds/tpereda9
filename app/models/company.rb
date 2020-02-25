@@ -24,6 +24,12 @@ class Company < ActiveRecord::Base
    return @inasists 
  end 
 
+ def get_inasists2
+   
+   @inasists = Inasist.where("id <> 1")
+   return @inasists 
+ end 
+
  
  def get_eess
    
