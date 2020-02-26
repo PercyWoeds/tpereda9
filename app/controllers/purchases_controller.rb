@@ -3542,6 +3542,8 @@ def newfactura2
   def destroy
     @purchase= Purchase.find(params[:id])
     company_id = @purchase[:company_id]
+
+    
     
     if @purchase.processed == "1" 
       
