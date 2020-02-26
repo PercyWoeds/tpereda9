@@ -158,11 +158,12 @@
           <td align="center" width="20%"><%=  @detalle %>   </td>
 
           <% end %>
-          <%resultado = "" %>
+          <% resultado = "" %>
           <% separar =  @total_horas.to_s.split('.') %>
           <% hora = separar[0] %>
-          <% minutos = separar[1].to_f * 0.6  %>  
-          <% resultado = hora + " : " + sprintf("%.0f",minutos.round(0).to_s) %>
+          <% minuto = separar[1].to_i * 0.6  %>  
+          <% minutos = minuto.round(0).to_s %>
+          <% resultado = hora + " : " + minutos[0..1]  %>
 
           <td align="center" width="20%"><%= resultado  %>   </td>
 
