@@ -151,23 +151,30 @@
            <tr >
         
           <td align="center" width="40%" ><%=  concepto.name %>   </td>
-          <% if  concepto.id == 2 || concepto.id == 4 || concepto.id == 6 %>
-          <td align="center" width="20%">   </td>
+
+          <% if  concepto.id == 4  %>
+              <td align="center" width="20%">   </td>
           
            <% else %> 
-          <td align="center" width="20%"><%=  @detalle %>   </td>
-
+              <td align="center" width="20%"><%=  @detalle %>   </td>
           <% end %>
-          <% resultado = "" %>
-          <% separar =  @total_horas.to_s.split('.') %>
-          <% hora = separar[0] %>
-          <% minuto = separar[1].to_i * 0.6  %>  
-          <% minutos = minuto.round(0).to_s %>
-          <% resultado = hora + " : " + minutos[0..1]  %>
 
-          <td align="center" width="20%"><%= resultado  %>   </td>
+              <% resultado = "" %>
+              <% separar =  @total_horas.to_s.split('.') %>
+              <% hora = separar[0] %>
+              <% minuto = separar[1].to_i * 0.6  %>  
+              <% minutos = minuto.round(0).to_s %>
+              <% resultado = hora + " : " + minutos[0..1]  %>
 
+          <% if  concepto.id == 3 || concepto.id == 5 || concepto.id = 8 || concepto.id == 9 || concepto.id == 6 || concepto.id == 7 || concepto.id == 10   %>
 
+            <td align="center" width="20%">   </td>
+          
+          <% else %>
+
+            <td align="center" width="20%"><%= resultado  %>   </td>
+
+          <% end %>  
 
           </tr>
             

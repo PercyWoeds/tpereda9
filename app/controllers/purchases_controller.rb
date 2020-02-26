@@ -3079,18 +3079,32 @@ def newfactura2
     if(@company.can_view(current_user))
 
       if @status == "1" 
-         @purchases = Purchase.all.order('date1 DESC',"documento  DESC").where(status: @status).paginate(:page => params[:page])
+         if current_user.level != "almacen" 
 
-        if params[:search]
-          @purchases = Purchase.search(params[:search]).order("date1 DESC","documento DESC").paginate(:page => params[:page])
-        else
-          @purchases = Purchase.order('date1 DESC',"documento DESC").where(status: @status).paginate(:page => params[:page]) 
-        end
+             @purchases = Purchase.all.order('date1 DESC',"documento  DESC").where(status: @status).paginate(:page => params[:page])
+
+            if params[:search]
+              @purchases = Purchase.search(params[:search]).order("date1 DESC","documento DESC").paginate(:page => params[:page])
+            else
+              @purchases = Purchase.order('date1 DESC',"documento DESC").where(status: @status).paginate(:page => params[:page]) 
+            end
+          else
+             @purchases = Purchase.all.order('date1 DESC',"documento  DESC").where(status: @status,user_id: 9).paginate(:page => params[:page])
+
+            if params[:search]
+              @purchases = Purchase.search(params[:search]).where(user_id:9).order("date1 DESC","documento DESC").paginate(:page => params[:page])
+            else
+              @purchases = Purchase.order('date1 DESC',"documento DESC").where(status: @status,user_id: 9).paginate(:page => params[:page]) 
+            end
+          
+          end  
+
+
       else
-        @purchases = Purchase.all.order('date1 DESC',"documento  DESC").where(status: nil).paginate(:page => params[:page])
-        puts "else " 
-        puts params[:search]
+        if current_user.level != "almacen" 
 
+        @purchases = Purchase.all.order('date1 DESC',"documento  DESC").where(status: nil).paginate(:page => params[:page])
+        
         if  params[:search] != ""
 
            @purchases = Purchase.where("documento ilike ? ",  "%#{params[:search]}%").order("date1 DESC","documento DESC").paginate(:page => params[:page])
@@ -3099,9 +3113,22 @@ def newfactura2
         else
           @purchases = Purchase.order('date1 DESC',"documento DESC").where(status: nil).paginate(:page => params[:page]) 
         end
+        else 
 
-      end 
+          @purchases = Purchase.all.order('date1 DESC',"documento  DESC").where(status: nil,user_id: 9).paginate(:page => params[:page])
+        
+        if  params[:search] != ""
 
+           @purchases = Purchase.where("documento ilike ?  and user_id = 9",  "%#{params[:search]}%").order("date1 DESC","documento DESC").paginate(:page => params[:page])
+           puts "else 2 "
+
+        else
+          @purchases = Purchase.order('date1 DESC',"documento DESC").where(status: nil,user_id: 9).paginate(:page => params[:page]) 
+        end
+          
+        end
+
+      end
     
     else
       errPerms()
@@ -3543,7 +3570,7 @@ def newfactura2
     @purchase= Purchase.find(params[:id])
     company_id = @purchase[:company_id]
 
-    
+
     
     if @purchase.processed == "1" 
       
