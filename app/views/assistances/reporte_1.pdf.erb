@@ -166,13 +166,13 @@
               <% minutos = minuto.round(0).to_s %>
               <% resultado = hora + " : " + minutos[0..1]  %>
 
-          <% if  concepto.id == 3 || concepto.id == 5 || concepto.id = 8 || concepto.id == 9 || concepto.id == 6 || concepto.id == 7 || concepto.id == 10   %>
+          <% if  concepto.id == 4  || concepto.id == 2 || concepto.id == 6   %>
 
-            <td align="center" width="20%">   </td>
+            <td align="center" width="20%"> <%= resultado  %>    </td>
           
           <% else %>
 
-            <td align="center" width="20%"><%= resultado  %>   </td>
+            <td align="center" width="20%"> </td>
 
           <% end %>  
 
