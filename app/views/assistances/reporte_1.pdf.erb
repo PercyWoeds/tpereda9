@@ -132,7 +132,7 @@
   <th>Concepto</th>
 
   <th>Dia</th>
-  <th>Horas</th>
+  <th>Horas Mins.</th>
         
  </tr>
       
@@ -148,12 +148,23 @@
 
           <% @total_horas = concepto.get_horas_minutos(concepto.id,@fecha1,@fecha2) %>
 
-
            <tr >
         
           <td align="center" width="40%" ><%=  concepto.name %>   </td>
+          <% if  concepto.id == 2 || concepto.id == 4 || concepto.id == 6 %>
+          <td align="center" width="20%">   </td>
+          
+           <% else %> 
           <td align="center" width="20%"><%=  @detalle %>   </td>
-          <td align="center" width="20%"><%=  @total_horas %>   </td>
+
+          <% end %>
+          <%resultado = "" %>
+          <% separar =  @total_horas.to_s.split('.') %>
+          <% hora = separar[0] %>
+          <% minutos = separar[1].to_f * 0.6  %>  
+          <% resultado = hora + " : " + sprintf("%.0f",minutos.round(0).to_s) %>
+
+          <td align="center" width="20%"><%= resultado  %>   </td>
 
 
 
