@@ -3462,10 +3462,21 @@ def newfactura2
     @purchase[:tax_amount] =@purchase[:total_amount] - @purchase[:payable_amount]  
     
     @tipodocumento = @purchase[:document_id]
+
+    puts @purchase[:total_amount]
+    puts @purchase[:tax_amount]
+    puts @purchase[:payable_amount] 
+    if  @purchase[:payable_amount].nil?
+      @purchase[:payable_amount] = 0 
+    end  
+    
+    if  @purchase[:inafecto].nil?
+      @purchase[:inafecto] = 0 
+    end  
     
     begin 
     if @tipodocumento == 2
-      @purchase[:payable_amount] = @purchase[:payable_amount]*-1
+      @purchase[:payable_amount] = @purchase[:payable_amount] * -1
     else
       @purchase[:payable_amount] = @purchase[:payable_amount]
     end   
@@ -3476,7 +3487,7 @@ def newfactura2
     begin 
 
     if @tipodocumento == 2
-      @purchase[:inafecto] = @purchase[:inafecto] *-1
+      @purchase[:inafecto] = @purchase[:inafecto] * -1
     else
       @purchase[:inafecto] = @purchase[:inafecto]
     end    
@@ -3487,10 +3498,10 @@ def newfactura2
 
     begin
        if @tipodocumento == 2
-        @purchase[:tax_amount] = @purchase[:tax_amount]*-1
+        @purchase[:tax_amount] =  @purchase[:tax_amount] * -1
        else
-        @purchase[:tax_amount] = @purchase[:tax_amount]
-       end 
+        @purchase[:tax_amount] =  @purchase[:tax_amount]
+        end 
     rescue
         @purchase[:tax_amount] = 0
     end
