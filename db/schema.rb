@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200220210403) do
+ActiveRecord::Schema.define(version: 20200222172546) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1655,6 +1655,14 @@ ActiveRecord::Schema.define(version: 20200220210403) do
     t.integer  "vtavac"
     t.integer  "dt"
     t.integer  "pat"
+    t.float    "total0"
+    t.float    "xdia"
+    t.float    "hesab"
+    t.float    "hedom"
+    t.float    "he25"
+    t.float    "he35"
+    t.float    "he100"
+    t.float    "prestamo"
   end
 
   create_table "payrollbonis", force: :cascade do |t|

@@ -1,5 +1,7 @@
   Mnygo::Application.routes.draw do
 
+  resources :almacens
+  resources :almacens
   resources :vacations
   resources :telecredito_details
   resources :telecreditos

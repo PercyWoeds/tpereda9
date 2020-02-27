@@ -122,9 +122,12 @@ TABLE_HEADERS30 = ["TD",
 TABLE_HEADERS31= ["ITEM","PROVEEDOR","TD",
                       "Nro.Docmto.",
                      "DESCRIPCION",
-                     "FECHA",
+                     "FECHA
+                     EMISION",
                      "FECHA 
-                     RECEPCION",
+                     RECEP",
+                     "FECHA 
+                     VMTO.",
                      "S/.",  
                      "US$",  
                      "DESTINO",
@@ -287,10 +290,18 @@ TABLE_HEADERS31= ["ITEM","PROVEEDOR","TD",
 
     a = PurchaseDetail.find_by(purchase_id: self.id)
     if a.nil?
-        return ""
+
+    
+
     else 
         if a.product.nil? 
-          return " "
+            b =Servicebuy.find_by(id:a.product_id)
+            if b.nil?
+              return ""
+            else  
+              return b.name 
+            end
+          return 
         else 
           return  a.product.name  
         end 

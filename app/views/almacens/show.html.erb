@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nombre:</strong>
+  <%= @almacen.nombre %>
+</p>
+
+<p>
+  <strong>Direccion:</strong>
+  <%= @almacen.direccion %>
+</p>
+
+<p>
+  <strong>Codigo:</strong>
+  <%= @almacen.codigo %>
+</p>
+
+<p>
+  <strong>Telefono:</strong>
+  <%= @almacen.telefono %>
+</p>
+
+<%= link_to 'Edit', edit_almacen_path(@almacen) %> |
+<%= link_to 'Back', almacens_path %>

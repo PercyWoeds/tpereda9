@@ -4413,8 +4413,9 @@ def client_data_headers
                 row << product.document.descripshort 
                 
                 row << product.documento 
-                row << product.get_descrip0 
+                row << product.get_descrip0[0..50]
                 row << product.date1.strftime("%d/%m/%Y")
+                row << product.date2.strftime("%d/%m/%Y")
                 row << product.date3.strftime("%d/%m/%Y")
 
                 if product.moneda_id == 1 
@@ -4430,7 +4431,7 @@ def client_data_headers
                 end 
                 row << product.get_destino 
                 row << product.user.username 
-                row << product.comments
+                row << product.get_observacion 
                 row << product.payment.descrip 
                 row << "   "
                 
@@ -4530,18 +4531,24 @@ def client_data_headers
                                           columns([0]).align=:center
                                           columns([1]).align=:left
                                           columns([2]).align=:left
+                                                                                                             
+         
                                           columns([3]).align=:left
                                           
                                           columns([4]).align=:left
+                                          columns([5]).width = 40                                                                           
+         
                                           columns([6]).width = 40                                                                           
          
                                           columns([7]).align=:right
-                                          columns([7]).width = 60
+                                          columns([7]).width = 40
                                           
                                           columns([8]).align=:right 
-                                          columns([8]).width =60
+                                          columns([8]).width =50
                                           
                                           columns([9]).align=:right
+                                          columns([9]).width =50
+                                          
                                           columns([10]).align=:right
                                         end                                          
                                         
