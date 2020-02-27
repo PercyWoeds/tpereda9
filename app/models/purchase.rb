@@ -311,12 +311,12 @@ TABLE_HEADERS31= ["ITEM","PROVEEDOR","TD",
 
   def get_destino
     
-    if self.tipo == "1" 
+    if self.tipo == "0" 
 
        a =  Purchaseorder.where(id: self.purchaseorder_id)
 
 
-      if a.first.nil?
+          if a.first.nil?
             return " "
            else
 
@@ -337,7 +337,7 @@ TABLE_HEADERS31= ["ITEM","PROVEEDOR","TD",
   end 
 def get_observacion
     
-    if self.tipo == "1" 
+    if self.tipo == "0" 
 
        a =  Purchaseorder.where(id: self.purchaseorder_id)
 

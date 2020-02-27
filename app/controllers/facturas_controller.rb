@@ -4531,7 +4531,7 @@ def client_data_headers
                                           columns([0]).align=:center
                                           columns([1]).align=:left
                                           columns([2]).align=:left
-                                                                                                             
+
          
                                           columns([3]).align=:left
                                           
@@ -4544,12 +4544,16 @@ def client_data_headers
                                           columns([7]).width = 40
                                           
                                           columns([8]).align=:right 
-                                          columns([8]).width =50
+                                          columns([8]).width =40
                                           
-                                          columns([9]).align=:right
-                                          columns([9]).width =50
+                                          columns([9]).align=:right 
+                                          columns([9]).width =40
                                           
-                                          columns([10]).align=:right
+                                          columns([10]).align=:left
+                                          columns([10]).width =80
+                                          columns([12]).width =80
+                                          
+                                          
                                         end                                          
                                         
       pdf.move_down 50

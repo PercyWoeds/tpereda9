@@ -3041,7 +3041,7 @@ def newfactura2
       user_ids.push(cu.user_id)
     end
     
-    @users = User.where(["id IN (#{user_ids.join(",")}) AND (email LIKE ? OR username LIKE ?)", "%" + params[:q] + "%", "%" + params[:q] + "%"])
+    @users = User.where(["id IN (#{user_ids.join(",")}) AND (email iLIKE ? OR username iLIKE ?)", "%" + params[:q] + "%", "%" + params[:q] + "%"])
     alr_ids = []
     
     for user in @users
