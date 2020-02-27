@@ -4506,6 +4506,7 @@ def client_data_headers
           row << "TOTALES => "
           row << ""
           
+          row << ""
           
           row << ""
           row << sprintf("%.2f",total_soles.to_s)
