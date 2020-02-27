@@ -40,10 +40,11 @@ class Assistance < ActiveRecord::Base
 
       fecha_dic="2019-12-01 00:00:00"
 
-      
+        Assistance.where(fecha)    
 
         fecha_asistencia = fecha 
-        Assistance.where("fecha >= ? and fecha <= ?", "#{fecha_asistencia}  00:00:00","#{fecha_asistencia} 23:59:59 ").delete_all 
+
+        Assistance.where("fecha >= ? and fecha <= ?", "#{fecha_asistencia} 00:00:00","#{fecha_asistencia} 23:59:59 ").delete_all 
         
         for ip in planilla
         

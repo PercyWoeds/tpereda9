@@ -67,6 +67,7 @@ class Inasist < ActiveRecord::Base
                 puts horas 
                 puts hora_1
                 puts minuto_1
+                puts total_horas
 
                 total_horas +=  hora_1 
                 total_minutos += minuto_1
@@ -88,4 +89,62 @@ class Inasist < ActiveRecord::Base
         return total_horas + total_minutos / 60 
    
  end
+
+
+
+  def contar_dias(fecha1,fecha2,tipo)
+
+      ret = 0
+
+
+      a = fecha1.in_time_zone.change( hour: 8 ,  min: 00 )     
+      b = fecha2.in_time_zone.change( hour: 18 , min: 30 )     
+
+      @asistencia = Assistance.where("inasist_id = ? and fecha>=? and fecha<=? ", tipo,"#{fecha1} 00:00:00","#{fecha2} 23:59:59" )
+
+        for a in @asistencia 
+
+          hora1 =  a.hora_efectivo::time 
+          hora2 =  a.hora_efectivo2::time 
+puts "asssssssssssssssssssssssssssssssssss"
+
+            puts hora1
+            puts hora2
+
+          if hora1.nil?
+            hora10 = "00:00:00"
+          else 
+            hora10 = hora1.to_s
+
+          end
+          if hora2.nil?
+              hora10 ="00:00:00"
+          else 
+            hora20 = hora2.to_s
+          end 
+          
+           
+            puts hora10[11..18]
+            puts hora20[11..18]
+
+
+
+
+            if hora10[11..18] == "08:00:00" and hora20[11..18] =="18:30:00" 
+
+              ret +=1 
+              puts "holiiii"
+
+              puts tipo 
+              puts ret 
+             end 
+
+
+
+        end
+
+        return ret
+    
+  end
+
 end
