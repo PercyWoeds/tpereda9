@@ -1,0 +1,119 @@
+
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %>
+</div>
+
+
+
+
+<div class="small">
+  <form method="get" action="/companies/outputs/<%= @company.id %>">
+    <strong>Buscar :</strong>
+    <input type="text" name="search" value="<% if @q_org %><%= @q_org %><% end %>" class="small" style="width: 250px;" onclick="$(this).select();" />
+    <input type="submit" value="Find" class="bold small_btn" />
+    <a href="/companies/outputs/<%= @company.id %>" > Limpiar</a>
+  </form>
+</div>
+  
+<br />
+
+<div class="button">
+  <%= link_to 'Nueva salida ', "/outputs/new/#{@company.id}/#{@almacen_id}" %>
+</div>
+
+
+<% if @outputs.count > 0 %>
+  <table>
+    <thead>
+      <tr>
+        <th class="bordered_right bordered_bottom" style="width: 80px;">
+          Nro.
+        </th>
+        <th class="bordered_right bordered_bottom" style="width: 200px;">
+          Proveedor
+        </th>
+        <th class="bordered_right bordered_bottom">
+          Empleado
+        </th>        
+        <th class="bordered_right bordered_bottom">
+          Vehiculo 
+        </th>
+        <th class="bordered_right bordered_bottom">
+          Importe
+        </th>
+        <th class="bordered_right bordered_bottom">
+          Fecha 
+        </th>
+            
+        <th class="bordered_right bordered_bottom">
+          Processed
+        </th>
+        <th class="bordered_right bordered_bottom" colspan="3">
+          Options
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <% for output in @outputs %>
+        <tr>
+          <td class="bordered_right bordered_bottom">
+            <%= link_to output.code, output, :title => "Ir a factura" %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%=  output.supplier.name  %>
+          </td>
+
+          <td class="bordered_right bordered_bottom">
+            <%=  output.employee.full_name %>
+          </td>
+
+          <td class="bordered_right bordered_bottom">
+            <%=  output.truck.placa %>
+          </td>
+
+
+          <td class="bordered_right bordered_bottom right">
+            <%= money(output.total) %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= doDate(output.created_at) %>
+          </td>
+
+          <td class="bordered_right bordered_bottom <%= output.processed_color %>">
+            <%= output.get_processed_short %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= link_to "Ver ", output %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= link_to "Editar", edit_output_path(output) %>
+          </td>
+
+          <%if @current_user.level == 'admin' %>          
+            <td class="bordered_right bordered_bottom">
+          <%= link_to "Eliminar", output , method: :delete, data: { confirm: 'Esta seguro ?' } %>
+            </td>
+
+          <% end %>
+          
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="error">
+    No existe registro de salidas 
+  </p>
+<% end %>
+
+
+
+<br />
+
+
+
+<%= will_paginate @outputs %>
+
+<%= render 'layouts/autocomplete' %>

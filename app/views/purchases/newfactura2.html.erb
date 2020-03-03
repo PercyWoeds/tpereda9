@@ -1,7 +1,7 @@
 <div class="breadcrumbs">
   <%= link_to "My companies", "/companies" %> &raquo;
   <%= link_to @company.name, @company %> &raquo;
-  <%= link_to "purchaseorders", "/companies/purchaseorders/#{@company.id}" %>
+  <%= link_to "purchases", "/companies/purchases/#{@company.id}" %>
 </div>
 
 <h3>
@@ -14,12 +14,12 @@
   
 </p>
 
-<% if @purchaseorder.errors.any? %>
+<% if @purchase.errors.any? %>
   <div id="error_explanation">
-    <h2><%= pluralize(@purchaseorder.errors.count, "error") %> prohibited this purchaseorder from being saved:</h2>
+    <h2><%= pluralize(@purchase.errors.count, "error") %> prohibited this purchase from being saved:</h2>
 
     <ul>
-    <% @purchaseorder.errors.full_messages.each do |msg| %>
+    <% @purchase.errors.full_messages.each do |msg| %>
       <li><%= msg %></li>
     <% end %>
     </ul>
@@ -40,13 +40,19 @@
     
     </div>
 
+
+     <div class="field">
+     <strong>Almacen:</strong><br />      
+      <%= select_tag(:almacen_id, options_from_collection_for_select(@almacens,'id','nombre')) %>
+    </div>
+
     <div class="field">
      <strong>Documento:</strong><br />      
       <%= select_tag(:document_id, options_from_collection_for_select(@documents,'id','description')) %>
     </div>
       
     <div class="field">    
-
+     <strong>Nro.Documento:</strong><br />      
       <input type="text" name="documento" value="" style = "width: 150px" >
       
     </div>
@@ -160,5 +166,5 @@
 <%= hr() %>
 
 <div class="button">
-  <%= link_to 'Back', "/companies/purchases/#{@company.id}" %>
+  <%= link_to 'Regresar', "/companies/purchases/#{@company.id}" %>
 </div>

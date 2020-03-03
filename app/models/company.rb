@@ -271,6 +271,16 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
   end
 
  
+  def get_almacens()
+     almacens = Almacen.order(:nombre)
+     return almacens 
+  end
+
+ 
+  def get_almacens2(id)
+     almacens = Almacen.where(id: id)
+     return almacens 
+  end
   
   def get_services()
      services = Service.where(company_id: self.id).order(:name)

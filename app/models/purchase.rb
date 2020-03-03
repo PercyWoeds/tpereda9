@@ -1,7 +1,7 @@
 class Purchase < ActiveRecord::Base
   self.per_page = 20
   
-  validates_presence_of :company_id, :supplier_id, :documento,:document_id,:date1,:date2,:date3, :moneda_id
+  validates_presence_of :company_id, :supplier_id, :documento,:document_id,:date1,:date2,:date3, :moneda_id,:almacen_id 
   validates :documento , uniqueness:{ scope:[:supplier_id, :document_id,:moneda_id]}
 
 
@@ -14,6 +14,7 @@ class Purchase < ActiveRecord::Base
   belongs_to :moneda
   belongs_to :payment
   belongs_to :product 
+   belongs_to :almacen 
    
   
   belongs_to :purchaseorder
@@ -744,11 +745,11 @@ def get_tax3(items, supplier_id)
       for ip in purchase_details
                 
         #actualiza stock
-         stock_product =  Stock.find_by(:product_id => ip.product_id)
+         stock_product =  Stock.find_by(:product_id => ip.product_id,:store_id=> self.almacen_id)
 
         if stock_product 
-           $last_stock = stock_product.quantity + ip.quantity      
-           stock_product.quantity = $last_stock
+           @last_stock = stock_product.quantity + ip.quantity      
+           stock_product.quantity = @last_stock
           if (self.moneda_id == 2)  
               stock_product.unitary_cost = ip.price_without_tax   
           else        
@@ -761,20 +762,20 @@ def get_tax3(items, supplier_id)
           end   
         else
 
-          $last_stock = 0
+          @last_stock = 0
 
           if (self.moneda_id == 2)  
-               $lcprice_tax = ip.price_without_tax   
+               @lcprice_tax = ip.price_without_tax   
           else        
                dolar = Tipocambio.find_by('dia = ?',self.date1)
                if dolar 
-                   $lcprice_tax = ip.price_without_tax * dolar.compra  
+                   @lcprice_tax = ip.price_without_tax * dolar.compra  
                else 
-                   $lcprice_tax = ip.price_without_tax   
+                   @lcprice_tax = ip.price_without_tax   
                end 
           end   
 
-          stock_product= Stock.new(:store_id=>1,:state=>"Lima",:unitary_cost=> $lcprice_tax,
+          stock_product= Stock.new(:store_id=> self.almacen_id,:state=>"Lima",:unitary_cost=> @lcprice_tax,
           :quantity=> ip.quantity,:minimum=>0,:user_id=>@user_id,:product_id=>ip.product_id,
           :document_id=>self.document_id,:documento=>self.documento)           
         end 

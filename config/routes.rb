@@ -591,14 +591,16 @@ end
   match 'output/add_kit/:company_id' => 'outputs#add_kit', via: [:get, :post]
   match 'outputs/list_items/:company_id' => 'outputs#list_items', via: [:get, :post]
   match 'outputs/ac_kit/:company_id' => 'outputs#ac_kit', via: [:get, :post]
-  match 'outputs/ac_products/:company_id' => 'outputs#ac_products', via: [:get, :post]
+  match 'outputs/ac_products/:company_id/:almacen_id' => 'outputs#ac_products', via: [:get, :post]
   match 'outputs/ac_user/:company_id' => 'outputs#ac_user', via: [:get, :post]
   match 'outputs/ac_customers/:company_id' => 'outputs#ac_customers', via: [:get, :post]
   match 'trucks/ac_placas/:company_id' => 'trucks#ac_placas', via: [:get, :post]
-  match 'outputs/new/:company_id' => 'outputs#new', via: [:get, :post]
+  match 'outputs/new/:company_id/:almacen_id' => 'outputs#new', via: [:get, :post]
   
   match 'outputs/do_email/:id' => 'outputs#do_email', via: [:get, :post]
   match 'outputs/do_process/:id' => 'outputs#do_process', via: [:get, :post]
+  match 'outputs/go_salidas/:id' => 'outputs#go_salidas', via: [:get, :post]
+
   match 'outputs/email/:id' => 'outputs#email', via: [:get, :post]
   match 'outputs/pdf/:id' => 'outputs#pdf', via: [:get, :post]
   match 'outputs/rpt_salidas_all_pdf/:id' => 'outputs#rpt_salidas_all_pdf', via: [:get, :post]

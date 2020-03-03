@@ -1,0 +1,43 @@
+
+  <table>
+    <thead>
+      <tr>
+        <th class="bordered_right bordered_bottom" style="width: 80px;">
+          Codigo
+        </th>
+        <th class="bordered_right bordered_bottom" style="width: 200px;">
+          Almacen
+        </th>
+       
+        <th class="bordered_right bordered_bottom" colspan="3">
+          Options
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <% for bancos in @almacens %>
+        <tr>
+          <td class="bordered_right bordered_bottom">
+            <%=  bancos.codigo  %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%=  bancos.nombre %>
+          </td>
+              
+            <td class="bordered_right bordered_bottom">
+               <%= link_to "Seleccionar","/outputs/go_salidas/#{bancos.id} "  %>
+            </td>
+        </tr>
+      <% end %>
+
+    </tbody>
+  </table>
+
+
+  <div class="button">
+
+    <%= link_to 'Regresar',"/companies/components2/#{@company.id}" %>
+    
+
+  </div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200222172546) do
+ActiveRecord::Schema.define(version: 20200302182707) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,6 +123,7 @@ ActiveRecord::Schema.define(version: 20200222172546) do
     t.datetime "updated_at",     null: false
     t.float    "subtotal"
     t.float    "tax"
+    t.integer  "almacen_id"
   end
 
   create_table "almacens", force: :cascade do |t|
@@ -1530,6 +1531,7 @@ ActiveRecord::Schema.define(version: 20200222172546) do
     t.integer  "employee_id"
     t.integer  "truck_id"
     t.datetime "fecha"
+    t.integer  "almacen_id"
   end
 
   create_table "packages", force: :cascade do |t|
@@ -1906,6 +1908,8 @@ ActiveRecord::Schema.define(version: 20200222172546) do
     t.float    "inafecto"
     t.float    "pagos"
     t.datetime "date4"
+    t.integer  "truck_id"
+    t.integer  "almacen_id"
   end
 
   create_table "purchaseships", force: :cascade do |t|

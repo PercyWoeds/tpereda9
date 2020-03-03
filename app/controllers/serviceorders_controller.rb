@@ -32,7 +32,7 @@ class ServiceordersController < ApplicationController
 
      $lcAprobado= @serviceorder.get_processed 
     
-      pdf.image "#{Dir.pwd}/public/images/logo2.png", :width => 270
+      pdf.image "#{Dir.pwd}/public/images/logo2020.jpg", :width => 270
         
       pdf.move_down 6
         

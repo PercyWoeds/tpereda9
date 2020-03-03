@@ -997,18 +997,41 @@ def build_pdf_header(pdf)
     
     render :layout => false
   end
+
+  def go_salidas 
+
+    @almacen_id = params[:id] 
+    @company = Company.find(1)
+
+
+       if(@company.can_view(current_user))
+      
+       @outputs = Output.all.order('id DESC').paginate(:page => params[:page])
+       
+        if params[:search]
+          @outputs = Output.search(params[:search]).where(almacen_id: @almacen_id).order('id DESC').paginate(:page => params[:page])
+        else
+          @outputs = Output.all.order('id DESC').where(almacen_id: @almacen_id).paginate(:page => params[:page]) 
+        end
+    else
+      errPerms()
+    end
+      
+  end
   
   
   # Autocomplete for products
   def ac_products
+    puts "almacenm"
+    puts params[:almacen_id]
   @products = Product.find_by_sql(['Select products.code,products.name, products.id,
     stocks.unitary_cost as cost,
     products.tax1, products.tax2,products.tax3,stocks.quantity 
     from products   
     INNER JOIN stocks ON   products.id = stocks.product_id
-    WHERE stocks.quantity > 0 and products.company_id = ? 
-    AND products.code LIKE ? OR products.name iLIKE ? ',
-    params[:company_id], "%" + params[:q] + "%", "%" +  params[:q] + "%"]) 
+    WHERE stocks.quantity > 0 and products.company_id = ?  and stocks.store_id = ?
+    AND (products.code LIKE ? OR products.name iLIKE ? )',
+    params[:company_id],params[:almacen_id], "%" + params[:q] + "%", "%" +  params[:q] + "%"]) 
 
     render :layout => false
   end
@@ -1046,6 +1069,9 @@ def build_pdf_header(pdf)
     @company = Company.find(params[:company_id])
     @pagetitle = "#{@company.name} - outputs"
     @filters_display = "block"
+
+    @almacens = @company.get_almacens()
+
     
     @locations = Location.where(company_id: @company.id).order("name ASC")
     @divisions = Division.where(company_id: @company.id).order("name ASC")
@@ -1112,6 +1138,7 @@ def build_pdf_header(pdf)
     @company = Company.find(params[:company_id])
     @output.company_id = @company.id
     
+
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
 
@@ -1130,9 +1157,14 @@ def build_pdf_header(pdf)
     puts $yy
     puts $mm
     puts $dd
-    
+
+
+    @almacen_id = params[:almacen_id ]
+    @almacens = @company.get_almacens2(@almacen_id)
     @ac_user = getUsername()
     @output[:user_id] = getUserId()
+
+     @output[:fecha] = DateTime.now  
   end
 
 
@@ -1154,6 +1186,8 @@ def build_pdf_header(pdf)
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
+    @almacen_id = params[:almacen_id ]
+    @almacens = @company.get_almacens2(@almacen_id)
   end
 
   # POST /outputs
@@ -1191,9 +1225,14 @@ def build_pdf_header(pdf)
       curr_seller = User.find(params[:output][:user_id])
       @ac_user = curr_seller.username
     end
-    
-    
-    
+    puts "almacen "
+    puts params[:output][:almacen_id]
+
+    @output[:almacen_id] = params[:output][:almacen_id]
+
+    @output[:location_id] = 1 
+
+
     respond_to do |format|
       if @output.save 
         # Create products for kit
@@ -1263,9 +1302,11 @@ def build_pdf_header(pdf)
 
   # DELETE /outputs/1
   # DELETE /outputs/1.xml
-  def destroy
-    @output = Output.find(params[:id])
+  def destroy()
+      @output = Output.find(params[:id])
     company_id = @output[:company_id]
+    store_id = @output[:almacen_id]
+
 
     @outputdetail = OutputDetail.where(:output_id=> @output.id)
 
@@ -1279,7 +1320,8 @@ def build_pdf_header(pdf)
 
           for ip in @outputdetail
 
-             stock_product =  Stock.find_by(:product_id => ip.product_id)
+             stock_product =  Stock.find_by(:product_id => ip.product_id,store_id: store_id )
+              @last_stock = 0 
 
             if stock_product 
                @last_stock = stock_product.quantity + ip.quantity
@@ -1288,7 +1330,7 @@ def build_pdf_header(pdf)
 
             else
               @last_stock = 0
-              stock_product= Stock.new(:store_id=>1,:state=>"Lima",:unitary_cost=> ip.price ,
+              stock_product= Stock.new(:store_id=> store_id ,:state=>"Lima",:unitary_cost=> ip.price ,
               :quantity=> ip.quantity,:minimum=>0,:user_id=>@user_id,:product_id=>ip.product_id,
               :document_id=>1,:documento=>"AJUSTE X ELIMINACION")           
             end 
@@ -1325,7 +1367,7 @@ def build_pdf_header(pdf)
 
   private
   def output_params
-    params.require(:output).permit(:company_id,:location_id,:division_id,:supplier_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:employee_id,:truck_id,:fecha )
+    params.require(:output).permit(:company_id,:location_id,:division_id,:supplier_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:employee_id,:truck_id,:fecha ,:almacen_id)
   end
 
 end

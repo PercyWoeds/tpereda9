@@ -5,23 +5,25 @@
 
 <h1>
   <%= image_tag("product_restock_48.png", :class => "vmiddle") %>
-  Salidas
+  Salidas 
   <% if @customer %>
     for customer: <%= @customer.name %>
   <% end %>
+
 </h1>
 
-<div class="small">
-  <form method="get" action="/companies/outputs/<%= @company.id %>">
-    <strong>Buscar :</strong>
-    <input type="text" name="search" value="<% if @q_org %><%= @q_org %><% end %>" class="small" style="width: 250px;" onclick="$(this).select();" />
-    <input type="submit" value="Find" class="bold small_btn" />
-    <a href="/companies/outputs/<%= @company.id %>" > Limpiar</a>
-  </form>
-</div>
-  
-<br />
-<%= render "outputs/list" %>
+
+
+<h3>
+
+
+  Almacenes 
+
+</h3>
+
+
+
+<%= render "outputs/list_almacen" %>
 
 <br />
 

@@ -4,6 +4,7 @@
        Informacion Factura 
     </h3>
 
+    <h4> Almacen: Lima </h4>
     <div class="field">
     
       <label for="ac_supplier" class="bold">Proveedor*</label><br />
@@ -12,6 +13,8 @@
       <div class="small">
       <a href="#" onclick="createSupplierPurchase(); return false;">+ Crear nuevo proveedor</a>
       </div>
+
+
 
       <div class="small">
         Ingrese una termino de busqueda para encontrar un proveedor
@@ -42,12 +45,12 @@
     </div>
     <div class="field">
       <%= f.label :date1, "Fecha Emision*", :class => "bold" %><br />
-      <%= f.date_field :date1 , value: Date.today.strftime("%d/%m/%Y") , min: Date.new($yy, $mm, $dd) %>
+      <%= f.date_field :date1  %>
     </div>
 
     <div class="field">
       <%= f.label :date2, "Fecha Entrega*", :class => "bold" %><br />
-      <%= f.date_field :date2, value: Date.today.strftime("%d/%m/%Y") %>
+      <%= f.date_field :date2 %>
     </div>
 
 
@@ -57,7 +60,7 @@
     </div>
     <div class="field">
       <%= f.label :date3, "Fecha Vmto*", :class => "bold" %><br />
-      <%= f.date_field :date3, value: Time.now.strftime("%d/%m/%Y")  %>
+      <%= f.date_field :date3 %>
     </div>    
 
 

@@ -11,10 +11,10 @@
 
 <%= hr() %>
 
-<% if @purchase.location %>
+<% if @purchase.almacen_id %>
   <p>
-    <b>Location:</b>
-    <%= link_to @purchase.location.name, @purchase.location %>
+    <b>Almacen:</b>
+    <%= link_to @purchase.almacen.nombre  %>
   </p>
 <% end %>
 

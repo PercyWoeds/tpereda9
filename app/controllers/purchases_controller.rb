@@ -2696,7 +2696,8 @@ result = pdf.table table_content3, {:position => :center,
 
   def newfactura  
     @company = Company.find(1)
-    @purchaseorder = Purchaseorder.find(params[:id])      
+    @purchaseorder = Purchaseorder.find(params[:id])  
+
     $lcPurchaseOrderId = @purchaseorder.id
     $lcProveedorId  = @purchaseorder.supplier_id
     $lcProveedorName =@purchaseorder.supplier.name 
@@ -2724,6 +2725,8 @@ result = pdf.table table_content3, {:position => :center,
     @monedas  = @company.get_monedas()
     @payments  = @company.get_payments()
     @suppliers = @company.get_suppliers()      
+    @almacens = @company.get_almacens()
+
 
   end 
 def newfactura2
@@ -2748,7 +2751,7 @@ def newfactura2
 
     @purchase = Purchase.new 
 
-    
+    @almacens = @company.get_almacens()
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
 
@@ -2756,7 +2759,8 @@ def newfactura2
     @servicebuys  = @company.get_servicebuys()
     @monedas  = @company.get_monedas()
     @payments  = @company.get_payments()
-    @suppliers = @company.get_suppliers()      
+    @suppliers = @company.get_suppliers()    
+     @almacens = @company.get_almacens()  
 
   end 
 
@@ -2773,7 +2777,7 @@ def newfactura2
     $lcDocumento     =  params[:documento]
     
     @purchase = Purchase.new(:company_id=>1,:supplier_id=>$lcProveedorId,:date1=>$lcFechaEmision,:date2=>$lcFechaEmision,:payment_id=>$lcFormaPagoId,:document_id=>$lcDocumentId,:documento=>$lcDocumento,
-:date3 => $lcFechaVmto,:moneda_id => $lcMonedaId,:user_id =>@current_user.id,:purchaseorder_id=>$lcPurchaseOrderId)
+:date3 => $lcFechaVmto,:moneda_id => $lcMonedaId,:user_id =>@current_user.id,:purchaseorder_id=>$lcPurchaseOrderId,:almacen_id => params[:almacen_id] )
     
     @company = Company.find(1)
     
@@ -2787,6 +2791,7 @@ def newfactura2
     @tipodocumento = @purchase[:document_id]  
 
     @purchase[:tipo] = $lcTipoFacturaCompra
+    @almacens = @company.get_almacens()
     
 
     if $lcTipoFacturaCompra =="1"
@@ -3026,6 +3031,7 @@ def newfactura2
   end
   
   
+
   # Autocomplete for products
   def ac_products
     @products = Product.where(["company_id = ? AND (code LIKE ? OR name iLIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])  
@@ -3182,6 +3188,12 @@ def newfactura2
     
     @ac_user = getUsername()
     @purchase[:user_id] = getUserId()
+    @purchase[:almacen_id] = 1
+
+    @purchase[:date1] = DateTime.now
+      @purchase[:date2] = DateTime.now
+        @purchase[:date3] = DateTime.now
+
   end
 
  def new2
@@ -3207,7 +3219,7 @@ def newfactura2
     @purchase[:date2] = Date.today 
     @purchase[:document_id] = 7  
     
-    
+    @purchase[:almacen_id] = 1
     
     @company = Company.find(params[:company_id])
     @purchase.company_id = @company.id
@@ -3223,6 +3235,8 @@ def newfactura2
     
     @ac_user = getUsername()
     @purchase[:user_id] = getUserId()
+
+
   end
 
 
@@ -3264,6 +3278,8 @@ def newfactura2
     @action_txt = "Crear"
     
     @purchase = Purchase.new(purchase_params)
+
+    @purchase[:almacen] = 1 
     
     if  params[:purchase][:status] == "1"
           @company = Company.find(params[:purchase][:company_id])
@@ -3614,7 +3630,7 @@ def newfactura2
       :product_id,:unit_id,:price_with_tax,:price_without_tax,:price_public,:quantity,:other,:money_type,
       :discount,:tax1,:payable_amount,:tax_amount,:total_amount,:status,:pricestatus,:charge,:pago,
       :balance,:tax2,:supplier_id,:order1,:plate_id,:user_id,:company_id,:location_id,:division_id,:comments,
-      :processed,:return,:date_processed,:payment_id,:document_id,:documento,:moneda_id,:search,:inafecto)
+      :processed,:return,:date_processed,:payment_id,:document_id,:documento,:moneda_id,:search,:inafecto,:almacen_id,:participacion)
   end
 
 end

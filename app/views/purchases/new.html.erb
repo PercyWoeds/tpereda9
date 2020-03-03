@@ -1,8 +1,12 @@
+
+
 <div class="breadcrumbs">
   <%= link_to "My companies", "/companies" %> &raquo;
   <%= link_to @company.name, @company %> &raquo;
   <%= link_to "Compras", "/companies/purchases/#{@company.id}" %>
 </div>
+
+
 
 <h2>
   <%= image_tag("invoice_48.png", :class => "vmiddle") %>
@@ -13,6 +17,21 @@
   Para crear una nueva factura, por favor llenar el siguiente formulario. Los campos marcados con <strong>*</strong> son obligatorios
   
 </p>
+
+
+
+<% if @purchase.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@purchase.errors.count, "error") %> prohibited this purchase from being saved:</h2>
+
+    <ul>
+    <% @purchase.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
 
 <%= render 'form' %>
 

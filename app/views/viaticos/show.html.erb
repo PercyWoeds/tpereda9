@@ -109,6 +109,18 @@
     <%  @viatico_detail.each do |product| %>
     
       <tr>
+
+        <td class="small bordered_bottom bordered_right">
+             <%if product.gasto %>  
+             
+             <%=product.fecha.strftime("%d/%m/%Y") %>
+             
+               <%else%>
+
+              <%end %>
+
+          </td>
+          
          <td class="small bordered_bottom bordered_right">
             <%= product.tranportorder.employee.full_name %>
           </td>
@@ -138,16 +150,6 @@
 
          <td class="small bordered_bottom bordered_right">
             <%= product.tranportorder.get_punto(product.tranportorder.ubication_id) %>
-          </td>
-          <td class="small bordered_bottom bordered_right">
-             <%if product.gasto %>  
-             
-             <%=product.fecha.strftime("%d/%m/%Y") %>
-             
-               <%else%>
-
-              <%end %>
-
           </td>
           
           <td class="small bordered_bottom bordered_right">

@@ -20,7 +20,7 @@
     <div class="field">
       
       <%= f.label :fecha, "Fecha *", :class => "bold" %><br />
-      <%= f.date_field :fecha , value: Date.today.strftime("%d/%m/%Y") , min: Date.new($yy, $mm, $dd) %>
+      <%= f.date_field :fecha %>
     </div>
   
    
@@ -28,12 +28,11 @@
       <%= f.label :code, "Code*", :class => "bold" %><br />
       <%= f.text_field :code, :onclick => "$(this).select();" %>
     </div>
-  
-    <div class="field">
-      <%= f.label :location_id ,"Local"%><br />
-      <%= f.select :location_id, options_from_collection_for_select(@locations,'id','name') %>
-            
+   <div class="field">
+      <%= f.label :almacen_id %><br />
+      <%= f.select :almacen_id,options_from_collection_for_select(@almacens,'id','nombre') %>
     </div>
+  
 
     <div class="field">
       <%= f.label :division_id %><br />
@@ -99,14 +98,14 @@
   
     <%= hr() %>
   
-  
-    
-    <%= hr() %>
+
   
     <div class="actions">
       <input type="hidden" name="items" id="items" value="<% if @products_lines %><%= @products_lines %><% end %>" />
       <%= f.hidden_field :user_id, :id => "ac_user_id" %>      
       <%= f.hidden_field :company_id %>
+    
+      
       <%= f.submit %>
     </div>
     
@@ -207,7 +206,7 @@
       $("#selected_seller").html(data[0]);
     });
     
-    $("#ac_item").autocomplete("/outputs/ac_products/<%= @company.id %>", {
+    $("#ac_item").autocomplete("/outputs/ac_products/<%= @company.id %>/<%= @almacen_id %>", {
 			matchSubset: 1,
 			matchContains: 1,
       selectFirst: false

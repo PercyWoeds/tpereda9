@@ -3,7 +3,7 @@ class Output < ActiveRecord::Base
 
   self.per_page = 20
   validates_uniqueness_of :code
-  validates_presence_of :company_id, :supplier_id, :employee_id,:truck_id,:code, :user_id
+  validates_presence_of :company_id, :supplier_id, :employee_id,:truck_id,:code, :user_id, :almacen_id 
   
   belongs_to :company
   belongs_to :location
@@ -231,6 +231,7 @@ class Output < ActiveRecord::Base
   end
   # Process the invoice
   def process
+
    if(self.processed == "1" or self.processed == true)
 
       output_details = OutputDetail.where( output_id: self.id)
@@ -249,16 +250,17 @@ class Output < ActiveRecord::Base
         end        
         
         #actualiza stock
-         stock_product =  Stock.find_by(:product_id => ip.product_id)
+        @last_stock = 0 
+         stock_product =  Stock.find_by(:product_id => ip.product_id,store_id: self.almacen_id )
 
         if stock_product 
-           $last_stock = stock_product.quantity - ip.quantity
+           @last_stock = stock_product.quantity - ip.quantity
            stock_product.unitary_cost = ip.price   
-           stock_product.quantity = $last_stock
+           stock_product.quantity = @last_stock
 
         else
-          $last_stock = 0
-          stock_product= Stock.new(:store_id=>1,:state=>"Lima",:unitary_cost=> ip.price ,
+          @last_stock = 0
+          stock_product= Stock.new(:store_id=> self.almacen_id,:state=>"Lima",:unitary_cost=> ip.price ,
           :quantity=> ip.quantity,:minimum=>0,:user_id=>@user_id,:product_id=>ip.product_id,
           :document_id=>self.document_id,:documento=>self.documento)           
         end 
