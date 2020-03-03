@@ -19,13 +19,13 @@ class Purchaseorder < ActiveRecord::Base
 
 
   TABLE_HEADERS = ["ITEM",
-                     "CANTIDAD",
+                     "CANT.",
+                     "UNI.",
                      "CODIGO",
                      "DESCRIPCION",
-                     "NUM.PARTE",
-                     "PRECIO UNITARIO",
-                     "DSCTO",
-                     "VALOR TOTAL"]
+                     "N.PARTE",
+                     "PRECIO UNIT.",
+                     "MONTO"]
 
   TABLE_HEADERS1 = ["ITEM",
                      "PROVEEDOR",
@@ -195,7 +195,7 @@ class Purchaseorder < ActiveRecord::Base
   def get_products    
     @itemproducts = PurchaseorderDetail.find_by_sql(['Select purchaseorder_details.price,
     	purchaseorder_details.quantity,purchaseorder_details.discount,purchaseorder_details.total,
-      products.name,products.code, products.numparte   
+      products.name,products.code, products.numparte, products.unidad_id   
     	from purchaseorder_details INNER JOIN products ON purchaseorder_details.product_id = products.id
     	where purchaseorder_details.purchaseorder_id = ?', self.id ])
     puts self.id

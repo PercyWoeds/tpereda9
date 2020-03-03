@@ -6,6 +6,12 @@ class PurchaseorderDetail < ActiveRecord::Base
   belongs_to :product
   before_save :calcular_transito
 
+  
+ def get_unidad(id)
+  	a = Unidad.find(id)
+  	return a.descrip
+  end 
+
 
   private
 
@@ -16,6 +22,8 @@ class PurchaseorderDetail < ActiveRecord::Base
 		self.quantity_transit  = self.quantity - self.pending
 		
   end 
+
+
 
     private
   def purchaseorderdetail_params

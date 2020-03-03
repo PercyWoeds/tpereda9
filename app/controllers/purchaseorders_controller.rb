@@ -180,12 +180,7 @@ def build_pdf_header(pdf)
 
       pdf.move_down 6
 
-      pdf.move_down 4
-      #pdf.text supplier.street, :size => 10
-      #pdf.text supplier.district, :size => 10
-      #pdf.text supplier.city, :size => 10
-      pdf.move_down 4
-
+      
       pdf.bounding_box([325, 725], :width => 200, :height => 80) do
         pdf.stroke_bounds
         pdf.move_down 15
@@ -224,10 +219,12 @@ def build_pdf_header(pdf)
           :width => pdf.bounds.width
         }) do
           columns([0, 2]).font_style = :bold
+          columns([1]).width = 250
+          columns([1]).align = :left
 
         end
 
-        pdf.move_down 20
+        pdf.move_down 10
 
       end
 
@@ -248,12 +245,14 @@ def build_pdf_header(pdf)
             row = []
             row << nroitem.to_s
             row << product.quantity.to_s
+
+            row << product.get_unidad(product.unidad_id)
             row << product.code
             row << product.name
             row << product.numparte
             
             row << product.price.round(2).to_s
-            row << product.discount.round(2).to_s
+        
             row << product.total.round(2).to_s
             table_content << row
 
@@ -297,9 +296,9 @@ def build_pdf_header(pdf)
         pdf.text "Comentarios : #{@purchaseorder.comments}", :size => 8, :spacing => 4
 
 
-        data =[[{:content=> $lcEntrega4,:colspan=>2},"" ] ,
-               [$lcEntrega1,{:content=> $lcEntrega3,:rowspan=>2}],
-               [$lcEntrega2]
+        data =[[$lcEntrega1,{:content=> $lcEntrega3,:rowspan=>2}],
+               [$lcEntrega2],
+               [$lcEntrega4],
                ]
 
            {:border_width=>0  }.each do |property,value|
