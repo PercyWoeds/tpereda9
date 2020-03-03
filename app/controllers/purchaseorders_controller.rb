@@ -192,8 +192,8 @@ def build_pdf_header(pdf)
 
         end
       end
-      pdf.move_down 25
-      pdf
+      pdf.move_down 2
+         pdf
   end
 
   def build_pdf_body(pdf)
@@ -224,7 +224,7 @@ def build_pdf_header(pdf)
 
         end
 
-        pdf.move_down 10
+        pdf.move_down 5
 
       end
 
@@ -274,6 +274,8 @@ def build_pdf_header(pdf)
                                         end
 
       pdf.move_down 10
+
+
       pdf.table invoice_summary, {
         :position => :right,
         :cell_style => {:border_width => 1},
@@ -289,7 +291,7 @@ def build_pdf_header(pdf)
 
 
     def build_pdf_footer(pdf)
-
+   pdf.font "Helvetica" , :size => 6
         pdf.text ""
         pdf.text ""
         pdf.text "Descripcion : #{@purchaseorder.description}", :size => 8, :spacing => 4
@@ -306,7 +308,7 @@ def build_pdf_header(pdf)
             pdf.table(data,:cell_style=> {property =>value})
             pdf.move_down 20
            end
-
+   pdf.font "Helvetica" , :size => 8
         pdf.bounding_box([0, 20], :width => 535, :height => 40) do
 
         pdf.text "_________________               _____________________         ____________________      ", :size => 13, :spacing => 4
