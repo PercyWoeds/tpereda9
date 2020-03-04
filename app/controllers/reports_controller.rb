@@ -1332,6 +1332,7 @@ def rpt_facturas_4
     @products = @company.get_products()
     @categories = ProductsCategory.all 
     @locations = @company.get_locations()
+    @almacens = @company.get_almacens()
     
     
   end

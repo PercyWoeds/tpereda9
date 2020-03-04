@@ -355,10 +355,10 @@ class StocksController < ApplicationController
     @categoria =params[:products_category_id]
     @estado = params[:estado]
 
-    @local = params[:location_id]
+    @local = params[:almacen_id]
     
     @namecategoria= @company.get_categoria_name(@categoria) 
-    @local_name= @company.get_local_name(@local) 
+    @local_name= @company.get_almacen_name(@local) 
      
     ## separado por destino 
     #@movements = @company.get_stocks_inventarios2(@fecha1,@fecha2,@categoria,@estado)   

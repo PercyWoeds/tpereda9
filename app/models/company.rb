@@ -648,7 +648,12 @@ def get_guias_2(fecha1,fecha2)
 
  end 
 
+def get_almacen_name(local)
 
+   a= Almacen.find(local)
+   return a.nombre
+
+ end 
  def get_st_mes(fecha10,fecha20,local)
 
   if local =="all"
@@ -2913,7 +2918,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
      ##saldo inicial
      ######################################################################3 
 
-     @inv = Inventario.where('fecha < ?',"#{fecha1} 00:00:00")  
+     @inv = Inventario.where('fecha < ? and almacen_id = ?',"#{fecha1} 00:00:00",local )  
 
     
      for inv in @inv       
@@ -2952,7 +2957,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
       end 
 
       #ingresos
-     @ing = Purchase.where('date1 <  ? and location_id = ?',"#{fecha1} 00:00:00",local )
+     @ing = Purchase.where('date1 <  ? and almacen_id = ?',"#{fecha1} 00:00:00",local )
 
      for ing in @ing    
           $lcFecha = ing.date1.to_date
@@ -3004,7 +3009,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
      end 
 
      #salidas 
-    @sal  = Output.where('fecha <  ? and location_id = ?',"#{fecha1} 00:00:00",local )
+    @sal  = Output.where('fecha <  ? and almacen_id = ?',"#{fecha1} 00:00:00",local )
 
      for sal in @sal     
         @saldetail=  OutputDetail.where(:output_id=>sal.id)
@@ -3036,7 +3041,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
    #actualiza ajustes de inventarios
    
    
-     @ajuste  = Ajust.where('fecha1 <  ? and location_id = ?',"#{fecha1} 00:00:00",local )
+     @ajuste  = Ajust.where('fecha1 <  ? and almacen_id = ?',"#{fecha1} 00:00:00",local )
 
      for ajuste  in @ajuste
         @ajustedetail= AjustDetail.where(:ajust_id=>ajuste.id)
@@ -3079,7 +3084,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 
    
   #actualiza  el costo de la salida
-     @inv = Inventario.where('fecha >= ? and  fecha <= ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59")  
+     @inv = Inventario.where('fecha >= ? and  fecha <= ? ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59")  
      for inv in @inv 
         $lcFecha =inv.fecha 
 
@@ -3100,7 +3105,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
         end 
       end 
       #ingresos0 
-     @ing = Purchase.where('date1>= ? and date1 <= ? and location_id = ?  ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59",local)
+     @ing = Purchase.where('date1>= ? and date1 <= ? and almacen_id = ?  ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59",local)
 
      for ing in @ing
 
@@ -3147,7 +3152,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
      end 
 
      #salidas 
-    @sal  = Output.where('fecha>= ? and fecha <= ? and location_id = ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59",local)
+    @sal  = Output.where('fecha>= ? and fecha <= ? and almacen_id = ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59",local)
 
      for sal in @sal 
         $lcFecha = sal.fecha 
@@ -3178,7 +3183,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 # ajustes de inventarios
 
 
-    @ajuste = Ajust.where('fecha1>= ? and fecha1 <= ? and location_id = ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59",local)
+    @ajuste = Ajust.where('fecha1>= ? and fecha1 <= ? and almacen_id = ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59",local)
 
      for sal in @ajuste
         $lcFecha = sal.fecha1 

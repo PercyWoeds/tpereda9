@@ -20,15 +20,15 @@ totals = []
 
 <form method="get" action="/stocks/rpt_stocks2/<%= @company.id %>" >   
   <div class="field">
-      <input type="date" name="fecha1" value="2017-01-01" style = "width: 150px" >
+      <input type="date" name="fecha1" value="2020-01-01" style = "width: 150px" >
     </div>
 
 	<div class="field">
-		<input type="date" name="fecha2" value="2017-01-31" style = "width: 150px" >
+		<input type="date" name="fecha2" value="2020-01-31" style = "width: 150px" >
   </div>
 
   <div class="field">
-    <%= select_tag(:location_id,options_from_collection_for_select(@locations,'id','name') ) %>
+    <%= select_tag(:almacen_id,options_from_collection_for_select(@almacens,'id','nombre') ) %>
   </div>
   
   <div class="field">
