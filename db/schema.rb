@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200303201231) do
+ActiveRecord::Schema.define(version: 20200304164835) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1737,6 +1737,7 @@ ActiveRecord::Schema.define(version: 20200303201231) do
     t.integer  "products_lines_id"
     t.integer  "products_grupos_id"
     t.integer  "unidad_id"
+    t.string   "stock_active"
   end
 
   add_index "products", ["stock_id"], name: "index_products_on_stock_id", using: :btree

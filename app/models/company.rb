@@ -3848,7 +3848,7 @@ def get_ingresos_day(fecha1,fecha2,product)
     from purchase_details   
 INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
 INNER JOIN products ON purchase_details.product_id = products.id
-WHERE purchase_details.product_id = ?  and purchases.date1 > ? and purchases.date1 < ? and purchases.status is null ' ,product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+WHERE products.stock_active = ? and  purchase_details.product_id = ?  and purchases.date1 > ? and purchases.date1 < ? and purchases.status is null ' ,"1",product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
  
     return @purchases 
 end
@@ -3862,8 +3862,8 @@ def get_ingresos_day2(fecha1,fecha2,product)
     from purchase_details   
 INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
 INNER JOIN products ON purchase_details.product_id = products.id
-WHERE products.products_category_id = ?  and purchases.date1 >= ? and purchases.date1 <= ? and purchases.processed =  ? and purchases.status is null
-ORDER BY products.code  ',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1" ])
+WHERE products.products_category_id = ?  and purchases.date1 >= ? and purchases.date1 <= ? and purchases.processed =  ? and purchases.status is null and products.stock_active = ? 
+ORDER BY products.code  ',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1","1" ])
   
     return @purchases 
 
@@ -3888,7 +3888,7 @@ end
 # end
 
  def get_ingresos_day3(fecha1,fecha2,proveedor,moneda )  
-     @purchases = Purchase.where(["date2 >= ? and date2 <= ? and supplier_id  = ?  and moneda_id = ?  ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",proveedor ,moneda  ])
+     @purchases = Purchase.where(["date2 >= ? and date2 <= ? and supplier_id  = ?  and moneda_id = ?   ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",proveedor ,moneda  ])
      return @purchases 
 
  end
@@ -3902,8 +3902,8 @@ def get_ingresos_day4(fecha1,fecha2)
     from purchase_details   
 INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
 INNER JOIN products ON purchase_details.product_id = products.id
-WHERE purchases.date1 >= ? and purchases.date1 <= ? and purchases.processed = ? and purchases.status is NULL 
-ORDER BY products.products_category_id,products.code  ', "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1" ])
+WHERE products.stock_active = ? and  purchases.date1 >= ? and purchases.date1 <= ? and purchases.processed = ? and purchases.status is NULL 
+ORDER BY products.products_category_id,products.code  ',"1", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1" ])
   
     return @purchases 
 
