@@ -222,7 +222,7 @@ pdf.move_down 5
 
     @lcEntrega =  @instrucciones.find(1)
     $lcEntrega1 =  @lcEntrega.description1
-    $lcEntrega2 =  @lcEntrega.description2
+    $lcEntrega2 =  ""
     $lcEntrega3 =  @lcEntrega.description3
     $lcEntrega4 =  @lcEntrega.description4
 
