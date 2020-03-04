@@ -155,7 +155,7 @@
         Total:
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        <%= money(@purchaseorder.total) %>
+        <%= money(@purchaseorder.total.round(2)) %>
       </td>
     </tr>
   </tbody>

@@ -53,15 +53,15 @@ class ServiceordersController < ApplicationController
           
         end
       end
-      pdf.move_down 25
+      pdf.move_down 5
       pdf 
   end   
 
   def build_pdf_body(pdf)
     
     pdf.text "__________________________________________________________________________", :size => 13, :spacing => 4
-    pdf.text " ", :size => 13, :spacing => 4
-    pdf.font "Helvetica" , :size => 8
+ 
+    pdf.font "Helvetica" , :size => 6
 
     max_rows = [client_data_headers.length, invoice_headers.length, 0].max
       rows = []
@@ -84,7 +84,7 @@ class ServiceordersController < ApplicationController
           
         end
 
-        pdf.move_down 20
+        pdf.move_down 5
 
       end
 
@@ -163,31 +163,49 @@ class ServiceordersController < ApplicationController
 
     def build_pdf_footer(pdf)
 
-        pdf.text ""
-        pdf.text ""     
-        pdf.text "Comentarios : #{@serviceorder.comments}", :size => 8, :spacing => 4          
+        pdf.font "Helvetica" , :size => 6
 
-        data =[[{:content=> $lcEntrega4,:colspan=>2},"" ] ,
-               [$lcEntrega1,{:content=> $lcEntrega3,:rowspan=>2}],
-               [$lcEntrega2]               
+        pdf.text ""
+        pdf.text ""
+        pdf.move_down 10
+
+         pdf.stroke_horizontal_rule
+
+        pdf.text ""
+         pdf.text ""
+ pdf.move_down 5
+       pdf.text "SON : " + @serviceorder.textify.upcase +  @serviceorder.moneda.description 
+        pdf.text ""
+         pdf.move_down 5
+                     pdf.text ""
+        
+         pdf.stroke_horizontal_rule
+      
+pdf.move_down 5
+        pdf.text "Descripcion : #{@serviceorder.description}", :size => 6, :spacing => 4
+        pdf.text "Comentarios : #{@serviceorder.comments}", :size => 6, :spacing => 4
+pdf.move_down 5
+    
+        data =[[$lcEntrega1,{:content=> $lcEntrega3,:rowspan=>2}],
+               [$lcEntrega2],
+               [$lcEntrega4],
                ]
 
            {:border_width=>0  }.each do |property,value|
             pdf.text " Instrucciones: "
             pdf.table(data,:cell_style=> {property =>value})
-            pdf.move_down 20          
-           end     
+            pdf.move_down 20
+           end
 
+   pdf.font "Helvetica" , :size => 6
         pdf.bounding_box([0, 20], :width => 535, :height => 40) do
-        
-        pdf.text "_________________               _____________________         ____________________      ", :size => 13, :spacing => 4
-        pdf.text ""
-        pdf.text "                  Realizado por                                                 V.B.Jefe Compras                                            V.B.Gerencia           ", :size => 10, :spacing => 4
 
+        pdf.text "_________________                                _____________________                            ____________________      ", :size => 9, :spacing => 4
+        pdf.text ""
+        pdf.text "                  Elaborado por                                                 V.B.Jefe Compras                                            V.B.Gerencia           ", :size => 9, :spacing => 4
         pdf.draw_text "Company: #{@serviceorder.company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
 
       end
-
       pdf
       
   end
