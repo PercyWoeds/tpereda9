@@ -220,11 +220,11 @@ pdf.move_down 5
 
     @instrucciones = @company.get_instruccions()
 
-    @lcEntrega =  @instrucciones.find(1)
+    @lcEntrega =  @instrucciones.find(6)
     $lcEntrega1 =  @lcEntrega.description1
     $lcEntrega2 =  ""
     $lcEntrega3 =  @lcEntrega.description3
-    $lcEntrega4 =  @lcEntrega.description4
+    $lcEntrega4 =  ""
 
     Prawn::Document.generate("app/pdf_output/#{@serviceorder.id}.pdf") do |pdf|
         pdf.font "Helvetica"
