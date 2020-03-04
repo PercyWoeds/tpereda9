@@ -484,7 +484,9 @@ class ServiceordersController < ApplicationController
     @serviceorder[:code] = "#{generate_guid4()}"
     @serviceorder[:processed] = false
     @serviceorder[:detracion_percent] = 12.00
-    
+    @serviceorder[:cotiza] = ""
+    @serviceorder[:otros] = ""
+
     #@serviceorder[:fecha1] = Date.today.strftime("%d/%m/%Y").to_s
     
     
@@ -737,27 +739,37 @@ class ServiceordersController < ApplicationController
     end
   end
 
-  def client_data_headers
+ 
+ def client_data_headers
+  
 
-    #{@purchaseorder.description}
-      client_headers  = [["Proveedor: ", $lcCli ]] 
-      client_headers << ["Direccion : ", $lcdir1]
-      client_headers << ["Distrito  : ",$lcdis]
-      client_headers << ["Provincia : ",$lcProv]   
-      client_headers << ["Empleado  : ",$lcEmpleado]   
-      
+      client_headers  = [["Proveedor: ",  @serviceorder.supplier.name]]
+      client_headers << [" RUC.: ",  @serviceorder.supplier.ruc]
+      client_headers << ["Direccion :" , @direccion ]
+      client_headers << ["Cotizacion : ", @serviceorder.cotiza ]
+    
       client_headers
   end
 
-  def invoice_headers            
-      invoice_headers  = [["Fecha de emisión : ",$lcFecha1]]
-      invoice_headers <<  ["Tipo de moneda : ", $lcMon]
-      invoice_headers <<  ["Forma de pago : ",$lcPay ]    
-      invoice_headers <<  ["Estado  : ",$lcAprobado ]  
-      invoice_headers <<  ["Placa  : ",$lcPlaca ]  
-      
+  def invoice_headers
+      invoice_headers  = [["Fecha de emisión: ",@serviceorder.fecha1.strftime("%d/%m/%Y") ]]
+      invoice_headers <<  ["Fecha Entrega: ", @serviceorder.fecha2.strftime("%d/%m/%Y")]
+      invoice_headers <<  ["Condiciones de pago : ",@serviceorder.payment.descrip  ]
+      invoice_headers <<  ["Otros/Referencia : ",@serviceorder.otros  ]
       invoice_headers
   end
+
+  def invoice_summary
+      invoice_summary = []
+      invoice_summary << ["SubTotal",  ActiveSupport::NumberHelper::number_to_delimited($lcSubtotal,delimiter:",",separator:".").to_s]
+      invoice_summary << ["IGV 18% ",ActiveSupport::NumberHelper::number_to_delimited($lcIgv,delimiter:",",separator:".").to_s]
+      invoice_summary << ["Total", ActiveSupport::NumberHelper::number_to_delimited($lcTotal ,delimiter:",",separator:".").to_s]
+
+      invoice_summary
+    end
+
+
+
   def invoice_summary
       invoice_summary = []
       invoice_summary << ["SubTotal",  ActiveSupport::NumberHelper::number_to_delimited($lcSubtotal,delimiter:",",separator:".").to_s]
@@ -1045,7 +1057,7 @@ def list_receive_serviceorders
   
   private
   def serviceorder_params
-    params.require(:serviceorder).permit(:company_id,:location_id,:division_id,:supplier_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:detraccion,:payment_id,:moneda_id,:fecha1,:fecha2,:fecha3,:fecha4,:document_id,:documento,:dolar,:truck_id,:employee_id,:detracion_percent)
+    params.require(:serviceorder).permit(:company_id,:location_id,:division_id,:supplier_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:detraccion,:payment_id,:moneda_id,:fecha1,:fecha2,:fecha3,:fecha4,:document_id,:documento,:dolar,:truck_id,:employee_id,:detracion_percent,:cotiza,:otros)
   end
 
 end

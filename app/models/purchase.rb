@@ -977,6 +977,6 @@ def get_tax3(items, supplier_id)
     where("documento iLIKE ?", "%#{search}%") 
   end  
   
-  
+   
 
 end

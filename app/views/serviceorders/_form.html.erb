@@ -31,9 +31,26 @@
     </div>
         
     <div class="field">
-      <%= f.label :fecha1, "Fecha Entrega*", :class => "bold" %><br />
+      <%= f.label :fecha1, "Fecha Emision*", :class => "bold" %><br />
       <%= f.date_field :fecha1 , placeholder: "YYYY-MM-DD", value: (f.object.fecha1 || Date.today.to_s(:db)) %>
     </div>
+
+    <div class="field">
+      <%= f.label :fecha2, "Fecha Entrega*", :class => "bold" %><br />
+      <%= f.date_field :fecha2 , placeholder: "YYYY-MM-DD", value: (f.object.fecha1 || Date.today.to_s(:db)) %>
+    </div>
+
+
+      <div class="field">
+      <%= f.label :cotiza,"Cotizacion: " %><br />
+      <%= f.text_field :cotiza %>
+      </div>  
+
+      <div class="field">
+      <%= f.label :otros,"Otros" %><br />
+      <%= f.text_field :otros %>
+      </div>  
+      
 
     <div class="field">
       <%= f.label  :payment_id,"Forma de Pago " %><br />
@@ -59,7 +76,9 @@
       <%= f.label :division_id %><br />
       <%= f.select :division_id,options_from_collection_for_select(@divisions,'id','name') %>
     </div>
-    
+
+    <%= hr() %>
+
     
     <strong>Placa  :</strong><br />
     <div class="field">  

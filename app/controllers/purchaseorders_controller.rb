@@ -165,6 +165,7 @@ def build_pdf_header(pdf)
      $lcdir2 =@purchaseorder.supplier.address2
      $lcdis  =@purchaseorder.supplier.city
      $lcProv = @purchaseorder.supplier.state
+
      $lcFecha1= @purchaseorder.fecha1.strftime("%d/%m/%Y")
      $lcMon=@purchaseorder.moneda.description
      $lcPay= @purchaseorder.payment.descrip
@@ -199,8 +200,14 @@ def build_pdf_header(pdf)
   def build_pdf_body(pdf)
 
     pdf.text "__________________________________________________________________________", :size => 13, :spacing => 4
-    pdf.text " ", :size => 13, :spacing => 4
-    pdf.font "Helvetica" , :size => 8
+    
+    pdf.font "Helvetica" , :size => 6
+    @direccion = ""
+   if  @purchaseorder.supplier.address1 == nil 
+    @direccion =""
+   else 
+    @direccion =  @purchaseorder.supplier.address1
+  end 
 
     max_rows = [client_data_headers.length, invoice_headers.length, 0].max
       rows = []
@@ -219,7 +226,7 @@ def build_pdf_header(pdf)
           :width => pdf.bounds.width
         }) do
           columns([0, 2]).font_style = :bold
-          columns([1]).width = 250
+          columns([1]).width = 300
           columns([1]).align = :left
 
         end
@@ -266,10 +273,12 @@ def build_pdf_header(pdf)
                                           columns([0]).align=:center
                                           columns([1]).align=:right
                                           columns([2]).align=:center
-                                          columns([3]).align=:center
-                                          columns([4]).align=:right
+                                          columns([4]).align=:left 
+                                          
                                           columns([5]).align=:right
                                           columns([6]).align=:right
+                                           columns([7]).align=:right
+
 
                                         end
 
@@ -292,12 +301,28 @@ def build_pdf_header(pdf)
 
     def build_pdf_footer(pdf)
    pdf.font "Helvetica" , :size => 6
+
         pdf.text ""
         pdf.text ""
-        pdf.text "Descripcion : #{@purchaseorder.description}", :size => 8, :spacing => 4
-        pdf.text "Comentarios : #{@purchaseorder.comments}", :size => 8, :spacing => 4
+        pdf.move_down 10
 
+         pdf.stroke_horizontal_rule
 
+        pdf.text ""
+         pdf.text ""
+ pdf.move_down 5
+       pdf.text "SON : " + @purchaseorder.textify.upcase +  @purchaseorder.moneda.description 
+        pdf.text ""
+         pdf.move_down 5
+                     pdf.text ""
+        
+         pdf.stroke_horizontal_rule
+      
+pdf.move_down 5
+        pdf.text "Descripcion : #{@purchaseorder.description}", :size => 6, :spacing => 4
+        pdf.text "Comentarios : #{@purchaseorder.comments}", :size => 6, :spacing => 4
+pdf.move_down 5
+    
         data =[[$lcEntrega1,{:content=> $lcEntrega3,:rowspan=>2}],
                [$lcEntrega2],
                [$lcEntrega4],
@@ -308,12 +333,13 @@ def build_pdf_header(pdf)
             pdf.table(data,:cell_style=> {property =>value})
             pdf.move_down 20
            end
-   pdf.font "Helvetica" , :size => 8
+
+   pdf.font "Helvetica" , :size => 6
         pdf.bounding_box([0, 20], :width => 535, :height => 40) do
 
-        pdf.text "_________________               _____________________         ____________________      ", :size => 13, :spacing => 4
+        pdf.text "_________________               _____________________         ____________________      ", :size => 9, :spacing => 4
         pdf.text ""
-        pdf.text "                  Realizado por                                                 V.B.Jefe Compras                                            V.B.Gerencia           ", :size => 10, :spacing => 4
+        pdf.text "                  Elaborado por                                                 V.B.Jefe Compras                                            V.B.Gerencia           ", :size => 9, :spacing => 4
         pdf.draw_text "Company: #{@purchaseorder.company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
 
       end
@@ -352,27 +378,28 @@ def build_pdf_header(pdf)
   end
 
  def client_data_headers
+  
 
-    #{@purchaseorder.description}
-      client_headers  = [["Proveedor: ", $lcCli ]]
-      client_headers << ["Direccion : ", $lcdir1]
-      client_headers << ["Distrito  : ",$lcdis]
-      client_headers << ["Provincia : ",$lcProv]
+      client_headers  = [["Proveedor: ",  @purchaseorder.supplier.name]]
+      client_headers << [" RUC.: ",  @purchaseorder.supplier.ruc]
+      client_headers << ["Direccion :" , @direccion ]
+      client_headers << ["Cotizacion : ", @purchaseorder.cotiza ]
+    
       client_headers
   end
 
   def invoice_headers
-      invoice_headers  = [["Fecha de emisión : ",$lcFecha1]]
-      invoice_headers <<  ["Tipo de moneda : ", $lcMon]
-      invoice_headers <<  ["Forma de pago : ",$lcPay ]
-      invoice_headers <<  ["Estado  : ",$lcAprobado ]
+      invoice_headers  = [["Fecha de emisión: ",@purchaseorder.fecha1.strftime("%d/%m/%Y") ]]
+      invoice_headers <<  ["Fecha Entrega: ", @purchaseorder.fecha2.strftime("%d/%m/%Y")]
+      invoice_headers <<  ["Condiciones de pago : ",@purchaseorder.payment.descrip  ]
+      invoice_headers <<  ["Otros/Referencia : ",@purchaseorder.otros  ]
       invoice_headers
   end
 
   def invoice_summary
       invoice_summary = []
       invoice_summary << ["SubTotal",  ActiveSupport::NumberHelper::number_to_delimited($lcSubtotal,delimiter:",",separator:".").to_s]
-      invoice_summary << ["IGV",ActiveSupport::NumberHelper::number_to_delimited($lcIgv,delimiter:",",separator:".").to_s]
+      invoice_summary << ["IGV 18% ",ActiveSupport::NumberHelper::number_to_delimited($lcIgv,delimiter:",",separator:".").to_s]
       invoice_summary << ["Total", ActiveSupport::NumberHelper::number_to_delimited($lcTotal ,delimiter:",",separator:".").to_s]
 
       invoice_summary
@@ -691,8 +718,8 @@ def build_pdf_header(pdf)
     @purchaseorder[:fecha1] = Date.today 
     @purchaseorder[:fecha2] = Date.today
     @purchaseorder[:location_id ] = 3 
-
-
+    @purchaseorder[:cotiza] = ""
+    @purchaseorder[:otros ] = ""
   end
 
   # GET /purchaseorders/1/edit
@@ -1093,7 +1120,10 @@ def build_pdf_header(pdf)
 
   private
   def purchaseorder_params
-    params.require(:purchaseorder).permit(:company_id,:location_id,:division_id,:supplier_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:moneda_id,:fecha1,:fecha2,:payment_id)
+    params.require(:purchaseorder).permit(:company_id,:location_id,:division_id,
+      :supplier_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,
+      :return,:date_processed,:user_id,:moneda_id,:fecha1,:fecha2,:payment_id,
+      :cotiza,:fecha_entrega,:otros)
 
   end
 

@@ -3279,7 +3279,7 @@ def newfactura2
     
     @purchase = Purchase.new(purchase_params)
 
-    @purchase[:almacen] = 1 
+    @purchase[:almacen_id] = 1 
     
     if  params[:purchase][:status] == "1"
           @company = Company.find(params[:purchase][:company_id])

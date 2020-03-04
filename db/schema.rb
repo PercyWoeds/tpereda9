@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200302182707) do
+ActiveRecord::Schema.define(version: 20200303201231) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1857,6 +1857,10 @@ ActiveRecord::Schema.define(version: 20200302182707) do
     t.datetime "date_processed"
     t.integer  "moneda_id"
     t.datetime "fecha2"
+    t.string   "cotizacion"
+    t.string   "cotiza"
+    t.datetime "fecha_entrega"
+    t.string   "otros"
   end
 
   create_table "purchases", force: :cascade do |t|
@@ -2165,6 +2169,9 @@ ActiveRecord::Schema.define(version: 20200302182707) do
     t.integer  "truck_id"
     t.integer  "employee_id"
     t.float    "detracion_percent"
+    t.string   "cotiza"
+    t.datetime "fecha_entrega"
+    t.string   "otros"
   end
 
   create_table "services", force: :cascade do |t|
