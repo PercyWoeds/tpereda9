@@ -23,11 +23,14 @@
 
         <span id="selected supplier"><% if @ac_supplier %><%= @ac_supplier %><% else %><!-- i --><% end %></span>
 
+
       </div>
     </div>
  <div class="field">
-     <strong>Almacen:</strong><br />      
-      <%= select_tag(:almacen_id, options_from_collection_for_select(@almacens,'id','nombre')) %>
+     <strong>Almacen:</strong><br />    
+
+      <%= f.select :almacen_id, options_from_collection_for_select(@almacens,'id','nombre') %>  
+      
     </div>
     <div class="field">
       <%= f.label :document_id,"Documento:" %><br />

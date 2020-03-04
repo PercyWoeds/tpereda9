@@ -4,7 +4,11 @@
        Informacion Factura 
     </h3>
 
-    <h4> Almacen: Lima </h4>
+    <div class="field">
+     <strong>Almacen:</strong><br />      
+        <%= f.select :almacen_id, options_from_collection_for_select(@almacens,'id','nombre') %>
+    </div>
+    
     <div class="field">
     
       <label for="ac_supplier" class="bold">Proveedor*</label><br />

@@ -3184,7 +3184,7 @@ def newfactura2
     @servicebuys  = @company.get_servicebuys()
     @monedas  = @company.get_monedas()
     @payments  = @company.get_payments()
-
+   @almacens = @company.get_almacens()
     
     @ac_user = getUsername()
     @purchase[:user_id] = getUserId()
@@ -3218,8 +3218,7 @@ def newfactura2
     @purchase[:date1] = Date.today
     @purchase[:date2] = Date.today 
     @purchase[:document_id] = 7  
-    
-    @purchase[:almacen_id] = 1
+  
     
     @company = Company.find(params[:company_id])
     @purchase.company_id = @company.id
@@ -3231,12 +3230,11 @@ def newfactura2
     @servicebuys  = @company.get_servicebuys()
     @monedas  = @company.get_monedas()
     @payments  = @company.get_payments()
-
+    @almacens = @company.get_almacens()
     
     @ac_user = getUsername()
     @purchase[:user_id] = getUserId()
-
-
+    
   end
 
 
@@ -3254,7 +3252,7 @@ def newfactura2
     
     
     @purchase_details = @purchase.purchase_details
-
+     
 
 
      
@@ -3265,21 +3263,17 @@ def newfactura2
 
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
-
+  @almacens = @company.get_almacens()
   end
 
   # POST /purchases
   # POST /purchases.xml
   def create
 
-    
-
       @pagetitle = "Nueva Compra"
     @action_txt = "Crear"
-    
-    @purchase = Purchase.new(purchase_params)
-
   
+    @purchase = Purchase.new(purchase_params)
     
     if  params[:purchase][:status] == "1"
           @company = Company.find(params[:purchase][:company_id])
@@ -3291,7 +3285,8 @@ def newfactura2
           @servicebuys  = @company.get_servicebuys()
           @monedas  = @company.get_monedas()
           @payments  = @company.get_payments()  
-
+  @almacens = @company.get_almacens()
+    
 
           @purchase[:total_amount] = @purchase[:payable_amount] * 1.18
           @purchase[:tax_amount] =@purchase[:total_amount] - @purchase[:payable_amount]  
@@ -3410,7 +3405,8 @@ def newfactura2
     @servicebuys  = @company.get_servicebuys()
     @monedas  = @company.get_monedas()
     @payments  = @company.get_payments()
-
+    @almacens = @company.get_almacens()
+    
       @purchase[:date3]  =   @purchase[:date2] + @purchase.get_dias_vmto(@purchase[:payment_id]).days  
   
 
