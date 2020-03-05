@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  employee_id: 1
+  division_id: 1
+  fecha: 2020-03-04 14:18:40
+  hora: MyString
+  item_1: MyString
+  codigo_1: MyString
+  cantidad_1: 1
+  unidad_1: MyString
+  descrip_1: MyString
+  placa_1: MyString
+  descrip_1: MyString
+  nota: MyText
+  observa: MyText
+
+two:
+  code: MyString
+  employee_id: 1
+  division_id: 1
+  fecha: 2020-03-04 14:18:40
+  hora: MyString
+  item_1: MyString
+  codigo_1: MyString
+  cantidad_1: 1
+  unidad_1: MyString
+  descrip_1: MyString
+  placa_1: MyString
+  descrip_1: MyString
+  nota: MyText
+  observa: MyText

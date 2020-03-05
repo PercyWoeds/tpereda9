@@ -22,9 +22,23 @@
   </p>
 
   <p class="big">
-  <%= link_to "Reporte de Inventario detallado Formato 13 ", "/companies/reports/rpt_calmacen8_pdf/#{@company.id}" %>
+  <%= link_to "Reporte de kardes articulo  ", "/companies/reports/rpt_calmacen8_pdf/#{@company.id}" %>
   </p>
 
+   <p class="big">
+    <%= link_to "Listado de Consumos Centro costos ", "/companies/reports/rpt_calmacen12_pdf/#{@company.id}" %>
+  </p>
+    <p class="big">
+    <%= link_to "Listado de analisis reposicion stock  ", "/companies/reports/rpt_calmacen14_pdf/#{@company.id}" %>
+  </p>
+   <p class="big">
+    <%= link_to "Listado de articulos sin movimiento ", "/companies/reports/rpt_calmacen15_pdf/#{@company.id}" %>
+  </p>
+  
+ <p class="big">
+    <%= link_to "Listado de articulos con stock negativo", "/companies/reports/rpt_calmacen16_pdf/#{@company.id}" %>
+  </p>
+  
 
 <h3>
    Ingresos 
@@ -69,10 +83,7 @@
     <%= link_to "Listado de Salidas  por familia / empleado", "/companies/reports/rpt_calmacen11_pdf/#{@company.id}" %>
   </p>
   
-  <p class="big">
-    <%= link_to "Listado de Salidas  por familia / placa ", "/companies/reports/rpt_calmacen12_pdf/#{@company.id}" %>
-  </p>
-  
+ 
 </div>
 
 

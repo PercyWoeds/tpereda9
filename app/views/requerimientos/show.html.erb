@@ -1,0 +1,153 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @requerimiento.code %>
+</p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @requerimiento.employee.full_name %>
+</p>
+
+<p>
+  <strong>Division:</strong>
+  <%= @requerimiento.division.name %>
+</p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @requerimiento.fecha.strftime("%d/%m/%Y") %>
+</p>
+
+<p>
+  <strong>Hora:</strong>
+  <%= @requerimiento.hora %>
+
+</p>
+
+<table class="table" align="center">
+
+    <tr>
+    <<th  style="width:15px " >Item</th>
+    <th scope="col">Codigo</th>
+    <th scope="col">Cant.</th>
+     <th scope="col">Uni.</th>
+       <th scope="col" style="width:300px">Descrip </th>
+         <th scope="col">Placa.</th>
+  </tr>
+  <tr>
+    <td  style="width:15px"> 01 </td>
+    <td> <%= @requerimiento.codigo_1 %></td>
+    <td><%= @requerimiento.cantidad_1 %></td>
+    <td> <%= @requerimiento.unidad_1 %></td>
+    <td  style="width:300px"><%= @requerimiento.descrip_1 %></td>
+    <td> <%= @requerimiento.placa_1 %></td>
+
+  </tr>
+
+
+
+ <tr>
+    <td  style="width:15px">02 </td>
+    <td> <%= @requerimiento.codigo_2 %></td>
+    <td><%= @requerimiento.cantidad_2 %></td>
+    <td> <%= @requerimiento.unidad_2 %></td>
+    <td  style="width:300px"><%= @requerimiento.descrip_2 %></td>
+    <td> <%= @requerimiento.placa_2 %></td>
+
+  </tr>
+
+  <tr>
+    <td  style="width:15px"> 03</td>
+    <td> <%= @requerimiento.codigo_3 %></td>
+    <td><%= @requerimiento.cantidad_3 %></td>
+    <td> <%= @requerimiento.unidad_3 %></td>
+    <td  style="width:300px"><%= @requerimiento.descrip_3 %></td>
+    <td> <%= @requerimiento.placa_3 %></td>
+
+  </tr>
+
+  <tr>
+    <td  style="width:15px"> 04</td>
+    <td> <%= @requerimiento.codigo_4 %></td>
+    <td><%= @requerimiento.cantidad_4 %></td>
+    <td> <%= @requerimiento.unidad_4 %></td>
+    <td  style="width:300px"><%= @requerimiento.descrip_4 %></td>
+    <td> <%= @requerimiento.placa_4 %></td>
+
+  </tr>
+  <tr>
+    <td  style="width:15px"> 05</td>
+    <td> <%= @requerimiento.codigo_5 %></td>
+    <td><%= @requerimiento.cantidad_5 %></td>
+    <td> <%= @requerimiento.unidad_5 %></td>
+    <td  style="width:300px"><%= @requerimiento.descrip_5 %></td>
+    <td> <%= @requerimiento.placa_5 %></td>
+
+  </tr>
+  <tr>
+    <td  style="width:15px"> 06</td>
+    <td> <%= @requerimiento.codigo_6 %></td>
+    <td><%= @requerimiento.cantidad_6 %></td>
+    <td> <%= @requerimiento.unidad_6 %></td>
+    <td  style="width:300px"><%= @requerimiento.descrip_6 %></td>
+    <td> <%= @requerimiento.placa_6 %></td>
+
+  </tr>
+  <tr>
+    <td  style="width:15px"> 07</td>
+    <td> <%= @requerimiento.codigo_7 %></td>
+    <td><%= @requerimiento.cantidad_7 %></td>
+    <td> <%= @requerimiento.unidad_7 %></td>
+    <td  style="width:300px"><%= @requerimiento.descrip_7 %></td>
+    <td> <%= @requerimiento.placa_7 %></td>
+
+  </tr>
+
+  <tr>
+    <td  style="width:15px"> 08</td>
+    <td> <%= @requerimiento.codigo_8 %></td>
+    <td><%= @requerimiento.cantidad_8 %></td>
+    <td> <%= @requerimiento.unidad_8 %></td>
+    <td  style="width:300px"><%= @requerimiento.descrip_8 %></td>
+    <td> <%= @requerimiento.placa_8 %></td>
+
+  </tr>
+
+  <tr>
+    <td  style="width:15px"> 09</td>
+    <td> <%= @requerimiento.codigo_9 %></td>
+    <td><%= @requerimiento.cantidad_9 %></td>
+    <td> <%= @requerimiento.unidad_9 %></td>
+    <td  style="width:300px"><%= @requerimiento.descrip_9 %></td>
+    <td> <%= @requerimiento.placa_9 %></td>
+
+  </tr>
+
+  <tr>
+    <td  style="width:15px"> 10</td>
+    <td> <%= @requerimiento.codigo_10 %></td>
+    <td><%= @requerimiento.cantidad_10 %></td>
+    <td> <%= @requerimiento.unidad_10 %></td>
+    <td  style="width:300px"><%= @requerimiento.descrip_10 %></td>
+    <td> <%= @requerimiento.placa_10 %></td>
+
+  </tr>
+  </table>
+
+<p>
+  <strong>Nota:</strong>
+  <%= @requerimiento.nota %>
+</p>
+
+<p>
+  <strong>Observa:</strong>
+  <%= @requerimiento.observa %>
+</p>
+
+
+
+
+<%= link_to 'Editar', edit_requerimiento_path(@requerimiento) %> |
+<%= link_to 'Regresar', requerimientos_path %>

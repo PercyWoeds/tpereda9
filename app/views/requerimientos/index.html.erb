@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Requerimientos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Employee</th>
+      <th>Division</th>
+      <th>Fecha</th>
+      <th>Hora</th>
+      
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @requerimientos.each do |requerimiento| %>
+      <tr>
+        <td><%= requerimiento.code %></td>
+        <td><%= requerimiento.employee.full_name %></td>
+        <td><%= requerimiento.division.name  %></td>
+        <td><%= requerimiento.fecha.strftime("%d/%m/%Y") %></td>
+        <td><%= requerimiento.hora %></td>
+        
+        <td><%= link_to 'Ver', requerimiento %></td>
+        <td><%= link_to 'Editar', edit_requerimiento_path(requerimiento) %></td>
+
+        <td><%= link_to 'Eliminar', requerimiento, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Requerimiento', new_requerimiento_path %>

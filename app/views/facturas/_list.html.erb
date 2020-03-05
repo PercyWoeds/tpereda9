@@ -36,10 +36,10 @@
           </td>
 
           <td class="bordered_right bordered_bottom right">
-            <%= money(invoice.total) %>
+            <%= money(invoice.total) %>  
           </td>
           <td class="bordered_right bordered_bottom">
-            <%= invoice.fecha %>
+             <%= invoice.fecha.strftime("%d/%m/%Y") %> --
           </td>
           <td class="bordered_right bordered_bottom <%= invoice.processed_color %>">
             <%= invoice.get_processed_short %>

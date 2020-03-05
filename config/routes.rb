@@ -1,5 +1,6 @@
   Mnygo::Application.routes.draw do
 
+  resources :requerimientos
   resources :almacens
   resources :almacens
   resources :vacations
@@ -184,6 +185,11 @@
    end 
    
     
+  resources :stocks do
+    collection { get :rpt_stocks5 }  
+    collection { get :rpt_stocks6 }  
+   end 
+   
 
   resources :assistances do 
    collection { post :import }
@@ -519,6 +525,11 @@ end
   match 'companies/reports/rpt_calmacen11_pdf/:company_id' => 'reports#rpt_calmacen11_pdf', via: [:get, :post]
   match 'companies/reports/rpt_calmacen12_pdf/:company_id' => 'reports#rpt_calmacen12_pdf', via: [:get, :post]
   match 'companies/reports/rpt_calmacen13_pdf/:company_id' => 'reports#rpt_calmacen13_pdf', via: [:get, :post]
+
+  match 'companies/reports/rpt_calmacen14_pdf/:company_id' => 'reports#rpt_calmacen14_pdf', via: [:get, :post]
+  match 'companies/reports/rpt_calmacen15_pdf/:company_id' => 'reports#rpt_calmacen15_pdf', via: [:get, :post]
+  match 'companies/reports/rpt_calmacen16_pdf/:company_id' => 'reports#rpt_calmacen16_pdf', via: [:get, :post]
+  
   
   match 'companies/reports/rpt_cajust1_pdf/:company_id' => 'reports#rpt_cajust1_pdf', via: [:get, :post]
   match 'companies/reports/rpt_viatico_pdf/:company_id' => 'reports#rpt_viatico_pdf', via: [:get, :post]
@@ -1049,6 +1060,7 @@ end
   match '/stocks/rpt_stocks1/:company_id' => 'stocks#rpt_stocks1', via: [:get, :post]
   match '/stocks/rpt_stocks2/:company_id' => 'stocks#rpt_stocks2', via: [:get, :post]
   match '/stocks/rpt_stocks4/:company_id' => 'stocks#rpt_stocks4', via: [:get, :post]
+
   match '/stocks/do_stocks/:company_id' => 'stocks#do_stocks', via: [:get, :post]
 
   resources :stocks 

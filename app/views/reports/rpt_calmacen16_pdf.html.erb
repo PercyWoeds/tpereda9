@@ -15,23 +15,31 @@ totals = []
 
 <h1>
   <%= image_tag("reports_48.png", :class => "vmiddle") %>
-  Reporte de Stock 
+ Listado de articulos con stock negativo
 </h1>
 
-<form method="get" action="/stocks/rpt_stocks1/<%= @company.id %>">
-  
+
+ <%= form_tag(rpt_stocks6_stocks_path, :method => "get") do %>
+
   <div class="field">
     <%= select_tag(:almacen_id,options_from_collection_for_select(@almacens,'id','nombre') ) %>
   </div>
-	
- <div class="field">
+  
+  <div class="field">
     <%= select_tag(:products_category_id,options_from_collection_for_select(@categories,'id','category') ) %>
   </div>
-  
 
-  <input type="submit" value="Generar Reporte "  />
-  
-</form>
+  <div class="field">
+      <input type="date" name="fecha1" value="2020-01-01" style = "width: 150px" >
+    </div>
+
+	<div class="field">
+		<input type="date" name="fecha2" value="2020-01-31" style = "width: 150px" >
+  </div>
+
+  <%= submit_tag  "PDF", :name => "print"  %>
+  <%= submit_tag "Excel", :name => "print" %>
+<% end %>
 
 <br />
 

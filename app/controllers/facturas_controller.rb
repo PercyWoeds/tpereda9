@@ -369,7 +369,12 @@ class FacturasController < ApplicationController
             #else 
              # row << product.employee.full_name 
             #end
-            row << product.truck.placa             
+            if product.truck == nil 
+                  row << ""
+            else
+                  row << product.truck.placa
+            end    
+ 
             row << sprintf("%.2f",product.quantity.to_s)
             row << sprintf("%.2f",product.get_stock(product.product_id).to_s)
             row << sprintf("%.2f",product.price.to_s)
