@@ -25,7 +25,7 @@
 
             <%  @purchase_soles.each do |compra1| %>
 
-             <% if compra1.balance.round(2) != 0.00 %>
+           
 
             <table style=  'font-size:80% ;width:100%'>       
             <tr>
@@ -44,6 +44,8 @@
             
             
             <% @detalle.each do |compra| %>
+
+              <% if compra1.balance.round(2) != 0.00 %>
  
             <table style=  'font-size:80% ;width:100%'>       
             <tr>
@@ -69,7 +71,8 @@
              <% tot_4 += compra.balance %>
 
             <%end %>
-              <%end %>
+           
+            <%end %> 
             
 
 
