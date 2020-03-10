@@ -485,6 +485,7 @@ class CustomerPaymentsController < ApplicationController
     @monedas  = @company.get_monedas()
     @documents  = @company.get_documents()
     @concepts = Concept.all 
+  
 
     @ac_user = getUsername()
     @customerpayment[:user_id] = getUserId()
@@ -2997,6 +2998,14 @@ class CustomerPaymentsController < ApplicationController
     send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
     end 
   end
+
+   def  update_monedas
+
+    @monedabanco = BankAcount.find(params[:bank_acount_id])
+
+    @monedas = Moneda.find(@monedabanco)
+
+   end 
 
 
   #####

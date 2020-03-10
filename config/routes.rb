@@ -126,7 +126,11 @@
   resources :serviceorders do
      collection { get :update_serviceext }
   end 
-  
+  resources :customer_payments do
+    collection do
+      get 'update_monedas', to: "customer_payments#update_monedas "
+    end 
+  end 
   
   resources :facturas do 
     collection { get :reportes}

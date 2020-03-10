@@ -1,10 +1,5 @@
 <html>
 <body>  
-    
-  
-
-      
-        
         <hr>
 
 
@@ -28,15 +23,10 @@
       <% totg3 = 0 %>
       <% totg4 = 0 %>
 
-
-                 
             <% tot_1 = 0 %>
             <% tot_2 = 0 %>
             <% tot_3  = 0 %>
             <% tot_4 = 0 %>
-
-            
-            
                   
             <%  @purchase_dolar.each do |compra1| %>
 
@@ -59,6 +49,9 @@
             
             
             <% @detalle.each do |compra| %>
+
+
+            <% if compra.balance.round(2) != 0.00 %>
  
               <table style=  'font-size:80% ;width:100%'>       
             <tr>
@@ -81,6 +74,8 @@
              <% tot_2 += compra.charge %>
              <% tot_3 += compra.pago %>
              <% tot_4 += compra.balance %>
+
+             <% end %>
 
             <%end %>
 

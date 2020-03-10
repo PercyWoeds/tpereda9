@@ -37,6 +37,11 @@
 
     </div>
     
+    <div class="field">
+      <%= f.label  :moneda_id,"Moneda:  " , :class => "bold"%><br />
+      <%= f.select :moneda_id,options_from_collection_for_select(@monedas,'id','description') ,:id => "moneda_select"  %>
+
+    </div>
 
     <div class="field">
       <%= f.label  :document_id %><br />
@@ -233,5 +238,20 @@
     alert 'holas customers_lines';
       listItemsCustomerPayment();
     <% end %>
+
+
+    $('#bank_acount_id').change(function() {
+      $.ajax({
+        url: "/customer_payments/update_monedas",
+        type: "GET",
+        data: {
+          bank_acount_id : $('#bank_acount_id').val()
+        },
+        dataType: "script"
+      });
+    
+    });
+
+
   });
 </script>

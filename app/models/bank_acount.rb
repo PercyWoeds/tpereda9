@@ -24,4 +24,10 @@ class BankAcount < ActiveRecord::Base
 		bancos = Bank.all 
     	return  bancos		
 	end
+    def get_moneda(id)
+
+		
+		return self.moneda_id  
+	end
+
 end

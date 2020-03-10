@@ -759,7 +759,7 @@ pdf.move_down 5
 
  
  def client_data_headers
-  
+      
 
       client_headers  = [["Proveedor: ",  @serviceorder.supplier.name]]
       client_headers << [" RUC.: ",  @serviceorder.supplier.ruc]
