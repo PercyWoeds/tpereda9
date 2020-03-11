@@ -20,20 +20,39 @@ totals = []
 
 </h4>
 
-<form method="get" action="/supplier_payments/rpt_cpagar4_pdf/<%= @company.id %>">
+<%= form_tag(rpt_cpagar40_facturas_path, :method => "get") do %>
+
+
  	<div class="field">
-      <input type="date" name="fecha1" value="2014-10-01" style = "width: 150px" >
+    <input type="date" name="fecha1" value="2014-10-01" style = "width: 150px" >
 
     </div>
 	<div class="field">
 		<input type="date" name="fecha2" value="2020-01-31" style = "width: 150px" >
     </div>
 
- 
+ <div class="field">
+        <label class="check_prov" >
+    <%= check_box_tag  :check_prov ,'true',true  %>
+         </label>
 
-  <input type="submit" value="Generar"  />
-  <a href="/supplier_payments/rpt_cpagar4_pdf/<%= @company.id %>"></a>
-</form>
+</div>
+         <div class="small">
+            Todos los proveedores
+          </div>
+  
+      <div class="field">
+        <h5>  Proveedor </h5>
+        <%= select_tag(:supplier_id,options_from_collection_for_select(@suppliers,'id','name'),:id => "supplier_select"  ) %>
+      </div>
+    
+
+ 
+<br> 
+ <%= submit_tag "To PDF",   :name => "print" %>
+ <%= submit_tag "To Excel", :name => "print" %>
+  
+<%end %>
 
 <br />
 
@@ -41,3 +60,35 @@ totals = []
 <div class="button">
   <%= link_to 'Regresar', "/companies/cpagar/#{@company.id}" %>
 </div>
+
+
+
+
+<script>
+
+$(document).ready(function() {
+  
+  if ($('#check_prov').is(":checked")) {
+      $('#supplier_select').attr('disabled', true); //disable input
+   }
+   else {
+      $('#supplier_select').removeAttr('disabled'); //enable input
+   }
+   
+   
+   $('#check_prov').click(function () {
+        //check if checkbox is checked
+        if ($(this).is(':checked')) {
+
+           $('#supplier_select').attr('disabled', true); //disable input
+
+        } else {
+             $('#supplier_select').removeAttr('disabled'); //enable input
+            
+        }
+    });
+
+
+  });
+
+  </script>

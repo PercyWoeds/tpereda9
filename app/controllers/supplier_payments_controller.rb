@@ -6,6 +6,8 @@ include SupplierPaymentsHelper
 
 class SupplierPaymentsController < ApplicationController
 
+   before_action :set_supplierpayment, only: [:show, :edit, :update, :destroy]
+
   before_filter :authenticate_user!, :checkServices
 
 ##-------------------------------------------------------------------------------------
@@ -582,229 +584,6 @@ class SupplierPaymentsController < ApplicationController
 # ---------------------------------------------------------------------------------------------------
 
 
-  def build_pdf_header_rpt3(pdf)
-      pdf.font "Helvetica" , :size => 6
-      
-
-     $lcCli  =  @company.name 
-     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
-
-     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
-     $lcHora  = Time.now.to_s
-
-    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
-      rows = []
-      (1..max_rows).each do |row|
-        rows_index = row - 1
-        rows[rows_index] = []
-        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
-        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
-      end
-
-      if rows.present?
-        pdf.table(rows, {
-          :position => :center,
-          :cell_style => {:border_width => 0},
-          :width => pdf.bounds.width
-        }) do
-          columns([0, 2]).font_style = :bold
-
-      end
-
-        pdf.move_down 10
-
-      end
-      
-      pdf 
-  end   
-
- def build_pdf_body_rpt3(pdf)
-    
-    pdf.text "Emision de Cheques :    Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
-    pdf.text ""
-    pdf.font "Helvetica" , :size => 6
-
-      headers = []
-      table_content = []
-      total_general = 0
-      total_factory = 0
-
-      SupplierPayment::TABLE_HEADERS2.each do |header|
-        cell = pdf.make_cell(:content => header)
-        cell.background_color = "FFFFCC"
-        headers << cell
-      end
-      table_content << headers
-      nroitem = 1
-
-       for  customerpayment_rpt in @customerpayment_rpt
-
-        #@fechacobro = customerpayment_rpt.fecha1
-          $lcDocumento = ""   
-        row = []
-         row << nroitem.to_s
-         row << customerpayment_rpt.code
-         row << customerpayment_rpt.fecha1.strftime("%d/%m/%Y")         
-         row << customerpayment_rpt.get_moneda(customerpayment_rpt.bank_acount.moneda_id)   
-         row << customerpayment_rpt.get_document(customerpayment_rpt.document_id)    
-         row << customerpayment_rpt.documento 
-         row << customerpayment_rpt.supplier.ruc
-         row << customerpayment_rpt.supplier.name    
-         row << " "
-         row << customerpayment_rpt.total    
-         table_content << row
-                
-        @customerdetails =  customerpayment_rpt.get_payments()
-
-        if @customerdetails
-
-           for  productItem in  @customerdetails
-                
-                row = []
-                row <<  nroitem.to_s
-                row << " "
-                row << " "
-                row << " "
-                row <<  productItem.get_document(productItem.document_id)   
-                row <<  productItem.documento
-                row <<  productItem.get_supplier_ruc(productItem.supplier_id)
-                row <<  productItem.get_supplier(productItem.supplier_id)
-                row <<  sprintf("%.2f",productItem.total.to_s)
-                row << " "
-
-                table_content << row
-
-                nroitem=nroitem + 1
-             
-            end
-        end 
-
-       end  
-      
-      row =[]
-      row << ""
-      row << ""
-      row << ""
-      row << ""
-      row << ""
-      row << ""
-      row << ""
-      row << "TOTALES => "
-      row << sprintf("%.2f",@total_soles.to_s)
-      row << sprintf("%.2f",@total_dolares.to_s)                    
-      
-      table_content << row
-
-      result = pdf.table table_content, {:position => :center,
-                                        :header => true,
-                                        :width => pdf.bounds.width
-                                        } do 
-                                          columns([0]).align=:center
-                                          columns([1]).align=:left
-                                          columns([2]).align=:left
-
-                                          columns([3]).align=:left
-                                          columns([4]).align=:left  
-                                          columns([5]).align=:left
-                                          columns([6]).align=:left
-                                          columns([7]).align=:left 
-                                          columns([8]).align=:right
-                                          columns([9]).align=:right
-                                          columns([10]).align=:right
-                                        end                                          
-      pdf.move_down 10      
-      pdf
-      
-
-    end
-
-
-    def build_pdf_footer_rpt3(pdf)      
-
-         table_content2 = []
-
-    
-        row =[]  
-        row << "   " 
-        row << "   " 
-        row << "   " 
-        row << "   " 
-        table_content2 << row
-
-       
-
-      
-
-          row =[]  
-        row << "---------------------------------------------------   " 
-        row << "---------------------------------------------------   " 
-        row << "---------------------------------------------------   " 
-        row << "---------------------------------------------------  " 
-        table_content2 << row
-
-         row =[] 
-    
-        row << "Procesado por: "
-        row << "V.B.Contador : "
-        row << "V.B.Administracion : "
-        row << "V.B.Gerencia : "
-
-    
-        table_content2 << row
-
-
-          result = pdf.table table_content2, {:position => :center,
-                                        :header => true,  :cell_style => {:border_width => 0},
-                                        :width => pdf.bounds.width
-                                        } do 
-                                          columns([0]).align=:center
-                                          columns([0]).width = 135
-                                        
-                                          
-                                          columns([1]).align=:center
-                                           columns([1]).width = 135
-                                          columns([2]).align=:center
-                                           columns([2]).width = 135
-                                          columns([3]).align=:center
-                                           columns([3]).width = 135
-                                        end                            
-          
-      
-    
-        pdf
-      
-end
-
-
-
-  def rpt_cpagar4_pdf
-
-    @company=Company.find(params[:id])      
-    @fecha1 = params[:fecha1]
-    @fecha2 = params[:fecha2]
-    @tipomoneda = params[:moneda_id]
-
-    
-    @customerpayment_rpt = @company.get_supplier_payments0(@fecha1,@fecha2)
-    @total_soles   = @company.get_paymentsD_day_value(@fecha1,@fecha2,"total")
-    @total_dolares = @company.get_paymentsC_day_value(@fecha1,@fecha2,"total")
-      
-    Prawn::Document.generate("app/pdf_output/rpt_supplierpayment2.pdf") do |pdf|        
-
-
-        
-        pdf.font "Helvetica"
-        pdf = build_pdf_header_rpt3(pdf)
-        pdf = build_pdf_body_rpt3(pdf)
-        build_pdf_footer_rpt3(pdf)
-        $lcFileName =  "app/pdf_output/rpt_supplierpayment2.pdf"      
-        
-    end     
-
-    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
-    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
-  
-  end
 
 
 
@@ -1602,6 +1381,12 @@ def list_receive_supplierpayments
 
   
   private
+
+   def set_supplierpayment
+
+         @supplierpayment = SupplierPayment.find(params[:id])
+    end
+
   def supplierpayment_params
     params.require(:supplier_payment).permit(:company_id,:location_id,:division_id,:bank_acount_id,
       :document_id,:documento,:supplier_id,:tm,:total,:fecha1,:fecha2,:nrooperacion,:operacion,

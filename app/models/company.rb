@@ -1541,6 +1541,8 @@ def get_supplier_payments0(fecha1,fecha2)
     @vouchers = SupplierPayment.where([" company_id = ? AND fecha1 >= ? and fecha1<= ?  ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:id)
     return @vouchers    
 end 
+
+
   
 def get_paymentsD_day_value(fecha1,fecha2,value = "total")
 
@@ -1584,6 +1586,60 @@ def get_paymentsD_day_value(fecha1,fecha2,value = "total")
       return ret
  end 
 
+
+ ##[[[[[[]]]]]]
+
+def get_supplier_payments01(fecha1,fecha2,supplier)
+    @vouchers = SupplierPayment.where([" company_id = ? AND fecha1 >= ? and fecha1<= ? and supplier_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",supplier ]).order(:id)
+    return @vouchers    
+end 
+
+
+  
+def get_paymentsD_day_value1(fecha1,fecha2,value = "total",supplier)
+
+    facturas = SupplierPayment.where(["company_id = ? AND fecha1 >= ? and fecha1<= ? and supplier_id = ? ", 
+      self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,supplier])
+    ret = 0
+      for factura in facturas      
+                
+          @detail = SupplierPaymentDetail.where(:supplier_payment_id => factura.id)
+
+          for d in @detail 
+            if(value == "ajuste")
+              ret += d.ajuste
+            elsif (value == "compen")
+              ret += d.compen 
+            else
+              ret += d.total            
+            end
+          end 
+
+      end
+
+      return ret
+ end 
+
+ def get_paymentsC_day_value1(fecha1,fecha2,value = "total",supplier)
+    ret = 0
+    facturas = SupplierPayment.where(["company_id = ? AND fecha1 >= ? and fecha1<= ? and supplier_id = ?",
+     self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",supplier ])
+
+      for d in facturas                
+            if(value == "ajuste")
+              ret += d.ajuste
+            elsif (value == "compen")
+              ret += d.compen 
+            else
+              ret += d.total            
+            end          
+      end
+
+      return ret
+ end 
+
+
+ #####
 
 def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
 

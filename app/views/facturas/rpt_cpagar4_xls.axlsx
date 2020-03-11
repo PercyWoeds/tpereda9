@@ -1,0 +1,102 @@
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
+
+require 'axlsx'
+
+p = Axlsx::Package.new
+wb = xlsx_package.workbook
+wb.styles do |s|
+    date = s.add_style(:format_code => "yyyy-mm-dd", :border => Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+    padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
+    percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
+    title = s.add_style(:bg_color => "FFFF0000", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :left})
+
+    currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
+                              :border=>Axlsx::STYLE_THIN_BORDER)
+    red_negative = wb.styles.add_style :num_fmt => 8
+    comma = wb.styles.add_style :num_fmt => 3
+    super_funk = wb.styles.add_style :format_code => '[Green]#'
+    
+     @company=Company.find(1)      
+    @fecha1 = params[:fecha1]
+    @fecha2 = params[:fecha2]
+    @proveedor  = params[:supplier_id]
+    @provee_existe = params[:check_prov]
+
+     if  @provee_existe == "true" || @provee_existe != nil 
+
+        @customerpayment_rpt = @company.get_supplier_payments0(@fecha1,@fecha2)
+        @total_soles   = @company.get_paymentsD_day_value(@fecha1,@fecha2,"total")
+        @total_dolares = @company.get_paymentsC_day_value(@fecha1,@fecha2,"total")
+     
+     else
+
+      
+        @customerpayment_rpt = @company.get_supplier_payments01(@fecha1,@fecha2,@proveedor)
+        @total_soles   = @company.get_paymentsD_day_value1(@fecha1,@fecha2,"total",@proveedor)
+        @total_dolares = @company.get_paymentsC_day_value1(@fecha1,@fecha2,"total",@proveedor)
+       
+     end 
+
+
+
+    nroitem = 1 
+    wb.add_worksheet(name: "Cancelaciones") do |sheet|
+    
+
+    sheet.add_row ["ITEM","Nro.", "Fecha","Moneda","DOC","Numero", "RUC.","PROVEEDOR","DEBE", "HABER" ], :style => title 
+
+
+   @customerpayment_rpt.each do |payment|
+                  
+  
+         $lcDocumento = ""   
+        
+         
+   sheet.add_row [nroitem,payment.code,payment.fecha1,
+          payment.get_moneda(payment.bank_acount.moneda_id),
+          payment.get_document(payment.document_id),
+          payment.documento,
+          payment.supplier.ruc,
+          payment.supplier.name,"",
+          payment.total ], 
+    :style => 
+        [cadena,cadena,date,cadena,cadena,cadena,cadena,cadena,cadena,currency]
+
+
+                
+        @customerdetails =  payment.get_payments()
+
+        if @customerdetails
+
+           for  productItem in  @customerdetails
+                
+                sheet.add_row [nroitem,"","","",
+                productItem.get_document(productItem.document_id),
+                productItem.documento,
+                productItem.get_supplier_ruc(productItem.supplier_id),
+                productItem.get_supplier(productItem.supplier_id),
+                productItem.total,"" ],:style => 
+        [cadena,cadena,date,cadena,cadena,cadena,cadena,cadena,cadena,currency]
+
+
+                nroitem=nroitem + 1
+             
+            end
+
+
+        end 
+
+
+       
+        
+   end   
+    end
+
+
+   
+
+  ##
+end 
+
+    

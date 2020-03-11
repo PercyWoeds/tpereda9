@@ -178,10 +178,11 @@
     collection {get :guias1 }
     
     collection {get :rpt_purchase6  }
-   
 
+    collection { get  :rpt_cpagar40  }
+   collection { get  :rpt_cpagar4_pdf}
 
- end 
+    end 
 
   resources :voideds do
     collection { post :anular }  
@@ -268,6 +269,9 @@ resources :tranportorders do
   collection { post :rpt_ost_3 }        
   
 end 
+
+  
+
 
   resources :serviceorders do 
 
