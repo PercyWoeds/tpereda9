@@ -26,115 +26,38 @@
 
 </p>
 
-<table class="table" align="center">
 
+
+
+  <table>
     <tr>
-    <<th  style="width:15px " >Item</th>
-    <th scope="col">Codigo</th>
-    <th scope="col">Cant.</th>
-     <th scope="col">Uni.</th>
-       <th scope="col" style="width:300px">Descrip </th>
-         <th scope="col">Placa.</th>
-  </tr>
-  <tr>
-    <td  style="width:15px"> 01 </td>
-    <td> <%= @requerimiento.codigo_1 %></td>
-    <td><%= @requerimiento.cantidad_1 %></td>
-    <td> <%= @requerimiento.unidad_1 %></td>
-    <td  style="width:300px"><%= @requerimiento.descrip_1 %></td>
-    <td> <%= @requerimiento.placa_1 %></td>
+   <th style="width: 5%">Item </th>
+   <th style="width: 10%">Codigo </th>
+   <th style="width: 10%">Cantidad </th>
+   <th style="width: 10%">Unidad </th>
+   <th style="width: 50%">Descrip </th>
+   <th style="width: 15%">Placa/Destino </th>
+   <% nroitem = 1%>
+   </tr>
+    <% for rq  in @requerimiento.rqdetails  %>
+    <tr>
+    <td style="width: 5%">  <%= nroitem %> </td>
+    <td style="width: 10%">  <%= rq.codigo %></td>
 
-  </tr>
+    <td style="width: 10%">  <%= rq.qty %></td>
+     <td style="width: 10%">  <%= rq.unidad.descrip %></td>
+    
+    <td style="width: 50%"> <%= rq.descrip %></td>
+    <td style="width: 15%"> <%= rq.placa_destino %></td>
+    
+    </tr>
+    <% nroitem +=1 %>
+    <% end %>
 
-
-
- <tr>
-    <td  style="width:15px">02 </td>
-    <td> <%= @requerimiento.codigo_2 %></td>
-    <td><%= @requerimiento.cantidad_2 %></td>
-    <td> <%= @requerimiento.unidad_2 %></td>
-    <td  style="width:300px"><%= @requerimiento.descrip_2 %></td>
-    <td> <%= @requerimiento.placa_2 %></td>
-
-  </tr>
-
-  <tr>
-    <td  style="width:15px"> 03</td>
-    <td> <%= @requerimiento.codigo_3 %></td>
-    <td><%= @requerimiento.cantidad_3 %></td>
-    <td> <%= @requerimiento.unidad_3 %></td>
-    <td  style="width:300px"><%= @requerimiento.descrip_3 %></td>
-    <td> <%= @requerimiento.placa_3 %></td>
-
-  </tr>
-
-  <tr>
-    <td  style="width:15px"> 04</td>
-    <td> <%= @requerimiento.codigo_4 %></td>
-    <td><%= @requerimiento.cantidad_4 %></td>
-    <td> <%= @requerimiento.unidad_4 %></td>
-    <td  style="width:300px"><%= @requerimiento.descrip_4 %></td>
-    <td> <%= @requerimiento.placa_4 %></td>
-
-  </tr>
-  <tr>
-    <td  style="width:15px"> 05</td>
-    <td> <%= @requerimiento.codigo_5 %></td>
-    <td><%= @requerimiento.cantidad_5 %></td>
-    <td> <%= @requerimiento.unidad_5 %></td>
-    <td  style="width:300px"><%= @requerimiento.descrip_5 %></td>
-    <td> <%= @requerimiento.placa_5 %></td>
-
-  </tr>
-  <tr>
-    <td  style="width:15px"> 06</td>
-    <td> <%= @requerimiento.codigo_6 %></td>
-    <td><%= @requerimiento.cantidad_6 %></td>
-    <td> <%= @requerimiento.unidad_6 %></td>
-    <td  style="width:300px"><%= @requerimiento.descrip_6 %></td>
-    <td> <%= @requerimiento.placa_6 %></td>
-
-  </tr>
-  <tr>
-    <td  style="width:15px"> 07</td>
-    <td> <%= @requerimiento.codigo_7 %></td>
-    <td><%= @requerimiento.cantidad_7 %></td>
-    <td> <%= @requerimiento.unidad_7 %></td>
-    <td  style="width:300px"><%= @requerimiento.descrip_7 %></td>
-    <td> <%= @requerimiento.placa_7 %></td>
-
-  </tr>
-
-  <tr>
-    <td  style="width:15px"> 08</td>
-    <td> <%= @requerimiento.codigo_8 %></td>
-    <td><%= @requerimiento.cantidad_8 %></td>
-    <td> <%= @requerimiento.unidad_8 %></td>
-    <td  style="width:300px"><%= @requerimiento.descrip_8 %></td>
-    <td> <%= @requerimiento.placa_8 %></td>
-
-  </tr>
-
-  <tr>
-    <td  style="width:15px"> 09</td>
-    <td> <%= @requerimiento.codigo_9 %></td>
-    <td><%= @requerimiento.cantidad_9 %></td>
-    <td> <%= @requerimiento.unidad_9 %></td>
-    <td  style="width:300px"><%= @requerimiento.descrip_9 %></td>
-    <td> <%= @requerimiento.placa_9 %></td>
-
-  </tr>
-
-  <tr>
-    <td  style="width:15px"> 10</td>
-    <td> <%= @requerimiento.codigo_10 %></td>
-    <td><%= @requerimiento.cantidad_10 %></td>
-    <td> <%= @requerimiento.unidad_10 %></td>
-    <td  style="width:300px"><%= @requerimiento.descrip_10 %></td>
-    <td> <%= @requerimiento.placa_10 %></td>
-
-  </tr>
   </table>
+  
+
+
 
 <p>
   <strong>Nota:</strong>
@@ -146,8 +69,46 @@
   <%= @requerimiento.observa %>
 </p>
 
+<div>
+  <strong> Estado : <%= @requerimiento.get_processed %></strong>
+  <% if @requerimiento.processed == "1" and @requerimiento.date_processed %>
+    <%= doDate(@requerimiento.date_processed) %>
+  <% end %>
+</div>
+
+
+<div>
+  <strong> Usuario:</strong>
+  <%=  @requerimiento.user.username  %>
+</div >
 
 
 
-<%= link_to 'Editar', edit_requerimiento_path(@requerimiento) %> |
+
 <%= link_to 'Regresar', requerimientos_path %>
+
+
+<div class="button">
+  <%= link_to 'Exportar to PDF', "/requerimientos/pdf/#{@requerimiento.id}.pdf" %>  
+
+  <% if @requerimiento.processed == "1" %>
+   
+   <%= link_to 'Anular', "/requerimientos/do_anular/#{@requerimiento.id}" %>
+   <%= link_to 'Cancelar', "/requerimientos/sendcancelar/#{@requerimiento.id}" %>
+
+
+    <%= link_to 'Enviar  via email', "/requerimientos/sendmail/#{@requerimiento.id}" %>
+  </tr>  
+
+  <%end %>
+
+
+  <% if @requerimiento.processed.nil? %>
+  <%= link_to 'Editar', edit_requerimiento_path(@requerimiento) %> 
+  <%= link_to 'Procesar ST.', "/requerimientos/do_process/#{@requerimiento.id}" %>
+  <%end %>
+
+
+  
+  <%= link_to 'Regresar', requerimientos_path %>
+</div>

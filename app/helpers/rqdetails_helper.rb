@@ -1,0 +1,2 @@
+module RqdetailsHelper
+end

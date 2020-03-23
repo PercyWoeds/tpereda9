@@ -1,167 +1,82 @@
-<%= simple_form_for(@requerimiento) do |f| %>
+<%= simple_form_for( @requerimiento ) do  |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
 
-
-  <div class="field">
-    <%= f.label :employee_id,"Empleado:" %><br />
-    <%= f.collection_select :employee_id, @empleados, :id, :full_name, :prompt => true %>
+ <table style="width:100%">
+ 
+  <tr>
+    <td>Nombre:</td>
+    <td>  <%= f.collection_select :employee_id, @empleados, :id, :full_name, :prompt => true %></td>
+    <td>Fecha</td>
+    <td>  <%= f.date_field :fecha  %>
+    </td>
+  </tr>
+  <tr>
+    <td>Area</td>
+    <td> <%= f.collection_select :division_id, @divisions, :id, :name, :prompt => true %></td>
+    <td>Hora</td>
+    <td> <%= f.text_field :hora %></td>
+  </tr>
+</table> 
     
-    <div class="small">
-      Linea productos
-    </div>
-  </div>
-  <div class="field">
-    <%= f.label :division_id %><br />
-    <%= f.collection_select :division_id, @divisions, :id, :name, :prompt => true %>
-    
-    <div class="small">
-      Linea productos
-    </div>
-  </div>
- <div class="field">
-    <%= f.label :fecha %><br />
-    <%= f.date_field :fecha  %>
-    
-    <div class="small">
-      Fecha Requerimiento
-    </div>
-  </div>
 
-
-
-     <div class="field">
-    <%= f.label :hora, "Hora*", :class => "bold" %><br />
-    <%= f.text_field :hora %>
-    <div class="small">
-      The name of the product.
-    </div>
-  </div>
-
-  <table>
-
-    <tr>
-    <th>Item</th>
-    <th>Codigo</th>
-    <th>Cant.</th>
-     <th>Uni.</th>
-       <th>Descrip</th>
-         <th>Placa.</th>
-  </tr>
-  <tr>
-    <td> 01 </td>
-    <td> <%= f.text_field :codigo_1 %></td>
-    <td><%= f.text_field :cantidad_1 %></td>
-    <td> <%= f.text_field :unidad_1 %></td>
-    <td><%= f.text_field :descrip_1 %></td>
-    <td> <%= f.text_field :placa_1 %></td>
-
-  </tr>
-
-
-
- <tr>
-    <td>02 </td>
-    <td> <%= f.text_field :codigo_2 %></td>
-    <td><%= f.text_field :cantidad_2 %></td>
-    <td> <%= f.text_field :unidad_2 %></td>
-    <td><%= f.text_field :descrip_2 %></td>
-    <td> <%= f.text_field :placa_2 %></td>
-
-  </tr>
-
-  <tr>
-    <td> 03</td>
-    <td> <%= f.text_field :codigo_3 %></td>
-    <td><%= f.text_field :cantidad_3 %></td>
-    <td> <%= f.text_field :unidad_3 %></td>
-    <td><%= f.text_field :descrip_3 %></td>
-    <td> <%= f.text_field :placa_3 %></td>
-
-  </tr>
-
-  <tr>
-    <td> 04</td>
-    <td> <%= f.text_field :codigo_4 %></td>
-    <td><%= f.text_field :cantidad_4 %></td>
-    <td> <%= f.text_field :unidad_4 %></td>
-    <td><%= f.text_field :descrip_4 %></td>
-    <td> <%= f.text_field :placa_4 %></td>
-
-  </tr>
-  <tr>
-    <td> 05</td>
-    <td> <%= f.text_field :codigo_5 %></td>
-    <td><%= f.text_field :cantidad_5 %></td>
-    <td> <%= f.text_field :unidad_5 %></td>
-    <td><%= f.text_field :descrip_5 %></td>
-    <td> <%= f.text_field :placa_5 %></td>
-
-  </tr>
-  <tr>
-    <td> 06</td>
-    <td> <%= f.text_field :codigo_6 %></td>
-    <td><%= f.text_field :cantidad_6 %></td>
-    <td> <%= f.text_field :unidad_6 %></td>
-    <td><%= f.text_field :descrip_6 %></td>
-    <td> <%= f.text_field :placa_6 %></td>
-
-  </tr>
-  <tr>
-    <td> 07</td>
-    <td> <%= f.text_field :codigo_7 %></td>
-    <td><%= f.text_field :cantidad_7 %></td>
-    <td> <%= f.text_field :unidad_7 %></td>
-    <td><%= f.text_field :descrip_7 %></td>
-    <td> <%= f.text_field :placa_7 %></td>
-
-  </tr>
-
-  <tr>
-    <td> 08</td>
-    <td> <%= f.text_field :codigo_8 %></td>
-    <td><%= f.text_field :cantidad_8 %></td>
-    <td> <%= f.text_field :unidad_8 %></td>
-    <td><%= f.text_field :descrip_8 %></td>
-    <td> <%= f.text_field :placa_8 %></td>
-
-  </tr>
-
-  <tr>
-    <td> 09</td>
-    <td> <%= f.text_field :codigo_9 %></td>
-    <td><%= f.text_field :cantidad_9 %></td>
-    <td> <%= f.text_field :unidad_9 %></td>
-    <td><%= f.text_field :descrip_9 %></td>
-    <td> <%= f.text_field :placa_9 %></td>
-
-  </tr>
-
-  <tr>
-    <td> 10</td>
-    <td> <%= f.text_field :codigo_10 %></td>
-    <td><%= f.text_field :cantidad_10 %></td>
-    <td> <%= f.text_field :unidad_10 %></td>
-    <td><%= f.text_field :descrip_10 %></td>
-    <td> <%= f.text_field :placa_10 %></td>
-
-  </tr>
-  </table>
 
       <div class="field">
     <%= f.label :nota %><br />
-    <%= f.text_field :nota %>
+    <%= f.text_field :nota,:size=> "120" %>
   </div>
+
+  </div>
+
+
+
+
+  <table>
+    <tr>
+   <th style="width: 5%">Item </th>
+   <th style="width: 10%">Codigo </th>
+   <th style="width: 10%">Cantidad </th>
+   <th style="width: 10%">Unidad </th>
+   <th style="width: 50%">Descrip </th>
+   <th style="width: 15%">Placa/Destino </th>
+   <% nroitem = 1%>
+   </tr>
+
+    <%= f.fields_for :rqdetails  do |rq_fields| %>
+    
+    <tr>
+
+    <td style="width: 5%">  <%= nroitem %> </td>
+    <td style="width: 10%">  <%= rq_fields.text_field :codigo , :size=>"10" %></td>
+    <td style="width: 10%">  <%= rq_fields.number_field :qty , :size=>"10"%></td>
+    <td style="width: 10%">  <%= rq_fields.select :unidad_id,options_from_collection_for_select(@unidads,'id','descrip') %></td>
+    <td style="width: 50%"> <%= rq_fields.text_field :descrip  , :size=>"55"%></td>
+    <td style="width: 15%"> <%= rq_fields.text_field :placa_destino , :size=>"25" %></td>
+    
+    </tr>
+  
+
+    <% nroitem +=1 %>
+    <% end %>
+
+  </table>
   
   <div class="field">
     <%= f.label :observa %><br />
-    <%= f.text_area :observa %>
+    <%= f.text_area :observa,:size=>"120" %>
   </div>
   
 
-  </div>
+
   <div class="form-actions">
     <%= f.button :submit %>
   </div>
 <% end %>
+
+<style>
+select
+{
+width:80px;
+    }
+</style>

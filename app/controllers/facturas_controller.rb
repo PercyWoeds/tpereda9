@@ -1377,6 +1377,45 @@ def reportes4
   end
   
 
+def rpt_monitoreo
+    $lcFacturasall = '1'
+
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+   
+
+    @current_user_id = current_user.id 
+    
+    @facturas_rpt = @company.get_facturas_day_todos(@fecha1,@fecha2)          
+   
+    
+    @total1  = @company.get_facturas_by_day_value(@fecha1,@fecha2,@moneda,"subtotal")  
+    @total2  = @company.get_facturas_by_day_value(@fecha1,@fecha2,@moneda,"tax")  
+    @total3  = @company.get_facturas_by_day_value(@fecha1,@fecha2,@moneda,"total")  
+    
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Facturas ",template: "facturas/rventas2_rpt.pdf.erb",locals: {:facturas => @facturas_rpt},
+         :orientation      => 'Landscape',
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               }
+               
+
+        end   
+      when "To Excel" then render xlsx: 'exportxls'
+      else render action: "index"
+    end
+  end
+  
+
 def reportes_st_1 
 
     $lcFacturasall = '1'

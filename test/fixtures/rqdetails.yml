@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  requerimiento_id: 1
+  codigo: MyString
+  qty: 1.5
+  unidad_id: 1
+  descrip: MyString
+  placa_destino: MyString
+  string: MyString
+
+two:
+  requerimiento_id: 1
+  codigo: MyString
+  qty: 1.5
+  unidad_id: 1
+  descrip: MyString
+  placa_destino: MyString
+  string: MyString

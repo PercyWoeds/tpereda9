@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Requerimiento:</strong>
+  <%= @rqdetail.requerimiento_id %>
+</p>
+
+<p>
+  <strong>Codigo:</strong>
+  <%= @rqdetail.codigo %>
+</p>
+
+<p>
+  <strong>Qty:</strong>
+  <%= @rqdetail.qty %>
+</p>
+
+<p>
+  <strong>Unidad:</strong>
+  <%= @rqdetail.unidad_id %>
+</p>
+
+<p>
+  <strong>Descrip:</strong>
+  <%= @rqdetail.descrip %>
+</p>
+
+<p>
+  <strong>Placa destino:</strong>
+  <%= @rqdetail.placa_destino %>
+</p>
+
+<p>
+  <strong>String:</strong>
+  <%= @rqdetail.string %>
+</p>
+
+<%= link_to 'Edit', edit_rqdetail_path(@rqdetail) %> |
+<%= link_to 'Back', rqdetails_path %>

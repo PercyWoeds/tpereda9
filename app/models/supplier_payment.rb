@@ -128,7 +128,7 @@ self.per_page = 20
         begin
           purchase = Purchase.find(id.to_i)          
 
-new_purchase = SupplierPaymentDetail.new(:supplier_payment_id => self.id, 
+          new_purchase = SupplierPaymentDetail.new(:supplier_payment_id => self.id, 
   :purchase_id => purchase.id, :total => balance.to_f )
           new_purchase.save
 
@@ -256,6 +256,8 @@ new_purchase = SupplierPaymentDetail.new(:supplier_payment_id => self.id,
       return "red"
     end
   end
+
+    
 
 
    def textify

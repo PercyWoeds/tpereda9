@@ -1,5 +1,6 @@
   Mnygo::Application.routes.draw do
 
+  resources :rqdetails
   resources :requerimientos
   resources :almacens
   resources :almacens
@@ -181,6 +182,7 @@
 
     collection { get  :rpt_cpagar40  }
    collection { get  :rpt_cpagar4_pdf}
+     collection { get  :rpt_monitoreo}
 
     end 
 
@@ -323,7 +325,6 @@ end
     collection { get :generar  }
     collection { post :import }
     collection { get :excel }
-
 
     collection do 
       put :discontinue 
@@ -547,6 +548,7 @@ end
   match 'companies/reports/rpt_facturas_3/:company_id' => 'reports#rpt_facturas_3', via: [:get, :post]
   match 'companies/reports/rpt_facturas_4/:company_id' => 'reports#rpt_facturas_4', via: [:get, :post]
   match 'companies/reports/rpt_facturas_5/:company_id' => 'reports#rpt_facturas_5', via: [:get, :post]
+  match 'companies/reports/rpt_facturas_monitoreo/:company_id' => 'reports#rpt_facturas_monitoreo', via: [:get, :post]
 
   
   match 'companies/reports/rpt_purchase_all/:company_id' => 'reports#rpt_purchase_all', via: [:get, :post]
@@ -958,6 +960,19 @@ end
   match 'manifests/sendcancelar/:id' => 'manifests#sendcancelar', via: [:get, :post]
 
   resources :manifests 
+
+
+  match 'requerimientos/do_process/:id' => 'requerimientos#do_process', via: [:get, :post]
+  match 'requerimientos/do_anular/:id' => 'requerimientos#do_anular', via: [:get, :post]
+  match 'requerimientos/do_cancelar/:id' => 'requerimientos#do_cancelar', via: [:get, :post]
+  
+  match 'requerimientos/pdf/:id' => 'requerimientos#pdf', via: [:get, :post]
+  match 'requerimientos/do_email/:id' => 'requerimientos#do_email', via: [:get, :post]
+  match 'requerimientos/sendmail/:id' => 'requerimientos#sendmail', via: [:get, :post]
+  match 'requerimientos/sendcancelar/:id' => 'requerimientos#sendcancelar', via: [:get, :post]
+
+  resources :manifests 
+
 
   match 'suppliers/new2/:id'   => 'suppliers#new2', via: [:get, :post]
   resources :suppliers 

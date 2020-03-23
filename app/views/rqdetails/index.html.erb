@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Rqdetails</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Requerimiento</th>
+      <th>Codigo</th>
+      <th>Qty</th>
+      <th>Unidad</th>
+      <th>Descrip</th>
+      <th>Placa destino</th>
+      <th>String</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @rqdetails.each do |rqdetail| %>
+      <tr>
+        <td><%= rqdetail.requerimiento_id %></td>
+        <td><%= rqdetail.codigo %></td>
+        <td><%= rqdetail.qty %></td>
+        <td><%= rqdetail.unidad_id %></td>
+        <td><%= rqdetail.descrip %></td>
+        <td><%= rqdetail.placa_destino %></td>
+        <td><%= rqdetail.string %></td>
+        <td><%= link_to 'Show', rqdetail %></td>
+        <td><%= link_to 'Edit', edit_rqdetail_path(rqdetail) %></td>
+        <td><%= link_to 'Destroy', rqdetail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Rqdetail', new_rqdetail_path %>

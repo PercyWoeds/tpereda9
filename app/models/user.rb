@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   has_many :invoices
   has_many :inventories
   has_many :users
-
+  has_many :requerimientos 
   
   def print
     return '<a href="/users/' + self.id.to_s + '">' + self.username + '</a>'
