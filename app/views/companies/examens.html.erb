@@ -47,7 +47,7 @@
   <h3>
         <div>
     <%= image_tag("clients_32.png", :class => "vmiddle") %>
-    <%= link_to "Inventario", "/companies/inventarios/#{@company.id}" %>
+    <%= link_to "Base de datos", "/companies/reports/reports_basedatosexm/#{@company.id}" %>
         </div>
   </h3>
   
@@ -60,7 +60,7 @@
      <% if @current_user.level == "admin" %>
   <h3>
     <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
-    <%= link_to "Ajustes Inventario", "/companies/ajusts/#{@company.id}" %>
+    <%= link_to "Autotizacion de viaticos", autoviaticos_path   %>
   </h3>
 
   <p>

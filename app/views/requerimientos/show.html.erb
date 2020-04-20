@@ -1,4 +1,14 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+
+
 <p id="notice"><%= notice %></p>
+
 
 <p>
   <strong>Code:</strong>
@@ -35,8 +45,10 @@
    <th style="width: 10%">Codigo </th>
    <th style="width: 10%">Cantidad </th>
    <th style="width: 10%">Unidad </th>
-   <th style="width: 50%">Descrip </th>
+   <th style="width: 40%">Descrip </th>
    <th style="width: 15%">Placa/Destino </th>
+   <th style="width: 10%">Estado </th>
+
    <% nroitem = 1%>
    </tr>
     <% for rq  in @requerimiento.rqdetails  %>
@@ -47,9 +59,9 @@
     <td style="width: 10%">  <%= rq.qty %></td>
      <td style="width: 10%">  <%= rq.unidad.descrip %></td>
     
-    <td style="width: 50%"> <%= rq.descrip %></td>
+    <td style="width: 40%"> <%= rq.descrip %></td>
     <td style="width: 15%"> <%= rq.placa_destino %></td>
-    
+    <td style="width: 10%"> <%= rq.get_atendido %></td>
     </tr>
     <% nroitem +=1 %>
     <% end %>
@@ -70,7 +82,8 @@
 </p>
 
 <div>
-  <strong> Estado : <%= @requerimiento.get_processed %></strong>
+  <strong> Estado : <%= @requerimiento.get_processed %> </strong>
+
   <% if @requerimiento.processed == "1" and @requerimiento.date_processed %>
     <%= doDate(@requerimiento.date_processed) %>
   <% end %>
@@ -83,32 +96,30 @@
 </div >
 
 
+<div class="ui buttons">
 
+  <%= link_to 'Exportar to PDF', "/requerimientos/pdf/#{@requerimiento.id}.pdf",class:"ui primary button" %>  
 
-<%= link_to 'Regresar', requerimientos_path %>
-
-
-<div class="button">
-  <%= link_to 'Exportar to PDF', "/requerimientos/pdf/#{@requerimiento.id}.pdf" %>  
 
   <% if @requerimiento.processed == "1" %>
    
-   <%= link_to 'Anular', "/requerimientos/do_anular/#{@requerimiento.id}" %>
-   <%= link_to 'Cancelar', "/requerimientos/sendcancelar/#{@requerimiento.id}" %>
+   <%= link_to 'Anular', "/requerimientos/do_anular/#{@requerimiento.id}",class:"ui primary button" %>
+   <%= link_to 'Cancelar', "/requerimientos/sendcancelar/#{@requerimiento.id}" ,class:"ui primary button"%>
 
 
-    <%= link_to 'Enviar  via email', "/requerimientos/sendmail/#{@requerimiento.id}" %>
+    <%= link_to 'Enviar  via email', "/requerimientos/sendmail/#{@requerimiento.id}" ,class:"ui primary button"%>
   </tr>  
 
   <%end %>
 
 
+  </div>
+
+
   <% if @requerimiento.processed.nil? %>
-  <%= link_to 'Editar', edit_requerimiento_path(@requerimiento) %> 
-  <%= link_to 'Procesar ST.', "/requerimientos/do_process/#{@requerimiento.id}" %>
+  <%= link_to 'Editar', edit_requerimiento_path(@requerimiento) ,class:"ui primary button"%> 
+  <%= link_to 'Procesar ST.', "/requerimientos/do_process/#{@requerimiento.id}",class:"ui primary button" %>
   <%end %>
 
-
-  
-  <%= link_to 'Regresar', requerimientos_path %>
+  <%= link_to 'Regresar', requerimientos_path,class:"ui primary button" %>
 </div>

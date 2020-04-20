@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  fecha1: 2020-03-27 09:44:16
+  fecha2: 2020-03-27 09:44:16
+  descrip: MyString
+  punto_id: 1
+
+two:
+  code: MyString
+  fecha1: 2020-03-27 09:44:16
+  fecha2: 2020-03-27 09:44:16
+  descrip: MyString
+  punto_id: 1

@@ -1,0 +1,2 @@
+module ProyectoMinerosHelper
+end

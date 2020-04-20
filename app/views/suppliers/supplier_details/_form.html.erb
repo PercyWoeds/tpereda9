@@ -1,0 +1,40 @@
+<%= simple_form_for [@supplier,@supplier_detail] do |f| %>
+
+
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+
+      <div class="field">
+    <%= f.label :name, "Contacto*", :class => "bold" %><br />
+    <%= f.text_field :name %>
+  </div>
+  
+
+    <div class="field">
+    <%= f.label :cargo, "Cargo*", :class => "bold" %><br />
+    <%= f.text_field :cargo %>
+  </div>
+   
+  <div class="field">
+    <%= f.label :telefono, "Telefono*", :class => "bold" %><br />
+    <%= f.text_field :telefono %>
+  </div>
+
+  <div class="field">
+    <%= f.label :correo, "Correo*", :class => "bold" %><br />
+    <%= f.text_field :correo%>
+  </div>
+    
+
+  <div class="field">
+    <%= f.label :area, "Area*", :class => "bold" %><br />
+    <%= f.text_field :area %>
+  </div>
+    
+
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

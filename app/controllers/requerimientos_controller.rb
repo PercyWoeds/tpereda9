@@ -1,5 +1,12 @@
+include UsersHelper
+include ServicesHelper
+
+
 class RequerimientosController < ApplicationController
-  before_action :set_requerimiento, only: [:show, :edit, :update, :destroy]
+   $: << Dir.pwd  + '/lib'
+    require "open-uri"
+
+  before_action :set_requerimiento, only: [:show, :edit, :update, :destroy ]
 
   # GET /requerimientos
   # GET /requerimientos.json
@@ -25,6 +32,7 @@ class RequerimientosController < ApplicationController
     @requerimiento[:fecha] = DateTime.now
     @requerimiento[:hora] = Time.zone.now.strftime("%H:%M")
     @unidads = @company.get_unidads()
+
     10.times {@requerimiento.rqdetails.build }
 
   end
@@ -41,13 +49,16 @@ class RequerimientosController < ApplicationController
   # POST /requerimientos.json
   def create
     @requerimiento = Requerimiento.new(requerimiento_params)
-@company = Company.find(1)
+    
+    @company = Company.find(1)
     @empleados = @company.get_employees()
     @divisions = @company.get_divisions()
-    @requerimiento[:user_id] = current_user.id 
+    @requerimiento[:user_id] = getUserId()
+
     respond_to do |format|
 
       @requerimiento[:code] = @requerimiento.generate_rq_number("001")
+      
       if @requerimiento.save
         format.html { redirect_to @requerimiento, notice: 'Requerimiento was successfully created.' }
         format.json { render :show, status: :created, location: @requerimiento }
@@ -287,7 +298,7 @@ def build_pdf_header(pdf)
  
   # Send invoice via email
   def sendmail
-
+    @requerimiento  = Requerimiento.find(params[:id])
     ActionCorreo.rq_email(@requerimiento).deliver_now 
 
   end
@@ -303,6 +314,27 @@ def build_pdf_header(pdf)
     redirect_to @requerimiento 
   end
 
+  def do_anular
+    @requerimiento = Requerimiento.find(params[:id])
+
+ 
+   a = Rqdetail.where(:requerimiento_id=> @requerimiento.id, :atento=> !nil  )
+    if a.size > 0 
+    flash[:notice] = "Requerimiento  tiene RQ atendidas, no se puede anular."
+    
+    else
+
+    @requerimiento[:processed] = "2"
+    @requerimiento.anular 
+    
+    flash[:notice] = "Documento a sido anulado."
+    end 
+    redirect_to @requerimiento
+
+
+
+  end
+  
 
   def sendcancelar 
     
@@ -310,6 +342,26 @@ def build_pdf_header(pdf)
     @requerimiento = Requerimiento.find(params[:id])
 
   end
+
+
+  def do_cancelar
+
+
+    @company =  Company.find(1)
+    @requerimiento = Requerimiento.find(params[:id])
+    @observa  = params[:motivo]
+  
+    @requerimiento[:processed] = "3"
+
+     @requerimiento.update_attributes(:motivo => @observa,:processed =>"3") 
+     @requerimiento.cancelar
+    
+    
+    flash[:notice] = "Motivo grabado."
+    redirect_to "/requerimientos/#{@requerimiento.id}"
+
+  end
+
 
   private
 

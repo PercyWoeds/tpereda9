@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  contacto: MyString
+  email: MyString
+  telefono: MyString
+  contactopm_id: 
+
+two:
+  contacto: MyString
+  email: MyString
+  telefono: MyString
+  contactopm_id: 

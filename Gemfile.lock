@@ -305,7 +305,7 @@ DEPENDENCIES
   axlsx_rails
   binding_of_caller (~> 0.7.2)
   bluecloth
-  bootstrap
+  bootstrap (~> 4.3.1)
   byebug
   coffee-rails (~> 4.1.0)
   consulta_sunat

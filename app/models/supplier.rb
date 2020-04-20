@@ -14,6 +14,11 @@ class Supplier < ActiveRecord::Base
   has_many :outputs
   has_many :freepagars
   
+  self.per_page = 20
+
+
+
+  has_many   :supplier_details , :dependent => :destroy
   
 
   def self.to_csv(options = {})

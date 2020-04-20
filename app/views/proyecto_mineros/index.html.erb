@@ -1,0 +1,55 @@
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+
+
+
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Proyecto Mineros</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Fecha1</th>
+      <th>Fecha2</th>
+      <th>Descrip</th>
+      <th>Punto</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @proyecto_mineros.each do |proyecto_minero| %>
+      <tr>
+        <td><%= proyecto_minero.code %></td>
+        <td><%= proyecto_minero.fecha1 %></td>
+        <td><%= proyecto_minero.fecha2 %></td>
+        <td><%= proyecto_minero.descrip %></td>
+        <td><%= proyecto_minero.punto_id %></td>
+        <td><%= link_to 'Ver', proyecto_minero %></td>
+        <td><%= link_to 'Editar', edit_proyecto_minero_path(proyecto_minero) %></td>
+
+        <% if @current_user.level == "admin" %>
+        <td><%= link_to 'Destroy', proyecto_minero, method: :delete, data: { confirm: 'Esta seguro de eliminar ?' } %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<div class="extra content">
+
+<%= link_to 'New Proyecto minero', new_proyecto_minero_path ,class: "ui primary button"  %>
+
+<%= link_to 'Regresar', "/companies/reports/reports_basedatosexm/1" ,class: "ui primary button"  %>
+
+</div>

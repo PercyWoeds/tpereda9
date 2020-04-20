@@ -1,0 +1,29 @@
+<%= simple_form_for(@proyecto_minero) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+
+
+    <td>Ubicacion:</td>
+    <td>  <%= f.collection_select :punto_id, @puntos, :id, :name, :prompt => true, class: "ui selection dropdown" %></td>
+
+    <td>Fecha</td>
+      <td>  <%= f.date_field :fecha1  %>
+    </td>
+
+    <td>Fecha</td>
+      <td>  <%= f.date_field :fecha2  %>
+    </td>
+
+     <td>Descripcion </td>
+      <td>  <%= f.text_field :descrip   %>
+    </td>
+
+   
+   </div>  
+
+
+  <div class="form-actions">
+    <%= f.button :submit,   class: "ui green submit button" %>
+  </div>
+<% end %>

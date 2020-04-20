@@ -102,7 +102,8 @@ gem 'savon', '~> 2.11', '>= 2.11.1'
 gem 'rubyzip'
 
 
-gem 'bootstrap'
+gem 'bootstrap', '~> 4.3.1'
+
 gem 'rails-ujs', '~> 0.1.0'
 
 gem 'consulta_sunat'

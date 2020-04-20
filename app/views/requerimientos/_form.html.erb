@@ -1,17 +1,21 @@
 <%= simple_form_for( @requerimiento ) do  |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
+  <div class="ui form">
 
  <table style="width:100%">
  
   <tr>
+  <div class="field">
     <td>Nombre:</td>
-    <td>  <%= f.collection_select :employee_id, @empleados, :id, :full_name, :prompt => true %></td>
+    <td>  <%= f.collection_select :employee_id, @empleados, :id, :full_name, :prompt => true, class: "ui selection dropdown" %></td>
+   </div>  
+   
     <td>Fecha</td>
     <td>  <%= f.date_field :fecha  %>
     </td>
   </tr>
+  
   <tr>
     <td>Area</td>
     <td> <%= f.collection_select :division_id, @divisions, :id, :name, :prompt => true %></td>
@@ -25,7 +29,7 @@
       <div class="field">
     <%= f.label :nota %><br />
     <%= f.text_field :nota,:size=> "120" %>
-  </div>
+     </div>
 
   </div>
 
@@ -62,6 +66,7 @@
 
   </table>
   
+  
   <div class="field">
     <%= f.label :observa %><br />
     <%= f.text_area :observa,:size=>"120" %>
@@ -69,8 +74,8 @@
   
 
 
-  <div class="form-actions">
-    <%= f.button :submit %>
+  <div class="ui button" tabindex="0">
+  <%= f.button :submit %>
   </div>
 <% end %>
 
@@ -80,3 +85,11 @@ select
 width:80px;
     }
 </style>
+
+<script>
+
+$('select.dropdown')
+  .dropdown()
+;
+
+</script>

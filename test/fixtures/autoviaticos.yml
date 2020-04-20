@@ -1,0 +1,41 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  employee_id: 1
+  fecha: 2020-04-01 11:13:17
+  tema: MyString
+  supplier_id: 1
+  asunto: MyString
+  movilidad: 1.5
+  almuerzo: 1.5
+  otros: 1.5
+  observa: MyString
+  hora_ingreso: MyString
+  hora_salida: MyString
+  employee_id2: 1
+  lugar_salida: MyString
+  lugar_destino: MyString
+  hora1: MyString
+  hora2: MyString
+  observa2: MyString
+
+two:
+  code: MyString
+  employee_id: 1
+  fecha: 2020-04-01 11:13:17
+  tema: MyString
+  supplier_id: 1
+  asunto: MyString
+  movilidad: 1.5
+  almuerzo: 1.5
+  otros: 1.5
+  observa: MyString
+  hora_ingreso: MyString
+  hora_salida: MyString
+  employee_id2: 1
+  lugar_salida: MyString
+  lugar_destino: MyString
+  hora1: MyString
+  hora2: MyString
+  observa2: MyString

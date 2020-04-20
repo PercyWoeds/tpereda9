@@ -1,0 +1,2 @@
+module ContactopmdetailsHelper
+end

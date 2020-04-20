@@ -18,16 +18,15 @@ class ActionCorreo < ApplicationMailer
 	  end
 
 	  def rq_email(invoice)
-		@manifest =invoice 			
+		@requerimiento =invoice 			
 		 @url  = 'http://www.tpereda.com.pe'
 
-		email_with_copy = current_user.email 
+		email_with_copy = " Rq <percywoeds@gmail.com "
 		email_with_copia = "Almacen  <almacen@tpereda.com.pe>"
 		
 		email_add = " "
 
-
-		mail(to: [email_with_copy] ,cc: [email_with_copia  ], subject: 'Requerimiento sistema  : ' )
+		mail(to: [email_with_copia] , cc: email_with_copy, subject: 'Requerimiento sistema  : ' )
 
 
 	end

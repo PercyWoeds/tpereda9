@@ -1,0 +1,61 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Autoviaticos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Employee</th>
+      <th>Fecha</th>
+      <th>Tema</th>
+      <th>Supplier</th>
+      <th>Asunto</th>
+      <th>Movilidad</th>
+      <th>Almuerzo</th>
+      <th>Otros</th>
+      <th>Observa</th>
+      <th>Hora ingreso</th>
+      <th>Hora salida</th>
+      <th>Employee id2</th>
+      <th>Lugar salida</th>
+      <th>Lugar destino</th>
+      <th>Hora1</th>
+      <th>Hora2</th>
+      <th>Observa2</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @autoviaticos.each do |autoviatico| %>
+      <tr>
+        <td><%= autoviatico.code %></td>
+        <td><%= autoviatico.employee_id %></td>
+        <td><%= autoviatico.fecha %></td>
+        <td><%= autoviatico.tema %></td>
+        <td><%= autoviatico.supplier_id %></td>
+        <td><%= autoviatico.asunto %></td>
+        <td><%= autoviatico.movilidad %></td>
+        <td><%= autoviatico.almuerzo %></td>
+        <td><%= autoviatico.otros %></td>
+        <td><%= autoviatico.observa %></td>
+        <td><%= autoviatico.hora_ingreso %></td>
+        <td><%= autoviatico.hora_salida %></td>
+        <td><%= autoviatico.employee_id2 %></td>
+        <td><%= autoviatico.lugar_salida %></td>
+        <td><%= autoviatico.lugar_destino %></td>
+        <td><%= autoviatico.hora1 %></td>
+        <td><%= autoviatico.hora2 %></td>
+        <td><%= autoviatico.observa2 %></td>
+        <td><%= link_to 'Show', autoviatico %></td>
+        <td><%= link_to 'Edit', edit_autoviatico_path(autoviatico) %></td>
+        <td><%= link_to 'Destroy', autoviatico, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Autoviatico', new_autoviatico_path %>

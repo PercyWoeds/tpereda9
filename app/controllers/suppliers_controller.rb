@@ -19,21 +19,25 @@ class SuppliersController < ApplicationController
      @data = ConsultaSunat.by_ruc(ruc_number)
      puts @data[:razon_social] 
 
-
   end
  
   # Show suppliers for a company
   def list_suppliers
     @company = Company.find(params[:company_id])
+  
     @pagetitle = "#{@company.name} - Suppliers"
   
     if(@company.can_view(current_user))
+
      if(params[:search] and params[:search] != "")                     
         
-        @suppliers = Supplier.where(["company_id = ? and (ruc LIKE ? OR name LIKE ?)", @company.id,"%" + params[:search] + "%", "%" + params[:search] + "%"]).order('name').paginate(:page => params[:page]) 
+        @suppliers = Supplier.where(["company_id = ? and (ruc LIKE ? OR name LIKE ?) ", @company.id,"%" + params[:search] + "%", "%" + params[:search] + "%" ]).order('name').paginate(:page => params[:page]) 
       else
-        @suppliers = Supplier.where(company_id: @company.id).order('name').paginate(:page => params[:page])
+
+        @suppliers = Supplier.where(company_id: @company.id,tipo1: @tipo ).order('name').paginate(:page => params[:page])
       end
+
+
     else
       errPerms()
     end
@@ -59,6 +63,9 @@ class SuppliersController < ApplicationController
   def show
     @supplier = Supplier.find(params[:id])
     @pagetitle = "Suppliers - #{@supplier.name}"
+
+    @supplier_detail = @supplier.supplier_details
+
   end
 
   # GET /suppliers/new
@@ -68,6 +75,9 @@ class SuppliersController < ApplicationController
     
     
       @company = Company.find(1)
+      @bancos = @company.get_banks()
+      @tipoproveedor =@company.get_tipoproveedor()
+
     
       if(@company.can_view(current_user))
         @supplier = Supplier.new
@@ -85,8 +95,11 @@ class SuppliersController < ApplicationController
 
   # GET /suppliers/1/edit
   def edit
+    @company = Company.find(1)
+    @bancos = @company.get_banks()
     @pagetitle = "Edit supplier"
-    
+     @tipoproveedor =@company.get_tipoproveedor()
+
     @supplier = Supplier.find(params[:id])
   end
 
@@ -96,8 +109,10 @@ class SuppliersController < ApplicationController
     @pagetitle = "New supplier"
     
     @company = Company.find(params[:supplier][:company_id])
+  
     @supplier = Supplier.new(supplier_params)
-
+  
+  
     respond_to do |format|
       if @supplier.save
         format.html { redirect_to(@supplier, :notice => 'Supplier was successfully created.') }
@@ -196,7 +211,8 @@ class SuppliersController < ApplicationController
   end
 
   def supplier_params
-    params.require(:supplier).permit(:name, :email, :phone1, :phone2, :address1,:address2,:city, :state,:zip,:country,:comments,:ruc,:company_id,:taxable )    
+    params.require(:supplier).permit(:name, :email, :phone1, :phone2, :address1,:address2,:city, :state,:zip,
+      :country,:comments,:ruc,:company_id,:taxable,:tipo1 ,:bank_id,:cuenta_corriente,:proyecto_minero)    
   end
   
 

@@ -1,5 +1,12 @@
   Mnygo::Application.routes.draw do
 
+  
+  resources :autoviaticos
+  resources :supplier_details
+  resources :tipoproveedors
+  resources :contactopms
+  resources :contactopmdetails
+  resources :proyecto_mineros
   resources :rqdetails
   resources :requerimientos
   resources :almacens
@@ -114,6 +121,9 @@
   resources :viaticos do
     resources :viatico_details, except: [:index,:show], controller: "viaticos/viatico_details"
   end
+  resources :suppliers  do
+    resources :supplier_details, except: [:index,:show], controller: "suppliers/supplier_details"
+  end
 
   resources :telecreditos do
     resources :telecredito_details, except: [:index,:show], controller: "telecreditos/telecredito_details"
@@ -183,6 +193,7 @@
     collection { get  :rpt_cpagar40  }
    collection { get  :rpt_cpagar4_pdf}
      collection { get  :rpt_monitoreo}
+      collection { get  :do_gestion}
 
     end 
 
@@ -203,6 +214,10 @@
   
 
   end  
+
+  resources :requerimientos  do
+      collection { get  :do_gestion}
+  end 
   
   resources :ventaislas  do
     resources :ventaisla_details, except: [:index,:show], controller: "ventaislas/ventaisla_details"
@@ -215,8 +230,11 @@
    resources :facturas do
     resources :factura_details, except: [:index,:show], controller: "facturas/facturas_details"
     collection { post :discontinue }
+     collection { post :discontinue2 }
+    
     collection do 
-      put :discontinue 
+       put :discontinue 
+       put :discontinue2
     end 
     collection { post :print }
 
@@ -338,6 +356,7 @@ end
   resources :inventories  do 
     collection { get :addCategory  }    
   end 
+ 
 
   resources :carts
   get 'store/index'
@@ -351,8 +370,9 @@ end
   get '/404', :to => "errors#not_found"
   get '/422', :to => "errors#unacceptable"
   get '/500', :to => "errors#internal_error" 
+
   
-  
+
   if Rails.env.production?
     get '404', to: 'application#page_not_found'
     get '422', to: 'application#server_error'
@@ -370,7 +390,12 @@ end
 
   devise_scope :user  do 
         match '/sessions/user', to: 'devise/sessions#create', via: :post
-  end  
+  end 
+
+
+  
+
+
   resources :company_user do
     collection { post :new_company_use }
   end 
@@ -485,6 +510,8 @@ end
   match 'companies/reports/reports_cventas/:company_id' => 'reports#reports_cventas', via: [:get, :post]
   match 'companies/reports/reports_calmacen/:company_id' => 'reports#reports_calmacen', via: [:get, :post]
   match 'companies/reports/reports_basedatos/:company_id' => 'reports#reports_basedatos', via: [:get, :post]
+  match 'companies/reports/reports_basedatosexm/:company_id' => 'reports#reports_basedatosexm', via: [:get, :post]
+  
   match 'companies/reports/reports_iconsultas/:company_id' => 'reports#reports_iconsultas', via: [:get, :post]
   
   
@@ -584,6 +611,7 @@ end
   match 'compros/ac_user/:company_id' => 'compros#ac_user', via: [:get, :post]
   match 'compros/ac_purchases/:company_id' => 'compros#ac_purchases', via: [:get, :post]
   match 'compros/ac_suppliers/:company_id' => 'compros#ac_suppliers', via: [:get, :post]
+
 
   match 'compros/new/:company_id' => 'compros#new', via: [:get, :post]
   match 'compros/do_email/:id' => 'compros#do_email', via: [:get, :post]
@@ -971,7 +999,7 @@ end
   match 'requerimientos/sendmail/:id' => 'requerimientos#sendmail', via: [:get, :post]
   match 'requerimientos/sendcancelar/:id' => 'requerimientos#sendcancelar', via: [:get, :post]
 
-  resources :manifests 
+  
 
 
   match 'suppliers/new2/:id'   => 'suppliers#new2', via: [:get, :post]
@@ -1154,7 +1182,10 @@ end
   # Suppliers
   match 'suppliers/create_ajax/:company_id' => 'suppliers#create_ajax', via: [:get, :post]
   match 'suppliers/new/:company_id' => 'suppliers#new', via: [:get, :post]
+
+
   match 'companies/suppliers/:company_id' => 'suppliers#list_suppliers', via: [:get, :post]
+
   resources :suppliers
   # Gastos
   match 'gastos/new/:company_id' => 'gastos#new', via: [:get, :post]

@@ -1,0 +1,147 @@
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+<div class="ui form segment raised">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Requerimientos", "/companies/requerimientos/#{@company.id}" %>
+</div>
+<div class="ui form segment raised">
+<h3>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  Requerimientos 
+</h3>
+
+<p>
+  Para gestionar requerimientos  por favor llenar el siguiente formulario. Los campos marcados con <strong>*</strong> son obligatorios
+  
+</p>
+
+  <%= hr() %>
+
+<div >
+  
+   
+
+    <p class="bold big">
+      Detalle de Requerimientos pendientes 
+    </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th class="small bordered_bottom bordered_right">
+          Fecha
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Cod.Emp
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Turno
+        </th>        
+        <th class="small bordered_bottom bordered_right">
+          Serie 
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Número 
+        </th>        
+        <th class="small bordered_bottom bordered_right">
+          Placa/Destino
+        </th>
+      
+       
+        <th class="small bordered_bottom bordered_right">
+          Seleccionar
+        </th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      
+  
+
+<% if @detalle_rq.count > 0 %>
+
+<%=  form_tag discontinue2_facturas_path ,method: :post  %>
+    
+<button type="button" id = "check_all" class="btw"> <%= "Marcar todos / Desmarcar todos "%> </button>
+
+      <% for rq in @detalle_rq %>
+        <tr>
+       <td style="width: 10%">  <%= rq.fecha.strftime("%d/%m/%Y") %></td>
+
+    
+          <td style="width: 10%">  <%= rq.codigo %></td>
+
+          <td style="width: 10%">  <%= rq.qty %></td>
+           <td style="width: 10%">  <%= rq.get_unidad(rq.unidad_id) %></td>
+          
+          <td style="width: 40%"> <%= rq.descrip %></td>
+          <td style="width: 15%"> <%= rq.placa_destino %></td>
+         
+           <td >
+             <div class="ui toggle checkbox">
+          
+                  <%= check_box_tag "products_ids[]", rq.id  %> 
+                <label>Atender?</label>
+              </div>
+
+          
+
+          </td>          
+
+        </tr>
+      <% end %>
+    
+ <% end %>
+    </tbody>
+  </table>
+
+
+   
+    <%= hr() %>
+
+
+
+   <div class="ui button" tabindex="0">
+    
+   <%=  submit_tag "Grabar detalle ", class: "ui green submit button"%>
+
+  </div>
+
+</div>
+</div>
+
+<%= br() %>
+<br />
+
+<%= render 'layouts/autocomplete' %>
+
+
+<div class="button">
+  <%= link_to 'Regresar', requerimientos_path, class: "ui blue submit button" %>
+</div>
+
+
+
+<script type="text/javascript"> 
+
+$('.ui.checkbox').change(function() {
+  var is_checked = this.checked;
+  $('.selectable-checkbox').each(function() {
+    this.checked = is_checked;
+  });
+});
+
+
+$('.ui.checkbox').checkbox();
+
+
+</script>

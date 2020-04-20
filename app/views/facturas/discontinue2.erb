@@ -1,0 +1,58 @@
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+<div class="ui form segment raised">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Requerimientos", "/companies/requerimientos/#{@company.id}" %>
+</div>
+<div class="ui form segment raised">
+<h3>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  Requerimientos 
+</h3>
+
+<p>
+  Requerimientos actualizados.
+</p>
+
+  <%= hr() %>
+
+  
+   
+
+
+
+<%= br() %>
+<br />
+
+<%= render 'layouts/autocomplete' %>
+
+
+<div class="button">
+  <%= link_to 'Regresar', requerimientos_path, class: "ui blue submit button" %>
+</div>
+
+<script type="text/javascript"> 
+
+$('#check_all').change(function() {
+  var is_checked = this.checked;
+  $('.selectable-checkbox').each(function() {
+    this.checked = is_checked;
+  });
+});
+
+
+$('.ui.checkbox').checkbox();
+
+
+</script>

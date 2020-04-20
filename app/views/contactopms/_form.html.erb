@@ -1,0 +1,43 @@
+<%= simple_form_for(@contactopm) do |f| %>
+  <%= f.error_notification %>
+
+
+  <td> Proyecto Minero :</td>
+    <td>  <%= f.collection_select :proyecto_minero_id, @proyecto_minero, :id, :descrip, :prompt => true, class: "ui selection dropdown" %></td>
+  
+
+  <table>
+    <tr>
+   <th style="width: 5%">Item </th>
+   <th style="width: 10%">Contacto </th>
+   <th style="width: 10%">Email</th>
+   <th style="width: 10%">Telefono </th>
+   
+   <% nroitem = 1 %>
+   </tr>
+
+    <%= f.fields_for :contactopmdetails  do |rq_fields| %>
+    
+    <tr>
+
+    <td style="width: 5%">  <%= nroitem %> </td>
+    <td style="width: 10%">  <%= rq_fields.text_field :contacto , :size=>"30" %></td>
+   
+    <td style="width: 10%">  <%= rq_fields.text_field :telefono , :size=>"30"%></td>
+    
+    </tr>
+  
+
+    <% nroitem +=1 %>
+    <% end %>
+
+  </table>
+  
+
+
+
+<br>
+ <div class="ui button" tabindex="0">
+  <%= f.button :submit %>
+  </div>
+<% end %>

@@ -16,7 +16,19 @@ class Company < ActiveRecord::Base
   has_many :company_users
   has_many :ajusts 
   has_many :manifests 
- 
+
+
+ def get_proyecto_minero()
+   
+   @dato = ProyectoMinero.all.order(:descrip)
+   return @dato 
+ end 
+ def get_tipoproveedor()
+   
+   @tipoproveedor = Tipoproveedor.all
+   return @tipoproveedor 
+ end 
+
 
  def get_inasists
    

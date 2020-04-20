@@ -1,3 +1,12 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+
+
 <div class="breadcrumbs">
   <%= link_to "My companies", "/companies" %> &raquo;
   <%= link_to @company.name, @company %>
@@ -16,19 +25,24 @@
     <a href="/companies/suppliers/<%= @company.id %>" class="small_btn">Clear</a>
   </form>
 </div>
+<br>
 
+<div class="extra content">
+  <%= link_to 'Nuevo proveedor', "/suppliers/new/#{@company.id}/#{@tipo}",class:"ui primary button" %>
+
+  <%= link_to 'Carga desde Sunat ', "/suppliers/new2/#{@company.id}" ,class:"ui primary button"%>
+ 
+
+
+</div>
 <%= render "suppliers/list" %>
 
 <br />
 
-<div class="button">
-  <%= link_to 'Nuevo proveedor', "/suppliers/new/#{@company.id}" %>
-</div>
 
-<div class="button">
-  <%= link_to 'Carga desde Sunat ', "/suppliers/new2/#{@company.id}" %>
-  
-</div>
+ 
+<%= will_paginate @suppliers %>
+
 
 
 
@@ -43,6 +57,5 @@
  Download:
  
   <%= link_to "CSV", suppliers_path(format: "csv"), multipart: true  %> 
- 
-<%= will_paginate @suppliers %>
+
 

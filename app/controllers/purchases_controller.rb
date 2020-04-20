@@ -134,7 +134,7 @@ WHERE purchase_details.product_id = ? ',params[:id] ])
       pdf 
   end   
 
-  def build_pdf_body9(pdf)
+  def build_pdf_body9(build_pdf_body10)
     
     pdf.text "Facturas  de compra Emitidas : Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
     pdf.text ""
@@ -3285,7 +3285,7 @@ def newfactura2
           @servicebuys  = @company.get_servicebuys()
           @monedas  = @company.get_monedas()
           @payments  = @company.get_payments()  
-  @almacens = @company.get_almacens()
+          @almacens = @company.get_almacens()
     
 
           @purchase[:total_amount] = @purchase[:payable_amount] * 1.18
@@ -3438,13 +3438,15 @@ def newfactura2
     if @purchase[:payment_id]  == 1 
       @purchase[:pago] = @purchase[:total_amount]
       @purchase[:balance] =  0.00 
+         @purchase[:tipo]    = 0
     
     else 
       @purchase[:pago] = 0
       @purchase[:balance] =   @purchase[:total_amount]
+       @purchase[:tipo]    = 1
     end 
 
-    @purchase[:tipo]    = 0
+ 
     
     
     if(params[:purchase][:user_id] and params[:purchase][:user_id] != "")

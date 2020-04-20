@@ -11,6 +11,89 @@
 
 <%= render "suppliers/show" %>
 
+
+
+
+<div class="button">
+<%= link_to 'Agregar Item', new_supplier_supplier_detail_path(@supplier) %>
+</div> 
+
+
+
+<table>
+  <thead>
+    <tr>
+      <th>
+        Contacto
+      </th>
+      <th>
+        Cargo
+      </th>
+      
+      <th>
+        email
+      </th>
+      <th>
+        telefono
+      </th>
+      
+      <th>
+        Area
+      </th>
+    
+    </tr>
+  </thead>
+  <tbody>
+    
+<%= hr() %>
+    <%  @supplier_detail.each do |product| %>
+    
+      <tr>
+
+        <td class="small bordered_bottom bordered_right">
+          
+             <%=product.name %>
+             
+
+          </td>
+          
+         <td class="small bordered_bottom bordered_right">
+            <%= product.cargo %>
+          </td>
+         <td class="small bordered_bottom bordered_right">
+         
+          </td>
+         <td class="small bordered_bottom bordered_right">
+             
+          </td>
+          
+         <td class="small bordered_bottom bordered_right">
+            <%= product.telefono %>
+          </td>
+         <td class="small bordered_bottom bordered_right">
+            <%= product.area %>
+          </td>
+
+       
+          <td><%= link_to 'Editar',  edit_supplier_supplier_detail_path(supplier_id: @supplier.id,id: product.id ) %></td>          
+          <td><%= link_to 'Eliminar',[@supplier,product], method: :delete, data: { confirm: 'Esta seguro?' } %></td>
+          
+      </tr>
+    <% end %>
+  
+    
+  
+   
+   
+  </tbody>
+</table>
+<br />
+
+
+<br />
+
+
+
 <div class="button">
   <%= link_to "Invoices for supplier", "/companies/serviceorders/#{@supplier.company.id}?supplier=#{@supplier.id}" %>
   <%= link_to 'Editar', edit_supplier_path(@supplier) %>

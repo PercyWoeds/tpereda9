@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Supplier Details</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Cargo</th>
+      <th>Telefono</th>
+      <th>Correo</th>
+      <th>Area</th>
+      <th>Supplier</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @supplier_details.each do |supplier_detail| %>
+      <tr>
+        <td><%= supplier_detail.name %></td>
+        <td><%= supplier_detail.cargo %></td>
+        <td><%= supplier_detail.telefono %></td>
+        <td><%= supplier_detail.correo %></td>
+        <td><%= supplier_detail.area %></td>
+        <td><%= supplier_detail.supplier %></td>
+        <td><%= link_to 'Show', supplier_detail %></td>
+        <td><%= link_to 'Edit', edit_supplier_detail_path(supplier_detail) %></td>
+        <td><%= link_to 'Destroy', supplier_detail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Supplier detail', new_supplier_detail_path %>

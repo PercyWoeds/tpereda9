@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200322164350) do
+ActiveRecord::Schema.define(version: 20200406160111) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -156,6 +156,35 @@ ActiveRecord::Schema.define(version: 20200322164350) do
 
   add_index "assistances", ["inasist_id"], name: "index_assistances_on_inasist_id", using: :btree
 
+  create_table "autoviaticos", force: :cascade do |t|
+    t.string   "code"
+    t.integer  "employee_id"
+    t.datetime "fecha"
+    t.string   "tema"
+    t.integer  "supplier_id"
+    t.string   "asunto"
+    t.float    "movilidad"
+    t.float    "almuerzo"
+    t.float    "otros"
+    t.string   "observa"
+    t.string   "hora_ingreso"
+    t.string   "hora_salida"
+    t.integer  "employee_id2"
+    t.string   "lugar_salida"
+    t.string   "lugar_destino"
+    t.string   "hora1"
+    t.string   "hora2"
+    t.string   "observa2"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "asunto1"
+    t.datetime "fecha2"
+    t.string   "asunto2"
+    t.string   "lugar1"
+    t.string   "lugar2"
+    t.string   "lugar3"
+  end
+
   create_table "bank_acounts", force: :cascade do |t|
     t.string   "number"
     t.integer  "moneda_id"
@@ -289,6 +318,44 @@ ActiveRecord::Schema.define(version: 20200322164350) do
     t.string   "code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "contactodmdetails", force: :cascade do |t|
+    t.string   "contacto"
+    t.string   "email"
+    t.string   "telefono"
+    t.integer  "contactopm_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "contactodmdetails", ["contactopm_id"], name: "index_contactodmdetails_on_contactopm_id", using: :btree
+
+  create_table "contactopm_details", force: :cascade do |t|
+    t.integer  "contactopm_id"
+    t.string   "contacto"
+    t.string   "email"
+    t.string   "celular"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "contactopmdetails", force: :cascade do |t|
+    t.string   "contacto"
+    t.string   "email"
+    t.string   "telefono"
+    t.integer  "contactopm_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "contactopmdetails", ["contactopm_id"], name: "index_contactopmdetails_on_contactopm_id", using: :btree
+
+  create_table "contactopms", force: :cascade do |t|
+    t.integer  "proyecto_minero_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "code"
   end
 
   create_table "contratos", force: :cascade do |t|
@@ -1716,6 +1783,16 @@ ActiveRecord::Schema.define(version: 20200322164350) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "proyecto_mineros", force: :cascade do |t|
+    t.string   "code"
+    t.datetime "fecha1"
+    t.datetime "fecha2"
+    t.string   "descrip"
+    t.integer  "punto_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "pumps", force: :cascade do |t|
     t.string   "fuel"
     t.string   "pump01"
@@ -2048,6 +2125,7 @@ ActiveRecord::Schema.define(version: 20200322164350) do
     t.string   "processed"
     t.datetime "date_processed"
     t.integer  "user_id"
+    t.string   "motivo"
   end
 
   create_table "restocks", force: :cascade do |t|
@@ -2074,6 +2152,7 @@ ActiveRecord::Schema.define(version: 20200322164350) do
     t.string   "string"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.string   "atento"
   end
 
   create_table "sellvales", force: :cascade do |t|
@@ -2271,6 +2350,19 @@ ActiveRecord::Schema.define(version: 20200322164350) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "supplier_details", force: :cascade do |t|
+    t.string   "name"
+    t.string   "cargo"
+    t.string   "telefono"
+    t.string   "correo"
+    t.string   "area"
+    t.integer  "supplier_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "supplier_details", ["supplier_id"], name: "index_supplier_details_on_supplier_id", using: :btree
+
   create_table "supplier_payment_details", force: :cascade do |t|
     t.integer  "document_id"
     t.string   "documento"
@@ -2323,9 +2415,14 @@ ActiveRecord::Schema.define(version: 20200322164350) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "company_id"
-    t.string   "ruc",        limit: 11
+    t.string   "ruc",              limit: 11
     t.string   "taxable"
     t.string   "account"
+    t.string   "tipo1"
+    t.string   "tipo2"
+    t.integer  "bank_id"
+    t.string   "cuenta_corriente"
+    t.string   "proyecto_minero"
   end
 
   create_table "tanques", force: :cascade do |t|
@@ -2437,6 +2534,13 @@ ActiveRecord::Schema.define(version: 20200322164350) do
     t.string   "code"
     t.string   "descrip"
     t.float    "importe"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tipoproveedors", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -2739,7 +2843,10 @@ ActiveRecord::Schema.define(version: 20200322164350) do
   end
 
   add_foreign_key "assistances", "inasists"
+  add_foreign_key "contactodmdetails", "contactopms"
+  add_foreign_key "contactopmdetails", "contactopms"
   add_foreign_key "cpagar_details", "cpagars"
   add_foreign_key "products", "stocks"
   add_foreign_key "service_extensions", "servicebuys"
+  add_foreign_key "supplier_details", "suppliers"
 end

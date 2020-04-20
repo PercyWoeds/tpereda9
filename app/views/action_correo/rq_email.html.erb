@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+
+
+
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h3>Estimado Cliente  </h3>
+    <p>
+      Por la presente les comunicamos que el usuario <%= @requerimiento.user.username %> de  TRANPORTES PEREDA SRL ha realizado el siguiente requerimiento:
+
+      <table>
+        <tr>
+         <td> CODE  : </td>
+         <td> <%=@requerimiento.code %>  </td>
+        </tr>
+
+        <tr>
+          <td>Empleado </td>
+          <td><%= @requerimiento.employee.full_name %> </td>
+        </tr>
+
+        <tr>
+          <td>Division :</td>
+          <td><%= @requerimiento.division.name  %></td>
+        </tr>
+        <tr>
+          <td>Fecha  :</td>
+          <td><%= @requerimiento.fecha.strftime("%d/%m/%Y") %> </td>
+        </tr>
+        <tr>
+          <td>Hora : </td>
+          <td><%= @requerimiento.hora  %></td>
+        </tr>
+    
+
+      </table>
+
+    </p>
+
+   
+
+
+  <table>
+  <tr>
+ <th style="width: 5%">Item </th>
+ <th style="width: 10%">Codigo </th>
+ <th style="width: 10%">Cantidad </th>
+ <th style="width: 10%">Unidad </th>
+ <th style="width: 50%">Descrip </th>
+ <th style="width: 15%">Placa/Destino </th>
+ <% nroitem = 1%>
+ </tr>
+  <% for rq  in @requerimiento.rqdetails  %>
+  <tr>
+  <td style="width: 5%">  <%= nroitem %> </td>
+  <td style="width: 10%">  <%= rq.codigo %></td>
+
+  <td style="width: 10%">  <%= rq.qty %></td>
+   <td style="width: 10%">  <%= rq.unidad.descrip %></td>
+  
+  <td style="width: 50%"> <%= rq.descrip %></td>
+  <td style="width: 15%"> <%= rq.placa_destino %></td>
+  
+  </tr>
+  <% nroitem +=1 %>
+  <% end %>
+
+</table>
+
+    <p> Nota:</p>
+    <%= @requerimiento.nota %>
+
+    <p> Observaciones </p>
+    <%= @requerimiento.get_processed %>
+
+    
+    <p> Usuario  </p>
+    <%= @requerimiento.user.username  %>
+
+    <p>
+
+  
+  </body>
+</html>

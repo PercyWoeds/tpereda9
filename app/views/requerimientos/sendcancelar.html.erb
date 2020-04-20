@@ -1,0 +1,43 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Requerimiento", "/companies/requerimientos/#{@company.id}" %> &raquo;
+  <%= link_to @requerimiento.code, @requerimiento %>
+</div>
+
+<h1>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+   Ingresar observaciones
+</h1>
+
+<%= hr() %>
+
+<h3>
+  <%= link_to @requerimiento.code, @requerimiento %>
+</h3>
+
+<%= hr() %>
+
+<form method="post" action="/requerimientos/do_cancelar/<%= @requerimiento.id %>">
+  <strong>Motivo de cancelacion :</strong>
+ 
+  <input type="text" name="motivo" value="Ingrese motivo de cancelacion requerimiento " onclick="$(this).select();" />
+  <div class="ui teal labeled icon button">
+  <input type="submit" value="Grabar" class="ui green button" />
+  <i class="add icon"></i>
+  </div>
+</form>
+
+<%= hr() %>
+
+<div class="button">
+
+  <%= link_to 'Regresar', "/companies/requerimientos/#{@company.id}",class:"ui primary button" %>
+</div>

@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Contactopmdetails</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Contacto</th>
+      <th>Email</th>
+      <th>Telefono</th>
+      <th>Contactopm</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @contactopmdetails.each do |contactopmdetail| %>
+      <tr>
+        <td><%= contactopmdetail.contacto %></td>
+        <td><%= contactopmdetail.email %></td>
+        <td><%= contactopmdetail.telefono %></td>
+        <td><%= contactopmdetail.contactopm %></td>
+        <td><%= link_to 'Show', contactopmdetail %></td>
+        <td><%= link_to 'Edit', edit_contactopmdetail_path(contactopmdetail) %></td>
+        <td><%= link_to 'Destroy', contactopmdetail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Contactopmdetail', new_contactopmdetail_path %>

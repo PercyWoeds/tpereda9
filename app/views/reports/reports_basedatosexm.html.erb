@@ -1,0 +1,67 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %>
+</div>
+
+<h1>
+  <%= image_tag("reports_48.png", :class => "vmiddle") %>
+  Base de datos 
+</h1>
+
+<div class="mid_box bordered_right">
+  <h3>
+  
+
+  <h3>
+    <%= image_tag("product_category_32.png", :class => "vmiddle") %>
+    <%= link_to "Proveedores - Examenes medicos",  "/companies/suppliers/#{@company.id}" %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar proveedores examenes medicos
+  </p>
+
+
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("product_category_32.png", :class => "vmiddle") %>
+    <%= link_to "Contacto Minas",contactopms_path %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar contacto minas 
+  </p>
+
+
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("product_category_32.png", :class => "vmiddle") %>
+    <%= link_to "Proyecto Minero", proyecto_mineros_path %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar Proyecto Minero.
+  </p>
+  
+
+ 
+
+
+
+</div>
+
+
+
+<div class="mid_box bordered_right">
+   
+
+
+   
+    
+  </div>
+
+
+
+<%= br() %>

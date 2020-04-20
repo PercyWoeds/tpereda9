@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @supplier_detail.name %>
+</p>
+
+<p>
+  <strong>Cargo:</strong>
+  <%= @supplier_detail.cargo %>
+</p>
+
+<p>
+  <strong>Telefono:</strong>
+  <%= @supplier_detail.telefono %>
+</p>
+
+<p>
+  <strong>Correo:</strong>
+  <%= @supplier_detail.correo %>
+</p>
+
+<p>
+  <strong>Area:</strong>
+  <%= @supplier_detail.area %>
+</p>
+
+<p>
+  <strong>Supplier:</strong>
+  <%= @supplier_detail.supplier %>
+</p>
+
+<%= link_to 'Edit', edit_supplier_detail_path(@supplier_detail) %> |
+<%= link_to 'Back', supplier_details_path %>

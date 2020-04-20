@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @proyecto_minero.code %>
+</p>
+
+<p>
+  <strong>Fecha1:</strong>
+  <%= @proyecto_minero.fecha1 %>
+</p>
+
+<p>
+  <strong>Fecha2:</strong>
+  <%= @proyecto_minero.fecha2 %>
+</p>
+
+<p>
+  <strong>Descrip:</strong>
+  <%= @proyecto_minero.descrip %>
+</p>
+
+<p>
+  <strong>Punto:</strong>
+  <%= @proyecto_minero.punto_id %>
+</p>
+
+<%= link_to 'Edit', edit_proyecto_minero_path(@proyecto_minero) %> |
+<%= link_to 'Back', proyecto_mineros_path %>

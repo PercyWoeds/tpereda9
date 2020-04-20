@@ -3580,6 +3580,7 @@ def newfactura2
       invoice_headers  = [["Fecha : ",$lcHora]]    
       invoice_headers
   end
+
  def discontinue
     
     @facturasselect = Sellvale.find(params[:products_ids])
@@ -3628,12 +3629,36 @@ def newfactura2
         format.xml  { render :xml => @invoice.errors, :status => :unprocessable_entity }
       end
     end
-    
-    
-    
-     
   end   
 
+  
+def discontinue2
+    @company = Company.find(1)
+    
+    if params[:products_ids] 
+    
+    @rqselect = Rqdetail.find(params[:products_ids])
+
+
+    for item in @rqselect
+        begin
+    
+
+          new_estado = Rqdetail.find(item.id)     
+          new_estado.atento="1"
+          new_estado.save 
+           
+        
+         end              
+    end
+
+    
+   end
+
+  
+  
+     
+  end   
 
 def reportep01 
     
@@ -4442,7 +4467,7 @@ def client_data_headers
        for  product in @facturas_rpt
 
         
-          if product.user_id != 3 
+        #  if product.user_id != 3 
         case @tipo 
          when "1"
           begin 
@@ -4526,7 +4551,7 @@ def client_data_headers
               nroitem = nroitem + 1
              
           end
-      end 
+     # end 
     end 
     end 
 
@@ -4651,12 +4676,9 @@ def client_data_headers
     @fecha2 = params[:fecha2]    
     @tipo   = params[:tiporeporte]    
 
-
     
     @facturas_rpt = @company.get_purchases_day(@fecha1,@fecha2)
-
      
-
         Prawn::Document.generate "app/pdf_output/TP_CM_F_015.pdf" , :page_layout => :landscape ,:page_size=>"A4"  do |pdf|
             pdf.font "Helvetica"
             pdf = build_pdf_header_rpt8(pdf)
@@ -4935,6 +4957,20 @@ end
 
 
 #####################################################################################################
+
+ def do_gestion
+
+    @company = Company.find(1)
+
+    @detalle_rq = Requerimiento.find_by_sql(['Select requerimientos.*,rqdetails.id,rqdetails.requerimiento_id, rqdetails.codigo,rqdetails.qty,rqdetails.unidad_id,rqdetails.descrip,rqdetails.placa_destino from rqdetails INNER JOIN requerimientos ON rqdetails.requerimiento_id = requerimientos.id where requerimientos.processed = ? and rqdetails.atento is null  order by code,fecha desc',"1"])
+
+
+
+    return @detalle_rq
+
+
+
+ end 
 
   
   private
