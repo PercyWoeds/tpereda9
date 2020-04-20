@@ -1889,7 +1889,7 @@ def get_pendientes_day_customer_detraccion(fecha1,fecha2,cliente)
     return @purchases 
   end
   def get_purchases_day(fecha1,fecha2)
-    @purchases = Purchase.where([" company_id = ? AND date2 >= ? and date2 <= ?  and payment_id <> ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","12" ]).order(:supplier_id,:moneda_id,:date2,:documento)    
+    @purchases = Purchase.where([" company_id = ? AND date2 >= ? and date2 <= ?  and document_id <> ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","12" ]).order(:supplier_id,:moneda_id,:date2,:documento)    
     return @purchases 
   end
   
