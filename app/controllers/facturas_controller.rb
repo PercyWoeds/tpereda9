@@ -4650,8 +4650,7 @@ def client_data_headers
       
       table_content3 << row 
       row = []
-      row << "V.B.COMPRAS 
-              RAUL ARMANDO DIESTRA JARAMILLO"
+      row << "V.B.COMPRAS "
       row << "V.B.GERENCIA"
       row << "V.B.CONTABILIDAD"
       
