@@ -1882,6 +1882,7 @@ def get_pendientes_day_customer_detraccion(fecha1,fecha2,cliente)
   end
   
 
+
   def get_purchases_year_month( year,month)
   
     @purchases = Purchase.where(["purchases.balance > 0  and  company_id = ?  AND date2 >= ? AND date2 <= ?", self.id,"2000-01-01 00:00:00", "#{year}-#{month}-31 23:59:59"]).order("supplier_id")  
@@ -4546,8 +4547,20 @@ INNER JOIN products ON output_details.product_id = products.id
 WHERE outputs.employee_id = ?  and products.products_category_id = ?  and outputs.fecha >= ? and outputs.fecha <= ?',empleado,product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
  
     return @purchases 
-
 end
+
+def get_salidas_day30(fecha1,fecha2,product,empleado)
+  
+    @purchases = Output.find_by_sql(['Select outputs.*,output_details.quantity,
+    output_details.price,output_details.total,products.name as nameproducto,products.code as codigo,products.unidad
+    from output_details   
+INNER JOIN outputs ON output_details.output_id = outputs.id
+INNER JOIN products ON output_details.product_id = products.id
+WHERE products.products_category_id = ?  and outputs.fecha >= ? and outputs.fecha <= ?',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+ 
+    return @purchases 
+end
+
 def get_salidas_day3_1(fecha1,fecha2,product,placa)
   
     @purchases = Output.find_by_sql(['Select outputs.*,output_details.quantity,
