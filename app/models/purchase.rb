@@ -977,6 +977,14 @@ def get_tax3(items, supplier_id)
     where("documento iLIKE ?", "%#{search}%") 
   end  
   
-   
+    def get_stock(codigo)
+        
+       a = Stock.find_by(product_id: codigo)
+       if a 
+        return a.quantity
+       else
+        return 0 
+       end 
+  end 
 
 end

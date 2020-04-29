@@ -5,6 +5,7 @@ require "open-uri"
  
 class FacturasController < ApplicationController
   
+
    
     $: << Dir.pwd  + '/lib'
     before_action :authenticate_user!
@@ -369,7 +370,7 @@ class FacturasController < ApplicationController
             #else 
              # row << product.employee.full_name 
             #end
-            if product.truck == nil 
+            if product.truck_id == nil 
                   row << ""
             else
                   row << product.truck.placa
@@ -1359,7 +1360,7 @@ def reportes4
     case params[:print]
       when "To PDF" then 
         begin 
-         render  pdf: "Facturas ",template: "facturas/rventas_rpt.pdf.erb",locals: {:facturas => @facturas_rpt},
+         render  pdf: "Facturas ",template: "facturas/rventas2_rpt.pdf.erb",locals: {:facturas => @facturas_rpt},
          :orientation      => 'Landscape',
          :header => {
            :spacing => 5,
@@ -4526,8 +4527,10 @@ def client_data_headers
               row << product.document.descripshort
               row << product.documento 
               row << product.get_descrip0 
-              row << product.date1.strftime("%d/%m/%Y")
-              row << product.date3.strftime("%d/%m/%Y")
+              
+                row << product.date1.strftime("%d/%m/%Y")
+                row << product.date2.strftime("%d/%m/%Y")
+                row << product.date3.strftime("%d/%m/%Y")
 
               if product.moneda_id == 1 
                   row << "0.00 "

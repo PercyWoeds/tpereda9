@@ -320,26 +320,6 @@ ActiveRecord::Schema.define(version: 20200406160111) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "contactodmdetails", force: :cascade do |t|
-    t.string   "contacto"
-    t.string   "email"
-    t.string   "telefono"
-    t.integer  "contactopm_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-  end
-
-  add_index "contactodmdetails", ["contactopm_id"], name: "index_contactodmdetails_on_contactopm_id", using: :btree
-
-  create_table "contactopm_details", force: :cascade do |t|
-    t.integer  "contactopm_id"
-    t.string   "contacto"
-    t.string   "email"
-    t.string   "celular"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-  end
-
   create_table "contactopmdetails", force: :cascade do |t|
     t.string   "contacto"
     t.string   "email"
@@ -2843,7 +2823,6 @@ ActiveRecord::Schema.define(version: 20200406160111) do
   end
 
   add_foreign_key "assistances", "inasists"
-  add_foreign_key "contactodmdetails", "contactopms"
   add_foreign_key "contactopmdetails", "contactopms"
   add_foreign_key "cpagar_details", "cpagars"
   add_foreign_key "products", "stocks"
