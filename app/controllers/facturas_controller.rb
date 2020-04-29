@@ -4473,7 +4473,7 @@ def client_data_headers
          when "1"
           begin 
         
-            if product.payment_id != 1 and product.supplier_id != 1731 and (product.payment_id != 12 || product.payment_id != 16 )
+            if product.payment_id != 1 and product.supplier_id != 1731 and (product.payment_id != 12 || product.payment_id != 16 ) and product.document_id != 13
             
                 fechas2 = product.date2 
                  
@@ -4517,7 +4517,7 @@ def client_data_headers
       when "0" 
         begin 
 
-          if  product.payment_id == 1 and product.supplier_id != 1731 
+          if  product.payment_id == 1 and product.supplier_id != 1731  and product.document_id != 13
 
             fechas2 = product.date2 
                

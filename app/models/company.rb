@@ -1903,9 +1903,9 @@ def get_pendientes_day_customer_detraccion(fecha1,fecha2,cliente)
   def get_purchases_day_tipo(fecha1,fecha2,tipo)
 
     if tipo =="2" 
-      @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date3 <= ? and processed = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1"]).order(:supplier_id,:moneda_id,:date1).where(status: nil)    
+      @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date3 <= ? and processed = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1"]).order(:supplier_id,:moneda_id,:date1) 
     else 
-      @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date3 <= ?  AND tipo = ?  and processed = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", tipo, "1"]).order(:supplier_id,:moneda_id,:date1).where(status: nil) 
+      @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date3 <= ?  AND tipo = ?  and processed = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", tipo, "1"]).order(:supplier_id,:moneda_id,:date1)
     end 
 
     return @purchases 
@@ -4540,7 +4540,7 @@ end
 def get_salidas_day3(fecha1,fecha2,product,empleado)
   
     @purchases = Output.find_by_sql(['Select outputs.*,output_details.quantity,
-    output_details.price,output_details.total,products.name as nameproducto,products.code as codigo,products.unidad
+    output_details.price,output_details.total,products.name as nameproducto,products.code as codigo,products.unidad,products.ubicacion 
     from output_details   
 INNER JOIN outputs ON output_details.output_id = outputs.id
 INNER JOIN products ON output_details.product_id = products.id
@@ -4551,7 +4551,7 @@ end
 
 def get_salidas_day30(fecha1,fecha2,product)
   
-    @purchases = Output.find_by_sql(['Select outputs.*,output_details.quantity,
+    @purchases = Output.find_by_sql(['Select outputs.*,output_details.quantity,output_details.product_id,
     output_details.price,output_details.total,products.name as nameproducto,products.code as codigo,products.unidad
     from output_details   
 INNER JOIN outputs ON output_details.output_id = outputs.id

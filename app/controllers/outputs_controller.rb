@@ -315,6 +315,7 @@ class OutputsController < ApplicationController
                                         } do 
                                           columns([0]).align=:center
                                           columns([1]).align=:left
+                                            columns([1]).width = 45
                                           columns([2]).align=:left
                                           columns([2]).width = 45
                                           columns([3]).align=:left
@@ -371,7 +372,8 @@ class OutputsController < ApplicationController
     @namecategoria = @company.get_categoria_name(@categoria)      
     @facturas_rpt = @company.get_salidas_day30(@fecha1,@fecha2,@categoria)
 
-    Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
+    Prawn::Document.generate "app/pdf_output/rpt_factura.pdf" , :page_layout => :landscape ,:page_size=>"A4"  do |pdf|
+
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt2(pdf)
         pdf = build_pdf_body_rpt2(pdf)
@@ -452,7 +454,7 @@ class OutputsController < ApplicationController
             row << product.codigo
             row << product.nameproducto
             row << product.unidad 
-            
+             row << product.ubicacion
             row << product.employee.full_name
             row << product.truck.placa            
             row << sprintf("%.2f",product.quantity.to_s)
@@ -484,6 +486,7 @@ class OutputsController < ApplicationController
       row << "TOTALES => "
       row << sprintf("%.2f",@cantidad.to_s)
       row << " "
+      row << " "
       row << sprintf("%.2f",@totales.to_s)
 
 
@@ -498,11 +501,19 @@ class OutputsController < ApplicationController
                                           columns([2]).align=:left
                                           columns([3]).align=:left
                                           columns([4]).align=:left
+                                           columns([4]).width = 160
                                           columns([5]).align=:center  
                                           columns([6]).align=:right
                                           columns([7]).align=:right
-                                          columns([8]).align=:right
-                                        end                                          
+                                          columns([8]).align=:left 
+                                          columns([9]).align=:right
+                                          columns([10]).align=:right
+                                          columns([11]).align=:right
+                                          
+
+
+
+                                                                                  end                                          
       pdf.move_down 10      
       #totales 
       pdf 
@@ -546,7 +557,7 @@ class OutputsController < ApplicationController
     
     @facturas_rpt = @company.get_salidas_day3(@fecha1,@fecha2,@categoria,@empleado)
 
-    Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
+    Prawn::Document.generate "app/pdf_output/rpt_factura.pdf" , :page_layout => :landscape ,:page_size=>"A4"  do |pdf|
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt3(pdf)
         pdf = build_pdf_body_rpt3(pdf)
