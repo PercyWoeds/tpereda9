@@ -1974,6 +1974,8 @@ def build_pdf_header_rpt48(pdf)
        lcCliente = @facturas_rpt.first.supplier_id
 
        for  product in @facturas_rpt
+
+         if product.balance.round(2)  != 0.00
         
           if lcCliente == product.supplier_id
 
@@ -2050,7 +2052,7 @@ def build_pdf_header_rpt48(pdf)
             table_content << row
 
 
-
+          end 
           end 
           
          

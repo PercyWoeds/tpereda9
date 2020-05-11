@@ -6,9 +6,8 @@ class AssistancesController < ApplicationController
   def index
     @company = Company.find(1)
 
-    @employees = @company.get_employees
+    @employees = @company.get_employees0
 
-    
 
     fecha1= params[:fecha1]
     fecha2= params[:fecha2]
@@ -33,12 +32,13 @@ class AssistancesController < ApplicationController
     @company = Company.find(1)
     @employees = @company.get_employees
     @inasists = @company.get_inasists
-
+    
+    params[:fecha1] = Date.today
+    params[:fecha2] = Date.today
+    
 
     now = Time.now.in_time_zone.change( hour: 8)
-    puts "horaxxxxxxx"
-    puts now.to_s 
-
+    
     @assistance['fecha'] = Date.today
     @assistance['hora1'] = Time.now.in_time_zone.change( hour: 8) 
     @assistance['hora2'] = Time.now.in_time_zone.change( hour: 17, min: 45)
