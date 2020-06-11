@@ -1,0 +1,104 @@
+<%= simple_form_for(@cdocument) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+
+    <div class="field">
+      <%= f.label :employee_id, "Empleado" %><br />
+      <%= f.collection_select :employee_id, @employees, :id, :full_name2, :prompt => true %>
+    </div>
+
+     <div class="field">
+      <%= f.label :lugar,"Lugar Residencia   " %><br />
+      <%= f.text_field :lugar   %>
+    </div>
+     <div class="field">
+      <%= f.label :experiencia," Años Experiencia Laboral Certificados " %><br />
+      <%= f.text_field :experiencia   %>
+    </div>
+   
+     <div class="field">
+      <%= f.label :dni ,"Licencia / DNI. " %><br />
+      <%= f.text_field :dni  %>
+    </div>
+
+
+     <div class="field">
+      <%= f.label :categoria ,"Categoria " %><br />
+      <%= f.text_field :categoria  %>
+    </div>
+
+
+    <div class="field">
+    <%= f.label :exp_licencia , "Expedicion Licencia *", :class => "bold" %><br />
+    <%= f.date_field :exp_licencia %>
+  </div>
+  <div class="field">
+    <%= f.label :rev_licencia , "Revalidacion Licencia*", :class => "bold" %><br />
+    <%= f.date_field :rev_licencia %>
+  </div>
+ <div class="field">
+      <%= f.label :categoria_especial ,"Categoria especial" %><br />
+      <%= f.text_field :categoria_especial  %>
+    </div>
+
+ <div class="field">
+      <%= f.label :exp_licencia2 ,"Expedicion Licencia " %><br />
+      <%= f.text_field :exp_licencia2  %>
+    </div>
+
+ <div class="field">
+    <%= f.label :rev_licencia2, "Revalidacion Licencia *", :class => "bold" %><br />
+    <%= f.date_field :rev_licencia2 %>
+  </div>
+
+  <div class="field">
+      <%= f.label :iqbf,"IDBF." %><br/>
+      <%= f.text_field :iqbf  %>
+    </div>
+
+  <div class="field">
+    <%= f.label :dni_emision, "DNI Fecha Emision *", :class => "bold" %><br />
+    <%= f.date_field :dni_emision  %>
+  </div>
+
+
+  <div class="field">
+    <%= f.label :dni_caducidad , "DNI Fecha Caducidad ", :class => "bold" %><br />
+    <%= f.date_field :dni_caducidad %>
+  </div>
+
+ <div class="field">
+    <%= f.label :ap_emision , "ANT.POLICIALES - Emision *", :class => "bold" %><br />
+    <%= f.date_field :ap_emision %>
+  </div>
+ <div class="field">
+    <%= f.label :ap_caducidad , "ANT.POLICIALES - Vmto.*", :class => "bold" %><br />
+    <%= f.date_field :ap_caducidad %>
+  </div>
+<div class="field">
+    <%= f.label :app_emision , "ANT.PENAL - Emision *", :class => "bold" %><br />
+    <%= f.date_field :app_emision %>
+  </div>
+ <div class="field">
+    <%= f.label :app_caducidad , "ANT.PENAL - Vmto.*", :class => "bold" %><br />
+    <%= f.date_field :app_caducidad %>
+  </div>
+
+
+ <div class="field">
+      <%= f.label :cv_documentado,"CV Documentado." %><br/>
+      <%= f.text_field :cv_documentado %>
+    </div>
+
+     <div class="field">
+      <%= f.label :nivel_educativo,"Nivel Educativo" %><br/>
+      <%= f.text_field :nivel_educativo %>
+    </div>
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

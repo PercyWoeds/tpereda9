@@ -4,7 +4,6 @@ class Purchase < ActiveRecord::Base
   validates_presence_of :company_id, :supplier_id, :documento,:document_id,:date1,:date2,:date3, :moneda_id,:almacen_id 
   validates :documento , uniqueness:{ scope:[:supplier_id, :document_id,:moneda_id]}
 
-
   belongs_to :company
   belongs_to :location
   belongs_to :division
@@ -292,8 +291,7 @@ TABLE_HEADERS31= ["ITEM","PROVEEDOR","TD",
     a = PurchaseDetail.find_by(purchase_id: self.id)
     if a.nil?
 
-    
-
+         return  ""
     else 
         if a.product.nil? 
             b =Servicebuy.find_by(id:a.product_id)

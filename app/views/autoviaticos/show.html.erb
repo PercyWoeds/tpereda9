@@ -1,94 +1,250 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Code:</strong>
-  <%= @autoviatico.code %>
-</p>
 
-<p>
-  <strong>Employee:</strong>
-  <%= @autoviatico.employee_id %>
-</p>
 
-<p>
-  <strong>Fecha:</strong>
-  <%= @autoviatico.fecha %>
-</p>
 
-<p>
-  <strong>Tema:</strong>
-  <%= @autoviatico.tema %>
-</p>
+<div class="ui form">
 
-<p>
-  <strong>Supplier:</strong>
-  <%= @autoviatico.supplier_id %>
-</p>
 
-<p>
-  <strong>Asunto:</strong>
-  <%= @autoviatico.asunto %>
-</p>
+ <table style="width:100%">
 
-<p>
-  <strong>Movilidad:</strong>
-  <%= @autoviatico.movilidad %>
-</p>
 
-<p>
-  <strong>Almuerzo:</strong>
-  <%= @autoviatico.almuerzo %>
-</p>
+<div class="ui form">
 
-<p>
-  <strong>Otros:</strong>
-  <%= @autoviatico.otros %>
-</p>
+ <table style="width:100%">
+ 
+<tr>
+ <td class="ui dividing header" >    </td>
+ <td  style="font-weight:bold" > LOCAL </td>
+  </tr>
 
-<p>
-  <strong>Observa:</strong>
-  <%= @autoviatico.observa %>
-</p>
+ <tr>
+    <div class="field">
+     <td>Nombre:</td>
+      <td>  <%= @autoviatico.employee.full_name2 %></td>
+    </div>
+   </tr>
+   <tr>      
 
-<p>
-  <strong>Hora ingreso:</strong>
-  <%= @autoviatico.hora_ingreso %>
-</p>
+    <div class="field">
+        <td>Fecha:  </td>
+        <td> <%= @autoviatico.fecha.strftime("%d/%m/%Y")%> </td>
 
-<p>
-  <strong>Hora salida:</strong>
-  <%= @autoviatico.hora_salida %>
-</p>
+    </div>
 
-<p>
-  <strong>Employee id2:</strong>
-  <%= @autoviatico.employee_id2 %>
-</p>
+   
 
-<p>
-  <strong>Lugar salida:</strong>
-  <%= @autoviatico.lugar_salida %>
-</p>
+  </tr>
 
-<p>
-  <strong>Lugar destino:</strong>
-  <%= @autoviatico.lugar_destino %>
-</p>
+<tr>
 
-<p>
-  <strong>Hora1:</strong>
-  <%= @autoviatico.hora1 %>
-</p>
+<div class="field">
+        <td>Tema</td>
+        <td>  <%= @autoviatico.tema %> </td>
+    </div>
 
-<p>
-  <strong>Hora2:</strong>
-  <%= @autoviatico.hora2 %>
-</p>
+</tr>
 
-<p>
-  <strong>Observa2:</strong>
-  <%= @autoviatico.observa2 %>
-</p>
+<tr>
 
-<%= link_to 'Edit', edit_autoviatico_path(@autoviatico) %> |
-<%= link_to 'Back', autoviaticos_path %>
+<div class="field" >
+     <td  style="font-weight:bold" > Clinica/ Capacitacion :</td>
+      <td>  <%= @autoviatico.supplier.name  %></td>
+    </div>
+
+</tr>
+
+ </table>
+
+
+<table style="width:100%">
+
+
+<tr>
+
+
+  <td >Asunto </td>
+  <td>
+
+     <div class="ui toggle checkbox">
+       
+           <% if @autoviatico.asunto1 == "1"  %>  
+           X
+           <% end %>
+        
+          <label>Examen Medico </label>
+        </div>
+      
+  </td>
+
+
+  <td>
+          <div class="ui toggle checkbox">
+
+          <% if @autoviatico.asunto2 == "1"  %>  
+           X
+           <% end %>
+          <label>Capacitacion </label>
+         </div>
+  </td>
+   
+
+</tr>
+
+<tr> 
+   
+   <div class="field">
+        <td>Movilidad</td>
+        <td>  <%= @autoviatico.movilidad %> </td>
+        <td> Lugar : </td>
+        <td> <%= @autoviatico.lugar1 %></td>
+    </div>
+
+</tr>
+
+  
+
+  <div class="field">
+        <td  >Almuerzo</td>
+        <td >  <%= @autoviatico.almuerzo %> </td>
+        <td > Lugar: </td>
+        <td > <%=@autoviatico.lugar2 %></td>
+    </div>
+    
+
+</tr>
+
+   
+   <div class="field">
+        <td>Otros</td>
+        <td>  <%=  @autoviatico.otros %> </td>
+        <td> Lugar: </td>
+        <td> <%= @autoviatico.lugar3 %></td>
+    </div>
+
+</tr>
+  
+</table>
+
+<table style="width:100%">
+
+<tr> 
+  <div class="field">
+        <td>Observaciones: </td>
+        <td ><%= @autoviatico.observa  %> </td>
+        <td></td>
+    </div>
+
+</tr>
+</table>
+
+<table style="width:100%">
+<tr>
+   <div class="field">
+        <td style="width:15%" >Hora ingreso: </td>
+        <td style="width:15%">  <%= @autoviatico.hora_ingreso  %> </td>
+        <td style="width:15%">Hora salida :</td>
+        <td style="width:15%">  <%= @autoviatico.hora_salida %>   </td>
+        <td style="width:40%"> </td>
+   </div>
+
+</tr>
+</table>
+
+<table style="width:100%">
+<tr>
+       <td class="ui dividing header"  style="font-weight:bold">    </td>
+       <td> SUCURSAL  </td>
+       <td> </td>
+</tr>
+
+<tr>
+   <div class="field">
+        <td> Empleado : </td>
+       
+        <td>  <%= @autoviatico.get_empleado(@autoviatico.employee_id2) %></td>
+        <td> </td>
+
+    </div>
+
+</tr>
+</table>
+
+<table style="width:100%">
+<tr>
+    <div class="field">
+        <td> Lugar Salida : </td>
+        <td>  <%= @autoviatico.lugar_salida %> </td>
+      
+    </div>
+   <div class="field">
+        <td> Fecha :  </td>
+        <td><%= @autoviatico.fecha2.strftime("%d/%m/%Y") %>  </td>
+    </div>
+
+
+</tr>
+
+<tr>
+    <div class="field">
+        <td> Lugar Destino : </td>
+        <td>  <%= @autoviatico.lugar_destino %> </td>
+        <td></td>
+        <td></td>
+    </div>
+
+
+</tr>
+
+<tr>
+   <div class="field">
+        <td style="width:15%" >Hora ingreso: </td>
+        <td style="width:15%">  <%= @autoviatico.hora1  %> </td>
+        <td style="width:15%">Hora salida :</td>
+        <td style="width:15%">  <%= @autoviatico.hora2 %>   </td>
+    
+   </div>
+
+</tr>
+
+
+
+
+
+
+
+</table>
+
+<table style="width:100%">
+
+<tr> 
+  <div class="field">
+        <td>Observaciones: </td>
+        <td ><%= @autoviatico.observa2  %> </td>
+        <td></td>
+    </div>
+
+</tr>
+</table>
+
+
+<div class="button">
+
+
+ 
+
+  <% if @autoviatico.processed == "1" %>
+   <%= link_to 'Exportar to PDF', "/autoviaticos/pdf/#{@autoviatico.id}.pdf" %>  
+   <%= link_to 'Anular', "/autoviaticos/do_anular/#{@autoviatico.id}" %>
+  
+  <%end %>
+
+
+  <% if @autoviatico.processed.nil? %>
+
+  <%= link_to 'Procesar', "/autoviaticos/do_process/#{@autoviatico.id}" %>
+  <%end %>
+
+
+
+<%= link_to 'Regresar', autoviaticos_path %>

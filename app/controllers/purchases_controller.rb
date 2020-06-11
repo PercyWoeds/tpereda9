@@ -1,14 +1,17 @@
-include UsersHelper
+
+include UsersHelper 
 include SuppliersHelper
 include ProductsHelper
 include PurchasesHelper
-include ApplicationHelper
+
 
 
 class PurchasesController < ApplicationController
+$: << Dir.pwd  + '/lib'
+    before_action :authenticate_user!
+    
+    require "open-uri"
 
-  before_filter :authenticate_user!
- 
  
 
   def show
@@ -234,12 +237,8 @@ WHERE purchase_details.product_id = ? ',params[:id] ])
         pdf.text ""
         pdf.text "" 
         
-
      end
     
-
-
-
   # Export purchaseorder to PDF
   def rpt_purchase2_all
 
@@ -821,6 +820,7 @@ WHERE purchase_details.product_id = ? ',params[:id] ])
     pdf      
   end
 
+
   # Export serviceorder to PDF
   def rpt_purchase_all
 
@@ -830,8 +830,6 @@ WHERE purchase_details.product_id = ? ',params[:id] ])
     @tiporeporte =params[:tiporeporte]
     
     @facturas_rpt = @company.get_purchases_day_tipo(@fecha1,@fecha2,@tiporeporte)
-
-     
 
         Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
             pdf.font "Helvetica"
@@ -845,7 +843,7 @@ WHERE purchase_details.product_id = ? ',params[:id] ])
  
   end
 
-
+ 
 # reporte de ingresos x producto x familia 
 
 # reporte completo
@@ -2762,27 +2760,39 @@ def newfactura2
     @monedas  = @company.get_monedas()
     @payments  = @company.get_payments()
     @suppliers = @company.get_suppliers()    
-     @almacens = @company.get_almacens()  
+    @almacens = @company.get_almacens()  
+
 
   end 
 
   def do_crear
-    @action_txt = "do_crear"
-    $lcDocumentId    =  params[:document_id]
-    $lcFechaEmision  =  params[:date1]
-    $lcFechaEntrega  =  params[:date2]
 
-     days = $lcFormaPagoDias  
-     fechas2 = $lcFechaEntrega.to_date + days.days                           
+    @action_txt = "do_crear" 
+    @purchaseorder = Serviceorder.find(params[:id] ) 
+    @lcDocumentId    =  params[:document_id]
+    @lcDocumento     =  params[:documento]
 
-    $lcFechaVmto     =  fechas2
-    $lcDocumento     =  params[:documento]
+    @lcFechaEmision  =  params[:date1]
+    @lcFechaEntrega  =  params[:date2]
+
+    puts "purchase order id "
+    puts @purchaseorder_id 
+
+     days = @purchaseorder.payment.day  
+     fechas2 = @lcFechaEntrega.to_date + days.days                           
+
+    @lcFechaVmto     =  fechas2
+    @lcDocumento     =  params[:documento]
     
-    @purchase = Purchase.new(:company_id=>1,:supplier_id=>$lcProveedorId,:date1=>$lcFechaEmision,:date2=>$lcFechaEmision,:payment_id=>$lcFormaPagoId,:document_id=>$lcDocumentId,:documento=>$lcDocumento,
-:date3 => $lcFechaVmto,:moneda_id => $lcMonedaId,:user_id =>@current_user.id,:purchaseorder_id=>$lcPurchaseOrderId,:almacen_id => params[:almacen_id] )
+    @purchase = Purchase.new(:company_id=>1,:supplier_id=>@purchaseorder.supplier_id,:date1=>@lcFechaEmision,:date2=>@lcFechaEntrega,:payment_id=>@purchaseorder.payment_id,
+      :document_id=>@lcDocumentId,:documento=>@lcDocumento,
+      :date3 => @lcFechaVmto,:moneda_id => @purchaseorder.moneda_id,:user_id =>@current_user.id,
+      :purchaseorder_id=> params[:id],:almacen_id => params[:almacen_id] )
     
     @company = Company.find(1)
-    
+    puts "sadas"
+    puts @lcFechaEntrega
+
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
       
@@ -2792,14 +2802,14 @@ def newfactura2
     @payments     = @company.get_payments()
     @tipodocumento = @purchase[:document_id]  
 
-    @purchase[:tipo] = $lcTipoFacturaCompra
+    @purchase[:tipo] = "1"
     @almacens = @company.get_almacens()
     
 
-    if $lcTipoFacturaCompra =="1"
-      @detalleitems =  @company.get_orden_detalle2($lcPurchaseOrderId)
+    if  @purchase[:tipo] =="1"
+      @detalleitems =  @company.get_orden_detalle2(@purchaseorder_id)
     else
-      @detalleitems =  @company.get_orden_detalle($lcPurchaseOrderId)
+      @detalleitems =  @company.get_orden_detalle(@purchaseorder_id)
     end 
 
   
@@ -2810,7 +2820,7 @@ def newfactura2
     end    
     
     
-    if $lcTipoFacturaCompra =="1"
+    if  @purchase[:tipo] == "1"
 
 
       begin
@@ -2874,7 +2884,7 @@ def newfactura2
           # Check if we gotta process the invoice
           @purchase.process()
 
-          if $lcTipoFacturaCompra == "0"
+          if  @purchase[:tipo] == "0"
             order_process = Purchaseorder.find($lcPurchaseOrderId)
             if order_process
               order_process.processed ='3'
@@ -2888,7 +2898,7 @@ def newfactura2
             end 
           end 
 
-          format.html { redirect_to(@purchase, :notice => 'Factura fue grabada con exito .') }
+          format.html { redirect_to("/companies/purchases/1", :notice => 'Factura fue grabada con exito .') }
           format.xml  { render :xml => @purchase, :status => :created, :location => @purchase}
         else
           format.html { render :action => "newfactura" }
@@ -3148,6 +3158,8 @@ def newfactura2
   # GET /purchases
   # GET /purchases.xml
   def index
+    console 
+
     @companies = Company.where(user_id: current_user.id).order("name")
     @path = 'purchases'
     @pagetitle = "Purchases"
@@ -3470,7 +3482,7 @@ def newfactura2
 
 
           
-          format.html { redirect_to(@purchase, :notice => 'Factura fue grabada con exito .') }
+          format.html { redirect_to(@purchase , :notice => 'Factura fue grabada con exito .') }
           format.xml  { render :xml => @purchase, :status => :created, :location => @purchase}
         else
           format.html { render :action => "new"  }

@@ -24,7 +24,14 @@ module Mnygo
     config.exceptions = self.routes
     config.enable_dependency_loading= true
     config.autoload_paths << Rails.root.join('lib')
-    
+
+     config.web_console.whitelisted_ips = '192.168.0.0/16'
+
+    config.web_console.permissions = '192.168.0.0/16'
+    config.web_console.whiny_requests = false
+    config.web_console.template_paths = 'app/views/web_console'
+    config.web_console.mount_point = '/path/to/web_console'
+
   end
 
   class String

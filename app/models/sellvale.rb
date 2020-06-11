@@ -12,7 +12,7 @@ class Sellvale < ActiveRecord::Base
            if row['cod_cli'] != nil
             row['cod_cli'] =  row['cod_cli'].rjust(11, '0')  
            else
-            row['cod_cli'] =  ""
+            row['cod_cli'] =  "000C_000001"
            end 
            
            row['processed'] = "0"

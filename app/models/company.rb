@@ -1914,6 +1914,18 @@ def get_pendientes_day_customer_detraccion(fecha1,fecha2,cliente)
 
     return @purchases 
   end
+
+   def get_purchases_day_tipo2(fecha1,fecha2,tipo,proveedor)
+
+    if tipo =="2" 
+      @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date3 <= ? and processed = ? and supplier_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1",proveedor]).order(:supplier_id,:moneda_id,:date1) 
+    else 
+      @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date3 <= ?  AND tipo = ?  and processed = ? and supplier_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", tipo, "1",proveedor ]).order(:supplier_id,:moneda_id,:date1)
+    end 
+
+    return @purchases 
+  end
+
   
   def get_purchases_day_tipo_moneda(fecha1,fecha2,tipo,moneda)
 
@@ -4515,14 +4527,14 @@ def get_salidas_day(fecha1,fecha2,product)
 
 end
 
-def get_salidas_day0(fecha1,fecha2)
+def get_salidas_day0(fecha1,fecha2,items )
   
       @purchases = Output.find_by_sql(['Select outputs.*,output_details.quantity,output_details.product_id,
       output_details.price,output_details.total,products.name as nameproducto,products.code as codigo,products.unidad
       from output_details   
       INNER JOIN outputs ON output_details.output_id = outputs.id
       INNER JOIN products ON output_details.product_id = products.id
-      WHERE  outputs.fecha >= ? and outputs.fecha <= ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+      WHERE  outputs.fecha >= ? and outputs.fecha <= ? and products_categories.id IN ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59", "#{items}"])
    
      return @purchases 
 
@@ -4609,7 +4621,7 @@ def get_ingresos_day2(fecha1,fecha2,product)
 
    @purchases = Purchase.find_by_sql(['Select purchases.*,purchase_details.quantity,
     purchase_details.price_without_tax as price,purchases.date1 as fecha, products.name as nameproducto,
-    products.code as codigo ,purchases.documento as code ,products.unidad,purchase_details.total,purchases.moneda_id,products.products_category_id
+    products.code as codigo ,purchases.documento as code ,products.unidad,purchase_details.total,purchases.moneda_id,products.products_category_id,products.id as product_id 
     from purchase_details   
 INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
 INNER JOIN products ON purchase_details.product_id = products.id

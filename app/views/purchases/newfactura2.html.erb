@@ -29,7 +29,7 @@
   <%= hr() %>
 
 <div class="mid_box bordered_right">
-  <form method="get" action="/purchases/do_crear/<%= @company.id %>">
+  <form method="get" action="/purchases/do_crear/<%= @company.id %>/<%= @purchaseorder.id%> ">
     <h4>
        Informacion factura 
     </h4>
@@ -59,12 +59,12 @@
 
     <div class="field">
       <strong>Fecha Emision :</strong><br />
-      <input type="date" name="date1" value="2017-10-01" style = "width: 150px" >
+      <input type="date" name="date1" style = "width: 150px" >
     </div>
 
       <div class="field">
       <strong>Fecha Entrega :</strong><br />
-      <input type="date" name="date2" value="2017-10-01" style = "width: 150px" >
+      <input type="date" name="date2" style = "width: 150px" >
     </div>
     
       

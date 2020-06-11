@@ -8,154 +8,28 @@
 
  <table style="width:100%">
 
-   <tr>
-    <th>Firstname</th>
-    <th>Lastname</th>
-    <th>Age</th>
-    <th>Age</th>
-    
-  </tr>
-  <tr>
-     <td class="ui dividing header">   Local</td>
-    <td></td>
-    <td></td>
-     <td></td>
-  </tr>
-  <tr>
-    <td>Nombre Apellidos</td>
-    <td><td>  <%= f.collection_select :employee_id, @empleados, :id, :full_name, :prompt => true, class: "ui selection dropdown" %></td></td>
-    <td></td>
-     <td></td>
-  </tr>
-<tr>
-    <td>Fecha </td>
-    <td> <%= f.date_field :fecha  %> </td>
-    <td></td>
-     <td></td>
-  </tr>
-
-<tr>
-    <td>Tema </td>
-    <td></td>
-    <td></td>
-     <td></td>
-  </tr>
-
-
-
-<tr>
-    <td>Clinica / Capacitacion </td>
-    <td></td>
-    <td></td>
-     <td></td>
-  </tr>
-
-
-<tr>
-    <td> Asunto </td>
-    <td></td>
-    <td></td>
-     <td></td>
-  </tr>
-
-
-<tr>
-    <td>Movilidad </td>
-    <td></td>
-    <td>Lugar:</td>
-     <td></td>
-  </tr>
-
-
-<tr>
-    <td>Almuerzo </td>
-    <td></td>
-    <td>Lugar:</td>
-     <td></td>
-  </tr>
-
-<tr>
-    <td>Otros</td>
-    <td></td>
-    <td>Lugar:</td>
-     <td></td>
-  </tr>
-
-  <tr>
-    <td>Observaciones</td>
-    <td></td>
-    <td> </td>
-     <td></td>
-  </tr>
-
- <tr>
-    <td>Hora Ingreso</td>
-    <td></td>
-    <td>Hora Salida</td>
-     <td></td>
-  </tr> 
-  <tr>
-    <td class="ui dividing header">   Sucursal</td>
-    <td></td>
-    <td> </td>
-     <td></td>
-  </tr>
-
- <tr>
-    <td>Nombres Apellidos</td>
-    <td></td>
-    <td></td>
-     <td></td>
-  </tr> 
-
-   <tr>
-    <td>Lugar salida</td>
-    <td></td>
-    <td>Fecha:</td>
-     <td></td>
-  </tr> 
-   <tr>
-    <td>Lugar destino:</td>
-    <td></td>
-    <td></td>
-     <td></td>
-  </tr> 
-
-   <tr>
-    <td>Hora Ingreso</td>
-    <td></td>
-    <td>Hora Salida</td>
-     <td></td>
-  </tr> 
-  <tr>
-    <td>Observaciones</td>
-    <td></td>
-    <td></td>
-     <td></td>
-  </tr> 
- </table>
-
-</div>
-
-
 
 <div class="ui form">
 
  <table style="width:100%">
  
 <tr>
- <td class="ui dividing header">  Local  </td>
+ <td class="ui dividing header" >    </td>
+ <td  style="font-weight:bold" > LOCAL </td>
   </tr>
 
  <tr>
     <div class="field">
      <td>Nombre:</td>
-      <td>  <%= f.collection_select :employee_id, @empleados, :id, :full_name, :prompt => true, class: "ui selection dropdown" %></td>
+      <td>  <%= f.collection_select :employee_id, @empleados, :id, :full_name2, :prompt => true, class: "ui selection dropdown" %></td>
     </div>
-         
+   </tr>
+   <tr>      
+
     <div class="field">
-        <td>Fecha</td>
-        <td>  <%= f.date_field :fecha  %> </td>
+        <td>Fecha:  </td>
+        <td> <%= f.date_field :fecha  %> </td>
+
     </div>
 
    
@@ -173,26 +47,39 @@
 
 <tr>
 
-<div class="field">
-     <td> Clinica/ Capacitacion :</td>
+<div class="field" >
+     <td  style="font-weight:bold" > Clinica/ Capacitacion :</td>
       <td>  <%= f.collection_select :supplier_id, @suppliers, :id, :name, :prompt => true, class: "ui selection dropdown" %></td>
     </div>
 
 </tr>
 
+ </table>
+
+
+<table style="width:100%">
+
 <tr>
 
 
 <div class="field">
-        <td>Asunto</td>
-      
-         <div class="ui toggle checkbox">
-          
-                  <%= check_box_tag  "asunto1" , :asunto  %> 
-                <label>Atender?</label>
+  <td >Asunto </td>
+  <td>
+         <div class="ui toggle checkbox" align="left">
+          <%= f.check_box  :asunto1  %> 
+          <label>Examen Medico </label>
          </div>
+      
+  </td>
 
-</div>
+
+  <td>
+          <div class="ui toggle checkbox" align="left">
+          <%= f.check_box  :asunto2 %> 
+          <label>Capacitacion </label>
+         </div>
+  </td>
+   
 
 </tr>
 
@@ -201,6 +88,8 @@
    <div class="field">
         <td>Movilidad</td>
         <td>  <%= f.number_field :movilidad %> </td>
+        <td> Lugar : </td>
+        <td> <%= f.text_field :lugar1 %></td>
     </div>
 
 </tr>
@@ -208,9 +97,12 @@
   
 
   <div class="field">
-        <td>Almuerzo</td>
-        <td>  <%= f.number_field :almuerzo %> </td>
+        <td  >Almuerzo</td>
+        <td >  <%= f.number_field :almuerzo %> </td>
+        <td > Lugar: </td>
+        <td > <%= f.text_field:lugar2 %></td>
     </div>
+    
 
 </tr>
 
@@ -218,59 +110,68 @@
    <div class="field">
         <td>Otros</td>
         <td>  <%= f.text_field :otros %> </td>
+        <td> Lugar: </td>
+        <td> <%= f.text_field :lugar3 %></td>
     </div>
 
 </tr>
   
+</table>
+
+<table style="width:100%">
 
 <tr> 
   <div class="field">
-        <td>Observa</td>
-        <td>  <%= f.text_field :observa  %> </td>
+        <td>Observaciones: </td>
+        <td ><%= f.text_field :observa ,size: 105 %> </td>
+        <td></td>
     </div>
 
 </tr>
+</table>
 
+<table style="width:100%">
 <tr>
-  
-  <div class="field">
-        <td>Hora ingreso: </td>
-        <td>  <%= f.text_field :hora_ingreso  %> </td>
-    </div>
-
-  
-
-
-
    <div class="field">
-        <td>Hora salida : </td>
-        <td>  <%= f.text_field :hora_salida  %> </td>
-    </div>
-
-
+        <td style="width:15%" >Hora ingreso: </td>
+        <td style="width:15%">  <%= f.text_field :hora_ingreso  %> </td>
+        <td style="width:15%">Hora salida :</td>
+        <td style="width:15%">  <%= f.text_field :hora_salida %>   </td>
+        <td style="width:40%"> </td>
+   </div>
 
 </tr>
+</table>
 
-<tr> <td class="ui dividing header">   Sucursal </td>
+<table style="width:100%">
+<tr>
+       <td class="ui dividing header"  style="font-weight:bold">    </td>
+       <td> SUCURSAL  </td>
+       <td> </td>
 </tr>
 
 <tr>
    <div class="field">
         <td> Empleado : </td>
-        <td>  <%= f.text_field :employee_id2  %> </td>
+       
+        <td>  <%= f.collection_select :employee_id2, @empleados, :id, :full_name2, :prompt => true, class: "ui selection dropdown" %></td>
+        <td> </td>
+
     </div>
 
 </tr>
+</table>
 
-
+<table style="width:100%">
 <tr>
     <div class="field">
         <td> Lugar Salida : </td>
         <td>  <%= f.text_field :lugar_salida %> </td>
+      
     </div>
    <div class="field">
-        <td> Fecha : </td>
-        <td>  <%= f.text_field :fecha2 %> </td>
+        <td> Fecha :  </td>
+        <td><%= f.date_field :fecha2 %>  </td>
     </div>
 
 
@@ -280,34 +181,25 @@
     <div class="field">
         <td> Lugar Destino : </td>
         <td>  <%= f.text_field :lugar_destino %> </td>
+        <td></td>
+        <td></td>
     </div>
 
 
 </tr>
+
 <tr>
-
-    <div class="field">
-        <td> Hora ingreso : </td>
-        <td>  <%= f.text_field :hora1  %> </td>
-    </div>
-
-
-
-
-    <div class="field">
-        <td> Hora salida  : </td>
-        <td>  <%= f.text_field :hora2  %> </td>
-    </div>
+   <div class="field">
+        <td style="width:15%" >Hora ingreso: </td>
+        <td style="width:15%">  <%= f.text_field :hora1  %> </td>
+        <td style="width:15%">Hora salida :</td>
+        <td style="width:15%">  <%= f.text_field :hora2 %>   </td>
+    
+   </div>
 
 </tr>
 
 
-
-
-    <div class="field">
-        <td> Observa   : </td>
-        <td>  <%= f.text_field :observa2 %> </td>
-    </div>
 
 
 
@@ -315,8 +207,21 @@
 
 </table>
 
+<table style="width:100%">
 
-  <div class="form-actions">
+<tr> 
+  <div class="field">
+        <td>Observaciones: </td>
+        <td ><%= f.text_field :observa2 ,size: 105 %> </td>
+        <td></td>
+    </div>
+
+</tr>
+</table>
+
+ <div class="ui button" tabindex="0">
     <%= f.button :submit %>
   </div>
+
+
 <% end %>

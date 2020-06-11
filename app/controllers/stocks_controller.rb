@@ -12,6 +12,7 @@ class StocksController < ApplicationController
       client_headers
   end
 
+
   def invoice_headers            
       invoice_headers  = [["Fecha : ",$lcHora]]    
       invoice_headers

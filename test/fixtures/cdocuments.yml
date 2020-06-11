@@ -1,0 +1,43 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 1
+  lugar: MyString
+  experiencia: MyString
+  dni: MyString
+  categoria: MyString
+  exp_licencia: MyString
+  rev_licencia: MyString
+  categoria_especial: MyString
+  exp_licencia2: MyString
+  rev_licencia: MyString
+  iqbf: MyString
+  dni_emision: 2020-05-18 13:42:08
+  dni_caducidad: 2020-05-18 13:42:08
+  ap_emision: 2020-05-18 13:42:08
+  ap_caducidad: 2020-05-18 13:42:08
+  app_emision: 2020-05-18 13:42:08
+  app_caducidad: 2020-05-18 13:42:08
+  cv_documentado: MyText
+  nivel_educativo: MyString
+
+two:
+  employee_id: 1
+  lugar: MyString
+  experiencia: MyString
+  dni: MyString
+  categoria: MyString
+  exp_licencia: MyString
+  rev_licencia: MyString
+  categoria_especial: MyString
+  exp_licencia2: MyString
+  rev_licencia: MyString
+  iqbf: MyString
+  dni_emision: 2020-05-18 13:42:08
+  dni_caducidad: 2020-05-18 13:42:08
+  ap_emision: 2020-05-18 13:42:08
+  ap_caducidad: 2020-05-18 13:42:08
+  app_emision: 2020-05-18 13:42:08
+  app_caducidad: 2020-05-18 13:42:08
+  cv_documentado: MyText
+  nivel_educativo: MyString

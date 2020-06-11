@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200406160111) do
+ActiveRecord::Schema.define(version: 20200518194800) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -175,14 +175,17 @@ ActiveRecord::Schema.define(version: 20200406160111) do
     t.string   "hora1"
     t.string   "hora2"
     t.string   "observa2"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.string   "asunto1"
     t.datetime "fecha2"
     t.string   "asunto2"
     t.string   "lugar1"
     t.string   "lugar2"
     t.string   "lugar3"
+    t.float    "total"
+    t.string   "processed"
+    t.datetime "date_processed"
   end
 
   create_table "bank_acounts", force: :cascade do |t|
@@ -243,6 +246,30 @@ ActiveRecord::Schema.define(version: 20200406160111) do
     t.string   "comments"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "cdocuments", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.string   "lugar"
+    t.string   "experiencia"
+    t.string   "dni"
+    t.string   "categoria"
+    t.string   "exp_licencia"
+    t.string   "rev_licencia"
+    t.string   "categoria_especial"
+    t.string   "exp_licencia2"
+    t.string   "iqbf"
+    t.datetime "dni_emision"
+    t.datetime "dni_caducidad"
+    t.datetime "ap_emision"
+    t.datetime "ap_caducidad"
+    t.datetime "app_emision"
+    t.datetime "app_caducidad"
+    t.text     "cv_documentado"
+    t.string   "nivel_educativo"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "rev_licencia2"
   end
 
   create_table "cegresos", force: :cascade do |t|
@@ -414,6 +441,32 @@ ActiveRecord::Schema.define(version: 20200406160111) do
     t.string   "nombre"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "csubdia", force: :cascade do |t|
+    t.string   "ccompro"
+    t.string   "cfeccom"
+    t.string   "ccodmon"
+    t.string   "csitua"
+    t.float    "ctipcam"
+    t.string   "cglosa"
+    t.float    "ctotal"
+    t.string   "ctipo"
+    t.string   "cflag"
+    t.datetime "cdate"
+    t.string   "chora"
+    t.string   "cfeccam"
+    t.string   "cuser"
+    t.string   "corig"
+    t.string   "cform"
+    t.string   "cextor"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "csubdia"
+    t.float    "factory"
+    t.float    "ajuste"
+    t.float    "compen"
+    t.float    "total1"
   end
 
   create_table "csubdiarios", force: :cascade do |t|
@@ -653,6 +706,37 @@ ActiveRecord::Schema.define(version: 20200406160111) do
     t.string   "tiposunat"
     t.string   "fullname"
     t.string   "area"
+  end
+
+  create_table "dsubdia", force: :cascade do |t|
+    t.string   "dcompro"
+    t.string   "dsecue"
+    t.string   "dfeccom"
+    t.string   "dcuenta"
+    t.string   "dcodane"
+    t.string   "dcencos"
+    t.string   "dcodmon"
+    t.string   "ddh"
+    t.float    "dimport"
+    t.string   "dtipdoc"
+    t.string   "dnumdoc"
+    t.string   "dfecdoc"
+    t.string   "dfecven"
+    t.string   "darea"
+    t.string   "dflag"
+    t.string   "dxglosa"
+    t.datetime "ddate"
+    t.string   "dcodane2"
+    t.float    "dusimpor"
+    t.float    "dmnimpor"
+    t.string   "dcodarc"
+    t.string   "dtidref"
+    t.string   "dndoref"
+    t.datetime "dfecref"
+    t.datetime "dbimref"
+    t.float    "digvref"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "dsubdiarios", force: :cascade do |t|
@@ -1039,6 +1123,7 @@ ActiveRecord::Schema.define(version: 20200406160111) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.float    "preciocigv"
+    t.integer  "factura_id"
   end
 
   create_table "invoiceitems", force: :cascade do |t|
@@ -1714,6 +1799,7 @@ ActiveRecord::Schema.define(version: 20200406160111) do
     t.integer  "marca_id"
     t.integer  "modelo_id"
     t.integer  "products_category_id"
+    t.integer  "Category_id"
     t.integer  "category_id"
     t.integer  "ubica_id"
     t.string   "unidad"
@@ -2405,6 +2491,17 @@ ActiveRecord::Schema.define(version: 20200406160111) do
     t.string   "proyecto_minero"
   end
 
+  create_table "tanks", force: :cascade do |t|
+    t.string   "comments"
+    t.integer  "product_id"
+    t.integer  "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "tanks", ["company_id"], name: "index_tanks_on_company_id", using: :btree
+  add_index "tanks", ["product_id"], name: "index_tanks_on_product_id", using: :btree
+
   create_table "tanques", force: :cascade do |t|
     t.string   "code"
     t.integer  "product_id"
@@ -2828,4 +2925,6 @@ ActiveRecord::Schema.define(version: 20200406160111) do
   add_foreign_key "products", "stocks"
   add_foreign_key "service_extensions", "servicebuys"
   add_foreign_key "supplier_details", "suppliers"
+  add_foreign_key "tanks", "companies"
+  add_foreign_key "tanks", "products"
 end

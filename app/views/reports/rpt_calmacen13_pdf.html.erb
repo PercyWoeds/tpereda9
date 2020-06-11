@@ -22,12 +22,60 @@ totals = []
  <%= form_tag(rpt_salidas_pdf_facturas_path, :method => "get") do %>
 
   <div class="field">
+      Desde:
       <input type="date" name="fecha1" value="2019-11-01" style = "width: 150px" >
     </div>
 
 	<div class="field">
+      Hasta:
 		<input type="date" name="fecha2" value="2019-11-30" style = "width: 150px" >
   </div>
+
+
+   <p class="bold big">
+      Detalle de productos 
+    </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th class="small bordered_bottom bordered_right">
+          Categoria
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Seleccion?
+        </th>
+       
+     
+        
+      </tr>
+    </thead>
+    <tbody>
+      
+      <%=  form_tag categoria_facturas_path,method: :post  %>
+      
+    
+<button type="button" id = "check_all" class="btw"> <%= "Marcar todos / Desmarcar todos "%> </button>
+
+      <% for item in @categories  %>
+        <tr>
+      
+          <td class="small bordered_bottom bordered_right" style="width: 250px;">
+            <%= item.category  %>
+          </td>
+          
+           <td class="bordered_right bordered_bottom right">
+            <%= check_box_tag "products_ids[]", item.id %> 
+
+          </td>          
+
+        </tr>
+
+      <% end %>
+
+    </tbody>
+  </table>
+
 
   <%= submit_tag  "PDF", :name => "print"  %>
   <%= submit_tag "Excel", :name => "print" %>

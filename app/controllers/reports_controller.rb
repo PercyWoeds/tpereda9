@@ -1405,6 +1405,8 @@ def rpt_facturas_4
     @pagetitle = "Listado de stocks "    
     
     @categories = ProductsCategory.all 
+
+    
   end
 
    def rpt_calmacen12_pdf
@@ -1458,6 +1460,14 @@ def rpt_facturas_4
     @pagetitle = "Listado de Compras  "    
     @products = @company.get_products()
     @categories = ProductsCategory.all 
+  end
+ def rpt_purchase_all2
+      @company = Company.find(params[:company_id])    
+    @pagetitle = "Listado de Compras  "    
+    @products = @company.get_products()
+
+    @suppliers =  @company.get_suppliers()
+
   end
 
   def rpt_purchaseorder2_all_all

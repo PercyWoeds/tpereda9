@@ -1,6 +1,7 @@
   Mnygo::Application.routes.draw do
 
   
+  resources :cdocuments
   resources :autoviaticos
   resources :supplier_details
   resources :tipoproveedors
@@ -191,10 +192,13 @@
     collection {get :rpt_purchase6  }
 
     collection { get  :rpt_cpagar40  }
-   collection { get  :rpt_cpagar4_pdf}
-     collection { get  :rpt_monitoreo}
-      collection { get  :do_gestion}
+    collection { get  :rpt_cpagar4_pdf}
+    collection { get  :rpt_monitoreo}
+    collection { get  :do_gestion}
+    collection { get  :rpt01}
 
+ collection { get  :rpt_purchase_all2b}
+    
     end 
 
   resources :voideds do
@@ -229,12 +233,15 @@
   
    resources :facturas do
     resources :factura_details, except: [:index,:show], controller: "facturas/facturas_details"
-    collection { post :discontinue }
+     collection { post :discontinue }
      collection { post :discontinue2 }
+     collection { post :categoria }
     
     collection do 
        put :discontinue 
        put :discontinue2
+       put :categoria
+       
     end 
     collection { post :print }
 
@@ -421,7 +428,7 @@ end
      collection { post :datos  }
      collection { get :search } 
      collection { post :import }
-     
+     collection { get  :rpt01 } 
 
   end 
   
@@ -525,7 +532,8 @@ end
   match 'companies/reports/rpt_purchase4_all/:company_id' => 'reports#rpt_purchase4_all', via: [:get, :post]
   match 'companies/reports/rpt_purchase5_all/:company_id' => 'reports#rpt_purchase5_all', via: [:get, :post]
   match 'companies/reports/rpt_purchase6_all/:company_id' => 'reports#rpt_purchase6_all', via: [:get, :post]
-  
+   match 'companies/reports/rpt_purchase_all2/:company_id' => 'reports#rpt_purchase_all2', via: [:get, :post]
+ 
   match 'companies/reports/rpt_purchaseorder_all/:company_id' => 'reports#rpt_purchaseorder_all', via: [:get, :post]
   match 'companies/reports/rpt_purchaseorder2_all/:company_id' => 'reports#rpt_purchaseorder2_all', via: [:get, :post]
 
@@ -775,6 +783,11 @@ end
   resources :facturas
 
 
+  match 'autoviaticos/do_process/:id' => 'autoviaticos#do_process', via: [:get, :post]
+   match 'autoviaticos/do_anular/:id' => 'autoviaticos#do_anular', via: [:get, :post]
+  match 'autoviaticos/pdf/:id' => 'autoviaticos#pdf', via: [:get, :post]
+  resources :autoviaticos
+
   match 'cotizacions/do_anular/:id' => 'cotizacions#do_anular', via: [:get, :post]
   match 'cotizacions/do_cancelar/:id' => 'cotizacions#do_anular', via: [:get, :post]
 
@@ -925,7 +938,7 @@ end
   match 'purchases/new/:company_id' => 'purchases#new', via: [:get, :post]  
   match 'purchases/new2/:company_id' => 'purchases#new2', via: [:get, :post]  
   match 'purchases/edit/:company_id' => 'purchases#edit', via: [:get, :post]  
-  
+
   
   match 'purchases/newfactura/:id' => 'purchases#newfactura', via: [:get, :post]  
   match 'purchases/newfactura2/:id' => 'purchases#newfactura2', via: [:get, :post]  
@@ -938,7 +951,7 @@ end
   match 'purchases/cargar/:id'   => 'purchases#cargar', via: [:get, :post]
   match 'purchases/cargar2/:id'   => 'purchases#cargar2', via: [:get, :post]
 
-  match 'purchases/do_crear/:id'   => 'purchases#do_crear', via: [:get, :post]
+  match 'purchases/do_crear/:company_id/:id'   => 'purchases#do_crear', via: [:get, :post]
   match 'purchases/do_crear2/:id'   => 'purchases#do_crear2', via: [:get, :post]
 
   match 'purchases/ingresos/:id'   => 'purchases#ingresos', via: [:get, :post]
@@ -946,6 +959,9 @@ end
 
   match 'purchases/buscaringresos/:id'   => 'purchases#buscaringresos', via: [:get, :post]
   match 'purchases/search_ingresos/:id'   => 'purchases#search_ingresos', via: [:get, :post]
+  match 'purchases/rpt01/:id' => 'purchases#rpt01', via: [:get, :post]  
+ 
+
 
   match 'facturas/rpt_cpagar2_pdf/:company_id' => 'facturas#rpt_cpagar2_pdf', via: [:get, :post]
   match 'purchases/rpt_cpagar3_pdf/:company_id' => 'purchases#rpt_cpagar3_pdf', via: [:get, :post]
@@ -958,10 +974,12 @@ end
   match 'purchases/rpt_ingresos4_all_pdf/:id' => 'purchases#rpt_ingresos4_all_pdf', via: [:get, :post]
   
   match 'purchases/rpt_purchase_all/:id' => 'purchases#rpt_purchase_all', via: [:get, :post]
+
   match 'purchases/rpt_purchase2_all/:id' => 'purchases#rpt_purchase2_all', via: [:get, :post]
   match 'purchases/rpt_purchase3_all/:id' => 'purchases#rpt_purchase3_all', via: [:get, :post]
   match 'purchases/rpt_purchase4_all/:id' => 'purchases#rpt_purchase4_all', via: [:get, :post]
-  
+   match 'purchases/rpt_purchase_all2/:id' => 'purchases#rpt_purchase_all2', via: [:get, :post]
+ 
   match 'purchases/rpt_compras1_pdf/:company_id' => 'purchases#rpt_compras1_pdf', via: [:get, :post]
 
 

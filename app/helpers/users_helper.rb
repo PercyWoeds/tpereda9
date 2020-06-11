@@ -1,6 +1,7 @@
 include ApplicationHelper
 
 module UsersHelper
+  
   def getSalt()
     return 'mnygo_password_salt'
   end

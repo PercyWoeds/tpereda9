@@ -53,27 +53,6 @@ gem 'rails_autolink', '~> 1.1', '>= 1.1.6'
 
 gem 'numbers_and_words', '~> 0.11.6'
 
-# Use unicorn as the web server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
-# gem 'ruby-debug'
-# gem 'ruby-debug19', :require => 'ruby-debug'
-
-# Bundle the extra gems:
-# gem 'bj'
-# gem 'nokogiri'
-# gem 'sqlite3-ruby', :require => 'sqlite3'
-# gem 'aws-s3', :require => 'aws/s3'
-
-# Bundle gems for the local environment. Make sure to
-# put test-only gems in this group so their generators
-# and rake tasks are available in development mode:
-# group :development, :test do
-#   gem 'w
 
 
 gem 'pg', '~> 0.18.4'
@@ -94,10 +73,6 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
 
-
-gem 'pry'
-gem 'mechanize'
-
 gem 'savon', '~> 2.11', '>= 2.11.1'
 gem 'rubyzip'
 
@@ -116,17 +91,15 @@ end
 
 group :development do
     
-    
  
   gem 'sqlite3'
   # Access an IRB console on exception pages or by using <%= console %> in views
  
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  
+ 
   gem 'binding_of_caller', '~> 0.7.2'
-  gem 'web-console', '~> 2.0'
-
+  gem 'web-console'
 
 end
 
