@@ -78,9 +78,9 @@
              <% end %>
 
             <%end %>
+             <% if compra.balance.round(2) != 0.00 %>
 
-
- <table style=  'font-size:80% ;width:100%'>       
+            <table style=  'font-size:80% ;width:100%'>       
             <tr>
             <td width="4%"> </td>
             <td width="8%"> </td>
@@ -95,6 +95,7 @@
             <td width="10%" align="right"><%= money(tot_4) %> </td>
             </tr>       
             </table>
+            <% end %>
 
             <%  totg1 += tot_1 %>                  
                <%  totg2 += tot_2 %> 
