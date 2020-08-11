@@ -185,6 +185,10 @@
     collection {get :rpt_salidas_pdf }
     collection {get :rpt_salidas_all_pdf}
     collection { get  :reporte_asistencia1 }
+
+    collection { get  :reporte_asistencia2 }
+    collection { get  :reporte_asistencia3 }
+
     collection {get :rpt_ost_3 }
     collection {get :guias1_pdf }
     collection {get :guias1 }
@@ -793,6 +797,8 @@ end
 
   match 'assistances/generar/:id' => 'assistances#generar', via: [:get, :post]
   match 'assistances/generar1/:id' => 'assistances#generar1', via: [:get, :post]
+  match 'assistances/generar2/:id' => 'assistances#generar2', via: [:get, :post]
+  match 'assistances/generar3/:id' => 'assistances#generar3', via: [:get, :post]
 
 
   match 'assistances/do_process/:id' => 'assistances#do_process', via: [:get, :post]
@@ -951,7 +957,8 @@ end
   match 'purchases/cargar/:id'   => 'purchases#cargar', via: [:get, :post]
   match 'purchases/cargar2/:id'   => 'purchases#cargar2', via: [:get, :post]
 
-  match 'purchases/do_crear/:company_id/:id'   => 'purchases#do_crear', via: [:get, :post]
+  match 'purchases/do_crear/:company_id'   => 'purchases#do_crear', via: [:get, :post]
+
   match 'purchases/do_crear2/:id'   => 'purchases#do_crear2', via: [:get, :post]
 
   match 'purchases/ingresos/:id'   => 'purchases#ingresos', via: [:get, :post]

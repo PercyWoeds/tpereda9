@@ -1,31 +1,16 @@
 class Assistance < ActiveRecord::Base
 
     belongs_to :inasist
-    belongs_to :employee
+    
     belongs_to :company
 
-
+    belongs_to :employee
   
     def self.import(file)
           CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
-          	
-    #       	str = row['fecha']
-
-        
-    #       	 if str.include?"a. m."		
-    #       		row['fecha'] = Time.zone.parse(str.sub('a. m.','a.m.'))
-    #       	else
-				# row['fecha'] = Time.zone.parse(str.sub('p. m.','p.m.'))
-    #       	end
-          	
-    #       	puts "fecha **"
-    #       	puts str	
-    #       	puts row['fecha'] 
-    puts "fecha ==> "
-    puts row['fecha']
-
-
-
+          
+          puts "fecha ==> "
+          puts row['fecha']
             Assistance.create! row.to_hash 
 
         end
@@ -106,13 +91,32 @@ class Assistance < ActiveRecord::Base
   end
 
 
-    def self.search(search, id)
-     if search
-       where(['idnumber iLIKE ? and AND fecha >= ? and fecha<= ? ', "%#{search}%" ,  "#{fecha} 00:00:00","#{fecha} 23:59:59"])
-     else
-      scoped
-     end
-    end
+    # def self.search(search, id)
+    #  if search
+    #    where(['idnumber iLIKE ? and AND fecha >= ? and fecha<= ? ', "%#{search}%" ,  "#{fecha} 00:00:00","#{fecha} 23:59:59"])
+    #  else
+    #   scoped
+    #  end
+    # end
 
+    def self_searched_fields
+
+      sharks = ["employee_id", "fecha", "fecha"]
+      return sharks
+
+    end 
+
+    def self.search(fecha1,fecha2,empleado)
+
+      if empleado == "0"
+        self.where(['fecha >= ? and fecha<= ? ', "#{fecha1} ","#{fecha2} "])
+
+      else 
+        self.where(['fecha >= ? and fecha<= ? and employee_id = ?', "%#{search}%" ,  "#{fecha}","#{fecha} ",empleado])
+
+      end 
+
+
+    end                     
 
 end

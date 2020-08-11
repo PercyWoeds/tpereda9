@@ -32,7 +32,7 @@ class Company < ActiveRecord::Base
 
  def get_inasists
    
-   @inasists = Inasist.all
+   @inasists = Inasist.all.order(:id)
    return @inasists 
  end 
 

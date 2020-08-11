@@ -7,17 +7,41 @@ class AssistancesController < ApplicationController
     @company = Company.find(1)
 
     @employees = @company.get_employees0
-
-
+    
     fecha1= params[:fecha1]
-    fecha2= params[:fecha2]
+    fecha2= params[:fecha2] 
+
+
+    if params[:fecha1].nil?
+      fecha1 = Date.today.to_date
+    end 
+    if params[:fecha2].nil?
+      fecha2= Date.today.to_date
+    end 
+    puts "fecha1 "
+    puts fecha1 
+
     empleado_id = params[:employee_id]
 
-    if fecha1 != nil
-      @assistances = Assistance.where("employee_id = ? and fecha >= ? and fecha <=?",empleado_id,"#{fecha1} 00:00:00","#{fecha2} 23:59:59").order(:fecha ).paginate(:page => params[:page])
-    else  
-      @assistances = Assistance.order(:fecha ).paginate(:page => params[:piage])
+    check_empleado =   params[:check_empleado]
+
+    if params[:check_empleado].nil?
+      check_empleado = "true" 
     end 
+    puts "check empleado "
+    puts check_empleado
+
+  
+    if check_empleado == "true"
+      puts "if che"
+      puts "check empleado "
+      puts check_empleado
+
+      @assistances = Assistance.search("#{fecha1} 00:00:00","#{fecha2} 23:59:59","0").joins(:employee).order("fecha DESC ,employees.full_name2 ").paginate(:page => params[:page])
+    else
+      @assistances = Assistance.search("#{fecha1} 00:00:00","#{fecha2} 23:59:59",empleado_id).joins(:employee).order("fecha DESC ,employees.full_name2 ").paginate(:page => params[:page])
+    end  
+      
   end
 
   # GET /join
@@ -123,6 +147,7 @@ class AssistancesController < ApplicationController
   end
 
 
+
   def import
       Time.zone = "America/Lima"
       Assistance.import(params[:file])
@@ -141,6 +166,21 @@ def generar
 end 
 
 def generar1
+        
+    @company = Company.find(1)
+    @users = @company.get_users()
+
+end 
+def generar2
+        
+    @company = Company.find(1)
+    @users = @company.get_users()
+    @employees = @company.get_employees0
+
+    
+    
+end 
+def generar3
         
     @company = Company.find(1)
     @users = @company.get_users()

@@ -9,8 +9,8 @@ class Employee < ActiveRecord::Base
 	belongs_to :categorium
 	belongs_to :afp 
 	belongs_to :ccosto 
-    belongs_to :afericion
-   belongs_to :tipofaltante
+  belongs_to :afericion
+  belongs_to :tipofaltante
 
 	
 	has_many :outputs
@@ -18,7 +18,7 @@ class Employee < ActiveRecord::Base
 	has_many :payrollbonis 
 	has_many :quintos 
 	has_many :horas_mes 
-	has_many :assistances  
+  has_many :assistances 
   has_many :contratos   
   
     

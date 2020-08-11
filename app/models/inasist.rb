@@ -106,7 +106,7 @@ class Inasist < ActiveRecord::Base
 
           hora1 =  a.hora_efectivo::time 
           hora2 =  a.hora_efectivo2::time 
-puts "asssssssssssssssssssssssssssssssssss"
+            puts "asssssssssssssssssssssssssssssssssss"
 
             puts hora1
             puts hora2

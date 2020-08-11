@@ -152,6 +152,8 @@
           <% @detalle = concepto.contar_dias(@fecha1,@fecha2,concepto.id) %>
 
           <% @total_horas = concepto.get_horas_minutos(concepto.id,@fecha1,@fecha2) %>
+
+          
            <% if  concepto.id == 4  || concepto.id == 2 || concepto.id == 6   %>
             <%= puts concepto.id   %>
             <% if concepto.id == 2%>  
@@ -194,26 +196,11 @@
               <% minutos = minuto1.round(0).to_s %>
               <% resultado = hora + " : " + minutos[0..1]  %>
 
-          <% if  concepto.id == 4  || concepto.id == 2 || concepto.id == 6   %>
-
-          <% if concepto.id == 2 %>
-               <%= puts "minutos " %>
-                <%= puts separar[1]  %>
-               
-                <%= puts minuto  %>
-                <%= puts minuto1  %>
-
-                <%= puts minutos  %>
-
-          <% end %>
+          
 
             <td align="center" width="20%"> <%= resultado  %>    </td>
           
-          <% else %>
-
-            <td align="center" width="20%"> </td>
-
-          <% end %>  
+         
 
           </tr>
             

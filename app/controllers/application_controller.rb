@@ -33,6 +33,24 @@ class ApplicationController < ActionController::Base
 
 
   
+rescue_from ActionController::RoutingError, :with => :route_not_found_error
+    rescue_from ActionController::BadRequest, :with => :bad_request_error
+    rescue_from StandardError, :with => :render_server_error
+
+    protected
+       def route_not_found_error
+          render "public/404", :status => 404
+       end
+
+       def bad_request_error
+          render "public/400", :status => 400
+       end
+
+       def render_server_error
+          render "public/500", :status => 500
+       end
+
+
 	private
 	def current_cart
 	Cart.find(session[:cart_id])

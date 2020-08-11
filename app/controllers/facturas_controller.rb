@@ -2131,7 +2131,7 @@ def reportes05
     Invoicesunat.delete_all
     @company = Company.find(params[:company_id])
     
-    @facturas  = Factura.where("fecha>=? and fecha<=? and tipo =?","2019-01-01 00:00:00","2025-05-31 23:59:59","1")
+    @facturas  = Factura.where("fecha>=? and fecha<=? and tipo =?","2020-08-01 00:00:00","2025-08-31 23:59:59","1")
      a = ""
      
      lcGuia=""
@@ -4313,8 +4313,6 @@ def client_data_headers
 
 
 
-
-
  #Process an invoice
   def reporte_asistencia1
   
@@ -4356,6 +4354,45 @@ def client_data_headers
 
  ##fin imprimir pdf facturas
 
+
+
+ #Process an invoice
+  def reporte_asistencia2
+  
+
+    $lcFacturasall = '1'
+
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @check_empleado = params[:check_empleado]
+   
+  @empleado = params[:employee_id]
+    @current_user_id = current_user.id 
+    
+    @conceptos  = @company.get_inasists         
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Facturas ",template: "assistances/reporte_2.pdf.erb",locals: {:facturas => @conceptos},
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header5.html',
+                           right: '[page] of [topage]'
+                  }
+
+               },
+
+               :footer => { :html => { template: 'layouts/pdf-footers.html' }       }  ,   
+               :margin => {bottom: 35} 
+
+        end   
+      when "To Excel" then render xlsx: 'rpt_asistencia_2'
+      else render action: "index"
+    end
+  end
 
 
 
@@ -4491,6 +4528,7 @@ def client_data_headers
                 row << nroitem.to_s 
                 row << product.supplier.name 
                 row << product.document.descripshort 
+              
                 
                 row << product.documento 
                 row << product.get_descrip0[0..50]
