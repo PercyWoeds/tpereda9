@@ -1227,6 +1227,7 @@ def get_customer_payments_detail_value(fecha1,fecha2,value="total")
     pagonacion = CustomerPayment.where(:bank_acount_id => 6 )
 
 
+
     for f in pagonacion 
     
         fact =  f.get_payment_dato(f.id)
@@ -4754,7 +4755,7 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
 
   def get_purchases_by_moneda_prov2(fecha1,fecha2,moneda,proveedor)  
     
-    @purchases = Purchase.where([" company_id = ? and date3 >= ? and date3 <= ? and moneda_id = ?  and balance <> 0 and supplier_id = ?  ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda, proveedor ]).order(:supplier_id,:date3)    
+    @purchases = Purchase.where([" company_id = ? and date3 >= ? and date3 <= ? and moneda_id = ?  and balance <> 0 and supplier_id = ? and payment_id<> ?  ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda, proveedor ,"1"]).order(:supplier_id,:date3)    
     return @purchases 
   end
 
