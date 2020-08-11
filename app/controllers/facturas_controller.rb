@@ -2902,8 +2902,7 @@ def newfactura2
     @fecha1 = params[:fecha1]  
     @fecha2 = params[:fecha2]
 
-
-    @company.actualizar_fecha2
+    #@company.actualizar_fecha2
     @company.actualizar_detraccion 
 
     @facturas_rpt = @company.get_pendientes_day(@fecha1,@fecha2)  
@@ -4326,7 +4325,8 @@ def client_data_headers
 
     @current_user_id = current_user.id 
     
-    @conceptos  = @company.get_inasists2         
+    @conceptos  = @company.get_inasists2       
+
     
     case params[:print]
       when "To PDF" then 
