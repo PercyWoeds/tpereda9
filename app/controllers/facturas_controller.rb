@@ -1567,7 +1567,6 @@ def reportes_st_3
   def rpt_cpagar2_pdf
 
 
-
     $lcxCliente ="0"
 
     @company=Company.find(1)      
@@ -1583,7 +1582,8 @@ def reportes_st_3
 
     @purchase_soles = @company.get_purchases_by_moneda_prov(@fecha1,@fecha2,"1")  
     
-    @purchase_dolar = @company.get_purchases_by_moneda_prov(@fecha1,@fecha2,"2")  
+    @purchase_dolar = @company.get_purchases_by_moneda_prov(@fecha1,@fecha2,"2") 
+
 
    case params[:print] 
       when "To PDF" then 
@@ -1623,8 +1623,17 @@ def reportes_st_3
         end 
 
 
-      when "Excel"   then render xlsx: 'rpt_purchase_xls'
+      when "Excel"   then 
+
+        begin 
+
+              @purchase_soles = @company.get_purchases_by_moneda_prov3(@fecha1,@fecha2)  
     
+            
+          render xlsx: 'rpt_purchase_pend'
+
+
+        end 
 
       else render action: "index"
 

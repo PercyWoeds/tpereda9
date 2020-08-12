@@ -1118,6 +1118,31 @@ pdf.move_down 5
 
   #fin reporte de orden de compra
 
+  def rpt_purchaseorder3_all
+    $lcxCliente = "0"
+    @company =Company.find(1)
+    @fecha1 =params[:fecha1]
+    @fecha2 =params[:fecha2]
+
+    @rpt_purchaseorder = @company.get_purchaseorder_detail2(@fecha1,@fecha2)
+
+    Prawn::Document.generate("app/pdf_output/orden_1.pdf") do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header2(pdf)
+        pdf = build_pdf_body2(pdf)
+        build_pdf_footer2(pdf)
+        $lcFileName =  "app/pdf_output/orden_1.pdf"
+
+    end
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+
+    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+
+
+  end
+
+
   private
   def purchaseorder_params
     params.require(:purchaseorder).permit(:company_id,:location_id,:division_id,

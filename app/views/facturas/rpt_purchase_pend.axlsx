@@ -1,0 +1,58 @@
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
+
+require 'axlsx'
+
+p = Axlsx::Package.new
+wb = xlsx_package.workbook
+wb.styles do |s|
+
+    date = s.add_style(:format_code => "yyyy-mm-dd", :border => Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+    padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
+    percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
+    title = s.add_style(:bg_color => "FFFF0000", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :left})
+
+    currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
+                              :border=>Axlsx::STYLE_THIN_BORDER)
+    red_negative = wb.styles.add_style :num_fmt => 8
+    comma = wb.styles.add_style :num_fmt => 3
+    super_funk = wb.styles.add_style :format_code => '[Green]#'
+    
+    wb.add_worksheet(name: "Basic work sheet") do |sheet|
+    
+    sheet.add_row ["Nro.","Td.","Documento","Fec.Emision", "Fec.Recepcion","Fec.Vmto.","Proveedor","Moneda","Soles ","Dolares"],  :style => title 
+
+     nroitem= 1 
+     tot_soles = 0 
+     tot_dolares = 0 
+     
+     espacio =" "
+
+         @purchase_soles.each do |linea|
+            
+                   dias = (linea.date3.to_date - linea.date2.to_date).to_i 
+
+                   documento0 = linea.document.descripshort + "-" + linea.documento
+                   if linea.moneda_id == 1 
+                     soles = 0 
+                     dolares = linea.total_amount
+                     
+                   else
+                     soles = linea.total_amount
+                     dolares = 0 
+                     
+                   end 
+
+                     tot_soles += soles 
+                     tot_dolares += dolares 
+
+                   sheet.add_row [nroitem,linea.document.descripshort,linea.documento,linea.date1,linea.date2,linea.date3,linea.supplier.name,linea.moneda.symbol,soles, dolares  ], :style => [ cadena,cadena,cadena,date,date,date,cadena,cadena,currency,currency ]
+
+                     nroitem = nroitem + 1 
+                
+         end 
+
+       sheet.add_row [espacio,espacio,espacio,espacio,espacio,espacio,espacio,"TOTAL ",tot_soles,tot_dolares,espacio,espacio], :style => [ cadena,date,date,date,currency,cadena,currency,currency,currency,currency]
+
+      end 
+end 

@@ -31,10 +31,9 @@ class AssistancesController < ApplicationController
     puts "check empleado "
     puts check_empleado
 
-  
     if check_empleado == "true"
-      puts "if che"
-      puts "check empleado "
+   
+      puts "check empleado if ..."
       puts check_empleado
 
       @assistances = Assistance.search("#{fecha1} 00:00:00","#{fecha2} 23:59:59","0").joins(:employee).order("fecha DESC ,employees.full_name2 ").paginate(:page => params[:page])
@@ -202,7 +201,6 @@ end
     
   end
 
-    
   
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -212,6 +210,6 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def assistance_params
-      params.require(:assistance).permit(:departamento, :nombre, :nro, :fecha, :equipo, :cod_verificacion, :num_tarjeta,:hora1,:hora2,:hora_efectivo, :inasist_id,:observacion,:hora_efectivo2,:employee_id)
+      params.require(:assistance).permit(:departamento, :nombre, :nro, :fecha, :equipo, :cod_verificacion, :num_tarjeta,:hora1,:hora2,:hora_efectivo, :inasist_id,:observacion,:hora_efectivo2,:employee_id,:check_empleado)
     end
 end

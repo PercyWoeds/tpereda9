@@ -16,6 +16,7 @@ class Assistance < ActiveRecord::Base
         end
     end     
 
+
  # Process the invoice
   def process(fecha)
      rango_fecha = "2019-12-01 00:00:00"
