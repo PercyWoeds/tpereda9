@@ -4360,8 +4360,6 @@ def client_data_headers
     end
   end
 
-
-
  ##fin imprimir pdf facturas
 
 
@@ -4404,6 +4402,42 @@ def client_data_headers
     end
   end
 
+
+
+ #Process an invoice
+def reporte_asistencia3
+
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @check_empleado = params[:check_empleado]
+   
+    @empleado = params[:employee_id]
+    @current_user_id = current_user.id 
+    
+    @conceptos  = @company.get_inasists         
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Facturas ",template: "assistances/reporte_3.pdf.erb",locals: {:facturas => @conceptos},
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header5.html',
+                           right: '[page] of [topage]'
+                  }
+
+               },
+
+               :footer => { :html => { template: 'layouts/pdf-footers.html' }       }  ,   
+               :margin => {bottom: 35} 
+
+        end   
+      when "To Excel" then render xlsx: 'rpt_asistencia_3'
+      else render action: "index"
+    end
+  end
 
 
 

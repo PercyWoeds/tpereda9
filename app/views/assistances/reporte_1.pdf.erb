@@ -143,9 +143,6 @@
         <% @detalle = 0%>
         <% @total_horas = 0%>
         
-        
-        
-
          
         
           <% @detalle = concepto.contar_dias(@fecha1,@fecha2,concepto.id) %>
@@ -169,36 +166,37 @@
         
           <td align="center" width="40%" ><%=  concepto.name %>   </td>
 
-          <% if  concepto.id == 4  %>
+          <% if  concepto.id == 4 ||  concepto.id == 12 || concepto.id == 16 %>
               <td align="center" width="20%">   </td>
           
            <% else %> 
 
-                <td align="center" width="20%"><%=  @detalle %>   </td>
+              <td align="center" width="20%"><%=  @detalle %>   </td>
 
           <% end %>
+
+
 
               <% resultado = "" %>
               <% separar =  @total_horas.to_s.split('.') %>
 
               <% hora = separar[0] %>
               <% minuto = separar[1]  %>
-
-
               <% if minuto  == nil  %>
                 <% minuto0 = 0   %>
               <%else%> 
                 <% minuto0 = minuto[0..1].to_f  %>
               <% end %>  
               <% minuto1 = minuto0  * 0.6  %>  
-              
               <% minutos = minuto1.round(0).to_s %>
               <% resultado = hora + " : " + minutos[0..1]  %>
 
-          
 
-            <td align="center" width="20%"> <%= resultado  %>    </td>
-          
+             <% if  concepto.id == 4 ||  concepto.id == 12 || concepto.id == 16 %>
+                 <td align="center" width="20%"> <%= resultado  %>    </td>
+             <% else %>
+                <td align="center" width="20%">    </td>
+             <% end %>
          
 
           </tr>
