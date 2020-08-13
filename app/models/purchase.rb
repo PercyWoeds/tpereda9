@@ -838,6 +838,7 @@ def get_tax3(items, supplier_id)
     end 
   end
   
+
   
   
   def process_documentos 
@@ -848,6 +849,15 @@ def get_tax3(items, supplier_id)
         if a 
           a.processed = "1"
           a.save 
+
+        else
+
+          b= Serviceorder.find_by(id:self.purchaseorder_id, supplier_id: self.supplier_id)
+          if b
+            b.processed = "1"
+            b.save 
+          end 
+
         end 
       end
 

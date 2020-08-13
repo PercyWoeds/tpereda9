@@ -2953,8 +2953,6 @@ def newfactura2
       end
   
 
-  
-
     
     @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]
     @purchase[:charge]  = 0
@@ -3701,6 +3699,7 @@ def newfactura2
       
     end   
     @purchase.process_documentos
+    
     @purchase.destroy
     
 
