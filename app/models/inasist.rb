@@ -19,16 +19,16 @@ class Inasist < ActiveRecord::Base
 
           if detalle.inasist_id == 4  
  
-                   fecha_hora = fecha1
-                  fechas = fecha_hora.to_time
+                  fecha_hora = detalle.fecha 
+                  fechas = fecha_hora.in_time_zone.to_time
 
-                  a=fechas.in_time_zone.change( hour: 8 )  
+                  a = fechas.in_time_zone('Lima').change( hour: 8 )  
 
                   b = detalle.hora_efectivo.in_time_zone.change( day: fechas.day,month:fechas.month )
-               
-
-              
-
+                   
+                   puts "tardanzas"
+                   puts a 
+                   puts b 
 
                   horas =  detalle.time_diff( a , b )
 
@@ -37,7 +37,6 @@ class Inasist < ActiveRecord::Base
                   minuto_1 =  parts[1].to_f
                  
                   
-
                   total_horas +=  hora_1 
                   total_minutos += minuto_1
 
@@ -45,7 +44,7 @@ class Inasist < ActiveRecord::Base
 
             
                  fecha_hora = fecha1
-                fechas = fecha_hora.to_time
+                fechas = fecha_hora.in_time_zone.to_time
 
                 a=fechas.in_time_zone.change( hour: 18 ,  min: 30 )
 
