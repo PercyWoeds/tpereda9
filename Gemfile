@@ -19,7 +19,10 @@ gem "prawn"
 gem 'prawnto'
 gem 'prawn-table'
 gem 'devise', '~> 4.1', '>= 4.1.1'
-gem 'thin'
+
+#em 'thin', '~> 1.7', '>= 1.7.2'
+gem 'puma', '~> 4.3', '>= 4.3.5'
+
 gem 'pivot_table'
 
 gem 'protected_attributes'

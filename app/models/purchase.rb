@@ -632,7 +632,41 @@ def get_tax3(items, supplier_id)
     end
 
   end   
+ def add_products_compras(items,tipo )
 
+    for item in items      
+        puts "items"
+
+       
+        total = item.price * item.quantity
+        total -= total * (item.discount / 100)
+        lcprice_tax = item.price*1.18     
+        puts "price * qty"
+        puts total
+        puts lcprice_tax
+        puts item.price
+        puts item.quantity
+        puts item.discount
+        puts item.total 
+
+
+
+        if tipo=="1"
+         product = Servicebuy.find(item.servicebuy_id)
+        else
+           product = Product.find(item.product_id)
+        end 
+
+        new_pur_product = PurchaseDetail.new(:purchase_id => self.id, :product_id => product.id,
+            :price_with_tax => lcprice_tax,:price_without_tax=>item.price, :quantity => item.quantity, 
+            :discount => 0.00 , :total => item.total )
+          new_pur_product.save   
+
+          
+      
+    end
+
+  end   
   
   
   def identifier

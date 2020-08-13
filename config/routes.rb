@@ -957,8 +957,8 @@ end
   match 'purchases/cargar/:id'   => 'purchases#cargar', via: [:get, :post]
   match 'purchases/cargar2/:id'   => 'purchases#cargar2', via: [:get, :post]
 
-  match 'purchases/do_crear/:company_id'   => 'purchases#do_crear', via: [:get, :post]
-
+match 'purchases/do_crear/:id'   => 'purchases#do_crear', via: [:get, :post]
+ 
   match 'purchases/do_crear2/:id'   => 'purchases#do_crear2', via: [:get, :post]
 
   match 'purchases/ingresos/:id'   => 'purchases#ingresos', via: [:get, :post]

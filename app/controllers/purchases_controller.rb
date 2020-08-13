@@ -2761,14 +2761,15 @@ def newfactura2
     @payments  = @company.get_payments()
     @suppliers = @company.get_suppliers()    
     @almacens = @company.get_almacens()  
+    @purchase.date1 = Date.today
 
-
+     @purchase.date2 = Date.today
   end 
 
   def do_crear
 
     @action_txt = "do_crear" 
-    @purchaseorder = Serviceorder.find(params[:id] ) 
+    @purchaseorder = Purchaseorder.find(params[:id] ) 
     @lcDocumentId    =  params[:document_id]
     @lcDocumento     =  params[:documento]
 
@@ -2802,15 +2803,15 @@ def newfactura2
     @payments     = @company.get_payments()
     @tipodocumento = @purchase[:document_id]  
 
-    @purchase[:tipo] = "1"
+
+    @purchase[:tipo] = "0"
+
     @almacens = @company.get_almacens()
     
 
-    if  @purchase[:tipo] =="1"
-      @detalleitems =  @company.get_orden_detalle2(@purchaseorder_id)
-    else
-      @detalleitems =  @company.get_orden_detalle(@purchaseorder_id)
-    end 
+    
+      @detalleitems =  @company.get_orden_detalle(@purchaseorder.id)
+
 
   
     if @tipodocumento == 3
@@ -2820,28 +2821,7 @@ def newfactura2
     end    
     
     
-    if  @purchase[:tipo] == "1"
-
-
-      begin
-           if @tipodocumento == 3
-            @purchase[:tax_amount] = @purchase.get_tax3(@detalleitems, @purchase[:supplier_id])*-1
-
-           else
-            @purchase[:tax_amount] = @purchase.get_tax3(@detalleitems, @purchase[:supplier_id])
-           end 
-           x = @purchase[:tax_amount]
-                 puts "servicio"
-                  puts x.to_s 
-                  puts $lcPurchaseOrderId
-
-
-      rescue
-          @purchase[:tax_amount] = 0        
-      end
-  
-
-    else 
+    
         begin
            if @tipodocumento == 3
             @purchase[:tax_amount] = @purchase.get_tax2(@detalleitems, @purchase[:supplier_id])*-1
@@ -2854,7 +2834,7 @@ def newfactura2
           
         end
 
-    end 
+  
 
     
     @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]
@@ -2880,24 +2860,17 @@ def newfactura2
       respond_to do |format|
        if    @purchase.save  || @purchase[:documento] != ""
           # Create products for kit
-          @purchase.add_products2(@detalleitems)
+          @purchase.add_products_compras(@detalleitems,"0")
           # Check if we gotta process the invoice
           @purchase.process()
 
-          if  @purchase[:tipo] == "0"
-            order_process = Purchaseorder.find($lcPurchaseOrderId)
+          
+            order_process = Purchaseorder.find(@purchaseorder.id)
             if order_process
               order_process.processed ='3'
               order_process.save
             end 
-          else
-            order_process = Serviceorder.find($lcPurchaseOrderId)
-            if order_process
-              order_process.processed ='3'
-              order_process.save
-            end 
-          end 
-
+        
           format.html { redirect_to("/companies/purchases/1", :notice => 'Factura fue grabada con exito .') }
           format.xml  { render :xml => @purchase, :status => :created, :location => @purchase}
         else
@@ -2908,7 +2881,128 @@ def newfactura2
       end
   end 
 
+ def do_crear2
 
+    @action_txt = "do_crear2" 
+    @purchaseorder =  Serviceorder.find(params[:id]) 
+
+    @lcDocumentId    =  params[:document_id]
+    @lcDocumento     =  params[:documento]
+
+    @lcFechaEmision  =  params[:date1]
+    @lcFechaEntrega  =  params[:date2]
+
+    puts "purchase order id "
+    puts @purchaseorder_id 
+
+     days = @purchaseorder.payment.day  
+     fechas2 = @lcFechaEntrega.to_date + days.days                           
+
+    @lcFechaVmto     =  fechas2
+    @lcDocumento     =  params[:documento]
+    
+    @purchase = Purchase.new(:company_id=>1,:supplier_id=>@purchaseorder.supplier_id,:date1=>@lcFechaEmision,:date2=>@lcFechaEntrega,:payment_id=>@purchaseorder.payment_id,
+      :document_id=>@lcDocumentId,:documento=>@lcDocumento,
+      :date3 => @lcFechaVmto,:moneda_id => @purchaseorder.moneda_id,:user_id =>@current_user.id,
+      :purchaseorder_id=> params[:id],:almacen_id => params[:almacen_id] )
+    
+    @company = Company.find(1)
+    puts "sadas"
+    puts @lcFechaEntrega
+
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+      
+    @documents    = @company.get_documents()    
+    @servicebuys  = @company.get_servicebuys()
+    @monedas      = @company.get_monedas()
+    @payments     = @company.get_payments()
+    @tipodocumento = @purchase[:document_id]  
+
+
+    @purchase[:tipo] = "1"
+
+    @almacens = @company.get_almacens()
+    
+    @detalleitems =  @company.get_orden_detalle2(@purchaseorder.id)
+   
+
+  
+    if @tipodocumento == 3
+      @purchase[:payable_amount] = @purchase.get_subtotal2(@detalleitems)*-1
+    else
+      @purchase[:payable_amount] = @purchase.get_subtotal2(@detalleitems)
+    end    
+    
+  
+      begin
+           if @tipodocumento == 3
+            @purchase[:tax_amount] = @purchase.get_tax3(@detalleitems, @purchase[:supplier_id])*-1
+
+           else
+            @purchase[:tax_amount] = @purchase.get_tax3(@detalleitems, @purchase[:supplier_id])
+           end 
+           x = @purchase[:tax_amount]
+                 puts "servicio"
+                  puts x.to_s 
+                  puts $lcPurchaseOrderId
+
+
+      rescue
+          @purchase[:tax_amount] = 0        
+      end
+  
+
+  
+
+    
+    @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]
+    @purchase[:charge]  = 0
+    @purchase[:pago] = 0
+
+    
+    if @purchase[:payment_id]  == 1 
+      @purchase[:pago] = @purchase[:total_amount]
+      @purchase[:balance] =  0.00 
+    
+    else 
+      @purchase[:pago] = 0
+      @purchase[:balance] =   @purchase[:total_amount]
+    end 
+
+    
+
+      curr_seller = User.find(@current_user.id)
+      @ac_user = curr_seller.username
+    
+
+      respond_to do |format|
+       if    @purchase.save  || @purchase[:documento] != ""
+          # Create products for kit
+          @purchase.add_products_compras(@detalleitems,"1")
+          # Check if we gotta process the invoice
+          @purchase.process()
+
+         
+            order_process = Serviceorder.find(@purchaseorder.id)
+            if order_process
+              order_process.processed ='3'
+              order_process.save
+            end 
+        
+
+          format.html { redirect_to("/companies/purchases/1", :notice => 'Factura fue grabada con exito .') }
+          format.xml  { render :xml => @purchase, :status => :created, :location => @purchase}
+        else
+          format.html { render :action => "newfactura2" }
+          format.xml  { render :xml => @purchase.errors, :status => :unprocessable_entity }
+        end 
+        
+      end
+  end 
+
+
+  
   
 
   def cargar

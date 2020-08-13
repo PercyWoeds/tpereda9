@@ -1,9 +1,6 @@
 Mnygo::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
-  # In the development environment your application's code is reloaded on
-  # every request.  This slows down response time but is perfect for development
-  # since you don't have to restart the webserver when you make code changes.
   config.cache_classes = false
   
   config.eager_load = false   
@@ -29,6 +26,9 @@ Mnygo::Application.configure do
   config.action_mailer.delivery_method = :smtp
   
   config.action_controller.include_all_helpers = false
+
+  config.force_ssl = false
+  
   
  config.action_mailer.smtp_settings = {
     address:              'send.one.com',
@@ -44,8 +44,5 @@ Mnygo::Application.configure do
   
   config.web_console.whitelisted_ips = ['10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16','148.102.0.0/16','167.250.205.154','190.8.128.0/16']
 
-  config.force_ssl = false 
   
-
-end
-
+  end
