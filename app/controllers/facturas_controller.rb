@@ -4415,7 +4415,7 @@ def reporte_asistencia3
     @empleado = params[:employee_id]
     @current_user_id = current_user.id 
     
-    @conceptos  = @company.get_inasists         
+    @conceptos  = @company.get_asistencia_resumen(@fecha1,@fecha2)         
     
     case params[:print]
       when "To PDF" then 

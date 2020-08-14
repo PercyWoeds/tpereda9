@@ -1091,8 +1091,54 @@ def get_customer_payments2(moneda,fecha1,fecha2)
  end 
 
 
+
 def get_customer_payments20(moneda,fecha1,fecha2)
+
+
    
+    
+   @facturas = CustomerPaymentDetail.find_by_sql(["
+   SELECT   month_year as year_month,
+   customer_id,
+   SUM(balance) as balance   
+   FROM tempcps
+   WHERE moneda_id = ? and balance>0 and fecha2 >= ? and fecha2  <= ?  
+   GROUP BY 2,1
+   ORDER BY 2,1 ", moneda,"#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])    
+   
+   
+   Tempfactura.delete_all
+   
+    for f in @facturas
+       if f.customer_id != nil
+        b = Tempfactura.new(year_month: f.year_month , customer_id: f.customer_id,balance: f.balance)
+        b.save 
+      end 
+    end 
+   
+   @facturas = Tempfactura.order(:customer_id,:year_month) 
+   
+  return @facturas
+    
+ end 
+
+
+
+def get_asistencia_resumen(fecha1,fecha2)
+
+  a = fecha1.in_time_zone.change( hour: 8 ,  min: 00 )     
+  b = fecha2.in_time_zone.change( hour: 18 , min: 30 )     
+
+  @asistencia = Assistance.where(" fecha>=? and fecha<=? ", tipo,"#{fecha1} 00:00:00","#{fecha2} 23:59:59" )
+
+   for f in @asistencia
+
+       if f.customer_id != nil
+        b = TempAsisten.new(year_month: f.year_month , customer_id: f.customer_id,balance: f.balance)
+        b.save 
+      end 
+      
+    end 
     
    @facturas = CustomerPaymentDetail.find_by_sql(["
    SELECT   month_year as year_month,
