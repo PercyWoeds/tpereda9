@@ -1333,6 +1333,8 @@ def rpt_facturas_4
      
     
   end
+
+
   def rpt_calmacen2_pdf
     @company = Company.find(params[:company_id])    
     @pagetitle = "Listado de stocks "    
@@ -1343,6 +1345,19 @@ def rpt_facturas_4
     
     
   end
+
+
+  def rpt_calmacen20_pdf
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Listado de stocks "    
+    @products = @company.get_products()
+    @categories = ProductsCategory.all 
+    @locations = @company.get_locations()
+    @almacens = @company.get_almacens()
+    
+    
+  end
+
   def rpt_calmacen3_pdf
       @company = Company.find(params[:company_id])    
     @pagetitle = "Listado de stocks "    
@@ -1591,5 +1606,6 @@ def rpt_facturas_4
     @pagetitle = "Orden Servicio de Transporte-3"    
   end
 
-  
+ 
+
 end

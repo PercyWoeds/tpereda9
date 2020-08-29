@@ -233,6 +233,9 @@ class StocksController < ApplicationController
         
 
        for  stock in @movements 
+          puts stock.product.id 
+          puts stock.product.name
+
               row = []
               row << nroitem.to_s
               row << stock.product.code
@@ -242,9 +245,19 @@ class StocksController < ApplicationController
 
                saldo = stock.stock_inicial  + stock.ingreso - stock.salida       
                 if (stock.price == 0  and saldo > 0)
-                stock.price = 1.0
+                  stock.price = 1.0
+                end 
+                if stock.product.code.strip == "20108"
+                    stock.price = 60.00
+                end
 
-              end 
+                if stock.product.code.strip == "91231"
+                    stock.price = 35.00
+                end
+                if stock.product.code.strip == "10409"
+                    stock.price = 1.25
+                end
+
               row << sprintf("%.3f",stock.price.round(3).to_s)
               row << sprintf("%.2f",stock.stock_inicial.round(2).to_s)         
               row << sprintf("%.2f",stock.ingreso.round(2).to_s)
@@ -263,7 +276,7 @@ class StocksController < ApplicationController
               end
               row << sprintf("%.2f",@total.round(2).to_s)
                 if (stock.price == 0  and saldo > 0) ||  saldo < 0
-                    row << "NX*"
+                  #  row << "NX*"
                 else
                   
                 end 
@@ -350,6 +363,7 @@ class StocksController < ApplicationController
 
   # Export serviceorder to PDF
   def rpt_stocks2
+
     @company=Company.find(params[:company_id])      
     @fecha1 = params[:fecha1] 
     @fecha2 = params[:fecha2] 
@@ -358,33 +372,79 @@ class StocksController < ApplicationController
 
     @local = params[:almacen_id]
     
-    @namecategoria= @company.get_categoria_name(@categoria) 
+    
+    @categorias = @company.get_categories()
     @local_name= @company.get_almacen_name(@local) 
      
-    ## separado por destino 
-    #@movements = @company.get_stocks_inventarios2(@fecha1,@fecha2,@categoria,@estado)   
-    @movements = @company.get_stocks_inventarios20(@fecha1,@fecha2,@categoria,@estado,@local)   
+      for detail in @categorias
+                
+                ## separado por destino 
+                #@movements = @company.get_stocks_inventarios2(@fecha1,@fecha2,@categoria,@estado)  
 
-      
-    Prawn::Document.generate("app/pdf_output/stocks2.pdf") do |pdf|            
-        pdf.font_families.update("Open Sans" => {
-          :normal => "app/assets/fonts/OpenSans-Regular.ttf",
-          :italic => "app/assets/fonts/OpenSans-Italic.ttf",
-        })
+                if detail.id != 2 
+               @movements = @company.get_stocks_inventarios20(@fecha1,@fecha2,detail.id,@estado,@local)   
+               @namecategoria = detail.category 
 
-        pdf.font "Open Sans",:size =>6
-        pdf = build_pdf_header2(pdf)
-        pdf = build_pdf_body2(pdf)
-        build_pdf_footer2(pdf)
-        $lcFileName =  "app/pdf_output/stocks2.pdf"      
-        
-    end     
+               puts detail.code
+               puts detail.category
 
-    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName    
-    send_file("app/pdf_output/stocks2.pdf", :type => 'application/pdf', :disposition => 'inline')
-    MovementDetail.delete_all 
+               @lcFileName =  "app/pdf_output/Stock-#{detail.code}-#{detail.category}.pdf" 
+
+              Prawn::Document.generate(@lcFileName) do |pdf|            
+                  pdf.font_families.update("Open Sans" => {
+                    :normal => "app/assets/fonts/OpenSans-Regular.ttf",
+                    :italic => "app/assets/fonts/OpenSans-Italic.ttf",
+
+                  })
+
+                  pdf.font "Open Sans",:size =>6
+                  pdf = build_pdf_header2(pdf)
+                  pdf = build_pdf_body2(pdf)
+                  build_pdf_footer2(pdf)
+                  
+              end    
+              MovementDetail.delete_all
+              end  
+      end
+
+
   end
 
+
+  # Export serviceorder to PDF
+  def rpt_stocks20
+
+    @company=Company.find(params[:company_id])      
+    @fecha1 = params[:fecha1] 
+    @fecha2 = params[:fecha2] 
+    @categoria =params[:products_category_id]
+    @estado = params[:estado]
+
+    @local = params[:almacen_id]
+    
+    @namecategoria= @company.get_categoria_name(@categoria)   
+    @local_name= @company.get_almacen_name(@local) 
+     
+    
+    ## separado por destino 
+    #@movements = @company.get_stocks_inventarios2(@fecha1,@fecha2,@categoria,@estado)   
+      
+    
+      CampaignExportJob.perform_later(@fecha1,@fecha2,@categoria,@estado,@local,@current_user)
+      
+
+
+  end
+
+
+
+  def download_campaign_export
+    # Create a 'safe link' to download (e.g. signed, expiring, etc)
+    download_url = @current_user.most_recent_report
+
+    # Trigger a download in the browser
+    redirect_to(download_url)
+  end
 
   # Export serviceorder to PDF
   def rpt_stocks3

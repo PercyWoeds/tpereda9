@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h3>Estimado Usuario  </h3>
+Hi <%= @user.email  %>,
+
+The export of your campaign report is complete. You can download it now.
+
+<%= link_to "Download Report", @user.most_recent_report %>
+
+  </body>
+</html>

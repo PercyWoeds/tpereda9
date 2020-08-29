@@ -25,17 +25,19 @@ Mnygo::Application.configure do
   
   config.action_mailer.delivery_method = :smtp
   
+  config.action_mailer.default_url_options = {:host=>'localhost:3000',protocol: 'http'}
+
   config.action_controller.include_all_helpers = false
 
   config.force_ssl = false
   
-  
+ 
  config.action_mailer.smtp_settings = {
-    address:              'send.one.com',
+    address:              'smtp.gmail.com',
     port:                 587,
-    domain:               'one.com',
-    user_name:            'wds.tpereda@gmail.com',
-    password:             'wjdogrbgagsvdpjk',
+    domain:               'gmail.com',
+    user_name:            'wds.report.tpereda@gmail.com',
+    password:             'wpjngmnqcrppgxws',
     authentication:       'plain',
     enable_starttls_auto: true  }
 

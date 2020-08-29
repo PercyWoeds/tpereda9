@@ -1,5 +1,5 @@
 class ActionCorreo < ApplicationMailer
-  	  default from: 'wds.tpereda@gmail.com'
+  	  default from: 'wds.report.tpereda@gmail.com'
 
 
 	  def st_email(invoice)
@@ -16,6 +16,8 @@ class ActionCorreo < ApplicationMailer
 
 
 	  end
+
+	  
 
 	  def rq_email(invoice)
 		@requerimiento =invoice 			
@@ -36,12 +38,7 @@ class ActionCorreo < ApplicationMailer
 	  def bienvenido_email(invoice,file1,file2,file3,file4,mail)
 		  @invoices=invoice 			
 		   @url  = 'http://www.tpereda.com.pe'
-		  #attachments["Factura"] = File.read("#{$lcFileName1}")
-		  #attachments['Factura'] = File.read($lcFileName1)
-
-		  #  $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName        
-          #  $lcFile2    =File.expand_path('../../../', __FILE__)+ "/"+$lcFilezip
-        
+	
 
 		  email_with_name = "Factura Enviada <facturaselectronicas@tpereda.com.pe>"	
 		  email_with_copy = "Operaciones <operaciones@tpereda.com.pe>"	
@@ -57,4 +54,23 @@ class ActionCorreo < ApplicationMailer
 		  mail(to: [mail], cc: email_with_copy,   bcc:email_with_name, subject: 'Factura Electrónica : '+$lcFileNameIni )
 
 	  end
+
+
+ 
+	  def notify_followers(mail,user)
+		   @user=user			
+		   @url  = 'http://www.tpereda.com.pe'
+		
+        
+
+		  email_with_name = "Stocks <percywoeds@gmail.com>"	
+		 
+		   
+
+
+		  mail(to: [mail], cc:email_with_name, subject: 'Account Reports : ' )
+
+	  end
+
+
 end

@@ -246,17 +246,18 @@ class FacturasController < ApplicationController
 ## salidas
 
 
+
+
   def rpt_salidas_pdf
 
     @company=Company.find(1)      
    
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]
-    
-    @items = 11
-    @facturas_rpt = @company.get_salidas_day0(@fecha1,@fecha2,@items)
+  
+    @items  = params[:products_ids]
 
-    if @facturas_rpt != nil 
+   
     
       case params[:print]
         when "PDF" then 
@@ -267,7 +268,7 @@ class FacturasController < ApplicationController
 
         else render action: "index"
       end
-    end 
+  
 
     
   end
@@ -279,7 +280,21 @@ class FacturasController < ApplicationController
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
     @items  = params[:items]
-    @facturas_rpt = @company.get_salidas_day0(@fecha1,@fecha2,@items)
+
+    @facturas_rpt = []
+
+   for item in @items 
+
+      puts item
+
+      @facturas_rpt0 = @company.get_salidas_day0(@fecha1,@fecha2,item)
+
+      if @facturas_rpt0 != nil 
+        @facturas_rpt  += @facturas_rpt0 
+      end 
+
+
+    end 
 
     Prawn::Document.generate "app/pdf_output/rpt_factura.pdf" , :page_layout => :landscape  do |pdf|
 

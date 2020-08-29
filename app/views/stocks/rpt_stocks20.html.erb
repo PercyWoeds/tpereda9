@@ -1,0 +1,33 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %>
+  <% if @view_restock %>
+    &raquo;
+    <%= link_to "Stocks", "/companies/stocks/#{@company.id}" %>
+  <% end %>
+</div>
+
+<h1>
+ 
+
+ Account Reports </h1>
+
+ <p>
+Download your export
+
+Your report export is ready to download.
+Generate a reports export
+
+Your export is a zip file that contains CSV files for all of your reports. If you have a lot of data, it may take some time to generate.
+
+Each time you generate a new export, it will replace the previous export.
+
+When your export is ready, we'll send you a notification email to <%= @current_user.email %>
+
+
+</p>
+
+
+
+
+<br />

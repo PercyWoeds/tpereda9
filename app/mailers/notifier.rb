@@ -12,5 +12,13 @@ class Notifier < ActionMailer::Base
     @to = to
     mail(:to => to)
   end
-  
+
+  def s3(to, user)
+    @user = user
+    @to = to
+    mail(:to => to)
+  end
+
+ 
+
 end

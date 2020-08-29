@@ -1,0 +1,50 @@
+<%= render 'layouts/charts' %>
+<%
+invoices_subtotal = 0
+invoices_tax = 0
+invoices_total = 0
+subtotals = []
+taxes = []
+totals = []
+%>
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Reports", "/companies/reports/#{@company.id}" %>
+</div>
+
+<h1>
+  <%= image_tag("reports_48.png", :class => "vmiddle") %>
+  Reporte de movimiento de stocks 
+</h1>
+
+<form method="get" action="/stocks/rpt_stocks20/<%= @company.id %>" >   
+  <div class="field">
+      <input type="date" name="fecha1" value="2020-07-01" style = "width: 150px" >
+    </div>
+
+	<div class="field">
+		<input type="date" name="fecha2" value="2020-07-15" style = "width: 150px" >
+  </div>
+
+  <div class="field">
+    <%= select_tag(:almacen_id,options_from_collection_for_select(@almacens,'id','nombre') ) %>
+  </div>
+  
+  <div class="field">
+    <%= select_tag(:products_category_id,options_from_collection_for_select(@categories,'id','category') ) %>
+  </div>
+  
+
+  <%if @current_user.level == "admin"  %>
+  <div class="fied">
+    <input type="checkbox" name="estado" value="1" >
+  </div>
+  <%end %>
+  
+  <input type="submit" value="Ver Reporte " />
+  
+</form>
+
+<br />
+

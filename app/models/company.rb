@@ -3379,7 +3379,8 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 
      # AGREGA LOS QUE NO TIENEN MOVIMIENTO 
     
-      @inv = MovementDetail.all.order(:product_id,:fecha).where("stock_inicial <> ?  or ingreso <> ? or  salida <>  ?",0,0,0)
+      @inv = MovementDetail.joins(:product).order("products.code,fecha")
+
     return @inv 
 
  end
@@ -4574,14 +4575,14 @@ def get_salidas_day(fecha1,fecha2,product)
 
 end
 
-def get_salidas_day0(fecha1,fecha2,items )
+def get_salidas_day0(fecha1,fecha2,item)
   
       @purchases = Output.find_by_sql(['Select outputs.*,output_details.quantity,output_details.product_id,
       output_details.price,output_details.total,products.name as nameproducto,products.code as codigo,products.unidad
       from output_details   
       INNER JOIN outputs ON output_details.output_id = outputs.id
       INNER JOIN products ON output_details.product_id = products.id
-      WHERE  outputs.fecha >= ? and outputs.fecha <= ? and products_categories.id IN ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59", "#{items}"])
+      WHERE  outputs.fecha >= ? and outputs.fecha <= ? and products.products_category_id = ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59", "#{item}"])
    
      return @purchases 
 

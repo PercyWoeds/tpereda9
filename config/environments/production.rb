@@ -45,13 +45,16 @@ Mnygo::Application.configure do
   config.exceptions_app = ->(env) { ExceptionsController.action(:show).call(env) }
 
   config.action_mailer.delivery_method = :smtp
+
+
+  config.active_storage.service = :amazon 
   
   config.action_mailer.smtp_settings = {
     address:              'smtp.gmail.com',
     port:                 587,
     domain:               'gmail.com',
-    user_name:            'wds.tpereda@gmail.com',
-    password:             'wjdogrbgagsvdpjk',
+    user_name:            'wds.report.tpereda@gmail.com',
+    password:             'wpjngmnqcrppgxws',
     authentication:       :plain,
     enable_starttls_auto: true  }
 
