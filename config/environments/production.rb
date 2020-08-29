@@ -47,8 +47,7 @@ Mnygo::Application.configure do
   config.action_mailer.delivery_method = :smtp
 
 
-  config.active_storage.service = :amazon 
-  
+
   config.action_mailer.smtp_settings = {
     address:              'smtp.gmail.com',
     port:                 587,
