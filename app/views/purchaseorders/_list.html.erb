@@ -51,8 +51,10 @@
          <td class="small bordered_bottom bordered_right">
             <%= link_to "Ver", purchaseorder %>
           </td>
+<td class="small bordered_bottom bordered_right">  
 
-          
+            
+
          <% if purchaseorder.processed =="" || purchaseorder.processed == nil %>
 
           <%= link_to "Edit", edit_purchaseorder_path(purchaseorder) %>                      
@@ -71,6 +73,8 @@
           <%= "** Cerrado **" %>                      
         <%= link_to 'Eliminar', purchaseorder,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>          
           <% end %> 
+        </td>
+        
 
         </tr>
       <% end %>
