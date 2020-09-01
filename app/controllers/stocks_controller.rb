@@ -430,10 +430,10 @@ class StocksController < ApplicationController
     #@movements = @company.get_stocks_inventarios2(@fecha1,@fecha2,@categoria,@estado)   
       
     
-      CampaignExportJob.perform_later(@fecha1,@fecha2,@categoria,@estado,@local,@current_user)
-      
+      CampaignExportJob.perform_later(@fecha1,@fecha2,@categoria,@estado,@local,@current_user) 
 
 
+  
   end
 
 

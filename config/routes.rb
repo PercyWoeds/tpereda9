@@ -1,3 +1,6 @@
+  
+require 'sidekiq/web'
+
   Mnygo::Application.routes.draw do
 
   
@@ -301,8 +304,6 @@ resources :tranportorders do
   collection { post :rpt_ost_3 }        
   
 end 
-
-  
 
 
   resources :serviceorders do 
@@ -1324,6 +1325,10 @@ match 'purchases/do_crear/:id'   => 'purchases#do_crear', via: [:get, :post]
 
   # Frontpage
  # match 'dashboard' => 'pages#dashboard', via: [:get,s :post]
+
+ 
+  mount Sidekiq::Web, at: '/sidekiq'
+
 
   root :to => "pages#frontpage"
   

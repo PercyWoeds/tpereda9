@@ -1,0 +1,35 @@
+<%= render 'layouts/charts' %>
+<%
+invoices_subtotal = 0
+invoices_tax = 0
+invoices_total = 0
+subtotals = []
+taxes = []
+totals = []
+%>
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Reports", "/companies/reports/#{@company.id}" %>
+</div>
+
+<h1>
+  <%= image_tag("reports_48.png", :class => "vmiddle") %>
+  Reporte de movimiento de stocks 
+</h1>
+<h1> Generate a reports export </h1>
+
+<h6>
+
+Your export is a zip file that contains CSV files for all of your reports. If you have a lot of data, it may take some time to generate.
+
+Each time you generate a new export, it will replace the previous export.
+
+When your export is ready, we'll send you a notification email to <%= @current_user.email %>.
+
+</h6>
+
+
+
+<br />
+

@@ -2531,7 +2531,7 @@ def newfactura2
     
     @invoice[:pago] = 0
     @invoice[:charge] = 0
-    
+      @invoice[:detraccion] = 0
     
      parts = (@invoice[:code]).split("-")
      id = parts[0]
@@ -3550,12 +3550,7 @@ def newfactura2
    
     @facturas_rpt = @company.get_pendientes_cliente(@fecha1,@fecha2,@cliente)  
     
-    for f in @facturas_rpt
-      puts f.document.descripshort
-      puts f.code 
-      puts f.balance 
-      
-    end 
+    
     
     @dolares = 0
     @soles = 0 

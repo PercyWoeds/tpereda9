@@ -1,4 +1,6 @@
 class CampaignExportJob < ActiveJob::Base
+
+queue_as :default
   
   def perform(fecha1,fecha2,categoria,estado,local,user)
     # Build the big, slow report into a zip file
@@ -11,8 +13,7 @@ class CampaignExportJob < ActiveJob::Base
 
     @key="Stock-#{categoria}-#{@namecategoria}"
     @movements = @company.get_stocks_inventarios20(fecha1,fecha2,categoria,estado,local)   
-      
-
+    
 
     Prawn::Document.generate("#{@directory}/#{@key}") do |pdf|            
         pdf.font_families.update("Open Sans" => {
