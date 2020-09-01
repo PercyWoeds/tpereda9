@@ -51,11 +51,26 @@
          <td class="small bordered_bottom bordered_right">
             <%= link_to "Ver", purchaseorder %>
           </td>
-         <% if  @current_user.level == "admin"|| @current_user.level == "compras" %>
-         <td class="small bordered_bottom bordered_right">
-            <%= link_to 'Eliminar', purchaseorder, :confirm => 'Are you sure?', :method => :delete %>
-          </td>
-         <% end %>
+
+          
+         <% if purchaseorder.processed =="" || purchaseorder.processed == nil %>
+
+          <%= link_to "Edit", edit_purchaseorder_path(purchaseorder) %>                      
+          <%= link_to 'Eliminar', purchaseorder, :confirm => 'Are you sure?', :method => :delete 
+          %>
+          <% elsif purchaseorder.processed =="1"%>    
+          <%= "** Aprobado **" %>
+          <%= link_to 'Eliminar', purchaseorder,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>
+          
+          <% elsif purchaseorder.processed =="2"%>  
+          <%= "** Anulado **" %>
+          
+          <%= link_to 'Eliminar', purchaseorder,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>
+          
+          <% elsif purchaseorder.processed =="3"%>  
+          <%= "** Cerrado **" %>                      
+        <%= link_to 'Eliminar', purchaseorder,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>          
+          <% end %> 
 
         </tr>
       <% end %>

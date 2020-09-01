@@ -1264,6 +1264,7 @@ def get_customer_payments_detail_value(fecha1,fecha2,value="total")
     end 
 
  end
+
  def actualizar_detraccion
     
     det = 0
@@ -1271,7 +1272,6 @@ def get_customer_payments_detail_value(fecha1,fecha2,value="total")
     Factura.update_all(:detraccion=>0)
 
     pagonacion = CustomerPayment.where(:bank_acount_id => 6 )
-
 
 
     for f in pagonacion 
