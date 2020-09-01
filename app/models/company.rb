@@ -1205,7 +1205,7 @@ def get_customer_payments_detail_value(fecha1,fecha2,value="total")
 
  def actualizar_fecha2
 
-    facturas = Factura.where(:fecha2 => nil )
+    facturas = Factura.where(["fecha>=? and fecha<=?","2020-08-01 00:00:00","2020-08-31 23:59:59"] )
     for factura in facturas
         fact =  Factura.find(factura.id)
         if fact.payment 
@@ -1965,9 +1965,9 @@ def get_pendientes_day_customer_detraccion(fecha1,fecha2,cliente)
    def get_purchases_day_tipo2(fecha1,fecha2,tipo,proveedor)
 
     if tipo =="2" 
-      @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date3 <= ? and processed = ? and supplier_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1",proveedor]).order(:supplier_id,:moneda_id,:date1) 
+      @purchases = Purchase.where([" company_id = ? AND date3 >= ? and date3 <= ? and processed = ? and supplier_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1",proveedor]).order(:supplier_id,:moneda_id,:date1) 
     else 
-      @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date3 <= ?  AND tipo = ?  and processed = ? and supplier_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", tipo, "1",proveedor ]).order(:supplier_id,:moneda_id,:date1)
+      @purchases = Purchase.where([" company_id = ? AND date3 >= ? and date3 <= ?  AND tipo = ?  and processed = ? and supplier_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", tipo, "1",proveedor ]).order(:supplier_id,:moneda_id,:date1)
     end 
 
     return @purchases 

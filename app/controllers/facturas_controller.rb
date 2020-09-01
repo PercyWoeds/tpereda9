@@ -2927,7 +2927,7 @@ def newfactura2
     @fecha1 = params[:fecha1]  
     @fecha2 = params[:fecha2]
 
-    #@company.actualizar_fecha2
+    @company.actualizar_fecha2
     #@company.actualizar_detraccion 
 
     @facturas_rpt = @company.get_pendientes_day(@fecha1,@fecha2)  
@@ -4778,10 +4778,14 @@ def reporte_asistencia3
     @company=Company.find(1)          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
-    @tipo   = params[:tiporeporte]    
+    @tipo   = params[:tiporeporte]   
 
+    @fecha6  = params[:fecha6]    
+    
     
     @facturas_rpt = @company.get_purchases_day(@fecha1,@fecha2)
+
+
      
         Prawn::Document.generate "app/pdf_output/TP_CM_F_015.pdf" , :page_layout => :landscape ,:page_size=>"A4"  do |pdf|
             pdf.font "Helvetica"

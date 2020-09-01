@@ -37,8 +37,9 @@ totals = []
     <option value="0" selected> COMPRA </option>    
   </select>
 </p>
-<div class="field">
-        <h5> Locales </h5>
+
+     <div class="field">
+        <h5> Proveedores </h5>
         <%= select_tag(:proveedor,options_from_collection_for_select(@suppliers,'id','name'),:id => "proveedor"  ) %>
       </div>
 

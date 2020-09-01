@@ -18,6 +18,14 @@
   
 <%= form_tag(rpt_purchase6_facturas_path, :method => "get") do %>
 
+  <select id="fecha6" name="fecha6" >
+  <option value="" selected disabled hidden>Selecionar Fecha </option>
+  <option value="1">Fec.Emision</option>
+  <option value="2">Fec.Recepcion</option>
+  
+</select>
+
+
     <div class="field">
         Desde
         <input type="date" name="fecha1" value="2020-02-01" style = "width: 150px" >
@@ -40,6 +48,11 @@
 </p>
 
 
+  <div class="field">
+        <h5> Proveedores </h5>
+        <%= select_tag(:proveedor,options_from_collection_for_select(@suppliers,'id','name'),:id => "proveedor"  ) %>
+      </div>
+ 
 <br> 
  <%= submit_tag "To PDF", :name => "print" %>
  <%= submit_tag "To Excel", :name => "print" %>
