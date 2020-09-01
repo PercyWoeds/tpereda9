@@ -4780,13 +4780,25 @@ def reporte_asistencia3
     @fecha2 = params[:fecha2]    
     @tipo   = params[:tiporeporte]   
 
-    @fecha6  = params[:fecha6]    
-    
-    
-    @facturas_rpt = @company.get_purchases_day(@fecha1,@fecha2)
+    @fecha6  = params[:fecha6]   
+
+     @supplier_check = params[:check_supplier] 
 
 
-     
+    if @supplier_check == "true"
+      @proveedor = ""
+      @proveedor_name = ""
+    else
+      @proveedor = params[:proveedor]
+      @proveedor_name =  @company.get_supplier_name(@proveedor)
+    end
+
+
+    
+    
+    @facturas_rpt = @company.get_purchases_day(@fecha1,@fecha2,@proveedor,@fecha6) 
+
+
         Prawn::Document.generate "app/pdf_output/TP_CM_F_015.pdf" , :page_layout => :landscape ,:page_size=>"A4"  do |pdf|
             pdf.font "Helvetica"
             pdf = build_pdf_header_rpt8(pdf)

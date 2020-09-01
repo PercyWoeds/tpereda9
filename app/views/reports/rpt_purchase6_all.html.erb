@@ -48,11 +48,28 @@
 </p>
 
 
-  <div class="field">
-        <h5> Proveedores </h5>
-        <%= select_tag(:proveedor,options_from_collection_for_select(@suppliers,'id','name'),:id => "proveedor"  ) %>
+ <table>
+    <tr>
+      <td>
+        <div class="field">
+            <input id="check_supplier" name="check_supplier" type="checkbox" value="true" checked />
+          <div class="small">
+            Todos los proveedores
+          </div>
+        </div>
+        
+      </td>
+      <td>
+      <div class="field">
+         <h5> Proveedores </h5>
+        <%= select_tag(:proveedor,options_from_collection_for_select(@suppliers,'id','name'),:id => "supplier_select"  ) %>
       </div>
- 
+      </td>
+      
+    </tr>
+
+  </table>
+  
 <br> 
  <%= submit_tag "To PDF", :name => "print" %>
  <%= submit_tag "To Excel", :name => "print" %>
@@ -62,3 +79,35 @@
    
 </html>
 
+
+<script>
+
+$(document).ready(function() {
+  
+  if ($('#check_supplier').is(":checked")) {
+      $('#supplier_select').attr('disabled', true); //disable input
+   }
+   else {
+      $('#supplier_select').removeAttr('disabled'); //enable input
+   }
+  
+   
+   $('#check_supplier').click(function () {
+        //check if checkbox is checked
+        if ($(this).is(':checked')) {
+
+           $('#supplier_select').attr('disabled', true); //disable input
+
+        } else {
+             $('#supplier_select').removeAttr('disabled'); //enable input
+            
+        }
+    });
+
+ 
+
+
+  });
+  
+  </script>
+  
