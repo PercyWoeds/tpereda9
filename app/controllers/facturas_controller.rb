@@ -4793,8 +4793,6 @@ def reporte_asistencia3
       @proveedor_name =  @company.get_supplier_name(@proveedor)
     end
 
-
-    
     
     @facturas_rpt = @company.get_purchases_day(@fecha1,@fecha2,@proveedor,@fecha6) 
 
