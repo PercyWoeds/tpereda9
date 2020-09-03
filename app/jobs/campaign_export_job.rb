@@ -3,6 +3,7 @@ class CampaignExportJob < ActiveJob::Base
 queue_as :default
   
   
+  
   def perform(fecha1,fecha2,categoria,estado,local,user)
     # Build the big, slow report into a zip file
   
