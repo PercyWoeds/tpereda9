@@ -30,13 +30,6 @@ class HardWorkerWorker
         
     end     
 
-
-
-  #  $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName    
-
-   # send_file("app/pdf_output/stocks2.pdf", :type => 'application/pdf', :disposition => 'inline')
- #   MovementDetail.delete_all 
-
    
         s3 = Aws::S3::Resource.new(region: ENV.fetch("AWS_REGION"),
         access_key_id: ENV.fetch("AWS_ACCESS_KEY_ID"),
@@ -57,11 +50,12 @@ class HardWorkerWorker
         puts download_url 
 
         # Record the location of the file
+        @user_grabar = User.find(user.id)
 
-        user.most_recent_report = download_url
+        @user_grabar.most_recent_report = download_url
 
 
-        if user.save 
+        if @user_grabar.save 
             
          puts  "actul ok "
 
@@ -72,7 +66,7 @@ class HardWorkerWorker
         puts user.email 
 
 
-        ActionCorreo.notify_followers(user.email, @user).deliver_now
+        ActionCorreo.notify_followers(@user_grabar.email, @user_grabar).deliver_now
 
     
 
