@@ -430,7 +430,7 @@ class StocksController < ApplicationController
     #@movements = @company.get_stocks_inventarios2(@fecha1,@fecha2,@categoria,@estado)   
       
     
-      HardWorkerWorker.perform_later(@fecha1,@fecha2,@categoria,@estado,@local,@current_user) 
+      HardWorkerWorker.perform_now(@fecha1,@fecha2,@categoria,@estado,@local,@current_user) 
 
 
   
