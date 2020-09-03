@@ -1,5 +1,6 @@
 class HardWorkerWorker
   include Sidekiq::Worker
+  sidekiq_options queue: 'default', retry: false, backtrace: true 
 
   
   def perform(fecha1,fecha2,categoria,estado,local,user)
