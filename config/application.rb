@@ -25,6 +25,7 @@ module Mnygo
     config.enable_dependency_loading= true
     config.autoload_paths << Rails.root.join('lib')
    config.active_job.queue_adapter =  :sidekiq 
+   config.active_job.queue_name_prefix = Rails.env
    
      # config.web_console.whitelisted_ips = '192.168.0.0/16'
 
