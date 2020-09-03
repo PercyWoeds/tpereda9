@@ -50,7 +50,7 @@ class HardWorkerWorker
         puts download_url 
 
         # Record the location of the file
-        @user_grabar = User.find(user.id)
+        @user_grabar = User.find(user.first.id)
 
         @user_grabar.most_recent_report = download_url
 
@@ -63,7 +63,7 @@ class HardWorkerWorker
 
             # Notify the user that the download is ready
                 
-        puts user.email 
+       # puts user.email 
 
 
         ActionCorreo.notify_followers(@user_grabar.email, @user_grabar).deliver_now
