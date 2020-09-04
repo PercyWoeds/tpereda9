@@ -16,6 +16,7 @@ class HardWorkerWorker
     @movements = @company.get_stocks_inventarios20(fecha1,fecha2,categoria,estado,local)   
     
 
+
     Prawn::Document.generate("#{@directory}/#{@key}") do |pdf|            
         pdf.font_families.update("Open Sans" => {
           :normal => "app/assets/fonts/OpenSans-Regular.ttf",
@@ -36,9 +37,15 @@ class HardWorkerWorker
         secret_access_key: ENV.fetch("AWS_SECRET_ACCESS_KEY"))  
 
         bucket_name = ENV.fetch("AWS_BUCKET")
-
        
         @s3_obj = s3.bucket(bucket_name).object(@key)
+
+
+         if @s3_obj.exists? && @s3_obj.last_modified.to_date == Date.current
+             
+              @s3_obj.delete
+            
+         end
 
           File.open("#{@directory}/#{@key}", 'rb') do |file|
                     @s3_obj.put(body: file)

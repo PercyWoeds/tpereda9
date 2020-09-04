@@ -3740,7 +3740,6 @@ def rpt_cobranzas_pdf
   end
 
 
-
 def rpt_ccobrar5_pdf
     @company=Company.find(params[:id])      
     @fecha1 = params[:fecha1]
