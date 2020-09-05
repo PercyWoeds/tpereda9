@@ -70,7 +70,21 @@ TABLE_HEADERS2  = ["ITEM ",
                      "COSTO S/.",
                      "TOTAL S/."
                      ]                     
- 
+
+
+ TABLE_HEADERS41 = ["ITEM",
+                    "FAMILIA",
+                      "DOCUMENTO",
+                     "FECHA",
+                     "CODIGO",
+                     "DESCRIPCION",
+                     "UNIDAD",                                         
+                     "PROVEEDOR",
+                     "CANTIDAD ",
+                     "COSTO US$ ",
+                     "COSTO S/.",
+                     "TOTAL S/."
+                     ]           
 TABLE_HEADERS6 = ["ITEM",
                      "RUC" ,
                      "CLIENTE",   
@@ -701,7 +715,10 @@ def get_tax3(items, supplier_id)
     purchase_details = PurchaseDetail.where(purchase_id:  self.id)    
     return purchase_details
   end
-  
+  def get_categoria_name(id)
+    purchase_details = ProductsCategory.find(id)    
+    return purchase_details.name 
+  end
 
   def products_lines
     products = []

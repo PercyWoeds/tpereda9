@@ -566,6 +566,9 @@ class AjustsController < ApplicationController
     @ajust[:tax] = 0
     
     @ajust[:total] = @ajust[:subtotal] 
+
+
+    @ajust[:almacen_id] = 1
     
     if(params[:ajust][:user_id] and params[:ajust][:user_id] != "")
       curr_seller = User.find(params[:ajust][:user_id])

@@ -52,6 +52,7 @@ class Output < ActiveRecord::Base
                      "PRODUCTO",
                      "UNIDAD",
                      "UBICACION",
+                     "PROVEEDOR",
                      "EMPLEADO",
                      "PLACA",
                      "CANTIDAD",
@@ -60,6 +61,22 @@ class Output < ActiveRecord::Base
                      "COSTO ",
                      "TOTAL"]
 
+   TABLE_HEADERS41 = ["ITEM",
+                      "FAMILIA",
+                      "DOCUMENTO",
+                     "FECHA",
+                     "CODE",
+                     "PRODUCTO",
+                     "UNIDAD",
+                     "UBICACION",
+                     "PROVEEDOR",
+                     "EMPLEADO",
+                     "PLACA",
+                     "CANTIDAD",
+                     "STOCK
+                      ACTUAL",
+                     "COSTO ",
+                     "TOTAL"]
   def get_categoria(product1)
 
     if business = Product.where(:id => product_id).first

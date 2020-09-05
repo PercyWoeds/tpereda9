@@ -112,7 +112,7 @@ class FacturasController < ApplicationController
       headers = []
       table_content = []
 
-      Purchase::TABLE_HEADERS4.each do |header|
+      Purchase::TABLE_HEADERS41.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
@@ -134,10 +134,10 @@ class FacturasController < ApplicationController
  
             row = []         
             row << nroitem.to_s
-            if product.products_category.nil?
+            if product.products_category_id.nil? 
               row <<"Categoria eliminada"
             else 
-              row << product.products_category.name 
+              row << product.get_categoria_name(product.products_category_id) 
             end 
 
             row << product.code
@@ -194,7 +194,7 @@ class FacturasController < ApplicationController
       row << ""
       row << ""
       row << ""
-     
+      row << ""
       row << "TOTALES => "
       row << sprintf("%.2f",@cantidad.to_s)
       row << " "
@@ -383,6 +383,7 @@ class FacturasController < ApplicationController
             row << product.nameproducto
             row << product.unidad 
             row << product.supplier.name
+            row << product.employee.full_name2 
            
             if product.truck_id == nil 
                   row << ""
@@ -437,8 +438,8 @@ class FacturasController < ApplicationController
                                           columns([5]).align=:left
                                           columns([5]).width= 120
                                           columns([6]).align=:right
-                                          columns([7]).align=:right
-                                          columns([8]).align=:right
+                                          columns([7]).align=:left
+                                          columns([8]).align=:left
                                           columns([9]).align=:right
                                           columns([9]).width= 50
                                           columns([10]).align=:right
