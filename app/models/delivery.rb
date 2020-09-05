@@ -343,7 +343,7 @@ where delivery_services.delivery_id = ?', self.id ])
     end
   end
   def get_processed_short
-    if(self.processed == "1")
+    if(self.processed == "1" || self.processed =="4")
       return "Yes"
     else
       return "No"
