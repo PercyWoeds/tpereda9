@@ -1,4 +1,0 @@
-
-
-    
-      SayHellJob.perform_later
