@@ -134,7 +134,12 @@ class FacturasController < ApplicationController
  
             row = []         
             row << nroitem.to_s
-            row << product.products_category.name 
+            if product.products_category.nil?
+              row <<"Categoria eliminada"
+            else 
+              row << product.products_category.name 
+            end 
+
             row << product.code
             row << product.fecha.strftime("%d/%m/%Y")
             row << product.codigo
