@@ -605,6 +605,7 @@ class OutputsController < ApplicationController
       pdf 
   end   
 
+
   def build_pdf_body_rpt4(pdf)
     pdf.text "Categoria  : "+@namecategoria  , :size => 11
     pdf.text "Listado de Salidas desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
@@ -614,7 +615,7 @@ class OutputsController < ApplicationController
       headers = []
       table_content = []
 
-      Output::TABLE_HEADERS2.each do |header|
+      Output::TABLE_HEADERS21.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell

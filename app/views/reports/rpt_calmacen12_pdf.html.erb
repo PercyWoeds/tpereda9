@@ -13,6 +13,7 @@ totals = []
   <%= link_to "Reports", "/companies/reports/#{@company.id}" %>
 </div>
 
+
 <h1>
   <%= image_tag("reports_48.png", :class => "vmiddle") %>
   Reporte de Consumos centro de costo 
@@ -20,11 +21,11 @@ totals = []
 
 <form method="get" action="/outputs/rpt_salidas4_all_pdf/<%= @company.id %>" >   
   <div class="field">
-      <input type="date" name="fecha1" value="2017-11-01" style = "width: 150px" >
+      <input type="date" name="fecha1" value="2020-09-01" style = "width: 150px" >
     </div>
 
 	<div class="field">
-		<input type="date" name="fecha2" value="2017-11-30" style = "width: 150px" >
+		<input type="date" name="fecha2" value="2020-09-30" style = "width: 150px" >
   </div>
 
 <input type="hidden" name="ac_item_id" id="ac_item_id" value="" style = "width: 350px"  />

@@ -415,7 +415,7 @@ class FacturasController < ApplicationController
       row << ""
       row << ""
       row << ""
-      
+      row << ""
       row << "TOTALES => "
       row << sprintf("%.2f",@cantidad.to_s)
       row << " "
