@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Color Vehis</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>User</th>
+      <th>Company</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @color_vehis.each do |color_vehi| %>
+      <tr>
+        <td><%= color_vehi.code %></td>
+        <td><%= color_vehi.name %></td>
+        <td><%= color_vehi.user_id %></td>
+        <td><%= color_vehi.company_id %></td>
+        <td><%= link_to 'Show', color_vehi %></td>
+        <td><%= link_to 'Edit', edit_color_vehi_path(color_vehi) %></td>
+        <td><%= link_to 'Destroy', color_vehi, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Color vehi', new_color_vehi_path %>

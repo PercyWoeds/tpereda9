@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Config Vehis</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>User</th>
+      <th>Company</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @config_vehis.each do |config_vehi| %>
+      <tr>
+        <td><%= config_vehi.code %></td>
+        <td><%= config_vehi.name %></td>
+        <td><%= config_vehi.user_id %></td>
+        <td><%= config_vehi.company_id %></td>
+        <td><%= link_to 'Show', config_vehi %></td>
+        <td><%= link_to 'Edit', edit_config_vehi_path(config_vehi) %></td>
+        <td><%= link_to 'Destroy', config_vehi, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Config vehi', new_config_vehi_path %>

@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @config_vehi.code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @config_vehi.name %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @config_vehi.user_id %>
+</p>
+
+<p>
+  <strong>Company:</strong>
+  <%= @config_vehi.company_id %>
+</p>
+
+<%= link_to 'Edit', edit_config_vehi_path(@config_vehi) %> |
+<%= link_to 'Back', config_vehis_path %>

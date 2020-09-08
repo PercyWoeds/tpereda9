@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200822172942) do
+ActiveRecord::Schema.define(version: 20200906032509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -295,6 +295,24 @@ ActiveRecord::Schema.define(version: 20200822172942) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "clase_cats", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.integer  "user_id"
+    t.integer  "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "color_vehis", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.integer  "user_id"
+    t.integer  "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "companies", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "name"
@@ -343,6 +361,44 @@ ActiveRecord::Schema.define(version: 20200822172942) do
   create_table "concepts", force: :cascade do |t|
     t.string   "descrip"
     t.string   "code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "conductors", force: :cascade do |t|
+    t.string   "lugar"
+    t.string   "anio"
+    t.string   "licencia"
+    t.string   "categoria"
+    t.datetime "expedicion_licencia"
+    t.datetime "revalidacion_licencia"
+    t.string   "categoria_especial"
+    t.datetime "expedicion_licencia_especial"
+    t.string   "iqbf"
+    t.datetime "fecha_emision"
+    t.datetime "dni_emision"
+    t.datetime "dni_caducidad"
+    t.datetime "ap_emision"
+    t.datetime "ap_caducidad"
+    t.datetime "ape_emision"
+    t.datetime "ape_caducidad"
+    t.integer  "user_id"
+    t.integer  "company_id"
+    t.integer  "employee_id"
+    t.string   "active"
+    t.integer  "employees_id"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.datetime "revalidacion_licencia_especial"
+  end
+
+  add_index "conductors", ["employees_id"], name: "index_conductors_on_employees_id", using: :btree
+
+  create_table "config_vehis", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.integer  "user_id"
+    t.integer  "company_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -2577,6 +2633,15 @@ ActiveRecord::Schema.define(version: 20200822172942) do
     t.integer  "tipocar_id"
   end
 
+  create_table "tipo_unidads", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.integer  "user_id"
+    t.integer  "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "tipocambios", force: :cascade do |t|
     t.datetime "dia"
     t.float    "compra"
@@ -2706,8 +2771,12 @@ ActiveRecord::Schema.define(version: 20200822172942) do
     t.integer  "anio"
     t.string   "estado"
     t.string   "propio"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "tipo_unidad_id"
+    t.integer  "config_vehi_id"
+    t.integer  "clase_cat_id"
+    t.integer  "color_vehi_id"
   end
 
   create_table "type_payrolls", force: :cascade do |t|
@@ -2921,6 +2990,7 @@ ActiveRecord::Schema.define(version: 20200822172942) do
   end
 
   add_foreign_key "assistances", "inasists"
+  add_foreign_key "conductors", "employees"
   add_foreign_key "contactopmdetails", "contactopms"
   add_foreign_key "cpagar_details", "cpagars"
   add_foreign_key "products", "stocks"

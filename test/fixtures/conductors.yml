@@ -1,0 +1,45 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  lugar: MyString
+  anio: MyString
+  licencia: MyString
+  categoria: MyString
+  expedicion_licencia: 2020-09-05 20:10:14
+  revalidacion_licencia: 2020-09-05 20:10:14
+  categoria_especial: MyString
+  expedicion_licencia_especial: 2020-09-05 20:10:14
+  iqbf: MyString
+  fecha_emision: 2020-09-05 20:10:14
+  dni_emision: 2020-09-05 20:10:14
+  dni_caducidad: 2020-09-05 20:10:14
+  ap_emision: 2020-09-05 20:10:14
+  ap_caducidad: 2020-09-05 20:10:14
+  ape_emision: 2020-09-05 20:10:14
+  ape_caducidad: 2020-09-05 20:10:14
+  user_id: 1
+  company_id: 1
+  active: MyString
+  employees_id: 
+
+two:
+  lugar: MyString
+  anio: MyString
+  licencia: MyString
+  categoria: MyString
+  expedicion_licencia: 2020-09-05 20:10:14
+  revalidacion_licencia: 2020-09-05 20:10:14
+  categoria_especial: MyString
+  expedicion_licencia_especial: 2020-09-05 20:10:14
+  iqbf: MyString
+  fecha_emision: 2020-09-05 20:10:14
+  dni_emision: 2020-09-05 20:10:14
+  dni_caducidad: 2020-09-05 20:10:14
+  ap_emision: 2020-09-05 20:10:14
+  ap_caducidad: 2020-09-05 20:10:14
+  ape_emision: 2020-09-05 20:10:14
+  ape_caducidad: 2020-09-05 20:10:14
+  user_id: 1
+  company_id: 1
+  active: MyString
+  employees_id: 

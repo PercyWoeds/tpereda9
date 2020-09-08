@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Clase Cats</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>User</th>
+      <th>Company</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @clase_cats.each do |clase_cat| %>
+      <tr>
+        <td><%= clase_cat.code %></td>
+        <td><%= clase_cat.name %></td>
+        <td><%= clase_cat.user_id %></td>
+        <td><%= clase_cat.company_id %></td>
+        <td><%= link_to 'Show', clase_cat %></td>
+        <td><%= link_to 'Edit', edit_clase_cat_path(clase_cat) %></td>
+        <td><%= link_to 'Destroy', clase_cat, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Clase cat', new_clase_cat_path %>

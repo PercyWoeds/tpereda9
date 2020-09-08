@@ -1,0 +1,2 @@
+json.extract! conductor, :id, :lugar, :anio, :licencia, :categoria, :expedicion_licencia, :revalidacion_licencia, :categoria_especial, :expedicion_licencia_especial, :revalidacion_licencia_especial,:iqbf, :fecha_emision, :dni_emision, :dni_caducidad, :ap_emision, :ap_caducidad, :ape_emision, :ape_caducidad, :user_id, :company_id, :active, :employees_id, :created_at, :updated_at
+json.url conductor_url(conductor, format: :json)

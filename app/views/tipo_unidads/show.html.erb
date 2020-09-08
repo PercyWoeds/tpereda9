@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @tipo_unidad.code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @tipo_unidad.name %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @tipo_unidad.user_id %>
+</p>
+
+<p>
+  <strong>Company:</strong>
+  <%= @tipo_unidad.company_id %>
+</p>
+
+<%= link_to 'Edit', edit_tipo_unidad_path(@tipo_unidad) %> |
+<%= link_to 'Back', tipo_unidads_path %>

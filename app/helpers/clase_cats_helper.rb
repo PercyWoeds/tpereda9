@@ -1,0 +1,2 @@
+module ClaseCatsHelper
+end

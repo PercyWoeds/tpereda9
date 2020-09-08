@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @clase_cat.code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @clase_cat.name %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @clase_cat.user_id %>
+</p>
+
+<p>
+  <strong>Company:</strong>
+  <%= @clase_cat.company_id %>
+</p>
+
+<%= link_to 'Edit', edit_clase_cat_path(@clase_cat) %> |
+<%= link_to 'Back', clase_cats_path %>
