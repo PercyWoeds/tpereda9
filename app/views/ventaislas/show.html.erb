@@ -86,57 +86,9 @@
       
     </tr>
   </thead>
-  <tbody>
 
 
-    <%  @ventaisla_details.each do |detalle| %>
-    
-    <tr>
-          
-          <td class="small bordered_bottom bordered_right">
-            
-            <%= link_to detalle.pump.fuel %>
-            
-          </td>
-          
-          <td class="small bordered_bottom bordered_right">
-            <%= detalle.product.name %>              
-          </td>
-          <td class="small bordered_bottom bordered_right">
-            <%= detalle.price  %>              
-          </td>
-          
-          <td class="small bordered_bottom bordered_right">
-            <%= detalle.le_an_gln  %>              
-          </td>
-          <td class="small bordered_bottom bordered_right">
-            <%= detalle.le_ac_gln  %>              
-          </td>
-          
-          <td class="small bordered_bottom bordered_right">
-            <%= detalle.quantity  %>              
-          </td>
-          <td class="small bordered_bottom bordered_right">
-            <%= detalle.total   %>              
-          </td>
-          
-          
-            
-       <td><%= link_to 'Eliminar',[@ventaisla,detalle], method: :delete, data: { confirm: 'Are you sure?' } %></td>
 
-      </tr>    
-          
-          
-          
-             <tr>
-  
-         
-     
-        </tr>
-    
-    <% end %>
-
-</tbody>
 </table>
 <br />
 

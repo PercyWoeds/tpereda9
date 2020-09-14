@@ -89,7 +89,6 @@ gem 'consulta_sunat'
 
 gem 'sidekiq'
 
-
 gem 'aws-sdk-s3'
 
 gem 'redis', '~> 4.2', '>= 4.2.1'
