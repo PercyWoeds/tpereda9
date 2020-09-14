@@ -96,9 +96,21 @@ class StocksController < ApplicationController
               table_content << row
               nroitem=nroitem + 1
 
-            
+              @cantidad += product.quantity
+
            
         end
+             row = []
+              row << ""
+              row << ""
+              row << "TOTALES =>"
+              row << ""
+              row << ""             
+              row << @cantidad 
+              row << " "
+              row << " "
+
+     table_content << row
             
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
