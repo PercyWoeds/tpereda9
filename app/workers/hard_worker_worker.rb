@@ -8,6 +8,9 @@ class HardWorkerWorker
   
     @company = Company.find(1)
     @user = User.find(user_id)
+    @fecha1 = fecha1 
+    @fecha2 = fecha2 
+    
     @directory = "app/pdf_output"
     @namecategoria= @company.get_categoria_name(categoria)   
     @local_name= @company.get_almacen_name(local) 
