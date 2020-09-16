@@ -1556,7 +1556,7 @@ def reportes_st_3
       @local_name =  @company.get_local_name(@local)
       @facturas_rpt = @company.get_st_mes(@fecha1,@fecha2,@local) 
     end 
-    
+  
 
     case params[:print]
       when "To PDF" then 
@@ -4604,7 +4604,6 @@ def reporte_asistencia3
                     row << sprintf("%.2f",product.total_amount.to_s)
                     row << "0.00 "
                     total_soles += product.total_amount  
-
                 end 
                 row << product.get_destino 
                 row << product.user.username 

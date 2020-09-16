@@ -356,7 +356,7 @@ def get_observacion
 
 
       if a.first.nil?
-            return " "
+            return self.comments
            else
 
              return a.first.comments 
@@ -367,7 +367,7 @@ def get_observacion
     else
            a =  Serviceorder.where(id: self.purchaseorder_id) 
            if a.first.nil?
-            return " "
+            return self.comments 
            else 
              return a.first.comments  
           end
