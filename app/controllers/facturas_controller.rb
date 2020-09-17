@@ -2921,7 +2921,6 @@ def newfactura2
 
 
 
-  
   def rpt_ccobrar2
   
     $lcxCliente ="1"

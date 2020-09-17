@@ -1758,11 +1758,11 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
         end
       else
         if(value == "subtotal")
-          ret -= factura.subtotal
+          ret += factura.subtotal
         elsif(value == "tax")
-          ret -= factura.tax
+          ret += factura.tax
         else         
-          ret -= factura.balance.round(2)
+          ret += factura.balance.round(2)
         end
       end
     end
@@ -1829,11 +1829,11 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
         
       else
         if(value == "subtotal")
-          ret -= factura.subtotal
+          ret += factura.subtotal
         elsif(value == "tax")
-          ret -= factura.tax
+          ret += factura.tax
         else         
-          ret -= factura.balance.round(2)
+          ret += factura.balance.round(2)
         end
       end
     end
