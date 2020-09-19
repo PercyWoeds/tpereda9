@@ -14,16 +14,16 @@
       <%= f.date_field :fecha  %>
     </div>   
 
-<div class="field">
+  
+  
+ <div class="field">
      <%= f.label :descripcion, "Descripcion *", :class => "bold" %><br />
       <%= f.text_field :descripcion %>
     </div>   
-    
-
-  
-
-
-  </div>
+     <div class="field">
+     <%= f.label :tipo, "Tipo *", :class => "bold" %><br />
+      <%= f.text_field :tipo %>
+   </div>
 
   <div class="form-actions">
     <%= f.button :submit %>
