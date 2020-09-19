@@ -2205,7 +2205,7 @@ def build_pdf_header_rpt48(pdf)
     
     #@namecategoria = @company.get_categoria_name(@categoria)      
 
-    @facturas_rpt = @company.get_ingresos_day3(@fecha1,@fecha2,@proveedor,@moneda )
+    @facturas_rpt = @company.get_ingresos_day3b(@fecha1,@fecha2,@proveedor,@moneda )
 
     if @facturas_rpt.size > 0 
 

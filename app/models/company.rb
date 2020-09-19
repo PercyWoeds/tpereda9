@@ -4767,6 +4767,13 @@ end
 
  end
 
+
+ def get_ingresos_day3b(fecha1,fecha2,proveedor,moneda )  
+     @purchases = Purchase.where(["balance<>0 and date2 >= ? and date2 <= ? and supplier_id  = ?  and moneda_id = ?   ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",proveedor ,moneda  ])
+     return @purchases 
+
+ end
+
 def get_ingresos_day4(fecha1,fecha2)
 
    @purchases = Purchase.find_by_sql(['Select purchases.*,purchase_details.quantity,
