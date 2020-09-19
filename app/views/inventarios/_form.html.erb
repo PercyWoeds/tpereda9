@@ -1,0 +1,31 @@
+<%= simple_form_for(@inventario) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+
+
+     <div class="field">
+      <%= f.label :almacen_id %><br />
+      <%= f.select :almacen_id, @almacens %>
+    </div>
+
+    <div class="field">
+     <%= f.label :fecha, "Fecha*", :class => "bold" %><br />
+      <%= f.date_field :fecha  %>
+    </div>   
+
+<div class="field">
+     <%= f.label :descripcion, "Descripcion *", :class => "bold" %><br />
+      <%= f.text_field :descripcion %>
+    </div>   
+    
+
+  
+
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

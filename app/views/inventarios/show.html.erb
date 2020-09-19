@@ -1,45 +1,29 @@
-<% content_for :title do %>
-Ver inventario
-<% end %>
-<% content_for :title do %>
-Ver Inventario
-<% end %>
-<h1>Ver Inventario Detalle</h1>
+<p id="notice"><%= notice %></p>
 
-<strong>Descripción:</strong><br/>
-<%= @inventario.descripcion %>
+<p>
+  <strong>Almacen:</strong>
+  <%= @inventario.almacen_id %>
+</p>
 
-<table>
-  <tr>
-    <th class="ui-state-default">Item</th>
-    <th class="ui-state-default">Producto</th>
-    <th class="ui-state-default">Cantidad</th>
-    <th class="ui-state-default">Precio</th>
-    <th class="ui-state-default">Total</th>
-  </tr>
+<p>
+  <strong>Fecha:</strong>
+  <%= @inventario.fecha %>
+</p>
 
-<% @inventario.inventario_detalles.each do |inv| %>
-  <tr>
-  <% if inv.product   != nil %>
+<p>
+  <strong>Descripcion:</strong>
+  <%= @inventario.descripcion %>
+</p>
 
-    <td><%= inv.product.code  %></td>
+<p>
+  <strong>Tipo:</strong>
+  <%= @inventario.tipo %>
+</p>
 
-    <% if inv.product != nil %>
-    <td><%= inv.product.name  %></td>
-    <% end %>
+<p>
+  <strong>Total:</strong>
+  <%= @inventario.total %>
+</p>
 
-    <td><%= inv.cantidad %></td>
-    <td><%= inv.precio_unitario %></td>   
-    <td><%= inv.total.round(2)  %></td>
-   <% end %> 
-
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-
-<%= link_to 'Listado', inventarios_path(:page => @page) %>
-<%= link_to 'Editar', edit_inventario_path(@inventario,:page => @page) %>
-
+<%= link_to 'Edit', edit_inventario_path(@inventario) %> |
+<%= link_to 'Back', inventarios_path %>

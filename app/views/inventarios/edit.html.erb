@@ -1,10 +1,6 @@
-<% content_for :title do %>
-Editar Inventario
-<% end %>
+<h1>Editing Inventario</h1>
 
-<h1>Editar Inventario</h1>
+<%= render 'form' %>
 
-<%= render :partial => "forma" %>
-
-<%= link_to "Listado", inventarios_path(:page => @page) %>
-<%= link_to "Ver", inventario_path(@inventario, :page => @page) %>
+<%= link_to 'Show', @inventario %> |
+<%= link_to 'Back', inventarios_path %>

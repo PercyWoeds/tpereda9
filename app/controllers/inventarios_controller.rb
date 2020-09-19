@@ -1,103 +1,79 @@
 class InventariosController < ApplicationController
+  before_action :set_inventario, only: [:show, :edit, :update, :destroy]
 
-
-  def import
-
-    @user_id= @current_user.id
-     Inventario.import(params[:file])
-       redirect_to root_url, notice: "Inventario importadas."
-  end 
-
-
-  def import2
-
-    @user_id= @current_user.id
-     Inventario.import2(params[:file])
-     redirect_to root_url, notice: "Inventario importadas."
-  end 
-
-  def import3
-
-    @user_id= @current_user.id
-     Inventario.import3(params[:file])
-     redirect_to root_url, notice: "Inventario importadas."
-  end 
-
-
-  def import4
-    @user_id= @current_user.id
-     Inventario.import4
-     redirect_to root_url, notice: "Inventario importadas."
-  end 
-  
-  
+  # GET /inventarios
+  # GET /inventarios.json
   def index
-    #page = params[:page] || 1
-    @inventarios = Inventario.paginate(:page => @page)
-    #@inventarios = Inventario.all
+    @inventarios = Inventario.all
   end
 
-  def new
-    # Se crea un item vacio
-    @inventario = Inventario.new(:inventario_detalles_attributes => [{}])
-    @almacen = Almacen.all 
-  end
-  
-  def create
-    @inventario = Inventario.new(params[:inventario])
-    if @inventario.save
-      flash[:notice] = "El inventario fue correctamente creado."
-      redirect_to inventarios_path      
-    else
-      render "new"
-    end
-  end
-
+  # GET /inventarios/1
+  # GET /inventarios/1.json
   def show
-    @inventario = Inventario.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @inventario }
-    end
   end
 
+  # GET /inventarios/new
+  def new
+    @inventario = Inventario.new
+    @inventario[:fecha] = Date.today 
+
+    @almacens = Almacen.all 
+
+  end
+
+  # GET /inventarios/1/edit
   def edit
-    @inventario = Inventario.find(params[:id], :include => {:inventario_detalles => {:item => :unidad_medida} })
+     @almacens = Almacen.all 
   end
 
-
-
-  def update
-    @inventario = Inventario.find(params[:id])
-    if @inventario.update_attributes(params[:inventario])
-      flash[:notice] = "El inventario fue correctamente actualizado."
-      redirect_to inventarios_path
-    else
-      render :action => "edit"
+  # POST /inventarios
+  # POST /inventarios.json
+  def create
+    @inventario = Inventario.new(inventario_params)
+    @almacens = Almacen.all 
+    respond_to do |format|
+      if @inventario.save
+        format.html { redirect_to @inventario, notice: 'Inventario was successfully created.' }
+        format.json { render :show, status: :created, location: @inventario }
+      else
+        format.html { render :new }
+        format.json { render json: @inventario.errors, status: :unprocessable_entity }
+      end
     end
   end
 
+  # PATCH/PUT /inventarios/1
+  # PATCH/PUT /inventarios/1.json
+  def update
+    respond_to do |format|
+      if @inventario.update(inventario_params)
+        format.html { redirect_to @inventario, notice: 'Inventario was successfully updated.' }
+        format.json { render :show, status: :ok, location: @inventario }
+      else
+        format.html { render :edit }
+        format.json { render json: @inventario.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
-  def do_process
+  # DELETE /inventarios/1
+  # DELETE /inventarios/1.json
+  def destroy
+    @inventario.destroy
+    respond_to do |format|
+      format.html { redirect_to inventarios_url, notice: 'Inventario was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
 
-    @inventario = InventarioDetalle.where(:inventario_id=>params[:id])
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_inventario
+      @inventario = Inventario.find(params[:id])
+    end
 
-    for i in @inventario
-        lcPrecio =i.precio_unitario
-        
-        product = Product.find(i.product_id)
-        
-        if product 
-          product.cost = lcPrecio        
-          product.save
-
-          if i.product_id == 4242
-            puts lcPrecio.to_s 
-          end 
-        end 
-    end 
-
-  end 
-
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def inventario_params
+      params.require(:inventario).permit(:almacen_id, :fecha, :descripcion, :tipo, :total)
+    end
 end

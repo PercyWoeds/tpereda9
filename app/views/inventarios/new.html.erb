@@ -1,9 +1,5 @@
-<% content_for :title do %>
-Nuevo Inventario
-<% end %>
+<h1>New Inventario</h1>
 
-<h1>Nuevo Inventario</h1>
+<%= render 'form' %>
 
-<%= render :partial => "forma" %>
-
-<%= link_to "Listado", inventarios_path %>
+<%= link_to 'Back', inventarios_path %>
