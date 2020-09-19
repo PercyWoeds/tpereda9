@@ -3110,7 +3110,10 @@ def get_purchaseorder_detail2(fecha1,fecha2)
      ##saldo inicial
      ######################################################################3 
 
-     @inv = Inventario.where('fecha < ? and almacen_id = ?',"#{fecha1} 00:00:00",local )  
+    ##cambie solo a julio 
+    fecha_inventario = "2020-07-31"
+
+     @inv = Inventario.where('fecha >=?  and fecha < ? and almacen_id = ?',"#{fecha_inventario} 00:00:00","#{fecha1} 00:00:00",local )  
 
     
      for inv in @inv       
@@ -3149,7 +3152,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
       end 
 
       #ingresos
-     @ing = Purchase.where('date1 <  ? and almacen_id = ?',"#{fecha1} 00:00:00",local )
+     @ing = Purchase.where('date1> ? and date1 <  ? and almacen_id = ?',"#{fecha_inventario} 00:00:00","#{fecha1} 00:00:00",local )
 
      for ing in @ing    
           $lcFecha = ing.date1.to_date
@@ -3201,7 +3204,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
      end 
 
      #salidas 
-    @sal  = Output.where('fecha <  ? and almacen_id = ?',"#{fecha1} 00:00:00",local )
+    @sal  = Output.where('fecha>? and fecha <  ? and almacen_id = ?',"#{fecha_inventario} 00:00:00","#{fecha1} 00:00:00",local )
 
      for sal in @sal     
         @saldetail=  OutputDetail.where(:output_id=>sal.id)
@@ -3233,7 +3236,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
    #actualiza ajustes de inventarios
    
    
-     @ajuste  = Ajust.where('fecha1 <  ? and almacen_id = ?',"#{fecha1} 00:00:00",local )
+     @ajuste  = Ajust.where('fecha1>? and fecha1 <  ? and almacen_id = ?',"#{fecha_inventario} 00:00:00","#{fecha1} 00:00:00",local )
 
      for ajuste  in @ajuste
         @ajustedetail= AjustDetail.where(:ajust_id=>ajuste.id)

@@ -66,6 +66,13 @@ class InventariosController < ApplicationController
     end
   end
 
+
+
+  def import
+      InventarioDetalle.import(params[:file])
+       redirect_to root_url, notice: "Inventarios importadas."
+  end 
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_inventario
