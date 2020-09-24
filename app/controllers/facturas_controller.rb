@@ -1614,8 +1614,8 @@ def reportes_st_3
     else
 
  
-          @purchase_soles  = @company.get_purchases_by_moneda_provb(@fecha1,@fecha2,@proveedor,"1" )
-          @purchase_dolar  = @company.get_purchases_by_moneda_provb(@fecha1,@fecha2,@proveedor,"2" )
+          @purchase_soles  = @company.get_purchases_by_moneda_provb(@fecha1,@fecha2,"1",@proveedor )
+          @purchase_dolar  = @company.get_purchases_by_moneda_provb(@fecha1,@fecha2,"2",@proveedor )
 
     end 
 
@@ -1662,10 +1662,14 @@ def reportes_st_3
 
         begin 
 
-              @purchase_soles = @company.get_purchases_by_moneda_prov3(@fecha1,@fecha2)  
-    
-            
-          render xlsx: 'rpt_purchase_pend'
+           if @check_proveedor == 'on' 
+
+              @purchase_soles = @company.get_purchases_by_moneda_prov3(@fecha1,@fecha2,@moneda_id)  
+           else 
+                @purchase_soles = @company.get_purchases_by_moneda_prov3b(@fecha1,@fecha2,@moneda_id,@proveedor)  
+            end 
+              
+              render xlsx: 'rpt_purchase_pend'
 
 
         end 
