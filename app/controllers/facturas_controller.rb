@@ -1614,8 +1614,8 @@ def reportes_st_3
     else
 
  
-          @purchase_soles  = @company.get_ingresos_day3b(@fecha1,@fecha2,@proveedor,"1" )
-          @purchase_dolar  = @company.get_ingresos_day3b(@fecha1,@fecha2,@proveedor,"2" )
+          @purchase_soles  = @company.get_purchases_by_moneda_provb(@fecha1,@fecha2,@proveedor,"1" )
+          @purchase_dolar  = @company.get_purchases_by_moneda_provb(@fecha1,@fecha2,@proveedor,"2" )
 
     end 
 
