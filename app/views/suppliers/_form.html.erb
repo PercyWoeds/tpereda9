@@ -60,13 +60,10 @@
   </div>
 
  <div class="field">
-      <%= f.label :bank_id ,"Local "%><br />
+      <%= f.label :bank_id ,"Banco"%><br />
       <%= f.select :bank_id, options_from_collection_for_select(@bancos,'id','name'),   :style => "width: 200px" %>
     
-        <div class="small">
-          <strong>Local :</strong>
-          <span id="selected_banco"></span>
-        </div>
+        
     </div>
 
 <div class="field">

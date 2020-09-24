@@ -1,7 +1,9 @@
 class TrucksController < ApplicationController
+
+
   before_action :set_truck, only: [:show, :edit, :update, :destroy]
-
-
+  respond_to :html, :json
+ 
   def import
       Truck.import(params[:file])
        redirect_to root_url, notice: "Vehiculos importadas."
@@ -10,11 +12,17 @@ class TrucksController < ApplicationController
   # GET /trucks
   # GET /trucks.json
   def index
-    @trucks = Truck.all
+
+     if(params[:search])                 
+  
+        @trucks = Truck.paginate(:page => params[:page]).search(params[:search]).order(:placa)
+      else
+        @trucks = Truck.where(estado: "1").order("placa").paginate(:page => params[:page])
+      end
   end
 
   # GET /trucks/1
-  # GET /trucks/1.json
+  # GET /trucks/1.jso
   def show
     @truck = Truck.new
     @marcas = @truck.get_marcas() 
@@ -23,9 +31,17 @@ class TrucksController < ApplicationController
 
   # GET /trucks/new
   def new
-    @truck = Truck.new
-    @marcas = @truck.get_marcas() 
-    @modelos = @truck.get_modelos()     
+    @truck   = Truck.new
+    @marcas  = @truck.get_marcas() 
+    @modelos = @truck.get_modelos() 
+    @tipo_unidad  = @truck.get_tipos()
+    @config  = @truck.get_config()
+    @clase   = @truck.get_clase()
+    @color   = @truck.get_color()
+
+   
+
+
   end
 
   # GET /trucks/1/edit
@@ -33,6 +49,10 @@ class TrucksController < ApplicationController
     @truck = Truck.find(params[:id])    
     @marcas = @truck.get_marcas() 
     @modelos = @truck.get_modelos()
+    @tipo_unidad  = @truck.get_tipos()
+    @config  = @truck.get_config()
+    @clase   = @truck.get_clase()
+    @color   = @truck.get_color()
          
   end
 
@@ -42,7 +62,14 @@ class TrucksController < ApplicationController
     @truck = Truck.new(truck_params)
     @marcas = @truck.get_marcas() 
     @modelos = @truck.get_modelos()
+    @tipo_unidad  = @truck.get_tipos()
+    @config  = @truck.get_config()
+    @clase   = @truck.get_clase()
+    @color   = @truck.get_color()
+    @serie = 1
           
+   @truck[:code] = @truck.generate_truck_number(@serie)  
+  
 
     respond_to do |format|
       if @truck.save
@@ -58,6 +85,14 @@ class TrucksController < ApplicationController
   # PATCH/PUT /trucks/1
   # PATCH/PUT /trucks/1.json
   def update
+    @marcas = @truck.get_marcas() 
+    @modelos = @truck.get_modelos()
+    @tipo_unidad  = @truck.get_tipos()
+    @config  = @truck.get_config()
+    @clase   = @truck.get_clase()
+    @color   = @truck.get_color()
+
+
     respond_to do |format|
       if @truck.update(truck_params)
         format.html { redirect_to @truck, notice: 'Truck was successfully updated.' }
@@ -72,12 +107,25 @@ class TrucksController < ApplicationController
   # DELETE /trucks/1
   # DELETE /trucks/1.json
   def destroy
-    @truck.destroy
-    respond_to do |format|
-      format.html { redirect_to trucks_url, notice: 'Truck was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+
+       if  @truck.destroy
+
+
+        respond_to do |format|
+          format.html { redirect_to trucks_url, notice: 'Truck was successfully destroyed.' }
+          format.json { head :no_content }
+        end
+        else 
+
+      respond_to do |format|
+          format.html { redirect_to trucks_url, notice: 'Vehiculo esta siendo usado, no puedes eliminar .' }
+          format.json { head :no_content }
+        end
+       end 
+
   end
+
+
   def ac_placas
     @placas = Truck.where(["placa  iLIKE ? ", "%" + params[:q] + "%"])  
     render :layout => false
@@ -93,6 +141,8 @@ class TrucksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def truck_params
-      params.require(:truck).permit(:code, :placa, :clase, :marca_id, :modelo_id, :certificado, :ejes, :licencia, :neumatico, :config, :carroceria, :anio, :estado, :propio)
+      params.require(:truck).permit(:code, :placa, :clase, :marca_id, :modelo_id, :certificado, :ejes, :licencia, :neumatico, :config, :carroceria, :anio, :estado, :propio,:search )
     end
+
+
 end

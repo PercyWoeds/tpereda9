@@ -25,3 +25,16 @@
 <br>
 
 <%= link_to 'New Marca', new_marca_path %>
+
+
+<h2>Importar Archivo marcas "*.csv"</h2>
+
+<%= form_tag import_marcas_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
+
+ Download:
+  <%= link_to "xls", marcas_path(format: "xls"), multipart: true  %> 
+  

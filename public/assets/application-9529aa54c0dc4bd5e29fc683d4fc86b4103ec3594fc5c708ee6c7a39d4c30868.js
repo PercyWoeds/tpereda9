@@ -917,6 +917,26 @@
 
 
 }).call(this);
+(function() {
+
+
+}).call(this);
+(function() {
+
+
+}).call(this);
+(function() {
+
+
+}).call(this);
+(function() {
+
+
+}).call(this);
+(function() {
+
+
+}).call(this);
 $(function() {
   const modal_holder_selector = '#modal-holder';
   const modal_selector = '.modal';
@@ -972,6 +992,10 @@ $(function() {
       return false;
     });
   });
+
+}).call(this);
+(function() {
+
 
 }).call(this);
 (function() {

@@ -2,11 +2,18 @@ class MarcasController < ApplicationController
   before_action :set_marca, only: [:show, :edit, :update, :destroy]
   respond_to :html, :json
   
+ 
   # GET /marcas
   # GET /marcas.json
   def index
-    @marcas = Marca.all
+        @marcas = Marca.all
+       respond_to do |format|
+          format.html
+          format.xls # { send_data @products.to_csv(col_sep: "\t") }
+        end
+
   end
+
 
   # GET /marcas/1
   # GET /marcas/1.json
@@ -16,7 +23,8 @@ class MarcasController < ApplicationController
   # GET /marcas/new
   def new
     @marca = Marca.new
-    render layout: 'modal'
+
+    
   end
 
   # GET /marcas/1/edit
@@ -27,6 +35,8 @@ class MarcasController < ApplicationController
   # POST /marcas.json
   def create
     @marca = Marca.new(marca_params)
+
+    
  
     respond_to do |format|
       if @marca.save
@@ -56,12 +66,31 @@ class MarcasController < ApplicationController
   # DELETE /marcas/1
   # DELETE /marcas/1.json
   def destroy
-    @marca.destroy
-    respond_to do |format|
-      format.html { redirect_to marcas_url, notice: 'Marca was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+
+      if    @marca.destroy
+        respond_to do |format|
+          format.html { redirect_to marcas_url, notice: 'Marca ha sido eliminado.' }
+            format.json { head :no_content }
+        end
+      else
+        respond_to do |format|
+          format.html { redirect_to marcas_url, notice: 'Marca esta siendo usado por otro archivo, no se puede eliminar.' }
+            format.json { head :no_content }
+        end
+
+
+      end 
+    
   end
+
+
+
+  def import
+      Marca.import(params[:file])
+       redirect_to root_url, notice: "Marca importadas."
+  end 
+
+
  def create_ajax
     if(params[:company_id] and params[:company_id] != "" and params[:name] and params[:name] != "" )
       @marca = Marca.new(:company_id => params[:company_id].to_i, :name => params[:name])
@@ -86,4 +115,8 @@ class MarcasController < ApplicationController
     def marca_params
       params.require(:marca).permit(:descrip,:company_id)
     end
+
+
+   
+  
 end

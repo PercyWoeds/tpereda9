@@ -17,8 +17,6 @@ class Supplier < ActiveRecord::Base
   
   self.per_page = 20
 
-
-
   has_many   :supplier_details , :dependent => :destroy
   
 

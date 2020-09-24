@@ -1597,7 +1597,8 @@ def reportes_st_3
     
     @fecha2 = params[:fecha2]
 
-      @moneda_id = params[:moneda_id]
+    @moneda_id = params[:moneda_id]
+    
     
    # @company.actualizar_fecha2
 
@@ -1662,6 +1663,8 @@ def reportes_st_3
   
 
   end
+
+
 
 
 

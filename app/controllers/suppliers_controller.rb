@@ -22,8 +22,6 @@ class SuppliersController < ApplicationController
 
 
 
-
-
  
   # Show suppliers for a company
   def list_suppliers
@@ -75,20 +73,17 @@ class SuppliersController < ApplicationController
   # GET /suppliers/new
   # GET /suppliers/new.xml
   def new
-    @pagetitle = "New supplier"
+    @pagetitle = "Nuevo proveedor"
     
     
       @company = Company.find(1)
       @bancos = @company.get_banks()
       @tipoproveedor =@company.get_tipoproveedor()
 
-    
-      if(@company.can_view(current_user))
-        @supplier = Supplier.new
-        @supplier.company_id = @company.id
-      else
-        errPerms()
-      end
+  
+      @supplier = Supplier.new
+      @supplier.company_id = @company.id
+
     
     
     if(params[:ajax])
@@ -173,16 +168,13 @@ class SuppliersController < ApplicationController
 
     # Create via ajax
   def create_ajax
+    puts "create ajax "
     if(params[:name] and params[:name] != "" and params[:ruc] != "")
       params[:company_id]= 1
       @supplier = Supplier.new(:company_id => 1, :name => params[:name], :email => params[:email],
       :phone1 => params[:phone1], :phone2 => params[:phone2], :address1 => params[:address1],
       :address2 => params[:address2], :city => params[:city], :state => params[:state],
       :zip => params[:zip], :country => params[:country], :comments => params[:comments],:ruc=>params[:ruc])
-      
-      puts params[:name]
-      puts params[:ruc]
-      
       
       if @supplier.save
         render :text => "#{@supplier.id}|BRK|#{@supplier.name}"
@@ -193,6 +185,9 @@ class SuppliersController < ApplicationController
       render :text => "error_empty"
     end
   end
+
+
+
 
   def new2
      @pagetitle = "Nuevo Datos desde Sunat "

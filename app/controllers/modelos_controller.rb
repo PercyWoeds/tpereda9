@@ -5,6 +5,13 @@ class ModelosController < ApplicationController
   # GET /modelos.json
   def index
     @modelos = Modelo.all
+
+           
+ respond_to do |format|
+    format.html
+    format.xls # { send_data @products.to_csv(col_sep: "\t") }
+  end
+
   end
 
   # GET /modelos/1
@@ -61,6 +68,12 @@ class ModelosController < ApplicationController
     end
   end
 
+
+
+  def import
+      Modelo.import(params[:file])
+       redirect_to root_url, notice: "Modelos importadas."
+  end 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_modelo

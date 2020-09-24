@@ -34,6 +34,35 @@ totals = []
   </div>
 
   
+  
+
+
+<table>
+    <tr>
+      <td>
+        <div class="field">
+            <input id="check_cliente" name="check_cliente" type="checkbox" value="true" checked />
+          <div class="small">
+            Todos los clientes
+          </div>
+        </div>
+        
+      </td>
+      <td>
+      <div class="field">
+        <h5>  Cliente </h5>
+
+          <%= select_tag(:supplier_id,options_from_collection_for_select(@suppliers,'id','name') ) %>
+
+
+      </div>
+      </td>
+      
+    </tr>
+
+  </table>
+  
+
 
   <%= submit_tag  "To PDF", :name => "print"    %>
 

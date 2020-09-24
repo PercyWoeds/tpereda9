@@ -375,7 +375,13 @@ end
   resources :inventories  do 
     collection { get :addCategory  }    
   end 
- 
+  resources :marcas do 
+       collection { post :import  }
+  end 
+  resources :modelos do 
+       collection { post :import  }
+  end 
+
 
   resources :carts
   get 'store/index'

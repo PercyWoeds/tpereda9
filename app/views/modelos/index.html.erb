@@ -25,3 +25,16 @@
 <br>
 
 <%= link_to 'New Modelo', new_modelo_path %>
+
+
+<h2>Importar Archivo modelos "*.csv"</h2>
+
+<%= form_tag import_modelos_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
+
+ Download:
+  <%= link_to "xls", modelos_path(format: "xls"), multipart: true  %> 
+  

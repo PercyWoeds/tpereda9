@@ -644,6 +644,7 @@
     });
   }
 
+
   // Create new customer in the invoice via ajax
   function doCreateCustomerInvoice() {
     var company_id = $("#invoice_company_id").val();
