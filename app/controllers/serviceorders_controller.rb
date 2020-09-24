@@ -431,48 +431,21 @@ pdf.move_down 5
     end
   
     if(@company.can_view(current_user))
-      if(params[:ac_supplier] and params[:ac_supplier] != "")
-        @supplier = supplier.find(:first, :conditions => {:company_id => @company.id, :name => params[:ac_supplier].strip})
-        
-        if @supplier
-          @serviceorders = Serviceorder.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :supplier_id => @supplier.id}, :order => "id DESC")
+     
+      
+        if(params[:search] and params[:search] != "")
+
+          @serviceorders = Serviceorder.paginate(:page => params[:page]).search(params[:search]).order("fecha1 desc  ")
         else
-          flash[:error] = "We couldn't find any serviceorders for that supplier."
-          redirect_to "/companies/serviceorders/#{@company.id}"
+          @serviceorders = Serviceorder.where(company_id:  @company.id).order("fecha1 desc").paginate(:page => params[:page])
+      
+
         end
-      elsif(params[:supplier] and params[:supplier] != "")
-        @supplier = Supplier.find(params[:supplier])
-        
-        if @supplier
-          @serviceorders = Serviceorder.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :supplier_id => @supplier.id}, :order => "id DESC")
-        else
-          flash[:error] = "We couldn't find any serviceorders for that supplier."
-          redirect_to "/companies/serviceorders/#{@company.id}"
-        end
-      elsif(params[:location] and params[:location] != "" and params[:division] and params[:division] != "")
-        @serviceorders = Serviceorder.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :location_id => params[:location], :division_id => params[:division]}, :order => "id DESC")
-      elsif(params[:location] and params[:location] != "")
-        @serviceorders = Serviceorder.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :location_id => params[:location]}, :order => "id DESC")
-      elsif(params[:division] and params[:division] != "")
-        @serviceorders = Serviceorder.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :division_id => params[:division]}, :order => "id DESC")
+
+    
       else
-        if(params[:q] and params[:q] != "")
-          fields = ["description", "comments", "code"]
-
-          q = params[:q].strip
-          @q_org = q
-
-          query = str_sql_search(q, fields)
-
-          @serviceorders = Serviceorder.paginate(:page => params[:page], :order => 'id DESC', :conditions => ["company_id = ? AND (#{query})", @company.id])
-        else
-          @serviceorders = Serviceorder.where(company_id:  @company.id).order("id DESC").paginate(:page => params[:page])
-          @filters_display = "none"
-        end
+        errPerms()
       end
-    else
-      errPerms()
-    end
   end
   
   # GET /serviceorders

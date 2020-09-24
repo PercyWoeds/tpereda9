@@ -1598,13 +1598,26 @@ def reportes_st_3
     @fecha2 = params[:fecha2]
 
     @moneda_id = params[:moneda_id]
+
     
-    
+    @check_proveedor = params[:check_proveedor]
+    @proveedor = params[:supplier_id ]
    # @company.actualizar_fecha2
 
-    @purchase_soles = @company.get_purchases_by_moneda_prov(@fecha1,@fecha2,"1")  
     
-    @purchase_dolar = @company.get_purchases_by_moneda_prov(@fecha1,@fecha2,"2") 
+
+    if @check_proveedor == 'on' 
+
+          @purchase_soles = @company.get_purchases_by_moneda_prov(@fecha1,@fecha2,"1")  
+          @purchase_dolar = @company.get_purchases_by_moneda_prov(@fecha1,@fecha2,"2") 
+          
+    else
+
+ 
+          @purchase_soles  = @company.get_ingresos_day3b(@fecha1,@fecha2,@proveedor,"1" )
+          @purchase_dolar  = @company.get_ingresos_day3b(@fecha1,@fecha2,@proveedor,"2" )
+
+    end 
 
 
    case params[:print] 

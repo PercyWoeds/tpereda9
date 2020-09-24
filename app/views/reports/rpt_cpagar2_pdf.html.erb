@@ -41,16 +41,16 @@ totals = []
     <tr>
       <td>
         <div class="field">
-            <input id="check_cliente" name="check_cliente" type="checkbox" value="true" checked />
+            <input id="check_proveedor" name="check_proveedor" type="checkbox"  checked />
           <div class="small">
-            Todos los clientes
+            Todos los Proveedores 
           </div>
         </div>
         
       </td>
       <td>
       <div class="field">
-        <h5>  Cliente </h5>
+        <h5>  Proveedor </h5>
 
           <%= select_tag(:supplier_id,options_from_collection_for_select(@suppliers,'id','name') ) %>
 
@@ -76,3 +76,19 @@ totals = []
 <div class="button">
   <%= link_to 'Regresar', "/companies/cpagar/#{@company.id}" %>
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+  
+    
+    $('#check_proveedor').change(function() {
+   if ($('#check_proveedor').is(":checked")) {
+     $('#supplier_id').attr('disabled', true);
+   }
+   else {
+     $('#supplier_id').attr('disabled', false);
+   }
+}); 
+    
+  });
+</script>

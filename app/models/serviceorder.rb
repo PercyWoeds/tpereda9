@@ -47,13 +47,12 @@ def not_serviceorders_with?(serviceorder_id)
 end
 
 
-def self.search(param)
-
-  return Serviceorder.none if param.blank?
-  param.strip!
-  (code_matches(param)) 
-
+def self.search(search)
+      # Title is for the above case, the OP incorrectly had 'name'
+      where("code ilike ? ", "%#{search}%")
 end
+
+
 
 def self.code_matches(param)
 
@@ -299,12 +298,17 @@ serviceorder_services.servicebuy_id = servicebuys.id where serviceorder_services
   
   # Color for processed or not
   def processed_color
-    if(self.processed == "1")
+    if(self.processed == "1" )
       return "green"
+
+    elsif (self.processed == "3")
+       return "green"
     else
       return "red"
     end
   end
+
+
   def get_placa
       if self.truck_id != nil 
         a= Truck.find(self.truck_id) 

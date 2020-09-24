@@ -146,6 +146,7 @@ require 'sidekiq/web'
 
   resources :serviceorders do
      collection { get :update_serviceext }
+     collection { get :search }
   end 
   resources :customer_payments do
     collection do

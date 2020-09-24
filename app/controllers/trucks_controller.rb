@@ -26,7 +26,11 @@ class TrucksController < ApplicationController
   def show
     @truck = Truck.new
     @marcas = @truck.get_marcas() 
-    @modelos = @truck.get_modelos()     
+    @modelos = @truck.get_modelos()    
+    @tipo_unidad  = @truck.get_tipos()
+    @config  = @truck.get_config()
+    @clase   = @truck.get_clase()
+    @color   = @truck.get_color()
   end
 
   # GET /trucks/new

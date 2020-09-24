@@ -38,7 +38,7 @@
             <%= money(serviceorder.total) %>
           </td>
          <td class="small bordered_bottom bordered_right">
-            <%= doDate(serviceorder.created_at) %>
+            <%= serviceorder.fecha1.strftime("%d/%m/%Y") %>
           </td>
            <td class="small bordered_bottom bordered_right <%= serviceorder.processed_color %>" >
             <%= serviceorder.get_processed_short %>

@@ -1033,6 +1033,8 @@ class ReportsController < ApplicationController
     @pagetitle = "Pendientes por cobrar general"    
     @customers = @company.get_customers()
      @monedas=@company.get_monedas
+  @suppliers = @company.get_suppliers()
+     
   end
   def rpt_cpagar3_pdf
     @company = Company.find(params[:company_id])    
