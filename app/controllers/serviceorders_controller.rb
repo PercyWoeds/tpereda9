@@ -772,7 +772,7 @@ pdf.move_down 5
     end
 
 # reporte completo
-  def build_pdf_header_rpt(pdf)
+  def build_pdf_header_rpt2(pdf)
       pdf.font "Helvetica" , :size => 8
      $lcCli  =  @company.name 
      $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
@@ -780,13 +780,13 @@ pdf.move_down 5
      $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
      $lcHora  = Time.now.to_s
 
-    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
+    max_rows = [client_data_headers_rpt2.length, invoice_headers_rpt2.length, 0].max
       rows = []
       (1..max_rows).each do |row|
         rows_index = row - 1
         rows[rows_index] = []
-        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
-        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
+        rows[rows_index] += (client_data_headers_rpt2.length >= row ? client_data_headers_rpt2[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_rpt2.length >= row ? invoice_headers_rpt2[rows_index] : ['',''])
       end
 
       if rows.present?
@@ -810,14 +810,18 @@ pdf.move_down 5
       pdf 
   end   
 
-  def build_pdf_body_rpt(pdf)
+  def build_pdf_body_rpt2(pdf)
     
-    pdf.text "Orden Servicio  Emitidas : Año "+@year.to_s+ " Mes : "+@month.to_s , :size => 11 
+    pdf.text "Orden Servicio  Emitidas :"+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
     pdf.text ""
     pdf.font "Helvetica" , :size => 8
 
       headers = []
       table_content = []
+       services_subtotal = 0
+      services_tax = 0
+      services_total = 0
+      services_detraccion = 0
 
       Serviceorder::TABLE_HEADERS2.each do |header|
         cell = pdf.make_cell(:content => header)
@@ -825,7 +829,7 @@ pdf.move_down 5
         headers << cell
       end
 
-      table_content << headers
+      table_content << headers    
 
       nroitem=1
 
@@ -837,13 +841,26 @@ pdf.move_down 5
             row << product.payment.descrip
             row << product.code
             row << product.supplier.name  
-            row << product.subtotal.to_s
-            row << product.tax.to_s
-            row << product.total.to_s
+            row << product.subtotal.round(2)
+            row << product.tax.round(2)
+            row << product.total.round(2)
             row << product.get_processed
+
             table_content << row
 
             nroitem=nroitem + 1
+
+
+          services_subtotal += product.subtotal          
+
+    
+          services_tax += product.tax
+        
+            
+         
+          services_total += product.total
+        
+    
         
         end
 
@@ -854,42 +871,19 @@ pdf.move_down 5
       totals = []
       detraccions =[]
 
-      services_subtotal = 0
-      services_tax = 0
-      services_total = 0
-      services_detraccion = 0
+     
 
-          subtotal = @company.get_services_day2(@fecha1,@fecha2, "subtotal")
-          subtotals.push(subtotal)
-          services_subtotal += subtotal          
-
-      
         
-        
-          tax = @company.get_services_day2(@fecha1,@fecha2, "tax")
-          taxes.push(tax)
-          services_tax += tax
-        
-                
-          total = @company.get_services_day2(@fecha1,@fecha2, "total")
-          totals.push(total)
-          services_total += total
-        
-      
-
-          detraccion = @company.get_services_day2(@fecha1,@fecha2, "detraccion")
-          detraccions.push(detraccion)
-          services_detraccion += detraccion
                     
             row = []
             row << " "
             row << " "
+            row << " TOTAL  ==>"
             row << " "
             row << " "
-            row << " "
-            row << subtotal.to_s
-            row << tax.to_s
-            row << total.to_s
+            row << services_subtotal.round(2) 
+            row << services_tax.round(2)
+            row << services_total.round(2)
             row << " "
 
             table_content << row
@@ -915,7 +909,7 @@ pdf.move_down 5
     end
 
 
-    def build_pdf_footer_rpt(pdf)
+    def build_pdf_footer_rpt2(pdf)
                   
 
         pdf.bounding_box([0, 20], :width => 535, :height => 40) do
@@ -936,15 +930,36 @@ pdf.move_down 5
       @fecha1 = params[:fecha1]
       @fecha2 = params[:fecha2]
     
-    
+
+
+
+     @check_proveedor = params[:check_proveedor]
+    @proveedor = params[:supplier_id ]
+   # @company.actualizar_fecha2
+
+
+    if @check_proveedor == 'on' 
+
 
     @serviceorder_rpt = @company.get_services_day(@fecha1,@fecha2)  
+
+
+    else
+
+    @serviceorder_rpt = @company.get_services_day_by_supplier(@fecha1,@fecha2,@proveedor)  
+
+
+
+    end 
+
+
+
       
     Prawn::Document.generate("app/pdf_output/rpt_serviceall.pdf") do |pdf|
         pdf.font "Helvetica"
-        pdf = build_pdf_header_rpt(pdf)
-        pdf = build_pdf_body_rpt(pdf)
-        build_pdf_footer_rpt(pdf)
+        pdf = build_pdf_header_rpt2(pdf)
+        pdf = build_pdf_body_rpt2(pdf)
+        build_pdf_footer_rpt2(pdf)
         $lcFileName =  "app/pdf_output/rpt_serviceall.pdf"      
         
     end     
@@ -970,13 +985,13 @@ pdf.move_down 5
   end
 
 
-  def client_data_headers_rpt
+  def client_data_headers_rpt2
       client_headers  = [["Empresa  :", $lcCli ]]
       client_headers << ["Direccion :", $lcdir1]
       client_headers
   end
 
-  def invoice_headers_rpt            
+  def invoice_headers_rpt2            
       invoice_headers  = [["Fecha : ",$lcHora]]    
       invoice_headers
   end

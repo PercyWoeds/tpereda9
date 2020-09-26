@@ -605,10 +605,15 @@ def get_guias_2(fecha1,fecha2)
     @serviceorder = Serviceorder.where(["company_id = ? AND fecha1 >= ? AND fecha1 <= ?", self.id, "#{year}-#{month}-01 00:00:00", "#{year}-#{month}-31 23:59:59"])
     return @serviceorder
  end 
+
  def get_services_day(fecha1,fecha2)
     @serviceorder = Serviceorder.where(["company_id = ? AND fecha1 >= ? AND fecha1 <= ?", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59"])
     return @serviceorder
  end 
+def get_services_day_by_supplier(fecha1,fecha2,proveedor)
+    @serviceorder = Serviceorder.where(["company_id = ? AND fecha1 >= ? AND fecha1 <= ? and supplier_id = ?", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59",proveedor ])
+    return @serviceorder
+ end
 
 ## generar archivo txt
  def get_facturas_year_month_day(fecha1)

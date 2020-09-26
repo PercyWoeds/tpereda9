@@ -900,6 +900,10 @@ class ReportsController < ApplicationController
       
       i += 1
     end
+
+    @suppliers = @company.get_suppliers()
+
+
   end
 
   def rpt_purchases_all

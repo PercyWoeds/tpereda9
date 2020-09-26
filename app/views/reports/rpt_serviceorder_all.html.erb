@@ -15,20 +15,45 @@ totals = []
 
 <h1>
   <%= image_tag("reports_48.png", :class => "vmiddle") %>
- Reporte Orden Servicio  - <%= @month_name %> <%= @year %>
+ Reporte Orden Servicio   %>
 </h1>
 
 <form method="get" action="/serviceorders/rpt_serviceorder_all_pdf/<%= @company.id %>">
 
   <div class="field">
-      <input type="date" name="fecha1" value="2017-01-01" style = "width: 150px" >
+      <input type="date" name="fecha1" value="2020-01-01" style = "width: 150px" >
   </div>
 
   <div class="field">
-		<input type="date" name="fecha2" value="2017-01-31" style = "width: 150px" >
+	  	<input type="date" name="fecha2" value="2020-08-31" style = "width: 150px" >
   </div>
 
 
+
+<table>
+    <tr>
+      <td>
+        <div class="field">
+            <input id="check_proveedor" name="check_proveedor" type="checkbox"  checked />
+          <div class="small">
+            Todos los Proveedores 
+          </div>
+        </div>
+        
+      </td>
+      <td>
+      <div class="field">
+        <h5>  Proveedor </h5>
+
+          <%= select_tag(:supplier_id,options_from_collection_for_select(@suppliers,'id','name') ) %>
+
+
+      </div>
+      </td>
+      
+    </tr>
+
+  </table>
 
   <input type="submit" value="Generar" />
   <a href="/serviceorders/rpt_serviceorder_all_pdf/<%= @company.id %>" </a>
@@ -36,76 +61,22 @@ totals = []
 
 <br />
 
-<div id="container_chart" class="chart"></div>
-
-<table>
-  <thead>
-    <tr>
-      <th class="bordered_bottom bordered_right" style="width: 70px;">
-        Date
-      </th>
-      <th class="bordered_bottom bordered_right" style="width: 100px;">
-        Subtotal
-      </th>
-      <th class="bordered_bottom bordered_right" style="width: 100px;">
-        Tax
-      </th>
-      <th class="bordered_bottom bordered_right" style="width: 100px;">
-        Total
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <% for date in @dates %>
-      <tr>
-        <td class="bordered_bottom bordered_right">
-          <%= doDate(Time.parse(date), 5) %>
-        </td>
-        <td class="bordered_bottom bordered_right right">
-          <%
-          subtotal = @company.get_invoices_value_exact_date(date, "subtotal")
-          subtotals.push(subtotal)
-          invoices_subtotal += subtotal
-          %>
-          $<%= money(subtotal) %>
-        </td>
-        <td class="bordered_bottom bordered_right right">
-          <%
-          tax = @company.get_invoices_value_exact_date(date, "tax")
-          taxes.push(tax)
-          invoices_tax += tax
-          %>
-          $<%= money(tax) %>
-        </td>
-        <td class="bordered_bottom bordered_right right">
-          <%
-          total = @company.get_invoices_value_exact_date(date, "total")
-          totals.push(total)
-          invoices_total += total
-          %>
-          $<%= money(total) %>
-        </td>
-      </tr>
-    <% end %>
-    <tr>
-      <td class="bordered_bottom bordered_right bold">
-        Total:
-      </td>
-      <td class="bordered_bottom bordered_right right bold">
-        $<%= money(invoices_subtotal) %>
-      </td>
-      <td class="bordered_bottom bordered_right right bold">
-        $<%= money(invoices_tax) %>
-      </td>
-      <td class="bordered_bottom bordered_right right bold">
-        $<%= money(invoices_total) %>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<br />
-
 <div class="button">
   <%= link_to "Regresar", "/companies/reports/#{@company.id}" %>
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+  
+    
+    $('#check_proveedor').change(function() {
+   if ($('#check_proveedor').is(":checked")) {
+     $('#supplier_id').attr('disabled', true);
+   }
+   else {
+     $('#supplier_id').attr('disabled', false);
+   }
+}); 
+    
+  });
+</script>
