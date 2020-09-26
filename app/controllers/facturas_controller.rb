@@ -4836,16 +4836,14 @@ def reporte_asistencia3
 ######-----
 def rpt_cpagar40 
 
- @company=Company.find(1)      
-   
+    @company=Company.find(1)     
         
     @fecha1 = params[:fecha1]
     @fecha2 = params[:fecha2]
     @proveedor  = params[:supplier_id]
     @provee_existe = params[:check_prov]
     
-   
-    
+  
       case params[:print]
         when "To PDF" then 
             redirect_to :action => "rpt_cpagar4_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2], :supplier_id=> params[:supplier_id],:id=>"1",:check_prov => params[:check_prov]
@@ -4862,25 +4860,35 @@ def rpt_cpagar40
     @fecha2 = params[:fecha2]
     @proveedor  = params[:supplier_id]
     @provee_existe = params[:check_prov]
+    @moneda  = params[:moneda_id]
 
-    puts "valor "
-  puts @provee_existe 
+
 
 
      if  @provee_existe == "true" || @provee_existe != nil 
 
         @customerpayment_rpt = @company.get_supplier_payments0(@fecha1,@fecha2)
-        @total_soles   = @company.get_paymentsD_day_value(@fecha1,@fecha2,"total")
-        @total_dolares = @company.get_paymentsC_day_value(@fecha1,@fecha2,"total")
+
+          if @moneda == 2 
+
+              @total_soles   = @company.get_paymentsD_day_value(@fecha1,@fecha2,"total")
+
+          else 
+             @total_dolares = @company.get_paymentsC_day_value(@fecha1,@fecha2,"total")
+          end 
        
      else
 
-        puts "check true "
 
         @customerpayment_rpt = @company.get_supplier_payments01(@fecha1,@fecha2,@proveedor)
-        @total_soles   = @company.get_paymentsD_day_value1(@fecha1,@fecha2,"total",@proveedor)
-        @total_dolares = @company.get_paymentsC_day_value1(@fecha1,@fecha2,"total",@proveedor)
 
+        if @moneda == 2 
+
+          @total_soles   = @company.get_paymentsD_day_value1(@fecha1,@fecha2,"total",@proveedor)
+        else
+
+          @total_dolares = @company.get_paymentsC_day_value1(@fecha1,@fecha2,"total",@proveedor)
+        end 
        
      end 
 

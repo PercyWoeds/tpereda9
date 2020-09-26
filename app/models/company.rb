@@ -1598,16 +1598,13 @@ def get_supplier_payments2(moneda,fecha1,fecha2)
   return b 
     
  end 
-
-
-
  
 
 
 #reporte de cancelaciones detaludo x proveedor
 
-def get_supplier_payments0(fecha1,fecha2)
-    @vouchers = SupplierPayment.where([" company_id = ? AND fecha1 >= ? and fecha1<= ?  ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:id)
+def get_supplier_payments0(fecha1,fecha2,moneda )
+    @vouchers = SupplierPayment.where([" company_id = ? AND fecha1 >= ? and fecha1<= ? and moneda_id = ?  ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:id)
     return @vouchers    
 end 
 

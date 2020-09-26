@@ -4,8 +4,37 @@ validates_uniqueness_of :placa
 
 
 has_many :outputs,:dependent => :destroy 
+has_many :tipo_unidads 
+
 
  before_destroy :check_for_trucks, prepend: true
+
+
+    def self.import(file)
+          CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
+            puts "placa21"
+            puts row['placa']
+
+            if a = Truck.find_by(placa: row['placa'].upcase.strip)
+
+             
+              puts row['placa']
+
+            else
+              puts "placa......"
+              puts row['placa']
+
+
+              Truck.create! row.to_hash 
+
+              
+            end 
+
+
+
+        end
+    end  
+
 
 
   def get_marcas()
@@ -55,11 +84,7 @@ has_many :outputs,:dependent => :destroy
 
 
 
-  def self.import(file)
-          CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
-          Truck.create! row.to_hash 
-        end
-  end       
+  
 
   def self.search(search)
       # Title is for the above case, the OP incorrectly had 'name'

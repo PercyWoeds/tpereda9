@@ -64,7 +64,17 @@
 
 </div>
 
+
+
+
+ Download:
+  <%= link_to "xls", marcas_path(format: "xls"), multipart: true  %> 
+
+  
+  <h2>Importar Archivo vehiculos "*.csv"</h2>
+
 <%= form_tag import_trucks_path, multipart: true do %>
   <%= file_field_tag :file %>
   <%= submit_tag "Importar " %>
 <% end %>
+

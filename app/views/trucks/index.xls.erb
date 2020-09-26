@@ -16,14 +16,15 @@
       </Row>
 
       
-    <% @marcas.each do |product| %>
+    <% @trucksxls.each do |product| %>
 
      
           <Row>
            
             <Cell><Data ss:Type="String"><%= product.id %></Data></Cell>
-            <Cell><Data ss:Type="String"><%= product.descrip %></Data></Cell>
-            <
+            <Cell><Data ss:Type="String"><%= product.code %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= product.placa %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= product.tipo_unidad.name  %></Data></Cell>
           </Row>
 
 

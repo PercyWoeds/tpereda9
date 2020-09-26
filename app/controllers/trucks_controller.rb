@@ -13,6 +13,8 @@ class TrucksController < ApplicationController
   # GET /trucks.json
   def index
 
+
+    @trucksxls = Truck.where(estado: "1").order("placa")
      if(params[:search])                 
   
         @trucks = Truck.paginate(:page => params[:page]).search(params[:search]).order(:placa)
@@ -135,7 +137,10 @@ class TrucksController < ApplicationController
     render :layout => false
   end
 
-
+ def import
+      Truck.import(params[:file])
+       redirect_to root_url, notice: "Vehiculos importadas."
+  end 
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -147,6 +152,8 @@ class TrucksController < ApplicationController
     def truck_params
       params.require(:truck).permit(:code, :placa, :clase, :marca_id, :modelo_id, :certificado, :ejes, :licencia, :neumatico, :config, :carroceria, :anio, :estado, :propio,:search ,:tipo_unidad_id , :config_vehi_id,:clase_cat_id,:color_vehi_id)
     end
+
+
 
 
 end

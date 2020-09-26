@@ -11,7 +11,6 @@ self.per_page = 20
   belongs_to :payment
   belongs_to :bank_acount
   belongs_to :document 
-  
 
   has_many :supplier_payment_details
 

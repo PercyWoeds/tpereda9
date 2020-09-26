@@ -31,12 +31,22 @@ totals = []
 		<input type="date" name="fecha2" value="2020-01-31" style = "width: 150px" >
     </div>
 
+
+  <div class="field">
+      
+  <%= select_tag(:moneda_id, options_from_collection_for_select(@monedas,'id','description')) %>
+  </div>
+
+    
+
  <div class="field">
         <label class="check_prov" >
     <%= check_box_tag  :check_prov ,'true',true  %>
          </label>
 
 </div>
+
+
          <div class="small">
             Todos los proveedores
           </div>
@@ -45,8 +55,6 @@ totals = []
         <h5>  Proveedor </h5>
         <%= select_tag(:supplier_id,options_from_collection_for_select(@suppliers,'id','name'),:id => "supplier_select"  ) %>
       </div>
-    
-
  
 <br> 
  <%= submit_tag "To PDF",   :name => "print" %>

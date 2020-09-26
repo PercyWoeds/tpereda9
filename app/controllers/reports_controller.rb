@@ -1043,12 +1043,17 @@ class ReportsController < ApplicationController
     @monedas = @company.get_monedas()
 
   end
+
+
   def rpt_cpagar4_pdf
     @company = Company.find(params[:company_id])    
     @pagetitle = "Liquidacion de pagos"    
     @customers = @company.get_customers()
       @suppliers = @company.get_suppliers()
+      @monedas = Moneda.all 
   end
+
+
   def rpt_cpagar5_pdf
     @company = Company.find(params[:company_id])    
     @pagetitle = "Cuentas x pagar por vencimiento"    
