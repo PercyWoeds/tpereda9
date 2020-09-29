@@ -62,8 +62,6 @@
     <td>  <%= f.collection_select :tipocargue_id, @cargas, :id, :name, :prompt => true %></td>
     <td>Carga </td>
     <td> <%= f.text_field :carga  %></td>
-
-
     
   </tr>
 
@@ -94,20 +92,22 @@
         <tr>
           <td class="left aligned">Tracto</td>
           <td><%= f.collection_select :truck_id, @trucks, :id, :placa, :prompt => true %></td>
-          <td>36g</td>
-          <td>2g</td>
+          <td> </td>
+          <td> </td>
+
+
         </tr>
         <tr>
           <td class="left aligned">Carreta</td>
           <td>  <%= f.collection_select :truck2_id, @trucks, :id, :placa, :prompt => true %></td>
-          <td>24g</td>
-          <td>29g</td>
+          <td></td>
+          <td></td>
         </tr>
         <tr>
           <td class="left aligned">Escolta</td>
           <td>  <%= f.collection_select :truck3_id, @trucks, :id, :placa, :prompt => true %></td>
-          <td>11g</td>
-          <td>9g</td>
+          <td> </td>
+          <td> </td>
         </tr>
 
 
@@ -179,28 +179,22 @@
 
 
 <script type="text/javascript">
-  $(document).ready(function() {
   
 
-    $("#ac_item3").autocomplete("/facturas/ac_st/<%= @company.id %>", {
-      matchSubset: 1,
-      matchContains: 1,
-      selectFirst: false
-    });
+  $(document).on('ready page:load', function () {
+ $('#truck_id').change(function(event){
+      $("#truck_id").attr('disabled', 'disabled')          
+      $.ajax({
+     type:'post',
+     url:'/tranportorder/do_camion',
+     data:{ truck_id: $(this).val() },
+     dataType:"script"
+   });
+  event.stopImmediatePropagation();
+});
+});
 
 
-    
-    $("#ac_item3").result(function(event, data, formatted) {
-      $("#ac_item_guia").val(data[2]);    
-      $("#selected_guia").html(data[0]);      
-    });
-    
-
-   <% if @guias_lines %>
-      listItemsSt2();
-    <% end %>
-
-  });
 </script>
 
 

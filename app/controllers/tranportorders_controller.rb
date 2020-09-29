@@ -133,6 +133,12 @@ class TranportordersController < ApplicationController
   end
 
 
+  def do_camion
+    ##no need to write anything
+
+    
+  end
+
 ##-----------------------------------------------------------------------------------
 ## REPORTE DE GUIAS EMITIDAS
 ##-----------------------------------------------------------------------------------
