@@ -4863,19 +4863,17 @@ def rpt_cpagar40
     @moneda  = params[:moneda_id]
 
 
-
-
      if  @provee_existe == "true" || @provee_existe != nil 
 
        
 
           if @moneda == 2 
-             @customerpayment_rpt = @company.get_supplier_payments0(@fecha1,@fecha2,"2")
+             @customerpayment_rpt = @company.get_supplier_payments0(@fecha1,@fecha2,@moneda)
              
 
           else 
 
-             @customerpayment_rpt = @company.get_supplier_payments0(@fecha1,@fecha2,"1")
+             @customerpayment_rpt = @company.get_supplier_payments0(@fecha1,@fecha2,@moneda)
              
           end 
        
@@ -4884,13 +4882,13 @@ def rpt_cpagar40
 
         if @moneda == 2 
 
-        @customerpayment_rpt = @company.get_supplier_payments01(@fecha1,@fecha2,@proveedor,"2" )
+        @customerpayment_rpt = @company.get_supplier_payments01(@fecha1,@fecha2,@proveedor,@moneda )
 
 
         
         else
 
-        @customerpayment_rpt = @company.get_supplier_payments01(@fecha1,@fecha2,@proveedor,"1" )
+        @customerpayment_rpt = @company.get_supplier_payments01(@fecha1,@fecha2,@proveedor,@moneda )
 
         
         end 
