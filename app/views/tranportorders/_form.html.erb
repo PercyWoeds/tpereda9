@@ -1,89 +1,151 @@
 
-<div class="mid_box bordered_right">
+<div >
 
 <%= form_for(@tranportorder) do |f| %>
 
-  <div class="form-inputs">
+  <div >
 
+<table style="width:100%">
+  <tr>
+    <td>
     <div class="field">
       <%= f.label :location_id ,"Local"%><br />
       <%= f.select :location_id, options_from_collection_for_select(@locations,'id','name') %>
            
     </div>
-    <div class="field">
-      <%= f.label :division_id %><br />
-      <%= f.select :division_id, options_from_collection_for_select(@divisions,'id','name') %>
-    </div>
-
+    </td>
+    <td>
     <div class="field">
       <%= f.label :code, "Numero *", :class => "bold" %><br />
       <%= f.text_field :code, :onclick => "$(this).select();" %>
     </div>
 
-    <%= hr() %>
+    </td>
+    <td>
 
-    <div class="field">
-      <%= f.label :employee_id , "Conductor :"%><br />
-      <%= f.collection_select :employee_id, @employees, :id, :full_name, :prompt => true %>
-    </div>
+         <div >
 
-    <div class="field">
-      <%= f.label :employee2_id , "Copiloto :"%><br />
-      <%= f.collection_select :employee2_id, @employees, :id, :full_name, :prompt => true %>
-    </div>
+          
+            <%= f.label :customer_id , "Cliente :"%><br />
+            <%= f.collection_select :customer_id, @customers, :id, :name, :prompt => true,:size=> "60" %>
+         
+        </div>
+      </td>
 
+  </td>
 
-    <div class="field">
-      <%= f.label :ubication_id , "De :  "%><br />
-       <%= f.collection_select :ubication_id, @puntos, :id, :name, :prompt => true %>
-    </div>
-   
-    <div class="field">
-      <%= f.label :ubication2_id , "Hasta :  "%><br />
-      <%= f.collection_select :ubication2_id, @puntos, :id, :name, :prompt => true %>
-    </div>
-   
+</tr>
+</table>
 
-    <div class="field">
-      <%= f.label :truck_id ,"Vehiculo "%><br />
-      <%= f.collection_select :truck_id, @trucks, :id, :placa, :prompt => true %>
-    </div>
+<br>
 
-    <div class="field">
-      <%= f.label :truck2_id ,"Vehiculo 2 "%><br />
-      <%= f.collection_select :truck2_id, @trucks, :id, :placa, :prompt => true %>
-    </div>
-   
-   
-    <%= hr() %>
+<table style="width:100%">
 
-    <div class="field">
-      <%= f.label :fecha1, "Fecha Salida*", :class => "bold" %><br />
-      <%= f.date_field :fecha1 %>
-
-    </div>
-
-    <div class="field">
-      <%= f.label :fecha2, "Fecha Llegada*", :class => "bold" %><br />
-      <%= f.date_field :fecha2 %>
-    </div>
+  <tr>
+    <td>Ruta</td>
+    <td>De:</td>
+    <td>  <%= f.collection_select :ubication_id, @puntos, :id, :name, :prompt => true %></td>
+    <td>Fecha Salida</td>
+    <td>  <%= f.date_field :fecha1 %></td>
+    <td>Fecha Llegada</td>
+    <td> <%= f.date_field :fecha2 %></td>
     
+  </tr>
+
+  <tr>
+    <td></td>
+    <td>A: </td>
+    <td>  <%= f.collection_select :ubication2_id, @puntos, :id, :name, :prompt => true %></td>
+    
+    <td>Tipo Carga </td>
+
+    <td>  <%= f.collection_select :tipocargue_id, @cargas, :id, :name, :prompt => true %></td>
+    <td>Carga </td>
+    <td> <%= f.text_field :carga  %></td>
+
+
+    
+  </tr>
+
+
+</table>
+  <br>
+<p>Guia Remision Transportista </p>
+ <p> <%= f.text_field :description %></p>
+
+<table class="ui right aligned table">
+      <thead>
+        <th class="left aligned">Datos</th>
+        <th>Placa</th>
+        <th>Tipo Unidad</th>
+        <th>Configuracion</th>
+        <th>Clase/ 
+        Categoria</th>
+        <th>Color</th>
+        <th>Año</th>
+        <th>Modelo</th>
+        <th>Marca</th>
+        <th>CHV</th>
+        <th>Nro.Ejes</th>
+
+
+      </thead>
+      <tbody>
+        <tr>
+          <td class="left aligned">Tracto</td>
+          <td><%= f.collection_select :truck_id, @trucks, :id, :placa, :prompt => true %></td>
+          <td>36g</td>
+          <td>2g</td>
+        </tr>
+        <tr>
+          <td class="left aligned">Carreta</td>
+          <td>  <%= f.collection_select :truck2_id, @trucks, :id, :placa, :prompt => true %></td>
+          <td>24g</td>
+          <td>29g</td>
+        </tr>
+        <tr>
+          <td class="left aligned">Escolta</td>
+          <td>  <%= f.collection_select :truck3_id, @trucks, :id, :placa, :prompt => true %></td>
+          <td>11g</td>
+          <td>9g</td>
+        </tr>
+
+
+       
+      </tbody>
+    </table>
+
+
+<table class="ui right aligned table">
+      <thead>
+        <th class="left aligned"></th>
+        <th>Datos</th>
+        <th>Conductor</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="left aligned">Conductor</td>
+          <td><%= f.collection_select :employee_id, @employees, :id, :full_name, :prompt => true %> </td>
+          <td>DNI</td>
+          <td></td>
+          <td>Licencia</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left aligned">Conductor</td>
+          <td><%= f.collection_select :employee2_id, @employees, :id, :full_name, :prompt => true %> </td>
+          <td>DNI</td>
+          <td></td>
+          <td>Licencia</td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+
     <%= hr() %>
-    <div class="field">
-      <%= f.label :description,"Guias en blanco " %><br />
-      <%= f.text_area :description %>
-    </div>
-    <div class="field">
-      <%= f.label :comments,"Observaciones  " %><br />
-      <%= f.text_area :comments %>
-    </div>
 
-    <div class="field" id="list_items2">
-      <p class="bold big">Guias:</p>
-    </div>
-
-
-     
 
   </div>
 
@@ -106,33 +168,8 @@
 
  </div>
 
+ 
 
-<div class="mid_box">
-
-
-  <h4>
-    Agregar Solicitud de Transporte
-  </h4>
-
-  
-  <form method="get" action="/facturas" onsubmit="addItemToSt2(); return false;">
-
-
-    <input type="hidden" name="ac_item_guia" id="ac_item_guia" value="" />
-    <strong>S.T.:</strong><br />
-
-    <input type="text" name="ac_item3" id="ac_item3" value="" />
-        <div class="small">
-          Ingrese un termino de busqueda para encontrar una solicitud de transporte
-        </div>
-    <br />    
-    
-    <input type="submit" value="Agregar S.T." />
-
-  </form>
-
-
-</div>
 
 <%= br() %>
 <br />

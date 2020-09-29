@@ -20,6 +20,7 @@ class Employee < ActiveRecord::Base
 	has_many :horas_mes 
   has_many :assistances 
   has_many :contratos   
+  has_many :conductors   
   
     
     validates_uniqueness_of :idnumber,:cod_interno

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200906032509) do
+ActiveRecord::Schema.define(version: 20200929163041) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2737,6 +2737,11 @@ ActiveRecord::Schema.define(version: 20200906032509) do
     t.datetime "fecha"
     t.string   "estado"
     t.datetime "date_processed"
+    t.string   "customer_id"
+    t.string   "integer"
+    t.integer  "tipocargue_id"
+    t.string   "carga"
+    t.integer  "truck3_id"
   end
 
   create_table "transferencia_detalles", force: :cascade do |t|

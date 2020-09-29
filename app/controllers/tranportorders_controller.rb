@@ -20,6 +20,7 @@ class TranportordersController < ApplicationController
   # GET /tranportorders/1
   # GET /tranportorders/1.json
   def show
+
   end
 
   # GET /tranportorders/new
@@ -42,6 +43,9 @@ class TranportordersController < ApplicationController
     @company =  Company.find(1)
     @tranportorder.company_id = @company.id   
     @tranportorder[:user_id] = getUserId()
+    @cargas = @company.get_cargas()
+
+    
 
   end
 

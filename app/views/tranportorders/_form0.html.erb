@@ -1,0 +1,204 @@
+
+<div class="mid_box bordered_right">
+
+<%= form_for(@tranportorder) do |f| %>
+
+  <div class="form-inputs">
+
+
+
+    <div class="field">
+      <%= f.label :location_id ,"Local"%><br />
+      <%= f.select :location_id, options_from_collection_for_select(@locations,'id','name') %>
+           
+    </div>
+  
+    <div class="field">
+      <%= f.label :code, "Numero *", :class => "bold" %><br />
+      <%= f.text_field :code, :onclick => "$(this).select();" %>
+    </div>
+
+    <%= hr() %>
+
+
+    <div class="field">
+      <%= f.label :customer_id , "Cliente :"%><br />
+      <%= f.collection_select :customer_id, @customers, :id, :name, :prompt => true %>
+    </div>
+
+<table style="width:100%">
+  <tr>
+    <th>Firstname</th>
+    <th>Lastname</th>
+    <th>Age</th>
+  </tr>
+  <tr>
+    <td>Ruta</td>
+    <td>De : </td>
+    <td>  <%= f.collection_select :ubication_id, @puntos, :id, :name, :prompt => true %></td>
+ <td>Fecha </td>
+    <td>  <%= f.date_field :fecha1 %></td>
+    <td>Guia Remision Transportista</td>
+    <td> <%= f.text_field :description %></td>
+  </tr>
+  <tr>
+    <td>Eve</td>
+    <td>Jackson</td>
+    <td>94</td>
+  </tr>
+</table>
+
+
+    <div class="field">
+      <%= f.label :ubication_id , "De :  "%><br />
+      
+    </div>
+   
+    <div class="field">
+      <%= f.label :ubication2_id , "Hasta :  "%><br />
+      <%= f.collection_select :ubication2_id, @puntos, :id, :name, :prompt => true %>
+    </div>
+   
+
+
+  <div class="field">
+      <%= f.label :fecha1, "Fecha Salida*", :class => "bold" %><br />
+    
+
+    </div>
+
+    <div class="field">
+      <%= f.label :fecha2, "Fecha Llegada*", :class => "bold" %><br />
+      <%= f.date_field :fecha2 %>
+    </div>
+
+
+    <div class="field">
+      <%= f.label :employee_id , "Conductor :"%><br />
+      <%= f.collection_select :employee_id, @employees, :id, :full_name, :prompt => true %>
+    </div>
+
+    <div class="field">
+      <%= f.label :employee2_id , "Copiloto :"%><br />
+      <%= f.collection_select :employee2_id, @employees, :id, :full_name, :prompt => true %>
+    </div>
+
+
+
+    <div class="field">
+      <%= f.label :truck_id ,"Vehiculo "%><br />
+      <%= f.collection_select :truck_id, @trucks, :id, :placa, :prompt => true %>
+    </div>
+
+    <div class="field">
+      <%= f.label :truck2_id ,"Vehiculo 2 "%><br />
+      <%= f.collection_select :truck2_id, @trucks, :id, :placa, :prompt => true %>
+    </div>
+   
+   
+    <%= hr() %>
+
+  
+    
+    <%= hr() %>
+    <div class="field">
+      <%= f.label :description,"Guias en blanco " %><br />
+      <%= f.text_area :description %>
+    </div>
+    <div class="field">
+      <%= f.label :comments,"Observaciones  " %><br />
+      <%= f.text_area :comments %>
+    </div>
+
+    <div class="field" id="list_items2">
+      <p class="bold big">Guias:</p>
+    </div>
+
+
+     
+
+  </div>
+
+
+    <div class="actions">
+      <input type="hidden" name="items2" id="items2" value="<% if @guias_lines %><%= @guias_lines %><% end %>" />
+          <%= f.hidden_field :company_id %>    
+
+      
+      <%= f.submit %>
+    </div>
+    
+    <div class="small">
+      Once you're done adding products, don't forget to <strong><%= @action_txt %></strong> your invoice.
+    </div>
+
+
+ 
+<% end %>
+
+ </div>
+
+ 
+
+
+<div class="mid_box">
+
+
+  <h4>
+    Agregar Solicitud de Transporte
+  </h4>
+
+  
+  <form method="get" action="/facturas" onsubmit="addItemToSt2(); return false;">
+
+
+    <input type="hidden" name="ac_item_guia" id="ac_item_guia" value="" />
+    <strong>S.T.:</strong><br />
+
+    <input type="text" name="ac_item3" id="ac_item3" value="" />
+        <div class="small">
+          Ingrese un termino de busqueda para encontrar una solicitud de transporte
+        </div>
+    <br />    
+    
+    <input type="submit" value="Agregar S.T." />
+
+  </form>
+
+
+</div>
+
+<%= br() %>
+<br />
+
+
+<%= render 'layouts/autocomplete' %>
+
+
+<script type="text/javascript">
+  $(document).ready(function() {
+  
+
+    $("#ac_item3").autocomplete("/facturas/ac_st/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+
+
+    
+    $("#ac_item3").result(function(event, data, formatted) {
+      $("#ac_item_guia").val(data[2]);    
+      $("#selected_guia").html(data[0]);      
+    });
+    
+
+   <% if @guias_lines %>
+      listItemsSt2();
+    <% end %>
+
+  });
+</script>
+
+
+

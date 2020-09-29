@@ -24,7 +24,6 @@ class ConductorsController < ApplicationController
     @conductor[:expedicion_licencia_especial] = Date.today
     @conductor[:revalidacion_licencia_especial] = Date.today
 
-
   
     @conductor[:dni_emision] = Date.today
     @conductor[:dni_caducidad] = Date.today
@@ -99,6 +98,10 @@ class ConductorsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def conductor_params
-      params.require(:conductor).permit(:lugar, :anio, :licencia, :categoria, :expedicion_licencia, :revalidacion_licencia, :categoria_especial, :expedicion_licencia_especial,:revalidacion_licencia_especial, :iqbf, :fecha_emision, :dni_emision, :dni_caducidad, :ap_emision, :ap_caducidad, :ape_emision, :ape_caducidad, :user_id, :company_id, :active, :employees_id)
+      params.require(:conductor).permit(:lugar, :anio, :licencia, :categoria, :expedicion_licencia, 
+        :revalidacion_licencia, :categoria_especial, :expedicion_licencia_especial,
+        :revalidacion_licencia_especial, :iqbf, :fecha_emision, :dni_emision, :dni_caducidad, 
+        :ap_emision, :ap_caducidad, :ape_emision, :ape_caducidad, :user_id, :company_id, :active, 
+        :employee_id)
     end
 end

@@ -4867,27 +4867,32 @@ def rpt_cpagar40
 
      if  @provee_existe == "true" || @provee_existe != nil 
 
-        @customerpayment_rpt = @company.get_supplier_payments0(@fecha1,@fecha2)
+       
 
           if @moneda == 2 
-
-              @total_soles   = @company.get_paymentsD_day_value(@fecha1,@fecha2,"total")
+             @customerpayment_rpt = @company.get_supplier_payments0(@fecha1,@fecha2,"2")
+             
 
           else 
-             @total_dolares = @company.get_paymentsC_day_value(@fecha1,@fecha2,"total")
+
+             @customerpayment_rpt = @company.get_supplier_payments0(@fecha1,@fecha2,"1")
+             
           end 
        
      else
 
 
-        @customerpayment_rpt = @company.get_supplier_payments01(@fecha1,@fecha2,@proveedor)
-
         if @moneda == 2 
 
-          @total_soles   = @company.get_paymentsD_day_value1(@fecha1,@fecha2,"total",@proveedor)
+        @customerpayment_rpt = @company.get_supplier_payments01(@fecha1,@fecha2,@proveedor,"2" )
+
+
+        
         else
 
-          @total_dolares = @company.get_paymentsC_day_value1(@fecha1,@fecha2,"total",@proveedor)
+        @customerpayment_rpt = @company.get_supplier_payments01(@fecha1,@fecha2,@proveedor,"1" )
+
+        
         end 
        
      end 
@@ -4957,6 +4962,8 @@ def rpt_cpagar40
       table_content = []
       total_general = 0
       total_factory = 0
+      total_debe  = 0
+      total_haber = 0
 
       SupplierPayment::TABLE_HEADERS2.each do |header|
         cell = pdf.make_cell(:content => header)
@@ -4965,6 +4972,8 @@ def rpt_cpagar40
       end
       table_content << headers
       nroitem = 1
+
+      if @customerpayment_rpt
 
        for  customerpayment_rpt in @customerpayment_rpt
 
@@ -4982,6 +4991,7 @@ def rpt_cpagar40
          row << " "
          row << customerpayment_rpt.total    
          table_content << row
+         total_debe += customerpayment_rpt.total    
                 
         @customerdetails =  customerpayment_rpt.get_payments()
 
@@ -5000,13 +5010,17 @@ def rpt_cpagar40
                 row <<  productItem.get_supplier(productItem.supplier_id)
                 row <<  sprintf("%.2f",productItem.total.to_s)
                 row << " "
-
+                total_haber += productItem.total  
                 table_content << row
 
                 nroitem=nroitem + 1
              
             end
         end 
+
+      
+
+       
 
        end  
       
@@ -5019,8 +5033,8 @@ def rpt_cpagar40
       row << ""
       row << ""
       row << "TOTALES => "
-      row << sprintf("%.2f",@total_soles.to_s)
-      row << sprintf("%.2f",@total_dolares.to_s)                    
+      row << sprintf("%.2f",total_debe.to_s)
+      row << sprintf("%.2f",total_haber.to_s)                    
       
       table_content << row
 
@@ -5044,6 +5058,7 @@ def rpt_cpagar40
       pdf.move_down 10      
       pdf
       
+    end 
 
     end
 

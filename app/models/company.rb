@@ -29,6 +29,10 @@ class Company < ActiveRecord::Base
    return @tipoproveedor 
  end 
 
+def get_cargas()
+    puntos = Tipocargue.all 
+    return puntos
+  end
 
  def get_inasists
    
@@ -1609,10 +1613,39 @@ def get_supplier_payments2(moneda,fecha1,fecha2)
 #reporte de cancelaciones detaludo x proveedor
 
 def get_supplier_payments0(fecha1,fecha2,moneda )
-    @vouchers = SupplierPayment.where([" company_id = ? AND fecha1 >= ? and fecha1<= ? and moneda_id = ?  ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:id)
+    @vouchers = SupplierPayment.joins(:bank_acount).select("supplier_payments.*, bank_acounts.moneda_id").where([" company_id = ? AND fecha1 >= ? and fecha1<= ? 
+      and bank_acounts.moneda_id = ?", 
+      self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,moneda]).order(:id)
     return @vouchers    
+
+    #MovementDetail.order(:product_id,:fecha,:to).joins(:product,:document).select("movement_details.*, products.name as product_name").where("products.id = ?", product1)
+
 end 
 
+
+def get_payments_day_value(fecha1,fecha2,value = "total")
+
+    facturas = SupplierPayment.where(["company_id = ? AND fecha1 >= ? and fecha1<= ?  ", 
+      self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+    ret = 0
+      for factura in facturas      
+                
+          @detail = SupplierPaymentDetail.where(:supplier_payment_id => factura.id)
+
+          for d in @detail 
+            if(value == "ajuste")
+              ret += d.ajuste
+            elsif (value == "compen")
+              ret += d.compen 
+            else
+              ret += d.total            
+            end
+          end 
+
+      end
+
+      return ret
+ end 
 
   
 def get_paymentsD_day_value(fecha1,fecha2,value = "total")
@@ -1660,8 +1693,13 @@ def get_paymentsD_day_value(fecha1,fecha2,value = "total")
 
  ##[[[[[[]]]]]]
 
-def get_supplier_payments01(fecha1,fecha2,supplier)
-    @vouchers = SupplierPayment.where([" company_id = ? AND fecha1 >= ? and fecha1<= ? and supplier_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",supplier ]).order(:id)
+def get_supplier_payments01(fecha1,fecha2,supplier,moneda)
+   @vouchers = SupplierPayment.joins(:bank_acount).select("supplier_payments.*, bank_acounts.moneda_id").where([" company_id = ? AND fecha1 >= ? and fecha1<= ? 
+      and supplier_id = ? and  bank_acounts.moneda_id = ?", 
+      self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,supplier,moneda]).order(:id)
+    return @vouchers    
+
+
     return @vouchers    
 end 
 

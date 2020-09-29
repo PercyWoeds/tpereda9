@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Conductors</h1>
+<h1>Listado Conductores</h1>
 
 <table>
   <thead>
@@ -16,15 +16,7 @@
       <th>Iqbf</th>
       <th>Fecha emision</th>
       <th>Dni emision</th>
-      <th>Dni caducidad</th>
-      <th>Ap emision</th>
-      <th>Ap caducidad</th>
-      <th>Ape emision</th>
-      <th>Ape caducidad</th>
-      <th>User</th>
-      <th>Company</th>
-      <th>Active</th>
-      <th>Employees</th>
+      
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -43,15 +35,7 @@
         <td><%= conductor.iqbf %></td>
         <td><%= conductor.fecha_emision %></td>
         <td><%= conductor.dni_emision %></td>
-        <td><%= conductor.dni_caducidad %></td>
-        <td><%= conductor.ap_emision %></td>
-        <td><%= conductor.ap_caducidad %></td>
-        <td><%= conductor.ape_emision %></td>
-        <td><%= conductor.ape_caducidad %></td>
-        <td><%= conductor.user_id %></td>
-        <td><%= conductor.company_id %></td>
-        <td><%= conductor.active %></td>
-        <td><%= conductor.employees %></td>
+       
         <td><%= link_to 'Show', conductor %></td>
         <td><%= link_to 'Edit', edit_conductor_path(conductor) %></td>
         <td><%= link_to 'Destroy', conductor, method: :delete, data: { confirm: 'Are you sure?' } %></td>

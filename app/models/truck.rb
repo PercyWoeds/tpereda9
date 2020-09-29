@@ -4,7 +4,13 @@ validates_uniqueness_of :placa
 
 
 has_many :outputs,:dependent => :destroy 
-has_many :tipo_unidads 
+belongs_to  :tipo_unidad 
+belongs_to  :config_vehi
+belongs_to  :color_vehi
+belongs_to  :clase_cat
+
+belongs_to  :modelo
+belongs_to  :marca
 
 
  before_destroy :check_for_trucks, prepend: true
@@ -19,6 +25,17 @@ has_many :tipo_unidads
 
              
               puts row['placa']
+
+              a.tipo_unidad_id = row['tipo_unidad_id']
+              a.config_vehi_id = row['config_vehi_id']
+              a.clase_cat_id = row['clase_cat_id']
+              a.color_vehi_id = row['color_vehi_id']
+              a.certificado = row['certificado']
+              a.ejes = row['ejes']
+              a.anio = row['anio']
+         
+               a.estado = "1"
+               a.save
 
             else
               puts "placa......"

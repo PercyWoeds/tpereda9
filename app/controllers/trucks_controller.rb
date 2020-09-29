@@ -13,7 +13,6 @@ class TrucksController < ApplicationController
   # GET /trucks.json
   def index
 
-
     @trucksxls = Truck.where(estado: "1").order("placa")
      if(params[:search])                 
   
