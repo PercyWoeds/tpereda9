@@ -4973,7 +4973,6 @@ def rpt_cpagar40
       table_content << headers
       nroitem = 1
 
-      if @customerpayment_rpt.size > 0
 
        for  customerpayment_rpt in @customerpayment_rpt
 
@@ -5060,7 +5059,7 @@ def rpt_cpagar40
       
     end 
 
-    end
+  
 
 
     def build_pdf_footer_rpt3(pdf)      

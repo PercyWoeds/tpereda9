@@ -135,8 +135,11 @@ class TranportordersController < ApplicationController
 
   def do_camion
     ##no need to write anything
+    truck_id = params[:truck_id]
 
-    
+    puts truck_id 
+
+
   end
 
 ##-----------------------------------------------------------------------------------

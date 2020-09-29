@@ -1,0 +1,5 @@
+<% if params[:state_id].present? %>
+
+   $("#site_id").html("<%= escape_javascript(render(partial: 'site_dropdown'))%>")
+
+<% end %>
