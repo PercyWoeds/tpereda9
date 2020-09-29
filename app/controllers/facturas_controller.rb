@@ -4846,7 +4846,7 @@ def rpt_cpagar40
   
       case params[:print]
         when "To PDF" then 
-            redirect_to :action => "rpt_cpagar4_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2], :supplier_id=> params[:supplier_id],:id=>"1",:check_prov => params[:check_prov]
+            redirect_to :action => "rpt_cpagar4_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2], :supplier_id=> params[:supplier_id],:id=>"1",:check_prov => params[:check_prov],:moneda_id => params[:moneda_id]
         when "To Excel" then render xlsx: 'rpt_cpagar4_xls'
          
         else render action: "index"
@@ -4952,7 +4952,7 @@ def rpt_cpagar40
 
  def build_pdf_body_rpt3(pdf)
     
-    pdf.text "Emision de Cheques :    Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
+    pdf.text "Liquidacion de Cancelaciones :    Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
     pdf.text ""
     pdf.font "Helvetica" , :size => 6
 
