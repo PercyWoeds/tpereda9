@@ -127,5 +127,36 @@ def cancelar
   end
 
 
+def not_friends_with?(friend_id)
+
+    Manifestship.where(manifest_id: friend_id).count < 1
+
+end
+
+
+def self.search(param)
+
+    return Manifest.none if param.blank?
+    param.strip!
+    param.downcase!
+    (first_name_matches(param)).uniq
+
+end
+
+
+
+def self.first_name_matches(param)
+
+matches('code', param)
+
+end
+
+
+def self.matches(field_name, param)
+
+where("lower(#{field_name}) ilike ?", "%#{param}%")
+
+end
+
 
 end

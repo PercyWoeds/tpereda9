@@ -21,6 +21,8 @@ class TranportordersController < ApplicationController
   # GET /tranportorders/1.json
   def show
 
+       @company =  Company.find(1)
+ @cargas = @company.get_cargas()
   end
 
   # GET /tranportorders/new
@@ -45,15 +47,18 @@ class TranportordersController < ApplicationController
     @tranportorder[:user_id] = getUserId()
     @cargas = @company.get_cargas()
 
-    
+    @tranportorder[:fecha1] = Date.today 
+    @tranportorder[:fecha2] = Date.today 
 
   end
 
   # GET /tranportorders/1/edit
   def edit
+     @company =  Company.find(1)
      @customers = @tranportorder.get_customers()
      @puntos    = @tranportorder.get_puntos()
-     
+     @cargas =  @company.get_cargas()
+
     
      @employees = @tranportorder.get_employees() 
      @trucks    = Truck.all 
@@ -71,6 +76,7 @@ class TranportordersController < ApplicationController
   # POST /tranportorders
   # POST /tranportorders.json
   def create
+    @company =  Company.find(1)
     @tranportorder = Tranportorder.new(tranportorder_params)
     @customers = @tranportorder.get_customers()
     @puntos = @tranportorder.get_puntos()
@@ -78,12 +84,15 @@ class TranportordersController < ApplicationController
     @trucks = Truck.all 
     @locations = Location.all
     @divisions = Division.all 
-    @company = @tranportorder.company
+  
+    @cargas = @company.get_cargas()
 
-    items2 = params[:items2].split(",")
     @tranportorder[:user_id] = @current_user.id
     @tranportorder[:company_id] = 1
     @tranportorder[:processed] = "1"
+   @tranportorder[:division_id] = 1
+
+   items2 = []
 
     respond_to do |format|
       if @tranportorder.save
@@ -133,14 +142,7 @@ class TranportordersController < ApplicationController
   end
 
 
-  def do_camion
-    ##no need to write anything
-    truck_id = params[:truck_id]
 
-    puts truck_id 
-
-
-  end
 
 ##-----------------------------------------------------------------------------------
 ## REPORTE DE GUIAS EMITIDAS
@@ -817,6 +819,195 @@ def build_pdf_header_ost(pdf)
 
 
 
+
+ # Export o2st to PDF
+  def pdf2
+    @ost = Tranportorder.find(params[:id])
+    company =@ost.company_id
+    @company =Company.find(company)
+    @cabecera ="Facturacion"
+    @abajo    ="Viatico"
+
+
+    Prawn::Document.generate("app/pdf_output/#{@ost.id}.pdf") do |pdf|
+        pdf.font "Helvetica"
+
+        pdf = build_pdf_header_ost2(pdf)
+        pdf = build_pdf_body_ost2(pdf)
+        build_pdf_footer_ost2(pdf)
+
+        @cabecera ="Conductor"
+        @abajo    ="Combustible"
+
+        
+        @lcFileName =  "app/pdf_output/#{@ost.id}.pdf"
+
+
+    end
+
+
+    @lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+@lcFileName
+    send_file("#{@lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+
+  end
+
+
+
+def build_pdf_header_ost2(pdf)
+      pdf.font "Helvetica" , :size => 8
+      image_path = "#{Dir.pwd}/public/images/tpereda2.png"
+
+       table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD OCUPACIONAL",:rowspan => 2},"CODIGO ","TP"], 
+          ["VERSION: ","0"], 
+          ["ORDEN DE SERVICIO DE TRANSPORTE ","Pagina: ","1 de 1 "] 
+         
+          ])
+     
+       pdf.table(table_content  ,{
+           :position => :center,
+           :width => pdf.bounds.width
+         })do
+           columns([1,2]).font_style = :bold
+            columns([0]).width = 118.55
+            columns([1]).width = 451.34
+            columns([1]).align = :center
+            
+            columns([2]).width = 100
+          
+            columns([3]).width = 100
+      
+         end
+        
+         table_content2 = ([["Fecha : ",Date.today.strftime("%d/%m/%Y")]])
+
+         pdf.table(table_content2,{:position=>:right }) do
+
+            columns([0, 1]).font_style = :bold
+            columns([0, 1]).width = 100
+            
+         end 
+
+     
+         pdf.text "(1) del "+@fecha1+" al "+@fecha2
+         
+         pdf.move_down 2
+      
+      pdf 
+  
+  end
+
+  def build_pdf_body_ost2(pdf)
+
+  
+      headers = []
+      table_content = []
+
+      Tranportorder::TABLE_HEADERS_OST2.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content << headers
+
+      nroitem=1
+      
+      ary = [1,2,3]
+      
+      
+            row = []
+            row << "TRACTO "
+            row << @ost.get_placa(@ost.truck_id)
+            row << @ost.get_tipounidad(@ost.truck_id)
+            row << @ost.get_configura(@ost.truck_id)
+            row << ""
+            row << ""
+            table_content << row
+
+            row = []
+            row << "CARRETA "
+            row << @ost.get_placa(@ost.truck2_id)
+            row << @ost.get_tipounidad(@ost.truck2_id)
+            row << @ost.get_configura(@ost.truck2_id)
+            row << ""
+            row << ""
+            table_content << row
+
+
+            row = []
+            row << "CONDUCTOR"
+            row << @ost.employee.full_name 
+            row << @ost.employee.dni 
+            row << @ost.get_licencia(@ost.employee_id)
+            row << ""
+            row << ""
+            table_content << row
+
+
+            row = []
+            row << "ESCOLTA "
+            row << @ost.get_empleado(@ost.employee2_id)
+            row << @ost.get_dni(@ost.employee2_id)
+            row << @ost.get_licencia(@ost.employee2_id)
+            row << ""
+            row << ""
+            table_content << row
+
+
+
+            client_headers  = [["Conductor de carga :",@ost.employee.full_name ]]
+      client_headers << ["Conducto de ruta :",""  ]
+      client_headers << ["Supervisor/apoyo :",@ost.get_empleado(@ost.employee2_id)]
+     
+          
+       
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                              } do
+                                          columns([0]).align=:center
+                                          columns([1]).align=:right
+                                          columns([2]).align=:center
+                                          columns([3]).align=:center
+                                          columns([4]).align=:right
+                                          columns([5]).align=:right
+                                          columns([6]).align=:right
+
+                                        end
+
+      pdf.move_down 10
+      
+      pdf.table invoice_summary, {
+        :position => :right,
+        :cell_style => {:border_width => 1},
+        :width => pdf.bounds.width/2
+      } do
+        columns([0]).font_style = :bold
+        columns([1]).align = :right
+
+      end
+     
+      
+      
+      pdf
+
+    end
+
+
+    def build_pdf_footer_ost2(pdf)
+      
+      
+
+        pdf.text ""
+      
+    
+         pdf
+
+     end
+
+
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tranportorder
@@ -825,6 +1016,6 @@ def build_pdf_header_ost(pdf)
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tranportorder_params
-      params.require(:tranportorder).permit(:code, :employee_id, :truck_id, :employee2_id, :truck2_id, :ubication_id, :ubication2_id, :fecha1, :fecha2, :description, :comments, :processed, :company_id, :location_id, :division_id)
+      params.require(:tranportorder).permit(:code, :employee_id, :truck_id, :employee2_id, :truck2_id, :truck3_id,:ubication_id, :ubication2_id, :fecha1, :fecha2, :description, :comments, :processed, :company_id, :location_id, :division_id,:tipocargue_id,:customer_id,:carga)
     end
 end

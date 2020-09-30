@@ -144,6 +144,13 @@ require 'sidekiq/web'
        collection { get :search }
   end 
 
+
+
+  get 'search_manifests', to: 'manifests#search'
+
+  post 'add_manifest', to: 'manifests#add_manifest'
+
+
   resources :serviceorders do
      collection { get :update_serviceext }
      collection { get :search }
@@ -1024,6 +1031,8 @@ match 'purchases/do_crear/:id'   => 'purchases#do_crear', via: [:get, :post]
   match 'manifests/do_cancelar/:id' => 'manifests#do_cancelar', via: [:get, :post]
   
   match 'manifests/pdf/:id' => 'manifests#pdf', via: [:get, :post]
+  match 'manifests/pdf2/:id' => 'manifests#pdf', via: [:get, :post]
+  
   match 'manifests/do_email/:id' => 'manifests#do_email', via: [:get, :post]
   match 'manifests/sendmail/:id' => 'manifests#sendmail', via: [:get, :post]
   match 'manifests/sendcancelar/:id' => 'manifests#sendcancelar', via: [:get, :post]

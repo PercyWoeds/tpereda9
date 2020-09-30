@@ -204,7 +204,11 @@
   
    
 <%= link_to 'Export PDF', "/tranportorders/pdf/#{@tranportorder.id}" %>
+<%= link_to 'Export PDF 2', "/tranportorders/pdf2/#{@tranportorder.id}" %>
+
 <%= link_to 'Enviar OST via email', "/tranportorders/email/#{@tranportorder.id}" %>
+
+
   
 <% if @tranportorder.processed =="0" || @tranportorder.processed==nil %>
   <%= link_to 'Procesar OST', "/tranportorders/do_process/#{@tranportorder.id}" %>

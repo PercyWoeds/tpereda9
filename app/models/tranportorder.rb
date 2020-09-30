@@ -51,6 +51,8 @@ TABLE_HEADERS2 = ["ITEM",
                      /FEC.PAGO",
                      "DIAS CREDITO"
                      ]
+
+
  TABLE_HEADERS_OST = ["EMPRESA",
                      "NRO.GUIA",
                      "DESCRIPCION",
@@ -58,6 +60,20 @@ TABLE_HEADERS2 = ["ITEM",
                      "PRECIO FACTURA"
                      ]
 
+
+                     
+ TABLE_HEADERS_OST2 = ["DATOS",
+                     "PLACA",
+                     "TIPO UNIDAD",
+                     "CONFIGURACION",
+                     "CLASE/CATEGORIA",
+                     "COLOR",
+                     "AÑO",
+                     "MODELO",
+                     "MARCA",
+                     "CHV",
+                     "N.EJES"
+                     ]
 	def self.search(search)
 		  where("code LIKE ?", "%#{search}%") 
   		  
@@ -93,6 +109,38 @@ TABLE_HEADERS2 = ["ITEM",
 	  	return placa.placa
 
 	  end 	
+
+      def get_tipounidad(id)
+	  	@tipounidad = Truck.find(id)
+	  	return @tipounidad.tipo_unidad.name 
+	  end 	
+
+	  def get_configura(id)
+	  	@tipounidad = Truck.find(id)
+	  	return @tipounidad.config_vehi.name 
+	  end 
+
+	  def get_dni(id)
+	  	@tipounidad = Employee.find(id)
+	  	return @tipounidad.dni
+	  end 
+      def get_licencia(id)
+      	ret = " "
+
+      	if Conductor.exists(employee_id: id )
+
+	  			@tipounidad = Conductor.find_by(employee_id: id)
+	  			ret = @tipounidad.full_name
+	  	end
+
+	  	return ret 
+	  end 
+
+
+
+
+
+
 	  def get_punto(id)
 	  	punto = Punto.find(id)
 	  	return punto.name 
@@ -135,9 +183,6 @@ TABLE_HEADERS2 = ["ITEM",
 	    else 
 	      return "No Aprobado"
 	    end
-
-
-
 	  
     end
 

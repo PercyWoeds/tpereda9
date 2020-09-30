@@ -1,5 +1,6 @@
 
   // Add an item to a product kit
+
   function addItemToSt2() {
     
     var item = $("#ac_item3").val();

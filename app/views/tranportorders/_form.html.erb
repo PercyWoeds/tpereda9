@@ -1,3 +1,18 @@
+ <% if @tranportorder.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@tranportorder.errors.count, "error") %> prohibited this invoice from being saved:</h2>
+
+    <ul>
+    <% @tranportorder.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>       
+
+
+
+
 
 <div >
 
@@ -48,7 +63,7 @@
     <td>Fecha Salida</td>
     <td>  <%= f.date_field :fecha1 %></td>
     <td>Fecha Llegada</td>
-    <td> <%= f.date_field :fecha2 %></td>
+    <td>  <%= f.date_field :fecha2 %></td>
     
   </tr>
 
@@ -166,6 +181,10 @@
  
 <% end %>
 
+
+<%= render 'layouts/autocomplete' %>
+
+
  </div>
 
  
@@ -175,27 +194,36 @@
 <br />
 
 
-<%= render 'layouts/autocomplete' %>
-
 
 <script type="text/javascript">
   
+  $(document).ready(function() {
+  
 
-  $(document).on('ready page:load', function () {
- $('#truck_id').change(function(event){
-      $("#truck_id").attr('disabled', 'disabled')          
-      $.ajax({
-     type:'post',
-     url:'/tranportorder/do_camion',
-     data:{ truck_id: $(this).val() },
-     dataType:"script"
-   });
-  event.stopImmediatePropagation();
-});
-});
+    $("#ac_item3").autocomplete("/facturas/ac_st/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
 
 
+    
+    $("#ac_item3").result(function(event, data, formatted) {
+      $("#ac_item_guia").val(data[2]);    
+      $("#selected_guia").html(data[0]);      
+    });
+    
+
+   <% if @guias_lines %>
+      listItemsSt2();
+    <% end %>
+
+  });
 </script>
+
+
+
+
 
 
 
