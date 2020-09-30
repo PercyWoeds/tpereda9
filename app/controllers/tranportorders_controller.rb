@@ -29,6 +29,7 @@ class TranportordersController < ApplicationController
   def new
     @tranportorder = Tranportorder.new
 
+
     @customers = @tranportorder.get_customers()
     @puntos =    @tranportorder.get_puntos()
     @employees = @tranportorder.get_employees() 
@@ -829,7 +830,7 @@ def build_pdf_header_ost(pdf)
     @abajo    ="Viatico"
 
 
-    Prawn::Document.generate("app/pdf_output/#{@ost.id}.pdf") do |pdf|
+    Prawn::Document.generate "app/pdf_output/#{@ost.id}.pdf", :page_layout => :landscape do  |pdf|
         pdf.font "Helvetica"
 
         pdf = build_pdf_header_ost2(pdf)
@@ -854,12 +855,15 @@ def build_pdf_header_ost(pdf)
 
 
 def build_pdf_header_ost2(pdf)
+
+
+
       pdf.font "Helvetica" , :size => 8
       image_path = "#{Dir.pwd}/public/images/tpereda2.png"
 
        table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD OCUPACIONAL",:rowspan => 2},"CODIGO ","TP"], 
           ["VERSION: ","0"], 
-          ["ORDEN DE SERVICIO DE TRANSPORTE ","Pagina: ","1 de 1 "] 
+          ["ORDEN DE SERVICIO DE TRANSPORTE : " +@ost.code  ,"Pagina: ","1 de 1 "] 
          
           ])
      
@@ -869,7 +873,8 @@ def build_pdf_header_ost2(pdf)
          })do
            columns([1,2]).font_style = :bold
             columns([0]).width = 118.55
-            columns([1]).width = 451.34
+            columns([1]).width = 401.45
+
             columns([1]).align = :center
             
             columns([2]).width = 100
@@ -878,17 +883,8 @@ def build_pdf_header_ost2(pdf)
       
          end
         
-         table_content2 = ([["Fecha : ",Date.today.strftime("%d/%m/%Y")]])
-
-         pdf.table(table_content2,{:position=>:right }) do
-
-            columns([0, 1]).font_style = :bold
-            columns([0, 1]).width = 100
-            
-         end 
-
-     
-         pdf.text "(1) del "+@fecha1+" al "+@fecha2
+        
+    
          
          pdf.move_down 2
       
@@ -902,26 +898,90 @@ def build_pdf_header_ost2(pdf)
       headers = []
       table_content = []
 
+       table_content3 = []
+        table_content4 = []
+            table_content5 = []
+        
+
       Tranportorder::TABLE_HEADERS_OST2.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
       end
 
+
++ "  -  "+ @ost.get_punto(@ost.ubication2_id)
       table_content << headers
 
+
+
+
+       table_content2 = ([ [{:content =>"CLIENTE: " , :rowspan => 2 },
+        {:content =>  @ost.customer.name ,:rowspan => 2},
+           {:content => "RUTA " ,:rowspan => 2},"DE",@ost.get_punto(@ost.ubication_id)  ,"FECHA : " , @ost.fecha1.strftime("%d/%m/%Y"), "N.GUIA REMISION TRANSPORTISTA" ,@ost.comments], 
+          ["A: ",@ost.get_punto(@ost.ubication2_id) ,"Tipo Carga",@ost.get_tipocarga(@ost.tipocargue_id),"CARGA",@ost.carga]
+         
+          ])
+     
+       pdf.table(table_content2 ,{
+           :position => :center,
+           :width => pdf.bounds.width
+         })do
+           columns([1,2]).font_style = :bold
+            columns([0]).width = 80
+             columns([1]).width = 120
+
+            columns([1]).align = :center
+            
+            columns([2]).width = 35
+          
+            columns([3]).width = 35
+            columns([4]).width = 60
+         end
+
+         pdf.move_down 10
+      
+      table_content3 = ([[{:content =>"DATOS DE LA UNIDAD : " } ]])
+     
+       pdf.table(table_content3 ,{
+           :position => :center,
+           :width => pdf.bounds.width
+         })do
+           columns([0]).font_style = :bold
+            
+           columns([0]).align=:center
+                                         
+         end
+      
+
+
+
       nroitem=1
-      
-      ary = [1,2,3]
-      
+    
+           pdf.move_down 10
       
             row = []
             row << "TRACTO "
             row << @ost.get_placa(@ost.truck_id)
             row << @ost.get_tipounidad(@ost.truck_id)
             row << @ost.get_configura(@ost.truck_id)
-            row << ""
-            row << ""
+
+            row << @ost.get_clase_cat(@ost.truck_id)
+
+            row << @ost.get_color_unid(@ost.truck_id)
+
+            row << @ost.get_anio(@ost.truck_id)
+
+            row << @ost.get_modelo(@ost.truck_id)
+
+            row << @ost.get_marca(@ost.truck_id)
+
+            row << @ost.get_chv(@ost.truck_id)
+
+            row << @ost.get_ejes(@ost.truck_id)
+
+
+           
             table_content << row
 
             row = []
@@ -929,37 +989,45 @@ def build_pdf_header_ost2(pdf)
             row << @ost.get_placa(@ost.truck2_id)
             row << @ost.get_tipounidad(@ost.truck2_id)
             row << @ost.get_configura(@ost.truck2_id)
-            row << ""
-            row << ""
+row << @ost.get_clase_cat(@ost.truck_id)
+
+            row << @ost.get_color_unid(@ost.truck2_id)
+
+            row << @ost.get_anio(@ost.truck2_id)
+
+            row << @ost.get_modelo(@ost.truck2_id)
+
+            row << @ost.get_marca(@ost.truck2_id)
+
+            row << @ost.get_chv(@ost.truck2_id)
+
+            row << @ost.get_ejes(@ost.truck2_id)
+
+           
             table_content << row
-
-
-            row = []
-            row << "CONDUCTOR"
-            row << @ost.employee.full_name 
-            row << @ost.employee.dni 
-            row << @ost.get_licencia(@ost.employee_id)
-            row << ""
-            row << ""
-            table_content << row
-
-
-            row = []
+row = []
             row << "ESCOLTA "
-            row << @ost.get_empleado(@ost.employee2_id)
-            row << @ost.get_dni(@ost.employee2_id)
-            row << @ost.get_licencia(@ost.employee2_id)
-            row << ""
-            row << ""
+            row << @ost.get_placa(@ost.truck3_id)
+            row << @ost.get_tipounidad(@ost.truck3_id)
+            row << @ost.get_configura(@ost.truck3_id)
+
+            row << @ost.get_clase_cat(@ost.truck3_id)
+
+            row << @ost.get_color_unid(@ost.truck3_id)
+
+            row << @ost.get_anio(@ost.truck3_id)
+
+            row << @ost.get_modelo(@ost.truck3_id)
+
+            row << @ost.get_marca(@ost.truck3_id)
+
+            row << @ost.get_chv(@ost.truck3_id)
+
+            row << @ost.get_ejes(@ost.truck3_id)
+           
             table_content << row
 
 
-
-            client_headers  = [["Conductor de carga :",@ost.employee.full_name ]]
-      client_headers << ["Conducto de ruta :",""  ]
-      client_headers << ["Supervisor/apoyo :",@ost.get_empleado(@ost.employee2_id)]
-     
-          
        
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
@@ -977,17 +1045,63 @@ def build_pdf_header_ost2(pdf)
 
       pdf.move_down 10
       
-      pdf.table invoice_summary, {
-        :position => :right,
-        :cell_style => {:border_width => 1},
-        :width => pdf.bounds.width/2
-      } do
-        columns([0]).font_style = :bold
-        columns([1]).align = :right
-
-      end
      
+  
       
+      table_content5 = ([[{:content =>"DATOS DEL CONDUCTOR : " } ]])
+     
+       pdf.table(table_content5 ,{
+           :position => :center,
+           :width => pdf.bounds.width
+         })do
+           columns([0]).font_style = :bold
+            
+           columns([0]).align=:center
+                                         
+         end
+      
+
+
+        row = []
+            row << "CONDUCTOR"
+            row << @ost.employee.full_name 
+            row << "DNI :"
+            row << @ost.employee.idnumber
+            row << "LICENCIA:"
+            row << @ost.get_licencia(@ost.employee_id)
+           
+            table_content4 << row
+
+
+            row = []
+            row << "ESCOLTA "
+            row << @ost.get_empleado(@ost.employee2_id)
+              row << "DNI :"
+            row << @ost.get_dni(@ost.employee2_id)
+               row << "LICENCIA:"
+            row << @ost.get_licencia(@ost.employee2_id)
+           
+            table_content4 << row
+
+
+
+           
+       
+      result = pdf.table table_content4, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                              } do
+                                          columns([0]).align=:center
+                                          columns([1]).align=:right
+                                          columns([2]).align=:center
+                                          columns([3]).align=:center
+                                          columns([4]).align=:right
+                                          columns([5]).align=:right
+                                          columns([6]).align=:right
+
+                                        end
+
+      pdf.move_down 10
       
       pdf
 

@@ -20,6 +20,7 @@
   </div>
 
 
+
 <div class="field">
     <%= f.label :tipo_unidad_id %><br />
      <%= f.collection_select :tipo_unidad_id, @tipo_unidad, :id, :name, :prompt => true %>
@@ -34,14 +35,14 @@
 
 <div class="field">
     <%= f.label :clase_cat_id %><br />
-     <%= f.collection_select :clase_cat_id, @config, :id, :name , :prompt => true %>
+     <%= f.collection_select :clase_cat_id, @clase, :id, :name , :prompt => true %>
 </div>
 
 
 
 <div class="field">
     <%= f.label :color_vehi_id %><br />
-     <%= f.collection_select :color_vehi_id, @config, :id, :name , :prompt => true %>
+     <%= f.collection_select :color_vehi_id, @color , :id, :name , :prompt => true %>
 </div>
 
 
@@ -53,12 +54,12 @@
 
 <div class="field">
     <%= f.label :modelo_id %><br />
-     <%= f.collection_select :modelo_id, @config, :id, :name , :prompt => true %>
+     <%= f.collection_select :modelo_id, @modelos, :id, :descrip , :prompt => true %>
 </div>
 
 <div class="field">
     <%= f.label :marca_id %><br />
-     <%= f.collection_select :marca_id, @config, :id, :name  , :prompt => true %>
+     <%= f.collection_select :marca_id, @marcas, :id, :descrip , :prompt => true %>
 </div>
 
 

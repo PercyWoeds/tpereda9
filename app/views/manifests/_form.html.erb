@@ -44,6 +44,11 @@
         <%= f.text_field :solicitante %>        
     </div>
 
+     <div class="field">  
+        <%= f.label :cotizacion, "cotizacion *", :class => "bold" %><br />
+        <%= f.text_field :cotizacion  %>        
+    </div>
+
     <div class="field">  
         <%= f.label :tipocargue_id , "Tipo carga*", :class => "bold" %><br />
         <%= f.collection_select :tipocargue_id, @cargas, :id, :name, :prompt => true %>

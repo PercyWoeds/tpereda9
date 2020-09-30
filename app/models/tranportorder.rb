@@ -1,7 +1,7 @@
 class Tranportorder < ActiveRecord::Base
 self.per_page = 20
 
-	validates_presence_of :location_id,:division_id,:code,:employee_id,:employee2_id,:ubication_id,:ubication2_id,:truck_id,:truck2_id
+	validates_presence_of :location_id,:division_id,:code,:employee_id,:employee2_id,:ubication_id,:ubication2_id,:truck_id,:truck2_id, :truck3_id
 	validates_presence_of :fecha1,:fecha2 	
      validates_uniqueness_of :code
 
@@ -116,18 +116,58 @@ TABLE_HEADERS2 = ["ITEM",
 	  end 	
 
 	  def get_configura(id)
+	  	puts id 
 	  	@tipounidad = Truck.find(id)
 	  	return @tipounidad.config_vehi.name 
+
 	  end 
+
+	
+	  def get_clase_cat(id)
+	  	@tipounidad = Truck.find(id)
+	  	return @tipounidad.clase_cat.name 
+	  end 
+
+	  def get_color_unid(id)
+	  	@tipounidad = Truck.find(id)
+	  	return @tipounidad.color_vehi.name 
+	  end 
+
+	    def get_anio(id)
+	  	@tipounidad = Truck.find(id)
+	  	return @tipounidad.anio  
+	  end 
+      def get_modelo(id)
+	  	@tipounidad = Truck.find(id)
+	  	return @tipounidad.modelo.descrip
+	  end 
+      def get_marca(id)
+	  	@tipounidad = Truck.find(id)
+	  	return @tipounidad.marca.descrip 
+	  end 
+
+
+	   def get_chv(id)
+	  	@tipounidad = Truck.find(id)
+	  	return @tipounidad.certificado
+	  end 
+
+    def get_ejes(id)
+	  	@tipounidad = Truck.find(id)
+	  	return @tipounidad.ejes 
+	  end 
+
+
+
 
 	  def get_dni(id)
 	  	@tipounidad = Employee.find(id)
-	  	return @tipounidad.dni
+	  	return @tipounidad.idnumber
 	  end 
       def get_licencia(id)
       	ret = " "
 
-      	if Conductor.exists(employee_id: id )
+      	if Conductor.exists?(employee_id: id )
 
 	  			@tipounidad = Conductor.find_by(employee_id: id)
 	  			ret = @tipounidad.full_name
@@ -137,7 +177,10 @@ TABLE_HEADERS2 = ["ITEM",
 	  end 
 
 
-
+       def get_tipocarga(id)
+	  	@tipounidad = Tipocargue.find(id)
+	  	return @tipounidad.name 
+	  end 
 
 
 
@@ -148,7 +191,7 @@ TABLE_HEADERS2 = ["ITEM",
 	  end 	
 
 	  def get_customers()
-	    customers = Customer.all
+	    customers = Customer.order(:name)
 	    return customers
 	  end
 	 

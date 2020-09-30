@@ -2426,6 +2426,7 @@ def reportes05
     @tipofacturas = @company.get_tipofacturas() 
     @monedas = @company.get_monedas()
     @tipodocumento = @company.get_documents_area("OPE")
+    @manifests = @company.get_manifests()
 
 
     @ac_user = getUsername()
@@ -5439,7 +5440,7 @@ end
   
   private
   def factura_params
-    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id,:detraccion,:factura2,:description,:document_id,:tipoventa_id,:contrato)
+    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id,:detraccion,:factura2,:description,:document_id,:tipoventa_id,:contrato,:ost,:manifest_id )
   end
 
 end

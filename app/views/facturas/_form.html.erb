@@ -32,6 +32,12 @@
       <%= f.select :tipo, options_from_collection_for_select(@tipofacturas,'id','descrip') %>
       </div>
 
+
+      <div class="field">
+      <%= f.label :manifest_id , "Solicitud de Transporte (S.T.):", :class => "bold" %><br />
+      <%= f.select :manifest_id, options_from_collection_for_select(@manifests,'id','code') %>
+      </div>
+
       <div class="field">
       <%= f.label :fecha , "Fecha *", :class => "bold" %><br />
 
