@@ -1,0 +1,247 @@
+
+
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "tranportorders", tranportorders_path %>
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+
+
+<div class="ui form segment raised">
+
+<h3>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  Nueva Orden Servicio 
+
+ <p> SOLICITUD DE TRANSPORTE <%= @manifest.code   %> </p>
+
+</h3>
+
+<p>
+  Para crear una nueva orden de servicio por favor llenar el siguiente formulario. Los campos marcados con <strong>*</strong> son obligatorios
+  
+</p>
+
+<% if @ost.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@ost.errors.count, "error") %> prohibited this purchase from being saved:</h2>
+
+    <ul>
+    <% @ost.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
+  <%= hr() %>
+
+<div>
+  <form method="get" action="/tranportorders/do_crear/<%= @manifest.id %> ">
+  
+
+
+
+<table style="width:100%">
+  <tr>
+    <td>
+    <div >
+       <strong>Locacion  :</strong><br />   
+      
+       <%= select_tag(:location_id, options_from_collection_for_select(@locations,'id','name')) %>
+  
+    </div>
+    </td>
+    <td>
+    <div class="field">
+      <strong>Nro.Orden   :</strong><br /> 
+      <%= text_field_tag  :code, @ost.generate_ost_number(1)  %>
+    </div>
+
+    </td>
+    <td>
+
+         <div >
+<strong>CLIENTE    :</strong><br /> 
+          <p > <%= @manifest.customer.name   %> </p>
+        </div>
+      </td>
+
+  </td>
+
+</tr>
+</table>
+    
+
+<br>
+
+<table style="width:100%">
+
+  <tr>
+    <td>Ruta</td>
+    <td>De:</td>
+    <td> <%= select_tag(:ubication_id, options_from_collection_for_select(@puntos,'id','name')) %>
+    </td>
+
+
+    <td>Fecha Salida</td>
+    <td>  <%= date_field_tag :fecha1 %></td>
+    <td>Fecha Llegada</td>
+    <td>  <%= date_field_tag :fecha2 %></td>
+    
+  </tr>
+
+  <tr>
+    <td></td>
+    <td>A: </td>
+    <td>       
+      <%= select_tag(:ubication2_id, options_from_collection_for_select(@puntos,'id','name')) %>
+    </td>
+    
+    <td>Tipo Carga </td>
+
+    <td> 
+      <%= @manifest.tipocargue.name %></td>
+    <td>Carga </td>
+    <td> <%= @manifest.especificacion  %></td>
+    
+  </tr>
+
+
+</table>
+  <br>
+<p>Guia Remision Transportista </p>
+ <p> <%= text_field_tag  :description %></p>
+
+<table class="ui right aligned table">
+      <thead>
+        <th class="left aligned">Datos</th>
+        <th>Placa</th>
+        <th>Tipo Unidad</th>
+        <th>Configuracion</th>
+        <th>Clase/ 
+        Categoria</th>
+        <th>Color</th>
+        <th>Año</th>
+        <th>Modelo</th>
+        <th>Marca</th>
+        <th>CHV</th>
+        <th>Nro.Ejes</th>
+
+
+      </thead>
+      <tbody>
+        <tr>
+          <td class="left aligned">Tracto</td>
+          <td>
+             <%= select_tag( :truck_id, options_from_collection_for_select(@trucks,'id','placa'))  %>
+          </td>
+          <td> </td>
+          <td> </td>
+
+
+        </tr>
+        <tr>
+          <td class="left aligned">Carreta</td>
+          <td>   <%= select_tag( :truck2_id, options_from_collection_for_select(@trucks,'id','placa'))  %></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left aligned">Escolta</td>
+          <td>  <%= select_tag( :truck3_id, options_from_collection_for_select(@trucks,'id','placa'))  %></td>
+          <td> </td>
+          <td> </td>
+        </tr>
+
+
+       
+      </tbody>
+    </table>
+
+
+<table class="ui right aligned table">
+      <thead>
+        <th class="left aligned"></th>
+        <th>Datos</th>
+        <th>Conductor</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="left aligned">Conductor</td>
+          <td>
+
+           <%= select_tag( :employee_id, options_from_collection_for_select(@employees,'id','full_name'))  %></td>
+          <td>DNI</td>
+          <td> </td>
+          <td>Licencia</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left aligned">Conductor</td>
+          <td><%= select_tag( :employee2_id, options_from_collection_for_select(@employees,'id','full_name'))  %> </td>
+          <td>DNI</td>
+          <td></td>
+          <td>Licencia</td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+
+    <%= hr() %>
+
+
+  </div>
+
+
+    <div class="actions">
+      <input type="hidden" name="items2" id="items2" value="<% if @guias_lines %><%= @guias_lines %><% end %>" />
+          <%= hidden_field_tag  :company_id %>    
+
+      
+      <%= submit_tag  "Grabar Factura" ,  class: "ui primary button"   %>
+
+
+
+    </div>
+    
+    <div class="small">
+      Once you're done adding products, don't forget to <strong><%= @action_txt %></strong> your invoice.
+    </div>
+
+   
+
+    
+  </form>
+
+</div>
+
+
+<%= br() %>
+<br />
+
+<%= render 'layouts/autocomplete' %>
+
+
+<%= hr() %>
+
+
+
+
+<div class="extra content">
+<%= link_to 'Regresar', tranportorders_path,class: "ui primary button" %>
+</div>
+
+
+</div>

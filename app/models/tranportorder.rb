@@ -256,5 +256,30 @@ TABLE_HEADERS2 = ["ITEM",
      from manifestships INNER JOIN manifests ON manifestships.manifest_id =  manifests.id where  manifestships.tranportorder_id = ?', self.id ])
     return @itemguias
   end
+ def generate_ost_number(serie)
+    if Tranportorder.where("cast(substring(code,1,3)  as int) = ?",serie).maximum("cast(substring(code,5,10)  as int)") == nil 
+      self.code = serie.to_s.rjust(3, '0') +"-000001"
+    else
+    self.code = serie.to_s.rjust(3, '0')+"-"+Tranportorder.where("cast(substring(code,1,3)  as int) = ?",serie).maximum("cast(substring(code,5,10)  as int)").next.to_s.rjust(6, '0') 
+          
+    end 
+    
+  end
+
+def add_catalogo(st)
+
+	 merge = Manifestship.new(tranportorder_id:self.id, manifest_id: st)
+
+
+	 if merge.save 
+
+	 st = Manifest.find(st)
+	 st.processed = "3"
+	 st.save
+
+	 end 
+
+
+end 
 
 end

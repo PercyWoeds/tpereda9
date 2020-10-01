@@ -4,7 +4,7 @@ class TranportordersController < ApplicationController
   # GET /tranportorders
   # GET /tranportorders.json
   def index
-
+ @company = Company.find(1)
   @tranportorders = Tranportorder.all.order(:fecha1).paginate(:page => params[:page]) 
 
 
@@ -16,6 +16,45 @@ class TranportordersController < ApplicationController
 
     
   end
+
+
+
+
+  def cargar
+    @lcProcesado='1'
+    @company = Company.find(1)
+    @manifests = Manifest.where(["processed =  ? and fecha1>=? ",@lcProcesado,"2020-08-01 00:00:00"])
+    return @manifests
+
+  end   
+
+  
+  def newost   
+    @company = Company.find(1)
+    @manifest = Manifest.find(params[:id])  
+
+     @ost  = Tranportorder.new 
+
+    
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+
+    @documents = @company.get_documents()    
+    @servicebuys  = @company.get_servicebuys()
+    @monedas  = @company.get_monedas()
+    @payments  = @company.get_payments()
+    @suppliers = @company.get_suppliers()      
+    @almacens = @company.get_almacens()
+    @puntos =    @ost.get_puntos()
+    @trucks = Truck.all.order(:placa )
+     @employees = @ost.get_employees() 
+    
+    @code = @ost.generate_ost_number(1)
+    @cargas = @company.get_cargas()
+    puts @manifest.code 
+     puts @code 
+   
+  end 
 
   # GET /tranportorders/1
   # GET /tranportorders/1.json
@@ -1124,6 +1163,84 @@ row = []
          pdf
 
      end
+
+
+  def do_crear
+
+    @action_txt = "do_crear" 
+
+
+    @company = Company.find(1)
+    @ost = Tranportorder.last 
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+
+    @documents = @company.get_documents()    
+    @servicebuys  = @company.get_servicebuys()
+    @monedas  = @company.get_monedas()
+    @payments  = @company.get_payments()
+    @suppliers = @company.get_suppliers()      
+    @almacens = @company.get_almacens()
+    @puntos =    @ost.get_puntos()
+    @trucks = Truck.all.order(:placa )
+     @employees = @ost.get_employees() 
+    
+    @code = @ost.generate_ost_number(1)
+    @cargas = @company.get_cargas()
+
+
+
+    @manifest  = Manifest.find(params[:id] ) 
+    
+
+   
+    
+    @ost = Tranportorder.new(code: params[:code],
+                             employee_id:  params[:employee_id],
+                             employee2_id: params[:employee2_id],
+                             truck_id:     params[:truck_id],
+                             truck2_id:     params[:truck2_id],
+                             truck3_id:     params[:truck3_id],
+                             ubication_id:  params[:ubication_id],
+                             ubication2_id:  params[:ubication2_id],
+                             fecha1:         params[:fecha1], 
+                             fecha2:         params[:fecha2], 
+                             description:    params[:description],
+                             processed:      "1",
+                             company_id:     "1",
+                             location_id:   params[:location_id],
+                             division_id:   "1",
+                             user_id: current_user.id, 
+                             customer_id: @manifest.customer_id,
+                             tipocargue_id: @manifest.tipocargue_id,
+                             carga: @manifest.especificacion)
+
+        
+   
+
+    
+    @company = Company.find(1)
+    puts "sadas"
+    puts @lcFechaEntrega
+
+
+
+      respond_to do |format|
+       if    @ost.save  
+          # Create products for kit
+          @ost.add_catalogo(@manifest.id)
+          # Check if we gotta process the invoice
+          
+          
+          format.html { redirect_to(tranportorders_path , :notice => 'OST fue grabada con exito .') }
+          format.xml  { render :xml => @ost, :status => :created, :location => @ost}
+        else
+          format.html { render :action => "newost" }
+          format.xml  { render :xml => @ost.errors, :status => :unprocessable_entity }
+        end 
+        
+      end
+  end 
 
 
   private

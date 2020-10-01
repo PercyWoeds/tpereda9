@@ -19,8 +19,13 @@
 
 
 <div class="button">
+
+  <% if current_user.level == "admin" %>
 <%= link_to 'Nueva Orden', new_tranportorder_path, class: "ui primary button" %>
- 
+  <% end %>
+
+
+ <%= link_to 'Cargar Solicitud Transporte ', "/tranportorders/cargar/#{@company.id}" %>
 </div>
 
 <table>
