@@ -170,7 +170,7 @@ TABLE_HEADERS2 = ["ITEM",
       	if Conductor.exists?(employee_id: id )
 
 	  			@tipounidad = Conductor.find_by(employee_id: id)
-	  			ret = @tipounidad.full_name
+	  			ret = @tipounidad.licencia 
 	  	end
 
 	  	return ret 
