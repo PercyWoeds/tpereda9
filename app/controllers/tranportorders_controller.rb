@@ -790,6 +790,12 @@ def build_pdf_header_ost(pdf)
       
 
         pdf.text ""
+        if @ost.comments == nil 
+           comments = ""
+         else
+          comments = @ost.comments 
+
+        end 
         
         data2 = [["RUTA :"+ @ost.get_punto(@ost.ubication_id) + "  -  "+ @ost.get_punto(@ost.ubication2_id) ,   "   FECHA: "+ @ost.fecha1.strftime("%d-%m-%Y")],
                  ["PLACA: " + @ost.truck.placa + " EJES:          "+  "ESCOLTA:                   ", "PLACA :"+ @ost.get_placa(@ost.truck2_id)],
@@ -797,7 +803,7 @@ def build_pdf_header_ost(pdf)
                  
                  [ " CONDUCTOR DE CARGA : " ,"CLIENTE : " ],
                  
-                 ["OBSERVACIONES: "+@ost.comments, " "],
+                 ["OBSERVACIONES: "+ comments, " "],
                  [" ", " "],
                  ["................................ ", " ................................ "],
                  ["V.B.Recepcion y Despacho ", "          V.B. Responsable"]]
@@ -1118,8 +1124,6 @@ row = []
          pdf
 
      end
-
-
 
 
   private

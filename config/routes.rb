@@ -1035,6 +1035,8 @@ match 'purchases/do_crear/:id'   => 'purchases#do_crear', via: [:get, :post]
   
   match 'manifests/pdf/:id' => 'manifests#pdf', via: [:get, :post]
   match 'tranportorders/pdf2/:id' => 'tranportorders#pdf2', via: [:get, :post]
+
+  match 'tranportorders/cargar/:id'   => 'tranportorders#cargar', via: [:get, :post]
   
   match 'manifests/do_email/:id' => 'manifests#do_email', via: [:get, :post]
   match 'manifests/sendmail/:id' => 'manifests#sendmail', via: [:get, :post]
