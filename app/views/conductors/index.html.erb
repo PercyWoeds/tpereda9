@@ -21,24 +21,30 @@
     </tr>
   </thead>
 
+
   <tbody>
     <% @conductors.each do |conductor| %>
       <tr>
-        <td><%= conductor.lugar %></td>
+        <td><%= conductor.employee.full_name  %></td>
         <td><%= conductor.anio %></td>
         <td><%= conductor.licencia %></td>
         <td><%= conductor.categoria %></td>
-        <td><%= conductor.expedicion_licencia %></td>
-        <td><%= conductor.revalidacion_licencia %></td>
+        <td><%= conductor.expedicion_licencia.strftime("%d/%m/%Y") %></td>
+        <td><%= conductor.revalidacion_licencia.strftime("%d/%m/%Y") %></td>
         <td><%= conductor.categoria_especial %></td>
-        <td><%= conductor.expedicion_licencia_especial %></td>
+        <td><%= conductor.expedicion_licencia_especial.strftime("%d/%m/%Y") %></td>
         <td><%= conductor.iqbf %></td>
-        <td><%= conductor.fecha_emision %></td>
-        <td><%= conductor.dni_emision %></td>
+        <td><%= conductor.fecha_emision.strftime("%d/%m/%Y") %></td>
+        <td><%= conductor.dni_emision.strftime("%d/%m/%Y") %></td>
        
-        <td><%= link_to 'Show', conductor %></td>
-        <td><%= link_to 'Edit', edit_conductor_path(conductor) %></td>
-        <td><%= link_to 'Destroy', conductor, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Ver', conductor %></td>
+        <td><%= link_to 'Editar', edit_conductor_path(conductor) %></td>
+
+        <%if current_user.level="admin"%>
+
+              <td><%= link_to 'Eliminar', conductor, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -46,4 +52,20 @@
 
 <br>
 
-<%= link_to 'New Conductor', new_conductor_path %>
+<div class="button">
+
+<%= link_to 'Nuevo Conductor', new_conductor_path %>
+
+
+</div>
+
+
+
+<h4>Importar Archivo conductores "*.csv"</h4>
+
+<%= form_tag import_conductors_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
+

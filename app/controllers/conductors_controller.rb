@@ -12,6 +12,14 @@ class ConductorsController < ApplicationController
   def show
   end
 
+
+  def import
+      Conductor.import(params[:file])
+       redirect_to root_url, notice: "Conductores  importadas."
+  end 
+
+
+
   # GET /conductors/new
   def new
     @conductor = Conductor.new

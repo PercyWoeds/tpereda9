@@ -237,10 +237,13 @@ require 'sidekiq/web'
 
   resources :assistances do 
    collection { post :import }
-  
 
   end  
 
+  resources :conductors do 
+   collection { post :import }
+
+  end  
   resources :requerimientos  do
       collection { get  :do_gestion}
   end 

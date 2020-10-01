@@ -989,7 +989,7 @@ def build_pdf_header_ost2(pdf)
             row << @ost.get_placa(@ost.truck2_id)
             row << @ost.get_tipounidad(@ost.truck2_id)
             row << @ost.get_configura(@ost.truck2_id)
-row << @ost.get_clase_cat(@ost.truck_id)
+row << @ost.get_clase_cat(@ost.truck2_id)
 
             row << @ost.get_color_unid(@ost.truck2_id)
 

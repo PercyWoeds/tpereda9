@@ -1698,7 +1698,8 @@ def get_paymentsD_day_value(fecha1,fecha2,value = "total")
  ##[[[[[[]]]]]]
 
 def get_supplier_payments01(fecha1,fecha2,supplier,moneda)
-   @vouchers = SupplierPayment.joins(:bank_acount).select("supplier_payments.*, bank_acounts.moneda_id").where([" company_id = ? AND fecha1 >= ? and fecha1<= ? 
+   @vouchers = SupplierPayment.joins(:bank_acount).select("supplier_payments.*, bank_acounts.moneda_id").
+   where([" company_id = ? AND fecha1 >= ? and fecha1<= ? 
       and supplier_id = ? and  bank_acounts.moneda_id = ?", 
       self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,supplier,moneda]).order(:id)
     return @vouchers    
