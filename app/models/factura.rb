@@ -464,10 +464,13 @@ def get_tipocambio(dia)
       self.save
     end
   end
+
   
   # Process the invoice
   def anular
-    if(self.processed == "1" )          
+    puts self.processed
+    
+    if(self.processed == "2" )          
       self.processed="2"
       self.subtotal =0
       self.tax = 0
