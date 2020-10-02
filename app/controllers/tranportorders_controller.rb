@@ -23,7 +23,10 @@ class TranportordersController < ApplicationController
   def cargar
     @lcProcesado='1'
     @company = Company.find(1)
-    @manifests = Manifest.where(["processed =  ? and fecha1>=? ",@lcProcesado,"2020-08-01 00:00:00"])
+
+   # @manifests = Manifest.where(["processed =  ? and fecha1>=? ",@lcProcesado,"2020-08-01 00:00:00"])
+
+   @manifests =  Manifest.where("processed = ? and fecha1 >=? ","1","2020-08-01 00:00:00").where( Manifestship.where('manifest_id = manifests.id').arel.exists.not)
     return @manifests
 
   end   
