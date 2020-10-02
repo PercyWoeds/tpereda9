@@ -19,6 +19,7 @@ self.per_page = 20
 	belongs_to :manifestship 
 	
 
+
  TABLE_HEADERS = ["ITEM",
                      "CODIGO",
                      "EMPLEADO",

@@ -26,7 +26,7 @@ class TranportordersController < ApplicationController
 
    # @manifests = Manifest.where(["processed =  ? and fecha1>=? ",@lcProcesado,"2020-08-01 00:00:00"])
 
-   @manifests =  Manifest.where("processed = ? and fecha1 >=? ","1","2020-09-01 00:00:00").where( Manifestship.where('manifest_id = manifests.id').arel.exists.not).order("code DESC " )
+   @manifests =  Manifest.where("processed = ? and fecha1 >=? ","1","2020-08-01 00:00:00").where( Manifestship.where('manifest_id = manifests.id').arel.exists.not).order("code DESC " )
     return @manifests
 
   end   
@@ -52,10 +52,25 @@ class TranportordersController < ApplicationController
     @trucks = Truck.all.order(:placa )
      @employees = @ost.get_employees() 
     
-    @code = @ost.generate_ost_number(@manifest.location_id)
+  
+
+   if  @manifest.location_id == 3
+      @lcSerie =  1
+   end 
+   if  @manifest.location_id == 1
+      @lcSerie =  2
+   end 
+   if  @manifest.location_id== 4
+      @lcSerie =  8
+   end 
+   puts "correlatio.v......................"
+   puts @lcSerie
+
+   @code = @ost.generate_ost_number(@lcSerie)  
+  puts @code 
+
     @cargas = @company.get_cargas()
-    puts @manifest.code 
-     puts @code 
+    
    
   end 
 
@@ -1208,13 +1223,15 @@ row = []
 
     @manifest  = Manifest.find(params[:id] ) 
 
-   if  @manifest[:location_id] == 3
+
+
+   if  @manifest.location_id == 3
       @lcSerie =  1
    end 
-   if  @manifest[:location_id] == 1
+   if  @manifest.location_id == 1
       @lcSerie =  2
    end 
-   if  @manifest[:location_id] == 4
+   if  @manifest.location_id == 4
       @lcSerie =  8
    end 
    
