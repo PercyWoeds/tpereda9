@@ -26,7 +26,7 @@ class TranportordersController < ApplicationController
 
    # @manifests = Manifest.where(["processed =  ? and fecha1>=? ",@lcProcesado,"2020-08-01 00:00:00"])
 
-   @manifests =  Manifest.where("processed = ? and fecha1 >=? ","1","2020-08-01 00:00:00").where( Manifestship.where('manifest_id = manifests.id').arel.exists.not)
+   @manifests =  Manifest.where("processed = ? and fecha1 >=? ","1","2020-08-01 00:00:00").where( Manifestship.where('manifest_id = manifests.id').arel.exists.not).order("code DESC " )
     return @manifests
 
   end   
