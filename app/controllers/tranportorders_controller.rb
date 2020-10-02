@@ -775,6 +775,27 @@ def build_pdf_header_ost(pdf)
       table_content << headers
 
       nroitem=1
+
+      @dir3=""
+      @dir4 =""
+
+      if Manifestship.where(tranportorder_id: @ost.id ).exists? 
+
+         a= Manifestship.where(tranportorder_id: @ost.id ).first 
+
+           @manifest = Manifest.find(a.manifest_id) 
+           @dir3 = @manifest.customer.name 
+           @dir4 = @manifest.especificacion
+
+      end 
+
+      row = []
+            row << @dir3
+            row << "" 
+            row << @dir4
+            row << " "
+            row << " "
+            table_content << row
       
       ary = [1,2,3,4,5,6,7]
       
