@@ -16,9 +16,6 @@
 
 
 <br />
-<%= render "purchases/list" %>
-
-<br />
 
 <div class="button">
   <% if @status == "1" %>
@@ -31,6 +28,11 @@
   <% end%>
   
 </div>
+
+<%= render "purchases/list" %>
+
+<br />
+
 
 <%= will_paginate @invoices %>
 
