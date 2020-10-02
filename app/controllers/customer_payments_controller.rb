@@ -1909,6 +1909,7 @@ class CustomerPaymentsController < ApplicationController
     @customerpayment_rpt = @company.get_customer_payments(@fecha1,@fecha2)  
 
       
+      
     Prawn::Document.generate("app/pdf_output/rpt_customerpayment.pdf") do |pdf|
         pdf.font "Helvetica"        
         pdf = build_pdf_header_rpt3(pdf)

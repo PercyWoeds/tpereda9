@@ -1028,11 +1028,11 @@ def get_customer_payments_value_otros_moneda(fecha1,fecha2,value='factory',moned
           
               if(value == "ajuste")
                 if factura.code == "001-4970"
-                   ret += d.ajuste 
+                   ret += d.ajuste.round(2)
 
                 else 
 
-                   ret += d.ajuste * -1
+                   ret += d.ajuste.round(2) * -1
                 end 
 
               elsif (value == "compen")
@@ -1998,6 +1998,71 @@ def get_pendientes_day_customer_detraccion(fecha1,fecha2,cliente)
     
     return @purchases 
   end
+
+
+  def get_purchases_day_usuario(fecha1,fecha2,proveedor,fechasel,usuario)
+
+   sql_dato =""
+   sql_dato1 =""
+   sql_dato2 =""
+   sql_dato3 =""
+   sql_dato4 =""
+   sql_dato5 =""
+   sql_dato6 =""
+   sql_order =""
+
+   
+  if proveedor != ""
+    sql_dato <<  "supplier_id = " << proveedor 
+  end 
+  
+  
+  if fechasel == "1"
+       sql_order = "date1"
+    if sql_dato != ""
+    txt_and = " and "
+    else 
+      txt_and = ""
+    end 
+    puts sql_dato 
+    
+    sql_dato << txt_and << "date1  >= " << "'#{fecha1} 00:00:00'"  << "  and  date1 <= " << "'#{fecha2} 23:59:59'"
+  end 
+
+
+  if fechasel == "2"
+    sql_order = "date2"
+    if sql_dato != ""
+    txt_and = " and "
+    else 
+      txt_and = ""
+    end 
+    puts sql_dato 
+    
+    sql_dato << txt_and << "date2  >= " << "'#{fecha1} 00:00:00' "  << "  and  date2 <= " << " '#{fecha2} 23:59:59'"
+  end 
+  
+  
+
+  
+    if sql_dato ==  ""
+  
+       @purchases = Purchase.where(["company_id = ? and document_id <> ?  and user_id = ?",self.id, "12",usuario  ]).order(:supplier_id,:moneda_id,"#{sql_order}",:documento )
+    else 
+
+       @purchases = Purchase.where([" company_id = ? and document_id <> ? and user_id = ? and #{sql_dato} ", self.id, "12",usuario  ]).order(:supplier_id,:moneda_id,"#{sql_order}",:documento)    
+    
+    end 
+    return @purchases 
+
+
+
+  end
+
+
+
+
+  
   def get_purchases_day(fecha1,fecha2,proveedor,fechasel)
 
    sql_dato =""
@@ -2045,10 +2110,10 @@ def get_pendientes_day_customer_detraccion(fecha1,fecha2,cliente)
   
     if sql_dato ==  ""
   
-       @purchases = Purchase.where(["company_id = ? and document_id <> ? ",self.id, "12"  ]).order(:supplier_id,:moneda_id,"#{sql_order}",:documento )
+       @purchases = Purchase.where(["company_id = ? and document_id <> ?  ",self.id, "12"  ]).order(:supplier_id,:moneda_id,"#{sql_order}",:documento )
     else 
 
-       @purchases = Purchase.where([" company_id = ? and document_id <> ?  and #{sql_dato} ", self.id, "12" ]).order(:supplier_id,:moneda_id,"#{sql_order}",:documento)    
+       @purchases = Purchase.where([" company_id = ? and document_id <> ? and #{sql_dato} ", self.id, "12" ]).order(:supplier_id,:moneda_id,"#{sql_order}",:documento)    
     
     end 
     return @purchases 

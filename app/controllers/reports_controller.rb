@@ -1538,7 +1538,16 @@ def rpt_facturas_4
   end
 
   def rpt_purchase6_all
-      @company = Company.find(params[:company_id])    
+      @company = Company.find(params[:company_id])  
+      @usuario = User.find(params[:usuario]) 
+    @pagetitle = "Facturas por proveedor "    
+    @products = @company.get_products()
+    @suppliers = @company.get_suppliers()
+    
+  end
+def rpt_purchase61_all
+      @company = Company.find(params[:company_id])  
+      @usuario = User.find(params[:usuario]) 
     @pagetitle = "Facturas por proveedor "    
     @products = @company.get_products()
     @suppliers = @company.get_suppliers()

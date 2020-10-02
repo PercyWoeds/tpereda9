@@ -4680,6 +4680,8 @@ def reporte_asistencia3
               nroitem = nroitem + 1
              
           end
+
+
      # end 
     end 
     end 
@@ -4831,6 +4833,285 @@ def reporte_asistencia3
         $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
         send_file("app/pdf_output/TP_CM_F_015.pdf", :type => 'application/pdf', :disposition => 'inline')    
  
+  end
+
+
+def rpt_purchase61
+
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+  
+    @fecha6  = params[:fecha6]   
+    @usuario = params[:usuario]
+
+     @supplier_check = params[:check_supplier] 
+
+
+    if @supplier_check == "true"
+      @proveedor = ""
+      @proveedor_name = ""
+    else
+      @proveedor = params[:proveedor]
+      @proveedor_name =  @company.get_supplier_name(@proveedor)
+    end
+    
+    @facturas_rpt = @company.get_purchases_day_usuario(@fecha1,@fecha2,@proveedor,@fecha6,@usuario) 
+
+
+
+        Prawn::Document.generate "app/pdf_output/TP_CM_F_015.pdf" , :page_layout => :landscape ,:page_size=>"A4"  do |pdf|
+            pdf.font "Helvetica"
+            pdf = build_pdf_header_rpt8a(pdf)
+            pdf = build_pdf_body_rpt8a(pdf)
+            build_pdf_footer_rpt8a(pdf)
+            $lcFileName =  "app/pdf_output/TP_CM_F_015.pdf"              
+        end     
+        $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+        send_file("app/pdf_output/TP_CM_F_015.pdf", :type => 'application/pdf', :disposition => 'inline')    
+ 
+  end
+
+
+
+
+###################################################################################################
+##REPORTE DE COMPRAS FACTURAS CREDITOS 1
+###################################################################################################
+
+
+  def build_pdf_header_rpt8a(pdf)
+      pdf.font "Helvetica" , :size => 8
+      image_path = "#{Dir.pwd}/public/images/tpereda2.png"
+
+    
+      
+       table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD OCUPACIONAL",:rowspan => 2},"CODIGO ","TP-CM-F-015 "], 
+          ["VERSION: ","3"], 
+          ["REPORTE DE FACTURAS - LIMA ","Pagina: ","1 de 1 "] 
+         
+          ])
+      
+
+
+
+       pdf.table(table_content  ,{
+           :position => :center,
+           :width => pdf.bounds.width
+         })do
+           columns([1,2]).font_style = :bold
+            columns([0]).width = 118.55
+            columns([1]).width = 451.34
+            columns([1]).align = :center
+            
+            columns([2]).width = 100
+          
+            columns([3]).width = 100
+      
+         end
+        
+         table_content2 = ([["Fecha : ",Date.today.strftime("%d/%m/%Y")]])
+
+         pdf.table(table_content2,{:position=>:right }) do
+
+            columns([0, 1]).font_style = :bold
+            columns([0, 1]).width = 100
+            
+         end 
+
+     
+         pdf.text "(1) del "+@fecha1+" al "+@fecha2
+         
+         pdf.move_down 2
+      
+      pdf 
+  end   
+
+  def build_pdf_body_rpt8a(pdf)
+
+    puts "tipo "
+    puts @tipo 
+    
+    pdf.font "Helvetica" , :size => 6
+
+      headers = []
+      table_content = []
+
+      Purchase::TABLE_HEADERS31.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content << headers
+
+      nroitem=1
+      lcmonedasoles   = 2
+      lcmonedadolares = 1
+      @total1=0
+      @total2=0
+      total_soles = 0
+      total_dolares =  0
+
+      lcDoc='FT'      
+
+      if @facturas_rpt.count > 0 
+
+       lcCliente = @facturas_rpt.first.supplier_id
+       row = []
+
+       for  product in @facturas_rpt
+
+        
+            if product.payment_id != 1 and product.supplier_id != 1731 and (product.payment_id != 12 || product.payment_id != 16 ) and product.document_id != 13
+            
+                fechas2 = product.date2 
+                 
+                row = []          
+                row << nroitem.to_s 
+                row << product.supplier.name 
+                row << product.document.descripshort 
+              
+                
+                row << product.documento 
+                row << product.get_descrip0[0..50]
+                row << product.date1.strftime("%d/%m/%Y")
+                row << product.date2.strftime("%d/%m/%Y")
+                row << product.date3.strftime("%d/%m/%Y")
+
+                if product.moneda_id == 1 
+                    row << "0.00 "
+                    row << sprintf("%.2f",product.total_amount.to_s)
+                    total_dolares  += product.total_amount 
+               
+                else
+                    row << sprintf("%.2f",product.total_amount.to_s)
+                    row << "0.00 "
+                    total_soles += product.total_amount  
+                end 
+                row << product.get_destino 
+                row << product.user.username 
+                row << product.get_observacion 
+                row << product.payment.descrip 
+                row << "   "
+                
+                table_content << row
+
+                nroitem = nroitem + 1
+
+            end 
+           
+
+      end 
+    end 
+
+        lcProveedor = @facturas_rpt.last.supplier_id 
+
+            
+            
+         
+        
+              
+          
+          row =[]
+          row << ""
+          row << ""
+          row << ""
+          row << ""
+          
+          row << "TOTALES => "
+          row << ""
+          
+          row << ""
+          
+          row << ""
+          row << sprintf("%.2f",total_soles.to_s)
+          row << sprintf("%.2f",total_dolares.to_s)                    
+          row << " "
+          row << " "
+          row << " "
+          row << " "
+          row << " "
+
+
+
+
+
+          
+          table_content << row
+          
+
+          result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:left
+
+         
+                                          columns([3]).align=:left
+                                          
+                                          columns([4]).align=:left
+                                          columns([5]).width = 40                                                                           
+         
+                                          columns([6]).width = 40                                                                           
+         
+                                          columns([7]).align=:right
+                                          columns([7]).width = 40
+                                          
+                                          columns([8]).align=:right 
+                                          columns([8]).width =40
+                                          
+                                          columns([9]).align=:right 
+                                          columns([9]).width =40
+                                          
+                                          columns([10]).align=:left
+                                          columns([10]).width =80
+                                          columns([12]).width =80
+                                          
+                                          
+                                        end                                          
+                                        
+      pdf.move_down 50
+
+
+
+
+
+     
+      pdf 
+
+    end
+
+    def build_pdf_footer_rpt8a(pdf)      
+
+      table_content3 =[]
+      row = []
+      row << "--------------------------------------------"
+      row << "--------------------------------------------"
+      row << "--------------------------------------------"
+      
+      table_content3 << row 
+      row = []
+      row << "V.B.COMPRAS "
+      row << "V.B.GERENCIA"
+      row << "V.B.CONTABILIDAD"
+      
+      table_content3 << row 
+
+      
+          result = pdf.table table_content3, {:position => :center,
+                                        :header => true,  :cell_style => {:border_width => 0},
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:center
+                                          columns([2]).align=:center 
+                                          
+                                        end                             
+
+      pdf      
   end
 
 
