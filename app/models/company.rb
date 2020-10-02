@@ -1027,7 +1027,14 @@ def get_customer_payments_value_otros_moneda(fecha1,fecha2,value='factory',moned
             
           
               if(value == "ajuste")
-                ret += d.ajuste * -1
+                if factura.code == "001-4970"
+                   ret += d.ajuste 
+
+                else 
+
+                   ret += d.ajuste * -1
+                end 
+
               elsif (value == "compen")
                 ret += d.compen 
               else         

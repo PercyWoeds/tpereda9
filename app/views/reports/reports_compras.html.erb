@@ -30,8 +30,10 @@
   </h3>
   
   <p class="big">
-    <%= link_to "Facturas ", "/companies/reports/rpt_purchase_all/#{@company.id}" %>
+    <%= link_to "Facturas -Todas  ", "/companies/reports/rpt_purchase_all/#{@company.id}" %>
   </p>
+
+  
   <p class="big">
     <%= link_to "Facturas  por proveedor ", "/companies/reports/rpt_purchase_all2/#{@company.id}" %>
   </p>
@@ -48,13 +50,37 @@
   </p>
   
   <p class="big">
-    <%= link_to "Facturas  contado/credito  ", "/companies/reports/rpt_purchase6_all/#{@company.id}" %>
+    <%= link_to "Facturas  contado/credito ", "/companies/reports/rpt_purchase6_all/#{@company.id}" %>
   </p>
 
 
 <p class="big">
     <%= link_to "Pendientes por pagar general  ", "/companies/reports/rpt_cpagar2_pdf/#{@company.id}" %>
   </p>
+
+<h3>
+    Otras Facturas 
+  </h3>
+
+
+ <p class="big">
+    <%= link_to "Facturas  contado/credito - Asis.Administrativo ", "/companies/reports/rpt_purchase6_all/#{@company.id}" %>
+  </p>
+
+   <p class="big">
+    <%= link_to "Facturas  contado/credito - Administracion ", "/companies/reports/rpt_purchase6_all/#{@company.id}" %>
+  </p>
+   <p class="big">
+    <%= link_to "Facturas  contado/credito - Finanzas ", "/companies/reports/rpt_purchase6_all/#{@company.id}" %>
+  </p>
+   <p class="big">
+    <%= link_to "Facturas  contado/credito - Caja ", "/companies/reports/rpt_purchase6_all/#{@company.id}" %>
+  </p>
+  <p class="big">
+    <%= link_to "Facturas  contado/credito - LGV ", "/companies/reports/rpt_purchase6_all/#{@company.id}" %>
+  </p>
+
+
 
 <h3>
     Productos
