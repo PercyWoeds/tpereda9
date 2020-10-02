@@ -52,7 +52,7 @@ class TranportordersController < ApplicationController
     @trucks = Truck.all.order(:placa )
      @employees = @ost.get_employees() 
     
-    @code = @ost.generate_ost_number(1)
+    @code = @ost.generate_ost_number(@manifest.location_id)
     @cargas = @company.get_cargas()
     puts @manifest.code 
      puts @code 
