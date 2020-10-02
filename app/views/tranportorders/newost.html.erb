@@ -57,14 +57,14 @@
     <div >
        <strong>Locacion  :</strong><br />   
       
-       <%= select_tag(:location_id, options_from_collection_for_select(@locations,'id','name')) %>
+       <%= @manifest.location.name  %>
   
     </div>
     </td>
     <td>
     <div class="field">
       <strong>Nro.Orden   :</strong><br /> 
-      <%= text_field_tag  :code, @ost.generate_ost_number(1)  %>
+      <%= text_field_tag  :code, @ost.generate_ost_number(1)  ,:readonly => true %>
     </div>
 
     </td>
@@ -195,6 +195,15 @@
           <td>Licencia</td>
           <td></td>
         </tr>
+        <tr>
+          <td class="left aligned">Supervisor /apoyo </td>
+          <td><%= select_tag( :employee3_id, options_from_collection_for_select(@employees,'id','full_name'))  %> </td>
+          <td>DNI</td>
+          <td></td>
+          <td>Licencia</td>
+          <td></td>
+        </tr>
+
         
       </tbody>
     </table>

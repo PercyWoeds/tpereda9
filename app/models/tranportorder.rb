@@ -1,7 +1,7 @@
 class Tranportorder < ActiveRecord::Base
 self.per_page = 20
 
-	validates_presence_of :location_id,:division_id,:code,:employee_id,:employee2_id,:ubication_id,:ubication2_id,:truck_id,:truck2_id, :truck3_id
+	validates_presence_of :location_id,:division_id,:code,:employee_id,:employee2_id,:employee3_id,:ubication_id,:ubication2_id,:truck_id,:truck2_id, :truck3_id
 	validates_presence_of :fecha1,:fecha2 	
      validates_uniqueness_of :code
 
@@ -256,11 +256,13 @@ TABLE_HEADERS2 = ["ITEM",
      from manifestships INNER JOIN manifests ON manifestships.manifest_id =  manifests.id where  manifestships.tranportorder_id = ?', self.id ])
     return @itemguias
   end
+
+
  def generate_ost_number(serie)
-    if Tranportorder.where("cast(substring(code,1,3)  as int) = ?",serie).maximum("cast(substring(code,5,10)  as int)") == nil 
+    if Tranportorder.where("cast(substring(code,1,3)  as int) = ? and fecha1 >?",serie,"2020-08-01 00:00:00").maximum("cast(substring(code,5,10)  as int)") == nil 
       self.code = serie.to_s.rjust(3, '0') +"-000001"
     else
-    self.code = serie.to_s.rjust(3, '0')+"-"+Tranportorder.where("cast(substring(code,1,3)  as int) = ?",serie).maximum("cast(substring(code,5,10)  as int)").next.to_s.rjust(6, '0') 
+    self.code = serie.to_s.rjust(3, '0')+"-"+Tranportorder.where("cast(substring(code,1,3)  as int) = ? and fecha1 >?",serie,"2020-08-01 00:00:00").maximum("cast(substring(code,5,10)  as int)").next.to_s.rjust(6, '0') 
           
     end 
     
@@ -280,6 +282,35 @@ def add_catalogo(st)
 	 end 
 
 
+end 
+def get_ejes(id)
+		ret   = 0
+		ejes1 = 0
+		ejes2 = 0
+
+		a  = Tranportorder.find(id)
+
+
+		 ejes1 = a.truck.ejes.to_i 
+
+		b = Truck.find(a.truck2_id)
+		if Truck.where(id: a.truck2_id).exists?
+
+			d = Truck.find(a.truck2_id)
+
+			ejes2 = d.ejes.to_i 
+
+
+		else 
+			ejes2 = 0 
+		end 
+
+		ret = ejes1 + ejes2 
+
+		return ret.to_s 
+
+		puts "ejees"
+		puts ret
 end 
 
 end

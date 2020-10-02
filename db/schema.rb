@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201001154759) do
+ActiveRecord::Schema.define(version: 20201002155041) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2746,6 +2746,7 @@ ActiveRecord::Schema.define(version: 20201001154759) do
     t.integer  "tipocargue_id"
     t.string   "carga"
     t.integer  "truck3_id"
+    t.integer  "employee3_id"
   end
 
   create_table "transferencia_detalles", force: :cascade do |t|

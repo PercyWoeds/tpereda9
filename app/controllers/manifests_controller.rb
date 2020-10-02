@@ -10,11 +10,19 @@ class ManifestsController < ApplicationController
 
   
   def index
+   
+    #Manifest.find_by_sql(['Select  manifests.id,manifests.code, manifests.solicitante,manifests.fecha1,manifests.telefono1,
+    #customers.name  from manifests INNER JOIN customers ON manifests.customer_id = customers.id order by code DESC'  ])
+   @company = Company.find(1)
+  
+
+  if params[:search]
+    @manifests = Manifest.search(params[:search]).paginate(:page => params[:page]) 
+  else
     @manifests = Manifest.order("CAST ( SUBSTRING(code,1,3) as int),CAST ( SUBSTRING(code,5,13) as int)").paginate(:page => params[:page])
 
 
-    #Manifest.find_by_sql(['Select  manifests.id,manifests.code, manifests.solicitante,manifests.fecha1,manifests.telefono1,
-    #customers.name  from manifests INNER JOIN customers ON manifests.customer_id = customers.id order by code DESC'  ])
+  end
 
   end
 
@@ -462,26 +470,10 @@ def build_pdf_header(pdf)
   end
 
 #####################
-
-
-def search
-
-
-
-  @manifests = Manifest.search(params[:search_param])
-
-  if @manifests 
-
-    
-      render partial: 'tranportorders/lookup'
-
-  else
-
-      render status: :not_found, nothing: true
-
+def self.search(search)
+      where("code LIKE ?", "%#{search}%") 
+        
   end
-
-end
 
 def add_manifest
 

@@ -155,6 +155,14 @@
           <td>Licencia</td>
           <td></td>
         </tr>
+         <tr>
+          <td class="left aligned">Supervisor / Apoyo </td>
+          <td><%= f.collection_select :employee3_id, @employees, :id, :full_name, :prompt => true %> </td>
+          <td>DNI</td>
+          <td></td>
+          <td>Licencia</td>
+          <td></td>
+        </tr>
         
       </tbody>
     </table>

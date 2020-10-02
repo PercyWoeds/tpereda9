@@ -4,8 +4,8 @@ class TranportordersController < ApplicationController
   # GET /tranportorders
   # GET /tranportorders.json
   def index
- @company = Company.find(1)
-  @tranportorders = Tranportorder.all.order(:fecha1).paginate(:page => params[:page]) 
+   @company = Company.find(1)
+     @tranportorders = Tranportorder.all.order(:fecha1).paginate(:page => params[:page]) 
 
 
   if params[:search]
@@ -617,10 +617,10 @@ def client_data_headers
 
     #{@serviceorder.description}
       client_headers  = [["Conductor de carga :",@ost.employee.full_name ]]
-      client_headers << ["Conducto de ruta :",""  ]
-      client_headers << ["Supervisor/apoyo :",@ost.get_empleado(@ost.employee2_id)]
+      client_headers << ["Conducto de ruta :", @ost.get_empleado(@ost.employee2_id)]
+      client_headers << ["Supervisor/apoyo :",@ost.get_empleado(@ost.employee3_id)]
       client_headers << ["Placa: Tracto/Carreta :",@ost.truck.placa + " " + @ost.get_placa(@ost.truck2_id)   ]
-      client_headers << ["Escolta:","" ]
+      client_headers << ["Escolta:",""]
       
       client_headers
   end
@@ -629,8 +629,8 @@ def client_data_headers
       ost_headers  = [["De : ",@ost.get_punto(@ost.ubication_id)]]
       ost_headers << ["A :", @ost.get_punto(@ost.ubication2_id)]
       ost_headers << ["Fecha/Hora Salida :", @ost.fecha1.strftime('%d-%m-%Y')]
-      ost_headers << ["Fecha/Hora de llegada:",""]
-      ost_headers << ["Placa: ","" ]
+      ost_headers << ["Fecha/Hora de llegada:",@ost.fecha2.strftime('%d-%m-%Y')]
+      ost_headers << ["Placa: ",@ost.get_placa(@ost.truck3_id)]
       ost_headers
   end
    def invoice_summary
@@ -800,13 +800,26 @@ def build_pdf_header_ost(pdf)
         columns([1]).align = :right
 
       end
+      @dir1 = ""
+      @dir2 = ""
+      if Manifestship.where(tranportorder_id: @ost.id ).exists? 
+
+         a= Manifestship.where(tranportorder_id: @ost.id ).first 
+
+           @manifest = Manifest.find(a.manifest_id) 
+           @dir1 = @manifest.direccion1
+           @dir2 = @manifest.direccion2
+
+      end 
+
+
      
       
       
       pdf.text "GUIAS EN BLANCO    : "+  @ost.description
       pdf.text "CONTACTO           : "
-      pdf.text "DIRECCION CARGUIO  : "
-      pdf.text "DIRECCION DESCARGA : "
+      pdf.text "DIRECCION CARGUIO  : " + @dir1 
+      pdf.text "DIRECCION DESCARGA : " + @dir2 
       
       pdf.move_down 10
       
@@ -837,10 +850,10 @@ def build_pdf_header_ost(pdf)
         end 
         
         data2 = [["RUTA :"+ @ost.get_punto(@ost.ubication_id) + "  -  "+ @ost.get_punto(@ost.ubication2_id) ,   "   FECHA: "+ @ost.fecha1.strftime("%d-%m-%Y")],
-                 ["PLACA: " + @ost.truck.placa + " EJES:          "+  "ESCOLTA:                   ", "PLACA :"+ @ost.get_placa(@ost.truck2_id)],
-                 [ " CONDUCTOR : " + @ost.employee.full_name,"SUPERVISOR/APOYO: "+@ost.get_empleado(@ost.employee2_id)],
+                 ["PLACA: " + @ost.truck.placa + " EJES:"+ @ost.get_ejes(@ost.id ) +  "      ESCOLTA:                   ", "PLACA :"+ @ost.get_placa(@ost.truck2_id)],
+                 [ " CONDUCTOR DE CARGA  " + @ost.employee.full_name,"SUPERVISOR/APOYO: "+@ost.get_empleado(@ost.employee3_id)],
                  
-                 [ " CONDUCTOR DE CARGA : " ,"CLIENTE : " ],
+                 [ " CONDUCTOR DE RUTA  : "+@ost.get_empleado(@ost.employee2_id) ,"CLIENTE : " +@ost.customer.name  ],
                  
                  ["OBSERVACIONES: "+ comments, " "],
                  [" ", " "],
@@ -1185,17 +1198,31 @@ row = []
     @trucks = Truck.all.order(:placa )
      @employees = @ost.get_employees() 
     
-    @code = @ost.generate_ost_number(1)
+  
     @cargas = @company.get_cargas()
 
 
 
     @manifest  = Manifest.find(params[:id] ) 
+
+   if  @manifest[:location_id] == 3
+      @lcSerie =  1
+   end 
+   if  @manifest[:location_id] == 1
+      @lcSerie =  2
+   end 
+   if  @manifest[:location_id] == 4
+      @lcSerie =  8
+   end 
+   
+
+   @code = @manifest.generate_ost_number(@lcSerie)  
+
     
 
    
     
-    @ost = Tranportorder.new(code: params[:code],
+    @ost = Tranportorder.new(code: @code ,
                              employee_id:  params[:employee_id],
                              employee2_id: params[:employee2_id],
                              truck_id:     params[:truck_id],
@@ -1208,7 +1235,7 @@ row = []
                              description:    params[:description],
                              processed:      "1",
                              company_id:     "1",
-                             location_id:   params[:location_id],
+                             location_id:   @manifest[:location_id] ,
                              division_id:   "1",
                              user_id: current_user.id, 
                              customer_id: @manifest.customer_id,
@@ -1251,6 +1278,6 @@ row = []
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tranportorder_params
-      params.require(:tranportorder).permit(:code, :employee_id, :truck_id, :employee2_id, :truck2_id, :truck3_id,:ubication_id, :ubication2_id, :fecha1, :fecha2, :description, :comments, :processed, :company_id, :location_id, :division_id,:tipocargue_id,:customer_id,:carga)
+      params.require(:tranportorder).permit(:code, :employee_id, :truck_id, :employee2_id,:employee3_id, :truck2_id, :truck3_id,:ubication_id, :ubication2_id, :fecha1, :fecha2, :description, :comments, :processed, :company_id, :location_id, :division_id,:tipocargue_id,:customer_id,:carga)
     end
 end

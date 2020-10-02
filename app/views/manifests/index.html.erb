@@ -2,6 +2,26 @@
 
 <h1>Solicitud de Transporte de Carga</h1>
 
+
+
+
+<%= form_tag(manifests_path, :method => "get", id: "search-form") do %>
+
+<%= text_field_tag :search, params[:search], placeholder: "Buscar ordenes" %>
+<%= submit_tag "Search",class: "ui positive button" %>
+<% end %>
+
+
+
+<%= link_to "Clear", manifests_path, class: "small_btn" %>
+
+<div class = "button" >
+
+<%= link_to 'Nueva solicitud', new_manifest_path %>
+
+</div>
+
+
 <table>
   <thead>
     <tr>
@@ -39,11 +59,7 @@
 
 <br>
 
-<div class= "buttons" >
 
-<%= link_to 'Nueva solicitud', new_manifest_path %>
-
-</div>
 
 
 <%= will_paginate @products %>
