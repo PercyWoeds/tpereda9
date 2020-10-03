@@ -1266,6 +1266,7 @@ row = []
     @ost = Tranportorder.new(code: @code ,
                              employee_id:  params[:employee_id],
                              employee2_id: params[:employee2_id],
+                             employee3_id: params[:employee3_id],
                              truck_id:     params[:truck_id],
                              truck2_id:     params[:truck2_id],
                              truck3_id:     params[:truck3_id],
