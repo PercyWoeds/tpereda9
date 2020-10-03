@@ -67,7 +67,7 @@ def get_placas
  end 
 
 def get_manifests()
-    puntos = Manifest.where(["fecha1 >= ?","2020-08-01 00:00:00"]).order(:code)
+    puntos = Manifest.where(["fecha1 >= ?","2020-07-01 00:00:00"]).order(:code)
     return puntos
   end
  def get_pendientes_cliente(fecha1,fecha2,cliente)
