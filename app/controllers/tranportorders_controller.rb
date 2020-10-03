@@ -1257,7 +1257,7 @@ row = []
    end 
    
 
-   @code = @manifest.generate_ost_number(@lcSerie)  
+   @code = @ost.generate_ost_number(@lcSerie)  
 
     
 
