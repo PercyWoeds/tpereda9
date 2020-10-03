@@ -1120,7 +1120,8 @@ class CustomerPaymentsController < ApplicationController
           row << sprintf("%.2f",$lcCompen.to_s)
           
           table_content2 << row
-          
+          $lcAjuste2 = 0 
+          $lcAjuste  = 0 
           row = []
           row << nroitem.to_s
           row << "AJUSTE"
