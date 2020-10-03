@@ -1101,8 +1101,8 @@ class CustomerPaymentsController < ApplicationController
            
            $lcCompen = $lcCompen*-1
            $lcCompen2 = $lcCompen2*-1
-           
-           @totalgeneral_soles = @totalgeneral_soles + $lcAjuste2 + $lcFactory2 +$lcCompen2
+           #02 10 quite la suma del ajuste 
+           @totalgeneral_soles = @totalgeneral_soles  + $lcFactory2 +$lcCompen2
            @totalgeneral_dolar = @totalgeneral_dolar + $lcAjuste + $lcFactory +$lcCompen
            
 
