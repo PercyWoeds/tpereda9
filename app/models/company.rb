@@ -4979,7 +4979,7 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
  end 
 
   def get_purchases_by_moneda_prov(fecha1,fecha2,moneda)  
-    @purchases = Purchase.select("purchases.supplier_id").where([" purchases.company_id = ? AND date3 >= ? and date3 <= ? and moneda_id = ? and round(balance::numeric,2 ) <> ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda,"0.00" ]).group("suppliers.ruc,purchases.supplier_id").joins(:supplier).order("suppliers.ruc,purchases.supplier_id")    
+    @purchases = Purchase.select("purchases.supplier_id").where([" purchases.company_id = ? AND date3 >= ? and date3 <= ? and moneda_id = ? and round(balance::numeric,2 ) <> ? and  ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda,"0.00" ]).group("suppliers.ruc,purchases.supplier_id").joins(:supplier).order("suppliers.ruc,purchases.supplier_id")    
     return @purchases 
   end
  def get_purchases_by_moneda_provb(fecha1,fecha2,moneda,proveedor)  
