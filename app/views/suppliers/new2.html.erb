@@ -17,7 +17,8 @@
 <label>RUC:</label>
 <input type="text" id="input_ruc" name="input_ruc" style="width:100%;"
        oninput="validarInput(this)"
-       placeholder="Ingrese su RUC">
+       placeholder="Ingrese su RUC" onblur = "consultaRuc()" >
+
 <pre id="resultado"></pre>
 <pre id="existente"></pre>
   
@@ -28,22 +29,10 @@
   
 <% end %>
 
-<script type="text/javascript">
-
-#resultado, #existente {
-    background-color: red;
-    color: white;
-    font-weight: bold;
-    margin-top: 20px;
-}
-
-#resultado.ok, #existente.ok {
-    background-color: green;
-}
-</script>
 
 
 
 <div class="button">
   <%= link_to 'Regresar', "/companies/suppliers/#{@company.id}" %>
 </div>
+

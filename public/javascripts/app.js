@@ -1791,6 +1791,9 @@ function addItemToLgv2() {
     });
   }
 
+
+
+
   // Create new customer in the invoice via ajax
   function doCreateSupplier() {
     var company_id = 1 ;

@@ -4593,13 +4593,13 @@ def reporte_asistencia3
        for  product in @facturas_rpt
 
         
-        #  if product.user_id != 3 
+        if product.user_id == 9 || product.user_id == 2 
         case @tipo 
          when "1"
 
           begin 
-        
-            if product.payment_id != 1 and product.supplier_id != 1731 and (product.payment_id != 12 || product.payment_id != 16 ) and product.document_id != 13
+         
+            if  product.supplier_id != 1731 and (product.payment_id != 12 || product.payment_id != 16  and product.payment_id != 1) and product.document_id != 13
             
                 fechas2 = product.date2 
                  
@@ -4643,7 +4643,7 @@ def reporte_asistencia3
       when "0" 
         begin 
 
-          if  product.payment_id == 1 and product.supplier_id != 1731  and product.document_id != 13
+          if  product.payment_id == 1 and product.supplier_id != 1731  and product.document_id != 13 
 
             fechas2 = product.date2 
                
@@ -4682,7 +4682,7 @@ def reporte_asistencia3
           end
 
 
-     # end 
+      end 
     end 
     end 
 

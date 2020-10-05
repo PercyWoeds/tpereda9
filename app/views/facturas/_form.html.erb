@@ -250,6 +250,7 @@
 
 
 <script type="text/javascript">
+
   $(document).ready(function() {
     $("#ac_customer").autocomplete("/facturas/ac_customers/<%= @company.id %>", {
 			matchSubset: 1,
@@ -322,4 +323,6 @@
     <% end %>
 
   });
+
+  
 </script>

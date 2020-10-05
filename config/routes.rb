@@ -1065,7 +1065,11 @@ match 'purchases/do_crear/:id'   => 'purchases#do_crear', via: [:get, :post]
   
 
 
-  match 'suppliers/new2/:id'   => 'suppliers#new2', via: [:get, :post]
+  match 'suppliers/new2/:company_id/'   => 'suppliers#new2', via: [:get, :post]
+
+
+  match 'suppliers/search_ruc/:company_id/'   => 'suppliers#search_ruc', via: [:get, :post]
+
   resources :suppliers 
 
   match 'tranportorders/rpt_ost1_pdf/:company_id' => 'tranportorders#rpt_ost1_pdf', via: [:get, :post]

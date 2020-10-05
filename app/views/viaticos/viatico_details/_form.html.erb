@@ -1,4 +1,6 @@
 
+
+
 <% if @viatico_detail.errors.any? %>
   <div id="error_explanation">
     <h2><%= pluralize(@viatico_detail.errors.count, "error") %> prohibited this viatico from being saved:</h2>
@@ -91,6 +93,8 @@
         <a href="#" onclick="createSupplierRuc(); return false;">+ Crear nuevo proveedor</a>
       </div>
 
+
+
     </td> 
     
   </tr>
@@ -169,6 +173,7 @@
   </div>
 
   <div class="form-actions">
+
     <%= f.hidden_field :tranportorder_id,:id => "ac_item_id" %>
     <%= f.hidden_field :supplier_id, :id => "ac_supplier_id" %>
     
@@ -269,11 +274,22 @@
 
   });
 
-  // Shortcut to create new customer form
-  function createSupplierRuc() {
-    var company_id = <%= @company.id %> ;
-usuario
-  }
+ function createSupplierRuc() { 
+  var company_id = 1 ;
+  
+  $.get('/suppliers/new/' + company_id + '?ajax=1', {
+  },
+  function(data) {
+    displayRemote(data);
+    showRemote();
+    
+    $("#new_supplier").bind("submit", function() {
+      event.preventDefault();
+      doCreateSupplierRuc();
+    });
+  });
+}
+
 
   // Create new customer in the invoice via ajax
   function doCreateSupplierRuc() {

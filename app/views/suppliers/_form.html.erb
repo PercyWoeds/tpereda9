@@ -1,3 +1,6 @@
+
+
+
 <%= form_for(@supplier) do |f| %>
   <% if @supplier.errors.any? %>
     <div id="error_explanation">
@@ -10,10 +13,12 @@
       </ul>
     </div>
   <% end %>
+
+
   
   <div class="field">
     <%= f.label :ruc, "Ruc*", :class => "bold" %><br />
-    <%= f.text_field :ruc %>
+    <%= f.text_field :ruc , onblur:  "consultaRuc()" %>
   </div>
   
   
@@ -103,18 +108,41 @@
     <%= f.submit %>
   </div>
 <% end %>
+
+
 <script type="text/javascript">
 
-#resultado, #existente {
-    background-color: red;
-    color: white;
-    font-weight: bold;
-    margin-top: 20px;
-}
 
-#resultado.ok, #existente.ok {
-    background-color: green;
-}
+
+  
+function consultaRuc()  {
+
+
+var ruc  = $("#supplier_ruc").val();
+var company_id = 1 ;
+
+$.post('/suppliers/search_ruc/' + company_id, {
+        ruc: ruc 
+
+      },
+      function(data) {
+        if(data == "error_empty") {
+          alert("Please enter a supplier name");
+        } else if(data == "error") {
+          alert("Ah ocurrido un error grabando el proveedor ,por favor trate otra vez ");
+        } else {
+          var data_arr = data.split("|BRK|");
+          
+          $("#supplier_name ").val(data_arr[1]);
+         
+          $("#selected_supplier").html(data_arr[1]);
+          
+      
+        
+        }
+
+});
+} 
+
+
 </script>
-
-

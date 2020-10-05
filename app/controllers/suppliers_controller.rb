@@ -11,15 +11,7 @@ class SuppliersController < ApplicationController
        redirect_to root_url, notice: "Proveedor  importadas."
   end 
   
-  def search_ruc
-
-    ruc_number = params[:input_ruc]
-     puts ruc_number
-
-     result = PeruSunatRuc.name_from ruc_number
-     puts result 
-  end
-
+ 
 
 
  
@@ -186,6 +178,18 @@ class SuppliersController < ApplicationController
     end
   end
 
+ def search_ruc
+  puts "search ajax "
+
+    if params[:ruc]
+        ruc_number  = params[:ruc]
+        @supplier  = PeruSunatRuc.info_from ruc_number
+        render :text => "#{@supplier.ruc_number}|BRK|#{@supplier.name}"
+    else
+        render :text => "error_empty"
+    end 
+
+  end
 
 
 
