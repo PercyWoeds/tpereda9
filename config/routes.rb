@@ -211,6 +211,7 @@ require 'sidekiq/web'
     collection {get :guias1 }
     
     collection {get :rpt_purchase6  }
+    collection {get :rpt_purchase60  }
     collection {get :rpt_purchase61  }
     collection {get :rpt_purchase62  }
 
@@ -564,7 +565,8 @@ end
   match 'companies/reports/rpt_purchase5_all/:company_id' => 'reports#rpt_purchase5_all', via: [:get, :post]
   match 'companies/reports/rpt_purchase6_all/:company_id' => 'reports#rpt_purchase6_all', via: [:get, :post]
    match 'companies/reports/rpt_purchase_all2/:company_id' => 'reports#rpt_purchase_all2', via: [:get, :post]
-   match 'companies/reports/rpt_purchase61_all/:company_id/:usuario' => 'reports#rpt_purchase61_all', via: [:get, :post]
+  match 'companies/reports/rpt_purchase60_all/:company_id' => 'reports#rpt_purchase60_all', via: [:get, :post]
+  match 'companies/reports/rpt_purchase61_all/:company_id/:usuario' => 'reports#rpt_purchase61_all', via: [:get, :post]
 
   match 'companies/reports/rpt_purchaseorder_all/:company_id' => 'reports#rpt_purchaseorder_all', via: [:get, :post]
   match 'companies/reports/rpt_purchaseorder2_all/:company_id' => 'reports#rpt_purchaseorder2_all', via: [:get, :post]
