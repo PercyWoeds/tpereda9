@@ -58,14 +58,13 @@ wb.styles do |s|
                     "Abr-2020",
                     "May-2020",
                     "Jun-2020",
-                                 
                     "Jul-2020",
                     "Ago-2020",
                     "Set-2020",
                     "Oct-2020",              
                     "Nov-2020",
                     "Dic-2020",
-                    "Ene-2021"
+                    "Ene-2021",
                     "TOTAL   "], :style => title 
     
     @lcCli = @customerpayment_rpt.first.customer_id
