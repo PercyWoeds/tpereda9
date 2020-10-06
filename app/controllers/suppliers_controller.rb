@@ -76,6 +76,7 @@ class SuppliersController < ApplicationController
       @supplier = Supplier.new
       @supplier.company_id = @company.id
 
+
     
     
     if(params[:ajax])
@@ -184,7 +185,10 @@ class SuppliersController < ApplicationController
     if params[:ruc]
         ruc_number  = params[:ruc]
         @supplier  = PeruSunatRuc.info_from ruc_number
-        render :text => "#{@supplier.ruc_number}|BRK|#{@supplier.name}"
+        render :text => "#{@supplier.ruc_number}|BRK|#{@supplier.name}|BRK|#{@supplier.address}"
+
+    
+
     else
         render :text => "error_empty"
     end 

@@ -119,9 +119,8 @@ TABLE_HEADERS9 = ["ITEM",
                      "CLIENTE",   
                     "=<2018",                  
                     "Ene-Dic 19",
-                    "Ene-2020",             
-                    "Feb-2020",
-                    "Mar-2020",
+                    "Ene-Mar 20",             
+                    
                     "Abr-2020",
                     "May-2020",
                     "Jun-2020",             
@@ -130,6 +129,8 @@ TABLE_HEADERS9 = ["ITEM",
                     "Set-2020",
                     "Oct-2020",              
                     "Nov-2020",
+                     "Dic-2020",
+                      "Ene-2021",
                     "TOTAL   "]
                    
                    

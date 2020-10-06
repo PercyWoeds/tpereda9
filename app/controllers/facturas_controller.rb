@@ -3405,6 +3405,7 @@ def newfactura2
             row << " "
             row << " "
             table_content << row
+
               
           total_soles   = @company.get_pendientes_day_value(@fecha1,@fecha2, "total",lcmonedasoles)
           total_dolares = @company.get_pendientes_day_value(@fecha1,@fecha2, "total",lcmonedadolares)
@@ -3418,6 +3419,7 @@ def newfactura2
           row << ""
           row << ""  
           row << "TOTALES => "
+          row << ""
           row << ""
           row << sprintf("%.2f",total_soles.to_s)
           row << sprintf("%.2f",total_dolares.to_s)                    
@@ -3907,38 +3909,39 @@ end
             @total_mes01 = @total_mes01 + customerpayment_rpt.balance
           end   
 
-          if customerpayment_rpt.year_month == '202001'
+         if customerpayment_rpt.year_month.to_f >= 202001 and customerpayment_rpt.year_month.to_f <= 202003
+        
             @total_mes02 = @total_mes02 + customerpayment_rpt.balance
           end 
             
-          if customerpayment_rpt.year_month == '202002'   
+          if customerpayment_rpt.year_month == '202004'   
             @total_mes03 = @total_mes03 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '202003'     
+          if customerpayment_rpt.year_month == '202005'     
             @total_mes04 = @total_mes04 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '202004'       
+          if customerpayment_rpt.year_month == '202006'       
             @total_mes05 = @total_mes05 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '202005'
+          if customerpayment_rpt.year_month == '202007'
             @total_mes06 = @total_mes06 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '202006' 
+          if customerpayment_rpt.year_month == '202008' 
             @total_mes07 = @total_mes07 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '202007'   
+          if customerpayment_rpt.year_month == '202009'   
             @total_mes08 = @total_mes08 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '202008'     
+          if customerpayment_rpt.year_month == '202010'     
             @total_mes09 = @total_mes09 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '202009'       
+          if customerpayment_rpt.year_month == '202011'       
             @total_mes10 = @total_mes10 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '202010'   
+          if customerpayment_rpt.year_month == '202012'   
             @total_mes11 = @total_mes11 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '202011'     
+          if customerpayment_rpt.year_month == '202101'     
             @total_mes12 = @total_mes12 + customerpayment_rpt.balance
           end   
             @total_general = @total_general + customerpayment_rpt.balance
@@ -4025,38 +4028,39 @@ end
             @total_mes01 = @total_mes01 + customerpayment_rpt.balance
           end   
 
-          if customerpayment_rpt.year_month == '202001'
+          if customerpayment_rpt.year_month.to_f >= 202001 and customerpayment_rpt.year_month.to_f <= 202003
+         
             @total_mes02 = @total_mes02 + customerpayment_rpt.balance
           end 
             
-          if customerpayment_rpt.year_month == '202002'   
+          if customerpayment_rpt.year_month == '202004'   
             @total_mes03 = @total_mes03 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '202003'     
+          if customerpayment_rpt.year_month == '202005'     
             @total_mes04 = @total_mes04 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '202004'       
+          if customerpayment_rpt.year_month == '202006'       
             @total_mes05 = @total_mes05 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '202005'
+          if customerpayment_rpt.year_month == '202007'
             @total_mes06 = @total_mes06 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '202006' 
+          if customerpayment_rpt.year_month == '202008' 
             @total_mes07 = @total_mes07 + customerpayment_rpt.balance
           end
-          if customerpayment_rpt.year_month == '202007'   
+          if customerpayment_rpt.year_month == '202009'   
             @total_mes08 = @total_mes08 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '202008'     
+          if customerpayment_rpt.year_month == '202010'     
             @total_mes09 = @total_mes09 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '202009'       
+          if customerpayment_rpt.year_month == '202011'       
             @total_mes10 = @total_mes10 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '202010'   
+          if customerpayment_rpt.year_month == '202012'   
             @total_mes11 = @total_mes11 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '202011'     
+          if customerpayment_rpt.year_month == '202101'     
             @total_mes12 = @total_mes12 + customerpayment_rpt.balance
           end   
           
