@@ -191,7 +191,7 @@ wb.styles do |s|
                             @total_mes02 = @total_mes02 + customerpayment_rpt.balance
                           end 
                             
-                          if customerpayment_rpt.year_month == '20204'   
+                          if customerpayment_rpt.year_month == '202004'   
                             @total_mes03 = @total_mes03 + customerpayment_rpt.balance
                           end 
                           if customerpayment_rpt.year_month == '202005'     
