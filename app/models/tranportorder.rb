@@ -289,7 +289,7 @@ def get_ejes(id)
 		ejes1 = 0
 		ejes2 = 0
 
-		a  = Tranportorder.find(id)
+		a  = Truck.find(id)
 
 
 		 ejes1 = a.truck.ejes.to_i 
