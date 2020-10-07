@@ -3905,13 +3905,11 @@ end
             @total_anterior = @total_anterior + customerpayment_rpt.balance
           end             
           
-          if customerpayment_rpt.year_month.to_f >= 201901 
-            and customerpayment_rpt.year_month.to_f <= 201912
+          if customerpayment_rpt.year_month.to_f >= 201901  and customerpayment_rpt.year_month.to_f <= 201912
             @total_mes01 = @total_mes01 + customerpayment_rpt.balance
           end   
 
-         if customerpayment_rpt.year_month.to_f >= 202001 
-          and customerpayment_rpt.year_month.to_f <= 202003
+         if customerpayment_rpt.year_month.to_f >= 202001 and customerpayment_rpt.year_month.to_f <= 202003
         
             @total_mes02 = @total_mes02 + customerpayment_rpt.balance
           end 
@@ -4026,13 +4024,11 @@ end
             @total_anterior = @total_anterior + customerpayment_rpt.balance
           end             
           
-          if customerpayment_rpt.year_month.to_f >= 201901 
-            and customerpayment_rpt.year_month.to_f <= 201912
+          if customerpayment_rpt.year_month.to_f >= 201901  and customerpayment_rpt.year_month.to_f <= 201912
             @total_mes01 = @total_mes01 + customerpayment_rpt.balance
           end   
 
-          if customerpayment_rpt.year_month.to_f >= 202001 
-            nd customerpayment_rpt.year_month.to_f <= 202003
+          if customerpayment_rpt.year_month.to_f >= 202001  and customerpayment_rpt.year_month.to_f <= 202003
          
             @total_mes02 = @total_mes02 + customerpayment_rpt.balance
           end 
