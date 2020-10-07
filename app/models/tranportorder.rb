@@ -284,12 +284,14 @@ def add_catalogo(st)
 
 
 end 
-def get_ejes(id)
+
+
+def get_ejes2(id)
 		ret   = 0
 		ejes1 = 0
 		ejes2 = 0
 
-		a  = Truck.find(id)
+		a  = Tranportorder.find(id)
 
 
 		 ejes1 = a.truck.ejes.to_i 

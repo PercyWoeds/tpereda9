@@ -19,7 +19,6 @@ class TranportordersController < ApplicationController
 
 
 
-
   def cargar
     @lcProcesado='1'
     @company = Company.find(1)
@@ -889,7 +888,7 @@ def build_pdf_header_ost(pdf)
         end 
         
         data2 = [["RUTA :"+ @ost.get_punto(@ost.ubication_id) + "  -  "+ @ost.get_punto(@ost.ubication2_id) ,   "   FECHA: "+ @ost.fecha1.strftime("%d-%m-%Y")],
-                 ["PLACA: " + @ost.truck.placa + " EJES:"+ @ost.get_ejes(@ost.id ) +  "      ESCOLTA:                   ", "PLACA :"+ @ost.get_placa(@ost.truck2_id)],
+                 ["PLACA: " + @ost.truck.placa + " EJES:"+ @ost.get_ejes2(@ost.id ) +  "      ESCOLTA:                   ", "PLACA :"+ @ost.get_placa(@ost.truck2_id)],
                  [ " CONDUCTOR DE CARGA  " + @ost.employee.full_name,"SUPERVISOR/APOYO: "+@ost.get_empleado(@ost.employee3_id)],
                  
                  [ " CONDUCTOR DE RUTA  : "+@ost.get_empleado(@ost.employee2_id) ,"CLIENTE : " +@ost.customer.name  ],
