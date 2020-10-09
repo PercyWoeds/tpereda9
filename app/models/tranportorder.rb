@@ -2,7 +2,7 @@ class Tranportorder < ActiveRecord::Base
 self.per_page = 20
 
 	validates_presence_of :location_id,:division_id,:code,:employee_id,:employee2_id,:employee3_id,:ubication_id,:ubication2_id,:truck_id,:truck2_id, :truck3_id
-	validates_presence_of :fecha1,:fecha2 	
+	validates_presence_of :fecha1,:fecha2 ,:customer_id 	
      validates_uniqueness_of :code
 
 	belongs_to :company
@@ -93,6 +93,8 @@ TABLE_HEADERS2 = ["ITEM",
      end 
     
 	  def get_empleado(id)
+
+
 	  	if id != nil || id !="" || id.blank? ==false || id.empty? == false 
 		  	empleado = Employee.find_by(id: id)
 		  	begin 

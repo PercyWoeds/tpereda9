@@ -25,7 +25,8 @@
     <td>
     <div class="field">
       <%= f.label :location_id ,"Local"%><br />
-      <%= f.select :location_id, options_from_collection_for_select(@locations,'id','name') %>
+       <td>  <%= f.collection_select :location_id, @locations, :id, :name, :prompt => true %></td>
+  
            
     </div>
     </td>
@@ -155,6 +156,16 @@
           <td>Licencia</td>
           <td></td>
         </tr>
+         <tr>
+          <td class="left aligned">Escolta </td>
+          <td><%= f.collection_select :employee4_id, @employees, :id, :full_name, :prompt => true %> </td>
+          <td>DNI</td>
+          <td></td>
+          <td>Licencia</td>
+          <td></td>
+        </tr>
+
+
          <tr>
           <td class="left aligned">Supervisor / Apoyo </td>
           <td><%= f.collection_select :employee3_id, @employees, :id, :full_name, :prompt => true %> </td>

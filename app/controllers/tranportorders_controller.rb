@@ -636,8 +636,8 @@ def client_data_headers
       client_headers  = [["Conductor de carga :",@ost.employee.full_name ]]
       client_headers << ["Conducto de ruta :", @ost.get_empleado(@ost.employee2_id)]
       client_headers << ["Supervisor/apoyo :",@ost.get_empleado(@ost.employee3_id)]
-      client_headers << ["Placa: Tracto/Carreta :",@ost.truck.placa + " " + @ost.get_placa(@ost.truck2_id)   ]
-      client_headers << ["Escolta:",""]
+      client_headers << ["Placa: Tracto/Carreta :",@ost.truck.placa + " " + @ost.get_placa(@ost.truck2_id) + "Ejes: " +@ost.get_ejes2(@ost.id ) ]
+      client_headers << ["Escolta:",@ost.get_empleado(@ost.employee4_id)]
       
       client_headers
   end
@@ -646,7 +646,7 @@ def client_data_headers
       ost_headers  = [["De : ",@ost.get_punto(@ost.ubication_id)]]
       ost_headers << ["A :", @ost.get_punto(@ost.ubication2_id)]
       ost_headers << ["Fecha/Hora Salida :", @ost.fecha1.strftime('%d-%m-%Y')]
-      ost_headers << ["Fecha/Hora de llegada:",@ost.fecha2.strftime('%d-%m-%Y')]
+      ost_headers << ["  Fecha/Hora de llegada:",@ost.fecha2.strftime('%d-%m-%Y')]
       ost_headers << ["Placa: ",@ost.get_placa(@ost.truck3_id)]
       ost_headers
   end
@@ -849,9 +849,7 @@ def build_pdf_header_ost(pdf)
            @dir2 = @manifest.direccion2
 
       end 
-
-
-     
+    
       
       
       pdf.text "GUIAS EN BLANCO    : "+  @ost.description
@@ -887,8 +885,8 @@ def build_pdf_header_ost(pdf)
 
         end 
         
-        data2 = [["RUTA :"+ @ost.get_punto(@ost.ubication_id) + "  -  "+ @ost.get_punto(@ost.ubication2_id) ,   "   FECHA: "+ @ost.fecha1.strftime("%d-%m-%Y")],
-                 ["PLACA: " + @ost.truck.placa + " EJES:"+ @ost.get_ejes2(@ost.id ) +  "      ESCOLTA:                   ", "PLACA :"+ @ost.get_placa(@ost.truck2_id)],
+        data2 = [["RUTA :"+ @ost.get_punto(@ost.ubication_id) + "  -  "+ @ost.get_punto(@ost.ubication2_id) ,   "   FECHA: "+ @ost.fecha1.strftime("%d-%m-%Y")+" PLACA TRACTO/CAMION: " + @ost.truck.placa+ " " + @ost.get_placa(@ost.truck2_id)],
+                 [ " EJES:"+ @ost.get_ejes2(@ost.id ) +  " ESCOLTA:" +@ost.get_empleado(@ost.employee4_id), "PLACA :"+ @ost.get_placa(@ost.truck2_id)],
                  [ " CONDUCTOR DE CARGA  " + @ost.employee.full_name,"SUPERVISOR/APOYO: "+@ost.get_empleado(@ost.employee3_id)],
                  
                  [ " CONDUCTOR DE RUTA  : "+@ost.get_empleado(@ost.employee2_id) ,"CLIENTE : " +@ost.customer.name  ],
@@ -1171,11 +1169,11 @@ row = []
 
             row = []
             row << "ESCOLTA "
-            row << @ost.get_empleado(@ost.employee2_id)
+            row << @ost.get_empleado(@ost.employee4_id)
               row << "DNI :"
             row << @ost.get_dni(@ost.employee2_id)
                row << "LICENCIA:"
-            row << @ost.get_licencia(@ost.employee2_id)
+            row << @ost.get_licencia(@ost.employee4_id)
            
             table_content4 << row
 
@@ -1266,6 +1264,7 @@ row = []
                              employee_id:  params[:employee_id],
                              employee2_id: params[:employee2_id],
                              employee3_id: params[:employee3_id],
+                             employee4_id: params[:employee4_id],
                              truck_id:     params[:truck_id],
                              truck2_id:     params[:truck2_id],
                              truck3_id:     params[:truck3_id],
@@ -1319,6 +1318,6 @@ row = []
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tranportorder_params
-      params.require(:tranportorder).permit(:code, :employee_id, :truck_id, :employee2_id,:employee3_id, :truck2_id, :truck3_id,:ubication_id, :ubication2_id, :fecha1, :fecha2, :description, :comments, :processed, :company_id, :location_id, :division_id,:tipocargue_id,:customer_id,:carga)
+      params.require(:tranportorder).permit(:code, :employee_id, :truck_id, :employee2_id,:employee3_id, :employee4_id,:truck2_id, :truck3_id,:ubication_id, :ubication2_id, :fecha1, :fecha2, :description, :comments, :processed, :company_id, :location_id, :division_id,:tipocargue_id,:customer_id,:carga)
     end
 end

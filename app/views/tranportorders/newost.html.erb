@@ -195,6 +195,15 @@
           <td>Licencia</td>
           <td></td>
         </tr>
+
+         <tr>
+          <td class="left aligned">Escolta </td>
+          <td><%= select_tag( :employee4_id, options_from_collection_for_select(@employees,'id','full_name'))  %> </td>
+          <td>DNI</td>
+          <td></td>
+          <td>Licencia</td>
+          <td></td>
+        </tr>
         <tr>
           <td class="left aligned">Supervisor /apoyo </td>
           <td><%= select_tag( :employee3_id, options_from_collection_for_select(@employees,'id','full_name'))  %> </td>

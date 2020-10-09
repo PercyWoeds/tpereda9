@@ -41,7 +41,7 @@
 <table style="width:100%">
   
   <tr>
-    <td><strong>Conductor:</strong></td>
+    <td><strong>Conductor de carga:</strong></td>
     <td> <%= @tranportorder.employee.full_name %></td> 
     <td><strong> De</strong></td>
     <td> <%= @tranportorder.get_punto(@tranportorder.ubication_id) %></td>
@@ -61,20 +61,29 @@
   
   
   <tr>
-    <td>Copiloto</td>
+    <td>Conductor de ruta </td>
     <td> <%= @tranportorder.get_empleado(@tranportorder.employee2_id) %></td> 
     <td>Fecha/Hora Salida  </td>
     <td><%= @tranportorder.fecha1.strftime('%d-%m-%Y') %> </td> 
   </tr>
   <tr>
-    <td>Placa</td>
-    <td></td> 
-    <td>Fecha/Hora Llegada  </td>
-    <td><%= @tranportorder.fecha2.strftime('%d-%m-%Y') %></td> 
+    <td>Escolta </td>
+    <td><%= @tranportorder.get_placa(@tranportorder.truck3_id)  %> </td> 
+    <td>  </td>
+    <td> </td> 
   </tr>
+
+ <tr>
+    <td>Conductor Escolta  </td>
+    <td><%= @tranportorder.get_empleado(@tranportorder.employee4_id) %> </td> 
+    <td>  </td>
+    <td> </td> 
+  </tr>
+
+
   <tr>
     <td>Ejes </td>
-    <td></td> 
+    <td> <%= @tranportorder.get_ejes2(@tranportorder.id ) %> </td> 
     <td></td>
     <td></td> 
   </tr>
@@ -155,15 +164,37 @@
   <tr>
   <td><p><strong>RUTA : </strong>    <%= @tranportorder.get_punto(@tranportorder.ubication_id)%>  - <%= @tranportorder.get_punto(@tranportorder.ubication2_id) %> </p></td>
   <td><strong>FECHA: </strong> <%= @tranportorder.fecha1.strftime('%d-%m-%Y') %> </td>
+ 
+    <td><strong>PLACA TRACTO/CAMION: </strong> <%= @tranportorder.truck.placa  + " " + @tranportorder.get_placa(@tranportorder.truck2_id) %>  </td>
+<tr>
+
+    <td><strong>EJES: </strong>  <%= @tranportorder.get_ejes2(@tranportorder.id ) %></td>
+
+    <td> <strong> ESCOLTA:  </strong> <%= @tranportorder.get_empleado(@tranportorder.employee4_id) %> </td>
+    <td> <strong> PLACA: </strong> <%= @tranportorder.get_placa(@tranportorder.truck3_id) %>  </td>
+    <td>  <strong>CLIENTE </strong> <%= @tranportorder.customer.name  %> </td>
   </tr>
+
+</table>
+
+<table  style="width:100%">
+
   <tr>
-    <td><strong>PLACA: </strong> <%= @tranportorder.truck.placa %> </td>
-    <td>EJES: </td>
+    <td><strong>CONDUCTOR DE CARGA :</strong> </td> <td> <%= @tranportorder.get_empleado(@tranportorder.employee_id) %> </td>
+    <td> <strong> SUPERVISOR/APOYO :</strong>  </td>
+    <td><%= @tranportorder.get_empleado(@tranportorder.employee3_id) %></td>
+
+    
   </tr>
+
   <tr>
-    <td><strong>CONDUCTOR:</strong> <%= @tranportorder.get_empleado(@tranportorder.employee_id) %> </td>
-    <td></td>
+    <td><strong>CONDUCTOR DE RUTA:</strong> </td> <td> <%= @tranportorder.get_empleado(@tranportorder.employee2_id) %> </td>
+    <td> <strong> </strong>  </td>
+    <td> </td>
+
   </tr>
+
+
   
   
 </table>
@@ -173,7 +204,7 @@
     <b><trong> Observaciones :</trong></b>
     <br />
     <br />
-    <%= format_text(@tranportorder.comments) %>
+    
   </div>
   <%= hr() %>
 

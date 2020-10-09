@@ -71,6 +71,22 @@ class Output < ActiveRecord::Base
                      "COSTO ",
                      "TOTAL"]
 
+                     TABLE_HEADERS40 = ["ITEM",
+                      "FAMILIA",
+                      "DOCUMENTO",
+                     "FECHA",
+                     "CODE",
+                     "PRODUCTO",
+                     "UNIDAD",
+                     "UBICACION",
+                     "EMPLEADO",
+                     "PLACA",
+                     "CANTIDAD",
+                     "STOCK
+                      ACTUAL",
+                     "COSTO ",
+                     "TOTAL"]
+
    TABLE_HEADERS41 = ["ITEM",
                       "FAMILIA",
                       "DOCUMENTO",
