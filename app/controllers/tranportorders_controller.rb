@@ -184,6 +184,8 @@ class TranportordersController < ApplicationController
   # DELETE /tranportorders/1
   # DELETE /tranportorders/1.json
   def destroy
+
+    
    respond_to do |format|
    a = Delivery.find_by(:tranportorder_id=> params[:id])
    if a 

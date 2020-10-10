@@ -16,12 +16,14 @@ totals = []
 <h3>
   <%= image_tag("reports_48.png", :class => "vmiddle") %>
  Reporte de cuentas proveedores 
+ <br>
+ Ordenes de servicio pendientes 
 <br>
 
  Por fecha de recepcion 
 </h3	>
 
-<form method="get" action="/purchaseorders/rpt_purchaseorder3_all/<%= @company.id %>">
+<form method="get" action="/purchaseorders/rpt_purchaseorder4_all/<%= @company.id %>">
 
   <div class="field">
     <input type="date" name="fecha1" value="2020-08-01" style = "width: 120px" >

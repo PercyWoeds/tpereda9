@@ -5,6 +5,19 @@ class Conductor < ActiveRecord::Base
   validates_presence_of :employee_id
   validates_uniqueness_of :employee_id
 
+  validates_presence_of :lugar,:anio,:licencia,:categoria,:expedicion_licencia,:revalidacion_licencia,
+   :categoria_especial,
+   :expedicion_licencia_especial,
+   :iqbf,
+    :dni_emision,
+    :dni_caducidad,
+    :ap_emision,
+    :ap_caducidad,
+    :ape_emision,
+    :ape_caducidad,
+    :user_id,
+    :revalidacion_licencia_especial
+   
 
     def self.import(file)
           CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|

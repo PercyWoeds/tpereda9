@@ -1119,18 +1119,22 @@ pdf.move_down 5
   #fin reporte de orden de compra
 
   def rpt_purchaseorder3_all
-    $lcxCliente = "0"
+   
     @company =Company.find(1)
     @fecha1 =params[:fecha1]
     @fecha2 =params[:fecha2]
 
-    @rpt_purchaseorder = @company.get_purchaseorder_detail2(@fecha1,@fecha2)
 
+ @rpt_purchaseorder =  Purchaseorder.where("processed = ? and fecha1 >=? ","1","2020-08-01 00:00:00")
+ .where( Purchase.where([" fecha1 >= ? and fecha1 <= ?  and  purchaseorder_id = purchaseorders.id ", 
+  "#{@fecha1} 00:00:00","#{@fecha2} 23:59:59"]).arel.exists.not).order("code DESC " )
+
+   
     Prawn::Document.generate("app/pdf_output/orden_1.pdf") do |pdf|
         pdf.font "Helvetica"
-        pdf = build_pdf_header2(pdf)
-        pdf = build_pdf_body2(pdf)
-        build_pdf_footer2(pdf)
+        pdf = build_pdf_header3(pdf)
+        pdf = build_pdf_body3(pdf)
+        build_pdf_footer3(pdf)
         $lcFileName =  "app/pdf_output/orden_1.pdf"
 
     end
@@ -1143,6 +1147,364 @@ pdf.move_down 5
   end
 
 
+  def build_pdf_header3(pdf)
+      pdf.font "Helvetica" , :size => 8
+      image_path = "#{Dir.pwd}/public/images/tpereda2.png"
+
+    
+       table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD OCUPACIONAL",:rowspan => 2},"CODIGO ","TP-CM-F-015 "], 
+          ["VERSION: ","3"], 
+          ["ORDENES DE COMPRA PENDIENTES DE FACTURA ","Pagina: ","1 de 1 "] 
+         
+          ])
+
+
+
+       pdf.table(table_content  ,{
+           :position => :center,
+           :width => pdf.bounds.width
+         })do
+           columns([1,2]).font_style = :bold
+            columns([0]).width = 98.55
+            columns([1]).width = 301.45
+            columns([1]).align = :center
+            
+            columns([2]).width = 70
+          
+            columns([3]).width = 70
+      
+         end
+        
+         table_content2 = ([["Fecha : ",Date.today.strftime("%d/%m/%Y")]])
+
+         pdf.table(table_content2,{:position=>:right }) do
+
+            columns([0, 1]).font_style = :bold
+            columns([0, 1]).width = 70
+            
+         end 
+
+     
+         pdf.text "(1) del "+@fecha1+" al "+@fecha2
+         
+         pdf.move_down 2
+      
+      pdf 
+  end   
+
+  def build_pdf_body3(pdf)
+
+    
+    pdf.text ""
+    pdf.font_families.update("Open Sans" => {
+          :normal => "app/assets/fonts/OpenSans-Regular.ttf",
+          :italic => "app/assets/fonts/OpenSans-Italic.ttf",
+        })
+
+        pdf.font "Open Sans",:size =>6
+
+
+      headers = []
+      table_content = []
+
+      Purchaseorder::TABLE_HEADERS2.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content << headers
+
+      nroitem=1
+      lcmonedasoles   = 2
+      lcmonedadolares = 1
+
+      total_cliente_soles = 0
+      total_cliente_dolares = 0
+      total_soles = 0
+      total_dolares = 0 
+    
+
+       lcCliente = @rpt_purchaseorder.first.supplier_id
+
+       if @rpt_purchaseorder.count()  > 0 
+
+       for  product in @rpt_purchaseorder
+
+         
+            fechas2 = product.fecha2
+
+            row = []
+            row << nroitem 
+            row << product.code
+            row << product.fecha1.strftime("%d/%m/%Y")
+            row << product.fecha2.strftime("%d/%m/%Y")
+            row << product.supplier.name
+            row << product.moneda.symbol
+
+            if product.moneda_id == 1
+                row << "0.00 "
+                row << sprintf("%.2f",product.total.to_s)
+                 total_dolares += product.total 
+            else
+                row << sprintf("%.2f",product.total.to_s)
+                row << "0.00 "
+                 total_soles += product.total 
+            end
+            row << " "
+
+            table_content << row
+
+            nroitem = nroitem + 1
+
+
+        end
+
+           
+            totals = []
+            total_cliente = 0
+
+             
+     
+
+          row =[]
+          row << ""
+          row << ""
+          row << ""
+          row << ""
+          row << "TOTALES => "
+          row << ""
+          row << sprintf("%.2f",total_soles.to_s)
+          row << sprintf("%.2f",total_dolares.to_s)
+          row << " "
+          table_content << row
+
+
+          result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:left
+                                          columns([3]).align=:left
+                                          columns([4]).align=:left
+                                          columns([5]).align=:right
+                                          columns([6]).align=:right
+                                          columns([7]).align=:right
+                                          columns([8]).align=:right
+                                        end
+        end 
+      pdf.move_down 10
+
+      #totales
+
+      pdf
+
+    end
+
+
+    def build_pdf_footer3(pdf)
+
+        pdf.text ""
+        pdf.text ""
+
+
+     end
+
+  def rpt_purchaseorder4_all
+   
+    @company =Company.find(1)
+    @fecha1 =params[:fecha1]
+    @fecha2 =params[:fecha2]
+
+
+ @rpt_purchaseorder =  Serviceorder.where("processed = ? and fecha1 >=? ","1","2020-08-01 00:00:00")
+ .where( Purchase.where([" fecha1 >= ? and fecha1 <= ?  and  purchaseorder_id = serviceorders.id and tipo =? ", 
+  "#{@fecha1} 00:00:00","#{@fecha2} 23:59:59","1"]).arel.exists.not).order("code DESC " )
+
+   
+    Prawn::Document.generate("app/pdf_output/orden_1.pdf") do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header3(pdf)
+        pdf = build_pdf_body3(pdf)
+        build_pdf_footer3(pdf)
+        $lcFileName =  "app/pdf_output/orden_1.pdf"
+
+    end
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+
+    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+
+
+  end
+
+
+  def build_pdf_header4(pdf)
+      pdf.font "Helvetica" , :size => 8
+      image_path = "#{Dir.pwd}/public/images/tpereda2.png"
+
+    
+       table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD OCUPACIONAL",:rowspan => 2},"CODIGO ","TP-CM-F-015 "], 
+          ["VERSION: ","3"], 
+          ["ORDENES DE COMPRA PENDIENTES DE FACTURA ","Pagina: ","1 de 1 "] 
+         
+          ])
+
+
+
+       pdf.table(table_content  ,{
+           :position => :center,
+           :width => pdf.bounds.width
+         })do
+           columns([1,2]).font_style = :bold
+            columns([0]).width = 98.55
+            columns([1]).width = 301.45
+            columns([1]).align = :center
+            
+            columns([2]).width = 70
+          
+            columns([3]).width = 70
+      
+         end
+        
+         table_content2 = ([["Fecha : ",Date.today.strftime("%d/%m/%Y")]])
+
+         pdf.table(table_content2,{:position=>:right }) do
+
+            columns([0, 1]).font_style = :bold
+            columns([0, 1]).width = 70
+            
+         end 
+
+     
+         pdf.text "(1) del "+@fecha1+" al "+@fecha2
+         
+         pdf.move_down 2
+      
+      pdf 
+  end   
+
+  def build_pdf_body4(pdf)
+
+    
+    pdf.text ""
+    pdf.font_families.update("Open Sans" => {
+          :normal => "app/assets/fonts/OpenSans-Regular.ttf",
+          :italic => "app/assets/fonts/OpenSans-Italic.ttf",
+        })
+
+        pdf.font "Open Sans",:size =>6
+
+
+      headers = []
+      table_content = []
+
+      Purchaseorder::TABLE_HEADERS2.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content << headers
+
+      nroitem=1
+      lcmonedasoles   = 2
+      lcmonedadolares = 1
+
+      total_cliente_soles = 0
+      total_cliente_dolares = 0
+      total_soles = 0
+      total_dolares = 0 
+    
+
+       lcCliente = @rpt_purchaseorder.first.supplier_id
+
+       if @rpt_purchaseorder.count()  > 0 
+
+       for  product in @rpt_purchaseorder
+
+         
+            fechas2 = product.fecha2
+
+            row = []
+            row << nroitem 
+            row << product.code
+            row << product.fecha1.strftime("%d/%m/%Y")
+            row << product.fecha2.strftime("%d/%m/%Y")
+            row << product.supplier.name
+            row << product.moneda.symbol
+
+            if product.moneda_id == 1
+                row << "0.00 "
+                row << sprintf("%.2f",product.total.to_s)
+                 total_dolares += product.total 
+            else
+                row << sprintf("%.2f",product.total.to_s)
+                row << "0.00 "
+                 total_soles += product.total 
+            end
+            row << " "
+
+            table_content << row
+
+            nroitem = nroitem + 1
+
+
+        end
+
+           
+            totals = []
+            total_cliente = 0
+
+             
+     
+
+          row =[]
+          row << ""
+          row << ""
+          row << ""
+          row << ""
+          row << "TOTALES => "
+          row << ""
+          row << sprintf("%.2f",total_soles.to_s)
+          row << sprintf("%.2f",total_dolares.to_s)
+          row << " "
+          table_content << row
+
+
+          result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:left
+                                          columns([3]).align=:left
+                                          columns([4]).align=:left
+                                          columns([5]).align=:right
+                                          columns([6]).align=:right
+                                          columns([7]).align=:right
+                                          columns([8]).align=:right
+                                        end
+        end 
+      pdf.move_down 10
+
+      #totales
+
+      pdf
+
+    end
+
+
+    def build_pdf_footer4(pdf)
+
+        pdf.text ""
+        pdf.text ""
+
+
+     end
   private
   def purchaseorder_params
     params.require(:purchaseorder).permit(:company_id,:location_id,:division_id,

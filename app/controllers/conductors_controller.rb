@@ -1,6 +1,8 @@
 class ConductorsController < ApplicationController
   before_action :set_conductor, only: [:show, :edit, :update, :destroy]
 
+  
+
   # GET /conductors
   # GET /conductors.json
   def index
@@ -56,7 +58,11 @@ class ConductorsController < ApplicationController
   # POST /conductors
   # POST /conductors.json
   def create
+
+
     @conductor = Conductor.new(conductor_params)
+
+    @conductor[:user_id] =  @current_user.id 
     @company = Company.find(1)
     @empleados = @company.get_employees()
 

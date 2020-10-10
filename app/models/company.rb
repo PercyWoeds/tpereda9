@@ -2754,6 +2754,11 @@ def get_purchaseorder_detail2(fecha1,fecha2)
     @purchaseorders = Purchaseorder.where([" fecha1 >= ? and fecha1 <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:supplier_id,:moneda_id,:fecha1)
     return @purchaseorders    
  end 
+
+ def get_purchaseorder_detail3(fecha1,fecha2)
+    @purchaseorders = Purchaseorder.where([" fecha1 >= ? and fecha1 <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:supplier_id,:moneda_id,:fecha1)
+    return @purchaseorders    
+ end 
   
 
  def get_purchaseorder_detail(fecha1,fecha2)

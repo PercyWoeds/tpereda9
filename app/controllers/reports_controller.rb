@@ -1308,6 +1308,18 @@ def rpt_facturas_4
     @pagetitle = "Ordenes de compra"    
   end
 
+  def rpt_purchaseorder3_all
+    @company = Company.find(params[:company_id])
+    @pagetitle = "Ordenes de compra"   
+    @monedas = @company.get_monedas
+  end
+
+def rpt_purchaseorder4_all
+    @company = Company.find(params[:company_id])
+    @pagetitle = "Ordenes de compra"   
+    @monedas = @company.get_monedas
+  end
+
   def reports_calmacen
     @company = Company.find(params[:company_id])
     @pagetitle = "Almacen"    
@@ -1496,7 +1508,7 @@ def rpt_facturas_4
 
   end
 
-  def rpt_purchaseorder2_all_all
+  def rpt_purchaseorder2_all
       @company = Company.find(params[:company_id])    
     @pagetitle = "Listado de Compras  "    
     @products = @company.get_products()
