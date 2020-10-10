@@ -255,9 +255,9 @@ serviceorder_services.servicebuy_id = servicebuys.id where serviceorder_services
   
   def get_processed_short
     if(self.processed == "1")
-      return "Yes"
+      return "Si"
     elsif (self.processed == "3")
-       return "Yes"
+       return "Si"
     else
       return "No"
     end

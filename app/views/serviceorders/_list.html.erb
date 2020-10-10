@@ -15,9 +15,12 @@
           Fecha
         </th>
         <th class="bordered_right bordered_bottom">
-          Aprobado 
+          
+        Procesado 
         </th>
-      
+       <th class="bordered_right bordered_bottom">
+          Estado 
+        </th>
         
         <th class="bordered_right bordered_bottom" colspan="3">
           Opciones 
@@ -43,29 +46,30 @@
            <td class="small bordered_bottom bordered_right <%= serviceorder.processed_color %>" >
             <%= serviceorder.get_processed_short %>
           </td>
+
+           <td class="small bordered_bottom bordered_right " >
+            <%= serviceorder.get_processed %>
+          </td>
+
+
          <td class="small bordered_bottom bordered_right">          
           <%= link_to "Ver", serviceorder %>                                 
-          </td>
-         <td class="small bordered_bottom bordered_right">  
-
+      
             
-          <% if serviceorder.processed =="" || serviceorder.processed == nil %>
+          <% if serviceorder.processed =="1" || serviceorder.processed == nil %>
 
-          <%= link_to "Edit", edit_serviceorder_path(serviceorder) %>                      
+          <%= link_to "Edit", edit_serviceorder_path(serviceorder) %>    
+
+
           <%= link_to 'Eliminar', serviceorder, :confirm => 'Are you sure?', :method => :delete 
           %>
-          <% elsif serviceorder.processed =="1"%>    
-          <%= "** Aprobado **" %>
-          <%= link_to 'Eliminar', serviceorder,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>
           
-          <% elsif serviceorder.processed =="2"%>  
-          <%= "** Anulado **" %>
+          <% else %>
+        
           
           <%= link_to 'Eliminar', serviceorder,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>
           
-          <% elsif serviceorder.processed =="3"%>  
-          <%= "** Cerrado **" %>                      
-        <%= link_to 'Eliminar', serviceorder,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>          
+            
           <% end %> 
 
           </td>
