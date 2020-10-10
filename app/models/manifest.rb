@@ -49,7 +49,11 @@ def get_processed
 
     elsif (self.processed == "3")
 
-      return "**Cancelado **"  
+      return "**Cancelado  **"  
+
+    elsif (self.processed == "4")
+
+      return "**Atendido  **" 
     else   
       return "Not yet processed"
         

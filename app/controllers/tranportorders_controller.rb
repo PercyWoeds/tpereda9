@@ -1293,7 +1293,6 @@ row = []
     puts @lcFechaEntrega
 
 
-
       respond_to do |format|
        if    @ost.save  
           # Create products for kit

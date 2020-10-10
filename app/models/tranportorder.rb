@@ -279,7 +279,7 @@ def add_catalogo(st)
 	 if merge.save 
 
 	 st = Manifest.find(st)
-	 st.processed = "3"
+	 st.processed = "4"
 	 st.save
 
 	 end 
