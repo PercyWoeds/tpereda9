@@ -1173,7 +1173,7 @@ row = []
             row << "ESCOLTA "
             row << @ost.get_empleado(@ost.employee4_id)
               row << "DNI :"
-            row << @ost.get_dni(@ost.employee2_id)
+            row << @ost.get_dni(@ost.employee4_id)
                row << "LICENCIA:"
             row << @ost.get_licencia(@ost.employee4_id)
            
