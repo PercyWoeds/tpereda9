@@ -332,7 +332,6 @@ class InvoicesController < ApplicationController
     @invoice[:total] = @invoice[:subtotal] + @invoice[:tax]
 
 
-
     respond_to do |format|
       if @invoice.update_attributes(params[:invoice])
         # Create products for kit

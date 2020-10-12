@@ -344,9 +344,8 @@ pdf.move_down 5
         discount = parts[3]
         ext_id = parts[4]
         
-        
-        
         product = Servicebuy.find(id.to_i)
+
         product2 = ServiceExtension.find(ext_id.to_i)
         #truck2 = Truck.find(truck_id.to_i)
         #empleado2 = Truck.find(empleado_id.to_i)
@@ -359,7 +358,6 @@ pdf.move_down 5
         product[:name_ext] = product2.name 
         #product[:truck_ext] = truck2.name 
         #product[:empleado_ext] = empleado2.name 
-        
         
         total = product[:price] * product[:quantity]
         total -= total * (product[:discount] / 100)
@@ -511,10 +509,15 @@ pdf.move_down 5
     @ac_user = @serviceorder.user.username
     @suppliers = @company.get_suppliers()
     @servicebuys  = @company.get_servicebuys()
+    @serviceexts  = ServiceExtension.all 
+    
+    @trucks = @company.get_trucks()
+    @employees = @company.get_employees()
     @payments = @company.get_payments()
     @monedas  = @company.get_monedas()
+    @serviceorder[:fecha] 
     
-    @products_lines = @serviceorder.services_lines
+    @suppliers_lines = @serviceorder.services_lines
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
@@ -639,7 +642,8 @@ pdf.move_down 5
       @ac_supplier = @serviceorder.supplier.name
     end
     
-    @products_lines = @serviceorder.products_lines
+    @products_lines = @serviceorder.services_lines 
+  
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
@@ -653,10 +657,11 @@ pdf.move_down 5
     @serviceorder[:total] = @serviceorder[:subtotal] + @serviceorder[:tax]
 
     respond_to do |format|
-      if @serviceorder.update_attributes(params[:serviceorder])
+
+      if @serviceorder.update_attributes(serviceorder_params)
         # Create products for kit
-        @serviceorder.delete_products()
-        @serviceorder.add_products(items)
+        @serviceorder.delete_services()
+        @serviceorder.add_services(items)
         
         # Check if we gotta process the serviceorder
         @serviceorder.process()

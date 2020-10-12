@@ -215,22 +215,35 @@ serviceorder_services.servicebuy_id = servicebuys.id where serviceorder_services
     return invoice_services
   end
   
-  
+
   
   def services_lines
     services = []
-    order_services = ServiceorderService.where(serviceorder_id:  self.id)
+    order_services  = ServiceorderService.where(serviceorder_id:  self.id)
     
     order_services.each do | ip |
 
-      ip.servicebuy[:price] = ip.price
-      ip.servicebuy[:quantity] = ip.quantity
-      ip.servicebuy[:discount] = ip.discount
-      ip.servicebuy[:total] = ip.total
+    
+        ip.servicebuy[:i] = ip.servicebuy_id 
+        ip.servicebuy[:quantity] = ip.quantity
+        ip.servicebuy[:price] = ip.price
+        ip.servicebuy[:discount] = ip.discount
+        ip.servicebuy[:ext_id] = ip.ext_id
+
+        product2 = ServiceExtension.find(ip.ext_id)
+        if product2.nil?
+
+        ip.servicebuy[:name_ext] = product2.name 
+      else
+        ip.servicebuy[:name_ext] = "+ no existe "
+      end 
       
-      services.push("#{ip.servicebuy.id}|BRK|#{ip.servicebuy.quantity}|BRK|#{ip.servicebuy.price}|BRK|#{ip.servicebuy.discount}")
+      services.push("#{ip.servicebuy.i}|BRK|#{ip.servicebuy.quantity}|BRK|#{ip.servicebuy.price}
+        |BRK|#{ip.servicebuy.discount}|BRK|#{ip.servicebuy.ext_id}|BRK|#{ip.servicebuy.name_ext}  ")
 
     end 
+
+       
 
     return services.join(",")
   end

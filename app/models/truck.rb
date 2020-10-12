@@ -2,6 +2,8 @@ class Truck < ActiveRecord::Base
 
 validates_uniqueness_of :placa 
 
+validates_presence_of :marca_id,:modelo_id,:tipo_unidad_id,:config_vehi_id,:color_vehi_id,
+ :clase_cat_id 
 
 has_many :outputs,:dependent => :destroy 
 belongs_to  :tipo_unidad 

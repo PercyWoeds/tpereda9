@@ -715,10 +715,7 @@ def get_tax3(items, supplier_id)
     purchase_details = PurchaseDetail.where(purchase_id:  self.id)    
     return purchase_details
   end
-  def get_categoria_name(id)
-    purchase_details = ProductsCategory.find(id)    
-    return purchase_details.name 
-  end
+  
 
   def products_lines
     products = []
@@ -759,19 +756,42 @@ def get_tax3(items, supplier_id)
       return "No"
     end
   end
-  
+  def get_orden_servicio(id)
+
+     if Serviceorder.where(id: id).exists?
+
+        a = Serviceorder.find(id)
+       return a.code 
+      else
+        return ""
+     end 
+
+  end 
   def get_purchaseorder
+
+    if self.tipo =="1"  
+        puts "ubnioooo "
+        if(self.purchaseorder_id == nil)
+          return ""
+        else
+          return self.get_orden_servicio(self.purchaseorder.id) 
+      
+        end
+
+    end
+
+    if self.tipo =="0"
 
     if(self.purchaseorder_id == nil)
       return ""
     else
-      if    self.purchaseorder  == nil
-        return ""
-      else        
-        return self.purchaseorder.code 
-      end 
-    end
-  end
+      
+      return self.purchaseorder.code 
+  
+    end      
+    end 
+
+end 
   
     def process2
 
@@ -907,11 +927,22 @@ def get_tax3(items, supplier_id)
     end
   end
   
-  def get_categoria_name(codigo)  
-    
-    a=ProductsCategory.find(codigo)
-    return a.category
-  end   
+   def get_categoria_name(id)
+
+      if   a= ProductsCategory.where(id: id ).exists? 
+
+           category = ProductsCategory.find(id)
+
+           return category.category
+      else
+
+           return "Categoria Eliminada."
+      end 
+  end 
+  
+
+
+
   def get_service_name(codigo)  
     a = Service.find_by(code:codigo) 
     

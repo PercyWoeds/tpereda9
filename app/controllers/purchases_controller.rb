@@ -379,9 +379,9 @@ WHERE purchase_details.product_id = ? ',params[:id] ])
     @company =Company.find(1)
     @fecha1 =params[:fecha1]
     @fecha2 =params[:fecha2]
-    @moneda1 = params[:moneda_id]
+    @moneda1 = params[:moneda]
 
-    
+
     if @moneda1== "2"
       $lcMoneda ="SOLES"
     else
@@ -389,6 +389,8 @@ WHERE purchase_details.product_id = ? ',params[:id] ])
     end 
     
     @tipo =params[:tiporeporte]
+    puts "monedaaaaaaaaaaaaaaa"
+    puts @moneda1 
 
 
     @rpt_detalle_purchase = @company.get_purchases_day_categoria(@fecha1,@fecha2,@moneda1,@tipo)

@@ -32,12 +32,12 @@
         
     <div class="field">
       <%= f.label :fecha1, "Fecha Emision*", :class => "bold" %><br />
-      <%= f.date_field :fecha1 , placeholder: "YYYY-MM-DD", value: (f.object.fecha1 || Date.today.to_s(:db)) %>
+      <%= f.date_field :fecha1  %>
     </div>
 
     <div class="field">
       <%= f.label :fecha2, "Fecha Entrega*", :class => "bold" %><br />
-      <%= f.date_field :fecha2 , placeholder: "YYYY-MM-DD", value: (f.object.fecha1 || Date.today.to_s(:db)) %>
+      <%= f.date_field :fecha2 %>
     </div>
 
 
@@ -62,6 +62,7 @@
       <%= f.select :moneda_id, options_from_collection_for_select(@monedas,'id','description') %>
     </div>
     
+
     <div class="field">
       <%= f.label :code, "Code*", :class => "bold" %><br />
       <%= f.text_field :code, :onclick => "$(this).select();" %>
@@ -120,6 +121,7 @@
     <div class="field" id="list_items">
       <p class="bold big">suppliers:</p>
     </div>
+
     
     <%= hr() %>
       
@@ -149,7 +151,8 @@
     <%= hr() %>
   
     <div class="actions">
-      <input type="hidden" name="items" id="items" value="<% if @suppliers_lines %><%= @suppliers_lines %><% end %>" />
+      <input type="hidden" name="items" id="items" value="<% if @suppliers_lines %>
+      <%= @suppliers_lines %><% end %>" />
       <%= f.hidden_field :user_id, :id => "ac_user_id" %>
       <%= f.hidden_field :supplier_id, :id => "ac_supplier_id" %>
       <%= f.hidden_field :company_id %>
@@ -184,13 +187,6 @@
       Ingrese un termino de busqueda para encontrar una extension servicio 
     </div>
     <br />
-
-
-
-    
-      
-    
-    
     
     <strong>Precio:</strong><br />
     <input type="text" name="ac_item_price" id="ac_item_price" value="" class="tf_short" />
@@ -286,8 +282,27 @@
     });
     
     <% if @suppliers_lines %>
-    alert 'holas suppliers_lines';
+
       listItemsserviceorder();
+
     <% end %>
   });
+
+
+
+   function listItemsserviceorder() {
+    var items = $("#items").val();
+    var company_id = "1";
+    
+    $.get('/serviceorders/list_items/' + company_id, {
+      items: items
+    },
+    function(data) {
+      $("#list_items").html(data);
+      documentReady();
+    });
+  }
+
+
+
 </script>

@@ -364,8 +364,16 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
   end 
 
   def get_categoria_name(id)
-     category = ProductsCategory.find(id)
-     return category.category
+
+      if   a= ProductsCategory.where(id: id ).exists? 
+
+           category = ProductsCategory.find(id)
+
+           return category.category
+      else
+
+           return "Categoria Eliminada."
+      end 
   end 
   
   def get_empleado_name(id)
@@ -2165,7 +2173,7 @@ def get_pendientes_day_customer_detraccion(fecha1,fecha2,cliente)
       from purchase_details   
       INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
       INNER JOIN products ON purchase_details.product_id = products.id
-      WHERE purchases.date1 >= ? and purchases.date1 <= ?  and purchases.moneda_id= ?  and purchases.tipo = ? and purchases.status is null
+      WHERE purchases.date1 >= ? and purchases.date1 <= ?  and purchases.moneda_id= ?  and purchases.tipo = ?  
       GROUP BY products.products_category_id  
       ORDER BY products.products_category_id  ' , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda,tipo])
     else
@@ -2173,7 +2181,7 @@ def get_pendientes_day_customer_detraccion(fecha1,fecha2,cliente)
       from purchase_details   
       INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
       INNER JOIN servicebuys ON purchase_details.product_id = servicebuys.id
-      WHERE purchases.date1 >= ? and purchases.date1 <= ?  and purchases.moneda_id= ?  and purchases.tipo = ? and purchases.status is null
+      WHERE purchases.date1 >= ? and purchases.date1 <= ?  and purchases.moneda_id= ?  and purchases.tipo = ?
       GROUP BY servicebuys.code
       ORDER BY servicebuys.code ' , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda,tipo  ])
     
@@ -2181,6 +2189,7 @@ def get_pendientes_day_customer_detraccion(fecha1,fecha2,cliente)
     return @purchases
     
   end
+
 
 def get_purchases_day_categoria2(fecha1,fecha2,moneda,tipo)
   

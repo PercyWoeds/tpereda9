@@ -3,7 +3,8 @@ include CompaniesHelper
 
 class ProductsCategoriesController < ApplicationController
   before_filter :authenticate_user!, :checkCompanies
-  
+  before_action :set_products_category, only: [:show, :edit, :update, :destroy]
+
   def import
      ProductsCategory.import(params[:file])
       redirect_to root_url, notice: "categories importadas."
@@ -32,7 +33,7 @@ class ProductsCategoriesController < ApplicationController
   # GET /products_categories/1
   # GET /products_categories/1.xml
   def show
-    @products_category = ProductsCategory.find(params[:id])
+    
     @pagetitle = "Product categories - #{@products_category.category}"
   end
 
@@ -48,7 +49,7 @@ class ProductsCategoriesController < ApplicationController
   # GET /products_categories/1/edit
   def edit
     @pagetitle = "Edit product category"
-    @products_category = ProductsCategory.find(params[:id])
+   
     @company = Company.find(@products_category[:company_id])
     @products_category[:company_id] = @company.id
   end
@@ -74,7 +75,7 @@ class ProductsCategoriesController < ApplicationController
   # PUT /products_categories/1.xml
   def update
     @pagetitle = "Edit product category"
-    @products_category = ProductsCategory.find(params[:id])
+    
 
     respond_to do |format|
       if @products_category.update_attributes(products_category_params)
@@ -90,15 +91,34 @@ class ProductsCategoriesController < ApplicationController
   # DELETE /products_categories/1
   # DELETE /products_categories/1.xml
   def destroy
-    @products_category = ProductsCategory.find(params[:id])
-    company_id = @products_category[:company_id]
-    @products_category.destroy
 
-    respond_to do |format|
-      format.html { redirect_to("/companies/products_categories/" + company_id.to_s) }
-      format.xml  { head :ok }
+      @company= Company.find(1)
+
+      company_id = @company.id 
+      if  @products_category.destroy
+
+          respond_to do |format|
+          format.html { redirect_to("/companies/products_categories/" + company_id.to_s) }
+          format.json { head :no_content }
+        end
+        else 
+
+          respond_to do |format|
+          format.html { redirect_to("/companies/products_categories/" + company_id.to_s, notice: 'Categoria esta siendo usado, no puedes eliminar .') }
+          format.json { head :no_content }
+        end
+      end 
+  end 
+
+private
+
+ # Use callbacks to share common setup or constraints between actions.
+    def set_products_category
+     @products_category = ProductsCategory.find(params[:id])
     end
-  end
+
+
+
   def products_category_params
     params.require(:products_category).permit(:company_id,:category,:code)
   

@@ -105,7 +105,8 @@
     <%= hr() %>
   
     <div class="actions">
-      <input type="hidden" name="items" id="items" value="<% if @products_lines %><%= @products_lines %><% end %>" />
+      <input type="hidden" name="items" id="items" value="<% if @products_lines %>
+      <%= @products_lines %><% end %>" />
       <%= f.hidden_field :user_id, :id => "ac_user_id" %>
       <%= f.hidden_field :customer_id, :id => "ac_customer_id" %>
       <%= f.hidden_field :company_id %>

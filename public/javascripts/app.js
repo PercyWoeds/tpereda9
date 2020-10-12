@@ -785,7 +785,7 @@
   }
 
   // List items in a kit
-  function listItemsserviceorder() {
+  function listItemsserviceorderx() {
     var items = $("#items").val();
     var company_id = $("#serviceorder_company_id").val();
     
