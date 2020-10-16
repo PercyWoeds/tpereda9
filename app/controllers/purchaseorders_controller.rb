@@ -1088,6 +1088,7 @@ pdf.move_down 5
      end
 
 
+
   # Export purchaseorder to PDF
   def rpt_purchaseorder2_all
     $lcxCliente = "0"
