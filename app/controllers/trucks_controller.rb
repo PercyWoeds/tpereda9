@@ -113,20 +113,19 @@ class TrucksController < ApplicationController
   # DELETE /trucks/1.json
   def destroy
 
-       if  @truck.destroy
+      if  @truck.destroy
 
-
-        respond_to do |format|
+          respond_to do |format|
           format.html { redirect_to trucks_url, notice: 'Truck was successfully destroyed.' }
           format.json { head :no_content }
         end
         else 
 
-      respond_to do |format|
+          respond_to do |format|
           format.html { redirect_to trucks_url, notice: 'Vehiculo esta siendo usado, no puedes eliminar .' }
           format.json { head :no_content }
         end
-       end 
+      end 
 
   end
 

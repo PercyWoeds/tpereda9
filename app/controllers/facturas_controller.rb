@@ -1620,6 +1620,7 @@ def reportes_st_3
     end 
 
 
+
    case params[:print] 
       when "To PDF" then 
         if @moneda_id == "2"
@@ -4216,7 +4217,6 @@ def client_data_headers
       invoice_summary << ["Nombre y Apellidos :",""]
       invoice_summary
   end
-
 
 
  ## imprimir pdf facturas
