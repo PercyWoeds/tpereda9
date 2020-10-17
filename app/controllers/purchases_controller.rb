@@ -3563,6 +3563,7 @@ def newfactura2
       @ac_user = curr_seller.username
     end    
     
+
       respond_to do |format|
 
         if @purchase.save     
@@ -3700,6 +3701,7 @@ def newfactura2
       
       
     end   
+    
     @purchase.process_documentos
     
     @purchase.destroy

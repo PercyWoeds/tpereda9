@@ -7,7 +7,6 @@ require "open-uri"
 
 class FacturasController < ApplicationController
 
-   
     $: << Dir.pwd  + '/lib'
     before_action :authenticate_user!
     
@@ -5696,7 +5695,6 @@ end
 
  end 
 #### FACTURAS POR PROVEEDOR ###################
-
 
 
   def rpt01
