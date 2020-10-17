@@ -796,7 +796,7 @@ def get_tax3(items, supplier_id)
         if(self.purchaseorder_id == nil)
           return ""
         else
-          return self.get_orden_servicio(self.purchaseorder.id) 
+          return self.get_orden_servicio(self.purchaseorder_id) 
       
         end
 
