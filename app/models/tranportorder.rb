@@ -29,28 +29,80 @@ self.per_page = 20
                      "FEC.INICIO",
                      "FEC.FIN",                     
                      "ESTADO"]
-TABLE_HEADERS2 = ["ITEM",
-                     "NRO.OST.",
-                     "FEC.
-                     GUIA",
-                     "DIAS",
-                     "GUIA",
-                     "FEC.
-                     INICIO",
-                     "FEC.
-                     TRASLADO",
-                     "FEC.
-                     RECEP.",
-                     "C L I E N T E",
-                     "PLACA",
-                     "CONDUCTOR",                     
+
+TABLE_HEADERS2 = ["NRO.COTIZACION",
+                     "FECHA 
+                     ST.",
+                     "NRO.
+                     ST",
+                     "CLIENTE",
+                     "CARGA",
+                     "TIPO DE CARGA ",
+                     "ORIGEN",
+                  
                      "DESTINO",
-                     "TOTAL",
-                     "DIA",
-                     "FACTURA",
-                     "FEC.FACTURA
-                     /FEC.PAGO",
-                     "DIAS CREDITO"
+                     "USD ",
+                     "S/.FLETE",
+                     "FECHA 
+                     DE OST",
+                     "NRO.
+                     OST",
+                     "CONDUCTOR 
+                     INICIAL 
+                     SERVICIO",
+                     "CONDUCTOR
+                     FINAL DEL 
+                     SERVICIO ",
+                     "PLACA 
+                  	   TRACTO ",
+                     "PLACA
+                     CAMION",
+                     "PLACA 
+                     SEMIREMOLQUE",                     
+                     "TIPO 
+                       UNIDAD ",
+                     "PESO",
+                     "ESCOLTA",
+                     "NRO.ORDEN
+                     SERVICIO",
+                     "PLACA",
+                     "CONDUCTOR",
+                     "G.TRANSPORTISTA
+                     PEREDA ",
+                     "G.REMITENTE
+                     CLIENTE ",
+                     "FECHA LLEGADA
+                     LIMA ",
+                     "FECHA 
+                     RECEPCION 
+                     DE GUIAS",
+                     "COMENTARIOS",
+                     "CONFORMIDAD 
+                     DEL SERVIIO",
+                     "ESTATUS 
+                     SERVICIO",
+                     "FECHA DE 
+                     CULMINO",
+                     "OBSERVACIONES",
+                     "NRO.OST
+                       CLIENTE",
+                       "NRO.FACTURA",
+                       "FECHA 
+                       FACTURA",
+                       "TOTAL 
+                       MONTO $",
+                       "TOTAL 
+                       MONTO USD",
+                       "FECHA
+                       RECEPCION 
+                       CLIENTE ",
+                       "FECHA 
+                       COBRANZA
+                       CLIENTE ",
+                       "FECHA 
+                       PAGO",
+                       "IMPORTE"
+                   
                      ]
 
 
@@ -110,6 +162,12 @@ TABLE_HEADERS2 = ["ITEM",
 	  def get_placa(id)
 	  	placa = Truck.find(id)
 	  	return placa.placa
+
+	  end 	
+
+	  def get_propio(id)
+	  	placa = Truck.find(id)
+	  	return placa.propio
 
 	  end 	
 
@@ -232,6 +290,19 @@ TABLE_HEADERS2 = ["ITEM",
 	  
     end
 
+    def get_facturas(id)
+
+    	@dato = Manifestship.where(tranportorder_id: id )
+    	if @dato 
+    			@facturas = Factura.where(manifest_id: @dato.last.manifest_id )
+    		else
+    			@facturas = []
+    	end 
+    	
+
+    	return @facturas 
+    	
+    end
 
 
   def add_guias(items)

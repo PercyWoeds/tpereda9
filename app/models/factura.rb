@@ -61,7 +61,29 @@ class Factura < ActiveRecord::Base
       where("code iLIKE ?", "%#{search}%") 
         
   end
+def get_pagos 
 
+    @pagos = CustomerPaymentDetail.where(factura_id: self.id )
+    return @pagos 
+
+
+end 
+
+def get_fecha_pago(id)
+
+
+    
+
+       @dato = CustomerPayment.where(id: id )
+
+     if @dato 
+         return @dato.fecha.strftime("%d/%m/%Y")
+     else 
+         return  ""
+     end 
+
+
+end 
 
 def get_tipocambio(dia)
     @tipocambio = Tipocambio.find_by(dia: dia )

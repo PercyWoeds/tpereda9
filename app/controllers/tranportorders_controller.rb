@@ -345,55 +345,60 @@ class TranportordersController < ApplicationController
     send_file("app/pdf_output/ost1.pdf", :type => 'application/pdf', :disposition => 'inline')
   end
   
-  
-  
-  
 
 ##-----------------------------------------------------------------------------------
 ## REPORTE 2
 ##-----------------------------------------------------------------------------------
   def build_pdf_header2(pdf)
+
       pdf.font "Helvetica" , :size => 8
-     $lcCli  =  @company.name 
-     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+      image_path = "#{Dir.pwd}/public/images/tpereda2.png"
 
-     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
-     $lcHora  = Time.now.to_s
+       table_content = ([ [{:image => image_path, :rowspan => 3 },
+       {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD OCUPACIONAL",
+        :rowspan => 2},"CODIGO ","TP-RD-F-003 "], 
+          ["VERSION: ","3"], 
+          ["REPORTE DE SEGUIMIENTO DE OST ","Pagina: ","1 de 1 "] 
+         
+          ])
+      
+       pdf.table(table_content  ,{
+           :position => :center,
+           :width => pdf.bounds.width
+         })do
+           columns([1,2]).font_style = :bold
+            columns([0]).width = 118.55
+            columns([1]).width = 800
+            columns([1]).align = :center
+            
+            columns([2]).width = 100
+          
+            columns([3]).width = 100
+      
+         end
+        
+         table_content2 = ([["Fecha : ",Date.today.strftime("%d/%m/%Y")]])
 
-    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
-      rows = []
-      (1..max_rows).each do |row|
-        rows_index = row - 1
-        rows[rows_index] = []
-        rows[rows_index] += (client_data_headers.length >= row ? client_data_headers[rows_index] : ['',''])
-        rows[rows_index] += (invoice_headers.length >= row ? invoice_headers[rows_index] : ['',''])
-      end
+         pdf.table(table_content2,{:position=>:right }) do
 
-      if rows.present?
+            columns([0, 1]).font_style = :bold
+            columns([0, 1]).width = 100
+            
+         end 
 
-        pdf.table(rows, {
-          :position => :center,
-          :cell_style => {:border_width => 0},
-          :width => pdf.bounds.width
-        }) do
-          columns([0, 2]).font_style = :bold
-
-        end
-
-        pdf.move_down 10
-
-      end
-
-
-      pdf.move_down 25
+     
+         pdf.text "(1) del "+@fecha1+" al "+@fecha2
+         
+         pdf.move_down 2
+      
       pdf 
-  end   
+  end  
 
-  def build_pdf_body2(pdf)
+    def build_pdf_body2(pdf)
     
     pdf.text "Ordenes de Transporte Emitidas : Desde "+@fecha1.to_s + " Hasta: "+@fecha2.to_s, :size => 11 
     pdf.text ""
-   pdf.font_families.update("Open Sans" => {
+    pdf.font_families.update("Open Sans" => {
           :normal => "app/assets/fonts/OpenSans-Regular.ttf",
           :italic => "app/assets/fonts/OpenSans-Italic.ttf",
         })
@@ -416,152 +421,114 @@ class TranportordersController < ApplicationController
        for  orden in @orden_transporte
   
             row = []
-            row << nroitem.to_s
-            row << orden.code
             row << ""
             row << ""
-            
             row << ""
             row << ""
-            @ordenfecha1 = orden.fecha1.strftime("%d/%m/%Y")  
-            @ordenfecha2 = orden.fecha2.strftime("%d/%m/%Y")
             row << ""
-            row << "" 
             row << ""
+            row << ""
+            row << ""
+            row << ""
+            row << ""
+            row << orden.fecha1.strftime("%d/%m/%Y")  
+            row << orden.code 
+            row << orden.employee.full_name
+            row << orden.get_empleado(orden.employee2_id)
+            row << orden.truck.placa 
             row << orden.get_placa(orden.truck2_id) 
-            
-            if orden.employee != nil
-              row << orden.employee.full_name
-            else
-              row << "*Empleado no registrado ** " 
-            end
+            row << orden.get_placa(orden.truck3_id) 
+            row << orden.get_tipounidad(orden.truck_id)
+            row << orden.get_ejes2(orden.id )
             
             @destino =  orden.get_punto(orden.ubication_id) +"-" + orden.get_punto(orden.ubication2_id)
-            row << @destino
-            row << ""
-            row << ""
-            row << ""
-            row << ""
-            row << ""
+            row << orden.get_propio(orden.truck3_id) 
+            row << orden.code 
+            row << orden.get_placa(orden.truck3_id) 
+            row << orden.get_empleado(orden.employee4_id)
+            (1..18).each { |i| row << "" }
             
             table_content << row
 
             nroitem=nroitem + 1
-            
             @guias = orden.get_delivery(orden.id)
-            
-            for guias in @guias 
-            
-            
-              row = []
-              row << ""
-              row << ""
               
-              row << guias.fecha1.strftime("%d/%m/%Y")  
-              b = business_days_between(orden.fecha1,guias.fecha1)
-              
-              row << b
-              
-              row << guias.code
-              row << guias.fecha1.strftime("%d/%m/%Y")  
-              row << @ordenfecha1
-              row << @ordenfecha2
-              @facturas= guias.get_factura_delivery(guias.id)
-              if @facturas != ""
-                
-                row << guias.get_delivery_customer(guias.id)
-              else
-                
+              for guias in @guias 
+                row = []
+                (1..23).each { |i| row << "" }
+                row <<  guias.code
+                row <<  guias.description
+                row << guias.fecha1.strftime("%d/%m/%Y")  
+                row << @ordenfecha2
+                row << guias.comments 
                 row << ""
-              end 
-              row << ""
-              row << ""
-              
-              if @facturas !=""
-                row << ""
-                row << @facturas.total 
-                a=business_days_between(orden.fecha1,@facturas.fecha)
-                row << a
-                row << @facturas.code
-                row << @facturas.fecha.strftime("%d/%m/%Y")    
-                row << @facturas.get_dias_formapago.to_s 
-              else
-                row << ""
-                row << ""
-                row << ""
-                row << ""
-                row << ""
-                row << ""
-              end 
-              
-              
-              
-              table_content << row
-            
-              if @facturas != ""    
-              @cancela = guias.get_factura_cancela(@facturas.id)
-              
-              for cancela in  @cancela
-              @fecha_cobranza = cancela.get_fecha_cobranza(cancela.customer_payment_id)
-              
-              if @fecha_cobranza
-              row = []
-              row << ""
-              row << ""
-              row << ""
-              row << ""
-              row << ""
-              row << ""
-              row << ""
-              row << ""
-              
-              row << ""
-              row << ""
-              row << ""
-              row << ""
-              row << ""
-              row << ""
-              
-              row << cancela.total 
-              row << "CANCELA"
-              
-              row << @fecha_cobranza.fecha1.strftime("%d/%m/%Y")  
-              
-              table_content << row
-              
-              end 
-              end 
-                
-              
-              
-              end 
-              
-              
-            
-            
-            end 
-            
-            
-            
-            
-        end
+                row << "status"
+                row << orden.fecha1.strftime("%d/%m/%Y")  
+                row << orden.fecha2.strftime("%d/%m/%Y")  
+                row << "obs "
+                (1..8).each { |i| row << "" }
+                table_content << row
 
-      result = pdf.table table_content, {:position => :center,
-                                        :header => true,
-                                        :width => pdf.bounds.width
-                                        } do 
-                                          columns([0]).align=:center
-                                          columns([1]).align=:center 
-                                          columns([2]).align=:left
-                                          columns([3]).align=:left
-                                          columns([4]).align=:left  
-                                          columns([5]).align=:left 
-                                          columns([6]).align=:left
-                                          columns([7]).align=:left 
-                                          columns([8]).align=:left
-                                        end                                          
-      pdf.move_down 10      
-      pdf
+
+              end 
+
+              @facturas = orden.get_facturas(orden.id)
+
+              for facturas in @facturas 
+                  row = []
+                 (1..33).each { |i| row << "" }
+                  row << " ost cliente "
+                  row << facturas.code
+                  row << facturas.fecha.strftime("%d/%m/%Y") 
+                  if facturas.moneda_id == "2"
+                    row << facturas.total 
+                  else
+                    row << facturas.total
+                  end 
+                  row << facturas.fecha.strftime("%d/%m/%Y") 
+                  row << ""
+                  row << ""
+                  row << ""
+                  
+                  table_content << row
+
+                  @cobranzas = facturas.get_pagos
+                  for pagos in @cobranzas
+                      row = []
+                      (1..37).each { |i| row << "" }
+                      row <<  facturas.fecha2.strftime("%d/%m/%Y")
+                      row <<  pagos.get_fecha_pago(pagos.customer_payment_id)
+                      row <<  pagos.total.round(2)
+                       table_content << row
+                    
+                  end 
+                 
+          
+
+               end 
+              
+              
+            
+          end
+            
+    
+
+              result = pdf.table table_content, {:position => :center,
+                                                :header => true,
+                                                :width => pdf.bounds.width
+                                                } do 
+                                                  columns([0]).align=:center
+                                                  columns([1]).align=:center 
+                                                  columns([2]).align=:left
+                                                  columns([3]).align=:left
+                                                  columns([4]).align=:left  
+                                                  columns([5]).align=:left 
+                                                  columns([6]).align=:left
+                                                  columns([7]).align=:left 
+                                                  columns([8]).align=:left
+                                                end                                          
+              pdf.move_down 10      
+              pdf
 
     end
 
@@ -581,7 +548,6 @@ class TranportordersController < ApplicationController
   end
 
 
-
   # Export serviceorder to PDF
   def rpt_ost2_pdf
 
@@ -593,7 +559,7 @@ class TranportordersController < ApplicationController
     @tipo = 1      
     @orden_transporte = @company.get_ordertransporte_day(@fecha1,@fecha2,@tipo)  
       
-    Prawn::Document.generate "app/pdf_output/ost2.pdf" , :page_layout => :landscape do |pdf|      
+    Prawn::Document.generate "app/pdf_output/ost2.pdf" , :page_layout => :landscape , :page_size=> "A3" do |pdf|      
         pdf.font "Helvetica"
         pdf = build_pdf_header2(pdf)
         pdf = build_pdf_body2(pdf)
