@@ -207,7 +207,12 @@ class InvoiceGenerator < DocumentGenerator
         lcGuia = ""
         lcComments = ""
         lcDes1 = ""
-        lcDes = " " << @invoice.description
+        if @invoice.os_customer.nil?
+          lcDes = " " << @invoice.description
+        else
+
+          lcDes = " " << @invoice.description << @invoice.os_customer 
+        end 
         
         lcRazon = @invoice.customer.name 
         

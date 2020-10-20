@@ -2218,7 +2218,12 @@ def reportes05
         lcCantidad= productItem.quantity
         lcDescrip = ""
         lcDescrip << productItem.name + "\n"
-        lcDescrip << lcDes
+        if f.os_customer.nil?
+          lcDescrip << lcDes
+        else 
+
+        lcDescrip << lcDes << f.os_customer 
+      end 
         a = ""        
         lcDes1 = ""
 
@@ -2231,6 +2236,7 @@ def reportes05
               else  
                   a << " " << guia.description                   
               end   
+
               existe1 = f.get_guias_remision(guia.id)
                 if existe1.size > 0 
                   a<<  "\n GR:" 
