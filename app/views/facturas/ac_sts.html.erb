@@ -1,0 +1,5 @@
+<% if @sts %>
+  <% for product in @sts %>
+    <%= product.code %>|BRK|<%= product.id %>|BRK|%>
+  <% end %>
+<% end %>

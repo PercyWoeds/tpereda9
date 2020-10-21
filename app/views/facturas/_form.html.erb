@@ -34,12 +34,6 @@
 
 
       <div class="field">
-      <%= f.label :manifest_id , "Solicitud de Transporte (S.T.
-      ):", :class => "bold" %><br />
-      <%= f.select :manifest_id, options_from_collection_for_select(@manifests,'id','code') %>
-      </div>
-
-      <div class="field">
       <%= f.label :fecha , "Fecha *", :class => "bold" %><br />
 
       <% if @current_user.level = "admin" %>
@@ -110,6 +104,10 @@
       <p class="bold big">Guias:</p>
     </div>
 
+
+    <div class="field" id="list_items3">
+      <p class="bold big">Guias:</p>
+    </div>
     <%= hr() %>
   
     <div class="field">
@@ -163,6 +161,8 @@
     <div class="actions">
       <input type="hidden" name="items" id="items" value="<% if @products_lines %><%= @products_lines %><% end %>" />
       <input type="hidden" name="items2" id="items2" value="<% if @guias_lines %><%= @guias_lines %><% end %>" />
+
+      <input type="hidden" name="items3" id="items3" value="<% if @ost_lines %><%= @ost_lines %><% end %>" />
       
       <%= f.hidden_field :user_id, :id => "ac_user_id" %>
       <%= f.hidden_field :customer_id, :id => "ac_customer_id" %>
@@ -241,7 +241,37 @@
         </div>
     <br />    
     
+    <div class="small">
+        <strong>Seleccionar cliente:</strong>
+        <span id="selected_sts"><% if @ac_customer %><%= @ac_customer %><% else %><!-- i --><% end %></span>
+      </div>
+     </div>
+
     <input type="submit" value="Agregar Guias" />
+
+  </form>
+
+
+
+  <%= hr() %>
+  
+
+  <h4>
+    Agregar Solicitud de Transporte 
+  </h4>
+  
+  <form method="get" action="/facturas" onsubmit="addItemToSolicitudT(); return false;">
+
+    <input type="hidden" name="ac_item_st" id="ac_item_st" value="" />
+    <strong>Guia :</strong><br />
+
+    <input type="text" name="ac_item4" id="ac_item4" value="" />
+        <div class="small">
+          Ingrese un termino de busqueda para encontrar un producto.
+        </div>
+    <br />    
+    
+    <input type="submit" value="Agregar Solicitud" />
 
   </form>
 
@@ -291,6 +321,21 @@
       $("#ac_item_guia").val(data[2]);    
       $("#selected_guia").html(data[0]);      
     });
+
+
+
+     $("#ac_item4").autocomplete("/facturas/ac_sts/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_item4").result(function(event, data, formatted) {
+      $("#ac_item_st").val(data[2]);    
+      $("#selected_st").html(data[0]);      
+    });
+
+
     
     $("#ac_item").autocomplete("/purchases/ac_products/<%= @company.id %>", {
       matchSubset: 1,
@@ -327,7 +372,55 @@
       listItemsdelivery2();
     <% end %>
 
+
+      <% if @sts_lines %>
+    alert 'holas guias_lines';
+      listItemsdeliveryST();
+    <% end %>
+
   });
+
+
+
+// Add an item to a product kit
+  function addItemToSolicitudT() {
+
+    var item = $("#ac_item4").val();
+    
+   if(item != "") {
+      var company_id = $("#factura_company_id").val();
+      var item_id = $("#ac_item_st").val();        
+      var items_arr = $("#items3").val().split(",");
+      var item_line = item_id + "|BRK|" ;
+        
+        $("#items3").val($("#items3").val() + "," + item_line );
+
+        listItemsdeliveryST();
+        
+        $("#ac_item_st").val("");
+        $("#ac_item4").val("");      
+      
+    } else {
+      alert("Please find a guia  to add first.");
+    }
+  }
+
+
+  function listItemsdeliveryST() {
+    var items3 = $("#items3").val();
+
+    var company_id = $("#factura_company_id").val();
+    
+    $.get('/facturas/list_items3/' + company_id, {
+      items3: items3
+    },
+    function(data) {
+      $("#list_items3").html(data);
+      documentReady();
+    });
+  }
+
+
 
   
 </script>

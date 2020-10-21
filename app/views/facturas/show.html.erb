@@ -195,6 +195,8 @@
   </tbody>
 
 </table>
+
+
 <table>
   <thead>
     <tr>
@@ -221,6 +223,34 @@
   </tbody>
 
 </table>
+
+<table>
+  <thead>
+    <tr>
+      <th>
+        Solicitud Tranporte 
+       </th> 
+    </tr>
+  </thead>
+
+    <tbody>
+    <% for productItem in @invoice.get_solicitud_transporte() %>
+      <tr>
+        <td class="bordered_bottom bordered_right">
+          <%= link_to productItem.code   %>
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right">
+        &nbsp;
+      </td>
+    </tr>
+    
+  </tbody>
+
+</table>
+
 <br />
 
 <%= hr() %>

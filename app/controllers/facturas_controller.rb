@@ -1954,7 +1954,7 @@ def reportes05
   def list_items3
     
     @company = Company.find(1)
-    items = params[:items2]
+    items = params[:items3]
     items = items.split(",")
     items_arr = []
     @guias = []
@@ -1973,7 +1973,6 @@ def reportes05
 
         @guias.push(product)
 
-
       end
       
       i += 1
@@ -1983,6 +1982,7 @@ def reportes05
   end 
 
 
+  
 
   def ac_facturas  
 
@@ -1995,6 +1995,11 @@ def reportes05
   def ac_guias
     procesado = '1'
     @guias = Delivery.where(["company_id = ? AND (code LIKE ?)   ", params[:company_id], "%" + params[:q] + "%"])   
+    render :layout => false
+  end
+  def ac_sts
+    procesado = '1'
+    @sts = Manifest.where(["company_id = ? AND (code LIKE ?)   ", params[:company_id], "%" + params[:q] + "%"])   
     render :layout => false
   end
 
@@ -2520,6 +2525,8 @@ def newfactura2
     items = params[:items].split(",")
 
     items2 = params[:items2].split(",")
+    items3 = params[:items3].split(",")
+
 
     @invoice = Factura.new(factura_params)
     
@@ -2581,6 +2588,8 @@ def newfactura2
         # Create products for kit
         @invoice.add_products(items)
         @invoice.add_guias(items2)
+        @invoice.add_sts(items3)
+        
         
         @invoice.correlativo
                # Check if we gotta process the invoice

@@ -2,7 +2,7 @@ class Factura < ActiveRecord::Base
   self.per_page = 20
 
 
-  validates_presence_of :company_id, :customer_id, :code, :user_id,:fecha ,:manifest_id 
+  validates_presence_of :company_id, :customer_id, :code, :user_id,:fecha
 
   validates_uniqueness_of :code
 
@@ -313,6 +313,29 @@ def get_tipocambio(dia)
       end
     end
   end
+
+  def add_sts(items)
+    for item in items
+      if(item and item != "")
+        parts = item.split("|BRK|")
+        
+        id = parts[0]
+        
+        begin
+          @guia = Manifest.find(id.to_i)
+
+          @guia.processed='4'
+          @guia.save  
+          
+          new_invoice_guia = Stsship.new(:factura_id => self.id, :manifest_id => @guia.id)          
+          new_invoice_guia.save
+           
+        rescue
+          
+        end
+      end
+    end
+  end
   
 
  def delete_guias()
@@ -377,6 +400,13 @@ def get_tipocambio(dia)
      from deliveryships INNER JOIN deliveries ON deliveryships.delivery_id =  deliveries.id where deliveries.remision=1 and  deliveryships.factura_id = ?', self.id ])
     return @itemguias1
   end
+ def get_solicitud_transporte
+    @itemguias1 = Stsship.find_by_sql(['Select manifests.code 
+     from stsships INNER JOIN manifests ON stsships.manifest_id =  manifests.id where stsships.factura_id = ?', self.id ])
+    return @itemguias1
+  end
+
+
   def get_guias2(id)    
     @itemguias = Deliveryship.find_by_sql(['Select deliveries.id,deliveries.code,deliveries.description,deliveries.processed
      from deliveryships INNER JOIN deliveries ON deliveryships.delivery_id =  deliveries.id where deliveries.remision=2 and  deliveryships.factura_id = ?', id ])

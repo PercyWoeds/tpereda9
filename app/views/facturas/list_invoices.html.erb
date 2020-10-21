@@ -19,14 +19,6 @@
     <a href="/companies/facturas/<%= @company.id %>" > Limpiar</a>
   </form>
 </div>
-
-<br />
-<%= render "facturas/list" %>
-
-<br />
-
-<%= will_paginate @invoices %>  
-
 <div class="button">
   
   <%= link_to "Factura", "/facturas/new/#{@company.id}" %>  
@@ -39,7 +31,16 @@
 
 
 </div>
-</div>
+
+<br />
+<%= render "facturas/list" %>
+
+<br />
+
+<%= will_paginate @invoices %>  
+
+
+
 
 <%= render 'layouts/autocomplete' %>
 

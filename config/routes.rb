@@ -786,7 +786,9 @@ end
   match 'facturas/ac_user/:company_id' => 'facturas#ac_user', via: [:get, :post]
   match 'facturas/ac_customers/:company_id' => 'facturas#ac_customers', via: [:get, :post]
   match 'facturas/ac_guias/:company_id' => 'facturas#ac_guias', via: [:get, :post]
+  match 'facturas/ac_sts/:company_id'    => 'facturas#ac_sts', via: [:get, :post]
   match 'facturas/ac_st/:company_id'    => 'facturas#ac_st', via: [:get, :post] 
+
 
   match 'facturas/new/:company_id' => 'facturas#new', via: [:get, :post]
   match 'facturas/new2/:company_id' => 'facturas#new2', via: [:get, :post]
