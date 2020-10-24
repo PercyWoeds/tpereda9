@@ -4311,7 +4311,7 @@ def client_data_headers
            lcMail         = @invoice.customer.email
        
 
-        if @invoice.moneda_id == "1"
+        if @invoice.moneda_id == 1 
             case_49 = InvoiceGenerator.new(7,49,5,@serie_factura,@invoice.id).with_different_currency2(true)
         else
             case_3 = InvoiceGenerator.new(1, 3, 1,@serie_factura,@invoice.id).with_igv3(true)
