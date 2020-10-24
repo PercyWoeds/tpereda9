@@ -4330,7 +4330,7 @@ def client_data_headers
         $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName        
         $lcFile2    = File.expand_path('../../../',__FILE__)+ $lcFilezip
     
-        ActionCorreo.bienvenido_email(@invoice,$lcFileName1,$lcFileName,$lcFile2,$lcFilezip,lcMail).deliver_now
+        ActionCorreo.bienvenido_email(@invoice,$lcFileName1,$lcFileName,$lcFile2,$lcFilezip,@invoice.customer.email).deliver_now
          $lcGuiaRemision =""
 
 
