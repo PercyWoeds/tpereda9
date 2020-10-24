@@ -4328,14 +4328,10 @@ def client_data_headers
     
         
         $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName        
-        $lcFile2 =File.expand_path('../../../', __FILE__)+ "/"+$lcFilezip
-
+        $lcFile2    = File.expand_path('../../../',__FILE__)+ $lcFilezip
     
-        ActionCorreo.bienvenido_email(@invoice).deliver
-    
-        @mailing = Mailing.new(:td =>$lcTd, :serie => 'FF01', :numero => $lcDocument_serial_id, :ruc=>$lcRuc, :flag1 => '1')
-        @mailing.save
-        $lcGuiaRemision =""
+        ActionCorreo.bienvenido_email(@invoice,$lcFileName1,$lcFileName,$lcFile2,$lcFilezip,lcMail).deliver_now
+         $lcGuiaRemision =""
 
 
     end
