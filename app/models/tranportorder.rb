@@ -50,7 +50,7 @@ TABLE_HEADERS2 = ["NRO.COTIZACION",
                      "CONDUCTOR 
                      INICIAL 
                      SERVICIO",
-                     "CONDUCTOR
+                     "CONDUCTOR 
                      FINAL DEL 
                      SERVICIO ",
                      "PLACA 
@@ -292,15 +292,19 @@ TABLE_HEADERS2 = ["NRO.COTIZACION",
 
     def get_facturas(id)
 
-    	@dato = Manifestship.where(tranportorder_id: id )
-    	if @dato 
-    			@facturas = Factura.where(manifest_id: @dato.last.manifest_id )
-    		else
-    			@facturas = []
-    	end 
-    	
 
-    	return @facturas 
+      if Manifestship.exists?(tranportorder_id: id )
+
+    	   @dato = Manifestship.where(tranportorder_id: id )
+         if @dato 
+          @facturas = Factura.where(manifest_id: @dato.last.manifest_id )
+         end 
+         return @facturas 
+      else
+        return nil 
+    	end 
+
+    	
     	
     end
 

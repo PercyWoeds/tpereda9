@@ -396,14 +396,14 @@ class TranportordersController < ApplicationController
 
     def build_pdf_body2(pdf)
     
-    pdf.text "Ordenes de Transporte Emitidas : Desde "+@fecha1.to_s + " Hasta: "+@fecha2.to_s, :size => 11 
+    pdf.text "Ordenes de Transporte Emitidas : Desde "+@fecha1.to_s + " Hasta: "+@fecha2.to_s, :size => 8
     pdf.text ""
     pdf.font_families.update("Open Sans" => {
           :normal => "app/assets/fonts/OpenSans-Regular.ttf",
           :italic => "app/assets/fonts/OpenSans-Italic.ttf",
         })
 
-        pdf.font "Open Sans",:size =>6
+        pdf.font "Open Sans",:size =>5
 
       headers = []
       table_content = []
@@ -474,6 +474,10 @@ class TranportordersController < ApplicationController
 
               @facturas = orden.get_facturas(orden.id)
 
+              if @facturas.nil?
+              else
+
+
               for facturas in @facturas 
                   row = []
                  (1..33).each { |i| row << "" }
@@ -503,8 +507,8 @@ class TranportordersController < ApplicationController
                     
                   end 
                  
-          
 
+                end 
                end 
               
               
@@ -526,6 +530,34 @@ class TranportordersController < ApplicationController
                                                   columns([6]).align=:left
                                                   columns([7]).align=:left 
                                                   columns([8]).align=:left
+                                                  columns([9]).align=:left
+                                                  columns([10]).align=:left
+                                                  columns([11]).align=:left
+                                                  columns([12]).align=:left  
+                                                  columns([13]).align=:left 
+                                                  columns([14]).align=:left
+                                                  columns([15]).align=:left 
+                                                  columns([16]).align=:left
+                                                  columns([17]).align=:left
+                                                  columns([18]).align=:left
+                                                  columns([19]).align=:left
+                                                  columns([20]).align=:left  
+                                                  columns([21]).align=:left 
+                                                  columns([22]).align=:left
+                                                  columns([23]).align=:left 
+                                                  columns([24]).align=:left
+                                                  columns([24]).width = 60
+                                                  
+                                                  columns([25]).align=:left
+                                                  columns([26]).align=:left  
+                                                  columns([27]).align=:left 
+                                                  columns([28]).align=:left
+                                                  columns([29]).align=:left 
+                                                  columns([30]).align=:left
+                                                  columns([31]).align=:left
+
+
+
                                                 end                                          
               pdf.move_down 10      
               pdf

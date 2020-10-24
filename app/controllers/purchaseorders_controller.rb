@@ -246,6 +246,7 @@ def build_pdf_header(pdf)
 
       table_content << headers
 
+
       nroitem=1
 
        for  product in @purchaseorder.get_products()
