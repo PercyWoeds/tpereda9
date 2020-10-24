@@ -2499,7 +2499,7 @@ def get_purchases_pendientes_day_supplier(fecha1,fecha2,value,moneda)
     if products.unidad == nil
     return products.name + " - "   
     else     
-    return products.name + " - "+products.unidad 
+    return products.name + " - "+products.unidad.descrip  
     end 
   end
   

@@ -16,6 +16,8 @@ class Product < ActiveRecord::Base
   belongs_to :stock 
   belongs_to :product  
 
+  belongs_to :unidad 
+
   has_many :movement_details
   has_many :items
   has_many :kits_products

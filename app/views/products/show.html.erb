@@ -18,7 +18,12 @@
 
 <div>
   <b>Unidad :</b>
-  <%= @product.unidad  %>
+  <% if @product.unidad.nil? %>
+    Sin unidad asignada 
+  <% else %>
+  <%= @product.unidad.descrip  %>
+  <% end %>
+
 </div>
 <br />
 
