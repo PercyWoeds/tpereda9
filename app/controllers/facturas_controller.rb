@@ -4260,6 +4260,8 @@ def client_data_headers
         @serie_factura =  "FF"+@invoice.code[1..2].rjust(2,"0")
         puts "serie factura : "
         puts @serie_factura
+
+
        if @invoice.document_id == 13
            if @invoice.moneda_id == 1
                 case_96 = ReceiptGenerator.new(12, 96, 1,@serie_factura,@invoice.id).with_different_currency2(true)
@@ -4301,34 +4303,40 @@ def client_data_headers
 
         SUNAT.environment = :test 
 
-        files_to_clean = Dir.glob("*.xml") + Dir.glob("./app/pdf_output/*.pdf") + Dir.glob("*.zip")
+       files_to_clean = Dir.glob("*.xml") + Dir.glob("./app/pdf_output/*.pdf") + Dir.glob("*.zip")
         files_to_clean.each do |file|
           File.delete(file)
         end 
+         @serie_factura =  "FF"+@invoice.code[1..2].rjust(2,"0")
 
-          @serie_factura =  "FF"+@invoice.code[2..3]
-
-           lcMail         = @invoice.customer.email
-       
-
-        if @invoice.moneda_id == 1 
-            case_49 = InvoiceGenerator.new(7,49,5,@serie_factura,@invoice.id).with_different_currency2(true)
-        else
-            case_3 = InvoiceGenerator.new(1, 3, 1,@serie_factura,@invoice.id).with_igv3(true)
+       if @invoice.document_id == 13
+           if @invoice.moneda_id == 1
+                case_96 = ReceiptGenerator.new(12, 96, 1,@serie_factura,@invoice.id).with_different_currency3(true)
+            else        
+                case_52 = ReceiptGenerator.new(8, 52, 1,@serie_factura,@invoice.id).with_igv3(true)
+            end 
+       else        
+           if @invoice.moneda_id == 1  
+                $lcFileName=""
+                case_49 = InvoiceGenerator.new(1,3,1,@serie_factura,@invoice.id).with_different_currency3(true)
+              #  puts $lcFileName 
+           else
+               
+                case_3  = InvoiceGenerator.new(1,3,1,@serie_factura,@invoice.id).with_igv3(true)
+           end        
         end 
     
+        
         $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName        
-        $lcFile2    = File.expand_path('../../../',__FILE__)+ $lcFilezip
-        
-        puts "file zip"        
-        puts $lcFilezip
-        puts "file 2"        
-        
-        puts $lcFile2
+        $lcFile2 =File.expand_path('../../../', __FILE__)+ "/"+$lcFilezip
 
-        ActionCorreo.bienvenido_email(@invoice,$lcFileName1,$lcFileName,$lcFile2,$lcFilezip,lcMail).deliver_now
-         $lcGuiaRemision =""
-             
+    
+        ActionCorreo.bienvenido_email(@invoice).deliver
+    
+        @mailing = Mailing.new(:td =>$lcTd, :serie => 'FF01', :numero => $lcDocument_serial_id, :ruc=>$lcRuc, :flag1 => '1')
+        @mailing.save
+        $lcGuiaRemision =""
+
 
     end
 
