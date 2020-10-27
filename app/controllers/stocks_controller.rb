@@ -247,12 +247,20 @@ class StocksController < ApplicationController
        for  stock in @movements 
           puts stock.product.id 
           puts stock.product.name
+         
+          puts stock.product.ubicacion 
 
               row = []
               row << nroitem.to_s
               row << stock.product.code
               row << stock.product.name
-              row << stock.product.unidad
+
+               if stock.product.unidad.nil? 
+                row << ""
+               else 
+                 row << stock.product.unidad.descrip 
+               end 
+
               row << stock.product.ubicacion 
 
                saldo = stock.stock_inicial  + stock.ingreso - stock.salida       

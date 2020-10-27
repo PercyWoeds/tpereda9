@@ -61,6 +61,8 @@ class Factura < ActiveRecord::Base
       where("code iLIKE ?", "%#{search}%") 
         
   end
+
+  
 def get_pagos 
 
     @pagos = CustomerPaymentDetail.where(factura_id: self.id )

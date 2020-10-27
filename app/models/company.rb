@@ -980,7 +980,7 @@ def get_customer_payments_value_otros_customer(fecha1,fecha2,value,cliente,moned
  def get_customer_payments_cliente(fecha1,fecha2,cliente)
 
 @facturas =CustomerPayment.find_by_sql(['Select customer_payments.id,customer_payment_details.total,
-customer_payments.code  as code_liq,facturas.code,facturas.customer_id,facturas.fecha,
+customer_payments.code  as code_liq,facturas.code,facturas.customer_id,facturas.fecha,facturas.payment_id,
 facturas.moneda_id,customer_payments.bank_acount_id,
 customer_payment_details.factory,
 customer_payments.fecha1

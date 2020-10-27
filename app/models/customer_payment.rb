@@ -151,6 +151,17 @@ end
     end 
    
  end 
+
+  def get_formapago(id)
+   
+     factura = Factura.find(id)
+    if factura  
+     return factura.payment.descrip 
+    else
+      return "."
+    end 
+   
+ end 
  
  def get_cliente_customer_payment(id)
 

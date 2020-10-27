@@ -309,6 +309,32 @@ TABLE_HEADERS2 = ["NRO.COTIZACION",
     end
 
 
+     
+def get_pagos 
+
+    @pagos = CustomerPaymentDetail.where(factura_id: self.id )
+    return @pagos 
+
+
+end 
+
+def get_fecha_pago(id)
+
+
+    
+
+       @dato = CustomerPayment.where(id: id )
+
+     if @dato 
+         return @dato.fecha.strftime("%d/%m/%Y")
+     else 
+         return  ""
+     end 
+
+
+end 
+
+
   def add_guias(items)
     for item in items
       if(item and item != "")

@@ -497,11 +497,14 @@ class TranportordersController < ApplicationController
                   table_content << row
 
                   @cobranzas = facturas.get_pagos
+                  
                   for pagos in @cobranzas
                       row = []
                       (1..37).each { |i| row << "" }
                       row <<  facturas.fecha2.strftime("%d/%m/%Y")
+
                       row <<  pagos.get_fecha_pago(pagos.customer_payment_id)
+
                       row <<  pagos.total.round(2)
                        table_content << row
                     

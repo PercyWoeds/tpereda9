@@ -158,7 +158,14 @@ class HardWorkerWorker
               row << nroitem.to_s
               row << stock.product.code
               row << stock.product.name
-              row << stock.product.unidad
+
+             if stock.product.unidad.nil? 
+                row << ""
+               else 
+                 row << stock.product.unidad.descrip 
+               end 
+
+
               row << stock.product.ubicacion 
 
                saldo = stock.stock_inicial  + stock.ingreso - stock.salida       

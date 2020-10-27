@@ -862,7 +862,7 @@ class CustomerPaymentsController < ApplicationController
 ## reporte completo de cobranza 
 ##-------------------------------------------------------------------------------------
   
-  def build_pdf_header_rpt1(pdf)
+  def build_pdf_header_rpt7a(pdf)
      pdf.font "Helvetica" , :size => 6    
      $lcCli  =  @company.name 
      $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
@@ -898,7 +898,7 @@ class CustomerPaymentsController < ApplicationController
   end   
 
 
-  def build_pdf_body_rpt1(pdf)
+  def build_pdf_body_rpt7a(pdf)
     
     pdf.text "Listado de Cobranza Emitidas : Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
     pdf.text ""
@@ -926,7 +926,7 @@ class CustomerPaymentsController < ApplicationController
             $lcCode   = productItem.code_liq
           end 
 
-         $lcFecha1 = productItem.fecha1.strftime("%d/%m/%Y")                  
+                $lcFecha1 = productItem.fecha1.strftime("%d/%m/%Y")                  
          
       
                 row = []
@@ -941,12 +941,14 @@ class CustomerPaymentsController < ApplicationController
                 row << $lcFecha1 
                 row << "FT"
                 row << productItem.code 
-                row << productItem.fecha1.strftime("%d/%m/%Y")  
+                row << productItem.fecha.strftime("%d/%m/%Y")  
                 
                 @cliente_obs = productItem.get_cliente(productItem.customer_id)
                 
                 row << @cliente_obs.ruc
                 row << @cliente_obs.name
+                row << productItem.get_formapago(productItem.factura_id)
+
                 if $lcxCliente == "0" 
                   row << " "  
                 else
@@ -1022,7 +1024,7 @@ class CustomerPaymentsController < ApplicationController
     end
 
 
-    def build_pdf_footer_rpt1(pdf)
+    def build_pdf_footer_rpt7a(pdf)
 
         subtotals = []
         taxes = []
@@ -1284,9 +1286,9 @@ class CustomerPaymentsController < ApplicationController
       
     Prawn::Document.generate("app/pdf_output/rpt_customerpayment.pdf") do |pdf|
         pdf.font "Helvetica"        
-        pdf = build_pdf_header_rpt1(pdf)
-        pdf = build_pdf_body_rpt1(pdf)
-        build_pdf_footer_rpt1(pdf)
+        pdf = build_pdf_header_rpt7a(pdf)
+        pdf = build_pdf_body_rpt7a(pdf)
+        build_pdf_footer_rpt7a(pdf)
         $lcFileName =  "app/pdf_output/rpt_customerpayment.pdf"      
         
     end     
@@ -2418,7 +2420,7 @@ class CustomerPaymentsController < ApplicationController
 
   def build_pdf_body_rpt10(pdf)
     
-    pdf.text "Listado de Cobranza Emitidas : Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
+    pdf.text "Listado de Cobranza Emitidas : Desde"+@fecha1.to_s+ " Hasta : "+@fecha2.to_s , :size => 11 
     pdf.text ""
     pdf.font "Helvetica" , :size => 6
 
@@ -2437,7 +2439,7 @@ class CustomerPaymentsController < ApplicationController
       nroitem = 1
 
        for  detalle in @customerpayment_rpt
-       puts detalle.total 
+              puts detalle.total 
                $lcFecha1 = detalle.fecha1.strftime("%d/%m/%Y")                  
                 row = []
                 row << nroitem.to_s
@@ -2464,6 +2466,10 @@ class CustomerPaymentsController < ApplicationController
                 tajuste  = 0
                 ttotal = 0
                 diferencia = 0
+
+
+
+
                 for productItem in detalle.get_payments()
                   row = []
                   row << ""
