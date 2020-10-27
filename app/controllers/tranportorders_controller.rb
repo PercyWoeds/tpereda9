@@ -319,7 +319,6 @@ class TranportordersController < ApplicationController
   end
 
 
-
   # Export serviceorder to PDF
   def rpt_ost1_pdf
 
@@ -419,18 +418,20 @@ class TranportordersController < ApplicationController
       nroitem=1
 
        for  orden in @orden_transporte
+
+            st  = orden.get_manifest 
   
             row = []
             row << ""
-            row << ""
-            row << ""
-            row << ""
-            row << ""
-            row << ""
-            row << ""
-            row << ""
-            row << ""
-            row << ""
+            row << st.fecha1.strftime("%d/%m/%Y") 
+            row << st.code
+            row << st.customer.name 
+            row << st.especificacion
+            row << st.tipocargue.name
+            row << st.direccion1
+            row << st.direccion2 
+            row << st.importe 
+            row << st.importe2 
             row << orden.fecha1.strftime("%d/%m/%Y")  
             row << orden.code 
             row << orden.employee.full_name

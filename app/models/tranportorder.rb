@@ -217,7 +217,22 @@ TABLE_HEADERS2 = ["NRO.COTIZACION",
 	  	@tipounidad = Truck.find(id)
 	  	return @tipounidad.ejes 
 	  end 
+   def get_manifest
 
+        a = Manifestship.exists?(tranportorder_id: self.id)
+        if a 
+
+          b = Manifestship.where(tranportorder_id: self.id)
+
+          c =  Manifest.find_by(id: b.first.manifest_id )
+
+          return c
+
+        else
+          return ""
+        end 
+
+   end 
 
 
 
