@@ -55,7 +55,8 @@ self.per_page = 20
                      "DOC.",
                      "FEC.DOC.",
                      "RUC",
-                     "CLIENTE",                    
+                     "CLIENTE",    
+                     "F.PAGO.",                
                      "FACTORY  ",
                      "IMPORTE S/. ",                     
                      "IMPORTE USD "]                      

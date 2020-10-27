@@ -910,6 +910,7 @@ class CustomerPaymentsController < ApplicationController
       total_general_dolar = 0
       total_factory = 0
 
+
       CustomerPayment::TABLE_HEADERS3.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
@@ -937,6 +938,7 @@ class CustomerPaymentsController < ApplicationController
                   $lcCode   = productItem.code_liq
                 end 
                 
+
                 row << $lcCode
                 row << $lcFecha1 
                 row << "FT"
@@ -994,6 +996,7 @@ class CustomerPaymentsController < ApplicationController
       row << ""
       row << ""
       row << ""
+       row << ""
       row << "TOTALES => "
       row << sprintf("%.2f",@total_factory.to_s)
       row << sprintf("%.2f",@total_soles.to_s)                    
@@ -1065,6 +1068,7 @@ class CustomerPaymentsController < ApplicationController
             row << banco.number 
 
               a = BankAcount.find(banco.id)
+
 
               if a.moneda_id == 1
                 row << " "
@@ -1151,12 +1155,20 @@ class CustomerPaymentsController < ApplicationController
             row =[]
             row << nroitem.to_s
             row << banco.number 
+
+
+            if banco.moneda_id == 1
+              row <<""
+
             row << sprintf("%.2f",total1.to_s)
-            if banco.moneda_id == 2
               @totalgeneral_soles = @totalgeneral_soles + total1 
             else
               @totalgeneral_dolar = @totalgeneral_dolar + total1 
+
+            row << sprintf("%.2f",total1.to_s)
+            row << ""
             end 
+
             nroitem = nroitem + 1
             table_content2 << row
           else
@@ -1216,11 +1228,11 @@ class CustomerPaymentsController < ApplicationController
           row << nroitem.to_s
           row << "TOTAL => "
 
-          row << sprintf("%.2f",@totalgeneral_soles.to_s)
+         
           
           row << sprintf("%.2f",@totalgeneral_dolar.to_s)
         
-            
+             row << sprintf("%.2f",@totalgeneral_soles.to_s)
 
       end 
 
