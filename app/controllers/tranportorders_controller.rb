@@ -510,8 +510,8 @@ class TranportordersController < ApplicationController
               row << st.tipocargue.name
               row << st.direccion1
               row << st.direccion2 
-              row << st.importe 
-              row << st.importe2 
+              row << st.importe2
+              row << st.importe
             end 
             row << orden.fecha1.strftime("%d/%m/%Y")  
             row << orden.code 
@@ -540,27 +540,30 @@ class TranportordersController < ApplicationController
                 lcComments = ""
                 lcOstFecha1 = ""
                 lcOstFecha2 = ""
-
+                lcpendiente ="PENDIENTE"
 
                for guias in @guias 
 
                   lcGuiaCode  << guias.code + "\n"
                   lcGuiaDes   << guias.description + "\n"
                   lcFecha1    << guias.fecha1.to_s[0..10] + "\n"
-                  lcFecha2    << guias.fecha2.to_s[0..10] + "\n"
+                  lcFecha2    << guias.created_at.to_s[0..10] + "\n"
                   lcComments  << guias.comments + "\n"
                   lcOstFecha1 << orden.fecha1.to_s[0..10] + "\n"
                   lcOstFecha2 << orden.fecha2.to_s[0..10] + "\n"
+
+                  lcpendiente = "LIQUIDADO"
              end 
                 
                 row << lcGuiaCode 
                 row << lcGuiaDes
                 row << lcFecha1 
                 row << lcFecha2 
-                row << lcComments
-                row << ""
-                row << "PENDIENTE"
-                row << lcOstFecha1
+                row << orden.get_processed
+                
+
+                row << lcpendiente
+              
                 row << lcOstFecha2
                 row << "  "
                
@@ -585,7 +588,7 @@ class TranportordersController < ApplicationController
                   lcFactCode << facturas.code + "\n"
                   lcFactFecha  << facturas.fecha.to_s[0..10] + "\n"
 
-                  if facturas.moneda_id == "2"
+                  if facturas.moneda_id == 2
                     lcfacturasTotal_s << facturas.total.to_s + "\n"
                   else
                     lcfacturasTotal_d << facturas.total.to_s + "\n"
@@ -612,8 +615,8 @@ class TranportordersController < ApplicationController
                   row << ""
                   row << ""
                   row << ""
-
-
+                  row << ""
+ row << ""
                   
                  table_content << row 
                  
@@ -636,9 +639,13 @@ class TranportordersController < ApplicationController
                                                   columns([4]).align=:left  
                                                   columns([5]).align=:left 
                                                   columns([6]).align=:left
+                                                   columns([6]).width = 30
                                                   columns([7]).align=:left 
+                                                    columns([7]).width = 30
                                                   columns([8]).align=:left
+                                                    columns([8]).width = 30
                                                   columns([9]).align=:left
+                                                    columns([9]).width = 30
                                                   columns([10]).align=:left
                                                   columns([11]).align=:left
                                                   columns([12]).align=:left  

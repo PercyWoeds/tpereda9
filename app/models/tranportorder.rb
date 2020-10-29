@@ -74,23 +74,22 @@ TABLE_HEADERS2 = ["NRO.COTIZACION",
                      "FECHA LLEGADA
                      LIMA ",
                      "FECHA 
-                     RECEPCION 
-                     DE GUIAS",
+                     LIQUI",
                      "COMENTARIOS",
-                     "CONFORMIDAD 
-                     DEL SERVIIO",
+                    
                      "ESTATUS 
                      SERVICIO",
-                     "FECHA DE 
-                     CULMINO",
-                     "OBSERVACIONES",
+                     
+                     "CULMINO SERVICIO",
                      "NRO.OST
                        CLIENTE",
                        "NRO.FACTURA",
                        "FECHA 
                        FACTURA",
                        "TOTAL 
-                       MONTO $",
+                       MONTO S/.",
+                       "PENDIENTE X
+                       FACTURAR",
                        "TOTAL 
                        MONTO USD",
                        "FECHA
@@ -101,7 +100,9 @@ TABLE_HEADERS2 = ["NRO.COTIZACION",
                        CLIENTE ",
                        "FECHA 
                        PAGO",
-                       "IMPORTE"
+                       "IMPORTE",
+                       "PENDIENTE 
+                       X COBRAR "
                    
                      ]
 
