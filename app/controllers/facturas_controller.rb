@@ -915,9 +915,12 @@ def rpt_ingresos2_all_pdf
     @company=Company.find(1)          
            
     @fecha1 = params[:fecha1]    
-    @fecha2 = params[:fecha2]    
+    @fecha2 = params[:fecha2]  
+    @fecha6 = params[:fecha6]     
+
+
     
-    @facturas_rpt = @company.get_ingresos_day4(@fecha1,@fecha2)
+    @facturas_rpt = @company.get_ingresos_day4(@fecha1,@fecha2,@fecha6)
     
 
     
@@ -925,7 +928,7 @@ def rpt_ingresos2_all_pdf
     
       case params[:print]
         when "To PDF" then 
-            redirect_to :action => "rpt_ingresos3_all_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2],:id=>"1"
+            redirect_to :action => "rpt_ingresos3_all_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2],:id=>"1",:fecha6 => params[:fecha6]
 
         when "Excel" then render xlsx: 'rpt_compras3_xls'
     
@@ -939,15 +942,17 @@ def rpt_ingresos2_all_pdf
 
 
 
-
-
   def rpt_ingresos3_all_pdf
   
     @company=Company.find(params[:id])          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
+
+    @fecha6 = params[:fecha6]    
+    puts "fecha 6 "
+    puts @fecha6
     
-    @facturas_rpt = @company.get_ingresos_day4(@fecha1,@fecha2)
+    @facturas_rpt = @company.get_ingresos_day4(@fecha1,@fecha2,@fecha6)
     
    
       Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
@@ -1002,8 +1007,11 @@ def build_pdf_header_rpt48(pdf)
 
 
   def build_pdf_body_rpt48(pdf)
-    
-    pdf.text "Listado de Ingresos desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 11
+    if  @fecha6 == "1"
+        pdf.text "*Fecha Emision -Listado de Ingresos desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 11
+    else
+        pdf.text "*Fecha Recepcion  -Listado de Ingresos desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 11
+    end 
    
     pdf.font "Helvetica" , :size => 6
 
@@ -1046,7 +1054,10 @@ def build_pdf_header_rpt48(pdf)
             row << product.fecha.strftime("%d/%m/%Y")
             row << product.codigo
             row << product.nameproducto
-            row << product.unidad 
+           
+            row << product.get_unidad(product.product_id)
+          
+
             row << sprintf("%.2f",product.quantity.to_s)
            
             if product.price != nil 

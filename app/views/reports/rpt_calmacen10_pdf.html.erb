@@ -21,16 +21,25 @@ totals = []
 
  <%= form_tag(rpt_compras3_pdf_facturas_path, :method => "get") do %>
    
+  
+   <select id="fecha6" name="fecha6" >
+      <option value="" selected disabled hidden>Selecionar Fecha </option>
+      <option value="1">Fec.Emision</option>
+      <option value="2">Fec.Recepcion</option>
+   </select>
+
+
+
   <div class="field">
-      <input type="date" name="fecha1" value="2019-11-01" style = "width: 150px" >
+      <input type="date" name="fecha1" value="2020-10-01" style = "width: 150px" >
     </div>
 
-
-	<div class="field">
-		<input type="date" name="fecha2" value="2019-11-30" style = "width: 150px" >
+  <div class="field">
+    <input type="date" name="fecha2" value="2020-10-31" style = "width: 150px" >
   </div>
 
-  
+
+
  <%= submit_tag  "To PDF", :name => "print"  %>
   <%= submit_tag "Excel", :name => "print" %>
 <% end %>

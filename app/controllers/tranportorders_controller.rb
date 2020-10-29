@@ -81,6 +81,14 @@ class TranportordersController < ApplicationController
  @cargas = @company.get_cargas()
   end
 
+  def sendcancelar 
+    
+    @company  = Company.find(1)
+    @tranportorder = Tranportorder.find(params[:id])
+
+  end
+
+
   # GET /tranportorders/new
   def new
     @tranportorder = Tranportorder.new
@@ -187,6 +195,8 @@ class TranportordersController < ApplicationController
 
     
    respond_to do |format|
+
+
    a = Delivery.find_by(:tranportorder_id=> params[:id])
    if a 
         format.html { redirect_to tranportorders_url, notice: 'Orden tiene guias asignadas no se puede eliminar' }
@@ -200,6 +210,60 @@ class TranportordersController < ApplicationController
    end 
   end
 
+
+
+  def do_anular
+    @invoice = Tranportorder.find(params[:id])
+
+
+   a = Delivery.find_by(:tranportorder_id=> params[:id])
+
+
+   if a 
+    flash[:notice] = "OST tiene guias asignadas, no se puede anular. Elimine primero las guias "
+    
+    else
+
+    @invoice[:processed] = "2"
+    @invoice.anular 
+    
+    flash[:notice] = "Documento a sido anulado."
+
+    end 
+    redirect_to @invoice 
+
+
+
+  end
+  
+  def do_anular2
+
+
+    @company =  Company.find(1)
+    @tranportorder = Tranportorder.find(params[:id])
+    @observa  = params[:motivo]
+  
+   a = Delivery.find_by(:tranportorder_id=> params[:id])
+
+
+    if a 
+    flash[:notice] = "OST tiene guias asignadas, no se puede anular. Elimine primero las guias "
+    
+    else
+
+
+        @tranportorder[:processed] = "2"
+         @tranportorder.update_attributes(:comments => @observa,:processed =>"2") 
+         @tranportorder.anular
+
+        
+        flash[:notice] = "OST anulado ."
+
+    end 
+
+    redirect_to @tranportorder 
+
+  end
 
 
 
@@ -422,16 +486,33 @@ class TranportordersController < ApplicationController
             st  = orden.get_manifest 
   
             row = []
-            row << ""
-            row << st.fecha1.strftime("%d/%m/%Y") 
-            row << st.code
-            row << st.customer.name 
-            row << st.especificacion
-            row << st.tipocargue.name
-            row << st.direccion1
-            row << st.direccion2 
-            row << st.importe 
-            row << st.importe2 
+
+            if st.nil?
+              row << ""
+              row << ""
+              row << ""
+              row << ""
+              row << ""
+
+              row << ""
+              row << ""
+              row << ""
+              row << ""
+              row << ""
+
+            else 
+
+              row << ""
+              row << st.fecha1.strftime("%d/%m/%Y")
+              row << st.code
+              row << st.customer.name 
+              row << st.especificacion
+              row << st.tipocargue.name
+              row << st.direccion1
+              row << st.direccion2 
+              row << st.importe 
+              row << st.importe2 
+            end 
             row << orden.fecha1.strftime("%d/%m/%Y")  
             row << orden.code 
             row << orden.employee.full_name
@@ -460,7 +541,7 @@ class TranportordersController < ApplicationController
                 row <<  guias.code
                 row <<  guias.description
                 row << guias.fecha1.strftime("%d/%m/%Y")  
-                row << @ordenfecha2
+                row << orden.fecha2
                 row << guias.comments 
                 row << ""
                 row << "status"
@@ -475,22 +556,30 @@ class TranportordersController < ApplicationController
 
               @facturas = orden.get_facturas(orden.id)
 
-              if @facturas.nil?
-              else
-
+             
+              if @facturas 
 
               for facturas in @facturas 
+                puts "facturass ...................................."
+                puts facturas.code
+                puts facturas.fecha.strftime("%d/%m/%Y") 
+                puts facturas.total 
+
                   row = []
-                 (1..33).each { |i| row << "" }
+                 (1..32).each { |i| row << "" }
                   row << " ost cliente "
                   row << facturas.code
+
                   row << facturas.fecha.strftime("%d/%m/%Y") 
+
                   if facturas.moneda_id == "2"
                     row << facturas.total 
                   else
                     row << facturas.total
                   end 
-                  row << facturas.fecha.strftime("%d/%m/%Y") 
+
+            
+
                   row << ""
                   row << ""
                   row << ""
@@ -498,23 +587,33 @@ class TranportordersController < ApplicationController
                   table_content << row
 
                   @cobranzas = facturas.get_pagos
+                
                   
                   for pagos in @cobranzas
+                      puts facturas.fecha2.strftime("%d/%m/%Y")
+
                       row = []
                       (1..37).each { |i| row << "" }
                       row <<  facturas.fecha2.strftime("%d/%m/%Y")
 
-                      row <<  pagos.get_fecha_pago(pagos.customer_payment_id)
+                      a = pagos.get_fecha_pago(pagos.customer_payment_id)
+                      puts facturas.fecha2 
+                      puts a.strftime("%d/%m/%Y")
+
+
+                      row <<  a.nil? ? "" : a.strftime("%d/%m/%Y")
 
                       row <<  pagos.total.round(2)
-                       table_content << row
+                      
+                      table_content << row
                     
                   end 
                  
 
                 end 
-               end 
-              
+               else 
+                puts "note tiene pago"
+              end 
               
             
           end
@@ -551,7 +650,6 @@ class TranportordersController < ApplicationController
                                                   columns([23]).align=:left 
                                                   columns([24]).align=:left
                                                   columns([24]).width = 60
-                                                  
                                                   columns([25]).align=:left
                                                   columns([26]).align=:left  
                                                   columns([27]).align=:left 

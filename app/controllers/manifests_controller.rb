@@ -459,7 +459,7 @@ def build_pdf_header(pdf)
     redirect_to @manifest 
   end
 
-  def do_anular
+  def do_anularx
       @manifest  = Manifest.find(params[:id])
       @manifest[:processed] = "2"
       

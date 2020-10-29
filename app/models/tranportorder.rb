@@ -229,7 +229,7 @@ TABLE_HEADERS2 = ["NRO.COTIZACION",
           return c
 
         else
-          return ""
+          return nil 
         end 
 
    end 
@@ -341,9 +341,9 @@ def get_fecha_pago(id)
        @dato = CustomerPayment.where(id: id )
 
      if @dato 
-         return @dato.fecha.strftime("%d/%m/%Y")
+         return @dato.first.fecha
      else 
-         return  ""
+         return  nil 
      end 
 
 
@@ -433,5 +433,30 @@ def get_ejes2(id)
 		puts "ejees"
 		puts ret
 end 
+
+
+
+def anular
+
+
+    if(self.processed == "2" )          
+       self.processed = "2"
+       self.date_processed = Time.now
+       self.save
+      
+       @sts =  Manifestship.where(tranportorder_id: self.id )
+
+       for sts in @sts
+
+          b =   Manifest.find(sts.manifest_id)
+          if b 
+              b.processed = "1"
+              b.save 
+          end   
+       end 
+
+      
+    end
+  end
 
 end

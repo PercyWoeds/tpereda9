@@ -1101,4 +1101,10 @@ end
        end 
   end 
 
+  def get_unidad(id)
+
+       a = Product.find(id)
+      return  a.unidad.descrip
+  end 
+
 end

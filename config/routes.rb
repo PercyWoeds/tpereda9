@@ -1087,6 +1087,8 @@ match 'purchases/do_crear/:id'   => 'purchases#do_crear', via: [:get, :post]
   
   match 'tranportorders/do_process/:id' => 'tranportorders#do_process', via: [:get, :post]
   match 'tranportorders/do_anular/:id' => 'tranportorders#do_anular', via: [:get, :post]
+   match 'tranportorders/do_anular2/:id' => 'tranportorders#do_anular2', via: [:get, :post]
+   match 'tranportorders/sendcancelar/:id' => 'tranportorders#sendcancelar', via: [:get, :post]
   match 'tranportorders/pdf/:id' => 'tranportorders#pdf', via: [:get, :post]
   match 'tranportorders/do_email/:id' => 'tranportorders#do_email', via: [:get, :post]
  

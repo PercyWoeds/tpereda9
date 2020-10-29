@@ -58,7 +58,6 @@ gem 'rails_autolink', '~> 1.1', '>= 1.1.6'
 gem 'numbers_and_words', '~> 0.11.6'
 
 
-
 gem 'pg', '~> 0.18.4'
 gem 'responders', '~> 2.0'
 
