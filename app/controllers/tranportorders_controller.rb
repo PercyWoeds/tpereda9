@@ -466,7 +466,7 @@ class TranportordersController < ApplicationController
           :italic => "app/assets/fonts/OpenSans-Italic.ttf",
         })
 
-        pdf.font "Open Sans",:size =>5
+        pdf.font "Open Sans",:size => 4
 
       headers = []
       table_content = []
@@ -528,91 +528,96 @@ class TranportordersController < ApplicationController
             row << orden.code 
             row << orden.get_placa(orden.truck3_id) 
             row << orden.get_empleado(orden.employee4_id)
-            (1..18).each { |i| row << "" }
-            
-            table_content << row
+           
 
             nroitem=nroitem + 1
             @guias = orden.get_delivery(orden.id)
-              
-              for guias in @guias 
-                row = []
-                (1..23).each { |i| row << "" }
-                row <<  guias.code
-                row <<  guias.description
-                row << guias.fecha1.strftime("%d/%m/%Y")  
-                row << orden.fecha2
-                row << guias.comments 
+
+                lcGuiaCode = ""
+                lcGuiaDes  = ""
+                lcFecha1 = ""
+                lcFecha2 = ""
+                lcComments = ""
+                lcOstFecha1 = ""
+                lcOstFecha2 = ""
+
+
+               for guias in @guias 
+
+                  lcGuiaCode  << guias.code + "\n"
+                  lcGuiaDes   << guias.description + "\n"
+                  lcFecha1    << guias.fecha1.to_s[0..10] + "\n"
+                  lcFecha2    << guias.fecha2.to_s[0..10] + "\n"
+                  lcComments  << guias.comments + "\n"
+                  lcOstFecha1 << orden.fecha1.to_s[0..10] + "\n"
+                  lcOstFecha2 << orden.fecha2.to_s[0..10] + "\n"
+             end 
+                
+                row << lcGuiaCode 
+                row << lcGuiaDes
+                row << lcFecha1 
+                row << lcFecha2 
+                row << lcComments
                 row << ""
-                row << "status"
-                row << orden.fecha1.strftime("%d/%m/%Y")  
-                row << orden.fecha2.strftime("%d/%m/%Y")  
-                row << "obs "
-                (1..8).each { |i| row << "" }
-                table_content << row
-
-
-              end 
+                row << "PENDIENTE"
+                row << lcOstFecha1
+                row << lcOstFecha2
+                row << "  "
+               
+            
 
               @facturas = orden.get_facturas(orden.id)
 
              
               if @facturas 
+                lcFactCode = ""
+                lcFactFecha = ""
+                lcfacturasTotal_s = ""
+                lcfacturasTotal_d = ""
 
-              for facturas in @facturas 
-                puts "facturass ...................................."
-                puts facturas.code
-                puts facturas.fecha.strftime("%d/%m/%Y") 
-                puts facturas.total 
 
-                  row = []
-                 (1..32).each { |i| row << "" }
-                  row << " ost cliente "
-                  row << facturas.code
+                for facturas in @facturas 
+                  puts "facturass ...................................."
+                  puts facturas.code
+                  puts facturas.fecha.strftime("%d/%m/%Y") 
+                  puts facturas.total 
 
-                  row << facturas.fecha.strftime("%d/%m/%Y") 
+                  lcFactCode << facturas.code + "\n"
+                  lcFactFecha  << facturas.fecha.to_s[0..10] + "\n"
 
                   if facturas.moneda_id == "2"
-                    row << facturas.total 
+                    lcfacturasTotal_s << facturas.total.to_s + "\n"
                   else
-                    row << facturas.total
+                    lcfacturasTotal_d << facturas.total.to_s + "\n"
                   end 
+                    @cobranzas = facturas.get_pagos
 
-            
-
-                  row << ""
-                  row << ""
-                  row << ""
-                  
-                  table_content << row
-
-                  @cobranzas = facturas.get_pagos
-                
-                  
-                  for pagos in @cobranzas
-                      puts facturas.fecha2.strftime("%d/%m/%Y")
-
-                      row = []
-                      (1..37).each { |i| row << "" }
-                      row <<  facturas.fecha2.strftime("%d/%m/%Y")
-
-                      a = pagos.get_fecha_pago(pagos.customer_payment_id)
-                      puts facturas.fecha2 
-                      puts a.strftime("%d/%m/%Y")
-
-
-                      row <<  a.nil? ? "" : a.strftime("%d/%m/%Y")
-
-                      row <<  pagos.total.round(2)
-                      
-                      table_content << row
-                    
-                  end 
-                 
 
                 end 
-               else 
-                puts "note tiene pago"
+                 
+                
+                  row <<  lcFactCode
+                  row << lcFactFecha
+
+                  if facturas.moneda_id == 2
+                    row << lcfacturasTotal_s 
+                    row << ""
+
+                  else
+                     row << ""
+                    row << lcfacturasTotal_d
+                  end 
+
+                  row << ""
+                  row << ""
+                  row << ""
+                  row << ""
+
+
+                  
+                 table_content << row 
+                 
+
               end 
               
             
@@ -947,8 +952,8 @@ def build_pdf_header_ost(pdf)
          a= Manifestship.where(tranportorder_id: @ost.id ).first 
 
            @manifest = Manifest.find(a.manifest_id) 
-           @dir1 = @manifest.direccion1
-           @dir2 = @manifest.direccion2
+           @dir1 = @manifest.direccion1.upcase 
+           @dir2 = @manifest.direccion2.upcase 
 
       end 
     
