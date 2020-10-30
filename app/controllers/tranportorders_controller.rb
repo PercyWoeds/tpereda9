@@ -487,6 +487,8 @@ class TranportordersController < ApplicationController
   
             row = []
 
+            @importe_st = 0
+
             if st.nil?
               row << ""
               row << ""
@@ -512,6 +514,7 @@ class TranportordersController < ApplicationController
               row << st.direccion2 
               row << st.importe2
               row << st.importe
+              @importe_st = st.importe
             end 
             row << orden.fecha1.strftime("%d/%m/%Y")  
             row << orden.code 
@@ -577,6 +580,9 @@ class TranportordersController < ApplicationController
                 lcFactFecha = ""
                 lcfacturasTotal_s = ""
                 lcfacturasTotal_d = ""
+                lcFacturasImporte = 0
+                lcFacturasImporte2 = 0
+
 
                 if @facturas 
                 for facturas in @facturas 
@@ -590,8 +596,10 @@ class TranportordersController < ApplicationController
 
                   if facturas.moneda_id == 2
                     lcfacturasTotal_s << facturas.total.round(2).to_s + "\n"
+                    lcFacturasImporte  = facturas.total.round(2)
                   else
                     lcfacturasTotal_d << facturas.total.round(2).to_s + "\n"
+                     lcFacturasImporte2  = facturas.total.round(2)
                   end 
                     @cobranzas = facturas.get_pagos
 
@@ -599,6 +607,7 @@ class TranportordersController < ApplicationController
 
                 end 
               end 
+                  lcPendienteFacturar =  @importe_st  - lcFacturasImporte
 
                    row <<  lcFactCode
                     row << lcFactFecha
@@ -609,14 +618,16 @@ class TranportordersController < ApplicationController
                     row << lcfacturasTotal_d 
 
 
-                    row << lcfacturasTotal_s 
+                    row << lcPendienteFacturar
                            
+                    lcPendienteCobrar =  lcFacturasImporte 
 
                     row << ""
                     row << ""
                                       
                     row << ""
                     row << ""
+                    row << lcPendienteCobrar 
 
             
                  

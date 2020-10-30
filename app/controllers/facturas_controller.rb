@@ -4683,6 +4683,7 @@ def reporte_asistencia3
                
               row = []          
               row << nroitem.to_s 
+              row << product.supplier.ruc 
               row << product.supplier.name 
               row << product.document.descripshort
               row << product.documento 
