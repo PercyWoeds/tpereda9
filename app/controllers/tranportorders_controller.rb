@@ -466,12 +466,12 @@ class TranportordersController < ApplicationController
           :italic => "app/assets/fonts/OpenSans-Italic.ttf",
         })
 
-        pdf.font "Open Sans",:size => 4
+        pdf.font "Open Sans",:size => 6
 
       headers = []
       table_content = []
 
-      Tranportorder::TABLE_HEADERS2.each do |header|
+      Tranportorder::TABLE_HEADERS2.each do |header|605
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
@@ -595,11 +595,7 @@ class TranportordersController < ApplicationController
                   end 
                     @cobranzas = facturas.get_pagos
 
-
-                end 
-                 
-                
-                  row <<  lcFactCode
+                   row <<  lcFactCode
                   row << lcFactFecha
 
                   if facturas.moneda_id == 2
@@ -610,13 +606,17 @@ class TranportordersController < ApplicationController
                      row << ""
                     row << lcfacturasTotal_d
                   end 
+                end 
+                 
+                
+                  
 
                   row << ""
                   row << ""
                   row << ""
                   row << ""
                   row << ""
- row << ""
+                  row << ""
                   
                  table_content << row 
                  
