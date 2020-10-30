@@ -88,10 +88,10 @@ TABLE_HEADERS2 = ["NRO.COTIZACION",
                        FACTURA",
                        "TOTAL 
                        MONTO S/.",
-                       "PENDIENTE X
-                       FACTURAR",
                        "TOTAL 
                        MONTO USD",
+                       "PENDIENTE X
+                       FACTURAR",
                        "FECHA
                        RECEPCION 
                        CLIENTE ",

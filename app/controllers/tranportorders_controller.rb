@@ -466,7 +466,7 @@ class TranportordersController < ApplicationController
           :italic => "app/assets/fonts/OpenSans-Italic.ttf",
         })
 
-        pdf.font "Open Sans",:size => 6
+        pdf.font "Open Sans",:size => 4
 
       headers = []
       table_content = []
@@ -617,6 +617,14 @@ class TranportordersController < ApplicationController
                   row << ""
                   row << ""
                   row << ""
+
+
+                  row << ""
+                  row << ""
+                  row << ""
+                  row << ""
+
+
                   
                  table_content << row 
                  
