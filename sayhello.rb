@@ -1,4 +1,0 @@
-
-
-    
-      SayHelloJob.perform_later

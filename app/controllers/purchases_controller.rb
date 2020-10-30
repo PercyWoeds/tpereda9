@@ -2700,18 +2700,7 @@ result = pdf.table table_content3, {:position => :center,
     @company = Company.find(1)
     @purchaseorder = Purchaseorder.find(params[:id])  
 
-    $lcPurchaseOrderId = @purchaseorder.id
-    $lcProveedorId  = @purchaseorder.supplier_id
-    $lcProveedorName =@purchaseorder.supplier.name 
-    $lcFechaEmision = @purchaseorder.fecha1
-    $lcFormaPagoId  = @purchaseorder.payment_id
-    $lcFormaPago    = @purchaseorder.payment.descrip
-    $lcFormaPagoDias =@purchaseorder.payment.day
-    $lcMonedaId   = @purchaseorder.moneda_id
-    $lcMoneda  = @purchaseorder.moneda.description
-    $lcLocationId = @purchaseorder.location_id
-    $lcDivisionId = @purchaseorder.division_id
-    $lcTipoFacturaCompra = "0"
+  
   
 
     @detalleitems =  @company.get_orden_detalle(@purchaseorder.id)
@@ -2735,20 +2724,21 @@ def newfactura2
     @company = Company.find(1)
     @purchaseorder = Serviceorder.find(params[:id])      
 
-    $lcPurchaseOrderId = @purchaseorder.id
-    $lcProveedorId  = @purchaseorder.supplier_id
-    $lcProveedorName =@purchaseorder.supplier.name 
-    $lcFechaEmision = @purchaseorder.fecha1
-    $lcFormaPagoId  = @purchaseorder.payment_id
-    $lcFormaPago    = @purchaseorder.payment.descrip
-    $lcFormaPagoDias =@purchaseorder.payment.day
-    $lcMonedaId   = @purchaseorder.moneda_id
-    $lcMoneda  = @purchaseorder.moneda.description
-    $lcLocationId = @purchaseorder.location_id
-    $lcDivisionId = @purchaseorder.division_id
+    # $lcPurchaseOrderId = @purchaseorder.id
+    # $lcProveedorId  = @purchaseorder.supplier_id
+    # $lcProveedorName =@purchaseorder.supplier.name 
+    # $lcFechaEmision = @purchaseorder.fecha1
+    # $lcFormaPagoId  = @purchaseorder.payment_id
+    # $lcFormaPago    = @purchaseorder.payment.descrip
+    # $lcFormaPagoDias =@purchaseorder.payment.day
+    # $lcMonedaId   = @purchaseorder.moneda_id
+    # $lcMoneda  = @purchaseorder.moneda.description
+    # $lcLocationId = @purchaseorder.location_id
+    # $lcDivisionId = @purchaseorder.division_id
     
 
-    $lcTipoFacturaCompra= "1"
+    #$lcTipoFacturaCompra= "1"
+
     @detalleitems =  @company.get_orden_detalle2(@purchaseorder.id)
 
     @purchase = Purchase.new 
@@ -2777,9 +2767,9 @@ def newfactura2
 
     @lcFechaEmision  =  params[:date1]
     @lcFechaEntrega  =  params[:date2]
+    @suma_stock      =  params[:suma_stock]
 
-    puts "purchase order id "
-    puts @purchaseorder_id 
+   
 
      days = @purchaseorder.payment.day  
      fechas2 = @lcFechaEntrega.to_date + days.days                           
@@ -2790,7 +2780,7 @@ def newfactura2
     @purchase = Purchase.new(:company_id=>1,:supplier_id=>@purchaseorder.supplier_id,:date1=>@lcFechaEmision,:date2=>@lcFechaEntrega,:payment_id=>@purchaseorder.payment_id,
       :document_id=>@lcDocumentId,:documento=>@lcDocumento,
       :date3 => @lcFechaVmto,:moneda_id => @purchaseorder.moneda_id,:user_id =>@current_user.id,
-      :purchaseorder_id=> params[:id],:almacen_id => params[:almacen_id] )
+      :purchaseorder_id=> params[:id],:almacen_id => params[:almacen_id] ,:suma_stock=> @suma_stock)
     
     @company = Company.find(1)
     puts "sadas"
@@ -2835,23 +2825,20 @@ def newfactura2
           @purchase[:tax_amount] = 0
           
         end
-
-  
-
     
-    @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]
-    @purchase[:charge]  = 0
-    @purchase[:pago] = 0
-
-    
-    if @purchase[:payment_id]  == 1 
-      @purchase[:pago] = @purchase[:total_amount]
-      @purchase[:balance] =  0.00 
-    
-    else 
+      @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]
+      @purchase[:charge]  = 0
       @purchase[:pago] = 0
-      @purchase[:balance] =   @purchase[:total_amount]
-    end 
+
+      
+      if @purchase[:payment_id]  == 1 
+        @purchase[:pago] = @purchase[:total_amount]
+        @purchase[:balance] =  0.00 
+      
+      else 
+        @purchase[:pago] = 0
+        @purchase[:balance] =   @purchase[:total_amount]
+      end 
 
     
 
@@ -2864,6 +2851,9 @@ def newfactura2
           # Create products for kit
           @purchase.add_products_compras(@detalleitems,"0")
           # Check if we gotta process the invoice
+
+          @purchase[:suma_stock] = @suma_stock
+
           @purchase.process()
 
           
@@ -2893,6 +2883,7 @@ def newfactura2
 
     @lcFechaEmision  =  params[:date1]
     @lcFechaEntrega  =  params[:date2]
+    @suma_stock      =  params[:suma_stock]
 
     puts "purchase order id "
     puts @purchaseorder_id 
@@ -2906,7 +2897,7 @@ def newfactura2
     @purchase = Purchase.new(:company_id=>1,:supplier_id=>@purchaseorder.supplier_id,:date1=>@lcFechaEmision,:date2=>@lcFechaEntrega,:payment_id=>@purchaseorder.payment_id,
       :document_id=>@lcDocumentId,:documento=>@lcDocumento,
       :date3 => @lcFechaVmto,:moneda_id => @purchaseorder.moneda_id,:user_id =>@current_user.id,
-      :purchaseorder_id=> params[:id],:almacen_id => params[:almacen_id] )
+      :purchaseorder_id=> params[:id],:almacen_id => params[:almacen_id] ,:suma_stock=> @suma_stock)
     
     @company = Company.find(1)
     puts "sadas"
@@ -2945,35 +2936,32 @@ def newfactura2
             @purchase[:tax_amount] = @purchase.get_tax3(@detalleitems, @purchase[:supplier_id])
            end 
            x = @purchase[:tax_amount]
-                 puts "servicio"
-                  puts x.to_s 
-                  puts $lcPurchaseOrderId
-
+              
 
       rescue
           @purchase[:tax_amount] = 0        
       end
   
 
-    
-    @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]
-    @purchase[:charge]  = 0
-    @purchase[:pago] = 0
+          
+          @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]
+          @purchase[:charge]  = 0
+          @purchase[:pago] = 0
 
-    
-    if @purchase[:payment_id]  == 1 
-      @purchase[:pago] = @purchase[:total_amount]
-      @purchase[:balance] =  0.00 
-    
-    else 
-      @purchase[:pago] = 0
-      @purchase[:balance] =   @purchase[:total_amount]
-    end 
+          
+          if @purchase[:payment_id]  == 1 
+            @purchase[:pago] = @purchase[:total_amount]
+            @purchase[:balance] =  0.00 
+          
+          else 
+            @purchase[:pago] = 0
+            @purchase[:balance] =   @purchase[:total_amount]
+          end 
 
-    
+        
 
-      curr_seller = User.find(@current_user.id)
-      @ac_user = curr_seller.username
+          curr_seller = User.find(@current_user.id)
+          @ac_user = curr_seller.username
     
 
       respond_to do |format|
@@ -2981,6 +2969,9 @@ def newfactura2
           # Create products for kit
           @purchase.add_products_compras(@detalleitems,"1")
           # Check if we gotta process the invoice
+
+          @purchase[:suma_stock] = @suma_stock
+
           @purchase.process()
 
          
@@ -3423,22 +3414,22 @@ def newfactura2
 
           end 
 
-    begin
-       if @tipodocumento == 2
-        @purchase[:tax_amount] = @purchase[:tax_amount]*-1
-       else
-        @purchase[:tax_amount] = @purchase[:tax_amount]
-       end 
-    rescue
-        @purchase[:tax_amount] = 0
-    end
+      begin
+         if @tipodocumento == 2
+          @purchase[:tax_amount] = @purchase[:tax_amount]*-1
+         else
+          @purchase[:tax_amount] = @purchase[:tax_amount]
+         end 
+      rescue
+          @purchase[:tax_amount] = 0
+      end
 
-    @purchase[:location_id] = 1
-    @purchase[:division_id] = 1    
-    @purchase[:date3]  =   @purchase[:date2] + @purchase.get_dias_vmto(@purchase[:payment_id]).days  
-    
-    @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]  + @purchase[:inafecto]
-    @purchase[:charge]  = 0
+        @purchase[:location_id] = 1
+        @purchase[:division_id] = 1    
+        @purchase[:date3]  =   @purchase[:date2] + @purchase.get_dias_vmto(@purchase[:payment_id]).days  
+        
+        @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]  + @purchase[:inafecto]
+        @purchase[:charge]  = 0
 
 
     if @purchase[:payment_id]  == 1 
@@ -3568,11 +3559,16 @@ def newfactura2
 
         if @purchase.save     
           if @tipodocumento == 2
-            @purchase.add_products_menos(items)   
+
+            @purchase.add_products_menos(items) 
+
             @purchase.process_nota_credito
           else
-            @purchase.add_products(items)                    
+
+            @purchase.add_products(items)   
+
             @purchase.process()
+
           end 
 
 
@@ -3738,7 +3734,7 @@ def newfactura2
       :product_id,:unit_id,:price_with_tax,:price_without_tax,:price_public,:quantity,:other,:money_type,
       :discount,:tax1,:payable_amount,:tax_amount,:total_amount,:status,:pricestatus,:charge,:pago,
       :balance,:tax2,:supplier_id,:order1,:plate_id,:user_id,:company_id,:location_id,:division_id,:comments,
-      :processed,:return,:date_processed,:payment_id,:document_id,:documento,:moneda_id,:search,:inafecto,:almacen_id,:participacion)
+      :processed,:return,:date_processed,:payment_id,:document_id,:documento,:moneda_id,:search,:inafecto,:almacen_id,:participacion,:suma_stock )
   end
 
 end

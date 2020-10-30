@@ -78,15 +78,26 @@
       <input type="number" name="participacion" value="0.00" min="0"  step="any" style = "width: 150px" >
         
     </div>
-      
+
+
     <div class="field">
+      <input name="suma_stock" type="hidden" value="0" />
+      <input checked="checked" type="checkbox" id="suma_stock" name="suma_stock" value="1" />
+
+      <div class="small">
+        <strong>   Agrega a stock de almacen? </strong>
+      </div>
+    </div>
+
+      
+     <div class="field">
       <%=  "Forma de Pago " %><br />
-      <%= $lcFormaPago %>
+      <%= @purchaseorder.payment.descrip %>
     </div>
   
     <div class="field">
       <%= " Moneda :  "%><br />
-      <%= $lcMoneda %>
+      <%= @purchaseorder.moneda.description %>
     </div>
       
     

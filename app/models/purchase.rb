@@ -133,7 +133,7 @@ TABLE_HEADERS30 = ["TD",
                      "OBSERV"]
 
 
-TABLE_HEADERS31= ["ITEM","PROVEEDOR","TD",
+TABLE_HEADERS31= ["ITEM","RUC","PROVEEDOR","TD",
                       "Nro.Docmto.",
                      "DESCRIPCION",
                      "FECHA
@@ -651,7 +651,7 @@ def get_tax3(items, supplier_id)
         total -= total * (item.discount / 100)
         lcprice_tax = item.price*1.18      
         
-        if $lcTipoFacturaCompra == "1"
+        if tipo == "1"
           product = Servicebuy.find(item.servicebuy_id)
         else
           product = Product.find(item.product_id)
@@ -833,54 +833,60 @@ end
     if(self.processed == "1" or self.processed == true  )
 
 
-      purchase_details =PurchaseDetail.where(purchase_id: self.id)
-    
-    
-      for ip in purchase_details
-                
-        #actualiza stock
-         stock_product =  Stock.find_by(:product_id => ip.product_id,:store_id=> self.almacen_id)
 
-        if stock_product 
-           @last_stock = stock_product.quantity + ip.quantity      
-           stock_product.quantity = @last_stock
-          if (self.moneda_id == 2)  
-              stock_product.unitary_cost = ip.price_without_tax   
-          else        
-              dolar = Tipocambio.find_by('dia = ?',self.date1)
-               if dolar 
-                   stock_product.unitary_cost = ip.price_without_tax * dolar.compra  
-               else 
-                   stock_product.unitary_cost = ip.price_without_tax   
-               end 
-          end   
-        else
+      if self.suma_stock == "1"
 
-          @last_stock = 0
+        purchase_details =PurchaseDetail.where(purchase_id: self.id)
+      
+      
+        for ip in purchase_details
+                  
+          #actualiza stock
+           stock_product =  Stock.find_by(:product_id => ip.product_id,:store_id=> self.almacen_id)
 
-          if (self.moneda_id == 2)  
-               @lcprice_tax = ip.price_without_tax   
-          else        
-               dolar = Tipocambio.find_by('dia = ?',self.date1)
-               if dolar 
-                   @lcprice_tax = ip.price_without_tax * dolar.compra  
-               else 
-                   @lcprice_tax = ip.price_without_tax   
-               end 
-          end   
+          if stock_product 
+             @last_stock = stock_product.quantity + ip.quantity      
+             stock_product.quantity = @last_stock
+            if (self.moneda_id == 2)  
+                stock_product.unitary_cost = ip.price_without_tax   
+            else        
+                dolar = Tipocambio.find_by('dia = ?',self.date1)
+                 if dolar 
+                     stock_product.unitary_cost = ip.price_without_tax * dolar.compra  
+                 else 
+                     stock_product.unitary_cost = ip.price_without_tax   
+                 end 
+            end   
+          else
 
-          stock_product= Stock.new(:store_id=> self.almacen_id,:state=>"Lima",:unitary_cost=> @lcprice_tax,
-          :quantity=> ip.quantity,:minimum=>0,:user_id=>@user_id,:product_id=>ip.product_id,
-          :document_id=>self.document_id,:documento=>self.documento)           
-        end 
+            @last_stock = 0
 
-        stock_product.save
+            if (self.moneda_id == 2)  
+                 @lcprice_tax = ip.price_without_tax   
+            else        
+                 dolar = Tipocambio.find_by('dia = ?',self.date1)
+                 if dolar 
+                     @lcprice_tax = ip.price_without_tax * dolar.compra  
+                 else 
+                     @lcprice_tax = ip.price_without_tax   
+                 end 
+            end   
+
+            stock_product= Stock.new(:store_id=> self.almacen_id,:state=>"Lima",:unitary_cost=> @lcprice_tax,
+            :quantity=> ip.quantity,:minimum=>0,:user_id=>@user_id,:product_id=>ip.product_id,
+            :document_id=>self.document_id,:documento=>self.documento)           
+          end 
+
+          stock_product.save
+
+        end
+      end 
+
 
         self.date_processed = Time.now
         self.save
       
 
-      end
     end   
   end 
   end
@@ -1106,6 +1112,14 @@ end
 
        a = Product.find(id)
       return  a.unidad.descrip
+  end 
+
+  def get_sumastock
+    if(self.suma_stock == "1")
+      return "* Asignado"
+    else
+      return "** No asignado" 
+    end
   end 
 
 end

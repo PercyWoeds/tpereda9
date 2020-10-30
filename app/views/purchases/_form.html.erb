@@ -109,6 +109,15 @@
         Es una orden de devolución?
       </div>
     </div>
+
+
+      <div class="field">
+      <%= f.check_box :suma_stock , {:checked=> true } %>
+      <%= f.label :suma_stock, "Agrega Stock ??", :class => "bold" %>
+      <div class="small">
+        Agrega a stock de almacen?
+      </div>
+    </div>
     
     <%= hr() %>
     
@@ -135,7 +144,7 @@
       <%= f.hidden_field :user_id, :id => "ac_user_id" %>
       <%= f.hidden_field :supplier_id, :id => "ac_supplier_id" %>
       <%= f.hidden_field :company_id %>
-      <%= f.submit %>
+      <%= f.submit  %>
     </div>
     
     <div class="small">
@@ -196,7 +205,9 @@
 
     
     <br />
+
     <input type="submit" value="Agregar item a Factura" />
+
   </form>
   
   <%= hr() %>

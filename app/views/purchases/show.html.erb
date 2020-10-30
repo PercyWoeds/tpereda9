@@ -18,6 +18,8 @@
   </p>
 <% end %>
 
+
+
 <% if @purchase.division %>
   <p>
     <b>Division:</b>
@@ -29,6 +31,12 @@
   <b>Code:</b>
   <%= @purchase.documento %>
 </p>
+<p>
+  <b>Stock :</b>
+  
+  <strong><%= @purchase.get_sumastock %></strong>
+</p>
+
 
 <%= hr() %>
 
@@ -199,5 +207,5 @@
   
 
   
-  <%= link_to 'Regresar', "/companies/purchases/#{@purchase.company.id}/1" %>
+  <%= link_to 'Regresar', "/companies/purchases/#{@purchase.company.id}" %>
 </div>

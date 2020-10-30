@@ -4638,6 +4638,7 @@ def reporte_asistencia3
                  
                 row = []          
                 row << nroitem.to_s 
+                row << product.supplier.ruc 
                 row << product.supplier.name 
                 row << product.document.descripshort 
               
@@ -4735,6 +4736,7 @@ def reporte_asistencia3
           row << ""
           row << ""
           row << ""
+            row << ""
           
           row << "TOTALES => "
           row << ""
@@ -4764,29 +4766,31 @@ def reporte_asistencia3
                                         } do 
                                           columns([0]).align=:center
                                           columns([1]).align=:left
+                                          columns([1]).width = 50
                                           columns([2]).align=:left
-
          
                                           columns([3]).align=:left
                                           
+                                          
                                           columns([4]).align=:left
-                                          columns([5]).width = 40                                                                           
-         
+
                                           columns([6]).width = 40                                                                           
          
-                                          columns([7]).align=:right
-                                          columns([7]).width = 40
-                                          
-                                          columns([8]).align=:right 
-                                          columns([8]).width =40
+                                          columns([7]).width = 40                                                                           
+         
+                                          columns([8]).align=:right
+                                          columns([8]).width = 40
                                           
                                           columns([9]).align=:right 
                                           columns([9]).width =40
                                           
-                                          columns([10]).align=:left
-                                          columns([10]).width =80
-                                          columns([12]).width =80
+                                          columns([10]).align=:right 
+                                          columns([10]).width =40
                                           
+                                          columns([11]).align=:left
+                                          columns([11]).width =80
+                                          columns([12]).width =40
+                                          columns([13]).width =60
                                           
                                         end                                          
                                         
