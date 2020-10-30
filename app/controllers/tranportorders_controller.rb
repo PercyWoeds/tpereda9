@@ -607,7 +607,7 @@ class TranportordersController < ApplicationController
 
                 end 
               end 
-                  lcPendienteFacturar =  @importe_st  - lcFacturasImporte
+                  lcPendienteFacturar = lcFacturasImporte - @importe_st
 
                    row <<  lcFactCode
                     row << lcFactFecha

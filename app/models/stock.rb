@@ -8,6 +8,7 @@ self.per_page = 20
 belongs_to :document 
 belongs_to :product
 
+
   TABLE_HEADERS = ["ITEM",
                      "CODIGO",
                      "NOMBRE",
@@ -84,5 +85,12 @@ def get_ingresos(id)
     
     return @purchases
  end 
+def get_store(id)
+
+    a =Almacen.find(id)
+    
+    return a.nombre
+
+end 
 
 end

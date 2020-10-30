@@ -5,6 +5,9 @@
     <thead>
       <tr>
         <th class="bordered_right bordered_bottom" style="width: 100px;">
+          Almacen 
+        </th>
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
           Codigo
         </th>
         <th class="bordered_right bordered_bottom" style="width: 250  px;">
@@ -30,7 +33,7 @@
       <% for product in @stocks %>
         <tr>
         <td class="bordered_right bordered_bottom">
-            <%=  product.location.name  %>
+            <%=  product.get_store(product.store_id) %>
           </td>
 
           <td class="bordered_right bordered_bottom">
