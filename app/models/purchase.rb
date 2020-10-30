@@ -835,6 +835,7 @@ end
 
       purchase_details =PurchaseDetail.where(purchase_id: self.id)
     
+    
       for ip in purchase_details
                 
         #actualiza stock

@@ -234,6 +234,8 @@ class Purchaseorder < ActiveRecord::Base
 
     return products.join(",")
   end
+
+  
   
   def get_processed
     if(self.processed == "1")

@@ -3676,8 +3676,7 @@ def newfactura2
         # Create products for kit
         
         # Check if we gotta process the purchase
-        @purchase.process()
-        
+
         format.html { redirect_to(@purchase, :notice => 'purchase was successfully updated.') }
         format.xml  { head :ok }
       else

@@ -129,7 +129,9 @@
     <%= hr() %>
   
     <div class="actions">
-      <input type="hidden" name="items" id="items" value="<% if @products_lines %><%= @products_lines %><% end %>" />
+
+      <input type="hidden" name="items" id="items" value="<% if @products_lines %>
+      <%= @products_lines %> <% end %>" />
       <%= f.hidden_field :user_id, :id => "ac_user_id" %>
       <%= f.hidden_field :supplier_id, :id => "ac_supplier_id" %>
       <%= f.hidden_field :company_id %>
@@ -266,10 +268,29 @@
     $("#ac_item_discount").bind("keyup", function() {
       updateItemTotal5();
     });
+
+
     
     <% if @products_lines %>
-    alert 'holas products_lines';
-      listItemspurchaseorder();
+  
+      listItemspurchaseorder2();
     <% end %>
+
+
   });
+
+  function listItemspurchaseorder2() {
+    var items = $("#items").val();
+    var company_id = "1";
+    
+    $.get('/purchaseorders/list_items/' + company_id, {
+      items: items
+    },
+    function(data) {
+      $("#list_items").html(data);
+      documentReady();
+    });
+  }
+
 </script>
+

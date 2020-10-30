@@ -478,6 +478,8 @@ pdf.move_down 5
     items_arr = []
     @products = []
     i = 0
+  puts "list_items"
+    puts items 
 
     for item in items
       if item != ""
@@ -737,6 +739,8 @@ pdf.move_down 5
     @monedas  = @company.get_monedas()
 
     @products_lines = @purchaseorder.products_lines
+    puts "editar "
+    puts @products_lines 
 
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
@@ -822,7 +826,10 @@ pdf.move_down 5
       @ac_supplier = @purchaseorder.supplier.name
     end
 
+
     @products_lines = @purchaseorder.products_lines
+
+    puts @products_lines 
 
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
@@ -836,7 +843,7 @@ pdf.move_down 5
     @purchaseorder[:total]    = @purchaseorder[:subtotal] + @purchaseorder[:tax]
 
     respond_to do |format|
-      if @purchaseorder.update_attributes(params[:purchaseorder])
+      if @purchaseorder.update_attributes(purchaseorder_params)
         # Create products for kit
         @purchaseorder.delete_products()
         @purchaseorder.add_products(items)
