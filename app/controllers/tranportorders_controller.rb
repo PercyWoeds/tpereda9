@@ -553,7 +553,7 @@ class TranportordersController < ApplicationController
                   lcOstFecha2 << orden.fecha2.to_s[0..10] + "\n"
 
                   lcpendiente = "LIQUIDADO"
-             end 
+               end 
                 
                 row << lcGuiaCode 
                 row << lcGuiaDes
@@ -572,13 +572,13 @@ class TranportordersController < ApplicationController
               @facturas = orden.get_facturas(orden.id)
 
              
-              if @facturas 
+             
                 lcFactCode = ""
                 lcFactFecha = ""
                 lcfacturasTotal_s = ""
                 lcfacturasTotal_d = ""
 
-
+                if @facturas 
                 for facturas in @facturas 
                   puts "facturass ...................................."
                   puts facturas.code
@@ -589,48 +589,40 @@ class TranportordersController < ApplicationController
                   lcFactFecha  << facturas.fecha.to_s[0..10] + "\n"
 
                   if facturas.moneda_id == 2
-                    lcfacturasTotal_s << facturas.total.to_s + "\n"
+                    lcfacturasTotal_s << facturas.total.round(2).to_s + "\n"
                   else
-                    lcfacturasTotal_d << facturas.total.to_s + "\n"
+                    lcfacturasTotal_d << facturas.total.round(2).to_s + "\n"
                   end 
                     @cobranzas = facturas.get_pagos
 
-                   row <<  lcFactCode
-                  row << lcFactFecha
 
-                  if facturas.moneda_id == 2
+
+                end 
+              end 
+
+                   row <<  lcFactCode
+                    row << lcFactFecha
+
+                
                     row << lcfacturasTotal_s 
+                   
+                    row << lcfacturasTotal_d 
+
+
+                    row << lcfacturasTotal_s 
+                           
+
+                    row << ""
+                    row << ""
+                                      
+                    row << ""
                     row << ""
 
-                  else
-                     row << ""
-                    row << lcfacturasTotal_d
-                  end 
-                end 
+            
                  
-                
-                  
-
-                  row << ""
-                  row << ""
-                  row << ""
-                  row << ""
-                  row << ""
-                  row << ""
-
-
-                  row << ""
-                  row << ""
-                  row << ""
-                  row << ""
-
-
-                  
-                 table_content << row 
+               
+               table_content << row 
                  
-
-              end 
-              
             
           end
             

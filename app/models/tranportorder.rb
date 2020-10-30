@@ -313,7 +313,9 @@ TABLE_HEADERS2 = ["NRO.COTIZACION",
 
     	   @dato = Manifestship.where(tranportorder_id: id )
          if @dato 
-          @facturas = Factura.where(manifest_id: @dato.last.manifest_id )
+          @facturas = Factura.joins(:stsship).where("stsships.manifest_id = ?",@dato.first.manifest_id )
+
+
          end 
          return @facturas 
       else

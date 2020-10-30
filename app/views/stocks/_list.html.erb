@@ -29,6 +29,10 @@
     <tbody>
       <% for product in @stocks %>
         <tr>
+        <td class="bordered_right bordered_bottom">
+            <%=  product.location.name  %>
+          </td>
+
           <td class="bordered_right bordered_bottom">
             <% if product.product.code and product.product.code != "" %>
 
