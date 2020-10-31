@@ -61,6 +61,7 @@
 
     </div>  
 
+    
     <div class="field">  
         <%= f.label :empaletizado  , "Empaletizado *", :class => "bold" %><br />
         <%= f.number_field :empaletizado, step: :any %>
@@ -78,6 +79,18 @@
         <%= f.number_field :importe2, step: :any %>
 
     </div>  
+
+    <div class="field">  
+        <%= f.label :escolta_pen  , "Escolta  S/.*", :class => "bold" %><br />
+        <%= f.number_field :escolta_pen, step: :any %>
+
+    </div>  
+     <div class="field">  
+        <%= f.label :stand_by_pen  , "Stand by S/.", :class => "bold" %><br />
+        <%= f.number_field :stand_b_pen, step: :any %>
+
+    </div>  
+
 
     <div class="field">  
         <%= f.label :escolta  , "Escolta  US$*", :class => "bold" %><br />

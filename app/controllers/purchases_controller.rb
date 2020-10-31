@@ -1341,8 +1341,9 @@ def build_pdf_header_rpt48(pdf)
     @company=Company.find(params[:id])          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
+    @almacen = params[:almacen_id]
     
-    @facturas_rpt = @company.get_ingresos_day4(@fecha1,@fecha2)
+    @facturas_rpt = @company.get_ingresos_day4(@fecha1,@fecha2,@almacen )
     
    
       Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|

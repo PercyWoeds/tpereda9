@@ -708,7 +708,9 @@ def get_almacen_name(local)
    SUM(montacarga) as importe3,
    SUM(importe2) as importe4,
    SUM(escolta) as importe5,
-   SUM(stand_by) as importe6 
+   SUM(stand_by) as importe6 ,
+   SUM(escolta_pen)  as importe7,
+   SUM(stand_by_pen) as importe8
    FROM manifests
    WHERE fecha1 >= ? and fecha1 <= ?  
    GROUP BY 1
@@ -723,7 +725,9 @@ def get_almacen_name(local)
    SUM(montacarga) as importe3,
    SUM(importe2) as importe4,
    SUM(escolta) as importe5,
-   SUM(stand_by) as importe6 
+   SUM(stand_by) as importe6 ,
+   SUM(escolta_pen)  as importe7,
+   SUM(stand_by_pen) as importe8 
    FROM manifests
    WHERE fecha1 >= ? and fecha1 <= ? and location_id=?  
    GROUP BY 1
@@ -4902,7 +4906,7 @@ end
 
  end
 
-def get_ingresos_day4(fecha1,fecha2,fecha6 )
+def get_ingresos_day4(fecha1,fecha2,fecha6,almacen  )
 
   if fecha6 == "1"
 
@@ -4913,8 +4917,9 @@ def get_ingresos_day4(fecha1,fecha2,fecha6 )
     from purchase_details   
 INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
 INNER JOIN products ON purchase_details.product_id = products.id
-WHERE products.stock_active = ? and  purchases.date1 >= ? and purchases.date1 <= ? and purchases.processed = ? and purchases.status is NULL 
-ORDER BY products.products_category_id,purchases.date1,products.code  ',"1", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1" ])
+WHERE products.stock_active = ? and  purchases.date1 >= ? and purchases.date1 <= ?
+ and purchases.processed = ? and purchases.status is NULL  and purchases.almacen_id  = ? 
+ORDER BY products.products_category_id,purchases.date1,products.code  ',"1", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1",almacen ])
   
     return @purchases 
 else

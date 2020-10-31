@@ -1429,6 +1429,8 @@ def rpt_purchaseorder4_all
     @pagetitle = "Listado de stocks "    
     @products = @company.get_products()
     @categories = ProductsCategory.all 
+   @almacens = @company.get_almacens()
+
   end
   def rpt_calmacen11_pdf
       @company = Company.find(params[:company_id])    

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201030161606) do
+ActiveRecord::Schema.define(version: 20201031151706) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1479,6 +1479,8 @@ ActiveRecord::Schema.define(version: 20201030161606) do
     t.float    "stand_by"
     t.string   "motivo"
     t.string   "cotizacion"
+    t.float    "stand_by_pen"
+    t.float    "escolta_pen"
   end
 
   create_table "manifestships", force: :cascade do |t|

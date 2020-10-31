@@ -916,11 +916,12 @@ def rpt_ingresos2_all_pdf
            
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]  
+    @almacen = params[:almacen_id]  
     @fecha6 = params[:fecha6]     
 
 
     
-    @facturas_rpt = @company.get_ingresos_day4(@fecha1,@fecha2,@fecha6)
+    @facturas_rpt = @company.get_ingresos_day4(@fecha1,@fecha2,@fecha,@almacen )
     
 
     
@@ -928,7 +929,7 @@ def rpt_ingresos2_all_pdf
     
       case params[:print]
         when "To PDF" then 
-            redirect_to :action => "rpt_ingresos3_all_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2],:id=>"1",:fecha6 => params[:fecha6]
+            redirect_to :action => "rpt_ingresos3_all_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2],:id=>"1",:fecha6 => params[:fecha6],:almacen_id => params[:almacen_id]
 
         when "Excel" then render xlsx: 'rpt_compras3_xls'
     
@@ -946,13 +947,15 @@ def rpt_ingresos2_all_pdf
   
     @company=Company.find(params[:id])          
     @fecha1 = params[:fecha1]    
-    @fecha2 = params[:fecha2]    
+    @fecha2 = params[:fecha2]  
+
+    @almacen = params[:almacen_id]  
 
     @fecha6 = params[:fecha6]    
     puts "fecha 6 "
     puts @fecha6
     
-    @facturas_rpt = @company.get_ingresos_day4(@fecha1,@fecha2,@fecha6)
+    @facturas_rpt = @company.get_ingresos_day4(@fecha1,@fecha2,@fecha6,@almacen)
     
    
       Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
@@ -1515,6 +1518,7 @@ def reportes_st_2
       @facturas_rpt = @company.get_st_day(@fecha1,@fecha2,@local) 
     end 
   
+
     case params[:print]
       when "To PDF" then 
         begin 
@@ -1576,7 +1580,7 @@ def reportes_st_3
          :header => {
            :spacing => 5,
                            :html => {
-                     :template => 'layouts/pdf-header2.html',
+                     :template => 'layouts/pdf-header7.html',
                            right: '[page] of [topage]'
                   }                  
                } ,

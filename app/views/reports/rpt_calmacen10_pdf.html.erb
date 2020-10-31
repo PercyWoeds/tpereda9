@@ -22,6 +22,12 @@ totals = []
  <%= form_tag(rpt_compras3_pdf_facturas_path, :method => "get") do %>
    
   
+   <div class="field">
+    <%= select_tag(:almacen_id,options_from_collection_for_select(@almacens,'id','nombre') ) %>
+  </div>
+
+<br>
+
    <select id="fecha6" name="fecha6" >
       <option value="" selected disabled hidden>Selecionar Fecha </option>
       <option value="1">Fec.Emision</option>
@@ -29,6 +35,7 @@ totals = []
    </select>
 
 
+<br>
 
   <div class="field">
       <input type="date" name="fecha1" value="2020-10-01" style = "width: 150px" >

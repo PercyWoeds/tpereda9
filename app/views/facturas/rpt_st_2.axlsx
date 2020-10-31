@@ -9,7 +9,7 @@ wb.styles do |s|
     padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
     percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
     title = s.add_style(:bg_color => "FFFF0000", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
-    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :left})
 
     currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
                               :border=>Axlsx::STYLE_THIN_BORDER)
@@ -19,7 +19,7 @@ wb.styles do |s|
     
     wb.add_worksheet(name: "Basic work sheet") do |sheet|
     
-    sheet.add_row ["Fecha", "Registro", "Cliente", "Origen","Destino","Importe S/.", "Empaletizado","Montacarga","Importe US$","Escolta","Stand by","OST","Procesado"], 
+    sheet.add_row ["Fecha", "Registro", "Cliente", "Origen","Destino","Importe S/.","Escolta S/.","Stand by S/.", "Empaletizado S/.","Montacarga S/.","Importe US$","Escolta US$","Stand by US$","OST","Procesado"], 
     :style => title 
 
 
@@ -37,7 +37,7 @@ wb.styles do |s|
             lcDes1 << a
 
         sheet.add_row [manifest.fecha1,  manifest.code,manifest.customer.name,manifest.direccion1,manifest.direccion2,
-        manifest.importe,manifest.empaletizado,manifest.montacarga,manifest.importe2,manifest.escolta,manifest.stand_by,lcDes1,manifest.get_processed], :style => [ date,cadena,cadena,cadena,cadena,currency,currency,currency,currency,currency,currency,cadena,cadena]
+        manifest.importe,manifest.escolta_pen,manifest.stand_by_pen,manifest.empaletizado,manifest.montacarga,manifest.importe2,manifest.escolta,manifest.stand_by,lcDes1,manifest.get_processed], :style => [ date,cadena,cadena,cadena,cadena,currency,currency,currency,currency,currency,currency,currency,currency,cadena,cadena]
       
    end
 

@@ -3,8 +3,6 @@
 class Store < ActiveRecord::Base
 
 
- belongs_to :stock
-
 
 def self.search(search)
   if search
