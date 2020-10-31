@@ -33,50 +33,37 @@ wb.styles do |s|
             @importe_st = 0
 
             if st.nil?
-              row << ""
-              row << ""
-              row << ""
-              row << ""
-              row << ""
-
-              row << ""
-              row << ""
-              row << ""
-              row << ""
-              row << ""
+              @importe_st = 0 
+              st_cotizacion =""
+              st_fecha1  = ""
+              st_code = ""
+              st_customer = ""
+              st_especificacion =""
+              st_tipocarga =""
+              st_dir1 = ""
+              st_dir2 = ""
+              st_importe2  =0
+              st_importe  = 0
 
             else 
-
-              row << ""
-              row << st.fecha1.strftime("%d/%m/%Y")
-              row << st.code
-              row << st.customer.name 
-              row << st.especificacion
-              row << st.tipocargue.name
-              row << st.direccion1
-              row << st.direccion2 
-              row << st.importe2
-              row << st.importe
               @importe_st = st.importe
+                       st_cotizacion= st.cotizacion,
+                       st_fecha1 = st.fecha1,
+                       st_code = st.code,
+                       st_customer = st.customer.name,
+                       st_especificacion =   st.especificacion,
+                       st_tipocarga =  st.tipocargue.name,
+                       st_dir1 =  st.direccion1,
+                       st_dir2 = st.direccion2 ,
+                       st_importe2 =  st.importe2,
+                       st_importe =  st.importe,
             end 
 
 
-            row << orden.fecha1.strftime("%d/%m/%Y")  
-            row << orden.code 
-            row << orden.employee.full_name
-            row << orden.get_empleado(orden.employee2_id)
-            row << orden.truck.placa 
-            row << orden.get_placa(orden.truck2_id) 
-            row << orden.get_placa(orden.truck3_id) 
-            row << orden.get_tipounidad(orden.truck_id)
-            row << orden.get_ejes2(orden.id )
+           
             
             @destino =  orden.get_punto(orden.ubication_id) +"-" + orden.get_punto(orden.ubication2_id)
-            row << orden.get_propio(orden.truck3_id) 
-            row << orden.code 
-            row << orden.get_placa(orden.truck3_id) 
-            row << orden.get_empleado(orden.employee4_id)
-           
+          
 
             nroitem=nroitem + 1
             @guias = orden.get_delivery(orden.id)
@@ -103,18 +90,7 @@ wb.styles do |s|
                   lcpendiente = "LIQUIDADO"
                end 
                 
-                row << lcGuiaCode 
-                row << lcGuiaDes
-                row << lcFecha1 
-                row << lcFecha2 
-                row << orden.get_processed
-                
-
-                row << lcpendiente
-              
-                row << lcOstFecha2
-                row << "  "
-               
+          
             
 
               @facturas = orden.get_facturas(orden.id)
@@ -131,10 +107,7 @@ wb.styles do |s|
 
                 if @facturas 
                 for facturas in @facturas 
-                  puts "facturass ...................................."
-                  puts facturas.code
-                  puts facturas.fecha.strftime("%d/%m/%Y") 
-                  puts facturas.total 
+                
 
                   lcFactCode << facturas.code + "\n"
                   lcFactFecha  << facturas.fecha.to_s[0..10] + "\n"
@@ -154,14 +127,14 @@ wb.styles do |s|
               end 
                   lcPendienteFacturar = lcFacturasImporte - @importe_st
 
-                   row <<  lcFactCode
+                   
+                           
+                    lcPendienteCobrar =  lcFacturasImporte
+                    row <<  lcFactCode
                     row << lcFactFecha
                     row << lcfacturasTotal_s 
                     row << lcfacturasTotal_d 
                     row << lcPendienteFacturar
-                           
-                    lcPendienteCobrar =  lcFacturasImporte 
-
                     row << ""
                     row << ""
                                       
@@ -178,12 +151,57 @@ wb.styles do |s|
           end
 
 
+        sheet.add_row [ 
+                      st_cotizacion,
+                       st_fecha1 ,
+                       st_code ,
+                       st_customer,
+                       st_especificacion ,
+                       st_tipocarga,
+                       st_dir1 ,
+                       st_dir2 ,
+                       st_importe2,
+                       st_importe,
+                      orden.fecha1,
+                      orden.code ,
+                      orden.employee.full_name,
+                      orden.get_empleado(orden.employee2_id),
+                      orden.truck.placa ,
+                      orden.get_placa(orden.truck2_id) ,
+                      orden.get_placa(orden.truck3_id) ,
+                      orden.get_tipounidad(orden.truck_id),
+                      orden.get_ejes2(orden.id ),
 
+                      orden.get_propio(orden.truck3_id) ,
+                      orden.code ,
+                      orden.get_placa(orden.truck3_id) ,
+                      orden.get_empleado(orden.employee4_id),
 
-        sheet.add_row [payment.code.strip,payment.fecha,payment.codigo,
-          payment.nameproducto,payment.unidad,payment.supplier.name,xemployee,payment.truck.placa, payment.quantity,payment.price,xtotal,categoria  ], 
+                      lcGuiaCode ,
+                      lcGuiaDes,
+                      lcFecha1 ,
+                      lcFecha2 ,
+                      orden.get_processed,
+                      lcpendiente,
+                      lcOstFecha2,
+                      "  ",
+                      lcFactCode,
+                      lcFactFecha,
+                      lcfacturasTotal_s ,
+                      lcfacturasTotal_d ,
+                      lcPendienteFacturar,
+                      "",
+                      "",
+                      "",
+                      "",
+                      lcPendienteCobrar 
+              ], 
     :style => 
-        [cadena,date,cadena,cadena,cadena,cadena,cadena,cadena,currency,currency,currency,cadena]
+        [cadena,date,
+        cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena
+        cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena
+        cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena
+        cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena        ]
         
    end   
     end
