@@ -21,7 +21,58 @@ wb.styles do |s|
     wb.add_worksheet(name: "Facturas Soles") do |sheet|
     
 
-    sheet.add_row ["Nro.Salida","Fecha", "Codigo","Producto","Unidad", "Proveedor","Empleado","Placa", "Cantidad","Precio","Total" ], :style => title 
+    sheet.add_row ["NRO.
+COTIZACION",
+"FECHA
+ST.","NRO.ST","CLIENTE","CARGA ","TIPODE CARGA",
+"ORIGEN ","DESTINO","USD","S/.FLETE ","FECHA
+DE OST","NRO.OST","
+CONDUCTOR
+INICIAL SERVICIO","CONDUCTOR
+FINAL DEL
+SERVICIO","PLACA","TRACTO",
+"PLACA","CAMION","PLACA SEMIREMOLQUE","TIPO
+UNIDAD","PESO
+ESCOLTA","NRO.ORD
+EN
+SERVICIO",
+"PLACA
+CONDUCTOR",
+"G.TRANSP
+ORTISTA
+PEREDA",
+"G.REMITENTE
+CLIENTE","FECHA
+LLEGADA
+LIMA","FECHA
+LIQUI","COM
+ENTA
+RIOS","ESTATUS
+SERVICIO",
+"CULMINO
+SERVICIO","NRO.OST
+CLIENTE",
+"NRO.
+FACTURA",
+"FECHA
+FACTURA TOTAL",
+"MONTO S/.",
+"TOTAL MONTO USD",
+"PENDIENT
+E X FACTURAR",
+"FECHA
+RECEPCION
+CLIENTE",
+"FECHA
+COBRANZA
+CLIENTE",
+"FECHA
+PAGO","IMPORTE
+PENDIENTE
+X COBRAR"
+
+
+    ], :style => title 
     
    @orden_transporte.each do |orden|
                 
@@ -34,7 +85,7 @@ wb.styles do |s|
 
             if st.nil?
               @importe_st = 0 
-              st_cotizacion =""
+              st_cotizacion = ""
               st_fecha1  = ""
               st_code = ""
               st_customer = ""
@@ -47,7 +98,8 @@ wb.styles do |s|
 
             else 
               @importe_st = st.importe
-                       st_cotizacion= st.cotizacion,
+
+                       st_cotizacion= "",
                        st_fecha1 = st.fecha1,
                        st_code = st.code,
                        st_customer = st.customer.name,
@@ -56,7 +108,7 @@ wb.styles do |s|
                        st_dir1 =  st.direccion1,
                        st_dir2 = st.direccion2 ,
                        st_importe2 =  st.importe2,
-                       st_importe =  st.importe,
+                       st_importe =  st.importe
             end 
 
 
@@ -65,7 +117,7 @@ wb.styles do |s|
             @destino =  orden.get_punto(orden.ubication_id) +"-" + orden.get_punto(orden.ubication2_id)
           
 
-            nroitem=nroitem + 1
+            
             @guias = orden.get_delivery(orden.id)
 
                 lcGuiaCode = ""
@@ -106,53 +158,37 @@ wb.styles do |s|
 
 
                 if @facturas 
-                for facturas in @facturas 
-                
 
-                  lcFactCode << facturas.code + "\n"
-                  lcFactFecha  << facturas.fecha.to_s[0..10] + "\n"
+                  for facturas in @facturas 
+                  
+                    lcFactCode << facturas.code + "\n"
+                    lcFactFecha  << facturas.fecha.to_s[0..10] + "\n"
 
-                  if facturas.moneda_id == 2
-                    lcfacturasTotal_s << facturas.total.round(2).to_s + "\n"
-                    lcFacturasImporte  = facturas.total.round(2)
-                  else
-                    lcfacturasTotal_d << facturas.total.round(2).to_s + "\n"
-                     lcFacturasImporte2  = facturas.total.round(2)
+                    if facturas.moneda_id == 2
+                      lcfacturasTotal_s << facturas.total.round(2).to_s + "\n"
+                      lcFacturasImporte  = facturas.total.round(2)
+                    else
+                      lcfacturasTotal_d << facturas.total.round(2).to_s + "\n"
+                       lcFacturasImporte2  = facturas.total.round(2)
+                    end 
+                      @cobranzas = facturas.get_pagos
                   end 
-                    @cobranzas = facturas.get_pagos
-
-
-
                 end 
-              end 
-                  lcPendienteFacturar = lcFacturasImporte - @importe_st
+
+                lcPendienteFacturar = lcFacturasImporte - @importe_st
 
                    
                            
                     lcPendienteCobrar =  lcFacturasImporte
-                    row <<  lcFactCode
-                    row << lcFactFecha
-                    row << lcfacturasTotal_s 
-                    row << lcfacturasTotal_d 
-                    row << lcPendienteFacturar
-                    row << ""
-                    row << ""
-                                      
-                    row << ""
-                    row << ""
-                    row << lcPendienteCobrar 
-
+                    
             
                  
-               
-               table_content << row 
-                 
-            
-          end
+          
+      
 
 
         sheet.add_row [ 
-                      st_cotizacion,
+                     "",
                        st_fecha1 ,
                        st_code ,
                        st_customer,
@@ -196,20 +232,15 @@ wb.styles do |s|
                       "",
                       lcPendienteCobrar 
               ], 
-    :style => 
-        [cadena,date,
-        cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena
-        cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena
-        cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena
-        cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena        ]
+            :style => 
+                [cadena,date,
+                cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,
+                cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,
+                cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,
+                cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena  ]
         
-   end   
+            end   
     end
-
-
-   
-
-  ##
 end 
 
     

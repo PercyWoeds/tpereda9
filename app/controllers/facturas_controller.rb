@@ -6042,15 +6042,15 @@ end
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]
     
-@tipo   = params[:tiporeporte]
+     @tipo   = params[:tiporeporte]
 
-    
+    @orden_transporte = @company.get_ordertransporte_day(@fecha1,@fecha2,@tipo) 
     
       case params[:print]
         when "To PDF" then 
             redirect_to :action => "rpt_ost_2_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2], :tiporeporte =>params[:tiporeporte]
 
-        when "Excel" then render xlsx: 'rpt_ost_2_xls'
+        when "To Excel" then render xlsx: 'rpt_ost_2_xls'
     
           
         else render action: "index"
