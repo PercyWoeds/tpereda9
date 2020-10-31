@@ -18,8 +18,9 @@ totals = []
   Orden de servicio de transporte 
 </h1>
 
-<form method="get" action="/tranportorders/rpt_ost2_pdf/<%= @company.id %>">
-  
+
+<%= form_tag(rpt_ost_2_facturas_path, :method => "get") do %>
+
   
 <p>
   <label for="tiporeporte"> Tipo de Reporte:</label><br>
@@ -32,19 +33,17 @@ totals = []
 
   
   <div class="field">
-      <input type="date" name="fecha1" value="2020-10-05" style = "width: 150px" >
-
-    </div>
+    <input type="date" name="fecha1" value="2020-10-05" style = "width: 150px" >
+  </div>
 	<div class="field">
 		<input type="date" name="fecha2" value="2020-10-31" style = "width: 150px" >
   </div>
 
-  <input type="submit" value="Generar Reporte" />
-  <a href="/tranportorders/rpt_ost2_pdf/<%= @company.id %>" > </a>
-
-
-</form>
-
+  
+  <%= submit_tag "To PDF"  , :name => "print" %>
+  <%= submit_tag "To Excel", :name => "print" %>
+     
+<% end %>
 
 
 <br />

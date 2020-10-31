@@ -221,7 +221,11 @@ require 'sidekiq/web'
     collection { get  :do_gestion}
     collection { get  :rpt01}
 
- collection { get  :rpt_purchase_all2b}
+    collection { get  :rpt_ost_2}
+    collection { get  :rpt_ost_2_pdf}
+
+
+     collection { get  :rpt_purchase_all2b}
     
     end 
 
@@ -321,10 +325,15 @@ require 'sidekiq/web'
 
 resources :tranportorders do
   collection { get :search   }
-  collection { post :rpt_ost_3 }        
-  
+  collection { post :rpt_ost_3 } 
 end 
 
+resources :tranportorders do
+
+ collection do 
+    get  "rpt_ost_2"
+  end 
+end 
 
   resources :serviceorders do 
 

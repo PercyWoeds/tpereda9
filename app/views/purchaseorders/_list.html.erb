@@ -61,7 +61,7 @@
           <%= link_to 'Eliminar', purchaseorder, :confirm => 'Are you sure?', :method => :delete 
           %>
           <% elsif purchaseorder.processed =="1"%>    
-          <%= "** Aprobado **" %>
+           <%= link_to "Edit", edit_purchaseorder_path(purchaseorder) %>    
           <%= link_to 'Eliminar', purchaseorder,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>
           
           <% elsif purchaseorder.processed =="2"%>  
