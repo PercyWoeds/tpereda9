@@ -1272,9 +1272,9 @@ class CustomerPaymentsController < ApplicationController
       
     Prawn::Document.generate("app/pdf_output/rpt_customerpayment.pdf") do |pdf|
         pdf.font "Helvetica"        
-        pdf = build_pdf_header_rpt1(pdf)
-        pdf = build_pdf_body_rpt1(pdf)
-        build_pdf_footer_rpt1(pdf)
+        pdf = build_pdf_header_rpt10(pdf)
+        pdf = build_pdf_body_rpt10(pdf)
+        build_pdf_footer_rpt10(pdf)
         $lcFileName =  "app/pdf_output/rpt_customerpayment.pdf"              
     end     
 
