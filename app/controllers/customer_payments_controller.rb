@@ -1284,7 +1284,7 @@ class CustomerPaymentsController < ApplicationController
   end
 
 
--------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------
 ## reporte completo de cobranza 
 ##-------------------------------------------------------------------------------------
   
@@ -1668,6 +1668,8 @@ class CustomerPaymentsController < ApplicationController
       pdf
       
   end
+
+
   def rpt_ccobrar7_pdf
     $lcxCliente = "1"
     @company=Company.find(params[:id])      
