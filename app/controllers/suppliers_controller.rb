@@ -12,8 +12,6 @@ class SuppliersController < ApplicationController
   end 
   
  
-
-
  
   # Show suppliers for a company
   def list_suppliers
@@ -57,9 +55,9 @@ class SuppliersController < ApplicationController
   def show
     @supplier = Supplier.find(params[:id])
     @pagetitle = "Suppliers - #{@supplier.name}"
-
+    @bancos = @company.get_banks()
     @supplier_detail = @supplier.supplier_details
-
+ @tipoproveedor =@company.get_tipoproveedor()
   end
 
   # GET /suppliers/new
@@ -103,8 +101,8 @@ class SuppliersController < ApplicationController
     @company = Company.find(params[:supplier][:company_id])
   
     @supplier = Supplier.new(supplier_params)
-  
-  
+   @tipoproveedor =@company.get_tipoproveedor()
+  @bancos = @company.get_banks()
     respond_to do |format|
       if @supplier.save
         format.html { redirect_to(@supplier, :notice => 'Supplier was successfully created.') }
@@ -120,9 +118,9 @@ class SuppliersController < ApplicationController
   # PUT /suppliers/1.xml
   def update
     @pagetitle = "Edit supplier"
-    
+    @bancos = @company.get_banks()
     @supplier = Supplier.find(params[:id])
-
+ @tipoproveedor =@company.get_tipoproveedor()
     respond_to do |format|
       if @supplier.update_attributes(supplier_params)
         format.html { redirect_to(@supplier, :notice => 'Supplier was successfully updated.') }
@@ -140,10 +138,10 @@ class SuppliersController < ApplicationController
     
     
     @supplier = Supplier.find(params[:id])
-    
+    @bancos = @company.get_banks()
     
     @company = @supplier.company
-    
+     @tipoproveedor =@company.get_tipoproveedor()
    
     @ordens = Purchaseorder.find_by(supplier_id: @supplier.id)
     @services = Serviceorder.find_by(supplier_id: @supplier.id)
@@ -200,7 +198,7 @@ class SuppliersController < ApplicationController
   def new2
      @pagetitle = "Nuevo Datos desde Sunat "
     
-    
+    @bancos = @company.get_banks()
       @company = Company.find(1)
     
       if(@company.can_view(current_user))
