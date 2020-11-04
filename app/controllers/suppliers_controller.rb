@@ -53,6 +53,7 @@ class SuppliersController < ApplicationController
   # GET /suppliers/1
   # GET /suppliers/1.xml
   def show
+    @company = Company.find(1)
     @supplier = Supplier.find(params[:id])
     @pagetitle = "Suppliers - #{@supplier.name}"
     @bancos = @company.get_banks()
