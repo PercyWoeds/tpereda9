@@ -207,6 +207,7 @@ require 'sidekiq/web'
     collection { get  :reporte_asistencia3 }
 
     collection {get :rpt_ost_3 }
+    collection {get :rpt_conductor_pdf  }
     collection {get :guias1_pdf }
     collection {get :guias1 }
     
@@ -560,6 +561,9 @@ end
   match 'companies/reports/reports_basedatos/:company_id' => 'reports#reports_basedatos', via: [:get, :post]
   match 'companies/reports/reports_basedatosexm/:company_id' => 'reports#reports_basedatosexm', via: [:get, :post]
   
+  match 'companies/reports/reports_cexamen/:company_id' => 'reports#reports_cexamen', via: [:get, :post]
+  match 'companies/reports/rpt_conductor_pdf/:company_id' => 'reports#rpt_conductor_pdf', via: [:get, :post]
+ 
   match 'companies/reports/reports_iconsultas/:company_id' => 'reports#reports_iconsultas', via: [:get, :post]
   
   
@@ -818,6 +822,7 @@ end
   match 'facturas/generar4/:company_id' => 'facturas#generar4', via: [:get, :post]
   match 'facturas/generar5/:company_id' => 'facturas#generar5', via: [:get, :post]
   match 'facturas/rpt_ost_3/:company_id' => 'facturas#rpt_ost_3', via: [:get, :post]
+  match 'facturas/rpt_conductor_pdf/:company_id' => 'facturas#rpt_conductor_pdf', via: [:get, :post]
   
   
   match 'facturas/newfactura2/:factura_id' => 'facturas#newfactura2', via: [:get, :post]

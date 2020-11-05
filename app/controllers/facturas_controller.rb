@@ -6381,7 +6381,244 @@ end
       
   end
 
+#############################################################################################
 
+
+
+
+def rpt_conductor_pdf
+
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+  
+    @fecha6  = params[:fecha6]   
+    @usuario = params[:usuario]
+
+   
+    @conductor  = @company.get_conductor
+
+
+        Prawn::Document.generate "app/pdf_output/TP_CM_F_015.pdf" , :page_layout => :landscape ,:page_size=>"A4"  do |pdf|
+            pdf.font "Helvetica"
+            pdf = build_pdf_header_rpt10a(pdf)
+            pdf = build_pdf_body_rpt10a(pdf)
+            build_pdf_footer_rpt10a(pdf)
+            $lcFileName =  "app/pdf_output/TP_CM_F_015.pdf"              
+        end     
+        $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+        send_file("app/pdf_output/TP_CM_F_015.pdf", :type => 'application/pdf', :disposition => 'inline')    
+ 
+  end
+
+
+
+
+###################################################################################################
+##REPORTE DE COMPRAS FACTURAS CREDITOS 1
+###################################################################################################
+
+
+  def build_pdf_header_rpt10a(pdf)
+      pdf.font "Helvetica" , :size => 8
+      image_path = "#{Dir.pwd}/public/images/tpereda2.png"
+
+    
+      
+       table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD OCUPACIONAL",:rowspan => 2},"CODIGO ","TP-EC-F-009 "], 
+          ["VERSION: ","02"], 
+          ["CONTROL DE DOCUMENTOS CONDUCTORES - LIMA ","Pagina: ","1 de 1 "] 
+         
+          ])
+      
+
+
+
+       pdf.table(table_content  ,{
+           :position => :center,
+           :width => pdf.bounds.width
+         })do
+           columns([1,2]).font_style = :bold
+            columns([0]).width = 118.55
+            columns([1]).width = 451.34
+            columns([1]).align = :center
+            
+            columns([2]).width = 100
+          
+            columns([3]).width = 100
+      
+         end
+        
+         table_content2 = ([["Fecha : ",Date.today.strftime("%d/%m/%Y")]])
+
+         pdf.table(table_content2,{:position=>:right }) do
+
+            columns([0, 1]).font_style = :bold
+            columns([0, 1]).width = 100
+            
+         end 
+
+     
+         pdf.text "Todos los conductores"
+         
+         pdf.move_down 2
+      
+      pdf 
+  end   
+
+  def build_pdf_body_rpt10a(pdf)
+
+   
+    pdf.font "Helvetica" , :size => 5
+
+      headers = []
+      table_content = []
+
+      Conductor::TABLE_HEADERS.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content << headers
+
+      nroitem=1
+      lcmonedasoles   = 2
+      lcmonedadolares = 1
+      @total1=0
+      @total2=0
+      total_soles = 0
+      total_dolares =  0
+
+      lcDoc='FT'      
+
+      if @conductor.count > 0 
+
+       
+       row = []
+
+       for  linea  in @conductor
+
+   
+                 
+                row = []          
+                row << nroitem.to_s
+                row << linea.employee.firstname  
+                row << linea.employee.lastname 
+                row << linea.lugar 
+                row << linea.anio 
+                row << linea.anio1
+                row << linea.anio2
+                row << linea.anio3
+                row << linea.anio4
+                row << linea.licencia
+                row << linea.categoria
+                row << linea.expedicion_licencia.strftime("%d/%m/%Y")
+                row << linea.revalidacion_licencia.strftime("%d/%m/%Y")
+                row << linea.categoria_especial
+                row << linea.expedicion_licencia_especial.strftime("%d/%m/%Y")
+                 row << linea.revalidacion_licencia_especial.strftime("%d/%m/%Y")
+                row << linea.iqbf
+        
+                row << linea.dni_emision.strftime("%d/%m/%Y")
+                row << linea.dni_caducidad.strftime("%d/%m/%Y")
+                row << linea.ap_emision.strftime("%d/%m/%Y")
+                row << linea.ap_caducidad.strftime("%d/%m/%Y")
+                row << linea.ape_emision.strftime("%d/%m/%Y")
+                row << linea.ape_caducidad.strftime("%d/%m/%Y")
+               
+
+                table_content << row
+
+                nroitem = nroitem + 1
+
+      
+
+      end 
+    end 
+
+    
+              
+              
+          table_content << row
+          
+
+          result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:left
+                                          columns([1]).width =  60
+                                          columns([2]).width =  60 
+         
+                                          columns([3]).align=:left
+                                          
+                                          columns([4]).align=:left
+                                           columns([4]).width = 35
+                                          columns([5]).width = 40                                                                           
+         
+                                          columns([6]).width = 40                                                                           
+         
+                                          columns([7]).align=:left 
+                                          columns([7]).width = 40
+                                          
+                                          columns([8]).align=:left  
+                                          columns([8]).width =40
+                                          
+                                          columns([9]).align=:left 
+                                          columns([9]).width =40
+                                          
+                                          columns([10]).align=:left
+                                          columns([10]).width =30
+                                          
+                                          
+                                          
+                                        end                                          
+                                        
+      pdf.move_down 50
+
+
+
+
+
+     
+      pdf 
+
+    end
+
+    def build_pdf_footer_rpt10a(pdf)      
+
+      table_content3 =[]
+      row = []
+      row << "--------------------------------------------"
+      row << "--------------------------------------------"
+      row << "--------------------------------------------"
+      
+      table_content3 << row 
+      row = []
+      row << "Elaborado por:
+        Coord. Exámenes 
+        medicos y capacitaciones"
+      row << "V.B.Jefe Operaciones"
+      row << "V.B.Administracion"
+      
+      table_content3 << row 
+
+      
+          result = pdf.table table_content3, {:position => :center,
+                                        :header => true,  :cell_style => {:border_width => 0},
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:center
+                                          columns([2]).align=:center 
+                                          
+                                        end                             
+
+      pdf      
+  end
   private
   def factura_params
     params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id,:detraccion,:factura2,:description,:document_id,:tipoventa_id,:contrato,:ost,:manifest_id,:os_customer )

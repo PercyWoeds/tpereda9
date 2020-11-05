@@ -1,0 +1,28 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %>
+</div>
+
+<h1>
+  <%= image_tag("reports_48.png", :class => "vmiddle") %>
+  Reportes
+</h1>
+
+<div class="mid_box bordered_right">
+  <h3>
+   Examenes Medicos y Capacitaciones 
+   
+     </h3>
+  
+  <p class="big">
+    <%= link_to "Listado de Conductores  ", "/companies/reports/rpt_conductor_pdf/#{@company.id}" %>
+  </p>
+
+
+ 
+    
+  </div>
+
+
+
+<%= br() %>

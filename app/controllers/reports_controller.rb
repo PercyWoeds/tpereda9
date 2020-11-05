@@ -1589,6 +1589,12 @@ def rpt_purchase61_all
     @cajas =Caja.order(:descrip)
     
   end
+  def reports_cexamen 
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Listado de Examen Medicos  "    
+    
+  end
+
   def reports_parte 
     @company = Company.find(params[:company_id])    
     @pagetitle = "Listado de Parte diario "    
@@ -1638,6 +1644,15 @@ def rpt_purchase61_all
     @locations = @company.get_locations
   end
   
+  def rpt_conductor_pdf 
+    
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Reportes de Ordenes "    
+    @customers = @company.get_customers()
+    @monedas=@company.get_monedas    
+    
+    @locations = @company.get_locations
+  end
  def rpt_facturas_monitoreo 
     @company = Company.find(params[:company_id])    
     @pagetitle = "Reportes de Ordenes "    

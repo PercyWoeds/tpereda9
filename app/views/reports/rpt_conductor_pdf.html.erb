@@ -1,0 +1,29 @@
+<%= render 'layouts/charts' %>
+
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Reports", "/companies/reports/#{@company.id}" %>
+</div>
+
+<h1>
+  <%= image_tag("reports_48.png", :class => "vmiddle") %>
+  Reporte de Conductores 
+</h1>
+ 
+  
+<%= form_tag(rpt_conductor_pdf_facturas_path , :method => "get") do %>
+
+    
+	
+
+
+<br> 
+ <%= submit_tag "To PDF", :name => "print" %>
+ <%= submit_tag "To Excel", :name => "print" %>
+  
+<% end %>
+
+   
+</html>
+

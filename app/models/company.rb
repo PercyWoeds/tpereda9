@@ -17,12 +17,20 @@ class Company < ActiveRecord::Base
   has_many :ajusts 
   has_many :manifests 
 
+def get_conductor()
+   
+   @dato = Conductor.joins(:employee).order("employees.full_name ")
+
+   return @dato 
+ end 
 
  def get_proyecto_minero()
    
    @dato = ProyectoMinero.all.order(:descrip)
    return @dato 
  end 
+
+
  def get_tipoproveedor()
    
    @tipoproveedor = Tipoproveedor.all
