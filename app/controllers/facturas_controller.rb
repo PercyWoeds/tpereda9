@@ -6043,12 +6043,15 @@ end
     @fecha2 = params[:fecha2]
     
      @tipo   = params[:tiporeporte]
+ @location  = params[:location_id]
 
-    @orden_transporte = @company.get_ordertransporte_day(@fecha1,@fecha2,@tipo) 
+    @orden_transporte = @company.get_ordertransporte_day(@fecha1,@fecha2,@tipo,@location) 
     
       case params[:print]
         when "To PDF" then 
-            redirect_to :action => "rpt_ost_2_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2], :tiporeporte =>params[:tiporeporte]
+            redirect_to :action => "rpt_ost_2_pdf", :format => "pdf", 
+            :fecha1 => params[:fecha1], :fecha2 => params[:fecha2],
+            :tiporeporte =>params[:tiporeporte],:location_id => params[:location_id]
 
         when "To Excel" then render xlsx: 'rpt_ost_2_xls'
     
@@ -6068,8 +6071,10 @@ end
     @fecha1 = params[:fecha1]
     @fecha2 = params[:fecha2]
     @tipo   = params[:tiporeporte]
-    @tipo = 1      
-    @orden_transporte = @company.get_ordertransporte_day(@fecha1,@fecha2,@tipo)  
+    @location = params[:location_id]
+  
+
+    @orden_transporte = @company.get_ordertransporte_day(@fecha1,@fecha2,@tipo,@location)  
       
     Prawn::Document.generate "app/pdf_output/ost2.pdf" , :page_layout => :landscape , :page_size=> "A3" do |pdf|      
         pdf.font "Helvetica"

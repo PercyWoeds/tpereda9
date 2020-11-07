@@ -581,12 +581,13 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
     return @delivery
  end 
  #orden de transporte
- def get_ordertransporte_day(fecha1,fecha2,tipo)
+ def get_ordertransporte_day(fecha1,fecha2,tipo,location )
    
     if tipo == "0"
-      @orden = Tranportorder.where(["company_id = ? AND created_at >= ? AND created_at <= ?", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59"]).order(:code)
+
+      @orden = Tranportorder.where(["company_id = ? AND created_at >= ? AND created_at <= ? and location_id = ?", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59",location]).order(:code)
     else
-      @orden = Tranportorder.where(["company_id = ? AND fecha1 >= ? AND fecha1 <= ?", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59"]).order(:code)
+      @orden = Tranportorder.where(["company_id = ? AND fecha1 >= ? AND fecha1 <= ? and location_id = ?", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59",location  ]).order(:code)
     end 
     return @orden 
  end 

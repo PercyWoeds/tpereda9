@@ -23,13 +23,27 @@ totals = []
 
   
 <p>
+
+
   <label for="tiporeporte"> Tipo de Reporte:</label><br>
   <select id="tiporeporte" name="tiporeporte" >
 
-    <option value="0" selected> FECHA O.S.T. </option>
+    <option value="1" selected> FECHA O.S.T. </option>
+    <option value="0" selected> FECHA Creacion </option>
     
   </select>
 </p>
+
+
+       
+        
+      
+      <td>
+      <div class="field">
+        <h5> Locales </h5>
+        <%= select_tag(:location_id,options_from_collection_for_select(@locations,'id','name'),:id => "location_select"  ) %>
+      </div>
+      
 
   
   <div class="field">
