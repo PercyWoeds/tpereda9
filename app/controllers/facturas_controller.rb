@@ -6071,6 +6071,7 @@ end
     @fecha1 = params[:fecha1]
     @fecha2 = params[:fecha2]
     @tipo   = params[:tiporeporte]
+    
     @location = params[:location_id]
   
 

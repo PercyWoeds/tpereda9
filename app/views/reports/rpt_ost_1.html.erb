@@ -32,6 +32,14 @@ totals = []
   </select>
 </p>
 
+   
+      
+      <td>
+      <div class="field">
+        <h5> Locales </h5>
+        <%= select_tag(:location_id,options_from_collection_for_select(@locations,'id','name'),:id => "location_select"  ) %>
+      </div>
+      
   
   <div class="field">
       <input type="date" name="fecha1" value="2017-08-01" style = "width: 150px" >

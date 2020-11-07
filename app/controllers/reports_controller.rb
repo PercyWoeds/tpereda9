@@ -1284,6 +1284,7 @@ def rpt_facturas_4
   def rpt_ost_1
     @company = Company.find(params[:company_id])
     @pagetitle = "Orden Servicio de Transporte"    
+       @locations = @company.get_locations()
   end
   def rpt_ost_2
     @company = Company.find(params[:company_id])
