@@ -75,7 +75,7 @@
       <%= f.select :payment_id,options_from_collection_for_select(@payments,'id','descrip') %>
     </div>
   
-    <%= hr() %>
+
         
 
     <div class="field">
@@ -95,6 +95,12 @@
       <%= f.text_field :contrato  %>
     </div>
 
+  <div class="field">
+      <%= f.label :documento2, "Documento Modificar:", :class => "bold"  %> <br/>
+      <%= f.text_field :documento2  %>
+    </div>
+
+
 
     <div class="field" id="list_items">
       <p class="bold big">Products:</p>
@@ -108,7 +114,8 @@
     <div class="field" id="list_items3">
       <p class="bold big">Guias:</p>
     </div>
-    <%= hr() %>
+   
+
   
     <div class="field">
       <%= f.check_box :processed %>
@@ -138,8 +145,7 @@
       <%= f.text_area :os_customer %>
     </div>  
       
-    <%= hr() %>
-
+   
     <div class="field">
       <label for="ac_user" class="bold">Seller*</label><br />
       <input type="text" name="ac_user" id="ac_user" value="<% if @ac_user %><%= @ac_user %><% end %>" />

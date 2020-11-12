@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201031151706) do
+ActiveRecord::Schema.define(version: 20201111145346) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -391,6 +391,10 @@ ActiveRecord::Schema.define(version: 20201031151706) do
     t.datetime "updated_at",                     null: false
     t.datetime "revalidacion_licencia_especial"
     t.string   "idnumber"
+    t.string   "anio1"
+    t.string   "anio2"
+    t.string   "anio3"
+    t.string   "anio4"
   end
 
   add_index "conductors", ["employees_id"], name: "index_conductors_on_employees_id", using: :btree
@@ -962,6 +966,7 @@ ActiveRecord::Schema.define(version: 20201031151706) do
     t.string   "ost"
     t.integer  "manifest_id"
     t.text     "os_customer"
+    t.string   "documento2"
   end
 
   create_table "faltantes", force: :cascade do |t|

@@ -13,4 +13,12 @@ class Manifestship < ActiveRecord::Base
 	    return customers.name 
 	    
 	end
+
+	def get_code(id)
+
+	   a =  Manifest.find(id)
+	   return a.code 
+
+	end 
+
 end

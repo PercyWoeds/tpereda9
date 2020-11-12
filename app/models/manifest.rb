@@ -37,7 +37,12 @@ def get_locations()
     
     return locations
   end
+def get_code(id)
 
+   a =  Manifest.find(id)
+   return a.code 
+
+end 
 
 def get_processed
     if(self.processed == "1")

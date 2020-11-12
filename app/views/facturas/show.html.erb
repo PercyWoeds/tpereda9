@@ -40,6 +40,7 @@
 <% end %>
 
 
+
 <p>
   <b>Code:</b>
   <%= @invoice.code %>
@@ -56,9 +57,17 @@
   <%= @invoice.moneda.description  %>
 </p>
 
+<% if !@invoice.documento2.nil? %>
+<p>
+  <b>Documento Modificar </b>
+  <%= @invoice.documento2 %>
+</p>
+<% end %>
+
 <%= hr() %>
 
 <h3>
+
   Informacion Cliente 
 </h3>
 

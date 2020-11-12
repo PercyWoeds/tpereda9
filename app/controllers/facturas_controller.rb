@@ -5,6 +5,7 @@ include ServicesHelper
 require "open-uri"
  
 
+
 class FacturasController < ApplicationController
 
     $: << Dir.pwd  + '/lib'
@@ -4255,6 +4256,8 @@ def client_data_headers
         
         lib = File.expand_path('../../../lib', __FILE__)
         $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
+
         
         require 'sunat'
         require './config/config'
@@ -4277,13 +4280,16 @@ def client_data_headers
         puts @serie_factura
 
 
-       if @invoice.document_id == 13
+      
+       if @invoice.document_id == 1
            if @invoice.moneda_id == 1
                 case_96 = ReceiptGenerator.new(12, 96, 1,@serie_factura,@invoice.id).with_different_currency2(true)
             else        
                 case_52 = ReceiptGenerator.new(8, 52, 1,@serie_factura,@invoice.id).with_igv2(true)
             end 
-       else        
+       end      
+
+        if @invoice.document_id == 7
            if @invoice.moneda_id == 1  
                 $lcFileName=""
                 case_49 = InvoiceGenerator.new(1,3,1,@serie_factura,@invoice.id).with_different_currency2(true)
@@ -4293,11 +4299,143 @@ def client_data_headers
                 case_3  = InvoiceGenerator.new(1,3,1,@serie_factura,@invoice.id).with_igv2(true)
            end        
         end 
+
+   if @invoice.document_id == 2 
+
+        parts = @invoice.fecha.split("-")
+          $aa = parts[0].to_i
+          $mm = parts[1].to_i        
+          $dd = parts[2].to_i      
+
+          $lcVVenta1      =  @invoice.subtotal * 100        
+          $lcVVenta       =  $lcVVenta1.round(0)
+
+          $lcIgv1         =  @invoice.tax * 100
+          $lcIgv          =  $lcIgv1.round(0)
+
+          $lcTotal1       =  @invoice.total * 100
+          $lcTotal        =  $lcTotal1.round(0)
+     
+          @invoice_detail = @invoice.where(factura_id: @invoice.id).first 
+
+
+          $lcPrecioCigv1  =  @invoice_detail.price * 100
+          $lcPrecioCigv2   = $lcPrecioCigv1.round(0).to_f
+          $lcPrecioCigv   =  $lcPrecioCigv2.to_i 
+
+          $lcPrecioSigv1  =  (@invoice_detail.price / 1.18) * 100
+          $lcPrecioSigv2   = $lcPrecioSigv1.round(0).to_f
+          $lcPrecioSIgv   =  $lcPrecioSigv2.to_i 
+
+
+
+        
+          if @invoice.moneda_id == 2
+                  $lcMonedaValor ="USD"
+          else
+                  $lcMonedaValor ="PEN"
+          end
+        
+        credit_note_data = { issue_date: Date.new($aa,$mm,$dd), id: @invoice.code , customer: {legal_name:@factura.customer.name , ruc:@factura.customer.ruc  },
+                             billing_reference: {id: @factura.documento2, document_type_code: "01"},
+                             discrepancy_response: {reference_id:@factura.documento2, response_code: "09", description: $lcDescrip},
+                             lines: [{id: "1", item: {id: "05", description: @invoice_detail.first.descrip}, quantity: @invoice_detail.first.quantity, unit: 'ZZ', 
+                                  price: {value: @lcPrecioSIgv}, pricing_reference: $lcPrecioCigv, tax_totals: [{amount: $lcIgv, type: :igv, code: "10"}], line_extension_amount:$lcVVenta }],
+                             additional_monetary_totals: [{id: "1001", payable_amount: $lcVVenta}], tax_totals: [{amount: $lcIgv, type: :igv}], legal_monetary_total: {value: $lcTotal, currency: $lcMonedaValor }}
+
+
+        if @invoice.moneda_id == 2
+              puts "dolares "
+          
+             credit_note = SUNAT::CreditNote.new(credit_note_data)
+  
+            $aviso = 'Nota enviada con exito...'
+        else            
+       
+             credit_note = SUNAT::CreditNote.new(credit_note_data)
+            $aviso = 'Nota enviada con exito...'
+        end 
+
+        if credit_note.valid?                       
+           credit_note.to_pdf    
+           document_type_code = "07"
+           file_name =   "#{accounting_supplier_party.account_id}-#{document_type_code}-#{id}"
+
+           $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+file_name              
+          send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+
+        else
+          
+          $aviso = "Invalid document, ignoring output: #{credit_note.errors.messages}"
+
+        end
+
+      end 
+
+      if @invoice.document_id == 3
+
+
+        parts = @invoice.fecha.to_s.split("-")
+          $aa = parts[0].to_i
+          $mm = parts[1].to_i        
+          $dd = parts[2].to_i      
+puts "nota debito"
+puts $aa
+puts $mm
+puts $dd
+
+          $lcVVenta1      =  @invoice.subtotal * 100        
+          $lcVVenta       =  $lcVVenta1.round(0)
+
+          $lcIgv1         =  @invoice.tax * 100
+          $lcIgv          =  $lcIgv1.round(0)
+
+          $lcTotal1       =  @invoice.total * 100
+          $lcTotal        =  $lcTotal1.round(0)
+     
+          @invoice_detail = InvoiceService.where(factura_id: @invoice.id).first 
+
+
+          $lcPrecioCigv1  =  @invoice_detail.price * 100
+          $lcPrecioCigv2   = $lcPrecioCigv1.round(0).to_f
+          $lcPrecioCigv   =  $lcPrecioCigv2.to_i 
+
+          $lcPrecioSigv1  =  (@invoice_detail.price / 1.18) * 100
+          $lcPrecioSigv2   = $lcPrecioSigv1.round(0).to_f
+          $lcPrecioSIgv   =  $lcPrecioSigv2.to_i 
+
+           $lcDescrip = "AUMENTO EN EL VALOR "   
+
+          debit_note_data = { issue_date: Date.new($aa,$mm,$dd), id: @invoice.code, customer: {legal_name: @invoice.customer.name , ruc: @invoice.customer.ruc },
+                     billing_reference: {id: @invoice.documento2, document_type_code: "01"},
+                     discrepancy_response: {reference_id: @invoice.documento2, response_code: "02", description: $lcDescrip},
+                     lines: [{id: "1", item: {id: "05", description: @invoice_detail.service.name }, quantity: @invoice_detail.quantity, unit: 'ZZ', 
+                          price: {value: $lcPrecioCigv}, pricing_reference: $lcPrecioCigv, tax_totals: [{amount: $lcIgv, type: :igv, code: "10"}], line_extension_amount:$lcVVenta }],
+                     additional_monetary_totals: [{id: "1001", payable_amount: $lcVVenta}], tax_totals: [{amount: $lcIgv, type: :igv}], legal_monetary_total: $lcTotal}
+
+          debit_note = SUNAT::DebitNote.new(debit_note_data)
+          
+
+        if debit_note.valid?
+            debit_note.to_pdf
+              document_type_code = "08"
+           file_name =   "20424092941-#{document_type_code}-#{@invoice.code}"
+            $lcFileName1=File.expand_path('../../../', __FILE__)+ "/app/pdf_output/"+file_name  
+          puts "archivoooo-.--"
+            puts $lcFileName1            
+            send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+        else          
+          $aviso = "Invalid document, ignoring output: #{debit_note.errors.messages}"  
+          puts $aviso         
+        end
+
+
+      end 
+        
+
+
     
-        $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
-        send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
-        @@document_serial_id =""
-        $aviso=""
+  
     end 
 
         
@@ -6537,8 +6675,7 @@ def rpt_conductor_pdf
                 table_content << row
 
                 nroitem = nroitem + 1
-
-      
+    
 
       end 
     end 
@@ -6627,7 +6764,7 @@ def rpt_conductor_pdf
   end
   private
   def factura_params
-    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id,:detraccion,:factura2,:description,:document_id,:tipoventa_id,:contrato,:ost,:manifest_id,:os_customer )
+    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id,:detraccion,:factura2,:description,:document_id,:tipoventa_id,:contrato,:ost,:manifest_id,:os_customer ,:documento_modificar )
   end
 
 end

@@ -2,9 +2,11 @@ require_relative 'document_generator'
 
 class CreditNoteGenerator < DocumentGenerator
   
-  def initialize(group, group_case, serie)
+  def initialize(group, group_case, serie,numero)
     super(group, group_case)
     @serie = serie
+    @numero = numero 
+    
   end
 
   def for_igv_document(associated_document, pdf=false)
@@ -57,7 +59,7 @@ class CreditNoteGenerator < DocumentGenerator
 
   def credit_note_data_for_line(line, associated_document)
     legal_monetary_total = line.line_extension_amount.value + line.tax_totals.inject(0){|sum, tax| sum + tax.tax_amount.value}
-    credit_note_data = {id: "#{@serie}-#{"%03d" % @@document_serial_id}", customer: associated_document.customer,
+    credit_note_data = {id: "#{@serie}-#{"%03d" % @numero}", customer: associated_document.customer,
                        billing_reference: {id: associated_document.id, document_type_code: TYPES[associated_document.class.name]},
                         discrepancy_response: {reference_id: associated_document.id, response_code: "09", description: "POR AJUSTE DE PRECIO"},
                         lines: [{id: "1", quantity: line.quantity.quantity, unit: 'GLL', item: line.item,
@@ -66,7 +68,7 @@ class CreditNoteGenerator < DocumentGenerator
                         legal_monetary_total: {value: legal_monetary_total, currency: associated_document.document_currency_code}}
 
 
-    @@document_serial_id += 1
+  
     credit_note_data  
     
 if credit_note.valid?

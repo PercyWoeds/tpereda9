@@ -339,8 +339,6 @@ end
 def get_fecha_pago(id)
 
 
-    
-
        @dato = CustomerPayment.where(id: id )
 
      if @dato 
@@ -461,5 +459,21 @@ def anular
       
     end
   end
+
+  def get_st
+
+    @sts =  Manifestship.where(tranportorder_id: self.id )
+     a = ""
+    for st in @sts 
+              a << " " <<  st.get_code(st.manifest_id) << " "
+              
+    end    
+
+    return a  
+
+    
+  end
+
+
 
 end

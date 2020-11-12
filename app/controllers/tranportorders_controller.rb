@@ -442,7 +442,7 @@ def client_data_headers
       client_headers  = [["Conductor de carga :",@ost.employee.full_name ]]
       client_headers << ["Conducto de ruta :", @ost.get_empleado(@ost.employee2_id)]
       client_headers << ["Supervisor/apoyo :",@ost.get_empleado(@ost.employee3_id)]
-      client_headers << ["Placa: Tracto/Carreta :",@ost.truck.placa + " " + @ost.get_placa(@ost.truck2_id) + "Ejes: " +@ost.get_ejes2(@ost.id ) ]
+      client_headers << ["Placa: Tracto/Carreta :",@ost.truck.placa + " " + @ost.get_placa(@ost.truck2_id) + "   Ejes: " +@ost.get_ejes2(@ost.id ) ]
       client_headers << ["Escolta:",@ost.get_empleado(@ost.employee4_id)]
       
       client_headers
@@ -459,7 +459,7 @@ def client_data_headers
    def invoice_summary
       lcTotal= 0.00
       invoice_summary = []
-      invoice_summary << ["Total Facturado:", ActiveSupport::NumberHelper::number_to_delimited(lcTotal ,delimiter:",",separator:".").to_s]
+      invoice_summary << ["Nro.Factura: "," ","Total Facturado:", ActiveSupport::NumberHelper::number_to_delimited(lcTotal ,delimiter:",",separator:".").to_s]
 
       invoice_summary
     end
@@ -513,35 +513,61 @@ def build_pdf_header_ost(pdf)
      pdf.font "Helvetica"  , :size => 8
      image_path = "#{Dir.pwd}/public/images/tpereda2.png"
 
-      two_dimensional_array0 = [["SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD "],["OCUPACIONAL "],["ORDEN DE SERVICIO DE TRANSPORTE : "+@ost.code ]]    
-      two_dimensional_array1 = [["CODIGO png "],["VERSION"],["PAGINA"]] 
-      two_dimensional_array2 = [["TP-RD-F-005"],["08"],["1 DE 1 "]]
-       
 
-      table_content = ([ [{:image=> image_path, :width => 100 },{:content => two_dimensional_array0,:width=>320,},two_dimensional_array1,two_dimensional_array2 ]
-                ]) 
+     
+       table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD OCUPACIONAL",:rowspan => 2},"CODIGO ","TP-RD-F-005"], 
+          ["VERSION: ","9"], 
+          ["ORDEN DE SERVICIO DE TRANSPORTE Nro. " + @ost.code ,"Pagina: ","1 de 1 "] 
+         
+          ])
+        
 
-      pdf.table(table_content, {
-          :position => :center,
-          :cell_style => {:border_width => 0},
-          :width => pdf.bounds.width
-        }) do
-          columns([0, 2]).font_style = :bold
 
+
+
+       pdf.table(table_content  ,{
+           :position => :center,
+           :width => pdf.bounds.width
+         })do
+           columns([1,2]).font_style = :bold
+            columns([0]).width = 118.55
+            columns([1]).width = 301.45
+            columns([1]).align = :center
+            
+            columns([2]).width = 60
           
-        end
-
-
-      pdf.move_down 2
+            columns([3]).width = 60
+      
+         end
+        
+      
+        
+         pdf.move_down 2
       pdf 
 
   end
 
   def build_pdf_body_ost(pdf)
 
-    pdf.text "__________________________________________________________________________", :size => 13, :spacing => 2
-    pdf.font "Helvetica" , :size => 8
 
+       table_content = ([ ["Nro.DE S.T.: "+@ost.get_st ]   ])
+      
+
+       pdf.table(table_content  ,{
+           :position => :center,
+           :width => pdf.bounds.width
+         })do
+           columns([0]).font_style = :bold
+          
+            columns([0]).align = :center
+          
+      
+         end
+        
+      
+
+         pdf.move_down 2
+   
     max_rows = [client_ost_headers.length, ost_headers.length, 0].max
       rows = []
       (1..max_rows).each do |row|
@@ -555,7 +581,7 @@ def build_pdf_header_ost(pdf)
 
         pdf.table(rows, {
           :position => :center,
-          :cell_style => {:border_width => 0},
+          :cell_style => {:border_width => 0, :height => 17},
           :width => pdf.bounds.width
         }) do
           columns([0, 2]).font_style = :bold
@@ -571,14 +597,19 @@ def build_pdf_header_ost(pdf)
       headers = []
       table_content = []
 
-      Tranportorder::TABLE_HEADERS_OST.each do |header|
-        cell = pdf.make_cell(:content => header)
-        cell.background_color = "FFFFCC"
-        headers << cell
-      end
+    
 
-      table_content << headers
 
+
+    header_text = [ ]
+    tb = [[{:content => "EMPRESA", :rowspan => 2},
+      {:content => "N.GUIA", :rowspan => 2},
+      {:content => "DESCRIPCION DE LA CARGA " },
+      {:content => "PESO", :rowspan => 2, width: 60 },
+      {:content => "IMPORTE", :rowspan => 2, width: 60 }],
+     [ {:content => "GENERAL [  ] PESADA [  ] EXTRAPESADA [  ] SOBREDIMENSIONADA [  ] MATPEL/IQBF [  ]", size: 6  } ]]
+  
+   
       nroitem=1
 
       @dir3=""
@@ -586,7 +617,7 @@ def build_pdf_header_ost(pdf)
 
       if Manifestship.where(tranportorder_id: @ost.id ).exists? 
 
-         a= Manifestship.where(tranportorder_id: @ost.id ).first 
+         a = Manifestship.where(tranportorder_id: @ost.id ).first 
 
            @manifest = Manifest.find(a.manifest_id) 
            @dir3 = @manifest.customer.name 
@@ -594,56 +625,49 @@ def build_pdf_header_ost(pdf)
 
       end 
 
-      row = []
-            row << @dir3
-            row << "" 
-            row << @dir4
-            row << " "
-            row << " "
-            table_content << row
       
-      ary = [1,2,3,4,5,6,7]
-      
-      ary.each do |i|
-      
-            row = []
-            row << " "
-            row << " "
-            row << " "
-            row << " "
-            row << " "
-            table_content << row
+  tb_text = [[@dir3,"",@dir4,"",""],
 
-            nroitem=nroitem + 1
-        end
-      
+[" "," ","","",""],
+[" "," ","","",""],
+[" "," ","","",""],
+[" "," ","","",""]
 
-       
-      result = pdf.table table_content, {:position => :center,
+]
+
+    pdf.table( tb + tb_text , header: 2 ,:position => :center,
                                         :header => true,
-                                        :width => pdf.bounds.width
-                                              } do
-                                          columns([0]).align=:center
-                                          columns([1]).align=:right
-                                          columns([2]).align=:center
-                                          columns([3]).align=:center
-                                          columns([4]).align=:right
-                                          columns([5]).align=:right
-                                          columns([6]).align=:right
 
-                                        end
+                                        :width => pdf.bounds.width,
+                                        
+                                              ) do
 
-      pdf.move_down 10
+      row(0).font_style = :bold
+       columns([0]).width = 120
+    
+    end
+
+    
+       
+     
+      pdf.move_down 2
       
       pdf.table invoice_summary, {
         :position => :right,
         :cell_style => {:border_width => 1},
-        :width => pdf.bounds.width/2
+        :width => pdf.bounds.width
       } do
-        columns([0]).font_style = :bold
-        columns([1]).align = :right
+        columns([0,2]).font_style = :bold
+        columns([0]).align = :right
+
+        columns([0]).width  = 280
+
+        columns([2]).width  = 100
+        columns([3]).width  = 60
 
       end
+
+
       @dir1 = ""
       @dir2 = ""
       if Manifestship.where(tranportorder_id: @ost.id ).exists? 
@@ -652,17 +676,42 @@ def build_pdf_header_ost(pdf)
 
            @manifest = Manifest.find(a.manifest_id) 
            @dir1 = @manifest.direccion1.upcase 
-           @dir2 = @manifest.direccion2.upcase 
-
+           @dir2 = @manifest.direccion2.upcase
+           @contacto = "CARGA : "+ @manifest.contacto1  + "  DESCARGA: "+ @manifest.contacto2 
       end 
-    
       
+          
+            tb_text_guias = [ [{:content => "GUIAS EN BLANCO : ", :font_style => :bold , :border_width => 0 }, 
+                          @ost.description,""," ","","",""],
+
+                          [{:content => " ", :font_style => :bold , :border_width => 0 },"",""," ","","",""],
+                        ]
+
+            pdf.table( tb_text_guias ,:position => :right,
+                                              
+                                              :width =>  pdf.bounds.width,
+                                              :cell_style => {:height => 17}
+                                                    ) do
+
+            row(0).font_style = :bold
+            columns([0]).width = 120
+            end
+
+         pdf.move_down 2
       
-      pdf.text "GUIAS EN BLANCO    : "+  @ost.description
-      pdf.text "CONTACTO           : "
-      pdf.text "DIRECCION CARGUIO  : " + @dir1 
-      pdf.text "DIRECCION DESCARGA : " + @dir2 
+
+          tb_text_direccion = [ [{:content => "CONTACTO: ", :font_style => :bold}, @contacto ],
+                   [{:content => "DIRECCION CARGUIO  : ", :font_style => :bold},@dir1],
+                   [{:content => "DIRECCION DESCARGA : ", :font_style => :bold},@dir2]]
+
+      pdf.table( tb_text_direccion ,:position => :right,
+                                              :width => pdf.bounds.width
+                                                    ) do
+              columns([0]).width = 120
+              columns([0]).font_style = :bold
+            end
       
+
       pdf.move_down 10
       
         data3=  [["-----------------------------------","-----------------------------------","-----------------------------------" ],
