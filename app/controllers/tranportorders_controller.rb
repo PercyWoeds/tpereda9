@@ -515,7 +515,7 @@ def build_pdf_header_ost(pdf)
 
 
      
-       table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD OCUPACIONAL",:rowspan => 2},"CODIGO ","TP-RD-F-005"], 
+       table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD EN EL TRABAJO ",:rowspan => 2},"CODIGO ","TP-RD-F-005"], 
           ["VERSION: ","9"], 
           ["ORDEN DE SERVICIO DE TRANSPORTE Nro. " + @ost.code ,"Pagina: ","1 de 1 "] 
          
@@ -529,15 +529,17 @@ def build_pdf_header_ost(pdf)
            :position => :center,
            :width => pdf.bounds.width
          })do
-           columns([1,2]).font_style = :bold
+            columns([1,2]).font_style = :bold
             columns([0]).width = 118.55
             columns([1]).width = 301.45
             columns([1]).align = :center
-            
+            columns([2]).align = :center
+            columns([3]).align = :center
+
             columns([2]).width = 60
-          
+
             columns([3]).width = 60
-      
+
          end
         
       
@@ -606,7 +608,7 @@ def build_pdf_header_ost(pdf)
       {:content => "N.GUIA", :rowspan => 2},
       {:content => "DESCRIPCION DE LA CARGA " },
       {:content => "PESO", :rowspan => 2, width: 60 },
-      {:content => "IMPORTE", :rowspan => 2, width: 60 }],
+      {:content => "PRECIO FACTURA", :rowspan => 2, width: 60 }],
      [ {:content => "GENERAL [  ] PESADA [  ] EXTRAPESADA [  ] SOBREDIMENSIONADA [  ] MATPEL/IQBF [  ]", size: 6  } ]]
   
    
@@ -677,7 +679,7 @@ def build_pdf_header_ost(pdf)
            @manifest = Manifest.find(a.manifest_id) 
            @dir1 = @manifest.direccion1.upcase 
            @dir2 = @manifest.direccion2.upcase
-           @contacto = "CARGA : "+ @manifest.contacto1  + "  DESCARGA: "+ @manifest.contacto2 
+           @contacto = "CARGA : "+ @manifest.contacto1 + " Telefono: "+ @manifest.telefono1 + "  DESCARGA: "+ @manifest.contacto2 + " Telefono :  " + @manifest.telefono2
       end 
       
           
