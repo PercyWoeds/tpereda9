@@ -3280,7 +3280,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
               movdetail.price = 0  
            else 
                 movdetail.price = invdetail.precio_unitario
-                
+
                 if detail.product_id == 4452  
                  movdetail.price = 40.00
                 end 
@@ -3327,10 +3327,17 @@ def get_purchaseorder_detail2(fecha1,fecha2)
               if $lcmoneda != nil                 
                 if $lcmoneda == 2
                   movdetail.price = detail.price_without_tax
+
+
+                if detail.product_id == 4452  
+                 movdetail.price = 40.00
+                end 
+                
                 else
                   @dolar = Tipocambio.find_by(["dia  >= ? and dia <= ? ", "#{$lcFecha} 00:00:00","#{$lcFecha} 23:59:59" ])
                   if @dolar 
                     movdetail.price = $lcPreciosinigv * @dolar.compra
+
                   else
                     movdetail.price = 0                  
                   end 
