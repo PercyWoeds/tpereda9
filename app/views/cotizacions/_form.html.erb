@@ -34,6 +34,13 @@
       <%= f.collection_select :tipocargue_id, @tipocarga, :id, :name, :prompt => true %>  
       
     </div>
+   <div class="field">
+      <%= f.label :tipo_unidad, "Tipo unidades:  "%><br />
+      <%= f.text_field  :tipo_unidad %>
+
+    </div>
+
+
     <div class="field">  
         <%= f.label :tarifa  , "Tarifa * " , :class => "bold" %><br />
         <%= f.number_field :tarifa , step: :any %>

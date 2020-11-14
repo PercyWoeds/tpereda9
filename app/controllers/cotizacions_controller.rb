@@ -113,6 +113,6 @@ class CotizacionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def cotizacion_params
-      params.require(:cotizacion).permit(:fecha, :code, :customer_id, :punto_id, :punto2_id, :tipocargue_id, :tarifa, :processed, :comments)
+      params.require(:cotizacion).permit(:fecha, :code, :customer_id, :punto_id, :punto2_id, :tipocargue_id, :tarifa, :processed, :comments,:tipo_unidad,:estado )
     end
 end

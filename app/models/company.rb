@@ -3028,6 +3028,8 @@ def get_purchaseorder_detail2(fecha1,fecha2)
                 if detail.product_id == 6685   
                movdetail.price = 9.04 
               end 
+
+
                 movdetail.stock_inicial += detail.quantity
               else
                 movdetail.stock_inicial -= detail.quantity*-1
@@ -3277,7 +3279,14 @@ def get_purchaseorder_detail2(fecha1,fecha2)
             if invdetail.precio_unitario == nil
               movdetail.price = 0  
            else 
-              movdetail.price = invdetail.precio_unitario
+                movdetail.price = invdetail.precio_unitario
+                
+                if detail.product_id == 4452  
+                 movdetail.price = 40.00
+                end 
+
+          
+
             end
 
             movdetail.save           
@@ -3396,6 +3405,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
                 if detail.product_id == 6685   
                movdetail.price = 9.04 
               end 
+
                 movdetail.stock_inicial += detail.quantity
               else
                 movdetail.stock_inicial -= detail.quantity*-1

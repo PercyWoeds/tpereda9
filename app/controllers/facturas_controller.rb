@@ -6529,6 +6529,349 @@ end
 
 
 
+###+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ def rpt_coti_1
+    @company=Company.find(1)      
+   
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]
+    
+  
+    @orden_transporte = @company.get_coti(@fecha1,@fecha2) 
+    
+      case params[:print]
+        when "To PDF" then 
+            redirect_to :action => "rpt_coti_1_pdf", :format => "pdf", 
+            :fecha1 => params[:fecha1], :fecha2 => params[:fecha2],
+            :tiporeporte =>params[:tiporeporte],:location_id => params[:location_id]
+
+        when "To Excel" then render xlsx: 'rpt_coti_1_xls'
+    
+          
+        else render action: "index"
+      end
+  
+    
+  end
+
+  # Export serviceorder to PDF
+  def rpt_coti_1_pdf
+
+    @company=Company.find(1)      
+
+    @fecha1 = params[:fecha1]
+    @fecha2 = params[:fecha2]
+    @tipo   = params[:tiporeporte]
+    
+    @location = params[:location_id]
+  
+
+    @cotizacion = @company.get_ordertransporte_day(@fecha1,@fecha2,@tipo,@location)  
+      
+    Prawn::Document.generate "app/pdf_output/ost2.pdf" , :page_layout => :landscape , :page_size=> "A3" do |pdf|      
+        pdf.font "Helvetica"
+        pdf = build_pdf_header2(pdf)
+        pdf = build_pdf_body2(pdf)
+        build_pdf_footer2(pdf)
+        $lcFileName =  "app/pdf_output/ost2.pdf"      
+        
+    end     
+
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+    #send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+    send_file("app/pdf_output/ost2.pdf", :type => 'application/pdf', :disposition => 'inline')
+  end
+
+##-----------------------------------------------------------------------------------
+## REPORTE 2
+##-----------------------------------------------------------------------------------
+  def build_pdf_header2(pdf)
+
+       pdf.font "Helvetica"  , :size => 8
+     image_path = "#{Dir.pwd}/public/images/tpereda2.png"
+     
+       table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD EN EL TRABAJO ",:rowspan => 2},"CODIGO ","TP-RD-F-005"], 
+          ["VERSION: ","9"], 
+          ["ORDEN DE SERVICIO DE TRANSPORTE Nro. " + @ost.code ,"Pagina: ","1 de 1 "] 
+         
+          ])
+        
+
+       pdf.table(table_content  ,{
+           :position => :center,
+           :width => pdf.bounds.width
+         })do
+            columns([1,2]).font_style = :bold
+            columns([0]).width = 118.55
+            columns([1]).width = 301.45
+            columns([1]).align = :center
+            columns([2]).align = :center
+            columns([3]).align = :center
+
+            columns([2]).width = 60
+
+            columns([3]).width = 60
+
+         end
+        
+      
+        
+         pdf.move_down 2
+      pdf 
+
+  end  
+
+    def build_pdf_body2(pdf)
+    
+    pdf.text ""
+    pdf.font_families.update("Open Sans" => {
+          :normal => "app/assets/fonts/OpenSans-Regular.ttf",
+          :italic => "app/assets/fonts/OpenSans-Italic.ttf",
+        })
+
+        pdf.font "Open Sans",:size => 4
+
+      headers = []
+      table_content = []
+
+      Tranportorder::TABLE_HEADERS2.each do |header|605
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content << headers
+
+      nroitem=1
+
+       for  orden in @orden_transporte
+
+            st  = orden.get_manifest 
+  
+            row = []
+
+            @importe_st = 0
+
+            if st.nil?
+              row << ""
+              row << ""
+              row << ""
+              row << ""
+              row << ""
+
+              row << ""
+              row << ""
+              row << ""
+              row << ""
+              row << ""
+
+            else 
+
+              row << ""
+              row << st.fecha1.strftime("%d/%m/%Y")
+              row << st.code
+              row << st.customer.name 
+              row << st.especificacion
+              row << st.tipocargue.name
+              row << st.direccion1
+              row << st.direccion2 
+              row << st.importe2
+              row << st.importe
+              @importe_st = st.importe
+            end 
+            row << orden.fecha1.strftime("%d/%m/%Y")  
+            row << orden.code 
+            row << orden.employee.full_name
+            row << orden.get_empleado(orden.employee2_id)
+            row << orden.truck.placa 
+            row << orden.get_placa(orden.truck2_id) 
+            row << orden.get_placa(orden.truck3_id) 
+            row << orden.get_tipounidad(orden.truck_id)
+            row << orden.get_ejes2(orden.id )
+            
+            @destino =  orden.get_punto(orden.ubication_id) +"-" + orden.get_punto(orden.ubication2_id)
+            row << orden.get_propio(orden.truck3_id) 
+            row << orden.code 
+            row << orden.get_placa(orden.truck3_id) 
+            row << orden.get_empleado(orden.employee4_id)
+           
+
+            nroitem=nroitem + 1
+            @guias = orden.get_delivery(orden.id)
+
+                lcGuiaCode = ""
+                lcGuiaDes  = ""
+                lcFecha1 = ""
+                lcFecha2 = ""
+                lcComments = ""
+                lcOstFecha1 = ""
+                lcOstFecha2 = ""
+                lcpendiente ="PENDIENTE"
+
+               for guias in @guias 
+
+                  lcGuiaCode  << guias.code + "\n"
+                  lcGuiaDes   << guias.description + "\n"
+                  lcFecha1    << guias.fecha1.to_s[0..10] + "\n"
+                  lcFecha2    << guias.created_at.to_s[0..10] + "\n"
+                  lcComments  << guias.comments + "\n"
+                  lcOstFecha1 << orden.fecha1.to_s[0..10] + "\n"
+                  lcOstFecha2 << orden.fecha2.to_s[0..10] + "\n"
+
+                  lcpendiente = "LIQUIDADO"
+               end 
+                
+                row << lcGuiaCode 
+                row << lcGuiaDes
+                row << lcFecha1 
+                row << lcFecha2 
+                row << orden.get_processed
+                
+
+                row << lcpendiente
+              
+                row << lcOstFecha2
+                row << "  "
+               
+            
+
+              @facturas = orden.get_facturas(orden.id)
+
+             
+             
+                lcFactCode = ""
+                lcFactFecha = ""
+                lcfacturasTotal_s = ""
+                lcfacturasTotal_d = ""
+                lcFacturasImporte = 0
+                lcFacturasImporte2 = 0
+
+
+                if @facturas 
+                for facturas in @facturas 
+                  puts "facturass ...................................."
+                  puts facturas.code
+                  puts facturas.fecha.strftime("%d/%m/%Y") 
+                  puts facturas.total 
+
+                  lcFactCode << facturas.code + "\n"
+                  lcFactFecha  << facturas.fecha.to_s[0..10] + "\n"
+
+                  if facturas.moneda_id == 2
+                    lcfacturasTotal_s << facturas.total.round(2).to_s + "\n"
+                    lcFacturasImporte  = facturas.total.round(2)
+                  else
+                    lcfacturasTotal_d << facturas.total.round(2).to_s + "\n"
+                     lcFacturasImporte2  = facturas.total.round(2)
+                  end 
+                    @cobranzas = facturas.get_pagos
+
+
+
+                end 
+              end 
+                  lcPendienteFacturar = lcFacturasImporte - @importe_st
+
+                   row <<  lcFactCode
+                    row << lcFactFecha
+
+                
+                    row << lcfacturasTotal_s 
+                   
+                    row << lcfacturasTotal_d 
+
+
+                    row << lcPendienteFacturar
+                           
+                    lcPendienteCobrar =  lcFacturasImporte 
+
+                    row << ""
+                    row << ""
+                                      
+                    row << ""
+                    row << ""
+                    row << lcPendienteCobrar 
+
+            
+                 
+               
+               table_content << row 
+                 
+            
+          end
+            
+    
+
+              result = pdf.table table_content, {:position => :center,
+                                                :header => true,
+                                                :width => pdf.bounds.width
+                                                } do 
+                                                  columns([0]).align=:center
+                                                  columns([1]).align=:center 
+                                                  columns([2]).align=:left
+                                                  columns([3]).align=:left
+                                                  columns([4]).align=:left  
+                                                  columns([5]).align=:left 
+                                                  columns([6]).align=:left
+                                                   columns([6]).width = 30
+                                                  columns([7]).align=:left 
+                                                    columns([7]).width = 30
+                                                  columns([8]).align=:left
+                                                    columns([8]).width = 30
+                                                  columns([9]).align=:left
+                                                    columns([9]).width = 30
+                                                  columns([10]).align=:left
+                                                  columns([11]).align=:left
+                                                  columns([12]).align=:left  
+                                                  columns([13]).align=:left 
+                                                  columns([14]).align=:left
+                                                  columns([15]).align=:left 
+                                                  columns([16]).align=:left
+                                                  columns([17]).align=:left
+                                                  columns([18]).align=:left
+                                                  columns([19]).align=:left
+                                                  columns([20]).align=:left  
+                                                  columns([21]).align=:left 
+                                                  columns([22]).align=:left
+                                                  columns([23]).align=:left 
+                                                  columns([24]).align=:left
+                                                  columns([24]).width = 60
+                                                  columns([25]).align=:left
+                                                  columns([26]).align=:left  
+                                                  columns([27]).align=:left 
+                                                  columns([28]).align=:left
+                                                  columns([29]).align=:left 
+                                                  columns([30]).align=:left
+                                                  columns([31]).align=:left
+
+
+
+                                                end                                          
+              pdf.move_down 10      
+              pdf
+
+    end
+
+
+    def build_pdf_footer2(pdf)
+
+        pdf.text ""
+        pdf.text "" 
+
+        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+        pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+
+      end
+
+      pdf
+      
+  end
+
+#############################################################################################
+
+
+
 
 def rpt_conductor_pdf
 

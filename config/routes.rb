@@ -553,6 +553,9 @@ end
   match 'companies/reports/rpt_ost_1/:company_id' => 'reports#rpt_ost_1', via: [:get, :post]
   match 'companies/reports/rpt_ost_2/:company_id' => 'reports#rpt_ost_2', via: [:get, :post]
   match 'companies/reports/rpt_ost_3/:company_id' => 'reports#rpt_ost_3', via: [:get, :post]
+
+   match 'companies/reports/rpt_coti_all/:company_id' => 'reports#rpt_coti_all', via: [:get, :post]
+
         
   match 'companies/reports_compras/:company_id' => 'reports#reports_compras', via: [:get, :post]
   match 'companies/reports/reports_cpagar/:company_id' => 'reports#reports_cpagar', via: [:get, :post]

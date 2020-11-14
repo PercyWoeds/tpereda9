@@ -1667,6 +1667,10 @@ def rpt_purchase61_all
     @pagetitle = "Orden Servicio de Transporte-3"    
   end
 
+  def rpt_coti_1 
+    @company = Company.find(params[:company_id])
+    @pagetitle = "Cotizacion"    
+  end
  
 
 end
