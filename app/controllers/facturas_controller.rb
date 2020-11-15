@@ -6217,9 +6217,9 @@ end
       
     Prawn::Document.generate "app/pdf_output/ost2.pdf" , :page_layout => :landscape , :page_size=> "A3" do |pdf|      
         pdf.font "Helvetica"
-        pdf = build_pdf_header2(pdf)
-        pdf = build_pdf_body2(pdf)
-        build_pdf_footer2(pdf)
+        pdf = build_pdf_header2f(pdf)
+        pdf = build_pdf_body2f(pdf)
+        build_pdf_footer2f(pdf)
         $lcFileName =  "app/pdf_output/ost2.pdf"      
         
     end     
@@ -6233,7 +6233,7 @@ end
 ##-----------------------------------------------------------------------------------
 ## REPORTE 2
 ##-----------------------------------------------------------------------------------
-  def build_pdf_header2(pdf)
+  def build_pdf_header2f(pdf)
 
       pdf.font "Helvetica" , :size => 8
       image_path = "#{Dir.pwd}/public/images/tpereda2.png"
@@ -6278,7 +6278,7 @@ end
       pdf 
   end  
 
-    def build_pdf_body2(pdf)
+    def build_pdf_body2f(pdf)
     
     pdf.text "Ordenes de Transporte Emitidas : Desde "+@fecha1.to_s + " Hasta: "+@fecha2.to_s, :size => 8
     pdf.text ""
@@ -6511,7 +6511,7 @@ end
     end
 
 
-    def build_pdf_footer2(pdf)
+    def build_pdf_footer2f(pdf)
 
         pdf.text ""
         pdf.text "" 
@@ -6590,6 +6590,8 @@ end
 
        pdf.font "Helvetica"  , :size => 8
      image_path = "#{Dir.pwd}/public/images/tpereda2.png"
+
+
      
        table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD EN EL TRABAJO ",:rowspan => 2},"CODIGO ","TP-RD-F-005"], 
           ["VERSION: ","9"], 

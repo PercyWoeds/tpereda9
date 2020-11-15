@@ -2807,7 +2807,7 @@ def newfactura2
 
 
   
-    if @tipodocumento == 3
+    if @tipodocumento == 2
       @purchase[:payable_amount] = @purchase.get_subtotal2(@detalleitems)*-1
     else
       @purchase[:payable_amount] = @purchase.get_subtotal2(@detalleitems)
@@ -2816,7 +2816,7 @@ def newfactura2
     
     
         begin
-           if @tipodocumento == 3
+           if @tipodocumento == 2
             @purchase[:tax_amount] = @purchase.get_tax2(@detalleitems, @purchase[:supplier_id])*-1
 
            else
@@ -2922,7 +2922,7 @@ def newfactura2
    
 
   
-    if @tipodocumento == 3
+    if @tipodocumento == 2
       @purchase[:payable_amount] = @purchase.get_subtotal2(@detalleitems)*-1
     else
       @purchase[:payable_amount] = @purchase.get_subtotal2(@detalleitems)
@@ -2930,7 +2930,7 @@ def newfactura2
     
   
       begin
-           if @tipodocumento == 3
+           if @tipodocumento == 2
             @purchase[:tax_amount] = @purchase.get_tax3(@detalleitems, @purchase[:supplier_id])*-1
 
            else
