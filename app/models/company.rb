@@ -570,6 +570,12 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
 
     return users
   end
+
+
+ def get_cotiza(fecha1,fecha2)
+    @delivery = Cotizacion.where(["company_id = ? AND fecha1 >= ? AND fecha1 <= ?", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59"]).order(:code)
+    return @delivery
+ end 
  def get_guias_year(year)
     @delivery = Delivery.where(["fecha1>= ? AND fecha1 <= ? and company_id  = ? ", "#{year}-01-01 00:00:00", "#{year}-12-31 23:59:59", self.id])   
     return @delivery

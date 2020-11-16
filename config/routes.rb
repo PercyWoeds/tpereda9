@@ -227,6 +227,8 @@ require 'sidekiq/web'
 
 
      collection { get  :rpt_purchase_all2b}
+
+      collection { get  :rpt_coti_1 }
     
     end 
 

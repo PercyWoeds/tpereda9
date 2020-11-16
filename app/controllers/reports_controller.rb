@@ -1671,6 +1671,10 @@ def rpt_purchase61_all
     @company = Company.find(params[:company_id])
     @pagetitle = "Cotizacion"    
   end
+ def rpt_coti_all 
+    @company = Company.find(params[:company_id])
+    @pagetitle = "Cotizacion"    
+  end
  
 
 end

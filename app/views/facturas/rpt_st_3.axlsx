@@ -1,0 +1,118 @@
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
+
+require 'axlsx'
+
+p = Axlsx::Package.new
+wb = xlsx_package.workbook
+wb.styles do |s|
+    date = s.add_style(:format_code => "yyyy-mm-dd", :border => Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+    padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
+    percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
+    title = s.add_style(:bg_color => "FFFF0000", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+
+    currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
+                              :border=>Axlsx::STYLE_THIN_BORDER)
+    red_negative = wb.styles.add_style :num_fmt => 8
+    comma = wb.styles.add_style :num_fmt => 3
+    super_funk = wb.styles.add_style :format_code => '[Green]#'
+    
+    wb.add_worksheet(name: "Basic work sheet") do |sheet|
+    
+    sheet.add_row ["Nro.", "Cliente",
+
+    "IMPORTE S/.",
+    "Escolta",
+    " Stand by ",
+    "Empaletizado",
+    "Montacarga ",
+    "IMPORTE US$ ",
+    "Escolta ",
+    "Stand by ",
+    "Totales "], 
+    :style => title 
+  
+  nroitem = 0
+  total_linea = 0
+  total_1 = 0
+  total_2 = 0 
+  total_3 = 0
+  total_4 = 0
+  total_5 = 0
+  total_6 = 0
+  total_7 = 0
+  total_8 = 0
+
+
+
+   @facturas_rpt.each do |manifest|
+        
+          lcDes1 ="" 
+           a ="" 
+
+          nroitem = 1
+
+         total_linea = manifest.importe1 + manifest.importe2 + manifest.importe3 + 
+          manifest.importe4 + manifest.importe5 +  manifest.importe6 + manifest.importe7 + 
+           manifest.importe8
+        
+
+        sheet.add_row [ nroitem, manifest.customer.name,
+        manifest.importe1,
+        manifest.importe7,
+        manifest.importe8,
+        manifest.importe2,
+        manifest.importe3,
+        manifest.importe4,
+        manifest.importe5,
+        manifest.importe6,
+        total_linea ], :style => [ currency,date,
+        currency,
+        currency,
+        currency,
+        currency,
+        currency,
+        currency,
+        currency,
+        currency,
+        currency]
+
+          nroitem = nroitem + 1 
+          total_1 += manifest.importe1 
+          total_2 += manifest.importe2 
+          total_3 += manifest.importe3 
+          total_4 += manifest.importe4 
+          total_5 += manifest.importe5 
+          total_6 += manifest.importe6 
+          total_7 += manifest.importe7 
+          total_8 += manifest.importe8
+          total_linea = 0  
+
+      
+        sheet.add_row [ "", "",
+        total_1,
+        total_2,
+       total_3,
+       total_4,
+        total_5,
+       total_6,
+       total_7,
+        total_8,
+        total_linea ], :style => [ currency,date,
+        currency,
+        currency,
+        currency,
+        currency,
+        currency,
+        currency,
+        currency,
+        currency,
+        currency]
+   end
+
+   
+   
+end
+end 
+
+    

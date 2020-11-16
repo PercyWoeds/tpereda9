@@ -6511,7 +6511,10 @@ end
     end
 
 
-    def build_pdf_footer2f(pdf)
+    def build_pdf_footer2f
+
+
+      (pdf)
 
         pdf.text ""
         pdf.text "" 
@@ -6536,8 +6539,7 @@ end
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]
     
-  
-    @orden_transporte = @company.get_coti(@fecha1,@fecha2) 
+    @orden_transporte = @company.get_cotiza(@fecha1,@fecha2) 
     
       case params[:print]
         when "To PDF" then 
