@@ -21,7 +21,7 @@
   <tbody>
     <% @cotizacions.each do |cotizacion| %>
       <tr>
-        <td><%= cotizacion.fecha %></td>
+        <td><%= cotizacion.fecha.strftime("%d/%m/%Y") %></td>
         <td><%= cotizacion.code %></td>
         <td><%= cotizacion.customer.name  %></td>
         <td><%= cotizacion.punto.name %></td>

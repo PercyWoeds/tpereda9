@@ -573,7 +573,7 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
 
 
  def get_cotiza(fecha1,fecha2)
-    @delivery = Cotizacion.where(["company_id = ? AND fecha1 >= ? AND fecha1 <= ?", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59"]).order(:code)
+    @delivery = Cotizacion.where(["fecha >= ? AND fecha <= ?", "#{fecha1} 00:00:00", "#{fecha2} 23:59:59"]).order(:code)
     return @delivery
  end 
  def get_guias_year(year)
@@ -597,7 +597,16 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
     end 
     return @orden 
  end 
- 
+ def get_ordertransporte_day_all(fecha1,fecha2,tipo )
+   
+    if tipo == "0"
+
+      @orden = Tranportorder.where(["company_id = ? AND created_at >= ? AND created_at <= ? ", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59" ]).order(:code)
+    else
+      @orden = Tranportorder.where(["company_id = ? AND fecha1 >= ? AND fecha1 <= ? ", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59"   ]).order(:code)
+    end 
+    return @orden 
+ end 
  
  def get_guias_day(fecha1,fecha2)
     @delivery = Delivery.where(["company_id = ? AND fecha1 >= ? AND fecha1 <= ?", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59"]).order(:code)

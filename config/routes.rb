@@ -229,6 +229,7 @@ require 'sidekiq/web'
      collection { get  :rpt_purchase_all2b}
 
       collection { get  :rpt_coti_1 }
+      collection { get  :rpt_coti_1_pdf }
     
     end 
 
@@ -557,6 +558,7 @@ end
   match 'companies/reports/rpt_ost_3/:company_id' => 'reports#rpt_ost_3', via: [:get, :post]
 
    match 'companies/reports/rpt_coti_all/:company_id' => 'reports#rpt_coti_all', via: [:get, :post]
+match 'companies/reports/rpt_coti_1_pdf/:company_id' => 'reports#rpt_coti_1_pdf', via: [:get, :post]
 
         
   match 'companies/reports_compras/:company_id' => 'reports#reports_compras', via: [:get, :post]

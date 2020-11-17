@@ -5,13 +5,27 @@ class Cotizacion < ActiveRecord::Base
  belongs_to :tipocargue 
  
 
+   TABLE_HEADERS = ["Nro.Item",
+                    "FECHA COTIZACION",
+                     "NRO.COTIZACION",
+                     "CLIENTE",
+                     "ORIGEN",
+                     "DESTINO",
+                     "TIPO DE CARGA",
+                     "TIPO DE UNIDADES.",
+                     "TARIFA",
+                     "ESTADO DEL SERVICIO",
+                     "OBSERVACIONES"]
+
+
+
  def get_punto(punto)
 
  	a = Punto.find(punto)
  	return a.name 
  	
  end
-  
+
 
 
   def generate_number(serie)
@@ -60,6 +74,8 @@ def get_processed
       self.save
     end
   end
+
+
 
 
 
