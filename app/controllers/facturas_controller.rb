@@ -6183,7 +6183,11 @@ end
      @tipo   = params[:tiporeporte]
     @location  = params[:location_id]
     @locales_all  = params[:check_local]
-
+ if @locales_all == "true"
+        @orden_transporte = @company.get_ordertransporte_day_all(@fecha1,@fecha2,@tipo) 
+    else 
+        @orden_transporte = @company.get_ordertransporte_day(@fecha1,@fecha2,@tipo,@location) 
+    end    
 
     
       case params[:print]
@@ -6625,6 +6629,8 @@ end
          pdf.move_down 2
       pdf 
 
+
+
   end  
 
     def build_pdf_body2c(pdf)
@@ -6652,10 +6658,7 @@ end
 
        for  cotiza in @cotizacion
 
-        puts "codr "
-
-        puts cotiza.code 
-
+      
               row = []
               row << nroitem 
               row << cotiza.fecha.strftime("%d/%m/%Y")
@@ -6711,17 +6714,33 @@ end
 
 
     def build_pdf_footer2c(pdf)
-
-        pdf.text ""
-        pdf.text "" 
-
-        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
-        pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
-
-      end
-
-      pdf
       
+      table_content3 =[]
+            row = []
+            row << "--------------------------------------------"
+            row << "--------------------------------------------"
+            row << "--------------------------------------------"
+            
+            table_content3 << row 
+            row = []
+            row << "V.B.VENTAS "
+            row << "V.B.GERENCIA"
+            row << "V.B.CONTABILIDAD"
+            
+            table_content3 << row 
+
+            
+                result = pdf.table table_content3, {:position => :center,
+                                              :header => true,  :cell_style => {:border_width => 0},
+                                              :width => pdf.bounds.width
+                                              } do 
+                                                columns([0]).align=:center
+                                                columns([1]).align=:center
+                                                columns([2]).align=:center 
+                                                
+                                              end                             
+
+            pdf      
   end
 
 #############################################################################################
