@@ -234,7 +234,7 @@ X COBRAR"
               ], 
             :style => 
                 [cadena,date,
-                cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,
+                cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,date,cadena,
                 cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,
                 cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena,
                 cadena,cadena,cadena,cadena,cadena,cadena,cadena,cadena  ]

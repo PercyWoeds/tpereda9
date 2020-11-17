@@ -5003,7 +5003,8 @@ def reporte_asistencia3
     @facturas_rpt = @company.get_purchases_day(@fecha1,@fecha2,@proveedor,@fecha6) 
 
 
-        Prawn::Document.generate "app/pdf_output/TP_CM_F_015.pdf" , :page_layout => :landscape ,:page_size=>"A4"  do |pdf|
+        Prawn::Document.generate "app/pdf_output/TP_CM_F_015.pdf" ,
+         :page_layout => :landscape ,:page_size=>"A4"  do |pdf|
             pdf.font "Helvetica"
             pdf = build_pdf_header_rpt8(pdf)
             pdf = build_pdf_body_rpt8(pdf)
@@ -6627,6 +6628,17 @@ end
          end
       
          pdf.move_down 2
+
+
+         table_content2 = ([["Fecha : ",Date.today.strftime("%d/%m/%Y")]])
+
+         pdf.table(table_content2,{:position=>:right }) do
+
+            columns([0, 1]).font_style = :bold
+            columns([0, 1]).width = 100
+            
+         end 
+         
       pdf 
 
 
@@ -6714,7 +6726,7 @@ end
 
 
     def build_pdf_footer2c(pdf)
-      
+
       table_content3 =[]
             row = []
             row << "--------------------------------------------"
