@@ -4960,7 +4960,7 @@ INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
 INNER JOIN products ON purchase_details.product_id = products.id
 WHERE products.stock_active = ? and  purchases.date1 >= ? and purchases.date1 <= ?
  and purchases.processed = ? and purchases.status is NULL  and purchases.almacen_id  = ? and suma_stock = ?
-ORDER BY products.products_category_id,purchases.date1,products.code  ',"1", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1",almacen,"1" ])
+ORDER BY products.products_category_id,purchases.date1,products.code ',"1", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1",almacen,"1" ])
   
     return @purchases 
 else
@@ -4971,8 +4971,9 @@ else
     from purchase_details   
 INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
 INNER JOIN products ON purchase_details.product_id = products.id
-WHERE products.stock_active = ? and  purchases.date2 >= ? and purchases.date2 <= ? and purchases.processed = ? and purchases.status is NULL and suma_stock = ?
-ORDER BY products.products_category_id,purchases.date2,products.code  ',"1", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1","1" ])
+WHERE products.stock_active = ? and  purchases.date2 >= ? and purchases.date2 <= ? and 
+purchases.processed = ? and purchases.status is NULL and purchases.almacen_id  = ?  and suma_stock = ?
+ORDER BY products.products_category_id,purchases.date2,products.code  ',"1", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1",almacen,"1" ])
   
     return @purchases 
 end 
