@@ -952,7 +952,9 @@ def rpt_ingresos2_all_pdf
 
     @almacen = params[:almacen_id]  
 
-    @fecha6 = params[:fecha6]    
+    @fecha6 = params[:fecha6]  
+
+
     puts "fecha 6 "
     puts @fecha6
     
@@ -2220,9 +2222,19 @@ def reportes05
         lcFecha  = f.fecha 
         
         lcTD = f.document.descripshort
-        lcVventa = f.subtotal
-        lcIGV = f.tax
-        lcImporte = f.total 
+
+        if f.document_id ==  2 
+           lcVventa = f.subtotal * -1 
+          lcIGV = f.tax * -1
+          lcImporte = f.total  * -1 
+
+        else 
+          lcVventa = f.subtotal
+          lcIGV = f.tax
+          lcImporte = f.total 
+      
+        end 
+
         lcFormapago = f.payment.descrip
         lcRuc = f.customer.ruc         
         lcDes = f.description
@@ -2288,7 +2300,7 @@ def reportes05
         :vventa => lcVventa,:igv => lcIGV,:importe => lcImporte,:ruc =>lcRuc,:guia => lcGuia,:formapago =>lcFormapago,
         :description => lcDescrip,:comments => lcComments,
         :descrip =>lcDes1,:moneda =>lcMoneda,:razon=> lcRazon,
-        :documento2 => lcModifica
+        :documento2 => lcModifica 
 
          )
         new_invoice_item.save
@@ -4316,7 +4328,7 @@ def client_data_headers
 
    if @invoice.document_id == 2 
 
-        parts = @invoice.fecha.split("-")
+      parts = @invoice.fecha.to_s.split("-")
           $aa = parts[0].to_i
           $mm = parts[1].to_i        
           $dd = parts[2].to_i      
@@ -4330,7 +4342,7 @@ def client_data_headers
           $lcTotal1       =  @invoice.total * 100 * -1
           $lcTotal        =  $lcTotal1.round(0)
      
-          @invoice_detail = @invoice.where(factura_id: @invoice.id).first 
+          @invoice_detail = InvoiceService.where(factura_id: @invoice.id).first 
 
 
           $lcPrecioCigv1  =  @invoice_detail.price * 100
@@ -4341,8 +4353,7 @@ def client_data_headers
           $lcPrecioSigv2   = $lcPrecioSigv1.round(0).to_f
           $lcPrecioSIgv   =  $lcPrecioSigv2.to_i 
 
-
-
+           $lcDescrip = "ANULACION DE FACTURA"   
         
           if @invoice.moneda_id == 2
                   $lcMonedaValor ="USD"
@@ -4350,10 +4361,10 @@ def client_data_headers
                   $lcMonedaValor ="PEN"
           end
         
-        credit_note_data = { issue_date: Date.new($aa,$mm,$dd), id: @invoice.code , customer: {legal_name:@factura.customer.name , ruc:@factura.customer.ruc  },
-                             billing_reference: {id: @factura.documento2, document_type_code: "01"},
-                             discrepancy_response: {reference_id:@factura.documento2, response_code: "09", description: $lcDescrip},
-                             lines: [{id: "1", item: {id: "05", description: @invoice_detail.first.descrip}, quantity: @invoice_detail.first.quantity, unit: 'ZZ', 
+        credit_note_data = { issue_date: Date.new($aa,$mm,$dd), id: @invoice.code , customer: {legal_name:@invoice.customer.name , ruc:@invoice.customer.ruc  },
+                             billing_reference: {id: @invoice.documento2, document_type_code: "01"},
+                             discrepancy_response: {reference_id:@invoice.documento2, response_code: "09", description: $lcDescrip},
+                             lines: [{id: "1", item: {id: "05", description: @invoice_detail.service.name }, quantity: @invoice_detail.quantity, unit: 'ZZ', 
                                   price: {value: @lcPrecioSIgv}, pricing_reference: $lcPrecioCigv, tax_totals: [{amount: $lcIgv, type: :igv, code: "10"}], line_extension_amount:$lcVVenta }],
                              additional_monetary_totals: [{id: "1001", payable_amount: $lcVVenta}], tax_totals: [{amount: $lcIgv, type: :igv}], legal_monetary_total: {value: $lcTotal, currency: $lcMonedaValor }}
 
@@ -7006,7 +7017,10 @@ def rpt_conductor_pdf
   end
   private
   def factura_params
-    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id,:detraccion,:factura2,:description,:document_id,:tipoventa_id,:contrato,:ost,:manifest_id,:os_customer ,:documento_modificar )
+    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,
+      :comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,
+      :fecha,:preciocigv,:tipo,:observ,:moneda_id,:detraccion,:factura2,:description,:document_id,
+      :tipoventa_id,:contrato,:ost,:manifest_id,:os_customer ,:documento2)
   end
 
 end
