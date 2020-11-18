@@ -3317,7 +3317,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
       end 
 
       #ingresos
-     @ing = Purchase.where('date1> ? and date1 <  ? and almacen_id = ?',"#{fecha_inventario} 23:59:59","#{fecha1} 00:00:00",local )
+     @ing = Purchase.where('date1> ? and date1 <  ? and almacen_id = ? and suma_stock = ?',"#{fecha_inventario} 23:59:59","#{fecha1} 00:00:00",local,"1" )
 
      for ing in @ing    
           $lcFecha = ing.date1.to_date
@@ -3473,7 +3473,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
         end 
       end 
       #ingresos0 
-     @ing = Purchase.where('date1>= ? and date1 <= ? and almacen_id = ?  ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59",local)
+     @ing = Purchase.where('date1>= ? and date1 <= ? and almacen_id = ?  and suma_stock = ? ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59",local,"1")
 
      for ing in @ing
 
@@ -4895,7 +4895,7 @@ def get_ingresos_day(fecha1,fecha2,product)
     from purchase_details   
 INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
 INNER JOIN products ON purchase_details.product_id = products.id
-WHERE products.stock_active = ? and  purchase_details.product_id = ?  and purchases.date1 > ? and purchases.date1 < ? ' ,"1",product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+WHERE products.stock_active = ? and  purchase_details.product_id = ?  and purchases.date1 > ? and purchases.date1 < ? and purchases.suma_stock = ?' ,"1",product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"1" ])
  
     return @purchases 
 end
@@ -4909,8 +4909,8 @@ def get_ingresos_day2(fecha1,fecha2,product)
     from purchase_details   
 INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
 INNER JOIN products ON purchase_details.product_id = products.id
-WHERE products.products_category_id = ?  and purchases.date1 >= ? and purchases.date1 <= ? and purchases.processed =  ? and purchases.status is null and products.stock_active = ? 
-ORDER BY products.code  ',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1","1" ])
+WHERE products.products_category_id = ?  and purchases.date1 >= ? and purchases.date1 <= ? and purchases.processed =  ? and purchases.status is null and products.stock_active = ? and purchases.suma_stock = ?
+ORDER BY products.code  ',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1","1","1" ])
   
     return @purchases 
 
@@ -4959,8 +4959,8 @@ def get_ingresos_day4(fecha1,fecha2,fecha6,almacen  )
 INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
 INNER JOIN products ON purchase_details.product_id = products.id
 WHERE products.stock_active = ? and  purchases.date1 >= ? and purchases.date1 <= ?
- and purchases.processed = ? and purchases.status is NULL  and purchases.almacen_id  = ? 
-ORDER BY products.products_category_id,purchases.date1,products.code  ',"1", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1",almacen ])
+ and purchases.processed = ? and purchases.status is NULL  and purchases.almacen_id  = ? and suma_stock = ?
+ORDER BY products.products_category_id,purchases.date1,products.code  ',"1", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1",almacen,"1" ])
   
     return @purchases 
 else
@@ -4971,8 +4971,8 @@ else
     from purchase_details   
 INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
 INNER JOIN products ON purchase_details.product_id = products.id
-WHERE products.stock_active = ? and  purchases.date2 >= ? and purchases.date2 <= ? and purchases.processed = ? and purchases.status is NULL 
-ORDER BY products.products_category_id,purchases.date2,products.code  ',"1", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1" ])
+WHERE products.stock_active = ? and  purchases.date2 >= ? and purchases.date2 <= ? and purchases.processed = ? and purchases.status is NULL and suma_stock = ?
+ORDER BY products.products_category_id,purchases.date2,products.code  ',"1", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1","1" ])
   
     return @purchases 
 end 

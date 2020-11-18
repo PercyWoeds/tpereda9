@@ -1046,6 +1046,9 @@ def build_pdf_header_rpt48(pdf)
       @tipocambio = 1
       valorcambio = 0
       valortotal = 0
+
+      if @facturas_rpt.count > 0
+
       lcCategoria = @facturas_rpt.first.products_category_id 
       
        for  product in @facturas_rpt
@@ -1215,8 +1218,10 @@ def build_pdf_header_rpt48(pdf)
             
 
           end 
+
+
         end
-        
+        end 
       
       total_qty    += @cantidad2   
       total_soles  += @totales2
@@ -2203,7 +2208,7 @@ def reportes05
     Invoicesunat.delete_all
     @company = Company.find(params[:company_id])
     
-    @facturas  = Factura.where("fecha>=? and fecha<=? and tipo =?","2020-07-01 00:00:00","2025-08-31 23:59:59","1")
+    @facturas  = Factura.where("fecha>=? and fecha<=? and tipo =?","2020-11-01 00:00:00","2025-08-31 23:59:59","1")
      a = ""
      
      lcGuia=""
@@ -4316,13 +4321,13 @@ def client_data_headers
           $mm = parts[1].to_i        
           $dd = parts[2].to_i      
 
-          $lcVVenta1      =  @invoice.subtotal * 100        
+          $lcVVenta1      =  @invoice.subtotal * 100 * -1      
           $lcVVenta       =  $lcVVenta1.round(0)
 
-          $lcIgv1         =  @invoice.tax * 100
+          $lcIgv1         =  @invoice.tax * 100 * -1
           $lcIgv          =  $lcIgv1.round(0)
 
-          $lcTotal1       =  @invoice.total * 100
+          $lcTotal1       =  @invoice.total * 100 * -1
           $lcTotal        =  $lcTotal1.round(0)
      
           @invoice_detail = @invoice.where(factura_id: @invoice.id).first 
