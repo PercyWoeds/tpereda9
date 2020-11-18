@@ -119,6 +119,7 @@ class SuppliersController < ApplicationController
   # PUT /suppliers/1.xml
   def update
     @pagetitle = "Edit supplier"
+     @company = Company.find(params[:supplier][:company_id])
     @bancos = @company.get_banks()
     @supplier = Supplier.find(params[:id])
  @tipoproveedor =@company.get_tipoproveedor()
