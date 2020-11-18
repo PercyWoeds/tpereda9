@@ -1,0 +1,32 @@
+<%= simple_form_for(@cout) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :code %>
+    <%= f.input :fecha %>
+    <%= f.input :importe %>
+    <%= f.input :truck_id %>
+    <%= f.input :punto_id %>
+    <%= f.input :tranportorder_id %>
+    <%= f.input :employee_id %>
+    <%= f.input :employee2_id %>
+    <%= f.input :employee3_id %>
+    <%= f.input :peajes %>
+    <%= f.input :lavado %>
+    <%= f.input :llanta %>
+    <%= f.input :alimento %>
+    <%= f.input :otros %>
+    <%= f.input :monto_recibido %>
+    <%= f.input :flete %>
+    <%= f.input :recibido_ruta %>
+    <%= f.input :vuelto %>
+    <%= f.input :descuento %>
+    <%= f.input :reembolso %>
+    <%= f.input :flete %>
+    <%= f.input :ost_id %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

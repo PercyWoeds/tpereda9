@@ -1,0 +1,69 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Couts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Fecha</th>
+      <th>Importe</th>
+      <th>Truck</th>
+      <th>Punto</th>
+      <th>Tranportorder</th>
+      <th>Employee</th>
+      <th>Employee2</th>
+      <th>Employee3</th>
+      <th>Peajes</th>
+      <th>Lavado</th>
+      <th>Llanta</th>
+      <th>Alimento</th>
+      <th>Otros</th>
+      <th>Monto recibido</th>
+      <th>Flete</th>
+      <th>Recibido ruta</th>
+      <th>Vuelto</th>
+      <th>Descuento</th>
+      <th>Reembolso</th>
+      <th>Flete</th>
+      <th>Ost</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @couts.each do |cout| %>
+      <tr>
+        <td><%= cout.code %></td>
+        <td><%= cout.fecha %></td>
+        <td><%= cout.importe %></td>
+        <td><%= cout.truck_id %></td>
+        <td><%= cout.punto_id %></td>
+        <td><%= cout.tranportorder_id %></td>
+        <td><%= cout.employee_id %></td>
+        <td><%= cout.employee2_id %></td>
+        <td><%= cout.employee3_id %></td>
+        <td><%= cout.peajes %></td>
+        <td><%= cout.lavado %></td>
+        <td><%= cout.llanta %></td>
+        <td><%= cout.alimento %></td>
+        <td><%= cout.otros %></td>
+        <td><%= cout.monto_recibido %></td>
+        <td><%= cout.flete %></td>
+        <td><%= cout.recibido_ruta %></td>
+        <td><%= cout.vuelto %></td>
+        <td><%= cout.descuento %></td>
+        <td><%= cout.reembolso %></td>
+        <td><%= cout.flete %></td>
+        <td><%= cout.ost_id %></td>
+        <td><%= link_to 'Show', cout %></td>
+        <td><%= link_to 'Edit', edit_cout_path(cout) %></td>
+        <td><%= link_to 'Destroy', cout, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Cout', new_cout_path %>

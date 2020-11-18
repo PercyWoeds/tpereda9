@@ -2230,6 +2230,7 @@ def reportes05
         lcComments = ""
         lcDes1 = ""
         lcRazon = f.customer.name 
+        lcModifica = f.documento2
         
         for productItem in f.get_products2(f.id)
 
@@ -2280,7 +2281,11 @@ def reportes05
         new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td =>lcTD,
         :serie => lcSerie,:numero => lcNumero,:preciocigv => lcPcigv ,:preciosigv =>lcPsigv,:cantidad =>lcCantidad,
         :vventa => lcVventa,:igv => lcIGV,:importe => lcImporte,:ruc =>lcRuc,:guia => lcGuia,:formapago =>lcFormapago,
-        :description => lcDescrip,:comments => lcComments,:descrip =>lcDes1,:moneda =>lcMoneda,:razon=> lcRazon )
+        :description => lcDescrip,:comments => lcComments,
+        :descrip =>lcDes1,:moneda =>lcMoneda,:razon=> lcRazon,
+        :documento2 => lcModifica
+
+         )
         new_invoice_item.save
         
       end  
@@ -4287,6 +4292,7 @@ def client_data_headers
             else        
                 case_52 = ReceiptGenerator.new(8, 52, 1,@serie_factura,@invoice.id).with_igv2(true)
             end 
+
        end      
 
         if @invoice.document_id == 7
@@ -4294,9 +4300,12 @@ def client_data_headers
                 $lcFileName=""
                 case_49 = InvoiceGenerator.new(1,3,1,@serie_factura,@invoice.id).with_different_currency2(true)
               #  puts $lcFileName 
+
            else
                
                 case_3  = InvoiceGenerator.new(1,3,1,@serie_factura,@invoice.id).with_igv2(true)
+
+
            end        
         end 
 
@@ -4359,10 +4368,11 @@ def client_data_headers
         if credit_note.valid?                       
            credit_note.to_pdf    
            document_type_code = "07"
-           file_name =   "#{accounting_supplier_party.account_id}-#{document_type_code}-#{id}"
+           file_name =   "20424092941-#{document_type_code}-#{@invoice.code}"+".pdf"
+            $lcFileName1=File.expand_path('../../../', __FILE__)+ "/app/pdf_output/"+file_name  
 
-           $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+file_name              
-          send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+            send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')      
+          
 
         else
           
@@ -4379,10 +4389,6 @@ def client_data_headers
           $aa = parts[0].to_i
           $mm = parts[1].to_i        
           $dd = parts[2].to_i      
-puts "nota debito"
-puts $aa
-puts $mm
-puts $dd
 
           $lcVVenta1      =  @invoice.subtotal * 100        
           $lcVVenta       =  $lcVVenta1.round(0)
@@ -4418,11 +4424,10 @@ puts $dd
 
         if debit_note.valid?
             debit_note.to_pdf
-              document_type_code = "08"
-           file_name =   "20424092941-#{document_type_code}-#{@invoice.code}"
+           document_type_code = "08"
+           file_name =   "20424092941-#{document_type_code}-#{@invoice.code}"+".pdf"
             $lcFileName1=File.expand_path('../../../', __FILE__)+ "/app/pdf_output/"+file_name  
-          puts "archivoooo-.--"
-            puts $lcFileName1            
+
             send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
         else          
           $aviso = "Invalid document, ignoring output: #{debit_note.errors.messages}"  
@@ -4432,7 +4437,13 @@ puts $dd
 
       end 
         
+     if @invoice.document_id == 1 || @invoice.document_id == 7
 
+        $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+        send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+        @@document_serial_id =""
+        $aviso=""
+     end 
 
     
   
@@ -6703,13 +6714,9 @@ end
                                                   columns([4]).align=:left  
                                                   columns([5]).align=:left 
                                                   columns([6]).align=:left
-                                                  
                                                   columns([7]).align=:left 
-                                                  
                                                   columns([8]).align=:left
-                                                
                                                   columns([9]).align=:left
-                                        
                                                   columns([10]).align=:left
                                                   columns([11]).align=:left
                                                   columns([12]).align=:left  

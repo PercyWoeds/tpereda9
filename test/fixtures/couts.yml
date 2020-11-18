@@ -1,0 +1,49 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  fecha: 2020-11-17 14:47:23
+  importe: 1.5
+  truck_id: 1
+  punto_id: 1
+  tranportorder_id: 1
+  employee_id: 1
+  employee2_id: 1
+  employee3_id: 1
+  peajes: 1.5
+  lavado: 1.5
+  llanta: 1.5
+  alimento: 1.5
+  otros: 1.5
+  monto_recibido: 1.5
+  flete: 1.5
+  recibido_ruta: 1.5
+  vuelto: 1.5
+  descuento: 1.5
+  reembolso: 1.5
+  flete: 1.5
+  ost_id: 1
+
+two:
+  code: MyString
+  fecha: 2020-11-17 14:47:23
+  importe: 1.5
+  truck_id: 1
+  punto_id: 1
+  tranportorder_id: 1
+  employee_id: 1
+  employee2_id: 1
+  employee3_id: 1
+  peajes: 1.5
+  lavado: 1.5
+  llanta: 1.5
+  alimento: 1.5
+  otros: 1.5
+  monto_recibido: 1.5
+  flete: 1.5
+  recibido_ruta: 1.5
+  vuelto: 1.5
+  descuento: 1.5
+  reembolso: 1.5
+  flete: 1.5
+  ost_id: 1

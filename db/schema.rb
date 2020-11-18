@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201113160214) do
+ActiveRecord::Schema.define(version: 20201118161532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -460,6 +460,32 @@ ActiveRecord::Schema.define(version: 20201113160214) do
     t.datetime "date_processed"
     t.string   "tipo_unidad"
     t.string   "estado"
+  end
+
+  create_table "couts", force: :cascade do |t|
+    t.string   "code"
+    t.datetime "fecha"
+    t.float    "importe"
+    t.integer  "truck_id"
+    t.integer  "punto_id"
+    t.integer  "tranportorder_id"
+    t.integer  "employee_id"
+    t.integer  "employee2_id"
+    t.integer  "employee3_id"
+    t.float    "peajes"
+    t.float    "lavado"
+    t.float    "llanta"
+    t.float    "alimento"
+    t.float    "otros"
+    t.float    "monto_recibido"
+    t.float    "flete"
+    t.float    "recibido_ruta"
+    t.float    "vuelto"
+    t.float    "descuento"
+    t.float    "reembolso"
+    t.integer  "ost_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "cpagar_details", force: :cascade do |t|
@@ -1249,6 +1275,7 @@ ActiveRecord::Schema.define(version: 20201113160214) do
     t.float    "preciosigv"
     t.integer  "moneda"
     t.string   "razon"
+    t.string   "documento2"
   end
 
   create_table "islands", force: :cascade do |t|
