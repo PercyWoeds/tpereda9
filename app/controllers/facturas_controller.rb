@@ -4297,11 +4297,17 @@ def client_data_headers
           File.delete(file)
         end         
        ###################################
+
+       if @invoice.document_id == 1 ||  @invoice.document_id == 7 
         @serie_factura =  "FF"+@invoice.code[1..2].rjust(2,"0")
         puts "serie factura : "
         puts @serie_factura
 
-
+        else 
+           @serie_factura =  @invoice.code[0..3]
+               puts "serie factura : "
+             puts @serie_factura
+      end 
       
        if @invoice.document_id == 1
            if @invoice.moneda_id == 1
@@ -4355,18 +4361,31 @@ def client_data_headers
 
            $lcDescrip = "ANULACION DE FACTURA"   
         
-          if @invoice.moneda_id == 2
+          if @invoice.moneda_id == 1
                   $lcMonedaValor ="USD"
           else
                   $lcMonedaValor ="PEN"
           end
+
+          puts "monedasss"
+          puts $lcMonedaValor
+
+
         
         credit_note_data = { issue_date: Date.new($aa,$mm,$dd), id: @invoice.code , customer: {legal_name:@invoice.customer.name , ruc:@invoice.customer.ruc  },
                              billing_reference: {id: @invoice.documento2, document_type_code: "01"},
                              discrepancy_response: {reference_id:@invoice.documento2, response_code: "09", description: $lcDescrip},
-                             lines: [{id: "1", item: {id: "05", description: @invoice_detail.service.name }, quantity: @invoice_detail.quantity, unit: 'ZZ', 
-                                  price: {value: @lcPrecioSIgv}, pricing_reference: $lcPrecioCigv, tax_totals: [{amount: $lcIgv, type: :igv, code: "10"}], line_extension_amount:$lcVVenta }],
+                            
+                            lines: [{id: "1", item: {id: "05", description: @invoice_detail.service.name }, quantity: @invoice_detail.quantity, unit: 'ZZ', 
+                                  price: {value: @lcPrecioSIgv },
+                                   pricing_reference: $lcPrecioCigv, tax_totals: [{amount: $lcIgv, type: :igv, code: "10"}], 
+                                   line_extension_amount:$lcVVenta }],
                              additional_monetary_totals: [{id: "1001", payable_amount: $lcVVenta}], tax_totals: [{amount: $lcIgv, type: :igv}], legal_monetary_total: {value: $lcTotal, currency: $lcMonedaValor }}
+         
+
+     
+
+   puts "sssss"
 
 
         if @invoice.moneda_id == 2
@@ -4374,7 +4393,7 @@ def client_data_headers
           
              credit_note = SUNAT::CreditNote.new(credit_note_data)
   
-            $aviso = 'Nota enviada con exito...'
+            $aviso = 'Nota enviada con exito...$$'
         else            
        
              credit_note = SUNAT::CreditNote.new(credit_note_data)
@@ -4426,7 +4445,13 @@ def client_data_headers
           $lcPrecioSigv2   = $lcPrecioSigv1.round(0).to_f
           $lcPrecioSIgv   =  $lcPrecioSigv2.to_i 
 
-           $lcDescrip = "AUMENTO EN EL VALOR "   
+           $lcDescrip = "AUMENTO EN EL VALOR "  
+
+           if @invoice.moneda_id == 1
+                  $lcMonedaValor ="USD"
+          else
+                  $lcMonedaValor ="PEN"
+          end 
 
           debit_note_data = { issue_date: Date.new($aa,$mm,$dd), id: @invoice.code, customer: {legal_name: @invoice.customer.name , ruc: @invoice.customer.ruc },
                      billing_reference: {id: @invoice.documento2, document_type_code: "01"},
