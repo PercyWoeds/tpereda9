@@ -6097,12 +6097,12 @@ def rpt_purchase61
                 if product.moneda_id == 1 
                     row << "0.00 "
                     row << sprintf("%.2f",product.total_amount.to_s)
-                    total_dolares  += product.total_amount 
+                    total_dolares  += product.total_amount.round(2) 
                
                 else
                     row << sprintf("%.2f",product.total_amount.to_s)
                     row << "0.00 "
-                    total_soles += product.total_amount  
+                    total_soles += product.total_amount.round(2)
                 end 
                 row << product.get_destino 
                 row << product.user.username 
