@@ -192,6 +192,23 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
       end 
     end 
   end 
+ def actualiza_monthyear_st 
+
+    @factura = Manifest.where(:year_mounth=> nil)
+
+    for factura in @factura
+       
+        @fechas =factura.fecha1.to_s
+        parts = @fechas.split("-")
+        year = parts[0]
+        mes  = parts[1]
+        dia  = parts[2]      
+        factura.year_mounth = year+mes 
+        factura.save
+    
+    end 
+  end 
+
   def actualizar_purchase_monthyear
     @factura = Purchase.where(:yearmonth=> nil)
     for factura in @factura
@@ -598,13 +615,24 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
     return @orden 
  end 
  def get_ordertransporte_day_all(fecha1,fecha2,tipo )
-   
-    if tipo == "0"
 
+  case tipo 
+   
+   when "0"
       @orden = Tranportorder.where(["company_id = ? AND created_at >= ? AND created_at <= ? ", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59" ]).order(:code)
-    else
+   when "1"
       @orden = Tranportorder.where(["company_id = ? AND fecha1 >= ? AND fecha1 <= ? ", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59"   ]).order(:code)
-    end 
+   when "2"
+
+    
+
+      @orden = Tranportorder.joins(:manifests).where(["tranportorders.company_id = ?
+       AND tranportorders.fecha1 >= ? AND tranportorders.fecha1 <= ? ", 
+       self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59" ]).order("manifests.code")
+
+
+   end 
+
     return @orden 
  end 
  
@@ -1152,9 +1180,6 @@ def get_customer_payments2(moneda,fecha1,fecha2)
 
 
 def get_customer_payments20(moneda,fecha1,fecha2)
-
-
-   
     
    @facturas = CustomerPaymentDetail.find_by_sql(["
    SELECT   month_year as year_month,
@@ -1181,6 +1206,129 @@ def get_customer_payments20(moneda,fecha1,fecha2)
     
  end 
 
+
+
+## REPORTE DE ESTADISTICAS DE PAGOS pivot
+
+def get_ventas2(moneda,fecha1,fecha2)
+   
+   @facturas = Factura.find_by_sql(["
+   SELECT   year_mounth as year_month,
+   customer_id,
+   SUM(total) as balance   
+   FROM facturas
+   WHERE moneda_id = ? and round(cast(balance as numeric),2) > 0 and fecha >= ? and fecha  <= ? and document_id <> 2 
+   GROUP BY 2,1
+   ORDER BY 2,1 ", moneda,"#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])    
+   
+   
+   @facturas2 = Factura.find_by_sql(["
+   SELECT   year_mounth as year_month,
+   customer_id,
+   SUM(total) as balance   
+   FROM facturas
+   WHERE moneda_id = ? and round(cast(balance as numeric),2) < 0 and fecha >= ? and fecha  <= ? and document_id = 2 
+   GROUP BY 2,1
+   ORDER BY 2,1 ", moneda,"#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])    
+   
+   Tempfactura.delete_all
+   
+  
+    for f in @facturas
+       if f.customer_id != nil
+        b = Tempfactura.new(year_month: f.year_month , customer_id: f.customer_id,balance: f.balance)
+        b.save 
+      end 
+    end 
+   
+   for c in @facturas2
+   
+         lcBalance= 0 
+         
+         tf = Tempfactura.find_by(year_month: c.year_month, customer_id: c.customer_id)
+       puts "cliente nc"
+       puts c.customer_id
+       puts c.year_month
+       puts c.balance
+       
+       if tf  
+           tf.balance += c.balance 
+           tf.save 
+       else
+         lcbalance = c.balance
+         puts "cliente "
+         puts c.customer_id 
+         a= Tempfactura.new(:year_month=> c.year_month,:customer_id => c.customer_id,:balance=>lcbalance)
+         a.save 
+       end
+       
+   end 
+   
+   @facturas = Tempfactura.joins(:customer).order("customers.name ",:year_month) 
+   
+  if @facturas.last != nil  
+    return @facturas
+  else
+    return nil 
+  end 
+ end 
+
+
+
+## REPORTE DE ESTADISTICAS DE PAGOS pivot
+
+def get_ventasst(moneda,fecha1,fecha2)
+
+    company = Company.find(1)
+
+  
+   company.actualiza_monthyear_st
+
+   if moneda == 1
+   
+   @facturas = Manifest.find_by_sql(["
+   SELECT   year_mounth as year_month,
+   customer_id,
+   SUM(importe2 +  escolta + stand_by) as balance   
+   FROM manifests
+   WHERE  fecha1 >= ? and fecha1 <= ?  and processed = ?  GROUP BY 2,1
+   ORDER BY 2,1 ","#{fecha1} 00:00:00","#{fecha2} 23:59:59","1" ])    
+
+
+   else 
+
+@facturas = Manifest.find_by_sql(["
+   SELECT   year_mounth as year_month,
+   customer_id,
+   SUM(importe + empaletizado + montacarga + escolta_pen + stand_by_pen) as balance   
+   FROM manifests
+   WHERE fecha1 >= ? and fecha1  <= ? and processed = ?
+   GROUP BY 2,1
+   ORDER BY 2,1 ","#{fecha1} 00:00:00","#{fecha2} 23:59:59","1" ])    
+
+
+   end 
+
+
+   
+   Tempfactura.delete_all
+   
+  
+    for f in @facturas
+       if f.customer_id != nil
+        b = Tempfactura.new(year_month: f.year_month , customer_id: f.customer_id,balance: f.balance)
+        b.save 
+      end 
+    end 
+   
+   @facturas = Tempfactura.joins(:customer).order("customers.name ",:year_month) 
+   
+  if @facturas.last != nil  
+    return @facturas
+  else
+    return nil 
+  end 
+ end 
 
 
 def get_asistencia_resumen(fecha1,fecha2)
@@ -1278,6 +1426,8 @@ def get_customer_payments_detail_value(fecha1,fecha2,value="total")
     end 
 
  end
+
+
  
  def actualizar_fecha20(fecha1,fecha2)
     Tempcp.delete_all 

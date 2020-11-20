@@ -16,7 +16,9 @@ self.per_page = 20
 	belongs_to :delivery
 	belongs_to :punto 
 
-	belongs_to :manifestship 
+
+  has_and_belongs_to_many :manifests, :join_table => "manifestships"
+
 	
 
 

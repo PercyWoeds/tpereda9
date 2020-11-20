@@ -14,6 +14,7 @@ self.per_page = 20
   belongs_to :supplier
   belongs_to :document 
   
+  
   belongs_to :user
   belongs_to :caja 
 
@@ -23,13 +24,11 @@ self.per_page = 20
    TABLE_HEADERS = ["ITEM",
                       "FECHA ",
                      "DESCRIPCION",
-                     "PROVEEDOR/EMPLEADO",
-                     "COMPROBANTE",
-                     "INGRESO",
-                     "EGRESO",
-                     "OST",
-                     "DETALLE",
-                     "DESTINO"]
+                     "TD",
+                     "NRO DOCUMENTO",
+                     "IMPORTE S/.",
+                     "DETALLE"
+                     ]
 
   TABLE_HEADERS2 = ["TD",
                       "Documento",
@@ -256,6 +255,26 @@ self.per_page = 20
   def get_viaticos
       @viaticos = ViaticoDetail.where("viatico_id = ? ",self.id).order(:destino_id,:id,:document_id)
   end
+
+  def get_egresos
+
+      @viaticos_egresos = Egreso.where("id> 1")
+
+  end 
+
+
+  def get_ingresos
+
+      @viaticos_egresos = Egreso.where(id: 1  )
+
+  end 
+ 
+
+  def get_egresos_suma
+
+     @viaticos = ViaticoDetail.select("egreso_id,sum(importe)  as total ").where("viatico_id = ? and egreso_id > 1 ",self.id).group(:egreso_id).order(:egreso_id)
+
+  end 
 
   def get_viaticos_cheque
       lcCheque = 6

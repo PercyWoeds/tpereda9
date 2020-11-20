@@ -26,24 +26,62 @@ before_filter :authenticate_user!
   
      
   def build_pdf_header(pdf)
-      pdf.image "#{Dir.pwd}/public/images/logo2.png", :width => 270        
-      pdf.move_down 6        
-      pdf.move_down 4
-      pdf.move_down 4
 
-      pdf.bounding_box([325, 725], :width => 200, :height => 80) do
-        pdf.stroke_bounds
-        pdf.move_down 15
-        pdf.font "Helvetica", :style => :bold do
-          pdf.text "R.U.C: 20424092941", :align => :center
-          pdf.text "LIQUIDACION DE VIATICOS", :align => :center
-          pdf.text "#{@viatico.code}", :align => :center,
-                                 :style => :bold
-          
-        end
-      end
-      pdf.move_down 10
-      pdf 
+      pdf.font "Helvetica"  , :size => 8
+     image_path = "#{Dir.pwd}/public/images/tpereda2.png"
+
+
+     
+       table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD EN EL TRABAJO ",:rowspan => 2},"CODIGO ","TP-FZ-F-018"], 
+          ["VERSION: ","9"], 
+          ["LIQUIDACION DE CAJA ","Pagina: ","1 de 1 "] 
+         
+          ])
+      
+
+       pdf.table(table_content  ,{
+           :position => :center,
+           :width => pdf.bounds.width
+         })do
+            columns([1,2]).font_style = :bold
+            columns([0]).width = 118.55
+            columns([1]).width = 301.45
+            columns([1]).align = :center
+            columns([2]).align = :center
+            columns([3]).align = :center
+
+            columns([2]).width = 60
+
+            columns([3]).width = 60
+
+         end
+        
+      
+        
+         pdf.move_down 2
+         table_content2 = ([["Fecha : ",Date.today.strftime("%d/%m/%Y")]])
+
+         pdf.table(table_content2,{:position=>:right }) do
+
+            columns([0, 1]).font_style = :bold
+            columns([0, 1]).width = 100
+            
+         end 
+
+         pdf.move_down 2
+
+         table_content3 = ([["LIQ N°: ",@viatico.code ]])
+
+         pdf.table(table_content3,{:position=>:right }) do
+
+            columns([0, 1]).font_style = :bold
+            columns([0, 1]).width = 100
+            
+         end 
+
+         pdf.move_down 2
+      
+         pdf 
   end   
 
   def build_pdf_body(pdf)
@@ -51,7 +89,7 @@ before_filter :authenticate_user!
     pdf.text " ", :size => 13, :spacing => 4
     pdf.font "Helvetica" , :size => 8
     pdf.text "FECHA :" << @viatico.fecha1.strftime("%d/%m/%Y")  <<    "           CAJA :" << @viatico.caja.descrip  ,:style => :bold;  
-    pdf.text "SALDO INICIAL :" << sprintf("%.2f",@viatico.inicial) ,:style => :bold;
+    pdf.text "SALDO ANTERIOR :" << sprintf("%.2f",@viatico.inicial) ,:style => :bold;
     pdf.font "Helvetica" , :size => 6      
       headers = []
       table_content = []
@@ -65,6 +103,7 @@ before_filter :authenticate_user!
       table_content << headers
 
       nroitem=1
+
       
        for  product in @viatico.get_viaticos_cheque() 
             row = []
@@ -166,7 +205,7 @@ before_filter :authenticate_user!
             
             lccompro =  product.document.descripshort << "-" << product.numero  
             
-            row << lccompro 
+            row << lccompro  
             
             if product.tm.to_i != 6
                 row << " "
@@ -218,28 +257,333 @@ before_filter :authenticate_user!
 
     end
 
+  def build_pdf_body_2(pdf)
+  
+    pdf.text " ", :size => 13, :spacing => 4
+    
+      pdf.font "Helvetica" , :size => 6      
+      headers = []
+      table_content = []
+      table_content0 = []
+      table_content2 = []
+      table_content3 = []
+
+      headers_ing = []
+      table_content_ing = []
+
+
+
+      Viatico::TABLE_HEADERS.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers_ing  << cell
+      end
+
+      table_content_ing << headers_ing 
+
+  
+       nroitem = 1
+   @total_importe = 0
+
+
+        for  egresos  in @viatico.get_ingresos() 
+         @detalle = egresos.get_detalle_egreso(@viatico.id,egresos.id)
+
+
+          if @detalle.count()>0 
+
+            table_content = ([ [egresos.name  ]   ])
+            
+
+             pdf.table(table_content  ,{
+                 :position => :center,
+                 :width => pdf.bounds.width
+               })do
+                 columns([0]).font_style = :bold
+                
+                 columns([0]).align = :center
+                
+               end
+
+              
+
+
+          #SALDO INICIAL 
+
+          row = []
+
+          row << ""    
+          row << ""
+          row << "SALDO ANTERIOR AL " +@viatico.fecha1.to_date.to_s 
+          row << ""
+           row << ""
+           row << sprintf("%.2f",@viatico.inicial)
+           row << ""
+
+          @total_importe   +=  @viatico.inicial 
+         
+          table_content_ing << row
+              
+          for product in @detalle 
+
+            puts 
+            row = []
+            row << nroitem.to_s        
+            row << product.fecha.strftime("%d/%m/%Y") 
+
+            if product.supplier_id !=  2570 
+              row <<  product.supplier.name
+            else
+
+              if  product.employee != 64
+              row <<   product.employee.full_name
+              end 
+            end 
+
+            row << product.document.descripshort 
+            
+            row << product.numero 
+         
+            row << sprintf("%.2f",product.importe)
+
+            @total_importe   +=  product.importe 
+
+          
+            row << product.detalle 
+      
+        
+            table_content_ing << row
+
+
+            nroitem=nroitem + 1     
+
+
+
+      result = pdf.table table_content_ing , {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                        
+                                          columns([1]).align=:left 
+                                          columns([2]).align=:left                                          
+                                          columns([3]).align=:left 
+                                          columns([4]).align=:left
+                                          columns([5]).align=:right 
+                                          columns([6]).align=:left  
+                                        
+                                         
+                                        end 
+         end 
+
+
+         row =[]
+         table_content3 = []
+
+
+         row << "TOTAL INGRESO S/."
+         row << sprintf("%.2f",@total_importe)
+         table_content3 << row 
+
+      result = pdf.table table_content3, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width/3
+                                        } do 
+                                          columns([0]).align=:center
+                                           columns([0]).width = 100 
+                 
+                                          columns([0]).align = :left
+                                          columns([1]).align = :right
+                  
+                                         
+                                         
+                                         
+                                        end 
+
+
+
+        end 
+
+
+  end 
+      
+
+   pdf.move_down 10  
+      ###EGRESOS 
+       for  egresos  in @viatico.get_egresos() 
+         @detalle = egresos.get_detalle_egreso(@viatico.id,egresos.id)
+
+
+
+        
+  if @detalle.count()>0 
+
+            table_content = ([ [egresos.name  ]   ])
+            
+
+             pdf.table(table_content  ,{
+                 :position => :center,
+                 :width => pdf.bounds.width
+               })do
+                 columns([0]).font_style = :bold
+                
+                 columns([0]).align = :center
+                
+               end
+
+      
+          table_content2 = []
+          headers = []
+
+      Viatico::TABLE_HEADERS.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content2 << headers
+
+
+
+             
+                total_importe = 0
+
+              
+          for product in @detalle 
+
+            puts 
+            row = []
+            row << nroitem.to_s        
+            row << product.fecha.strftime("%d/%m/%Y") 
+
+            if product.supplier_id !=  2570 
+              row <<  product.supplier.name
+            else
+
+              if  product.employee != 64
+              row <<   product.employee.full_name
+              end 
+            end 
+
+            row << product.document.descripshort 
+            
+            row << product.numero 
+         
+            row << sprintf("%.2f",product.importe)
+
+            total_importe   =+ product.importe 
+
+            row << product.detalle 
+      
+        
+            table_content2 << row
+            nroitem=nroitem + 1     
+
+
+
+      result = pdf.table table_content2, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                        
+                                          columns([1]).align=:left 
+                                          columns([2]).align=:left                                          
+                                          columns([3]).align=:left 
+                                          columns([4]).align=:left
+                                          columns([5]).align=:right 
+                                          columns([6]).align=:left  
+                                           columns([6]).width = 10
+                                         
+                                           columns([6]).width = 120
+                                         
+                                        
+                                         
+                                        end 
+         end 
+
+
+         row =[]
+         table_content3 = []
+
+
+         row << "TOTAL EGRESO S/."
+         row << sprintf("%.2f",product.importe)
+         table_content3 << row 
+
+      result = pdf.table table_content3, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width/3
+                                        } do 
+                                        
+                                                                             
+                                         columns([0]).width = 100 
+                 
+                                          columns([0]).align = :left
+                                          columns([1]).align = :right
+                  
+                                        end 
+
+
+       end 
+
+       #resumen 
+
+       end 
+       
+       
+
+      pdf.move_down 10  
+      pdf
+
+    end
 
     def build_pdf_footer(pdf)
+      total_egresos = 0
 
-   
+      table_content_footer = []
+    for  egresos  in @viatico.get_egresos_suma() 
 
-   $lcIngreso  = sprintf("%.2f",@viatico.total_ing.round(2).to_s)  
-   $lcEgreso   = sprintf("%.2f",@viatico.total_egreso.round(2).to_s)  
-   $lcSaldo   = sprintf("%.2f",@viatico.saldo.round(2).to_s)  
+       total_egresos += egresos.total 
 
-      data0 = [[" "," "," "," ","TOTALES INGRESOS => ",$lcIngreso ],
-               [" "," "," "," ","TOTALES EGRESOS  => ",$lcEgreso],
-               [" "," "," "," ","SALDO            => ",$lcSaldo]]
 
-            
-        pdf.move_down 150
-        pdf.text " "
-        pdf.table(data0,:cell_style=> {:border_width=>0, :width=> 90,:height => 20 })
-            
-       
-        pdf.text ""
-        pdf.text "" 
-        pdf.text "OBSERVACIONES : #{@viatico.comments}", :size => 8, :spacing => 4
+       row =[]
+       row << egresos.egreso.name 
+       row << egresos.total
+       table_content_footer << row 
+
+    end 
+
+      row = []
+      row << "TOTAL EGRESOS S/.:"
+      row << sprintf("%.2f",total_egresos)
+
+        table_content_footer << row 
+
+         row = []
+      row << "SALDO EN CAJA  S/.:"
+      row << sprintf("%.2f",@total_importe - total_egresos)
+
+ table_content_footer << row 
+
+             pdf.table(table_content_footer  ,{
+                 :position => :center,
+                 :width => pdf.bounds.width/3
+               })do
+                 columns([0]).font_style = :bold
+                
+                 columns([0]).align = :center
+                 columns([0]).width = 100 
+                  columns([0]).align = :left
+                   columns([1]).align = :right
+                  
+
+               end
+
+
+
+
+
 
         
        data =[ ["Procesado Asis.Finanzas ","V.B.Contador","V.B.Administracion ","V.B. Gerente ."],
@@ -286,7 +630,7 @@ before_filter :authenticate_user!
     Prawn::Document.generate("app/pdf_output/#{@viatico.id}.pdf") do |pdf|
         pdf.font "Helvetica"
         pdf = build_pdf_header(pdf)
-        pdf = build_pdf_body(pdf)
+        pdf = build_pdf_body_2(pdf)
         build_pdf_footer(pdf)
          $lcFileName =  "app/pdf_output/#{@viatico.id}.pdf"      
         
@@ -613,6 +957,8 @@ before_filter :authenticate_user!
       nroitem = 1
       lcmonedasoles   = 2
       lcmonedadolares = 1
+
+
 
        for  product1 in @viaticos_rpt
        

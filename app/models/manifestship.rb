@@ -1,8 +1,7 @@
 class Manifestship < ActiveRecord::Base
 
-	has_many :manifests 
-
-	has_many :tranportorders 
+	belongs_to :manifest
+	belongs_to :tranportorder
 	
 
   validates_uniqueness_of :manifest_id 

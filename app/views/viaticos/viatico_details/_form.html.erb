@@ -23,26 +23,8 @@
     <input type="hidden" name="ac_employee_id" id="ac_employee_id"  />
     <br />
     
-    <strong>Orden de servicio :</strong><br />
-    <input type="text" name="ac_item" id="ac_item" value="<% if @ac_item %><%= @ac_item %><% end %>" />
-    
-    <div class="small">
-      Ingrese un termino de busqueda para encontrar un documento 
-    </div>
-    
+  
     <br />
-
-
-    <div class="small">
-      <strong>Seleccionar proveedor:</strong>
-      <span id="selected supplier"><% if @ac_supplier %><%= @ac_supplier %><% else %><!-- i --><% end %></span>
-
-
-    </div>
-    <%= hr() %>
-
-    <div >
-
     
    
     <strong>Destino  :</strong>
@@ -58,7 +40,7 @@
 
 
     <br />
-      <%= f.collection_select :egreso_id, @egresos , :id, :name , :prompt => true %>
+      <%= f.collection_select :egreso_id, @egresos , :id, :formatted_name , :prompt => true %>
     <br />
   
       
@@ -174,7 +156,7 @@
 
   <div class="form-actions">
 
-    <%= f.hidden_field :tranportorder_id,:id => "ac_item_id" %>
+   
     <%= f.hidden_field :supplier_id, :id => "ac_supplier_id" %>
     
     <%= f.button :submit %>

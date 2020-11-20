@@ -66,109 +66,106 @@
 <table>
   <thead>
     <tr>
+     
       <th>
-        Empleado
+        Item
       </th>
-      <th>
-        Proveedor 
+
+       <th>
+        ingreso/Egreso
       </th>
-      
-      <th>
-        Gasto
-      </th>
-      <th>
-        Vehiculo
-      </th>
-      
-      <th>
-        OST.
-      </th>
-      <th>
-        Desde
-      </th>
-      
-      <th>
+
+       <th>
         Fecha
       </th>
       
+      
       <th>
-        Documento 
+        Descripcion 
       </th>
+      
+      
+      <th>
+        Nro.Documento   </th>
+      
+      <th>
+        Importe S/.
+      </th>
+      
+      
       <th>
         Detalle
       </th>
-      
-      <th>
-        Total
+        <th>
+        Opciones 
       </th>
+      
     </tr>
   </thead>
   <tbody>
     
 <%= hr() %>
+
+<% nroitem = 1 %>
     <%  @viatico_detail.each do |product| %>
     
       <tr>
 
         <td class="small bordered_bottom bordered_right">
-             <%if product.gasto %>  
-             
-             <%=product.fecha.strftime("%d/%m/%Y") %>
-             
+        <%= nroitem %>
+        </td>
+
+        <td class="small bordered_bottom bordered_right">
+             <%if product.egreso %>  
+              <%= product.egreso.name  %>
                <%else%>
 
               <%end %>
+          </td>
+
+        <td class="small bordered_bottom bordered_right">
+
+             <%=product.fecha.strftime("%d/%m/%Y") %>
 
           </td>
           
+        
          <td class="small bordered_bottom bordered_right">
-            <%= product.tranportorder.employee.full_name %>
-          </td>
-         <td class="small bordered_bottom bordered_right">
-           <%if product.supplier %>
+           <%if product.supplier_id !=  2570 %>
             <%= product.supplier.name %>
           <%else%>
-           <%if product.employee %>
+           <%if  product.employee != 64 %>
             <%= product.employee.full_name %>
             <%end %>
           <%end %>
           </td>
-         <td class="small bordered_bottom bordered_right">
-             <%if product.gasto %>  
-              <%= product.gasto.descrip %>
-               <%else%>
-
-              <%end %>
-          </td>
-          
-         <td class="small bordered_bottom bordered_right">
-            <%= product.tranportorder.truck.placa %>
-          </td>
-         <td class="small bordered_bottom bordered_right">
-            <%= product.tranportorder.code %>
-          </td>
-
-         <td class="small bordered_bottom bordered_right">
-            <%= product.tranportorder.get_punto(product.tranportorder.ubication_id) %>
-          </td>
+         
+        
           
           <td class="small bordered_bottom bordered_right">
             
               <%= product.document.descripshort << "-" << product.numero    %>
           </td>
+
+
+          <td class="small bordered_bottom bordered_left">
+            <%= money(product.importe) %>
+          </td>
+
+
            <td class="small bordered_bottom bordered_right">
               <%=product.detalle %>
           </td>
-          <td class="small bordered_bottom bordered_right">
-            <%= money(product.importe) %>
-          </td>
+
           <td><%= link_to 'Editar',  edit_viatico_viatico_detail_path(viatico_id: @viatico.id,id: product.id ) %></td>          
           <td><%= link_to 'Eliminar',[@viatico,product], method: :delete, data: { confirm: 'Esta seguro?' } %></td>
           
       </tr>
+
+      <% nroitem += 1 %>
     <% end %>
    <tr>
-      <td colspan="9" class="bordered_bottom bordered_right bold">
+      <td colspan="5" class="bordered_bottom bordered_right bold">
         Total Egresos
       </td>
       <td class="bordered_bottom bordered_right bold right">
@@ -177,7 +174,7 @@
     </tr>
     
    <tr>
-      <td colspan="9" class="bordered_bottom bordered_right bold">
+      <td colspan="5" class="bordered_bottom bordered_right bold">
         Saldo
       </td>
       <td class="bordered_bottom bordered_right bold right">

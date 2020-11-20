@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201118161532) do
+ActiveRecord::Schema.define(version: 20201119194313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1515,6 +1515,7 @@ ActiveRecord::Schema.define(version: 20201118161532) do
     t.string   "cotizacion"
     t.float    "stand_by_pen"
     t.float    "escolta_pen"
+    t.string   "year_mounth"
   end
 
   create_table "manifestships", force: :cascade do |t|

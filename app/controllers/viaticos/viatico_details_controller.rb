@@ -55,11 +55,11 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     @destinos = Destino.all
     @employees = @company.get_employees 
 
-     @egresos = Egreso.order(:code)
+    @egresos = Egreso.order(:code)
+    
+    
+    
 
-    @transporte = Tranportorder.find(@viatico_detail.tranportorder_id)
-    @ac_item = @transporte.code 
-    @ac_item_id = @transporte.id
     
     if @viatico_detail.supplier_id != nil
     @supplier = Supplier.find(@viatico_detail.supplier_id)

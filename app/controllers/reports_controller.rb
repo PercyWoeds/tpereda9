@@ -1675,6 +1675,16 @@ def rpt_purchase61_all
     @company = Company.find(params[:company_id])
     @pagetitle = "Cotizacion"    
   end
+ def rpt_facturas_res
+    @company = Company.find(params[:company_id])
+    @pagetitle = "Resumen Ventas "    
+      @monedas=@company.get_monedas    
+  end
  
-
+ def rpt_st_res
+    @company = Company.find(params[:company_id])
+    @pagetitle = "Resumen ST "    
+      @monedas=@company.get_monedas    
+  end
+ 
 end

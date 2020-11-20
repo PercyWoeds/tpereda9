@@ -35,6 +35,10 @@
   <p class="big">
     <%= link_to  "Solictud de transporte - mes", "/companies/reports/rpt_st_all3/#{@company.id}" %>
   </p>
+
+    <p class="big">
+    <%= link_to "Solicitud de transporte - Resumen x mes  ", "/companies/reports/rpt_st_res/#{@company.id}" %>
+  </p>
   
   <h3>
     Facturas 
@@ -50,6 +54,9 @@
 
   <p class="big">
     <%= link_to "Facturas y Notas por cliente ", "/companies/reports/rpt_facturas_all2/#{@company.id}" %>
+  </p>
+    <p class="big">
+    <%= link_to "Facturas y Notas - Resumen x mes  ", "/companies/reports/rpt_facturas_res/#{@company.id}" %>
   </p>
   
   

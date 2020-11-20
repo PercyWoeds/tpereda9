@@ -706,7 +706,6 @@ def rpt_purchase2_all
 
 
 
-
 def rpt_ingresos2_all_pdf
   
     @company=Company.find(params[:id])          
@@ -3954,6 +3953,445 @@ end
           
           #customerpayment_rpt.balance.round(2) > 0.00
       
+          if customerpayment_rpt.year_month.to_f <= 201912
+            @total_anterior = @total_anterior + customerpayment_rpt.balance
+          end             
+          
+          if customerpayment_rpt.year_month.to_f >= 202001  and customerpayment_rpt.year_month.to_f <= 202006
+            @total_mes01 = @total_mes01 + customerpayment_rpt.balance
+          end   
+
+         if customerpayment_rpt.year_month.to_f >= 202007 and customerpayment_rpt.year_month.to_f <= 202007
+        
+            @total_mes02 = @total_mes02 + customerpayment_rpt.balance
+          end 
+            
+          if customerpayment_rpt.year_month == '202008'   
+            @total_mes03 = @total_mes03 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202009'     
+            @total_mes04 = @total_mes04 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202010'       
+            @total_mes05 = @total_mes05 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202011'
+            @total_mes06 = @total_mes06 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202012' 
+            @total_mes07 = @total_mes07 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202101'   
+            @total_mes08 = @total_mes08 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202102'     
+            @total_mes09 = @total_mes09 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202103'       
+            @total_mes10 = @total_mes10 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202104'   
+            @total_mes11 = @total_mes11 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202105'     
+            @total_mes12 = @total_mes12 + customerpayment_rpt.balance
+          end   
+            @total_general = @total_general + customerpayment_rpt.balance
+            
+        #end 
+          
+        else
+          
+            @total_cliente = @total_anterior+
+            @total_mes01+
+            @total_mes02+
+            @total_mes03+
+            @total_mes04+
+            @total_mes05+
+            @total_mes06+
+            @total_mes07+
+            @total_mes08+
+            @total_mes09+
+            @total_mes10+
+            @total_mes11+
+            @total_mes12
+            
+            row = []
+            row << nroitem.to_s        
+            row << $lcCliName
+            row << sprintf("%.2f",@total_anterior.to_s)
+            row << sprintf("%.2f",@total_mes01.to_s)
+            row << sprintf("%.2f",@total_mes02.to_s)
+            row << sprintf("%.2f",@total_mes03.to_s)
+            row << sprintf("%.2f",@total_mes04.to_s)
+            row << sprintf("%.2f",@total_mes05.to_s)
+            row << sprintf("%.2f",@total_mes06.to_s)
+            row << sprintf("%.2f",@total_mes07.to_s)
+            row << sprintf("%.2f",@total_mes08.to_s)
+            row << sprintf("%.2f",@total_mes09.to_s)
+            row << sprintf("%.2f",@total_mes10.to_s)
+            row << sprintf("%.2f",@total_mes11.to_s)
+            row << sprintf("%.2f",@total_mes12.to_s)
+            row << sprintf("%.2f",@total_cliente.to_s)
+
+            table_content << row            
+            ## TOTAL XMES GENERAL
+            @total_anterior_column = @total_anterior_column + @total_anterior
+            @total_mes01_column = @total_mes01_column +@total_mes01
+            @total_mes02_column = @total_mes02_column +@total_mes02
+            @total_mes03_column = @total_mes03_column +@total_mes03
+            @total_mes04_column = @total_mes04_column +@total_mes04
+            @total_mes05_column = @total_mes05_column +@total_mes05
+            @total_mes06_column = @total_mes06_column +@total_mes06
+            @total_mes07_column = @total_mes07_column +@total_mes07
+            @total_mes08_column = @total_mes08_column +@total_mes08
+            @total_mes09_column = @total_mes09_column +@total_mes09
+            @total_mes10_column = @total_mes10_column +@total_mes10
+            @total_mes11_column = @total_mes11_column +@total_mes11
+            @total_mes12_column = @total_mes12_column +@total_mes12
+            @total_cliente = 0 
+            ## TOTAL XMES GENERAL
+
+            $lcCliName =customerpayment_rpt.customer.name
+            lcCli = customerpayment_rpt.customer_id
+
+            @total_anterior = 0
+            @total_mes01 = 0
+            @total_mes02 = 0
+            @total_mes03 = 0
+            @total_mes04 = 0
+            @total_mes05 = 0
+            @total_mes06 = 0
+            @total_mes07 = 0
+            @total_mes08 = 0
+            @total_mes09 = 0
+            @total_mes10 = 0
+            @total_mes11 = 0
+            @total_mes12 = 0
+            @total_cliente = 0 
+            
+          #if customerpayment_rpt.balance.round(2) > 0.00
+          
+          if customerpayment_rpt.year_month.to_f <= 201912
+            @total_anterior = @total_anterior + customerpayment_rpt.balance
+          end             
+          
+          if customerpayment_rpt.year_month.to_f >= 202001  and customerpayment_rpt.year_month.to_f <= 202006
+            @total_mes01 = @total_mes01 + customerpayment_rpt.balance
+          end   
+
+         if customerpayment_rpt.year_month.to_f >= 202007 and customerpayment_rpt.year_month.to_f <= 202007
+        
+            @total_mes02 = @total_mes02 + customerpayment_rpt.balance
+          end 
+            
+          if customerpayment_rpt.year_month == '202008'   
+            @total_mes03 = @total_mes03 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202009'     
+            @total_mes04 = @total_mes04 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202010'       
+            @total_mes05 = @total_mes05 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202011'
+            @total_mes06 = @total_mes06 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202012' 
+            @total_mes07 = @total_mes07 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202101'   
+            @total_mes08 = @total_mes08 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202102'     
+            @total_mes09 = @total_mes09 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202103'       
+            @total_mes10 = @total_mes10 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202104'   
+            @total_mes11 = @total_mes11 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202105'     
+            @total_mes12 = @total_mes12 + customerpayment_rpt.balance
+          end   
+          
+          nroitem = nroitem + 1 
+      
+          @total_general = @total_general + customerpayment_rpt.balance
+        #end 
+       end 
+       end   
+       
+
+      #fin for
+          #ultimo cliente 
+
+          @total_cliente = @total_anterior+
+          @total_mes01+
+          @total_mes02+
+          @total_mes03+
+          @total_mes04+
+          @total_mes05+
+          @total_mes06+
+          @total_mes07+
+          @total_mes08+
+          @total_mes09+
+          @total_mes10+
+          @total_mes11+
+          @total_mes12
+            @total_anterior_column = @total_anterior_column + @total_anterior
+            @total_mes01_column = @total_mes01_column +@total_mes01
+            @total_mes02_column = @total_mes02_column +@total_mes02
+            @total_mes03_column = @total_mes03_column +@total_mes03
+            @total_mes04_column = @total_mes04_column +@total_mes04
+            @total_mes05_column = @total_mes05_column +@total_mes05
+            @total_mes06_column = @total_mes06_column +@total_mes06
+            @total_mes07_column = @total_mes07_column +@total_mes07
+            @total_mes08_column = @total_mes08_column +@total_mes08
+            @total_mes09_column = @total_mes09_column +@total_mes09
+            @total_mes10_column = @total_mes10_column +@total_mes10
+            @total_mes11_column = @total_mes11_column +@total_mes11
+            @total_mes12_column = @total_mes12_column +@total_mes12
+          
+            row = []
+            row << nroitem.to_s        
+            row << customerpayment_rpt.customer.name  
+            row << sprintf("%.2f",@total_anterior.to_s)
+            row << sprintf("%.2f",@total_mes01.to_s)
+            row << sprintf("%.2f",@total_mes02.to_s)
+            row << sprintf("%.2f",@total_mes03.to_s)
+            row << sprintf("%.2f",@total_mes04.to_s)
+            row << sprintf("%.2f",@total_mes05.to_s)
+            row << sprintf("%.2f",@total_mes06.to_s)
+            row << sprintf("%.2f",@total_mes07.to_s)
+            row << sprintf("%.2f",@total_mes08.to_s)
+            row << sprintf("%.2f",@total_mes09.to_s)
+            row << sprintf("%.2f",@total_mes10.to_s)
+            row << sprintf("%.2f",@total_mes11.to_s)
+            row << sprintf("%.2f",@total_mes12.to_s)
+            row << sprintf("%.2f",@total_cliente.to_s)
+
+            table_content << row            
+            
+
+
+        row = []
+         row << ""       
+         row << " TOTAL GENERAL => "
+         row << sprintf("%.2f",@total_anterior_column.to_s)
+         row << sprintf("%.2f",@total_mes01_column.to_s)
+         row << sprintf("%.2f",@total_mes02_column.to_s)
+         row << sprintf("%.2f",@total_mes03_column.to_s)
+         row << sprintf("%.2f",@total_mes04_column.to_s)
+         row << sprintf("%.2f",@total_mes05_column.to_s)
+         row << sprintf("%.2f",@total_mes06_column.to_s)
+         row << sprintf("%.2f",@total_mes07_column.to_s)
+         row << sprintf("%.2f",@total_mes08_column.to_s)
+         row << sprintf("%.2f",@total_mes09_column.to_s)
+         row << sprintf("%.2f",@total_mes10_column.to_s)
+         row << sprintf("%.2f",@total_mes11_column.to_s)
+         row << sprintf("%.2f",@total_mes12_column.to_s)
+         row << sprintf("%.2f",@total_general.to_s)
+         
+         table_content << row
+
+
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:right
+                                          columns([3]).align=:right 
+                                          columns([4]).align=:right
+                                          columns([5]).align=:right 
+                                          columns([6]).align=:right
+                                          columns([7]).align=:right 
+                                          columns([8]).align=:right
+                                          columns([9]).align=:right 
+                                          columns([10]).align=:right
+                                          columns([11]).align=:right 
+                                          columns([12]).align=:right
+                                          columns([13]).align=:right 
+                                          columns([14]).align=:right 
+                                          columns([15]).align=:right
+                                          
+                                        end                                          
+      pdf.move_down 10      
+      pdf
+
+    end
+
+
+    def build_pdf_footer_rpt20(pdf)
+
+        subtotals = []
+        taxes = []
+        totals = []
+        services_subtotal = 0
+        services_tax = 0
+        services_total = 0
+
+        
+        
+        pdf.text "" 
+
+        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+           pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+        end
+
+      pdf
+      
+  end
+
+
+def rpt_ventas_pdf
+    @company=Company.find(1)      
+    @fecha1 = params[:fecha1]
+    @fecha2 = params[:fecha2]
+    @tipomoneda = params[:moneda_id]
+
+    @customerpayment_rpt = @company.get_ventas2(@tipomoneda,@fecha1,@fecha2)
+
+
+    case params[:print]
+      when "To PDF" then 
+        begin 
+        
+            if @customerpayment_rpt != nil 
+
+                Prawn::Document.generate "app/pdf_output/rpt_ventas2.pdf" , :page_layout => :landscape do |pdf|        
+                pdf.font "Helvetica"
+                pdf = build_pdf_header_rpt20b(pdf)
+                pdf = build_pdf_body_rpt20b(pdf)
+                build_pdf_footer_rpt20b(pdf)
+                $lcFileName =  "app/pdf_output/rpt_ventas2.pdf"      
+            end     
+
+            $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
+            send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+            end 
+
+        end   
+      when "To Excel" then render xlsx: 'rpt_ccobrar5_xls'
+      else render action: "index"
+    end
+
+
+
+  
+end 
+
+##-------------------------------------------------------------------------------------
+## REPORTE DE ESTADISTICA DE VENTAS
+##-------------------------------------------------------------------------------------
+  
+  def build_pdf_header_rpt20b(pdf)
+     pdf.font "Helvetica" , :size => 6
+      
+     $lcCli  = @company.name 
+     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+
+     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
+     $lcHora  = Time.now.to_s
+
+    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
+      end
+
+      if rows.present?
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+      end
+
+        pdf.move_down 10
+
+      end
+      
+      pdf 
+  end   
+
+  def build_pdf_body_rpt20b(pdf)
+    
+    if @tipomoneda == "1"
+       @tipomoneda_name ="DOLARES"  
+    else
+       @tipomoneda_name ="SOLES "  
+    end 
+    pdf.text "Resumen Clientes  Moneda : "+@tipomoneda_name  + " Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
+    pdf.text ""
+    pdf.font "Helvetica" , :size => 6
+
+      headers = []
+      table_content = []
+      total_general = 0
+      total_factory = 0
+
+      CustomerPayment::TABLE_HEADERS9.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+      table_content << headers
+      nroitem = 1
+
+      # tabla pivoteadas
+      # hash of hashes
+        # pad columns with spaces and bars from max_lengths
+
+      @total_general = 0
+      @total_anterior = 0
+      @total_cliente = 0 
+      @total_mes01 = 0
+      @total_mes02 = 0
+      @total_mes03 = 0
+      @total_mes04 = 0
+      @total_mes05 = 0
+      @total_mes06 = 0
+      @total_mes07 = 0
+      @total_mes08 = 0
+      @total_mes09 = 0
+      @total_mes10 = 0
+      @total_mes11 = 0
+      @total_mes12 = 0
+      @total_anterior_column = 0
+      @total_mes01_column = 0
+      @total_mes02_column = 0
+      @total_mes03_column = 0
+      @total_mes04_column = 0
+      @total_mes05_column = 0
+      @total_mes06_column = 0
+      @total_mes07_column = 0
+      @total_mes08_column = 0
+      @total_mes09_column = 0
+      @total_mes10_column = 0
+      @total_mes11_column = 0
+      @total_mes12_column = 0
+      
+      lcCli = @customerpayment_rpt.first.customer_id
+      $lcCliName = ""
+    
+
+     for  customerpayment_rpt in @customerpayment_rpt
+
+        if lcCli == customerpayment_rpt.customer_id 
+
+          $lcCliName = customerpayment_rpt.customer.name  
+          
+          #customerpayment_rpt.balance.round(2) > 0.00
+      
           if customerpayment_rpt.year_month.to_f <= 201812
             @total_anterior = @total_anterior + customerpayment_rpt.balance
           end             
@@ -4226,7 +4664,7 @@ end
     end
 
 
-    def build_pdf_footer_rpt20(pdf)
+    def build_pdf_footer_rpt20b(pdf)
 
         subtotals = []
         taxes = []
@@ -4246,6 +4684,450 @@ end
       pdf
       
   end
+
+
+
+
+
+
+def rpt_st_pdf
+    @company=Company.find(1)      
+    @fecha1 = params[:fecha1]
+    @fecha2 = params[:fecha2]
+    @tipomoneda = params[:moneda_id]
+
+    @customerpayment_rpt = @company.get_ventasst(@tipomoneda,@fecha1,@fecha2)
+
+
+    case params[:print]
+      when "To PDF" then 
+        begin 
+        
+            if @customerpayment_rpt != nil 
+
+                Prawn::Document.generate "app/pdf_output/rpt_st2.pdf" , :page_layout => :landscape do |pdf|        
+                pdf.font "Helvetica"
+                pdf = build_pdf_header_rpt20b(pdf)
+                pdf = build_pdf_body_rpt20b(pdf)
+                build_pdf_footer_rpt20b(pdf)
+                $lcFileName =  "app/pdf_output/rpt_st2.pdf"      
+            end     
+
+            $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
+            send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+            end 
+
+        end   
+      when "To Excel" then render xlsx: 'rpt_ccobrar5_xls'
+      else render action: "index"
+    end
+
+
+
+  
+end 
+
+##-------------------------------------------------------------------------------------
+## REPORTE DE ESTADISTICA DE VENTAS
+##-------------------------------------------------------------------------------------
+  
+  def build_pdf_header_rpt20b(pdf)
+     pdf.font "Helvetica" , :size => 6
+      
+     $lcCli  = @company.name 
+     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+
+     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
+     $lcHora  = Time.now.to_s
+
+    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
+      end
+
+      if rows.present?
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+      end
+
+        pdf.move_down 10
+
+      end
+      
+      pdf 
+  end   
+
+  def build_pdf_body_rpt20b(pdf)
+    
+    if @tipomoneda == "1"
+       @tipomoneda_name ="DOLARES"  
+    else
+       @tipomoneda_name ="SOLES "  
+    end 
+    pdf.text "Resumen Clientes  Moneda : "+@tipomoneda_name  + " Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
+    pdf.text ""
+    pdf.font "Helvetica" , :size => 6
+
+      headers = []
+      table_content = []
+      total_general = 0
+      total_factory = 0
+
+      CustomerPayment::TABLE_HEADERS9.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+      table_content << headers
+      nroitem = 1
+
+      # tabla pivoteadas
+      # hash of hashes
+        # pad columns with spaces and bars from max_lengths
+
+      @total_general = 0
+      @total_anterior = 0
+      @total_cliente = 0 
+      @total_mes01 = 0
+      @total_mes02 = 0
+      @total_mes03 = 0
+      @total_mes04 = 0
+      @total_mes05 = 0
+      @total_mes06 = 0
+      @total_mes07 = 0
+      @total_mes08 = 0
+      @total_mes09 = 0
+      @total_mes10 = 0
+      @total_mes11 = 0
+      @total_mes12 = 0
+      @total_anterior_column = 0
+      @total_mes01_column = 0
+      @total_mes02_column = 0
+      @total_mes03_column = 0
+      @total_mes04_column = 0
+      @total_mes05_column = 0
+      @total_mes06_column = 0
+      @total_mes07_column = 0
+      @total_mes08_column = 0
+      @total_mes09_column = 0
+      @total_mes10_column = 0
+      @total_mes11_column = 0
+      @total_mes12_column = 0
+      
+      lcCli = @customerpayment_rpt.first.customer_id
+      $lcCliName = ""
+    
+
+     for  customerpayment_rpt in @customerpayment_rpt
+
+        if lcCli == customerpayment_rpt.customer_id 
+
+          $lcCliName = customerpayment_rpt.customer.name  
+          
+          #customerpayment_rpt.balance.round(2) > 0.00
+      
+          if customerpayment_rpt.year_month.to_f <= 201812
+            @total_anterior = @total_anterior + customerpayment_rpt.balance
+          end             
+          
+          if customerpayment_rpt.year_month.to_f >= 201901  and customerpayment_rpt.year_month.to_f <= 201912
+            @total_mes01 = @total_mes01 + customerpayment_rpt.balance
+          end   
+
+         if customerpayment_rpt.year_month.to_f >= 202001 and customerpayment_rpt.year_month.to_f <= 202003
+        
+            @total_mes02 = @total_mes02 + customerpayment_rpt.balance
+          end 
+            
+          if customerpayment_rpt.year_month == '202004'   
+            @total_mes03 = @total_mes03 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202005'     
+            @total_mes04 = @total_mes04 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202006'       
+            @total_mes05 = @total_mes05 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202007'
+            @total_mes06 = @total_mes06 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202008' 
+            @total_mes07 = @total_mes07 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202009'   
+            @total_mes08 = @total_mes08 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202010'     
+            @total_mes09 = @total_mes09 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202011'       
+            @total_mes10 = @total_mes10 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202012'   
+            @total_mes11 = @total_mes11 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202101'     
+            @total_mes12 = @total_mes12 + customerpayment_rpt.balance
+          end   
+            @total_general = @total_general + customerpayment_rpt.balance
+            
+        #end 
+          
+        else
+          
+            @total_cliente = @total_anterior+
+            @total_mes01+
+            @total_mes02+
+            @total_mes03+
+            @total_mes04+
+            @total_mes05+
+            @total_mes06+
+            @total_mes07+
+            @total_mes08+
+            @total_mes09+
+            @total_mes10+
+            @total_mes11+
+            @total_mes12
+            
+            row = []
+            row << nroitem.to_s        
+            row << $lcCliName
+            row << sprintf("%.2f",@total_anterior.to_s)
+            row << sprintf("%.2f",@total_mes01.to_s)
+            row << sprintf("%.2f",@total_mes02.to_s)
+            row << sprintf("%.2f",@total_mes03.to_s)
+            row << sprintf("%.2f",@total_mes04.to_s)
+            row << sprintf("%.2f",@total_mes05.to_s)
+            row << sprintf("%.2f",@total_mes06.to_s)
+            row << sprintf("%.2f",@total_mes07.to_s)
+            row << sprintf("%.2f",@total_mes08.to_s)
+            row << sprintf("%.2f",@total_mes09.to_s)
+            row << sprintf("%.2f",@total_mes10.to_s)
+            row << sprintf("%.2f",@total_mes11.to_s)
+            row << sprintf("%.2f",@total_mes12.to_s)
+            row << sprintf("%.2f",@total_cliente.to_s)
+
+            table_content << row            
+            ## TOTAL XMES GENERAL
+            @total_anterior_column = @total_anterior_column + @total_anterior
+            @total_mes01_column = @total_mes01_column +@total_mes01
+            @total_mes02_column = @total_mes02_column +@total_mes02
+            @total_mes03_column = @total_mes03_column +@total_mes03
+            @total_mes04_column = @total_mes04_column +@total_mes04
+            @total_mes05_column = @total_mes05_column +@total_mes05
+            @total_mes06_column = @total_mes06_column +@total_mes06
+            @total_mes07_column = @total_mes07_column +@total_mes07
+            @total_mes08_column = @total_mes08_column +@total_mes08
+            @total_mes09_column = @total_mes09_column +@total_mes09
+            @total_mes10_column = @total_mes10_column +@total_mes10
+            @total_mes11_column = @total_mes11_column +@total_mes11
+            @total_mes12_column = @total_mes12_column +@total_mes12
+            @total_cliente = 0 
+            ## TOTAL XMES GENERAL
+
+            $lcCliName =customerpayment_rpt.customer.name
+            lcCli = customerpayment_rpt.customer_id
+
+            @total_anterior = 0
+            @total_mes01 = 0
+            @total_mes02 = 0
+            @total_mes03 = 0
+            @total_mes04 = 0
+            @total_mes05 = 0
+            @total_mes06 = 0
+            @total_mes07 = 0
+            @total_mes08 = 0
+            @total_mes09 = 0
+            @total_mes10 = 0
+            @total_mes11 = 0
+            @total_mes12 = 0
+            @total_cliente = 0 
+            
+          #if customerpayment_rpt.balance.round(2) > 0.00
+          
+          if customerpayment_rpt.year_month.to_f <= 201812
+            @total_anterior = @total_anterior + customerpayment_rpt.balance
+          end             
+          
+          if customerpayment_rpt.year_month.to_f >= 201901  and customerpayment_rpt.year_month.to_f <= 201912
+            @total_mes01 = @total_mes01 + customerpayment_rpt.balance
+          end   
+
+          if customerpayment_rpt.year_month.to_f >= 202001  and customerpayment_rpt.year_month.to_f <= 202003
+         
+            @total_mes02 = @total_mes02 + customerpayment_rpt.balance
+          end 
+            
+          if customerpayment_rpt.year_month == '202004'   
+            @total_mes03 = @total_mes03 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202005'     
+            @total_mes04 = @total_mes04 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202006'       
+            @total_mes05 = @total_mes05 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202007'
+            @total_mes06 = @total_mes06 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202008' 
+            @total_mes07 = @total_mes07 + customerpayment_rpt.balance
+          end
+          if customerpayment_rpt.year_month == '202009'   
+            @total_mes08 = @total_mes08 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202010'     
+            @total_mes09 = @total_mes09 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202011'       
+            @total_mes10 = @total_mes10 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202012'   
+            @total_mes11 = @total_mes11 + customerpayment_rpt.balance
+          end 
+          if customerpayment_rpt.year_month == '202101'     
+            @total_mes12 = @total_mes12 + customerpayment_rpt.balance
+          end   
+          
+          nroitem = nroitem + 1 
+      
+          @total_general = @total_general + customerpayment_rpt.balance
+        #end 
+       end 
+       end   
+       
+
+      #fin for
+          #ultimo cliente 
+
+          @total_cliente = @total_anterior+
+          @total_mes01+
+          @total_mes02+
+          @total_mes03+
+          @total_mes04+
+          @total_mes05+
+          @total_mes06+
+          @total_mes07+
+          @total_mes08+
+          @total_mes09+
+          @total_mes10+
+          @total_mes11+
+          @total_mes12
+            @total_anterior_column = @total_anterior_column + @total_anterior
+            @total_mes01_column = @total_mes01_column +@total_mes01
+            @total_mes02_column = @total_mes02_column +@total_mes02
+            @total_mes03_column = @total_mes03_column +@total_mes03
+            @total_mes04_column = @total_mes04_column +@total_mes04
+            @total_mes05_column = @total_mes05_column +@total_mes05
+            @total_mes06_column = @total_mes06_column +@total_mes06
+            @total_mes07_column = @total_mes07_column +@total_mes07
+            @total_mes08_column = @total_mes08_column +@total_mes08
+            @total_mes09_column = @total_mes09_column +@total_mes09
+            @total_mes10_column = @total_mes10_column +@total_mes10
+            @total_mes11_column = @total_mes11_column +@total_mes11
+            @total_mes12_column = @total_mes12_column +@total_mes12
+          
+            row = []
+            row << nroitem.to_s        
+            row << customerpayment_rpt.customer.name  
+            row << sprintf("%.2f",@total_anterior.to_s)
+            row << sprintf("%.2f",@total_mes01.to_s)
+            row << sprintf("%.2f",@total_mes02.to_s)
+            row << sprintf("%.2f",@total_mes03.to_s)
+            row << sprintf("%.2f",@total_mes04.to_s)
+            row << sprintf("%.2f",@total_mes05.to_s)
+            row << sprintf("%.2f",@total_mes06.to_s)
+            row << sprintf("%.2f",@total_mes07.to_s)
+            row << sprintf("%.2f",@total_mes08.to_s)
+            row << sprintf("%.2f",@total_mes09.to_s)
+            row << sprintf("%.2f",@total_mes10.to_s)
+            row << sprintf("%.2f",@total_mes11.to_s)
+            row << sprintf("%.2f",@total_mes12.to_s)
+            row << sprintf("%.2f",@total_cliente.to_s)
+
+            table_content << row            
+            
+
+
+        row = []
+         row << ""       
+         row << " TOTAL GENERAL => "
+         row << sprintf("%.2f",@total_anterior_column.to_s)
+         row << sprintf("%.2f",@total_mes01_column.to_s)
+         row << sprintf("%.2f",@total_mes02_column.to_s)
+         row << sprintf("%.2f",@total_mes03_column.to_s)
+         row << sprintf("%.2f",@total_mes04_column.to_s)
+         row << sprintf("%.2f",@total_mes05_column.to_s)
+         row << sprintf("%.2f",@total_mes06_column.to_s)
+         row << sprintf("%.2f",@total_mes07_column.to_s)
+         row << sprintf("%.2f",@total_mes08_column.to_s)
+         row << sprintf("%.2f",@total_mes09_column.to_s)
+         row << sprintf("%.2f",@total_mes10_column.to_s)
+         row << sprintf("%.2f",@total_mes11_column.to_s)
+         row << sprintf("%.2f",@total_mes12_column.to_s)
+         row << sprintf("%.2f",@total_general.to_s)
+         
+         table_content << row
+
+
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:right
+                                          columns([3]).align=:right 
+                                          columns([4]).align=:right
+                                          columns([5]).align=:right 
+                                          columns([6]).align=:right
+                                          columns([7]).align=:right 
+                                          columns([8]).align=:right
+                                          columns([9]).align=:right 
+                                          columns([10]).align=:right
+                                          columns([11]).align=:right 
+                                          columns([12]).align=:right
+                                          columns([13]).align=:right 
+                                          columns([14]).align=:right 
+                                          columns([15]).align=:right
+                                          
+                                        end                                          
+      pdf.move_down 10      
+      pdf
+
+    end
+
+
+    def build_pdf_footer_rpt20b(pdf)
+
+        subtotals = []
+        taxes = []
+        totals = []
+        services_subtotal = 0
+        services_tax = 0
+        services_total = 0
+
+        
+        
+        pdf.text "" 
+
+        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+           pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+        end
+
+      pdf
+      
+  end
+
 
 def client_data_headers
 
@@ -6236,7 +7118,9 @@ end
      @tipo   = params[:tiporeporte]
     @location  = params[:location_id]
     @locales_all  = params[:check_local]
- if @locales_all == "true"
+
+
+    if @locales_all == "true"
         @orden_transporte = @company.get_ordertransporte_day_all(@fecha1,@fecha2,@tipo) 
     else 
         @orden_transporte = @company.get_ordertransporte_day(@fecha1,@fecha2,@tipo,@location) 
@@ -6280,7 +7164,9 @@ end
         @orden_transporte = @company.get_ordertransporte_day_all(@fecha1,@fecha2,@tipo) 
     else 
         @orden_transporte = @company.get_ordertransporte_day(@fecha1,@fecha2,@tipo,@location) 
-    end     
+    end 
+
+        
     Prawn::Document.generate "app/pdf_output/ost2.pdf" , :page_layout => :landscape , :page_size=> "A3" do |pdf|      
         pdf.font "Helvetica"
         pdf = build_pdf_header2f(pdf)
@@ -6455,7 +7341,7 @@ end
                 row << lcpendiente
               
                 row << lcOstFecha2
-                row << "  "
+             
                
             
 
@@ -6470,7 +7356,7 @@ end
                 lcFacturasImporte = 0
                 lcFacturasImporte2 = 0
 
-
+                lcOstcustomer =  ""
                 if @facturas 
                 for facturas in @facturas 
                   puts "facturass ...................................."
@@ -6490,13 +7376,19 @@ end
                   end 
                     @cobranzas = facturas.get_pagos
 
+                 if facturas.os_customer.nil?
+                    lcOstcustomer = " "
+                  else
+                    lcOstcustomer << facturas.os_customer + "\n"
+                  end 
 
 
                 end 
               end 
                   lcPendienteFacturar = lcFacturasImporte - @importe_st
 
-                   row <<  lcFactCode
+                    row <<  lcOstcustomer
+                    row <<  lcFactCode
                     row << lcFactFecha
 
                 

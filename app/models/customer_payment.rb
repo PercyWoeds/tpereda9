@@ -118,20 +118,20 @@ self.per_page = 20
 
 TABLE_HEADERS9 = ["ITEM",
                      "CLIENTE",   
-                    "=<2018",                  
-                    "Ene-Dic 19",
-                    "Ene-Mar 20",             
+                    "=<2019",                  
+                    "Ene-Jun 20",
+                    "Jul- 20",             
                     
-                    "Abr-2020",
-                    "May-2020",
-                    "Jun-2020",             
-                    "Jul-2020",
                     "Ago-2020",
                     "Set-2020",
-                    "Oct-2020",              
+                    "Oct-2020",             
                     "Nov-2020",
-                     "Dic-2020",
-                      "Ene-2021",
+                    "Dic-2020",
+                    "Ene-2021",
+                    "Feb-2021",              
+                    "Mar-2021",
+                     "Abr-2021",
+                      "May-2021",
                     "TOTAL   "]
                    
                    
