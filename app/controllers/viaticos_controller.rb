@@ -287,10 +287,11 @@ before_filter :authenticate_user!
 
 
         for  egresos  in @viatico.get_ingresos() 
-         @detalle = egresos.get_detalle_egreso(@viatico.id,egresos.id)
 
+           puts egresos.name 
 
-          if @detalle.count()>0 
+         @detalle_ing= egresos.get_detalle_egreso(@viatico.id,egresos.id)
+
 
             table_content = ([ [egresos.name  ]   ])
             
@@ -311,6 +312,7 @@ before_filter :authenticate_user!
           #SALDO INICIAL 
 
           row = []
+          total_content_ing = []
 
           row << ""    
           row << ""
@@ -320,13 +322,14 @@ before_filter :authenticate_user!
            row << sprintf("%.2f",@viatico.inicial)
            row << ""
 
-          @total_importe   +=  @viatico.inicial 
+        
          
           table_content_ing << row
-              
-          for product in @detalle 
 
-            puts 
+            @total_importe   +=  @viatico.inicial 
+              
+          for product in @detalle_ing 
+
             row = []
             row << nroitem.to_s        
             row << product.fecha.strftime("%d/%m/%Y") 
@@ -357,6 +360,7 @@ before_filter :authenticate_user!
 
             nroitem=nroitem + 1     
 
+          end 
 
 
       result = pdf.table table_content_ing , {:position => :center,
@@ -374,18 +378,18 @@ before_filter :authenticate_user!
                                         
                                          
                                         end 
-         end 
+         
 
 
          row =[]
-         table_content3 = []
+         table_content_ing = []
 
 
          row << "TOTAL INGRESO S/."
          row << sprintf("%.2f",@total_importe)
-         table_content3 << row 
+         table_content_ing << row 
 
-      result = pdf.table table_content3, {:position => :center,
+      result = pdf.table table_content_ing , {:position => :center,
                                         :header => true,
                                         :width => pdf.bounds.width/3
                                         } do 
@@ -402,21 +406,22 @@ before_filter :authenticate_user!
 
 
 
-        end 
+      end 
 
 
-  end 
+  
       
+
 
    pdf.move_down 10  
       ###EGRESOS 
        for  egresos  in @viatico.get_egresos() 
+
+
          @detalle = egresos.get_detalle_egreso(@viatico.id,egresos.id)
 
-
-
         
-  if @detalle.count()>0 
+           if @detalle.count()>0 
 
             table_content = ([ [egresos.name  ]   ])
             
@@ -431,17 +436,17 @@ before_filter :authenticate_user!
                 
                end
 
-      
-          table_content2 = []
-          headers = []
+              
+                  table_content2 = []
+                  headers = []
 
-      Viatico::TABLE_HEADERS.each do |header|
-        cell = pdf.make_cell(:content => header)
-        cell.background_color = "FFFFCC"
-        headers << cell
-      end
+              Viatico::TABLE_HEADERS.each do |header|
+                cell = pdf.make_cell(:content => header)
+                cell.background_color = "FFFFCC"
+                headers << cell
+              end
 
-      table_content2 << headers
+              table_content2 << headers
 
 
 
@@ -456,14 +461,14 @@ before_filter :authenticate_user!
             row << nroitem.to_s        
             row << product.fecha.strftime("%d/%m/%Y") 
 
-            if product.supplier_id !=  2570 
-              row <<  product.supplier.name
-            else
+                if product.supplier_id !=  2570 
+                  row <<  product.supplier.name
+                else
 
-              if  product.employee != 64
-              row <<   product.employee.full_name
-              end 
-            end 
+                  if  product.employee != 64
+                  row <<   product.employee.full_name
+                  end 
+                end 
 
             row << product.document.descripshort 
             
@@ -471,17 +476,20 @@ before_filter :authenticate_user!
          
             row << sprintf("%.2f",product.importe)
 
-            total_importe   =+ product.importe 
+            total_importe   += product.importe.round(2)
 
             row << product.detalle 
       
         
             table_content2 << row
+
             nroitem=nroitem + 1     
 
 
+          end 
 
-      result = pdf.table table_content2, {:position => :center,
+
+          result = pdf.table table_content2, {:position => :center,
                                         :header => true,
                                         :width => pdf.bounds.width
                                         } do 
@@ -500,15 +508,13 @@ before_filter :authenticate_user!
                                         
                                          
                                         end 
-         end 
-
 
          row =[]
          table_content3 = []
 
 
          row << "TOTAL EGRESO S/."
-         row << sprintf("%.2f",product.importe)
+         row << sprintf("%.2f",total_importe)
          table_content3 << row 
 
       result = pdf.table table_content3, {:position => :center,
@@ -544,19 +550,19 @@ before_filter :authenticate_user!
       table_content_footer = []
     for  egresos  in @viatico.get_egresos_suma() 
 
-       total_egresos += egresos.total 
+       total_egresos += egresos.total.round(2) 
 
 
        row =[]
        row << egresos.egreso.name 
-       row << egresos.total
+       row << egresos.total.round(2)
        table_content_footer << row 
 
     end 
 
       row = []
       row << "TOTAL EGRESOS S/.:"
-      row << sprintf("%.2f",total_egresos)
+      row << sprintf("%.2f",total_egresos.round(2))
 
         table_content_footer << row 
 
