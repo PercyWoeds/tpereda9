@@ -16,16 +16,27 @@
   <div class="form-inputs">
 
 
-  <div class="field">
-    <%= f.label :ost_id, "ORDEN DE SERVICIO : *", :class => "bold" %><br />
-    <%= f.text_field :ost_id  %>
-  </div>
+      <div class="field">
+        <%= f.label :ost_id, "ORDEN DE SERVICIO : *", :class => "bold" %><br />
+        <%= f.text_field :ost_id  %>
+      </div>
+
+
+      <label for="ac_customer" class="bold">Cliente*</label><br />
+      <input type="text" name="ac_customer" id="ac_customer" value="<% if @ac_customer %><%= @ac_customer %><% end %>" />
+      
+      
+      <div class="small">
+        Ingrese una termino de busqueda para encontrar un cliente.
+      </div>
+      <br />
+
+
 
   <div class="field">
     <%= f.label :fecha, "Fecha: *", :class => "bold" %><br />
     <%= f.text_field :fecha %>
   </div>
-
   
    
     <%= f.input :fecha %>
@@ -55,3 +66,39 @@
     <%= f.button :submit %>
   </div>
 <% end %>
+
+
+
+  <script>
+
+$(document).ready(function() {
+  
+    $('#customer_select').change(function() {
+      $.ajax({
+        url: "/ordens/update_marcas",
+        data: {
+          customer_id : $('#customer_select').val()
+        },
+        dataType: "script"
+      });
+    
+    });
+    
+    $('#marca_select').change(function() {
+      $.ajax({
+        url: "/ordens/update_productos",
+        data: {
+          marca_id : $('#marca_select').val()
+
+        },
+        dataType: "script"
+      });
+    });
+
+  
+
+  });
+  
+  </script>
+
+

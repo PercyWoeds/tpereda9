@@ -4686,10 +4686,6 @@ end
   end
 
 
-
-
-
-
 def rpt_st_pdf
     @company=Company.find(1)      
     @fecha1 = params[:fecha1]

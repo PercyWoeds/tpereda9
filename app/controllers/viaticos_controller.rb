@@ -261,7 +261,7 @@ before_filter :authenticate_user!
   
     pdf.text " ", :size => 13, :spacing => 4
     
-      pdf.font "Helvetica" , :size => 6      
+      pdf.font "Helvetica" , :size => 5      
       headers = []
       table_content = []
       table_content0 = []
@@ -283,7 +283,7 @@ before_filter :authenticate_user!
 
   
        nroitem = 1
-   @total_importe = 0
+       @total_importe = 0
 
 
         for  egresos  in @viatico.get_ingresos() 
@@ -345,7 +345,7 @@ before_filter :authenticate_user!
 
             row << product.document.descripshort 
             
-            row << product.numero 
+            row << product.numero.to_s
          
             row << sprintf("%.2f",product.importe)
 
@@ -368,19 +368,25 @@ before_filter :authenticate_user!
                                         :width => pdf.bounds.width
                                         } do 
                                           columns([0]).align=:center
-                                        
+                                          
                                           columns([1]).align=:left 
-                                          columns([2]).align=:left                                          
+                                         
+                                          columns([2]).align=:left   
+                                                                            
                                           columns([3]).align=:left 
+                                          
                                           columns([4]).align=:left
+                                         
                                           columns([5]).align=:right 
+                                          
                                           columns([6]).align=:left  
-                                        
+                                          columns([6]).width = 180 
+                                         
                                          
                                         end 
          
 
-
+         pdf.move_down 1
          row =[]
          table_content_ing = []
 
@@ -394,12 +400,10 @@ before_filter :authenticate_user!
                                         :width => pdf.bounds.width/3
                                         } do 
                                           columns([0]).align=:center
-                                           columns([0]).width = 100 
-                 
+                                      
                                           columns([0]).align = :left
                                           columns([1]).align = :right
-                  
-                                         
+
                                          
                                          
                                         end 
@@ -501,10 +505,7 @@ before_filter :authenticate_user!
                                           columns([4]).align=:left
                                           columns([5]).align=:right 
                                           columns([6]).align=:left  
-                                           columns([6]).width = 10
-                                         
-                                           columns([6]).width = 120
-                                         
+                                            columns([6]).width = 180 
                                         
                                          
                                         end 
@@ -565,14 +566,32 @@ before_filter :authenticate_user!
       row << sprintf("%.2f",total_egresos.round(2))
 
         table_content_footer << row 
+         pdf.table(table_content_footer  ,{
+                 :position => :center,
+                 :width => pdf.bounds.width/3
+               })do
+                 columns([0]).font_style = :bold
+                
+                 columns([0]).align = :center
+                 columns([0]).width = 100 
+                  columns([0]).align = :left
+                   columns([1]).align = :right
+                  
+
+               end
+
+
+
 
          row = []
+         table_content_footer2=[]
       row << "SALDO EN CAJA  S/.:"
       row << sprintf("%.2f",@total_importe - total_egresos)
+        pdf.move_down 2
 
- table_content_footer << row 
+ table_content_footer2 << row 
 
-             pdf.table(table_content_footer  ,{
+             pdf.table(table_content_footer2  ,{
                  :position => :center,
                  :width => pdf.bounds.width/3
                })do
@@ -590,16 +609,31 @@ before_filter :authenticate_user!
 
 
 
-
+ pdf.move_down 30
         
-       data =[ ["Procesado Asis.Finanzas ","V.B.Contador","V.B.Administracion ","V.B. Gerente ."],
-               [":",":",":",":"],
-               [":",":",":",":"],
-               ["Fecha:","Fecha:","Fecha:","Fecha:"] ]
+       data =[["----------------------------------------------------------","----------------------------------------------------------","----------------------------------------------------------"],
+            ["Elaborado por ","V.B.","V.B."],
+               
+               ["Soledad Silvestre","Asistente de Gerencia","Gerente Administrativo"]
+                ]
 
            
             pdf.text " "
-            pdf.table(data,:cell_style=> {:border_width=>1} , :width => pdf.bounds.width)
+            pdf.table(data  ,{
+                 :position => :center,
+                 :width => pdf.bounds.width,
+                  :cell_style => {:border_width => 0},
+               })do
+                 columns([0,1,2]).font_style = :bold
+                
+                 columns([0]).align = :center
+          
+                  columns([1]).align = :center
+                   columns([2]).align = :center
+                  
+
+               end
+
             pdf.move_down 10          
                   
         pdf.bounding_box([0, 20], :width => 538, :height => 50) do        

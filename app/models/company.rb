@@ -1478,7 +1478,7 @@ def get_customer_payments_detail_value(fecha1,fecha2,value="total")
     
     det = 0
 
-    Factura.update_all(:detraccion=>0)
+    Factura.update_all(:detraccion=> 0)
 
     pagonacion = CustomerPayment.where(:bank_acount_id => 6 )
 
