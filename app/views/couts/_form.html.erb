@@ -1,8 +1,33 @@
 <%= simple_form_for(@cout) do |f| %>
-  <%= f.error_notification %>
+   <% if @cout.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@cout.errors.count, "error") %> prohibited this customer from being saved:</h2>
+
+      <ul>
+      <% @cout.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
 
   <div class="form-inputs">
-    <%= f.input :code %>
+
+
+  <div class="field">
+    <%= f.label :ost_id, "ORDEN DE SERVICIO : *", :class => "bold" %><br />
+    <%= f.text_field :ost_id  %>
+  </div>
+
+  <div class="field">
+    <%= f.label :fecha, "Fecha: *", :class => "bold" %><br />
+    <%= f.text_field :fecha %>
+  </div>
+
+  
+   
     <%= f.input :fecha %>
     <%= f.input :importe %>
     <%= f.input :truck_id %>

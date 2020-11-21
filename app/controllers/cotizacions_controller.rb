@@ -7,6 +7,7 @@ class CotizacionsController < ApplicationController
     @cotizacions = Cotizacion.all
   end
 
+
   # GET /cotizacions/1
   # GET /cotizacions/1.json
   def show
@@ -104,7 +105,17 @@ class CotizacionsController < ApplicationController
 
   end
 
+   
+   def do_process
+    @cotizacion  = Cotizacion.find(params[:id])
+    @cotizacion[:processed] = "1"
 
+
+    @cotizacion.process
+    
+    flash[:notice] = "El documento ha sido aceptado"
+    redirect_to @cotizacion
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_cotizacion

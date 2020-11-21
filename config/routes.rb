@@ -861,6 +861,7 @@ match 'companies/reports/rpt_coti_1_pdf/:company_id' => 'reports#rpt_coti_1_pdf'
   match 'cotizacions/do_anular/:id' => 'cotizacions#do_anular', via: [:get, :post]
   match 'cotizacions/do_cancelar/:id' => 'cotizacions#do_anular', via: [:get, :post]
 
+ match 'cotizacions/do_process/:id' => 'cotizacions#do_process', via: [:get, :post]
   match 'assistances/generar/:id' => 'assistances#generar', via: [:get, :post]
   match 'assistances/generar1/:id' => 'assistances#generar1', via: [:get, :post]
   match 'assistances/generar2/:id' => 'assistances#generar2', via: [:get, :post]

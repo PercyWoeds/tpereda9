@@ -12,7 +12,7 @@
       <th>Punto2</th>
       <th>Tipocargue</th>
       <th>Tarifa</th>
-      <th>Processed</th>
+      <th>Estado</th>
       <th>Comments</th>
       <th colspan="3"></th>
     </tr>
@@ -28,7 +28,7 @@
         <td><%= cotizacion.get_punto(cotizacion.punto2_id) %></td>
         <td><%= cotizacion.tipocargue.name %></td>
         <td><%= cotizacion.tarifa %></td>
-        <td><%= cotizacion.processed %></td>
+        <td><%= cotizacion.get_processed %></td>
         <td><%= cotizacion.comments %></td>
         <td><%= link_to 'Ver', cotizacion %></td>
         <td><%= link_to 'Editar', edit_cotizacion_path(cotizacion) %></td>

@@ -28,6 +28,37 @@ class Cotizacion < ActiveRecord::Base
 
 
 
+def get_processed
+    if(self.processed == "1")
+      return "Aprobado "
+
+    elsif (self.processed == "2")
+      
+      return "**Rechazado **"
+
+    elsif (self.processed == "3")
+
+      return "**Cancelado  **"  
+
+    elsif (self.processed == "4")
+
+      return "**Atendido  **" 
+    else   
+      return "Not yet processed"
+        
+    end
+  end
+  
+
+  def process
+    if(self.processed == "1" or self.processed == true)          
+      self.processed="1"
+      self.date_processed = Time.now
+      self.save
+    end
+  end
+
+
   def generate_number(serie)
     if Cotizacion.where("cast(substring(code,1,3)  as int) = ?",serie).maximum("cast(substring(code,5,10)  as int)") == nil 
       self.code = serie.to_s.rjust(3, '0') +"-000001"
@@ -35,24 +66,6 @@ class Cotizacion < ActiveRecord::Base
     self.code = serie.to_s.rjust(3, '0')+"-"+ Cotizacion.where("cast(substring(code,1,3)  as int) = ?",serie).maximum("cast(substring(code,5,10)  as int)").next.to_s.rjust(6, '0')          
     end 
     
-  end
-
-
-def get_processed
-    if(self.processed == "1")
-      return "Aprobado "
-
-    elsif (self.processed == "2")
-      
-      return "**Anulado **"
-
-    elsif (self.processed == "3")
-
-      return "-Cancelado --"  
-    else   
-      return "Not yet processed"
-        
-    end
   end
 
 

@@ -52,17 +52,22 @@
 </div>
 
 
+
 <div class="button">
+
+
+  <% if @cotizacion.processed.nil? %>
+
+  <%= link_to 'Aceptar.', "/cotizacions/do_process/#{@cotizacion.id}" %>
+  <%end %>
+
+
+
 <%= link_to 'Editar', edit_cotizacion_path(@cotizacion) %> 
 
- <% if @cotizacion.processed != "2" %>
-   <%= link_to 'Anular', "/cotizacions/do_anular/#{@cotizacion.id}" %>
+ <% if @cotizacion.processed == "1" %>
+   <%= link_to 'Rechazar', "/cotizacions/do_anular/#{@cotizacion.id}" %>
   <tr>
-<% end %>
- <% if @cotizacion.processed != "3" %>
-   <%= link_to 'Cancelar', "/cotizacions/do_cancelar/#{@cotizacion.id}" %>
-  <tr>
-
 <% end %>
 
 

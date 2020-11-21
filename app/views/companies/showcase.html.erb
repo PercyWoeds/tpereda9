@@ -4,7 +4,17 @@
   
   <h3>
     <%= image_tag("products_32.png", :class => "vmiddle") %>
-    <%= link_to "Liquidacion Viaticos/Cajas Chicas","/companies/viaticos/#{@company.id}" %>
+    <%= link_to "Comprobante Egreso ",couts_path %>
+  </h3>
+
+  <p>
+    Agregar, editar or eliminar liquidacion de viaticos/cajas que tu negocio ofrece.
+  </p>
+
+  <%= hr() %>
+  <h3>
+    <%= image_tag("products_32.png", :class => "vmiddle") %>
+    <%= link_to "Liquidacion Caja ","/companies/viaticos/#{@company.id}" %>
   </h3>
 
   <p>
