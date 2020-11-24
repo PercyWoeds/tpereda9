@@ -81,7 +81,7 @@ end
 
 def do_cargar
 
-   @osts   = Tranportorder.order("fecha desc "))
+   @osts   = Tranportorder.order("fecha desc ")
                  
 end 
 
