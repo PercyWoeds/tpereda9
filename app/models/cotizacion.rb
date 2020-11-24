@@ -3,6 +3,8 @@ class Cotizacion < ActiveRecord::Base
  belongs_to :customer
  belongs_to :punto
  belongs_to :tipocargue 
+ belongs_to :tipo_unidad 
+ belongs_to :config_vehi 
  
 
    TABLE_HEADERS = ["Nro.Item",
@@ -25,6 +27,34 @@ class Cotizacion < ActiveRecord::Base
  	return a.name 
  	
  end
+
+
+
+ def get_tipounidad(id)
+
+  if !id.nil?
+
+    a = TipoUnidad.find(id)
+    return a.name 
+  else
+     return ""
+  end 
+ end
+
+
+
+ def get_configvehi(id)
+
+  if   !id.nil? 
+     
+      a = ConfigVehi.find(id)
+      return a.name 
+  else
+      return " "
+    
+  end
+
+end 
 
 
 

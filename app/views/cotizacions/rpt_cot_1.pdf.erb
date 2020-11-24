@@ -1,0 +1,80 @@
+<html>
+<head>
+ <style type="text/css">
+        <%= Rails.application.assets.find_asset('wicked.css').to_s.html_safe %>
+    </style>
+  </head>
+  <body class='wicked'>
+
+
+    
+ 
+  <h4 ><center> Solicitud de Transporte  </center>   </h4>
+  
+  <h5><center> Desde: <%= @fecha1 %>  Hasta: <%= @fecha2 %>  </center></h5>
+  
+  
+  <font size="2" face="Courier New" >  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  
+  <tr bgcolor="#B4D7F7">
+    <td width="100%"> SOLICITUD DE TRANSPORTE *</td>
+  </tr>
+  
+  </table>
+
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <tr bgcolor="#B4D7F7">
+    <td width="4%"> Locacion </td>
+    <td width="5%"> Codigo  </td>
+    <td width="5%"> Fecha </td>
+    <td width="18%"> Cliente </td>
+    <td width="10%"> Punto Emision </td>
+    <td width="10%"> Punto Llegada </td>
+    <td width= "5%"> Fecha Carguio </td>
+
+    <td width="5%"> Tipo Carga </td>
+    <td width="8%"> IMPORTE S/. </td>
+    <td width="8%"> IMPORTE US$ </td>
+    <td width="5%"> Procesado </td>
+    <td width="8%"> OST </td>
+    
+    
+  </tr>
+  </table>
+
+  
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
+      <% nroitem = 1%>
+      <% total_1 =  0%>
+      <% total_2 =  0%>
+      
+     
+      <% subtotal =  0%>
+
+      <% total =  0%>
+      
+      
+
+
+    
+      
+      <hr>  
+     </table>
+     
+     <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+     <tr bgcolor="#B4D7F7">
+          <td width = "80%" align ="center">Totales  </td>
+          <td width = "10%" align ="right"><%= sprintf("%.3f",subtotal)   %></td>
+          <td width = "10%" align ="right"><%= sprintf("%.2f",total)   %></td>
+    
+    </tr>
+   </table>
+
+    
+    </body>
+      
+      </html>
+      

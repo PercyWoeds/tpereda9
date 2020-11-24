@@ -862,6 +862,9 @@ match 'companies/reports/rpt_coti_1_pdf/:company_id' => 'reports#rpt_coti_1_pdf'
   match 'cotizacions/do_cancelar/:id' => 'cotizacions#do_anular', via: [:get, :post]
 
  match 'cotizacions/do_process/:id' => 'cotizacions#do_process', via: [:get, :post]
+ match 'cotizacions/pdf/:id' => 'cotizacions#pdf', via: [:get, :post]
+
+
   match 'assistances/generar/:id' => 'assistances#generar', via: [:get, :post]
   match 'assistances/generar1/:id' => 'assistances#generar1', via: [:get, :post]
   match 'assistances/generar2/:id' => 'assistances#generar2', via: [:get, :post]
@@ -1396,13 +1399,17 @@ match 'purchases/do_crear/:id'   => 'purchases#do_crear', via: [:get, :post]
   match 'payrollboni/new/:payroll_id' => 'payrollbonis#new', via: [:get, :post]  
   resources :payrolls 
 
-
+  match 'tranportorders/ac_osts/:company_id' => 'tranportorders#ac_osts', via: [:get, :post]
+  resources :tranportorders
   # Sessions
   resources :sessions
 
   match 'ventaisla/ac_mangueras' => 'ventaislas#ac_mangueras', via: [:get, :post]
   resources :ventaislas
   
+
+  match 'companies/couts/do_cargar/:company_id' => 'couts#do_cargar', via: [:get, :post]
+  resources :viaticos 
 
   # Frontpage
  # match 'dashboard' => 'pages#dashboard', via: [:get,s :post]

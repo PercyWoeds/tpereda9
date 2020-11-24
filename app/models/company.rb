@@ -74,6 +74,22 @@ def get_placas
    return @dato 
  end 
 
+
+
+ def get_tipo_unidad
+   
+   @dato = TipoUnidad.all 
+   return @dato 
+
+ end 
+
+
+ def get_configvehi
+   
+   @dato = ConfigVehi.all 
+   return @dato 
+ end 
+
 def get_manifests()
     puntos = Manifest.where(["fecha1 >= ?","2020-07-01 00:00:00"]).order(:code)
     return puntos

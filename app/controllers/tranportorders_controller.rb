@@ -265,6 +265,12 @@ class TranportordersController < ApplicationController
 
   end
 
+  def ac_osts
+    procesado = '1'
+    @osts = Tranportorder.where([" (code LIKE ?)   ",  "%" + params[:q] + "%"]) 
+    render :layout => false
+  end
+
 
 
 ##-----------------------------------------------------------------------------------

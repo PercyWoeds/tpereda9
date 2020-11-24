@@ -583,11 +583,14 @@ before_filter :authenticate_user!
 
 
 
-         row = []
-         table_content_footer2=[]
-      row << "SALDO EN CAJA  S/.:"
-      row << sprintf("%.2f",@total_importe - total_egresos)
-        pdf.move_down 2
+row = []
+table_content_footer2=[]
+
+row << "SALDO EN CAJA  S/.:"
+row << sprintf("%.2f",@total_importe - total_egresos)
+
+
+pdf.move_down 2
 
  table_content_footer2 << row 
 
@@ -597,19 +600,50 @@ before_filter :authenticate_user!
                })do
                  columns([0]).font_style = :bold
                 
-                 columns([0]).align = :center
-                 columns([0]).width = 100 
-                  columns([0]).align = :left
-                   columns([1]).align = :right
+                columns([0]).align = :center
+                columns([0]).width = 100 
+                columns([0]).align = :left
+                columns([1]).align = :right
                   
 
                end
 
 
 
+table_content_footer3=[]
+
+@detalle1 = @viatico.get_viatico_suma
+
+for detalle1 in @detalle1
+row = []
+row << detalle1.document.descripshort
+row << sprintf("%.2f",detalle1.total)
+table_content_footer3 << row 
+end
+
+pdf.move_down 2
+
+ 
+
+             pdf.table(table_content_footer3  ,{
+                 :position => :left,
+                 :width => pdf.bounds.width/4
+               })do
+                 columns([0]).font_style = :bold
+                
+                columns([0]).align = :center
+               
+                columns([0]).align = :left
+                columns([1]).align = :right
+                  
+                 columns([1]).width = 100 
+               end
+
 
 
  pdf.move_down 30
+
+
         
        data =[["----------------------------------------------------------","----------------------------------------------------------","----------------------------------------------------------"],
             ["Elaborado por ","V.B.","V.B."],
@@ -1292,41 +1326,18 @@ before_filter :authenticate_user!
       curr_seller = User.find(params[:viatico][:user_id])
       @ac_user = curr_seller.username
     end
-    
+       @cotizacion[:code] = @cotizacion.generate_viatico_number( @viatico[:caja_id]) 
+
+ 
 
     respond_to do |format|
       if @viatico.save
         # Create products for kit
         # Check if we gotta process the viatico
- 
-        
-        if @viatico.caja_id == 1 
-          a = @cajas.find(1)
-          a.inicial =  @viatico[:saldo]
-          a.numero = @viatico.correlativo2(@viatico[:code])
-          a.save
-        end 
-        if @viatico.caja_id == 2
-          a = @cajas.find(2)
-          a.inicial =  @viatico[:saldo]
-          a.numero = @viatico.correlativo2(@viatico[:code])
-          a.save
-        end 
-        if @viatico.caja_id == 3 
-          a = @cajas.find(3)
-          a.inicial =  @viatico[:saldo]
-          a.numero = @viatico.correlativo2(@viatico[:code])
-          a.save
-        end 
-        if @viatico.caja_id == 4 
-          a = @cajas.find(4)
-          a.inicial =  @viatico[:saldo]
-          a.numero = @viatico.correlativo2(@viatico[:code])
-          a.save
-        end 
-        
+
+     
         @viatico.process()
-        @viatico.correlativo
+       
         
         format.html { redirect_to(@viatico, :notice => 'viatico was successfully created.') }
         format.xml  { render :xml => @viatico, :status => :created, :location => @viatico }

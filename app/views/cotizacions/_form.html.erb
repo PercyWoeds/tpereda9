@@ -3,6 +3,21 @@
 
   <div class="form-inputs">
 
+<p>
+  <label for="tm"> Tipo de Reporte:</label><br>
+  <select id="tm" name="tm" >
+
+
+    <option value="1" selected> CLIENTE ANTIGUO  </option>
+    <option value="2" selected> CLIENTE NUEVO </option>
+    <option value="3" selected> ALQUILER UNIDAD  </option>
+    <option value="4" selected> SERVICIO CONDICTOR </option>
+    
+  </select>
+</p>
+
+
+
      <div class="field">
       <%= f.label :fecha, "Fecha *", :class => "bold" %><br />
       <%= f.date_field :fecha %>
@@ -29,31 +44,135 @@
       
     </div>
 
-    <div class="field">
-      <%= f.label :tipocargue_id , "Tipo carga:  "%><br />
-      <%= f.collection_select :tipocargue_id, @tipocarga, :id, :name, :prompt => true %>  
-      
-    </div>
-   <div class="field">
-      <%= f.label :tipo_unidad, "Tipo unidades:  "%><br />
-      <%= f.text_field  :tipo_unidad %>
-
-    </div>
-
-
-    <div class="field">  
-        <%= f.label :tarifa  , "Tarifa * " , :class => "bold" %><br />
-        <%= f.number_field :tarifa , step: :any %>
-
-    </div>  
-
 
     <div class="field">  
     
-        <%= f.label :comments, "Observaciones  ", :class => "bold" %><br />
-        <%= f.text_area :comments %>
+        <%= f.label :especifica, "Especificaciones de la Carga ", :class => "bold" %><br />
+        <%= f.text_field :especifica ,{:style => "width:500px"} %>
 
     </div>
+    
+
+    <table style="width:80%">
+  <tr>
+    <th>ITEM </th>
+    <th>TIPO DE UNIDAD</th>
+    <th>CONFIGURACION VEHICULAR </th>
+    <th>CANTIDAD</th>
+    <th>PRECIO UNIT.</th>
+    <th>PRECIO TOTAL </th>
+
+  </tr>
+  <tr>
+    <td> 01 </td>
+   
+  <td> <%= f.collection_select :tipo_unidad_id , @tipo_unidad , :id, :name, {:prompt => true } , 
+   {:style => "width:150px"} %></td>
+
+    <td> <%= f.collection_select :config_vehi_id, @config_vehi , :id, :name, {:prompt => true }  , 
+   {:style => "width:150px"} %> </td>
+    <td> <%= f.number_field :qty, class: :text_field, step: :any %></td>
+    <td> <%= f.number_field :price, class: :text_field, step: :any %></td>
+    <td>  <span id="ac_item_total">0.00</span></td>
+  </tr>
+
+<tr>
+    <td> 02 </td>
+    <td><%= f.collection_select :tipo_unidad2_id, @tipo_unidad, :id, :name, {:prompt => true }, 
+   {:style => "width:150px"} %> </td>
+    <td> <%= f.collection_select :config_vehi2_id, @config_vehi , :id, :name, {:prompt => true }, 
+   {:style => "width:150px"}  %></td>
+    <td> <%= f.number_field :qty2, class: :text_field, step: :any %></td>
+    <td><%=   f.number_field :price2, class: :text_field, step: :any %></td>
+    <td>  <span id="ac_item_total2">0.00</span> </td>
+
+  </tr>
+  <tr>
+    <td> 03 </td>
+    <td><%= f.collection_select :tipo_unidad3_id, @tipo_unidad, :id, :name,{:prompt => true } , 
+   {:style => "width:150px"} %>  </td>
+    <td> <%= f.collection_select :config_vehi3_id, @config_vehi , :id, :name, {:prompt => true } , 
+   {:style => "width:150px"} %> </td>
+    <td> <%= f.number_field :qty3, class: :text_field, step: :any %></td>
+    <td><%=   f.number_field :price3, class: :text_field, step: :any %></td>
+    <td>  <span id="ac_item_total3">0.00</span></td>
+
+  </tr>
+
+<tr>
+    <td> </td>
+    <td>  </td>
+    <td>  </td>
+    <td> </td>
+    <td> VALOR TOTAL DEL SERVICIO </td>
+    <td>  <span id="valor_total">0.00</span></td>
+
+  </tr>
+  
+
+ <table style="width:30%" align="center">
+
+
+  <tr>
+  
+    <th>TIPO DE UNIDAD</th>
+    <th>STAND BY  POR DIA </th>
+    
+
+  </tr>
+
+  <tr>
+
+  <td>CAMIONETA</td>
+
+   <td><%= f.text_field :tipounidad1 ,{:style => "width:70px"} %></td>
+
+
+  </tr>
+
+
+
+  <tr>
+
+  <td>CAMION</td>
+
+   <td><%= f.text_field :tipounidad2 ,{:style => "width:70px"} %></td>
+
+
+  </tr>
+
+  <tr>
+
+  <td> PLATAFORMA </p></td>
+
+   <td><%= f.text_field :tipounidad3 ,{:style => "width:70px"} %></td>
+
+
+  </tr>
+
+  <tr>
+
+  <td>CAMABAJA</td>
+
+   <td><%= f.text_field :tipounidad4 ,{:style => "width:70px"} %></td>
+
+
+  </tr>
+
+
+
+  <tr>
+
+  <td>MODULAR </td>
+
+   <td><%= f.text_field :tipounidad5 ,{:style => "width:70px"} %></td>
+
+
+  </tr>
+
+
+</table>
+
     
 
   </div>
@@ -62,3 +181,108 @@
     <%= f.button :submit %>
   </div>
 <% end %>
+
+
+<script type="text/javascript">
+
+  $(document).ready(function() {
+
+    
+    $("#cotizacion_qty").bind("keyup", function() {
+      updateItemTotalCot();
+    });
+    
+    
+    $("#cotizacion_price").bind("keyup", function() {
+      updateItemTotalCot();
+    });
+    
+
+
+    $("#cotizacion_qty2").bind("keyup", function() {
+      updateItemTotalCot();
+    });
+    
+    
+    $("#cotizacion_price2").bind("keyup", function() {
+      updateItemTotalCot();
+    });
+
+    $("#cotizacion_qty3").bind("keyup", function() {
+      updateItemTotalCot();
+    });
+    
+    
+    $("#cotizacion_price3").bind("keyup", function() {
+      updateItemTotalCot();
+    });
+
+    });
+
+
+   // Update price total for invoice
+  function updateItemTotalCot() {
+
+    var quantity = $("#cotizacion_qty").val();
+    var price = $("#cotizacion_price").val();
+
+
+    var quantity2 = $("#cotizacion_qty2").val();
+    var price2 = $("#cotizacion_price2").val();
+
+    var quantity3 = $("#cotizacion_qty3").val();
+    var price3  = $("#cotizacion_price3").val();
+
+
+  
+
+    if(isNumeric(quantity) && isNumeric(price)) {
+      
+      var total = quantity * price ;
+  
+    
+      $("#ac_item_total").html(total.toFixed(2));
+    } else {
+      $("#ac_item_total").html("0.00");
+       var total = 0;
+    }
+
+
+    if(isNumeric(quantity2) && isNumeric(price2)) {
+      
+      var total2 = quantity2 * price2 ;
+      
+    
+
+      $("#ac_item_total2").html(total2.toFixed(2));
+    } else {
+      $("#ac_item_total2").html("0.00");
+       var total2 = 0;
+    }
+    
+
+    if(isNumeric(quantity3) && isNumeric(price3)) {
+      
+      var total3 = quantity3 * price3 ;
+      
+      $("#ac_item_total3").html(total3.toFixed(2));
+    } else {
+      $("#ac_item_total3").html("0.00");
+
+      var total3 = 0;
+    }
+    
+
+    var valor_total = total + total2 + total3
+
+    $("#valor_total").html(valor_total.toFixed(2));
+
+
+
+
+  }
+
+
+  </script>
+
+

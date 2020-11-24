@@ -24,12 +24,7 @@
   <strong>Punto2:</strong>
   <%= @cotizacion.get_punto(@cotizacion.punto2_id) %>
 </p>
-
-<p>
-  <strong>Tipocargue:</strong>
-  <%= @cotizacion.tipocargue.name  %>
-</p>
-
+s
 <p>
   <strong>Tarifa:</strong>
   <%= @cotizacion.tarifa %>
@@ -54,6 +49,10 @@
 
 
 <div class="button">
+
+
+    <%= link_to 'Exportar to PDF', "/cotizacions/pdf/#{@cotizacion.id}.pdf" %>  
+
 
 
   <% if @cotizacion.processed.nil? %>

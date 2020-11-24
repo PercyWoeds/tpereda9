@@ -1,6 +1,6 @@
 class ViaticoDetail < ActiveRecord::Base
     
-    validates_presence_of :viatico_id,  :importe , :gasto_id,:employee_id,:document_id,:egreso_id 
+    validates_presence_of :viatico_id,  :importe , :gasto_id,:employee_id,:document_id,:egreso_id ,:supplier_id
   
     belongs_to :viatico  
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201119194313) do
+ActiveRecord::Schema.define(version: 20201121180804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -451,11 +451,33 @@ ActiveRecord::Schema.define(version: 20201119194313) do
     t.float    "tarifa"
     t.string   "processed"
     t.string   "comments"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.datetime "date_processed"
     t.string   "tipo_unidad"
     t.string   "estado"
+    t.string   "especifica"
+    t.integer  "tipo_unidad_id"
+    t.integer  "tipo_unidad2_id"
+    t.integer  "tipo_unidad3_id"
+    t.integer  "config_vehi_id"
+    t.integer  "config_vehi2_id"
+    t.integer  "config_vehi3_id"
+    t.float    "qty"
+    t.float    "qty2"
+    t.float    "qty3"
+    t.float    "price"
+    t.float    "price2"
+    t.float    "price3"
+    t.float    "total"
+    t.float    "total2"
+    t.float    "total3"
+    t.float    "tipounidad1"
+    t.float    "tipounidad2"
+    t.float    "tipounidad3"
+    t.float    "tipounidad4"
+    t.float    "tipounidad5"
+    t.integer  "tm"
   end
 
   create_table "couts", force: :cascade do |t|

@@ -15,6 +15,14 @@ class CoutsController < ApplicationController
   # GET /couts/new
   def new
     @cout = Cout.new
+
+    @company   = Company.find(1)
+
+      @employees = @company.get_employees() 
+
+      @cout[:fecha] = Date.today 
+
+      @cout[:importe] = 0.00
   end
 
   # GET /couts/1/edit
@@ -59,6 +67,32 @@ class CoutsController < ApplicationController
       format.html { redirect_to couts_url, notice: 'Cout was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+def get_employee(id)
+
+  a = Employee.find(id)
+
+  return a.full_name 
+
+
+
+end 
+
+def do_cargar
+
+   @osts   = Tranportorder.order("fecha desc "))
+                 
+end 
+
+
+
+  def update_employee
+
+     @employees = Employee.where(params[:employee_id])
+    # map to name and id for use in our options_for_select
+     puts @employee.id
+   
   end
 
   private

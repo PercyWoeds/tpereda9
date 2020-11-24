@@ -16,18 +16,26 @@
   <div class="form-inputs">
 
 
-      <div class="field">
-        <%= f.label :ost_id, "ORDEN DE SERVICIO : *", :class => "bold" %><br />
-        <%= f.text_field :ost_id  %>
-      </div>
+    
 
-
-      <label for="ac_customer" class="bold">Cliente*</label><br />
-      <input type="text" name="ac_customer" id="ac_customer" value="<% if @ac_customer %><%= @ac_customer %><% end %>" />
-      
+      <label for="ac_ost" class="bold">ORDEN DE SERVICIO </label><br />
+      <input type="text" name="ac_ost" id="ac_ost" value="<% if @ac_ost %><%= @ac_ost %><% end %>" />
       
       <div class="small">
-        Ingrese una termino de busqueda para encontrar un cliente.
+        <strong>Seleccionar ORDEN DE SERVICIO :</strong>
+        <span id="selected_ost"><% if @ac_ost %><%= @ac_ost %><% else %><!-- i --><% end %></span>
+      </div>
+     </div>
+      
+
+       <div class="small">
+        <strong>EMPLEADO :</strong>
+        <span id="ac_employee_id"><% if @ac_ost %><%= @ac_ost %><% else %><!-- i --><% end %></span>
+      </div>
+    
+
+      <div class="small">
+        Ingrese una termino de busqueda para encontrar una orden de servicio 
       </div>
       <br />
 
@@ -35,68 +43,214 @@
 
   <div class="field">
     <%= f.label :fecha, "Fecha: *", :class => "bold" %><br />
-    <%= f.text_field :fecha %>
+    <%= f.date_field :fecha %>
   </div>
   
    
-    <%= f.input :fecha %>
-    <%= f.input :importe %>
-    <%= f.input :truck_id %>
-    <%= f.input :punto_id %>
-    <%= f.input :tranportorder_id %>
-    <%= f.input :employee_id %>
-    <%= f.input :employee2_id %>
-    <%= f.input :employee3_id %>
-    <%= f.input :peajes %>
-    <%= f.input :lavado %>
-    <%= f.input :llanta %>
-    <%= f.input :alimento %>
-    <%= f.input :otros %>
-    <%= f.input :monto_recibido %>
-    <%= f.input :flete %>
-    <%= f.input :recibido_ruta %>
-    <%= f.input :vuelto %>
-    <%= f.input :descuento %>
-    <%= f.input :reembolso %>
-    <%= f.input :flete %>
-    <%= f.input :ost_id %>
+
+  
+        <div class="field">
+          <%= f.label  :importe,"Importe:  " , :class => "bold"%><br />
+            <%= f.number_field :importe , step: :any  %>
+        </div>
+
+
+
+
+<table class="ui right aligned table">
+      <thead>
+        <th class="left aligned"></th>
+        <th>Datos</th>
+        <th>Conductor</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="left aligned">Conductor 1 </td>
+          <td> <span id="ac_employee_id"> </td>
+          <td>DNI</td>
+          <td> </td>
+          <td>Licencia</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left aligned">Conductor 2 </td>
+            <td> <span id="ac_employee2_id"></span> </td>
+          <td>DNI</td>
+          <td></td>
+          <td>Licencia</td>
+          <td></td>
+        </tr>
+        
+        
+      </tbody>
+    </table>
+
+
+
+  <table class="ui right aligned table">
+      <thead>
+        <th class="left aligned"></th>
+        <th>Datos</th>
+        <th>Conductor</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="left aligned">Conductor</td>
+          <td>   <%= f.number_field :peajes, step: :any  %> </td>
+          <td>DNI</td>
+          <td> </td>
+          <td>Licencia</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left aligned">Conductor</td>
+          <td><   <%= f.number_field :lavado , step: :any  %></td>
+          <td>DNI</td>
+          <td></td>
+          <td>Licencia</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left aligned">Conductor</td>
+          <td>   <%= f.number_field :llanta, step: :any  %> </td>
+          <td>DNI</td>
+          <td> </td>
+          <td>Licencia</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left aligned">Conductor</td>
+          <td><   <%= f.number_field :alimento, step: :any  %></td>
+          <td>DNI</td>
+          <td></td>
+          <td>Licencia</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left aligned">Conductor</td>
+          <td><   <%= f.number_field :otros, step: :any  %></td>
+          <td>DNI</td>
+          <td></td>
+          <td>Licencia</td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+
+
+  <table class="ui right aligned table">
+      <thead>
+        <th class="left aligned"></th>
+        <th>Datos</th>
+        <th>Conductor</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="left aligned">Conductor</td>
+          <td>   <%= f.number_field :monto_recibido, step: :any  %> </td>
+          <td>DNI</td>
+          <td> </td>
+          <td>Licencia</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left aligned">Conductor</td>
+          <td><   <%= f.number_field :flete , step: :any  %></td>
+          <td>DNI</td>
+          <td></td>
+          <td>Licencia</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left aligned">Conductor</td>
+          <td>   <%= f.number_field :recibido_ruta, step: :any  %> </td>
+          <td>DNI</td>
+          <td> </td>
+          <td>Licencia</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left aligned">Conductor</td>
+          <td><   <%= f.number_field :vuelto, step: :any  %></td>
+          <td>DNI</td>
+          <td></td>
+          <td>Licencia</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left aligned">Conductor</td>
+          <td><   <%= f.number_field :descuento, step: :any  %></td>
+          <td>DNI</td>
+          <td></td>
+          <td>Licencia</td>
+          <td></td>
+        </tr>
+
+         <tr>
+          <td class="left aligned">Conductor</td>
+          <td><   <%= f.number_field :reembolso, step: :any  %></td>
+          <td>DNI</td>
+          <td></td>
+          <td>Licencia</td>
+          <td></td>
+        </tr>
+        
+         <tr>
+          <td class="left aligned">Conductor</td>
+          <td><   <%= f.number_field :flete, step: :any  %></td>
+          <td>DNI</td>
+          <td></td>
+          <td>Licencia</td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+    
   </div>
 
   <div class="form-actions">
+
+     <%= f.hidden_field :tranportorder_id, :id => "ac_ost_id" %>
     <%= f.button :submit %>
   </div>
 <% end %>
 
 
 
+<%= render 'layouts/autocomplete' %>
+
+
+
+
   <script>
 
 $(document).ready(function() {
-  
-    $('#customer_select').change(function() {
-      $.ajax({
-        url: "/ordens/update_marcas",
-        data: {
-          customer_id : $('#customer_select').val()
-        },
-        dataType: "script"
-      });
-    
-    });
-    
-    $('#marca_select').change(function() {
-      $.ajax({
-        url: "/ordens/update_productos",
-        data: {
-          marca_id : $('#marca_select').val()
 
-        },
-        dataType: "script"
-      });
+
+  $("#ac_ost").autocomplete("/tranportorders/ac_osts/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
     });
 
-  
+    
+    $("#ac_ost").result(function(event, data, formatted) {
 
+      $("#ac_ost_id").val(data[2]);
+      $("#selected_ost").html(data[0]);
+      $("#ac_employee_id").html(data[4]);
+      $("#ac_employee2_id").html(data[6]);
+     
+
+     });  
+
+
+    
   });
   
   </script>

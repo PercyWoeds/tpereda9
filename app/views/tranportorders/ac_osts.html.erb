@@ -1,0 +1,5 @@
+<% if @osts %>
+  <% for ost in @osts %>
+      <%= ost.code %>  |BRK|<%= ost.id  %>  |BRK|<%= ost.employee_id %>  |BRK|<%= ost.employee2_id %>   |BRK|<%= ost.ubication_id  %> |BRK|<%= ost.ubication2_id  %>
+  <% end %>
+<% end %>

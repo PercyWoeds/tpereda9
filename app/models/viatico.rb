@@ -4,7 +4,7 @@ class Viatico < ActiveRecord::Base
 self.per_page = 20
 
 
-  validates_presence_of :company_id,  :code, :user_id,:inicial,:fecha1
+  validates_presence_of :company_id,  :code, :user_id,:inicial,:fecha1,:caja_id
   validates_uniqueness_of :code, scope: :caja_id
   
   
@@ -106,6 +106,18 @@ self.per_page = 20
         return @deliveryships
   end 
 
+
+
+  def generate_viatico_number(serie)
+    if Manifest.where("caja_id = ?",serie).maximum("cast(code  as int)") == nil 
+      self.code = serie.to_s.rjust(3, '0') +"-000001"
+    else
+    self.code = serie.to_s.rjust(3, '0')+"-"+Manifest.where("caja_id  as int) = ?",serie).maximum("cast(code  as int)").next.to_s.rjust(6, '0') 
+          
+    end 
+    
+  end
+
   def correlativo      
         numero = Voided.find(2).numero.to_i + 1
         lcnumero = numero.to_s
@@ -149,6 +161,18 @@ self.per_page = 20
     
     return subtotal
   end
+
+   def get_viatico_suma
+    subtotal = 0
+    
+    @viatico_suma = ViaticoDetail.select(:document_id,"SUM(importe) as total ").
+    where(viatico_id: self.id).group(:document_id).order(:document_id)
+  
+  
+    
+    return @viatico_suma
+  end
+  
   
   def get_total_sal
     subtotal = 0

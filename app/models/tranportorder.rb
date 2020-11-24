@@ -285,6 +285,15 @@ TABLE_HEADERS2 = ["NRO.COTIZACION",
 	    return empleados
 	  end
 
+  def get_employee(codigo)
+
+      if   Employee.exists?(:id=> codigo)
+           empleados = Employee.find(codigo)
+           return empleados.full_name
+      else
+           return ""
+      end 
+    end
 
 		def correlativo		
 			numero=Voided.find(8).numero.to_i + 1

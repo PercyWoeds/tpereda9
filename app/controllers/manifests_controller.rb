@@ -219,11 +219,12 @@ class ManifestsController < ApplicationController
     end
   end
 
-def pdf
+  def pdf
     @manifest  = Manifest.find(params[:id])
     company =@manifest.company_id
     @company =Company.find(company) 
     
+
 
     Prawn::Document.generate("app/pdf_output/#{@manifest.id}.pdf") do |pdf|
         pdf.font "Helvetica"
