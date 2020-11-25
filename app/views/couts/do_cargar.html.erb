@@ -1,8 +1,12 @@
 <div class="breadcrumbs">
   <%= link_to "My companies", "/companies" %> &raquo;
   <%= link_to @company.name, @company %> &raquo;
-  <%= link_to "Compras", "/companies/purchases/#{@company.id}" %>
+  <%= link_to "Comprobantes", couts_path %>
 </div>
+
+
+<p id="notice"><%= notice %></p>
+
 
 <h2>
   <%= image_tag("invoice_48.png", :class => "vmiddle") %>
@@ -16,15 +20,18 @@
 
 
 
+
+
+
 <% if @osts.count > 0 %>
   <table>
     <thead>
       <tr>
         <th class="bordered_right bordered_bottom" style="width: 100px;">
-          Orden Compra
+          Code 
         </th>
         <th class="bordered_right bordered_bottom" style="width: 350px;">
-          supplier
+          Cliente 
         </th>
         <th class="bordered_right bordered_bottom">
           Moneda
@@ -48,26 +55,24 @@
       <% for detalle in @osts %>
         <tr>
           <td class="bordered_right bordered_bottom">
-            <%= link_to detalle.code, tranpororder, :title => "Ir a factura" %>
+            <%= detalle.code  %>
           </td>
           <td class="bordered_right bordered_bottom">
-            <%= link_to detalle.customer.name  %>
+
+            <% if detalle.customer.nil?  %>
+
+            <%= " " %>
+
+            <% else %>
+
+               <%=   detalle.customer.name  %>
+
+           <% end %>    
+
           </td>
-          <td class="bordered_right bordered_bottom right">
-            <%= detalle.ubication.name %>
-          </td>
-          
-          <td class="bordered_right bordered_bottom right">
-            <%= money(purchaseorder.total) %>
-          </td>
+         
           <td class="bordered_right bordered_bottom">
-            <%= doDate(purchaseorder.created_at) %>
-          </td>
-          <td class="bordered_right bordered_bottom <%= purchaseorder.processed_color %>">
-            <%= purchaseorder.get_processed_short %>
-          </td>
-          <td class="bordered_right bordered_bottom">
-            <%= link_to "Ver", "/purchases/newfactura/#{purchaseorder.id}" %>
+            <%= link_to "Ver", "/couts/newviatico/#{detalle.id}" %>
           </td>
 
         </tr>
@@ -76,12 +81,15 @@
   </table>
 <% else %>
   <p class="error">
-    We couldn't find any purchaseorders.
+    We couldn't find any osts
   </p>
 <% end %>
+
+
+<%= will_paginate @osts %>
 
 <%= hr() %>
 
 <div class="button">
-  <%= link_to 'Back', "/companies/purchases/#{@company.id}" %>
+  <%= link_to 'Regresar', "/companies/couts/do_cargar/#{@company.id}" %>
 </div>

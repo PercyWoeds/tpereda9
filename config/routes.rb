@@ -765,7 +765,12 @@ match 'companies/reports/rpt_coti_1_pdf/:company_id' => 'reports#rpt_coti_1_pdf'
   match 'viaticos/rpt_viatico_pdf/:company_id' => 'viaticos#rpt_viatico_pdf', via: [:get, :post]
   match 'viaticos/rpt_viatico_pdf' => 'viaticos#rpt_viatico_pdf', via: [:get, :post]
   match 'viaticos/reportxls/:company_id' => 'viaticos#reportxls', via: [:get]
-  
+
+ match 'couts/newviatico/:id' => 'couts#newviatico', via: [:get, :post]
+
+  match 'companies/couts/do_cargar/:company_id' => 'couts#do_cargar', via: [:get, :post]
+  match 'couts/do_crear/:id'   => 'couts#do_crear', via: [:get, :post]
+
   resources :viaticos 
 # lgv
   
@@ -1408,7 +1413,7 @@ match 'purchases/do_crear/:id'   => 'purchases#do_crear', via: [:get, :post]
   resources :ventaislas
   
 
-  match 'companies/couts/do_cargar/:company_id' => 'couts#do_cargar', via: [:get, :post]
+
   resources :viaticos 
 
   # Frontpage

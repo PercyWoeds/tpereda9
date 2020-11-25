@@ -1,32 +1,24 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Couts</h1>
+
+
+<h1>Comprobantes de Egresos </h1>
 
 <table>
   <thead>
     <tr>
       <th>Code</th>
       <th>Fecha</th>
+       <th>O.S.T.</th>
+      <th>Empleado</th>
+      <th>Placa</th>
       <th>Importe</th>
-      <th>Truck</th>
-      <th>Punto</th>
-      <th>Tranportorder</th>
-      <th>Employee</th>
-      <th>Employee2</th>
-      <th>Employee3</th>
-      <th>Peajes</th>
-      <th>Lavado</th>
-      <th>Llanta</th>
-      <th>Alimento</th>
-      <th>Otros</th>
-      <th>Monto recibido</th>
-      <th>Flete</th>
-      <th>Recibido ruta</th>
-      <th>Vuelto</th>
-      <th>Descuento</th>
-      <th>Reembolso</th>
-      <th>Flete</th>
-      <th>Ost</th>
+      <th>TBK</th>
+  
+      <th>TBK documento </th>
+
+      
+     
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -35,30 +27,18 @@
     <% @couts.each do |cout| %>
       <tr>
         <td><%= cout.code %></td>
-        <td><%= cout.fecha %></td>
+        <td><%= cout.fecha.strftime("%d/%m/%Y") %></td>
+        <td><%= cout.tranportorder.code  %></td>
+        <td><%= cout.employee.full_name %></td>
+       
+        <td><%= cout.truck.placa %></td>
         <td><%= cout.importe %></td>
-        <td><%= cout.truck_id %></td>
-        <td><%= cout.punto_id %></td>
-        <td><%= cout.tranportorder_id %></td>
-        <td><%= cout.employee_id %></td>
-        <td><%= cout.employee2_id %></td>
-        <td><%= cout.employee3_id %></td>
-        <td><%= cout.peajes %></td>
-        <td><%= cout.lavado %></td>
-        <td><%= cout.llanta %></td>
-        <td><%= cout.alimento %></td>
-        <td><%= cout.otros %></td>
-        <td><%= cout.monto_recibido %></td>
-        <td><%= cout.flete %></td>
-        <td><%= cout.recibido_ruta %></td>
-        <td><%= cout.vuelto %></td>
-        <td><%= cout.descuento %></td>
-        <td><%= cout.reembolso %></td>
-        <td><%= cout.flete %></td>
-        <td><%= cout.ost_id %></td>
-        <td><%= link_to 'Show', cout %></td>
-        <td><%= link_to 'Edit', edit_cout_path(cout) %></td>
-        <td><%= link_to 'Destroy', cout, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= cout.tbk  %></td>
+        <td><%= cout.tbk_documento %></td>
+     
+        <td><%= link_to 'Ver', cout %></td>
+        <td><%= link_to 'Editar', edit_cout_path(cout) %></td>
+        <td><%= link_to 'Eliminar', cout, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -66,4 +46,7 @@
 
 <br>
 
-<%= link_to 'New Cout', new_cout_path %>
+<div class="buttons">
+<%= link_to 'Cargar OST ', "/companies/couts/do_cargar/#{@company.id}" %>
+
+</div>

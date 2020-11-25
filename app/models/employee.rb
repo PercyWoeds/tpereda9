@@ -21,6 +21,9 @@ class Employee < ActiveRecord::Base
   has_many :assistances 
   has_many :contratos   
   has_many :conductors   
+
+ has_many :couts  
+
   
     
     validates_uniqueness_of :idnumber,:cod_interno

@@ -1326,7 +1326,10 @@ pdf.move_down 2
       curr_seller = User.find(params[:viatico][:user_id])
       @ac_user = curr_seller.username
     end
-       @cotizacion[:code] = @cotizacion.generate_viatico_number( @viatico[:caja_id]) 
+
+
+
+       @viatico[:code] = @viatico.generate_viatico_number( @viatico[:caja_id]) 
 
  
 

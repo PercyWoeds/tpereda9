@@ -109,10 +109,10 @@ self.per_page = 20
 
 
   def generate_viatico_number(serie)
-    if Manifest.where("caja_id = ?",serie).maximum("cast(code  as int)") == nil 
-      self.code = serie.to_s.rjust(3, '0') +"-000001"
+    if Viatico.where("caja_id = ?",serie).maximum("cast(code  as int)") == nil 
+      self.code = "000001"
     else
-    self.code = serie.to_s.rjust(3, '0')+"-"+Manifest.where("caja_id  as int) = ?",serie).maximum("cast(code  as int)").next.to_s.rjust(6, '0') 
+    self.code = Viatico.where("caja_id  as int) = ?",serie).maximum("cast(code  as int)").next.to_s.rjust(6, '0') 
           
     end 
     
