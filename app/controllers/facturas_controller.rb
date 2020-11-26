@@ -5392,7 +5392,8 @@ def client_data_headers
         end 
 
          @serie_factura =  "FF"+@invoice.code[1..2].rjust(2,"0")
-  
+        $lcFileName   = ""
+
        if @invoice.document_id == 13
            if @invoice.moneda_id == 1
                 case_96 = ReceiptGenerator.new(12, 96, 1,@serie_factura,@invoice.id).with_different_currency3(true)
@@ -5410,6 +5411,12 @@ def client_data_headers
            end        
         end 
 
+    
+        
+        $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName        
+        $lcFile2    = File.expand_path('../../../',__FILE__)+ $lcFilezip
+
+
          puts "file zip"       
          puts $lcFileName  
          puts $lcFileName1
@@ -5419,10 +5426,7 @@ def client_data_headers
         puts $lcFilezip
         puts $lcFile2
 
-    
-        
-        $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName        
-        $lcFile2    = File.expand_path('../../../',__FILE__)+ $lcFilezip
+
     
         ActionCorreo.bienvenido_email(@invoice,$lcFileName1,$lcFileName,$lcFile2,$lcFilezip,@invoice.customer.email).deliver_now
          $lcGuiaRemision =""
