@@ -868,6 +868,8 @@ match 'companies/reports/rpt_coti_1_pdf/:company_id' => 'reports#rpt_coti_1_pdf'
 
  match 'cotizacions/do_process/:id' => 'cotizacions#do_process', via: [:get, :post]
  match 'cotizacions/pdf/:id' => 'cotizacions#pdf', via: [:get, :post]
+ match 'cotizacions/pdf2/:id' => 'cotizacions#pdf2', via: [:get, :post]
+
 
 
   match 'assistances/generar/:id' => 'assistances#generar', via: [:get, :post]
