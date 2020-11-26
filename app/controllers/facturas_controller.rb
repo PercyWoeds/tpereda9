@@ -5390,6 +5390,7 @@ def client_data_headers
         files_to_clean.each do |file|
           File.delete(file)
         end 
+        
          @serie_factura =  "FF"+@invoice.code[1..2].rjust(2,"0")
   
        if @invoice.document_id == 13

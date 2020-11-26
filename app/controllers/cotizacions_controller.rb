@@ -471,6 +471,8 @@ class CotizacionsController < ApplicationController
 
                end 
 
+             end 
+
 
         pdf 
 
