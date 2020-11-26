@@ -5413,8 +5413,8 @@ def client_data_headers
 
     
         
-        $lcFileName1= "app/pdf_output/"+ $lcFileName        
-        $lcFile2    = "app/pdf_output/"+ $lcFilezip
+        $lcFileName1= File.expand_path('../', __FILE__)+ $lcFileName        
+        $lcFile2    = File.expand_path('../', __FILE__)+ $lcFilezip
 
 
          puts "file zip"       
