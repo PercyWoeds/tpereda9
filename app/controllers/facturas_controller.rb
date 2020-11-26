@@ -5391,7 +5391,7 @@ def client_data_headers
           File.delete(file)
         end 
          @serie_factura =  "FF"+@invoice.code[1..2].rjust(2,"0")
-
+  
        if @invoice.document_id == 13
            if @invoice.moneda_id == 1
                 case_96 = ReceiptGenerator.new(12, 96, 1,@serie_factura,@invoice.id).with_different_currency3(true)
@@ -5400,7 +5400,7 @@ def client_data_headers
             end 
        else        
            if @invoice.moneda_id == 1  
-                $lcFileName=""
+              
                 case_49 = InvoiceGenerator.new(1,3,1,@serie_factura,@invoice.id).with_different_currency3(true)
               #  puts $lcFileName 
            else

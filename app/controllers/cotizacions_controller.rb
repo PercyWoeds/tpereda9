@@ -222,27 +222,27 @@ class CotizacionsController < ApplicationController
 
      image_path = "#{Dir.pwd}/public/images/cotizacion1.jpg"
 
-      pdf.font "Times-Roman"  , :size => 8
-    
-      pdf.float do
-          pdf.move_down 100
-          pdf.text_box "blaaaa" , :at => [150,pdf.cursor ]
+              pdf.font "Times-Roman"  , :size => 8
+            
+              pdf.float do
+                  pdf.move_down 100
+                  pdf.text_box "blaaaa" , :at => [150,pdf.cursor ]
 
-      end
+              end
 
-          
-       table_content0 = []
+              
+             table_content0 = []
 
-       table_content0 = ([[{:image => image_path, :fit => [pdf.bounds.width, pdf.bounds.height] }]  ])
+             table_content0 = ([[{:image => image_path, :fit => [pdf.bounds.width, pdf.bounds.height] }]  ])
 
-         pdf.table(table_content0,{ 
-                 :position => :right,
-                :width => pdf.bounds.width,
-                :cell_style => {:border_width => 0} }) do
+               pdf.table(table_content0,{ 
+                       :position => :right,
+                      :width => pdf.bounds.width,
+                      :cell_style => {:border_width => 0} }) do
 
-                columns([0]).font_style = :bold
+                      columns([0]).font_style = :bold
 
-         end 
+               end 
 
 
 
@@ -258,8 +258,6 @@ class CotizacionsController < ApplicationController
                   pdf.cell :content=> "CLIENTE : 
                    "+@cotizacion.customer.name   , align: :center, valign: :top, size: 24 , :text_color => "000000", :border_width => 0 ,:font_style => :italic
                  end
-
-
       
               end
               pdf 
@@ -341,8 +339,11 @@ class CotizacionsController < ApplicationController
               pdf.bounding_box [40,530], :width  => pdf.bounds.width* 0.9 ,:border_width=> 0 do
 
               table_content =[]
+
+
               row=[]
 
+              
 
              row << "ITEM"
              row << "TIPO DE UNIDAD"
@@ -373,7 +374,13 @@ class CotizacionsController < ApplicationController
 
             row << "01"
             row << @cotizacion.get_tipounidad(@cotizacion.tipo_unidad2_id)
-            row << @cotizacion.get_configvehi(@cotizacion.config_vehi2_id)
+            if !@cotizacion.config_vehi2_id.nil?
+              puts "cotizacion..."
+              puts @cotizacion.config_vehi2_id
+              row << @cotizacion.get_configvehi(@cotizacion.config_vehi2_id)
+            else
+              row << ""
+            end 
             row << ""
             row << @cotizacion.qty2
             row << @cotizacion.price2
@@ -384,7 +391,14 @@ class CotizacionsController < ApplicationController
 
             row << "01"
             row << @cotizacion.get_tipounidad(@cotizacion.tipo_unidad3_id)
-            row << @cotizacion.get_configvehi(@cotizacion.config_vehi3_id)
+
+            if !@cotizacion.config_vehi3_id.nil?
+              puts "cotizacion..."
+              puts @cotizacion.config_vehi3_id
+             row << @cotizacion.get_configvehi(@cotizacion.config_vehi3_id)
+            else
+             row << ""
+            end 
             row << ""
             row << @cotizacion.qty3
             row << @cotizacion.price3
@@ -427,27 +441,22 @@ class CotizacionsController < ApplicationController
                                           columns([6]).align = :right
                                           columns([6]).width = 90
                                         end 
+
+
+
+               end 
+
+
         
-          end 
 
         puts "instrucccion  "
 
          @parrafo = Instruccion.find(7)
 
-          pdf.bounding_box [40,410], :width  => pdf.bounds.width - 40,:border_width=> 0 do
-          pdf.cell :content=>"TERMINOS Y CONDICIONES GENERALES DEL SERVICIO:" ,
-          align: :left, valign: :top, size: 10, :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic
-          end
-
-
-          pdf.bounding_box [40,400], :width  => pdf.bounds.width - 40,:border_width=> 0 do
-          pdf.cell :content=> @parrafo.description1 ,
-          align: :left, valign: :top, size: 10, :text_color => "000000", :border_width => 0 ,:font_style => :italic
-          end
 
         end 
 
-          pdf 
+        pdf 
 
   end 
   

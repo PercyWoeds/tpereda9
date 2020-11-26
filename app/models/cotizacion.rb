@@ -47,13 +47,10 @@ class Cotizacion < ActiveRecord::Base
 
   ret = ""
 
-  if   !id.nil? 
      
       a = ConfigVehi.find(id)
       ret = a.name
  
-  end
-  return ret 
 end 
 
 
