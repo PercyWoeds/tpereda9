@@ -5390,7 +5390,7 @@ def client_data_headers
         files_to_clean.each do |file|
           File.delete(file)
         end 
-        
+
          @serie_factura =  "FF"+@invoice.code[1..2].rjust(2,"0")
   
        if @invoice.document_id == 13
@@ -5409,6 +5409,16 @@ def client_data_headers
                 case_3  = InvoiceGenerator.new(1,3,1,@serie_factura,@invoice.id).with_igv3(true)
            end        
         end 
+
+         puts "file zip"       
+         puts $lcFileName  
+         puts $lcFileName1
+
+
+        puts "file 2"        
+        puts $lcFilezip
+        puts $lcFile2
+
     
         
         $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName        
@@ -5416,17 +5426,6 @@ def client_data_headers
     
         ActionCorreo.bienvenido_email(@invoice,$lcFileName1,$lcFileName,$lcFile2,$lcFilezip,@invoice.customer.email).deliver_now
          $lcGuiaRemision =""
-
-
-
-        $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName        
-        $lcFile2    = File.expand_path('../../../',__FILE__)+ $lcFilezip
-        
-        puts "file zip"        
-        puts $lcFilezip
-        puts "file 2"        
-        
-        puts $lcFile2
 
 
     end
