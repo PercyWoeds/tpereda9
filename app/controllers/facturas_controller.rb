@@ -5412,10 +5412,10 @@ def client_data_headers
         end 
 
     
-        
-        $lcFileName1= File.expand_path('../', __FILE__)+ $lcFileName        
-        $lcFile2    = File.expand_path('../', __FILE__)+ $lcFilezip
-
+        $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName        
+        $lcFile2    =File.expand_path('../../../', __FILE__)+ "/"+$lcFilezip
+    
+        ActionCorreo.bienvenido_email(@invoice).deliver_now
 
          puts "file zip"       
          puts $lcFileName  
@@ -5428,7 +5428,7 @@ def client_data_headers
 
 
     
-        ActionCorreo.bienvenido_email(@invoice,$lcFileName1,$lcFileName,$lcFile2,$lcFilezip,@invoice.customer.email).deliver_now
+        #ActionCorreo.bienvenido_email(@invoice,$lcFileName1,$lcFileName,$lcFile2,$lcFilezip,@invoice.customer.email).deliver_now
          $lcGuiaRemision =""
 
 

@@ -42,23 +42,25 @@ class DocumentGenerator
   
   def generate_documents3(document, pdf=false)
     
-    
+     
     if document.valid?
-     begin
-       document.to_zip
-    
-      puts "xml"
 
-      rescue Savon::SOAPFault => e
-      puts "Error generating document for case #{group_case} in group #{group}: #{e}"      
-      $aviso = ""
+      
 
-      end
+       document.to_xml 
+
+
+      document.to_zip  
+
       document.to_pdf if pdf
+
+
+
     else
      raise "Documento invalido para caso #{group_case} in group #{group}, ignoring output: #{document.errors.messages}"
     end
 
+   
   end
 
 end
