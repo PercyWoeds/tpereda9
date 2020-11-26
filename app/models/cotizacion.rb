@@ -32,24 +32,17 @@ class Cotizacion < ActiveRecord::Base
 
  def get_tipounidad(id)
 
-  if !id.nil?
-
     a = TipoUnidad.find(id)
     return a.name 
-  else
-     return ""
-  end 
+
  end
 
 
 
  def get_configvehi(id)
-
-  ret = ""
-
      
       a = ConfigVehi.find(id)
-      ret = a.name
+      return   a.name
  
 end 
 

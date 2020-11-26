@@ -5417,6 +5417,17 @@ def client_data_headers
          $lcGuiaRemision =""
 
 
+
+        $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName        
+        $lcFile2    = File.expand_path('../../../',__FILE__)+ $lcFilezip
+        
+        puts "file zip"        
+        puts $lcFilezip
+        puts "file 2"        
+        
+        puts $lcFile2
+
+
     end
 
 
