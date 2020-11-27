@@ -76,8 +76,6 @@ class CotizacionsController < ApplicationController
     @cotizacion[:total3] = @cotizacion[:price3] * @cotizacion[:qty3] 
      
 
-
-
     respond_to do |format|
       if @cotizacion.save
         format.html { redirect_to @cotizacion, notice: 'Cotizacion was successfully created.' }

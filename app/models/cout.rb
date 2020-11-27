@@ -3,6 +3,8 @@ class Cout < ActiveRecord::Base
 
 validates_presence_of :tranportorder_id,:employee_id,:truck_id,:importe  
 
+
+
 belongs_to :employee
 belongs_to :truck 
 belongs_to :tranportorder
@@ -18,6 +20,9 @@ belongs_to :tranportorder
     end 
     
   end
+
+private
+
 
 
 end

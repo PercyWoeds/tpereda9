@@ -148,7 +148,7 @@ before_filter :authenticate_user!
             row << nroitem.to_s        
             row << product.fecha.strftime("%d/%m/%Y") 
             row << product.tranportorder.employee.full_name   
-            if product.supplier 
+            if product.supplier_id != 2570  
               row << product.supplier.name 
             else
               row << product.employee.full_name

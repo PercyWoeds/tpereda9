@@ -768,6 +768,9 @@ match 'companies/reports/rpt_coti_1_pdf/:company_id' => 'reports#rpt_coti_1_pdf'
 
  match 'couts/newviatico/:id' => 'couts#newviatico', via: [:get, :post]
 
+ match 'cout/pdf/:id' => 'couts#pdf', via: [:get, :post]
+
+
   match 'companies/couts/do_cargar/:company_id' => 'couts#do_cargar', via: [:get, :post]
   match 'couts/do_crear/:id'   => 'couts#do_crear', via: [:get, :post]
 

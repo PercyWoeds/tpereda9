@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
 
+
+
 <p>
   <strong>Code:</strong>
   <%= @cout.code %>
@@ -7,108 +9,187 @@
 
 <p>
   <strong>Fecha:</strong>
-  <%= @cout.fecha %>
+  <%= @cout.fecha.to_date  %>
 </p>
+
+
+<p>
+  <strong>ORDEN DE SERVICIO :</strong>
+  <%= @cout.tranportorder.code  %>
+</p>
+
+
+
+<p>
+  <strong>Empleado : </strong>
+  <%= @cout.employee.full_name %>
+</p>
+<p>
+  <strong> Placa :</strong>
+  <%= @cout.truck.placa  %>
+</p>
+
+
+
 
 <p>
   <strong>Importe:</strong>
   <%= @cout.importe %>
 </p>
 
+
 <p>
-  <strong>Truck:</strong>
-  <%= @cout.truck_id %>
+  <strong> TBK :</strong>
+  <%= @cout.tbk %>
 </p>
 
 <p>
-  <strong>Punto:</strong>
-  <%= @cout.punto_id %>
+  <strong> TBK Documento  :</strong>
+  <%= @cout.tbk_documento %>
 </p>
 
-<p>
-  <strong>Tranportorder:</strong>
-  <%= @cout.tranportorder_id %>
-</p>
 
-<p>
-  <strong>Employee:</strong>
-  <%= @cout.employee_id %>
-</p>
+<table style="width: 80%;">
+  <tr>
+    <td >PEAJES </td>
+   
+    <td></td>
+    <td> <%= @cout.peajes %></td>
+  
+    
+  </tr>
+  <tr>
+    <td>LAVADO </td>
+    <td></td>
+    <td><%= @cout.lavado %></td>
+ 
+  </tr>
+  <tr>
+    <td>LLANTA </td>
+    <td></td>
+    <td><%= @cout.llanta %></td>
+   
+  </tr>
 
-<p>
-  <strong>Employee2:</strong>
-  <%= @cout.employee2_id %>
-</p>
+  <tr>
+    <td>ALIMENTO </td>
+    <td></td>
+    <td> <%= @cout.alimento %> </td>
+   
+  </tr>
 
-<p>
-  <strong>Employee3:</strong>
-  <%= @cout.employee3_id %>
-</p>
+  <tr>
+    <th> </th>
+    <td></td>
+    <td> </td>
+   
+  </tr>
 
-<p>
-  <strong>Peajes:</strong>
-  <%= @cout.peajes %>
-</p>
+  <tr>
+    <td> TOTAL S/- </td>
+    <td></td>
+    <td> </td>
+   
+  </tr>
 
-<p>
-  <strong>Lavado:</strong>
-  <%= @cout.lavado %>
-</p>
 
-<p>
-  <strong>Llanta:</strong>
-  <%= @cout.llanta %>
-</p>
+</table>
 
-<p>
-  <strong>Alimento:</strong>
-  <%= @cout.alimento %>
-</p>
+<p> </br> </p>
 
-<p>
-  <strong>Otros:</strong>
-  <%= @cout.otros %>
-</p>
+<p> <strong> RENDICION DE LGV </strong></p>
+<table style="width: 80%;">
+  <tr>
+    <td >MONTO RECIBIDO </td>
+   
+    <td></td>
+    <td> <%= @cout.monto_recibido %></td>
+  
+    
+  </tr>
+  <tr>
+    <td>FLETE </td>
+    <td></td>
+    <td><%= @cout.flete %></td>
+ 
+  </tr>
+  <tr>
+    <td>RECIBIDO RUTA </td>
+    <td></td>
+    <td><%= @cout.recibido_ruta  %></td>
+   
+  </tr>
 
-<p>
-  <strong>Monto recibido:</strong>
-  <%= @cout.monto_recibido %>
-</p>
+  <tr>
+    <td>TOTAL  </td>
+    <td></td>
+    <td> <%=  %> </td>
+   
+  </tr>
 
-<p>
-  <strong>Flete:</strong>
-  <%= @cout.flete %>
-</p>
+  <tr>
+    <th> </th>
+    <td></td>
+    <td> </td>
+   
+  </tr>
 
-<p>
-  <strong>Recibido ruta:</strong>
-  <%= @cout.recibido_ruta %>
-</p>
+  <tr>
+    <td> VUELTO  </td>
+    <td></td>
+    <td> <%= @cout.vuelto  %></td>
+   
+  </tr>
 
-<p>
-  <strong>Vuelto:</strong>
-  <%= @cout.vuelto %>
-</p>
+  <tr>
+    <td> DESCUENTO  </td>
+    <td></td>
+    <td><%= @cout.descuento %> </td>
+   
+  </tr>
 
-<p>
-  <strong>Descuento:</strong>
-  <%= @cout.descuento %>
-</p>
+  <tr>
+    <td> REEMBOLSO  </td>
+    <td></td>
+    <td><%= @cout.reembolso  %> </td>
+   
+  </tr>
 
-<p>
-  <strong>Reembolso:</strong>
-  <%= @cout.reembolso %>
-</p>
+  <tr>
+    <td> FLETE   </td>
+    <td></td>
+    <td><%= @cout.flete  %> </td>
+   
+  </tr>
 
-<p>
-  <strong>Flete:</strong>
-  <%= @cout.flete %>
-</p>
 
-<p>
-  <strong>Ost:</strong>
-  <%= @cout.ost_id %>
-</p>
 
-<%= link_to 'Edit', edit_cout_path(@cout) %> |
-<%= link_to 'Back', couts_path %>
+</table>
+
+
+
+<div class="button">
+
+
+    <%= link_to 'Exportar to PDF', "/cout/pdf/#{@cout.id}.pdf" %>  
+
+
+
+  <% if @cout.processed.nil? %>
+
+  <%= link_to 'Anular .', "/couts/do_process/#{@cout.id}" %>
+  <%end %>
+
+
+
+<%= link_to 'Editar', edit_cout_path(@cout) %> 
+
+ <% if @cout.processed == "1" %>
+   <%= link_to 'Cancelar', "/couts/do_anular/#{@cout.id}" %>
+  <tr>
+<% end %>
+
+
+<%= link_to 'Regresar', couts_path %>
+
+</div>
