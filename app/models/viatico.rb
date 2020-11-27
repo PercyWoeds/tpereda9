@@ -166,7 +166,7 @@ self.per_page = 20
     subtotal = 0
     
     @viatico_suma = ViaticoDetail.select(:document_id,"SUM(importe) as total ").
-    where(viatico_id: self.id).group(:document_id).order(:document_id)
+    where("viatico_id = ?  and egreso_id > 1 ",self.id).group(:document_id).order(:document_id)
   
   
     

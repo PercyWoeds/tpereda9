@@ -33,7 +33,7 @@ before_filter :authenticate_user!
 
      
        table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD EN EL TRABAJO ",:rowspan => 2},"CODIGO ","TP-FZ-F-018"], 
-          ["VERSION: ","9"], 
+          ["VERSION: ","4"], 
           ["LIQUIDACION DE CAJA ","Pagina: ","1 de 1 "] 
          
           ])
@@ -59,7 +59,7 @@ before_filter :authenticate_user!
       
         
          pdf.move_down 2
-         table_content2 = ([["Fecha : ",Date.today.strftime("%d/%m/%Y")]])
+         table_content2 = ([["Fecha : ",@viatico.fecha1.strftime("%d/%m/%Y")]])
 
          pdf.table(table_content2,{:position=>:right }) do
 
@@ -609,6 +609,8 @@ pdf.move_down 2
                end
 
 
+total_resumen = 0
+
 
 table_content_footer3=[]
 
@@ -619,7 +621,15 @@ row = []
 row << detalle1.document.descripshort
 row << sprintf("%.2f",detalle1.total)
 table_content_footer3 << row 
+
+ total_resumen +=  detalle1.total.round(2)
 end
+
+row = []
+
+row << "TOTAL : "
+row << sprintf("%.2f",total_resumen)
+table_content_footer3 << row 
 
 pdf.move_down 2
 
@@ -1283,7 +1293,7 @@ pdf.move_down 2
     @documents = @company.get_documents()
     @cajas = Caja.all 
     @gastos = Gasto.order(:descrip)
-    @viaticos_lines = @viatico.viaticos_lines
+  
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
   end

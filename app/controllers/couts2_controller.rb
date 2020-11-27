@@ -242,7 +242,7 @@ end
      
        table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD EN EL TRABAJO ",:rowspan => 2},"CODIGO ","TP-FZ-F-009"], 
           ["VERSION: ","2"], 
-          ["LIQUIDACION DE GASTOS DE VIAJE  Nro. " + @cout.code ,"Pagina: ","1 de 1 "] 
+          ["COMPROBANTE DE EGRESO  Nro. " + @cout.code ,"Pagina: ","1 de 1 "] 
          
           ])
         
