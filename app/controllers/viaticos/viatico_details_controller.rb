@@ -92,15 +92,27 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     @employees = @company.get_employees 
      @egresos = Egreso.order(:code)
     
+
+
     @viatico_detail = ViaticoDetail.new(viatico_detail_params)    
     @viatico_detail.viatico_id  = @viatico.id 
     
     @viatico_detail.tranportorder_id = params[:ac_item_id]
-    @viatico_detail.supplier_id = params[:ac_supplier_id]
-    @viatico_detail.document_id = params[:viatico_detail][:tm]
-    
-    
+
+    if  params[:tipoproveedor] ==  "1"
+      @viatico_detail.supplier_id = params[:ac_supplier_id]
+
+        @viatico_detail.employee_id = 64 
+    else
+       @viatico_detail.supplier_id = 2570 
        @viatico_detail.employee_id = params[:viatico_detail][:employee_id]
+    end 
+  
+    @viatico_detail.document_id = params[:viatico_detail][:tm]
+
+    
+    
+    
     
 
     zeros =' 00:00:00'
@@ -130,6 +142,8 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     puts  @viatico[:total_ing]
     puts @viatico[:total_egreso]
 
+   
+
     @viatico[:saldo] = @viatico[:inicial] +  @viatico[:total_ing] - @viatico[:total_egreso]
 
 
@@ -155,6 +169,8 @@ class Viaticos::ViaticoDetailsController < ApplicationController
           a.inicial =  @viatico[:saldo]
           a.save
         end 
+
+
          format.html { redirect_to @viatico, notice: 'Viatico Detalle fue creado satisfactoriamente.' }
          format.json { render :show, status: :created, location: @viatico }
        else

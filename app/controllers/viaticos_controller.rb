@@ -1315,7 +1315,8 @@ pdf.move_down 2
     @viatico = Viatico.new(viatico_params)
     @company = Company.find(params[:viatico][:company_id])
     
-    
+ 
+
     begin
       @viatico[:inicial] = @viatico.get_total_inicial
     rescue
@@ -1341,8 +1342,8 @@ pdf.move_down 2
     end
 
 
-
-       @viatico[:code] = @viatico.generate_viatico_number( @viatico[:caja_id]) 
+      
+    @viatico[:code] = @viatico.generate_viatico_number( @viatico[:caja_id]) 
 
  
 
