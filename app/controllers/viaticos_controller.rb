@@ -308,7 +308,7 @@ before_filter :authenticate_user!
 
 
           #SALDO INICIAL 
-            @viatico_last = Viatico.where("id < ? ", @viatico.id).order("id DESC").last # last - 1
+            @viatico_last = Viatico.where("id < ? ", @viatico.id).order("id DESC").first # last - 1
 
           row = []
           total_content_ing = []
