@@ -359,14 +359,14 @@ class CotizacionsController < ApplicationController
 
             row << "01"
             if !@cotizacion.tipo_unidad_id.nil?
-             row << @cotizacion.tipo_unidad.name 
+              row << @cotizacion.tipo_unidad.name 
             else 
               row << ""
             end 
 
             if !@cotizacion.config_vehi_id.nil?
 
-            row << @cotizacion.config_vehi.name 
+              row << @cotizacion.config_vehi.name 
             else 
               row << " "
             end 
@@ -375,25 +375,22 @@ class CotizacionsController < ApplicationController
             row << @cotizacion.qty
             row << @cotizacion.price
             row << @cotizacion.total 
-
-
             table_content << row 
+
+
             row=[]
 
             row << "02"
-
             if !@cotizacion.tipo_unidad2_id.nil?
              row << @cotizacion.get_tipounidad(@cotizacion.tipo_unidad2_id)
             else 
               row << ""
             end 
-
             if !@cotizacion.config_vehi2_id.nil?
               row << @cotizacion.get_configvehi(@cotizacion.config_vehi2_id)
             else
               row << ""
             end 
-
             row << ""
             row << @cotizacion.qty2
             row << @cotizacion.price2
@@ -401,7 +398,6 @@ class CotizacionsController < ApplicationController
             table_content << row 
 
             row=[]
-
             row << "03"
             if !@cotizacion.tipo_unidad3_id.nil?
               row << @cotizacion.get_tipounidad(@cotizacion.tipo_unidad3_id)
@@ -423,7 +419,6 @@ class CotizacionsController < ApplicationController
             table_content << row 
 
             row=[]
-
             row << ""
             row << {:content=>"VALOR TOTAL DEL SERVICIO",:colspan => 5 } 
             row << @cotizacion.total 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201127160428) do
+ActiveRecord::Schema.define(version: 20201202174136) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -820,6 +820,7 @@ ActiveRecord::Schema.define(version: 20201127160428) do
     t.string   "tiposunat"
     t.string   "fullname"
     t.string   "area"
+    t.string   "orden"
   end
 
   create_table "dsubdia", force: :cascade do |t|
@@ -1096,6 +1097,7 @@ ActiveRecord::Schema.define(version: 20201127160428) do
     t.integer  "company_id"
     t.string   "grupo"
     t.string   "fullcuenta"
+    t.string   "flag"
   end
 
   create_table "grado_instruccions", force: :cascade do |t|

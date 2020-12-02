@@ -165,11 +165,11 @@ self.per_page = 20
    def get_viatico_suma
     subtotal = 0
     
-    @viatico_suma = ViaticoDetail.select(:document_id,"SUM(importe) as total ").
-    where("viatico_id = ?  and egreso_id > 1 ",self.id).group(:document_id).order(:document_id)
+
+    @viatico_suma = ViaticoDetail.select("documents.orden","documents.descripshort", "SUM(importe) as total ").
+    where("viatico_id = ?  and egreso_id > 1 ",self.id).joins(:document).group("documents.orden,documents.descripshort").order("documents.orden,documents.descripshort")
   
-  
-    
+   
     return @viatico_suma
   end
   

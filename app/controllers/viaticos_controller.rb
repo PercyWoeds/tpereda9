@@ -306,17 +306,20 @@ before_filter :authenticate_user!
                 
                end
 
-              
-
 
           #SALDO INICIAL 
+            @viatico_last = Viatico.where("id < ? ", @viatico.id).order("id DESC").last # last - 1
 
           row = []
           total_content_ing = []
 
           row << ""    
           row << ""
-          row << "SALDO ANTERIOR AL " +@viatico.fecha1.to_date.to_s 
+           if !@viatico_last.nil?
+          row << "SALDO ANTERIOR AL " + @viatico_last.fecha1.to_date.to_s 
+        else 
+            row << "SALDO ANTERIOR  " 
+        end 
           row << ""
            row << ""
            row << sprintf("%.2f",@viatico.inicial)
@@ -425,9 +428,9 @@ before_filter :authenticate_user!
          @detalle = egresos.get_detalle_egreso(@viatico.id,egresos.id)
 
         
-           if @detalle.count()>0 
+         
 
-            table_content = ([ [egresos.name  ]   ])
+            table_content = ([ [egresos.name + " " + egresos.extension  ]   ])
             
 
              pdf.table(table_content  ,{
@@ -532,7 +535,7 @@ before_filter :authenticate_user!
                                         end 
 
 
-       end 
+       
 
        #resumen 
 
@@ -618,7 +621,7 @@ table_content_footer3=[]
 
 for detalle1 in @detalle1
 row = []
-row << detalle1.document.descripshort
+row << detalle1.descripshort
 row << sprintf("%.2f",detalle1.total)
 table_content_footer3 << row 
 
