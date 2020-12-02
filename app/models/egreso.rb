@@ -9,6 +9,7 @@ class Egreso < ActiveRecord::Base
     	"#{name} - #{extension}"
 
     	
+      
     end
 def get_detalle_egreso(viatico_id,id)
       lcCheque = 6

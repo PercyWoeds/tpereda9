@@ -595,6 +595,7 @@ class LgvsController < ApplicationController
     total = 0 
     monto_inicial = 0
     $total_inicial= 0
+
     for item in items
       if item != ""
         parts = item.split("|BRK|")
@@ -602,7 +603,7 @@ class LgvsController < ApplicationController
         id      = parts[0]  
         monto_inicial = parts[1]
         
-        product = Compro.find(id.to_i)
+        product = Cout.find(id.to_i)
         
         product[:i] = i
         product[:importe] = monto_inicial.to_f
@@ -647,7 +648,7 @@ class LgvsController < ApplicationController
   end
   # Autocomplete for compro
   def ac_compros
-    @compros = Compro.where(["company_id = ? AND code LIKE ?", params[:company_id], "%" + params[:q] + "%"])
+    @compros = Cout.where(["code iLIKE ?", "%" + params[:q] + "%"])
     
     render :layout => false
   end

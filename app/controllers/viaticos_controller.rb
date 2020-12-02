@@ -1459,6 +1459,35 @@ pdf.move_down 2
       invoice_headers
   end
  
+
+ def rpt_compras1_pdf
+    @company=Company.find(1)      
+   
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]
+    
+    @product = params[:ac_item_id]
+
+    @products = @company.get_products_dato(@product)        
+
+    @facturas_rpt = @company.get_ingresos_day(@fecha1,@fecha2,@product)
+
+
+    if @facturas_rpt != nil 
+    
+      case params[:print]
+       
+        when "Excel" then render xlsx: 'rpt_compras1_xls'
+    
+          
+        else render action: "index"
+      end
+    end 
+
+    
+  end
+
+
   
   private
   def viatico_params

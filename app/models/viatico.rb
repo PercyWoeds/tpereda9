@@ -112,7 +112,7 @@ self.per_page = 20
     if Viatico.where("caja_id = ?",serie).maximum("cast(code  as int)") == nil 
       self.code = "000001"
     else
-    self.code = Viatico.where("caja_id  as int) = ?",serie).maximum("cast(code  as int)").next.to_s.rjust(6, '0') 
+    self.code = Viatico.where("caja_id  = ?",serie).maximum("cast(code  as int)").next.to_s.rjust(6, '0') 
           
     end 
     
@@ -145,7 +145,7 @@ self.per_page = 20
     
     for item in  @viatico_details 
     
-        if item.tm == "6"
+        if item.egreso_id  ==  1 
           total = item.importe
         else
           total = 0
@@ -183,7 +183,7 @@ self.per_page = 20
   
     
          
-        if item.tm == "6"
+        if item.egreso_id == 1
             total = 0
           else
             total = item.importe
@@ -292,6 +292,35 @@ self.per_page = 20
       @viaticos_egresos = Egreso.where(id: 1  )
 
   end 
+
+
+  def get_egresos_tot
+
+      @viaticos = ViaticoDetail.select("sum(importe)  as total ").where("viatico_id = ? and egreso_id > 1 ",self.id).group(:viatico_id).order(:viatico_id)
+
+ if @viaticos
+
+        return @viaticos.first.total 
+
+      else
+        return 0 
+      end 
+  end 
+
+
+  def get_ingresos_tot 
+
+      @viaticos = ViaticoDetail.select("sum(importe)  as total ").where("viatico_id = ? and egreso_id = 1 ",self.id).group(:viatico_id).order(:viatico_id)
+      if @viaticos
+
+        return @viaticos.first.total 
+
+      else
+        return 0 
+      end 
+
+  end 
+
  
 
   def get_egresos_suma
@@ -522,6 +551,16 @@ self.per_page = 20
         lcnumero = numero.to_s
         Voided.where(:id=>'13').update_all(:numero =>lcnumero)        
   end
+
+  def get_cheque
+    @viatico_details
+   if   ViaticoDetail.exists?(document_id: 6 , viatico_id: self.id)
+
+
+        return ViaticoDetail.exists?(document_id: 6 , viatico_id: self.id).first        
+
+   end 
+ end 
 
   
 end

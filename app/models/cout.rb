@@ -10,6 +10,20 @@ belongs_to :truck
 belongs_to :tranportorder
 
 
+
+  
+   TABLE_HEADERS = [ "FECHA ",
+                     "CONCEPTO",
+                     "CANT",
+                     "  ",
+                     "COMPROBANTE",
+                     "IMPORTE S/.",
+                     "DETALLE"
+                     ]
+
+
+
+
  def generate_cout_number
     if Cout.where("fecha  >?","2020-08-01 00:00:00")
     	.maximum("cast(substring(code,1,6)  as int)") == nil 
@@ -44,6 +58,16 @@ belongs_to :tranportorder
       return "#{text} y #{cents}/100 "
 
     end
+
+
+
+
+ def get_egresos_grupo
+   
+   @dato = Gasto.select("grupo ").where("grupo <> ?","").group(:grupo)
+
+      return @dato 
+ end 
 
 
 

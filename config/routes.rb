@@ -235,6 +235,8 @@ require 'sidekiq/web'
       collection { get  :rpt_ventas_pdf }
 
        collection { get  :rpt_st_pdf }
+
+     collection { get  :rpt_viatico_1 }
     end 
 
   resources :voideds do
@@ -769,7 +771,7 @@ match 'companies/reports/rpt_coti_1_pdf/:company_id' => 'reports#rpt_coti_1_pdf'
  match 'couts/newviatico/:id' => 'couts#newviatico', via: [:get, :post]
 
  match 'cout/pdf/:id' => 'couts#pdf', via: [:get, :post]
-
+ match 'cout/pdf1/:id' => 'couts#pdf1', via: [:get, :post]
 
   match 'companies/couts/do_cargar/:company_id' => 'couts#do_cargar', via: [:get, :post]
   match 'couts/do_crear/:id'   => 'couts#do_crear', via: [:get, :post]
@@ -1189,6 +1191,9 @@ match 'purchases/do_crear/:id'   => 'purchases#do_crear', via: [:get, :post]
   match 'companies/customer_payments/:company_id' => 'customer_payments#list_customerpayments', via: [:get, :post]  
   
   match 'companies/reports/rpt_ordenes1_pdf/:company_id' => 'reports#rpt_ordenes1_pdf', via: [:get, :post]
+
+  match '/reports/rpt_viaticos_1/:id' => 'reports#rpt_viaticos_1', via: [:get, :post]
+
   
   resources :customer_payments
   match 'inventories_detaisl/additems/:company_id' => 'additems#list', via: [:get, :post]  

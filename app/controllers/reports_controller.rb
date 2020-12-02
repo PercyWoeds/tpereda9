@@ -1571,7 +1571,7 @@ def rpt_purchaseorder4_all
     
   end
 
-def rpt_purchase61_all
+  def rpt_purchase61_all
       @company = Company.find(params[:company_id])  
       @usuario = User.find(params[:usuario]) 
     @pagetitle = "Facturas por proveedor "    
@@ -1686,5 +1686,13 @@ def rpt_purchase61_all
     @pagetitle = "Resumen ST "    
       @monedas=@company.get_monedas    
   end
- 
+  
+ def rpt_viaticos_1 
+    @company = Company.find(1)
+    @pagetitle = "Resumen ST "    
+    @monedas=@company.get_monedas    
+    @viatico = Viatico.find(params[:id])
+
+  end
+
 end

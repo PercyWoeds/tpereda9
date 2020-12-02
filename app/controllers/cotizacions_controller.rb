@@ -340,7 +340,6 @@ class CotizacionsController < ApplicationController
 
 
               row=[]
-
               
 
              row << "ITEM"
@@ -365,7 +364,12 @@ class CotizacionsController < ApplicationController
               row << ""
             end 
 
+            if !@cotizacion.config_vehi_id.nil?
+
             row << @cotizacion.config_vehi.name 
+            else 
+              row << " "
+            end 
 
             row << ""
             row << @cotizacion.qty
@@ -376,24 +380,20 @@ class CotizacionsController < ApplicationController
             table_content << row 
             row=[]
 
-            row << "01"
-
-
-            row << @cotizacion.get_tipounidad(@cotizacion.tipo_unidad2_id)
+            row << "02"
 
             if !@cotizacion.tipo_unidad2_id.nil?
              row << @cotizacion.get_tipounidad(@cotizacion.tipo_unidad2_id)
-
             else 
               row << ""
             end 
+
             if !@cotizacion.config_vehi2_id.nil?
-              puts "cotizacion..."
-              puts @cotizacion.config_vehi2_id
               row << @cotizacion.get_configvehi(@cotizacion.config_vehi2_id)
             else
               row << ""
             end 
+
             row << ""
             row << @cotizacion.qty2
             row << @cotizacion.price2
@@ -402,17 +402,12 @@ class CotizacionsController < ApplicationController
 
             row=[]
 
-            row << "01"
-
-
-          
+            row << "03"
             if !@cotizacion.tipo_unidad3_id.nil?
               row << @cotizacion.get_tipounidad(@cotizacion.tipo_unidad3_id)
-
             else 
               row << ""
             end 
-
 
             if !@cotizacion.config_vehi3_id.nil?
               puts "cotizacion..."

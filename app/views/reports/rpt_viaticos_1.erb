@@ -1,0 +1,84 @@
+<%= render 'layouts/charts' %>
+<%
+invoices_subtotal = 0
+invoices_tax = 0
+invoices_total = 0
+subtotals = []
+taxes = []
+totals = []
+%>
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Reports", "/companies/reports/#{@company.id}" %>
+</div>
+
+<h3>
+  <%= image_tag("reports_48.png", :class => "vmiddle") %>
+ Reporte resumen de Caja - <%= @viatico.code %>
+</h3	>
+
+<%= form_tag(rpt_viatico_1_facturas_path, :method => "get") do %>
+
+
+
+  <table style="width:100%">
+  <tr>
+    <th>FECHA</th>
+    <th>Nro.Liq.</th>
+    <th>Saldo Ant.</th>
+
+    <th>Cheque nro.</th>
+    <th>M.Cheque</th>
+    <th>Nro.CI</th>
+    <th>Monto CI</th>
+    <th>TOT.ING</th>
+    <th>TOT EGR </th>
+    <th>SALDO</th>
+  
+
+
+  </tr>
+  <tr>
+    <td><%= @viatico.fecha1.strftime("%d-%m-%Y")%> </td>
+    <td><%= @viatico.code %></td>
+    <td align="right"><%= @viatico.inicial %></td>
+    <% if @viatico.get_cheque  %>
+
+        <%@detalle = @viatico.get_cheque   %>
+        <td> <%= @detalle.documento  %>  </td>
+         <td><%= @detalle.importe   %> </td>
+
+      <% else %>
+       <td>  </td>
+       <td>  </td>
+
+       <%end %>
+
+         <td>  </td>
+       <td>  </td>
+
+       <td><%= @viatico.get_ingresos_tot %></td>
+       <td><%= @viatico.get_egresos_tot  %></td>
+         <td><%= @viatico.inicial + @viatico.get_ingresos_tot - @viatico.get_egresos_tot %>  </td>
+
+
+  </tr>
+</table> 
+  
+
+<br> 
+ <%= submit_tag "To Excel", :name => "print" %>
+  
+<% end %>
+
+
+
+<br />
+
+
+<div class="button">
+  <%= link_to 'Regresar', viaticos_path %>
+
+
+</div>

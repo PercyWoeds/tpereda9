@@ -119,13 +119,22 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     rescue 
       @viatico[:total_ing] = 0
     end 
+    
     begin 
       @viatico[:total_egreso]=  @viatico.get_total_sal
     rescue 
       @viatico[:total_egreso]= 0 
     end 
+    puts "valooooo"
+     puts @viatico[:inicial]
+    puts  @viatico[:total_ing]
+    puts @viatico[:total_egreso]
+
     @viatico[:saldo] = @viatico[:inicial] +  @viatico[:total_ing] - @viatico[:total_egreso]
+
+
          @viatico.save 
+
           if @viatico.caja_id == 1 
           a = @cajas.find(1)
           a.inicial =  @viatico[:saldo]

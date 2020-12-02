@@ -4247,6 +4247,45 @@ end
   end
 
 
+def rpt_viatico_1
+    @company=Company.find(1) 
+
+         
+    @fecha1 = params[:fecha1]
+    @fecha2 = params[:fecha2]
+    @tipomoneda = params[:moneda_id]
+
+    @customerpayment_rpt = @company.get_ventas2(@tipomoneda,@fecha1,@fecha2)
+
+
+    case params[:print]
+      when "To PDF" then 
+        begin 
+        
+            if @customerpayment_rpt != nil 
+
+                Prawn::Document.generate "app/pdf_output/rpt_ventas2.pdf" , :page_layout => :landscape do |pdf|        
+                pdf.font "Helvetica"
+                pdf = build_pdf_header_rpt20b(pdf)
+                pdf = build_pdf_body_rpt20b(pdf)
+                build_pdf_footer_rpt20b(pdf)
+                $lcFileName =  "app/pdf_output/rpt_ventas2.pdf"      
+            end     
+
+            $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
+            send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+            end 
+
+        end   
+      when "To Excel" then render xlsx: 'rpt_ccobrar5_xls'
+      else render action: "index"
+    end
+
+
+
+  
+end 
+
 def rpt_ventas_pdf
     @company=Company.find(1)      
     @fecha1 = params[:fecha1]

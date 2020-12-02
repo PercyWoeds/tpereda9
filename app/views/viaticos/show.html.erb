@@ -201,6 +201,7 @@
 
 <div class="button">
   <%= link_to 'Exportar to PDF', "/viaticos/pdf/#{@viatico.id}.pdf" %>  
+  <%= link_to 'Exportar to PDF-1', "/reports/rpt_viaticos_1/#{@viatico.id}" %>  
   
  <% if @viatico.processed == "1" %> 
 
