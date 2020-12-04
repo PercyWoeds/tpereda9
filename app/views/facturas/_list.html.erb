@@ -8,6 +8,8 @@
         <th class="bordered_right bordered_bottom" style="width: 350px;">
           Cliente
         </th>
+
+      
         <th class="bordered_right bordered_bottom">
           Total
           
@@ -35,11 +37,12 @@
             <%= invoice.customer.name %>
           </td>
 
+
           <td class="bordered_right bordered_bottom right">
             <%= money(invoice.total) %>  
           </td>
           <td class="bordered_right bordered_bottom">
-             <%= invoice.fecha.strftime("%d/%m/%Y") %> --
+             <%= invoice.fecha.strftime("%d/%m/%Y") %> 
           </td>
           <td class="bordered_right bordered_bottom <%= invoice.processed_color %>">
             <%= invoice.get_processed_short %>

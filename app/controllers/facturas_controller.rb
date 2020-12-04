@@ -1,5 +1,4 @@
 include UsersHelper 
-
 include CustomersHelper
 include ServicesHelper
 require "open-uri"
@@ -5531,6 +5530,7 @@ def client_data_headers
     
     @conceptos  = @company.get_inasists2       
 
+    
     
     case params[:print]
       when "To PDF" then 

@@ -311,7 +311,7 @@ class CotizacionsController < ApplicationController
 
               pdf.font "Times-Roman"  , :size => 8
               pdf.bounding_box [40,620], :width  => pdf.bounds.width,:border_width=> 0 do
-              pdf.cell :content=> "RUTA: " + "\n" + "  " + @cotizacion.punto.name  ,
+              pdf.cell :content=> "RUTA: " + "\n" + "  " + @cotizacion.punto.name + "-" + @cotizacion.get_punto(@cotizacion.punto2_id),
                 align: :left, valign: :top, size: 10, :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic
               end
 
@@ -378,7 +378,47 @@ class CotizacionsController < ApplicationController
             row << @cotizacion.total 
             table_content << row 
 
-            
+
+            row=[]
+
+            row << "02"
+            if !@cotizacion.tipo_unidad2_id.nil?
+             row << @cotizacion.get_tipounidad(@cotizacion.tipo_unidad2_id)
+            else 
+              row << ""
+            end 
+            if !@cotizacion.config_vehi2_id.nil?
+              row << @cotizacion.get_configvehi(@cotizacion.config_vehi2_id)
+            else
+              row << ""
+            end 
+            row << ""
+            row << @cotizacion.qty2
+            row << @cotizacion.price2
+            row << @cotizacion.total2
+            table_content << row 
+
+            row=[]
+            row << "03"
+            if !@cotizacion.tipo_unidad3_id.nil?
+              row << @cotizacion.get_tipounidad(@cotizacion.tipo_unidad3_id)
+            else 
+              row << ""
+            end 
+
+            if !@cotizacion.config_vehi3_id.nil?
+              puts "cotizacion..."
+              puts @cotizacion.config_vehi3_id
+             row << @cotizacion.get_configvehi(@cotizacion.config_vehi3_id)
+            else
+             row << ""
+            end 
+            row << ""
+            row << @cotizacion.qty3
+            row << @cotizacion.price3
+            row << @cotizacion.total3
+            table_content << row 
+
             row=[]
             row << ""
             row << {:content=>"VALOR TOTAL DEL SERVICIO",:colspan => 5 } 
