@@ -677,7 +677,7 @@ tb_text_guias  = [["Fecha :", @cout.fecha.strftime('%d-%m-%Y'), "TBK: " ,
         pdf.move_down 2
 
       end      
-     pdf.font "Helvetica"  , :size => 5
+     pdf.font "Helvetica"  , :size => 4
 
 
                   table_content0 = []
@@ -691,12 +691,12 @@ tb_text_guias  = [["Fecha :", @cout.fecha.strftime('%d-%m-%Y'), "TBK: " ,
 
                 table_content0 << headers0 
                 nroitem = 0 
-                2.times do |detalle |
+                1.times do |detalle |
 
                 puts 
                 row = []
                 row << ""       
-                row << "PEAJE "
+                row << "  "
 
                   
 
@@ -718,6 +718,23 @@ tb_text_guias  = [["Fecha :", @cout.fecha.strftime('%d-%m-%Y'), "TBK: " ,
 
                 end 
 
+                 row = []
+                row << " "       
+                row << " "
+
+                row << " "
+
+                row << " "
+
+                row << "TOTAL S/. "
+
+                row << " "
+                row << " "
+                table_content0 << row
+
+
+
+
 
                   result = pdf.table table_content0 , {:position => :center,
                                         :header => true,
@@ -727,23 +744,22 @@ tb_text_guias  = [["Fecha :", @cout.fecha.strftime('%d-%m-%Y'), "TBK: " ,
                                           columns([0]).align=:center
                                           columns([1]).width = 50
                                           columns([1]).align=:left 
-                                           columns([1]).width = 120
-                                        
+                                          columns([1]).width = 120
                                           columns([2]).align=:left   
-                                            columns([2]).width = 20                                       
+                                          columns([2]).width = 20                                       
                                           columns([3]).align=:left 
-                                            columns([3]).width = 20
+                                          columns([3]).width = 20
                                           columns([4]).align=:left
-                                           columns([4]).width = 80
+                                          columns([4]).width = 80
                                           columns([5]).align=:right 
-                                           columns([5]).width = 100
+                                          columns([5]).width = 100
                                           columns([6]).align=:left  
                                           columns([6]).width = 120 
                                         
                                          
                                         end 
 
-       x = @cout.get_egresos_grupo
+                                   x = @cout.get_egresos_grupo
 
        for dato in x 
 
@@ -766,34 +782,28 @@ tb_text_guias  = [["Fecha :", @cout.fecha.strftime('%d-%m-%Y'), "TBK: " ,
 
                     nroitem = 0 
 
-                    table_content2 = []
-                2.times do |detalle |
+                      table_content2 = []
+                      2.times do |detalle |
 
-                puts 
-                row = []
-                row << " "       
-                row << " "
+                          puts 
+                          row = []
+                          row << " "       
+                          row << " "
 
-                  
+                          row << " "
 
-                row << " "
+                          row << " "
 
-                row << " "
+                          row << " "
 
-                row << " "
+                          row << " "
+                           row << " "
 
-          
+                          table_content2 << row
 
-                row << " "
-                 row << " "
+                          nroitem = nroitem + 1     
 
-                table_content2 << row
-
-                nroitem = nroitem + 1     
-
-
-                end 
-
+                      end 
 
                   result = pdf.table table_content2, {:position => :center,
                                         :header => true,
@@ -821,13 +831,61 @@ tb_text_guias  = [["Fecha :", @cout.fecha.strftime('%d-%m-%Y'), "TBK: " ,
 
 
 
+                      table_content2 = []
+                      1.times do |detalle |
+
+                          puts 
+                          row = []
+                          row << " "       
+                          row << " "
+
+                          row << " "
+
+                          row << " "
+
+                          row << "TOTAL S/. "
+
+                          row << " "
+                          row << " "
+
+                          table_content2 << row
+
+                          nroitem = nroitem + 1     
+
+                      end 
+
+                  result = pdf.table table_content2, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width ,
+                                          :cell_style => {:height => 15}
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).width = 50
+                                          columns([1]).align=:left 
+                                           columns([1]).width = 120
+                                        
+                                          columns([2]).align=:left   
+                                            columns([2]).width = 20                                       
+                                          columns([3]).align=:left 
+                                            columns([3]).width = 20
+                                          columns([4]).align=:left
+                                           columns([4]).width = 80
+                                          columns([5]).align=:right 
+                                           columns([5]).width = 100
+                                          columns([6]).align=:left  
+                                          columns([6]).width = 120 
+                                        
+                                         
+                                        end 
+
+
 
                
 
 
         end 
 
-
+    pdf.move_down 5
       @blanco = {:content => " ", :font_style => :bold , :border_width => 0 }
 
        table_content = ([ [ @blanco,  @blanco, @blanco, @blanco,"GASTO TOTAL  .: "," ", @blanco  ]   ])
@@ -934,11 +992,37 @@ tb_text_guias  = [["Fecha :", @cout.fecha.strftime('%d-%m-%Y'), "TBK: " ,
 pdf.text "Carga Retorno :"
 pdf.text "Observacion: "
 
-
-    
-
+ table_content = ([ [ @blanco, "GASTOS CON COMPROBANTE "," ", " "," "," ", @blanco  ] ,
+[ @blanco, "GASTOS SIN COMPROBANTE "," ", " "," "," ", @blanco  ] 
+   ])
       
-   pdf.move_down 2
+
+       pdf.table(table_content  ,{
+           :position => :center ,
+           :width => pdf.bounds.width
+         })do
+       
+           columns([0]).align=:center
+                                          columns([1]).width = 50
+                                          columns([1]).align=:left 
+                                           columns([1]).width = 120
+                                        
+                                          columns([2]).align=:left   
+                                            columns([2]).width = 20                                       
+                                          columns([3]).align=:left 
+                                            columns([3]).width = 20
+                                          columns([4]).align=:left
+                                           columns([4]).width = 80
+                                          columns([5]).align=:right 
+                                           columns([5]).width = 100
+                                          columns([6]).align=:left  
+                                          columns([6]).width = 120 
+                                        
+      
+         end
+
+         pdf.move_down 5
+    
   
        data =[["----------------------------------------------------------","----------------------------------------------------------","----------------------------------------------------------"],
             ["Elaborado por ","V.B.","V.B."],
