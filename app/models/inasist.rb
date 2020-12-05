@@ -71,6 +71,38 @@ class Inasist < ActiveRecord::Base
                 total_horas +=  hora_1 
                 total_minutos += minuto_1
 
+
+ elsif(detalle.inasist_id == 16 )   
+
+            
+                 fecha_hora = fecha1
+                fechas = fecha_hora.in_time_zone.to_time
+
+                a = fechas.in_time_zone.change( hour: 18 ,  min: 30 )
+
+                puts "horas por hora *************************************************************"
+                puts a 
+
+                b = detalle.hora_efectivo2.in_time_zone.change( day: fechas.day,month:fechas.month )
+             
+
+                puts b 
+
+
+                horas =  detalle.time_diff( a , b )
+
+                parts = horas.split(":")  
+                hora_1   =  parts[0].to_f
+                minuto_1 =  parts[1].to_f
+               
+                puts horas 
+                puts hora_1
+                puts minuto_1
+                puts total_horas
+
+                total_horas +=  hora_1 
+                total_minutos += minuto_1
+
           else   
 
           detalle.hora2 =  detalle.hora2.in_time_zone.change( hour: 17 ,  min: 00 )   
