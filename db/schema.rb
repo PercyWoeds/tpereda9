@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201205143514) do
+ActiveRecord::Schema.define(version: 20201210211857) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2496,6 +2496,8 @@ ActiveRecord::Schema.define(version: 20201205143514) do
     t.integer  "peso"
     t.integer  "unidad_id"
     t.string   "cuenta"
+    t.float    "tax2"
+    t.string   "tax2_name"
   end
 
   create_table "sessions", force: :cascade do |t|

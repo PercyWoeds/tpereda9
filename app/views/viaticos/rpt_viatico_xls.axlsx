@@ -99,10 +99,7 @@ wb.styles do |s|
             @total_importe   += product.importe 
 
         
-      
-        
-            table_content_ing << row
-
+  
 
             sheet.add_row [nroitem,product.fecha,lcProveedor,lcEmpleado, product.document.descripshort ,product.numero.to_s,product.importe ,  product.detalle ], :style => [title3 ]
 
