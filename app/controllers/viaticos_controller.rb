@@ -19,7 +19,7 @@ before_filter :authenticate_user!
       case params[:print]
         when "To PDF" then 
             redirect_to :action => "rpt_viatico_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2] 
-        when "To Excel" then render xlsx: 'exportxls'
+        when "To Excel" then render xlsx: 'rpt_viatico_xls'
         else render action: "index"
       end
   end
@@ -1264,17 +1264,31 @@ pdf.move_down 2
     
      if @viaticos_rpt.size > 0 
     
-      Prawn::Document.generate("app/pdf_output/rpt_pendientes.pdf") do |pdf|
+
+
+      Prawn::Document.generate("app/pdf_output/rpt_caja.pdf") do |pdf|
       pdf.font "Helvetica"
-      pdf = build_pdf_header_rpt2(pdf)
-      pdf = build_pdf_body_rpt2(pdf)
-      build_pdf_footer_rpt2(pdf)
+
+      for viatico in @viaticos_rpt do 
+
+        @viatico =  Viatico.find(viatico.id) 
+      
+        pdf.font "Helvetica"
+        pdf = build_pdf_header(pdf)
+        pdf = build_pdf_body_2(pdf)
+        build_pdf_footer(pdf)
+        
+       end 
   
-      $lcFileName =  "app/pdf_output/rpt_pendientes.pdf"              
-  
-      $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
-      send_file("app/pdf_output/rpt_pendientes.pdf", :type => 'application/pdf', :disposition => 'inline')
+    
+        
+     
       end 
+
+        $lcFileName =  "app/pdf_output/rpt_caja.pdf"    
+
+       $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+      send_file("app/pdf_output/rpt_caja.pdf", :type => 'application/pdf', :disposition => 'inline')
     
     end 
 

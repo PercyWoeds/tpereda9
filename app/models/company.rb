@@ -2136,7 +2136,7 @@ def get_pendientes_day_customer_detraccion(fecha1,fecha2,cliente)
   end
  # Return value 
  def get_viaticos0(fecha1,fecha2,cajaid)
-   viaticos = Viatico.where([" company_id = ?  AND fecha1 >= ? AND fecha1 <= ? and caja_id = ?", self.id,"#{fecha1} 00:00:00", "#{fecha2} 23:59:59",cajaid]).order(:code)
+   viaticos = Viatico.where(["fecha1 >= ? AND fecha1 <= ? and caja_id = ?", "#{fecha1} 00:00:00", "#{fecha2} 23:59:59",cajaid]).order(:code)
    return viaticos 
  end 
 
