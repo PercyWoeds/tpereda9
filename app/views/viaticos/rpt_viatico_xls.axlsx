@@ -79,7 +79,7 @@ wb.styles do |s|
       
             @total_importe = 0 
             @total_importe   +=  @viatico.inicial 
-              
+              nroiitem = 0 
           for product in @detalle_ing 
 
             lcProveedor = ""
