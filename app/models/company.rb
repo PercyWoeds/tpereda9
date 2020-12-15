@@ -814,6 +814,23 @@ def get_almacen_name(local)
     
  end
  
+ def get_facturas_day_month2(moneda,mes,anio)
+
+  @facturas = Factura.find_by_sql(["
+   SELECT   customer_id,
+   sum(subtotal) as subtotal ,
+   sum(tax) as tax ,
+   SUM(total) as total 
+   FROM facturas 
+   WHERE company_id = ? AND (EXTRACT(MONTH FROM fecha))::integer = ? AND 
+      (EXTRACT(YEAR FROM fecha))::integer = ? and moneda_id = ?
+   GROUP BY 1
+   ORDER BY 1 ", self.id, "#{mes}" ,"#{anio}","#{moneda}"])
+    return @facturas 
+
+    
+ end
+ 
  
  def get_facturas_day_usuario(fecha1,fecha2,moneda,user_id)
 

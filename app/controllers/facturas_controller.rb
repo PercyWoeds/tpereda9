@@ -1721,13 +1721,13 @@ def reportes_st_3
     @formato ="TP-CL-004/VERSION 1"
     
     @moneda = params[:moneda_id]    
+
     
     @current_user_id = current_user.id 
     
-    @facturas_rpt = @company.get_facturas_day_month(@moneda,@fecha1,@fecha2)          
+    @facturas_rpt = @company.get_facturas_day_month2(@moneda,@fecha1,@fecha2)          
     
-    
-    
+
     case params[:print]
       when "To PDF" then 
         begin 
@@ -1743,7 +1743,7 @@ def reportes_st_3
                
 
         end   
-      when "To Excel" then render xlsx: 'exportxls'
+      when "To Excel" then render xlsx: 'rventas_rptxls'
       else render action: "index"
     end
   end

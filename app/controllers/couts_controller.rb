@@ -677,7 +677,7 @@ tb_text_guias  = [["Fecha :", @cout.fecha.strftime('%d-%m-%Y'), "TBK: " ,
         pdf.move_down 2
 
       end      
-     pdf.font "Helvetica"  , :size => 4
+     pdf.font "Helvetica"  , :size => 6
 
 
                   table_content0 = []
@@ -783,7 +783,7 @@ tb_text_guias  = [["Fecha :", @cout.fecha.strftime('%d-%m-%Y'), "TBK: " ,
                     nroitem = 0 
 
                       table_content2 = []
-                      2.times do |detalle |
+                      1.times do |detalle |
 
                           puts 
                           row = []

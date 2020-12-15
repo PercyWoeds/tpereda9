@@ -21,22 +21,38 @@ wb.styles do |s|
     wb.add_worksheet(name: "Facturas Soles") do |sheet|
     
 
-    sheet.add_row ["Nro.Salida","Fecha", "Codigo","Producto","Unidad", "Proveedor","Empleado","Placa", "Cantidad","Precio","Total" ], :style => title 
+    sheet.add_row ["Nro.Item"," ", " ","RUC ","CLIENTE", "SUBTOTAL ","IGV","TOTAL"  ], :style => title 
 
-    nroitem = 0
+    nroitem = 1
+
+    subtotal = 0
+    tax = 0
+    total_1 = 0
     
        @facturas_rpt.each do |payment|
                       
       
                
-            sheet.add_row [nroitem ,"","",detalle.customer.ruc , detalle.customer.name,
-             detalle.subtotal,detalle.tax,detalle.total   ], 
+            sheet.add_row [nroitem ,"","",payment.customer.ruc , payment.customer.name,
+             payment.subtotal,payment.tax,payment.total   ], 
         :style => 
             [cadena,cadena,cadena,cadena,cadena,currency,currency,currency ]
             
 
             nroitem += 1 
+            subtotal += payment.subtotal
+            tax += payment.tax
+            total_1 +=  payment.total 
+
+
        end   
+
+
+      
+            sheet.add_row ["" ,"","","" , "TOTAL ",
+             subtotal, tax,total_1   ], 
+        :style => 
+            [cadena,cadena,cadena,cadena,cadena,currency,currency,currency ]
     end
 
 

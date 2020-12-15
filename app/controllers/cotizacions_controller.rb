@@ -224,11 +224,6 @@ class CotizacionsController < ApplicationController
 
               pdf.font "Times-Roman"  , :size => 8
             
-              pdf.float do
-                  pdf.move_down 100
-                  pdf.text_box "blaaaa" , :at => [150,pdf.cursor ]
-
-              end
               
              table_content0 = []
 
@@ -243,9 +238,6 @@ class CotizacionsController < ApplicationController
 
                end 
 
-
-
-     
              pdf.canvas do 
               
                  pdf.bounding_box [160,450], :width  => pdf.bounds.width,:border_width=> 0 do
@@ -259,6 +251,7 @@ class CotizacionsController < ApplicationController
                  end
       
               end
+
               pdf 
 
     ##########################################################################################
@@ -284,8 +277,6 @@ class CotizacionsController < ApplicationController
               :cell_style => {:border_width => 0} }) do
                    columns([0]).font_style = :bold
               end 
-
-
 
 
        pdf.canvas do 
@@ -335,89 +326,86 @@ class CotizacionsController < ApplicationController
 
               pdf.font "Times-Roman"  , :size => 8
 
-              pdf.bounding_box [40,530], :width  => pdf.bounds.width* 0.9 ,:border_width=> 0 do
+              pdf.bounding_box [40,530], :width  => pdf.bounds.width* 0.9 ,:border_width => 0 do
 
-              table_content =[]
+                   table_content =[]
+                   row=[]
+                   row << "ITEM"
+                   row << "TIPO DE UNIDAD"
+                   row << "CONFIGURACION 
+                   VEHICULAR"
+                   row << "DESCRIPCION"
+                   row << "CANTIDAD"
+                   row << "PRECIO
+                   UNITARIO"
+                   row << "PRECIO 
+                   TOTAL"
+
+                  table_content << row 
+
+                  row=[]
+
+                  row << "01"
+                  if !@cotizacion.tipo_unidad_id.nil?
+                    row << @cotizacion.tipo_unidad.name 
+                  else 
+                    row << ""
+                  end 
+
+                  if !@cotizacion.config_vehi_id.nil?
+                    row << @cotizacion.config_vehi.name 
+                  else 
+                    row << " "
+                  end 
+
+                  row << ""
+                  row << @cotizacion.qty
+                  row << @cotizacion.price
+                  row << @cotizacion.total 
+                  table_content << row 
+
+                  
+                  row=[]
+                  row << ""
+                  row << {:content=>"VALOR TOTAL DEL SERVICIO",:colspan => 5 } 
+                  row << @cotizacion.total 
+
+                  table_content << row 
+
+                  result = pdf.table table_content , {:position => :center,
+                                            :header => true,
+                                            :width => pdf.bounds.width,
+                                            :height => 17
+
+                                            } do 
+                                              rows([0]).font_style = :bold
+                                              columns([0]).align=:center
+                                              columns([0]).width = 40
+                                      
+                                              columns([1]).align = :left
+                                              columns([1]).width = 80
+
+                                              columns([2]).align = :left
+                                              columns([2]).width = 80
+
+                                              columns([3]).align = :right
+                                              columns([3]).width = 105.752
+
+                                              columns([4]).align = :right
+                                              columns([4]).width = 70
+
+                                              columns([5]).align = :right
+                                              columns([5]).width = 70
+                
+                                              columns([6]).align = :right
+                                              columns([6]).width = 90
+                                            end 
+
+                  end 
 
 
-              row=[]
-              
 
-             row << "ITEM"
-             row << "TIPO DE UNIDAD"
-             row << "CONFIGURACION 
-             VEHICULAR"
-             row << "DESCRIPCION"
-             row << "CANTIDAD"
-             row << "PRECIO
-             UNITARIO"
-             row << "PRECIO 
-             TOTAL"
-
-             table_content << row 
-
-            row=[]
-
-            row << "01"
-            if !@cotizacion.tipo_unidad_id.nil?
-              row << @cotizacion.tipo_unidad.name 
-            else 
-              row << ""
-            end 
-
-            if !@cotizacion.config_vehi_id.nil?
-
-              row << @cotizacion.config_vehi.name 
-            else 
-              row << " "
-            end 
-
-            row << ""
-            row << @cotizacion.qty
-            row << @cotizacion.price
-            row << @cotizacion.total 
-            table_content << row 
-
-            
-            row=[]
-            row << ""
-            row << {:content=>"VALOR TOTAL DEL SERVICIO",:colspan => 5 } 
-            row << @cotizacion.total 
-
-            table_content << row 
-
-            result = pdf.table table_content , {:position => :center,
-                                        :header => true,
-                                        :width => pdf.bounds.width,
-                                        :height => 17
-
-                                        } do 
-                                          rows([0]).font_style = :bold
-                                          columns([0]).align=:center
-                                          columns([0]).width = 40
-                                  
-                                          columns([1]).align = :left
-                                          columns([1]).width = 80
-
-                                          columns([2]).align = :left
-                                          columns([2]).width = 80
-
-                                          columns([3]).align = :right
-                                          columns([3]).width = 105.752
-
-                                          columns([4]).align = :right
-                                          columns([4]).width = 70
-
-                                          columns([5]).align = :right
-                                          columns([5]).width = 70
-            
-                                          columns([6]).align = :right
-                                          columns([6]).width = 90
-                                        end 
-
-               end 
-
-             end 
+          end 
 
 
         pdf 
@@ -431,11 +419,7 @@ def build_pdf_header(pdf)
 
       pdf.font "Times-Roman"  , :size => 8
     
-      pdf.float do
-          pdf.move_down 100
-          pdf.text_box "blaaaa" , :at => [150,pdf.cursor ]
 
-      end
 
           
        table_content0 = []
@@ -452,10 +436,10 @@ def build_pdf_header(pdf)
          end 
 
 
-     
-             pdf.canvas do 
+    
+              pdf.canvas do 
               
-                 pdf.bounding_box [160,450], :width  => pdf.bounds.width,:border_width=> 0 do
+                  pdf.bounding_box [160,450], :width  => pdf.bounds.width,:border_width=> 0 do
                   pdf.cell :content=> "COTIZACIÓN 
                   Nº GC 001-"+@cotizacion.code  , align: :center, valign: :top, size: 24 , :text_color => "FFFFFF", :border_width => 0 ,:font_style => :bold_italic
                  end

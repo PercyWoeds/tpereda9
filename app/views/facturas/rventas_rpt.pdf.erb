@@ -1,0 +1,115 @@
+<html>
+<body>
+    
+ 
+  <h4 ><center> Documento emitidos  </center>   </h4>
+  
+  <h5><center> Mes : <%= @fecha1 %>  Año : <%= @fecha2 %>  </center></h5>
+  
+  
+  <font size="2" face="Courier New" >  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  
+  <tr bgcolor="#B4D7F7">
+    <td width="100%"> DOCUMENTOS EMITIDOS *</td>
+  </tr>
+  
+  </table>
+
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <tr bgcolor="#B4D7F7">
+    <td width="4%"> TD </td>
+    <td width="8%"> Numero  </td>
+    <td width="8%"> Fecha </td>
+    <td width="10%"> Ruc</td>
+    <td width="20%"> Cliente </td>
+    <td width="5%"> T.C. </td>
+    
+    <td width="5%"> Mon. </td>
+    
+    <td width="10%"> V.Venta</td>
+    <td width="10%"> IGV </td>
+    <td width="10%"> IMPORTE </td>
+    <td width="10%"> Comercial </td>
+    
+    
+  </tr>
+  </table>
+
+  
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
+      <% nroitem = 1%>
+      <% total_1 =  0%>
+      <% total_2 =  0%>
+      
+      <% lcsubtotal =  0%>
+      <% lctax =  0%>
+      <% lctotal =  0%>
+      <% subtotal =  0%>
+      <% tax =  0%>
+      <% total =  0%>
+      
+       <% for  detalle in @facturas_rpt  %>
+       
+                    <tr>
+                    <td width= "4%" ><%= nroitem   %></td>
+                    <td width= "8%" >    </td>
+                    <td width = "8%" align ="center"> </td>
+
+                    
+                    <td width = "8%" align ="left"><%= detalle.customer.ruc   %> </td>
+                    <td width = "22%" align ="left"><%= detalle.customer.name   %> </td>
+
+                    <% if @moneda == 1 %>
+                      <% tipocambio = 0  %>
+
+                      <td width = "5%" align ="center"> USD </td>
+                      <td width = "5%" align ="center"> <%= sprintf("%.4f",tipocambio.to_s)   %> </td>
+                    <% else %>
+                      <% tipocambio = 1 %>
+                      <td width = "5%" align ="center"> S/. </td>
+                      <td width = "5%" align ="center">  </td>
+                    <% end %>
+                    
+                  
+                      <% lcsubtotal = detalle.subtotal  %>
+                      <% lctax =  detalle.tax   %>
+                      <% lctotal = detalle.total  %>
+                   
+
+                <td width = "10%" align ="right"><%= sprintf("%.2f",lcsubtotal)   %></td>
+                <td width = "10%" align ="right"><%= sprintf("%.2f",lctax)   %></td>
+                <td width = "10%" align ="right"><%= sprintf("%.2f",lctotal)   %></td>
+                 <td width = "10%" align ="right"> </td>
+                
+                </tr>
+                <% subtotal += lcsubtotal %>
+                <% tax += lctax %>
+                <% total += lctotal  %>
+                <% nroitem += 1 %>
+            
+         <% end %>
+
+
+    
+      
+      <hr>  
+     </table>
+     
+     <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+     <tr bgcolor="#B4D7F7">
+          <td width = "60%" align ="center">Totales  </td>
+          <td width = "10%" align ="right"><%= sprintf("%.3f",subtotal)   %></td>
+          <td width = "10%" align ="right"><%= sprintf("%.3f",tax)   %></td>
+          <td width = "10%" align ="right"><%= sprintf("%.2f",total)   %></td>
+          <td width = "10%" align ="right"></td>
+    </tr>
+   </table>
+
+    
+    </body>
+      
+      </html>
+      

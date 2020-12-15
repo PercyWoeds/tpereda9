@@ -634,5 +634,7 @@ def get_tipocambio(dia)
         return valor         
   end
   
+
+  
   
 end
