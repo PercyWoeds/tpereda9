@@ -68,6 +68,7 @@ class CotizacionsController < ApplicationController
     @cotizacion[:code] = @cotizacion.generate_number("1") 
 
 
+    @cotizacion[:tm] = params[:tm]
 
     @cotizacion[:total]  = @cotizacion[:price] * @cotizacion[:qty] 
 
@@ -97,14 +98,14 @@ class CotizacionsController < ApplicationController
     @tipo_unidad = @company.get_tipo_unidad
     @config_vehi = @company.get_configvehi
     @tipocarga = Tipocargue.all 
+    @cotizacion[:tm] = params[:tm]
+    puts "cotiza tm "
+    puts  @cotizacion[:tm] 
+    @cotizacion[:total] = params[:cotizacion][:price].to_f * params[:cotizacion][:qty].to_f 
 
-
-
-    @cotizacion[:total] = @cotizacion.price * @cotizacion.qty 
-
-    @cotizacion[:total2] = @cotizacion.price2 * @cotizacion.qty2
+    @cotizacion[:total2] = params[:cotizacion][:price2].to_f * params[:cotizacion][:qty2].to_f
      
-    @cotizacion[:total3] = @cotizacion.price3 * @cotizacion.qty3
+    @cotizacion[:total3] = params[:cotizacion][:price3].to_f * params[:cotizacion][:qty3].to_f
 
 
     respond_to do |format|
@@ -180,7 +181,7 @@ class CotizacionsController < ApplicationController
       pdf = build_pdf_header(pdf)
 
        pdf = build_pdf_body(pdf)
-      #  build_pdf_footer(pdf)
+       build_pdf_footer(pdf)
         @lcFileName =  "app/pdf_output/#{@cotizacion.id}.pdf"     
 
     end
@@ -207,7 +208,7 @@ class CotizacionsController < ApplicationController
       pdf.font "Helvetica"
       pdf = build_pdf_header2(pdf)
       pdf = build_pdf_body2(pdf)
-      #  build_pdf_footer(pdf)
+      build_pdf_footer2(pdf)
         @lcFileName =  "app/pdf_output/#{@cotizacion.id}.pdf"     
 
     end
@@ -263,7 +264,7 @@ class CotizacionsController < ApplicationController
 
   def build_pdf_body2(pdf)
 
-              pdf.font "Times-Roman"  , :size => 11
+              pdf.font "Times-Roman"  , :size => 9
 
               image_path = "#{Dir.pwd}/public/images/cotizacion2.jpg"
 
@@ -282,136 +283,319 @@ class CotizacionsController < ApplicationController
        pdf.canvas do 
     
               pdf.bounding_box [340,760 ], :width  => pdf.bounds.width,:border_width=> 0  do
-              pdf.cell :content=>"Lima , "+I18n.l(@cotizacion.fecha.to_date, locale: :es ,format: :long )   , align: :right , valign: :top, size: 12  , :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic  
+              pdf.cell :content=>"Lima , "+I18n.l(@cotizacion.fecha.to_date, locale: :es ,format: :long )   , align: :right , valign: :top, size: 11  , :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic  
               end
 
-              pdf.bounding_box [20,740], :width  => pdf.bounds.width,:border_width=> 0 do
+              pdf.bounding_box [20,750], :width  => pdf.bounds.width,:border_width=> 0 do
 
               pdf.cell :content=> "COTIZACIÓN N°. :"+@cotizacion.code + "\n"+
               "Señores :" + "\n" + @cotizacion.customer.name + "\n" +
               @cotizacion.customer.ruc + "\n" +
               "Atención:" + "\n" + 
-              "Sr.", align: :left, valign: :top, size: 12, :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic
+              "Sr.", align: :left, valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic
               end
 
-              pdf.bounding_box [20,650], :width  => pdf.bounds.width,:border_width=> 0 do
+              pdf.bounding_box [20,680], :width  => pdf.bounds.width,:border_width=> 0 do
               pdf.cell :content=> "Es grato dirigirnos  a usted  para comunicarle que de acuerdo a su solicitud, nuestro precio por el servicio" +"\n" + "solicitado es el siguiente. :",
-              align: :left, valign: :top, size: 12, :text_color => "000000", :border_width => 0 ,:font_style => :italic
+              align: :left, valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :italic
               end
 
 
               pdf.font "Times-Roman"  , :size => 8
-              pdf.bounding_box [40,620], :width  => pdf.bounds.width,:border_width=> 0 do
-              pdf.cell :content=> "RUTA: " + "\n" + "  " + @cotizacion.punto.name  ,
-                align: :left, valign: :top, size: 10, :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic
+              pdf.bounding_box [40,650], :width  => pdf.bounds.width,:border_width=> 0 do
+               pdf.cell :content=> "RUTA: " + "  " + @cotizacion.punto.name + "-" + @cotizacion.get_punto(@cotizacion.punto2_id),
+                align: :left, valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic
               end
 
 
-              pdf.bounding_box [40,590], :width  => pdf.bounds.width,:border_width=> 0 do
+              pdf.bounding_box [40,630], :width  => pdf.bounds.width,:border_width=> 0 do
               pdf.cell :content=> "ESPECIFICACIONES DE LA CARGA : " ,
-              align: :left, valign: :top, size: 10, :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic
+              align: :left, valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic
               end
 
 
-              pdf.bounding_box [50,570], :width  => pdf.bounds.width,:border_width=> 0 do
+              pdf.bounding_box [50,620], :width  => pdf.bounds.width,:border_width=> 0 do
               pdf.cell :content=> @cotizacion.especifica ,
-              align: :left, valign: :top, size: 10, :text_color => "000000", :border_width => 0 ,:font_style => :italic
+              align: :left, valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :italic
               end
          
-              pdf.bounding_box [40,550], :width  => pdf.bounds.width,:border_width=> 0 do
+              pdf.bounding_box [40,610], :width  => pdf.bounds.width,:border_width=> 0 do
               pdf.cell :content=> "TIPO DE UNIDAD E IMPORTE DEL SERVICIO  : " ,
-              align: :left, valign: :top, size: 10, :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic
+              align: :left, valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic
               end
 
 
-              pdf.font "Times-Roman"  , :size => 8
+              pdf.font "Times-Roman"  , :size => 6
 
-              pdf.bounding_box [40,530], :width  => pdf.bounds.width* 0.9 ,:border_width => 0 do
 
-                   table_content =[]
-                   row=[]
-                   row << "ITEM"
-                   row << "TIPO DE UNIDAD"
-                   row << "CONFIGURACION 
-                   VEHICULAR"
-                   row << "DESCRIPCION"
-                   row << "CANTIDAD"
-                   row << "PRECIO
-                   UNITARIO"
-                   row << "PRECIO 
-                   TOTAL"
+               pdf.bounding_box [40,595], :width  => pdf.bounds.width* 0.9 ,:border_width=> 0 do
 
-                  table_content << row 
+              table_content =[]
 
-                  row=[]
 
-                  row << "01"
-                  if !@cotizacion.tipo_unidad_id.nil?
-                    row << @cotizacion.tipo_unidad.name 
-                  else 
-                    row << ""
-                  end 
+              row=[]
+              
 
-                  if !@cotizacion.config_vehi_id.nil?
-                    row << @cotizacion.config_vehi.name 
-                  else 
-                    row << " "
-                  end 
+             row << "ITEM"
+             row << "TIPO DE UNIDAD"
+             row << "CONFIGURACION 
+             VEHICULAR"
+             row << "DESCRIPCION"
+             row << "CANTIDAD"
+             row << "PRECIO
+             UNITARIO"
+             row << "PRECIO 
+             TOTAL"
 
-                  row << ""
-                  row << @cotizacion.qty
-                  row << @cotizacion.price
-                  row << @cotizacion.total 
-                  table_content << row 
+             table_content << row 
+             puts "apdfdfd"
+             puts row 
 
-                  
-                  row=[]
-                  row << ""
-                  row << {:content=>"VALOR TOTAL DEL SERVICIO",:colspan => 5 } 
-                  row << @cotizacion.total 
 
-                  table_content << row 
+            row=[]
 
-                  result = pdf.table table_content , {:position => :center,
-                                            :header => true,
-                                            :width => pdf.bounds.width,
-                                            :height => 17
+            row << "01"
+            if !@cotizacion.tipo_unidad_id.nil?
+              row << @cotizacion.tipo_unidad.name 
+            else 
+              row << ""
+            end 
 
-                                            } do 
-                                              rows([0]).font_style = :bold
-                                              columns([0]).align=:center
-                                              columns([0]).width = 40
+            if !@cotizacion.config_vehi_id.nil?
+
+              row << @cotizacion.config_vehi.name 
+            else 
+              row << " "
+            end 
+
+            row << ""
+            row << @cotizacion.qty
+            row << @cotizacion.price
+            row << @cotizacion.total 
+            table_content << row 
+
+
+            row=[]
+
+            row << "02"
+            if !@cotizacion.tipo_unidad2_id.nil?
+             row << @cotizacion.get_tipounidad(@cotizacion.tipo_unidad2_id)
+            else 
+              row << ""
+            end 
+            if !@cotizacion.config_vehi2_id.nil?
+              row << @cotizacion.get_configvehi(@cotizacion.config_vehi2_id)
+            else
+              row << ""
+            end 
+            row << ""
+            row << @cotizacion.qty2
+            row << @cotizacion.price2
+            row << @cotizacion.total2
+            table_content << row 
+
+            row=[]
+            row << "03"
+            if !@cotizacion.tipo_unidad3_id.nil?
+              row << @cotizacion.get_tipounidad(@cotizacion.tipo_unidad3_id)
+            else 
+              row << ""
+            end 
+
+            if !@cotizacion.config_vehi3_id.nil?
+              puts "cotizacion..."
+              puts @cotizacion.config_vehi3_id
+             row << @cotizacion.get_configvehi(@cotizacion.config_vehi3_id)
+            else
+             row << ""
+            end 
+            row << ""
+            row << @cotizacion.qty3
+            row << @cotizacion.price3
+            row << @cotizacion.total3
+            table_content << row 
+
+            row=[]
+            row << ""
+            row << {:content=>"VALOR TOTAL DEL SERVICIO",:colspan => 5 } 
+            row << @cotizacion.total 
+
+            table_content << row 
+          
+
+            pdf.table table_content , {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+
+                                        } do 
+                                          rows([0]).font_style = :bold
+                                          columns([0]).align=:center
+                                          columns([0]).width = 40
+                                  
+                                          columns([1]).align = :left
+                                          columns([1]).width = 80
+
+                                          columns([2]).align = :left
+                                          columns([2]).width = 80
+
+                                          columns([3]).align = :right
+                                          columns([3]).width = 105.752
+
+                                          columns([4]).align = :right
+                                          columns([4]).width = 70
+
+                                          columns([5]).align = :right
+                                          columns([5]).width = 70
+            
+                                          columns([6]).align = :right
+                                          columns([6]).width = 90
+                                        end 
+               #tabl bouxing                            
+               end 
+
+              
+
+              if @cotizacion.tm == 1 
+
+                texto = Instruccion.find(7)
+
+                @instruccion1 = texto.description1
+                @instruccion2 = texto.description2
+                @instruccion3 = texto.description3
+                @instruccion4 = texto.description4
+                @instruccion5 = texto.instruccion6
+
+              end 
+
+
+
+              pdf.bounding_box [40,500], :width  => pdf.bounds.width,:border_width=> 0 do
+              pdf.cell :content => @instruccion1 ,
+              align: :left, valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :italic
+              end
+
+               pdf.bounding_box [40,410], :width  => pdf.bounds.width,:border_width=> 0 do
+               
+            table_content =[]
+              row=[]
+              
+
+             row << "TIPO DE UNIDAD"
+             row << "STAND BY DIA"
+             
+             table_content << row 
+          
+
+            row=[]
+            row << "CAMIONETA"
+            row << @cotizacion.tipounidad1
+            table_content << row 
+
+
+            row=[]
+            row << "CAMION"
+            row << @cotizacion.tipounidad2
+            table_content << row 
+
+            row=[]
+            row << "PLATAFORMA"
+            row << @cotizacion.tipounidad3
+            table_content << row 
+
+            row=[]
+            row << "CAMABAJA"
+            row << @cotizacion.tipounidad4
+            table_content << row 
+
+            row=[]
+            row << "MODULAR "
+            row << @cotizacion.tipounidad5
+            table_content << row 
+
+
+
+          
+
+            pdf.table table_content , {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width/3
+
+                                        } do 
+                                          rows([0]).font_style = :bold
+                                          columns([0]).align = :center
                                       
-                                              columns([1]).align = :left
-                                              columns([1]).width = 80
+                                          columns([1]).align = :center
+                                        
+                                        
+                                        end 
+              
 
-                                              columns([2]).align = :left
-                                              columns([2]).width = 80
 
-                                              columns([3]).align = :right
-                                              columns([3]).width = 105.752
+           end # canvas 
 
-                                              columns([4]).align = :right
-                                              columns([4]).width = 70
 
-                                              columns([5]).align = :right
-                                              columns([5]).width = 70
+
+
+              pdf.bounding_box [40,300], :width  => pdf.bounds.width - 50,:border_width=> 0 do
+              pdf.cell :content => @instruccion2 ,
+              align: :left , valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :italic
+              end
+
+          #end canvas 
                 
-                                              columns([6]).align = :right
-                                              columns([6]).width = 90
-                                            end 
-
-                  end 
-
-
-
           end 
+
+
 
 
         pdf 
 
   end 
   
+
+    def build_pdf_footer2(pdf)
+
+         pdf.font "Times-Roman"  , :size => 9
+
+              image_path = "#{Dir.pwd}/public/images/cotizacion2.jpg"
+
+              table_content0 = []
+
+              table_content0 = ([[{:image => image_path, :fit => [pdf.bounds.width, pdf.bounds.height] }] ])
+
+              pdf.table(table_content0,{ 
+              :position => :right,
+              :width => pdf.bounds.width,
+              :cell_style => {:border_width => 0} }) do
+                   columns([0]).font_style = :bold
+              end 
+
+
+       pdf.canvas do 
+
+         pdf.bounding_box [40,740], :width  => pdf.bounds.width - 50,:border_width=> 0 do
+              pdf.cell :content => @instruccion3 ,
+              align: :left , valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :italic
+              end
+
+         pdf.bounding_box [40,600], :width  => pdf.bounds.width - 50,:border_width=> 0 do
+              pdf.cell :content => @instruccion4 ,
+              align: :left , valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :italic
+              end
+
+ pdf.bounding_box [40,550], :width  => pdf.bounds.width - 50,:border_width=> 0 do
+              pdf.cell :content => "Se expide la presente Cotización, con el fin de dar su conformidad y pronta respuesta.
+Muy atentamente, " ,
+              align: :left , valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :italic
+              end
+
+
+
+       end 
+      
+      pdf
+      
+     end
 
 
 def build_pdf_header(pdf)
@@ -487,36 +671,36 @@ def build_pdf_header(pdf)
               "Señores :" + "\n" + @cotizacion.customer.name + "\n" +
               @cotizacion.customer.ruc + "\n" +
               "Atención:" + "\n" + 
-              "Sr.", align: :left, valign: :top, size: 12, :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic
+              "Sr.", align: :left, valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic
               end
 
               pdf.bounding_box [20,650], :width  => pdf.bounds.width,:border_width=> 0 do
               pdf.cell :content=> "Es grato dirigirnos  a usted  para comunicarle que de acuerdo a su solicitud, nuestro precio por el servicio" +"\n" + "solicitado es el siguiente. :",
-              align: :left, valign: :top, size: 12, :text_color => "000000", :border_width => 0 ,:font_style => :italic
+              align: :left, valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :italic
               end
 
 
               pdf.font "Times-Roman"  , :size => 8
               pdf.bounding_box [40,620], :width  => pdf.bounds.width,:border_width=> 0 do
               pdf.cell :content=> "RUTA: " + "\n" + "  " + @cotizacion.punto.name + "-" + @cotizacion.get_punto(@cotizacion.punto2_id),
-                align: :left, valign: :top, size: 10, :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic
+                align: :left, valign: :top, size: 8, :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic
               end
 
 
               pdf.bounding_box [40,590], :width  => pdf.bounds.width,:border_width=> 0 do
               pdf.cell :content=> "ESPECIFICACIONES DE LA CARGA : " ,
-              align: :left, valign: :top, size: 10, :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic
+              align: :left, valign: :top, size: 8, :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic
               end
 
 
               pdf.bounding_box [50,570], :width  => pdf.bounds.width,:border_width=> 0 do
               pdf.cell :content=> @cotizacion.especifica ,
-              align: :left, valign: :top, size: 10, :text_color => "000000", :border_width => 0 ,:font_style => :italic
+              align: :left, valign: :top, size: 8, :text_color => "000000", :border_width => 0 ,:font_style => :italic
               end
          
               pdf.bounding_box [40,550], :width  => pdf.bounds.width,:border_width=> 0 do
               pdf.cell :content=> "TIPO DE UNIDAD E IMPORTE DEL SERVICIO  : " ,
-              align: :left, valign: :top, size: 10, :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic
+              align: :left, valign: :top, size: 8, :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic
               end
 
 
@@ -620,11 +804,11 @@ def build_pdf_header(pdf)
 
           pdf.bounding_box [40,410], :width  => pdf.bounds.width - 40,:border_width=> 0 do
           pdf.cell :content=>"TERMINOS Y CONDICIONES GENERALES DEL SERVICIO:" ,
-          align: :left, valign: :top, size: 10, :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic
+          align: :left, valign: :top, size: 6, :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic
           end
 
 
-          pdf.bounding_box [40,400], :width  => pdf.bounds.width - 40,:border_width=> 0 do
+          pdf.bounding_box [40,150], :width  => pdf.bounds.width - 40,:border_width=> 0 do
           pdf.cell :content=> @parrafo.description1 ,
           align: :left, valign: :top, size: 10, :text_color => "000000", :border_width => 0 ,:font_style => :italic
           end
