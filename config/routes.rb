@@ -4,6 +4,7 @@ require 'sidekiq/web'
   Mnygo::Application.routes.draw do
 
   
+  resources :tipocustomers
   resources :couts
   resources :inventarios
   resources :color_vehis

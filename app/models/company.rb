@@ -75,6 +75,20 @@ def get_placas
  end 
 
 
+ def get_tipocustomers
+   
+   @dato = Tipocustomer.all 
+   return @dato 
+ end 
+
+
+ def get_cliente(id)
+   
+   @dato = Customer.find(id)
+   return @dato 
+ end 
+
+
 
  def get_tipo_unidad
    

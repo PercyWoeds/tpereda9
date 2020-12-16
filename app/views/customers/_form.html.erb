@@ -70,11 +70,22 @@
     <%= f.text_area :comments %>
   </div>
 
+
+  <div class="field">
+    <%= f.label :contacto, "Contacto:" %><br />
+    <%= f.text_field :contacto %>
+  </div>
+  <div class="field">
+    <%= f.label :sr, "Sr / Sra. ? " %><br />
+    <%= f.text_field :sr %>
+  </div>
   
   <div class="field">
     <%= f.check_box :taxable %>
     <%= f.label :taxable %>
   </div>
+
+
   <div class="actions">
     <%= f.hidden_field :company_id %>
     <%= f.submit %>

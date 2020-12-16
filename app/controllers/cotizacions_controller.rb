@@ -11,6 +11,8 @@ class CotizacionsController < ApplicationController
   # GET /cotizacions/1
   # GET /cotizacions/1.json
   def show
+
+
   end
 
   # GET /cotizacions/new
@@ -24,7 +26,9 @@ class CotizacionsController < ApplicationController
     @tipo_unidad = @company.get_tipo_unidad
     @config_vehi = @company.get_configvehi
     @tipocarga = Tipocargue.all 
-
+    @monedas = @company.get_monedas()
+    @payments = @company.get_payments()
+      @tipocustomers =  @company.get_tipocustomers()
     @cotizacion[:fecha]= Date.today 
 
     @cotizacion[:price] = 0
@@ -46,14 +50,24 @@ class CotizacionsController < ApplicationController
   def edit
      @company = Company.find(1)
     @customers = @company.get_customers
+     @monedas = @company.get_monedas()
+    @payments = @company.get_payments()
 
     @puntos = @company.get_puntos 
     @tipo_unidad = @company.get_tipo_unidad
     @config_vehi = @company.get_configvehi
     @tipocarga = Tipocargue.all 
+    @tipocustomers =  @company.get_tipocustomers()
+
 
     @puntos = @company.get_puntos 
     @tipocarga = Tipocargue.all 
+
+    if @cotizacion.tm == 1
+
+        tm = 1 
+    end
+
   end
 
   # POST /cotizacions
@@ -62,6 +76,10 @@ class CotizacionsController < ApplicationController
      @company = Company.find(1)
     @customers = @company.get_customers
     @puntos = @company.get_puntos 
+     @monedas = @company.get_monedas()
+    @payments = @company.get_payments()
+     @tipocustomers =  @company.get_tipocustomers()
+
     @tipocarga = Tipocargue.all 
     @cotizacion = Cotizacion.new(cotizacion_params)
     
@@ -93,6 +111,9 @@ class CotizacionsController < ApplicationController
   def update
      @company = Company.find(1)
     @customers = @company.get_customers
+    @monedas = @company.get_monedas()
+    @payments = @company.get_payments()
+    @tipocustomers =  @company.get_tipocustomers()
 
     @puntos = @company.get_puntos 
     @tipo_unidad = @company.get_tipo_unidad
@@ -101,6 +122,8 @@ class CotizacionsController < ApplicationController
     @cotizacion[:tm] = params[:tm]
     puts "cotiza tm "
     puts  @cotizacion[:tm] 
+
+
     @cotizacion[:total] = params[:cotizacion][:price].to_f * params[:cotizacion][:qty].to_f 
 
     @cotizacion[:total2] = params[:cotizacion][:price2].to_f * params[:cotizacion][:qty2].to_f
@@ -292,7 +315,7 @@ class CotizacionsController < ApplicationController
               "Señores :" + "\n" + @cotizacion.customer.name + "\n" +
               @cotizacion.customer.ruc + "\n" +
               "Atención:" + "\n" + 
-              "Sr.", align: :left, valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic
+                 @cotizacion.customer.sr + " : "+ @cotizacion.customer.contacto , align: :left, valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic
               end
 
               pdf.bounding_box [20,680], :width  => pdf.bounds.width,:border_width=> 0 do
@@ -583,7 +606,7 @@ class CotizacionsController < ApplicationController
               align: :left , valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :italic
               end
 
- pdf.bounding_box [40,550], :width  => pdf.bounds.width - 50,:border_width=> 0 do
+ pdf.bounding_box [40,450], :width  => pdf.bounds.width - 50,:border_width=> 0 do
               pdf.cell :content => "Se expide la presente Cotización, con el fin de dar su conformidad y pronta respuesta.
 Muy atentamente, " ,
               align: :left , valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :italic
@@ -671,7 +694,7 @@ def build_pdf_header(pdf)
               "Señores :" + "\n" + @cotizacion.customer.name + "\n" +
               @cotizacion.customer.ruc + "\n" +
               "Atención:" + "\n" + 
-              "Sr.", align: :left, valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic
+              @cotizacion.sr + " : "+ @cotizacion.customer.contacto , align: :left, valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic
               end
 
               pdf.bounding_box [20,650], :width  => pdf.bounds.width,:border_width=> 0 do
@@ -843,7 +866,7 @@ def build_pdf_header(pdf)
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def cotizacion_params
-      params.require(:cotizacion).permit(:fecha, :code, :customer_id, :punto_id, :punto2_id, 
+      params.require(:cotizacion).permit(:fecha, :code, :customer_id, :punto_id, :punto2_id, :moneda_id,:payment_id,
         :tipocargue_id, :tarifa, :processed, :comments,:tipo_unidad,:estado,:especifica,
         :tipo_unidad_id,
         :tipo_unidad2_id,
@@ -865,6 +888,6 @@ def build_pdf_header(pdf)
         :tipounidad3,
         :tipounidad4,
         :tipounidad5,
-  :tm )
+  :tm ,:tipocustomer_id )
     end
 end

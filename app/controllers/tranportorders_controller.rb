@@ -207,6 +207,8 @@ class TranportordersController < ApplicationController
       format.html { redirect_to tranportorders_url, notice: 'Tranportorder was successfully destroyed.' }
       format.json { head :no_content }
     end
+
+    
    end 
   end
 

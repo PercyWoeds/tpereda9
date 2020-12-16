@@ -101,7 +101,7 @@ wb.styles do |s|
         
   
 
-            sheet.add_row [nroitem,product.fecha,lcProveedor,lcEmpleado, product.document.descripshort ,product.numero.to_s,product.importe ,  product.detalle ], :style => [cadena,cadena,cadena,date,cadena,cadena,currency ]
+            sheet.add_row [nroitem,product.fecha,lcProveedor,lcEmpleado, product.document.descripshort ,product.numero.to_s,product.importe ,  product.detalle ], :style => [cadena,date,cadena,cadena,cadena,cadena,currency,cadena  ]
 
 
 
@@ -168,7 +168,7 @@ for  egresos  in @viatico.get_egresos()
                      product.document.descripshort ,
                      product.numero,
                      product.importe,
-                     product.detalle ], :style => [ cadena ,cadena , cadena ,cadena ,cadena ,currency ,cadena  ]
+                     product.detalle ], :style => [ cadena ,date, cadena ,cadena ,cadena ,currency ,cadena  ]
          
 
                nroitem += 1  

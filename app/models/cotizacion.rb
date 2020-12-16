@@ -5,6 +5,7 @@ class Cotizacion < ActiveRecord::Base
  belongs_to :tipocargue 
  belongs_to :tipo_unidad 
  belongs_to :config_vehi 
+ belongs_to :tipocustomer 
  
 
    TABLE_HEADERS = ["Nro.Item",

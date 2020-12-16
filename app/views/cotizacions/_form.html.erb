@@ -3,18 +3,13 @@
 
   <div class="form-inputs">
 
-<p>
-  <label for="tm"> Tipo de Reporte:</label><br>
-  <select id="tm" name="tm" >
 
 
-    <option value="1" selected> CLIENTE ANTIGUO  </option>
-    <option value="2" selected> CLIENTE NUEVO </option>
-    <option value="3" selected> ALQUILER UNIDAD  </option>
-    <option value="4" selected> SERVICIO CONDICTOR </option>
-    
-  </select>
-</p>
+     <div class="field">
+      <%= f.label :tipocustomer_id , "Tipo de Reporte:  "%><br />
+      <%= f.collection_select :tipocustomer_id, @tipocustomers, :id, :name, :prompt => true %>      
+      
+    </div>
 
 
 
@@ -44,6 +39,18 @@
       
     </div>
 
+   <div class="field">
+      <%= f.label :moneda_id ," Moneda: "%><br />
+      <%= f.collection_select :moneda_id, @monedas, :id, :description, :prompt => true %>
+      
+    </div>
+
+
+  <div class="field">
+      <%= f.label :payment_id,"Forma de Pago " %><br />
+     <%= f.collection_select :payment_id, @payments, :id, :descrip, :prompt => true %>
+    </div>
+  
 
     <div class="field">  
     
@@ -111,6 +118,7 @@
   
 
  <table style="width:30%" align="center">
+
 
 
   <tr>

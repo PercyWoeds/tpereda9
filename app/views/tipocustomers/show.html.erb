@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @tipocustomer.code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @tipocustomer.name %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @tipocustomer.user_id %>
+</p>
+
+
+<p>
+  <strong>Company:</strong>
+  <%= @tipocustomer.company_id %>
+</p>
+
+<%= link_to 'Edit', edit_tipocustomer_path(@tipocustomer) %> |
+<%= link_to 'Back', tipocustomers_path %>
