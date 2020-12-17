@@ -180,7 +180,7 @@ for  egresos  in @viatico.get_egresos()
 
 
 
-          sheet.add_row [" "," ","TOTAL EGRESO S/.",total_importe], :style => [cadena,cadena, title3 , currency ]
+          sheet.add_row [" "," ","TOTAL EGRESO S/."," "," ",total_importe], :style => [cadena,cadena, title3 ,cadena,cadena, currency ]
 
 
        
