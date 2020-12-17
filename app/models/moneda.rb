@@ -11,5 +11,7 @@ validates_presence_of :company_id, :description
   has_many :serviceorders
   has_many :bank_acounts
   has_many :quotations
+  has_many :cotizacions 
+
 
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201216162111) do
+ActiveRecord::Schema.define(version: 20201216173852) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -485,6 +485,7 @@ ActiveRecord::Schema.define(version: 20201216162111) do
     t.integer  "moneda_id"
     t.integer  "payment_id"
     t.integer  "tipocustomer_id"
+    t.float    "valorseguro"
   end
 
   create_table "couts", force: :cascade do |t|
@@ -1156,10 +1157,14 @@ ActiveRecord::Schema.define(version: 20201216162111) do
     t.text     "description2"
     t.text     "description3"
     t.text     "description4"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.string   "condicion"
-    t.string   "instruccion6"
+    t.text     "instruccion6"
+    t.text     "instruccion7"
+    t.text     "instruccion8"
+    t.text     "instruccion9"
+    t.text     "instruccion10"
   end
 
   create_table "inventario_detalles", force: :cascade do |t|

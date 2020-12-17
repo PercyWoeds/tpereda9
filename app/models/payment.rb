@@ -8,4 +8,5 @@ class Payment < ActiveRecord::Base
   has_many :serviceorders 
   has_many :purchaseorders 
   has_many :purchases
+  has_many :cotizacions 
 end

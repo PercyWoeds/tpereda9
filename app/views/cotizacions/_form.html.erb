@@ -51,6 +51,11 @@
      <%= f.collection_select :payment_id, @payments, :id, :descrip, :prompt => true %>
     </div>
   
+  <div class="field">
+    <%= f.label :valorseguro,"Seguro: " %><br />
+    <%= f.number_field :valorseguro %>
+  </div>
+
 
     <div class="field">  
     
@@ -59,6 +64,8 @@
 
     </div>
     
+
+
 
     <table style="width:80%">
   <tr>
