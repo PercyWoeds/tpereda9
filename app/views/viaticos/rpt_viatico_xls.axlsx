@@ -34,8 +34,11 @@ wb.styles do |s|
     
    @viaticos_rpt.each do |payment|
 
-   sheet.add_row ["", "","","","","", "","",""],
-          :style => [cadena,cadena,currency,currency,currency,currency,cadena,cadena,cadena]
+
+
+
+      sheet.add_row ["", "","","","","", "","",""],
+          :style => [cadena,cadena,currency,currency,currency,currency,cadena]
 
 
       sheet.add_row ["CODE: ",
@@ -43,11 +46,11 @@ wb.styles do |s|
                      "SALDO INICIAL",
                      "INGRESO",
                      "EGRESO",                                         
-                     "SALDO"," "," "," " ], :style => [title5,title5,title5,title5,title5,title5,title5,title5,title5]
+                     "SALDO"," "," "," " ], :style => [title5,title5,title5,title5,title5,title5,title5]
 
 
                      
-      sheet.add_row ["",payment.code,payment.inicial,payment.total_ing,payment.total_egreso,payment.saldo,"","",""],
+      sheet.add_row ["",payment.code,payment.inicial,payment.total_ing,payment.total_egreso,payment.saldo,""],
           :style => [cadena,cadena,currency,currency,currency,currency,cadena,cadena,cadena]
 
 
@@ -71,7 +74,7 @@ wb.styles do |s|
 
           if !@viatico_last.nil?
          
-            sheet.add_row [" "," ","SALDO ANTERIOR AL " , @viatico_last.fecha1,"","",@viatico.inicial], :style => [cadena,cadena,cadena,date,cadena,cadena,currency ]
+            sheet.add_row [" "," ","SALDO ANTERIOR AL " , @viatico_last.fecha1,"",@viatico.inicial,""], :style => [cadena,cadena,cadena,date,cadena,currency ,cadena]
           else 
             sheet.add_row [" "," ","SALDO ANTERIOR AL " ," "], :style => [cadena,cadena ,cadena]
           end 
@@ -112,25 +115,19 @@ wb.styles do |s|
 
 
 
-          sheet.add_row [" "," ","TOTAL INGRESO S/.",@total_importe], :style => [cadena,cadena,cadena, currency ]
+          sheet.add_row [" "," ","TOTAL INGRESO S/."," "," ",@total_importe," "], :style => [cadena,cadena,cadena,cadena,cadena, currency ,cadena]
 
 
       
-for  egresos  in @viatico.get_egresos() 
+          for  egresos  in @viatico.get_egresos() 
 
 
-         @detalle = egresos.get_detalle_egreso(@viatico.id,egresos.id)
-
-        
-         
+            @detalle = egresos.get_detalle_egreso(@viatico.id,egresos.id)
 
             table_content = ([ [egresos.name + " " + egresos.extension  ]   ])
             
-
-          sheet.add_row [ " "," ",egresos.name , egresos.extension ], :style => [cadena,cadena,cadena,cadena ]
+          sheet.add_row [ " "," ",egresos.name , egresos.extension,"","","" ], :style => [cadena,cadena,title3,cadena,cadena,cadena,cadena ]
           
-            
-
           sheet.add_row [ "ITEM",
                       "FECHA ",
                      "DESCRIPCION",
@@ -139,8 +136,6 @@ for  egresos  in @viatico.get_egresos()
                      "IMPORTE S/.",
                      "DETALLE" ], :style => [ cadena ,cadena , cadena ,cadena ,cadena ,cadena ,cadena  ]
          
-
-
              
                 total_importe = 0
                 nroitem = 1 
@@ -160,7 +155,6 @@ for  egresos  in @viatico.get_egresos()
                 lcProveedor = product.employee.full_name
                 end 
               end 
-
           
                sheet.add_row [ nroitem,
                       product.fecha,
@@ -180,15 +174,35 @@ for  egresos  in @viatico.get_egresos()
 
 
 
-          sheet.add_row [" "," ","TOTAL EGRESO S/."," "," ",total_importe], :style => [cadena,cadena, title3 ,cadena,cadena, currency ]
+          sheet.add_row [" "," ","TOTAL EGRESO S/."," "," ",total_importe," "], :style => [cadena,cadena, title3 ,cadena,cadena, currency,cadena ]
 
-
-       
-
-       
-
+    
        end 
-       
+
+
+          sheet.add_row [" "," "," "," "," ",total_importe," "], :style => [cadena,cadena, title3 ,cadena,cadena, cadena,cadena ]
+
+
+       total_egresos = 0
+       table_content_footer = []
+
+       if !@viatico.get_egresos_suma().nil?
+        for  egresos1  in @viatico.get_egresos_suma() 
+
+           total_egresos += egresos1.total.round(2) 
+           
+           sheet.add_row [" "," ",egresos1.egreso.name ,egresos1.total.round(2) ,"","",""], :style => [cadena,cadena, title3 ,currency,cadena,cadena,cadena ]
+
+
+        end 
+
+        end 
+
+         sheet.add_row [" "," ","TOTAL EGRESOS S/." ,total_egresos.round(2),"" ,"",""], :style => [cadena,cadena, title3 ,currency ,cadena,cadena,cadena]
+
+
+        sheet.add_row [" "," ","SALDO EN CAJA S/." ,@total_importe - total_egresos ,"","",""], :style => [cadena,cadena, title3 ,currency,cadena,cadena,cadena ]
+     
 
 
       end 
