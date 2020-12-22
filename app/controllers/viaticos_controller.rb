@@ -549,8 +549,8 @@ before_filter :authenticate_user!
     end
 
     def build_pdf_footer(pdf)
+      
       total_egresos = 0
-
       table_content_footer = []
     for  egresos  in @viatico.get_egresos_suma() 
 
@@ -1264,7 +1264,6 @@ pdf.move_down 2
     
      if @viaticos_rpt.size > 0 
     
-
 
       Prawn::Document.generate("app/pdf_output/rpt_caja.pdf") do |pdf|
       pdf.font "Helvetica"
