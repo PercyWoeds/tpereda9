@@ -53,13 +53,13 @@ class TranportordersController < ApplicationController
     
   
 
-   if  @manifest.location_id == 3
+   if  @manifest.location_id == 5
       @lcSerie =  1
    end 
    if  @manifest.location_id == 1
       @lcSerie =  2
    end 
-   if  @manifest.location_id== 4
+   if  @manifest.location_id == 6
       @lcSerie =  8
    end 
    puts "correlatio.v......................"
