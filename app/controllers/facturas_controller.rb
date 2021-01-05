@@ -3006,6 +3006,7 @@ def newfactura2
 
     @company.actualizar_fecha2
     #@company.actualizar_detraccion 
+    
 
     @facturas_rpt = @company.get_pendientes_day(@fecha1,@fecha2)  
 
