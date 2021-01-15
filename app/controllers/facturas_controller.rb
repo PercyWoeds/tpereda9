@@ -2208,7 +2208,7 @@ def reportes05
     Invoicesunat.delete_all
     @company = Company.find(params[:company_id])
     
-    @facturas  = Factura.where("fecha>=? and fecha<=? and tipo =?","2020-12-21 00:00:00","2021-01-31 23:59:59","1")
+    @facturas  = Factura.where("fecha>=? and fecha<=? and tipo =?","2020-12-22 00:00:00","2021-04-31 23:59:59","1")
      a = ""
      
      lcGuia=""
@@ -2308,7 +2308,7 @@ def reportes05
 
     
     @invoice = Invoicesunat.all
-    send_data @invoice.to_csv , :filename => 'FT2019.csv'
+    send_data @invoice.to_csv , :filename => 'FT2021.csv'
     
   end
   
