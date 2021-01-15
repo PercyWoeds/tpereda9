@@ -3801,7 +3801,7 @@ def rpt_cobranzas_pdf
     @tipomoneda = params[:moneda_id]
 
     @company.actualizar_fecha2
-    @company.actualiza_monthyear
+    #@company.actualiza_monthyear
     
     @customerpayment_rpt = @company.get_customer_payments2(@tipomoneda,@fecha1,@fecha2)
   
