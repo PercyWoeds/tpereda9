@@ -1459,7 +1459,7 @@ def get_customer_payments_detail_value(fecha1,fecha2,value="total")
 
  def actualizar_fecha2
 
-    facturas = Factura.where(["fecha>=? and fecha<=?","2020-12-01 00:00:00","2021-12-31 23:59:59"] )
+    facturas = Factura.where(["fecha>=? and fecha<=?","2021-01-01 00:00:00","2021-12-31 23:59:59"] )
     for factura in facturas
         fact =  Factura.find(factura.id)
         if fact.payment 
