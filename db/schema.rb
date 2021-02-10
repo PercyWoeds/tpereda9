@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201216173852) do
+ActiveRecord::Schema.define(version: 20210210165120) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -486,6 +486,9 @@ ActiveRecord::Schema.define(version: 20201216173852) do
     t.integer  "payment_id"
     t.integer  "tipocustomer_id"
     t.float    "valorseguro"
+    t.string   "descrip1"
+    t.string   "descrip2"
+    t.string   "descrip3"
   end
 
   create_table "couts", force: :cascade do |t|

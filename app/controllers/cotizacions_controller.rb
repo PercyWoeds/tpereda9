@@ -411,7 +411,7 @@ class CotizacionsController < ApplicationController
               row << " "
             end 
 
-            row << ""
+            row << @cotizacion.descrip1
             row << @cotizacion.qty
             row << @cotizacion.price
             row << @cotizacion.total 
@@ -431,7 +431,7 @@ class CotizacionsController < ApplicationController
             else
               row << ""
             end 
-            row << ""
+            row << @cotizacion.descrip2
             row << @cotizacion.qty2
             row << @cotizacion.price2
             row << @cotizacion.total2
@@ -452,7 +452,7 @@ class CotizacionsController < ApplicationController
             else
              row << ""
             end 
-            row << ""
+            row << @cotizacion.descrip3
             row << @cotizacion.qty3
             row << @cotizacion.price3
             row << @cotizacion.total3
@@ -1428,6 +1428,9 @@ Muy atentamente, " ,
         :config_vehi_id,
         :config_vehi2_id,
         :config_vehi3_id,
+        :descrip1,
+        :descrip2,
+        :descrip3, 
         :qty,
         :qty2,
         :qty3,
