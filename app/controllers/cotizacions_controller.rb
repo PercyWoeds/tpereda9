@@ -639,7 +639,8 @@ class CotizacionsController < ApplicationController
 
  pdf.bounding_box [40,350], :width  => pdf.bounds.width - 50,:border_width=> 0 do
               pdf.cell :content => "Se expide la presente Cotización, con el fin de dar su conformidad y pronta respuesta.
-Muy atentamente, " ,
+Muy atentamente, 
+Diana Nathaly Perez Luciano." ,
               align: :left , valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :italic
               end
 
@@ -760,7 +761,7 @@ Muy atentamente, " ,
               row << " "
             end 
 
-            row << ""
+            row << @cotizacion.descrip1
             row << @cotizacion.qty
             row << @cotizacion.price
             row << @cotizacion.total 
@@ -780,7 +781,7 @@ Muy atentamente, " ,
             else
               row << ""
             end 
-            row << ""
+            row << @cotizacion.descrip2
             row << @cotizacion.qty2
             row << @cotizacion.price2
             row << @cotizacion.total2
@@ -801,7 +802,7 @@ Muy atentamente, " ,
             else
              row << ""
             end 
-            row << ""
+            row << @cotizacion.descrip3
             row << @cotizacion.qty3
             row << @cotizacion.price3
             row << @cotizacion.total3
@@ -1175,7 +1176,7 @@ Muy atentamente, " ,
               row << " "
             end 
 
-            row << ""
+            row << @cotizacion.descrip1
             row << @cotizacion.qty
             row << @cotizacion.price
             row << @cotizacion.total 
@@ -1195,7 +1196,7 @@ Muy atentamente, " ,
             else
               row << ""
             end 
-            row << ""
+            row << @cotizacion.descrip2
             row << @cotizacion.qty2
             row << @cotizacion.price2
             row << @cotizacion.total2
@@ -1216,7 +1217,7 @@ Muy atentamente, " ,
             else
              row << ""
             end 
-            row << ""
+            row << @cotizacion.descrip3
             row << @cotizacion.qty3
             row << @cotizacion.price3
             row << @cotizacion.total3
