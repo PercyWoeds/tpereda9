@@ -70,13 +70,10 @@ class SuppliersController < ApplicationController
       @company = Company.find(1)
       @bancos = @company.get_banks()
       @tipoproveedor =@company.get_tipoproveedor()
-
+      @typeproveedor =@company.get_typeproveedor()
   
       @supplier = Supplier.new
       @supplier.company_id = @company.id
-
-
-    
     
     if(params[:ajax])
       @ajax = true
@@ -90,6 +87,7 @@ class SuppliersController < ApplicationController
     @bancos = @company.get_banks()
     @pagetitle = "Edit supplier"
      @tipoproveedor =@company.get_tipoproveedor()
+      @typeproveedor =@company.get_typeproveedor()
 
     @supplier = Supplier.find(params[:id])
   end
@@ -104,6 +102,8 @@ class SuppliersController < ApplicationController
     @supplier = Supplier.new(supplier_params)
    @tipoproveedor =@company.get_tipoproveedor()
   @bancos = @company.get_banks()
+   @typeproveedor =@company.get_typeproveedor()
+
     respond_to do |format|
       if @supplier.save
         format.html { redirect_to(@supplier, :notice => 'Supplier was successfully created.') }
@@ -123,6 +123,8 @@ class SuppliersController < ApplicationController
     @bancos = @company.get_banks()
     @supplier = Supplier.find(params[:id])
  @tipoproveedor =@company.get_tipoproveedor()
+  @typeproveedor =@company.get_typeproveedor()
+
     respond_to do |format|
       if @supplier.update_attributes(supplier_params)
         format.html { redirect_to(@supplier, :notice => 'Supplier was successfully updated.') }
@@ -144,6 +146,8 @@ class SuppliersController < ApplicationController
     
     @company = @supplier.company
      @tipoproveedor =@company.get_tipoproveedor()
+    @typeproveedor =@company.get_typeproveedor()
+
    
     @ordens = Purchaseorder.find_by(supplier_id: @supplier.id)
     @services = Serviceorder.find_by(supplier_id: @supplier.id)

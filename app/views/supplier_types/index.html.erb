@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Supplier Types</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @supplier_types.each do |supplier_type| %>
+      <tr>
+        <td><%= supplier_type.code %></td>
+        <td><%= supplier_type.name %></td>
+        <td><%= link_to 'Show', supplier_type %></td>
+        <td><%= link_to 'Edit', edit_supplier_type_path(supplier_type) %></td>
+        <td><%= link_to 'Destroy', supplier_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Supplier type', new_supplier_type_path %>

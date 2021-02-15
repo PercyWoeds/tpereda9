@@ -37,6 +37,14 @@ def get_conductor()
    return @tipoproveedor 
  end 
 
+
+
+ def get_typeproveedor()
+   
+   @tipoproveedor = SupplierType.all
+   return @tipoproveedor 
+ end 
+
 def get_cargas()
     puntos = Tipocargue.all 
     return puntos

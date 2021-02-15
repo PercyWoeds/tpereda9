@@ -14,6 +14,7 @@ class Supplier < ActiveRecord::Base
   has_many :outputs
   has_many :freepagars
   has_many :autoviatico 
+  has_many :supplier_type 
   
   self.per_page = 20
 

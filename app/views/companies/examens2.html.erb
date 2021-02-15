@@ -1,0 +1,98 @@
+<div class="mid_box bordered_right">
+    
+  
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
+    <%= link_to "Proyecto", "/companies/outputs/#{@company.id}" %>
+  </h3>
+
+  <p>
+     Salidas de almacen
+  </p>
+  
+  <%= hr() %>
+
+   <h3>
+    <%= image_tag("supplier_32.png", :class => "vmiddle") %>
+    <%= link_to "Conductores", conductors_path %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar proveedores para tu negocio.
+  </p>
+  <%= hr() %>
+
+  
+   <h3>
+    <%= image_tag("supplier_32.png", :class => "vmiddle") %>
+    <%= link_to "Unidades" , trucks_path %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar proveedores para tu negocio.
+  </p>
+  <%= hr() %>
+  
+  
+  
+  
+  
+  
+</div>
+
+<div class="mid_box">
+<%= hr() %>
+  <h3>
+        <div>
+    <%= image_tag("clients_32.png", :class => "vmiddle") %>
+    <%= link_to "Base de datos", "/companies/reports/reports_basedatosexm/#{@company.id}" %>
+        </div>
+  </h3>
+  
+  <p>
+     Agregar, editar or eliminar ordenes de venta 
+  </p>
+
+<%= hr() %>
+
+     <% if @current_user.level == "admin" %>
+  <h3>
+    <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
+    <%= link_to "Autorización de viaticos", autoviaticos_path   %>
+  </h3>
+
+  <p>
+   Agregar, editar or eliminar kits de productos (grupos of productos).
+  </p>
+
+  <%= hr() %>
+ 
+  
+  <h3>
+    <%= image_tag("divisions_32.png", :class => "vmiddle") %>
+    <%= link_to "Control de documentos ", cdocuments_path %>
+  </h3>
+
+  <p>
+     Control de documentos de conductores y personal administrativo.
+  </p>
+   <% end %>
+  
+  
+  <%= hr() %>
+  
+  <h3>
+
+  
+  <h3>
+    <%= image_tag("divisions_32.png", :class => "vmiddle") %>
+    <%= link_to "Reportes", "/companies/reports/reports_cexamen/#{@company.id}" %>
+  </h3>
+
+  <p>
+    Reportes de tu negocio.
+  </p>
+
+</div>

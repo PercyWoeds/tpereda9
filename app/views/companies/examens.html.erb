@@ -5,33 +5,33 @@
 
   <h3>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Proyecto", "/companies/outputs/#{@company.id}" %>
+    <%= link_to "Control de Documentos", "/companies/examens01/#{@company.id}" %>
   </h3>
 
   <p>
-     Salidas de almacen
+     Control de documentos 
   </p>
   
   <%= hr() %>
 
    <h3>
     <%= image_tag("supplier_32.png", :class => "vmiddle") %>
-    <%= link_to "Conductores", conductors_path %>
+    <%= link_to "Homologacion a Proyectos Mineros",  "/companies/examens02/#{@company.id}" %>
   </h3>
 
   <p>
-     Agregar, editar or eliminar proveedores para tu negocio.
+     Homologacion a Proyectos mineros
   </p>
   <%= hr() %>
 
   
    <h3>
     <%= image_tag("supplier_32.png", :class => "vmiddle") %>
-    <%= link_to "Unidades" , trucks_path %>
+    <%= link_to "Unidades" , "/companies/examens03/#{@company.id}" %>
   </h3>
 
   <p>
-     Agregar, editar or eliminar proveedores para tu negocio.
+     Agregar, editar or eliminar unidades 
   </p>
   <%= hr() %>
   
@@ -47,12 +47,12 @@
   <h3>
         <div>
     <%= image_tag("clients_32.png", :class => "vmiddle") %>
-    <%= link_to "Base de datos", "/companies/reports/reports_basedatosexm/#{@company.id}" %>
+    <%= link_to "Aviso de Pago", "/companies/examens03/#{@company.id}"  %>
         </div>
   </h3>
   
   <p>
-     Agregar, editar or eliminar ordenes de venta 
+     Agregar, editar o eliminar avisos de pago
   </p>
 
 <%= hr() %>
@@ -60,11 +60,11 @@
      <% if @current_user.level == "admin" %>
   <h3>
     <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
-    <%= link_to "Autorización de viaticos", autoviaticos_path   %>
+    <%= link_to "Control de asistencias", autoviaticos_path   %>
   </h3>
 
   <p>
-   Agregar, editar or eliminar kits de productos (grupos of productos).
+   Agregar, editar o eliminar  control de asistencias 
   </p>
 
   <%= hr() %>
@@ -72,11 +72,11 @@
   
   <h3>
     <%= image_tag("divisions_32.png", :class => "vmiddle") %>
-    <%= link_to "Control de documentos ", cdocuments_path %>
+    <%= link_to "Programacion de Exm.Medicos y Capacitacion", cdocuments_path %>
   </h3>
 
   <p>
-     Control de documentos de conductores y personal administrativo.
+    Programacion de Examenes medicos y capacitaciones. 
   </p>
    <% end %>
   
@@ -85,14 +85,5 @@
   
   <h3>
 
-  
-  <h3>
-    <%= image_tag("divisions_32.png", :class => "vmiddle") %>
-    <%= link_to "Reportes", "/companies/reports/reports_cexamen/#{@company.id}" %>
-  </h3>
-
-  <p>
-    Reportes de tu negocio.
-  </p>
 
 </div>
