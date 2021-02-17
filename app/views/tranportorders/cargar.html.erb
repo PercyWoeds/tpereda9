@@ -33,12 +33,27 @@
         <th class="bordered_right bordered_bottom">
           Fecha 
         </th>
+        
+ <th class="bordered_right bordered_bottom">
+          Punto de Carguio
+        </th>
+         <th class="bordered_right bordered_bottom">
+          Punto de descarga
+        </th>
+<th class="bordered_right bordered_bottom">
+        Descripcion de la carga 
+        </th>
+
+
         <th class="bordered_right bordered_bottom">
           OST 
         </th>
+
         <th class="bordered_right bordered_bottom">
       
         </th>
+
+
         <th class="bordered_right bordered_bottom" colspan="3">
           Options
         </th>
@@ -52,6 +67,9 @@
             <td><%= detalle.customer.name %></td>
             <td><%= detalle.solicitante %></td>
             <td><%= detalle.fecha1.strftime("%Y-%m-%d") %></td>
+            <td><%= detalle.direccion1 %></td>
+            <td><%= detalle.direccion2 %></td>
+            <td><%= detalle.especificacion %></td>
             <td><%= detalle.get_processed %></td>
          
           <td class="bordered_right bordered_bottom">

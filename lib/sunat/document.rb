@@ -97,13 +97,17 @@ module SUNAT
       image_path = open("https://chart.googleapis.com/chart?chs=90x90&cht=qr&chl=#{$lcCodigoBarra}&choe=UTF-8")
     
      pdf.table([[ {:image => image_path,:position => :center}  , "
-      El pago del documento sera necesariamente efectuado mediante deposito en cualquiera de las siguientes cuentas bancarias:  
+      El pago del documento sera efectuado mediante deposito en cualquiera de las siguientes cuentas bancarias:  
   Banco SCOTIABANK Cuenta Corriente soles   : 4256085         CCI : 009-237-000004256085-94
   Banco SCOTIABANK Cuenta Corriente dolares : 1836766     CCI : 009-237-000001836766-94
-  Banco de CREDITO Cuenta Corriente soles   : 191-1204755-0-41 
-  Banco de CREDITO Cuenta Corriente dolares : 191-1403434-1-10 
+  Banco de CREDITO Cuenta Corriente soles   : 191-1204755-0-41 CCI: 002-191-001204755041-58
+  Banco de CREDITO Cuenta Corriente dolares : 191-1403434-1-10 CCI: 002-191-001403434110-58
+  Banco  PICHINCHA Cuenta Corriente soles   : 001-095371657  CCI: 035-053001095371657-87 
+  Banco  PICHINCHA Cuenta Corriente dolares : 001-095371665  CCI: 035-053001095371665-80
+  Banco BBVA Cuenta Corriente soles  : 0011-0307-0100022426  CCI: 011-307-000100022426-59
+  Banco BBVA Corriente dolares       : 0011-0307-0100023201  CCI: 011-307-000100023201-65
   Banco de la NACION Cuenta Detracción      : 00000459879
-  OPERACION SUJETA AL SISTEMA DE PAGO DE OBLIGACIONES TRIBUTARIAS CON EL GOBIERNO CENTRAL D-LEG.NRO 940 "]],:cell_style => { :border_width => 0 } )
+  OPERACION SUJETA AL SISTEMA DE PAGO DE OBLIGACIONES TRIBUTARIAS CONEL GOBIERNO CENTRAL D-LEG.NRO 940 "]],:cell_style => { :border_width => 0 } )
 
       end 
 
