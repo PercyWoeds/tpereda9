@@ -21,19 +21,52 @@ wb.styles do |s|
     wb.add_worksheet(name: "Facturas Soles") do |sheet|
     
 
-    sheet.add_row ["Nro.Salida","Fecha", "Codigo","Producto","Unidad", "Proveedor","Empleado","Placa", "Cantidad","Precio","Total" ], :style => title 
+    sheet.add_row ["Nro.Salida","Item", "Categoria","Nro.Salida","Codigo", "Descripcion","Unidad","Proveedor", "Empleado","Placa","Cantidad","Stock ","Costo","Total" ], :style => title 
 
     nroitem = 0
-    
-       @facturas_rpt.each do |payment|
-                      
-      
+
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @items  = params[:products_ids]
+
+    @facturas_rpt = []
+
+   for item in @items 
+      @facturas_rpt0 = @company.get_salidas_day0(@fecha1,@fecha2,item)
+      if @facturas_rpt0 != nil 
+        @facturas_rpt  += @facturas_rpt0 
+      end 
+    end 
+
+       lcplaca  = " "
+       @facturas_rpt.each do |product|
+
+
+            if product.truck_id == nil 
+                lcplaca = " "
+            else
+                lcplaca = product.truck.placa
+            end   
                
-            sheet.add_row [nroitem ,"","",detalle.customer.ruc , detalle.customer.name,
-             detalle.subtotal,detalle.tax,detalle.total   ], 
-        :style => 
-            [cadena,cadena,cadena,cadena,cadena,currency,currency,currency ]
-            
+
+            @total = product.quantity * product.price
+            sheet.add_row [nroitem.to_s,
+             product.get_categoria(product.id),
+             product.code,
+             product.fecha.strftime("%d/%m/%Y"),
+             product.codigo,
+             product.nameproducto,
+             product.unidad ,
+             product.supplier.name,
+             product.employee.full_name2 ,
+             lcplaca,
+             product.quantity,
+             product.get_stock(product.product_id),
+             product.price.to_s,
+              @total ], 
+              :style => [cadena,cadena,cadena,date,cadena,cadena,cadena,cadena,cadena,cadena,currency,cadena,currency,currency]
+
+
 
             nroitem += 1 
        end   
