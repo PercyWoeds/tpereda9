@@ -7674,7 +7674,7 @@ end
               row << cotiza.punto.name 
               row << cotiza.get_punto(cotiza.punto2_id) 
 
-              if cotiza.tipo_cargue_id != nil 
+              if cotiza.tipocargue_id != nil 
 
               row << cotiza.tipocargue.name 
 
