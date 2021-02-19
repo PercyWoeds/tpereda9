@@ -29,6 +29,8 @@ class CotizacionsController < ApplicationController
     @monedas = @company.get_monedas()
     @payments = @company.get_payments()
       @tipocustomers =  @company.get_tipocustomers()
+
+
     @cotizacion[:fecha]= Date.today 
 
     @cotizacion[:price] = 0
@@ -42,6 +44,64 @@ class CotizacionsController < ApplicationController
     @cotizacion[:price3] = 0
     @cotizacion[:qty3] = 0
     @cotizacion[:total3] = 0
+
+
+    @cotizacion[:price] = 0
+    @cotizacion[:qty] = 0
+    @cotizacion[:total] = 0
+
+    @cotizacion[:price2] = 0
+    @cotizacion[:qty2] = 0
+    @cotizacion[:total2] = 0
+
+    @cotizacion[:price3] = 0
+    @cotizacion[:qty3] = 0
+    @cotizacion[:total3] = 0
+
+
+    @cotizacion[:price] = 0
+    @cotizacion[:qty] = 0
+    @cotizacion[:total] = 0
+
+    @cotizacion[:price2] = 0
+    @cotizacion[:qty2] = 0
+    @cotizacion[:total2] = 0
+
+    @cotizacion[:price3] = 0
+    @cotizacion[:qty3] = 0
+    @cotizacion[:total3] = 0
+
+
+    @cotizacion[:price4] = 0
+    @cotizacion[:qty4] = 0
+    @cotizacion[:total4] = 0
+
+    @cotizacion[:price5] = 0
+    @cotizacion[:qty5] = 0
+    @cotizacion[:total5] = 0
+
+    @cotizacion[:price6] = 0
+    @cotizacion[:qty6] = 0
+    @cotizacion[:total6] = 0
+
+
+    @cotizacion[:price7] = 0
+    @cotizacion[:qty7] = 0
+    @cotizacion[:total7] = 0
+
+    @cotizacion[:price8] = 0
+    @cotizacion[:qty8] = 0
+    @cotizacion[:total8] = 0
+
+    @cotizacion[:price9] = 0
+    @cotizacion[:qty9] = 0
+    @cotizacion[:total9] = 0
+
+
+    @cotizacion[:price10] = 0
+    @cotizacion[:qty10] = 0
+    @cotizacion[:total10] = 0
+
 
 
   end
@@ -75,12 +135,20 @@ class CotizacionsController < ApplicationController
   def create
      @company = Company.find(1)
     @customers = @company.get_customers
-    @puntos = @company.get_puntos 
-     @monedas = @company.get_monedas()
+
+     @puntos = @company.get_puntos 
+    @tipo_unidad = @company.get_tipo_unidad
+    @config_vehi = @company.get_configvehi
+    @tipocarga = Tipocargue.all 
+    @monedas = @company.get_monedas()
     @payments = @company.get_payments()
-     @tipocustomers =  @company.get_tipocustomers()
+      @tipocustomers =  @company.get_tipocustomers()
+
 
     @tipocarga = Tipocargue.all 
+
+
+
     @cotizacion = Cotizacion.new(cotizacion_params)
     
     @cotizacion[:code] = @cotizacion.generate_number("1") 

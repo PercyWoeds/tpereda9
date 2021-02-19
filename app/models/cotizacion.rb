@@ -8,6 +8,41 @@ class Cotizacion < ActiveRecord::Base
  belongs_to :tipocustomer 
  belongs_to :moneda 
  belongs_to :payment 
+
+ validates_presence_of    :fecha, :code, :customer_id, :punto_id, :punto2_id, :moneda_id,
+        :payment_id,
+        :tipo_unidad,:especifica,:valorseguro,
+        :tipo_unidad_id,
+        :config_vehi_id,
+        :descrip1,
+        :fecha, :code, :customer_id, :punto_id, :punto2_id, :moneda_id,:payment_id,
+        :tipo_unidad,:valorseguro,
+        :tipo_unidad_id,
+        :config_vehi_id,
+        :descrip1,  
+        :qty,
+        :qty2,
+        :qty3,
+        :qty4,
+        :qty5,
+        :qty6,
+        :price,
+        :price2,
+        :price3,
+        :price4,
+        :price5,
+        :price6,
+        :total,
+        :total2,
+        :total3,
+        :total4,
+        :total5,
+        :total6
+       
+
+
+
+  validates_uniqueness_of :code
  
 
    TABLE_HEADERS = ["Nro.Item",
