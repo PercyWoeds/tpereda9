@@ -7673,7 +7673,15 @@ end
               row << cotiza.customer.name 
               row << cotiza.punto.name 
               row << cotiza.get_punto(cotiza.punto2_id) 
+
+              if cotiza.tipo_cargue_id != nil 
+
               row << cotiza.tipocargue.name 
+
+            else 
+              row << ""
+            end
+
               row << cotiza.tipo_unidad 
               row << cotiza.tarifa
               row << cotiza.get_processed 
