@@ -7675,14 +7675,12 @@ end
               row << cotiza.get_punto(cotiza.punto2_id) 
 
               if cotiza.tipocargue_id != nil 
-
               row << cotiza.tipocargue.name 
+              else 
+              row << " "
+              end
 
-            else 
-              row << ""
-            end
-
-              row << cotiza.tipo_unidad 
+              row << cotiza.tipo_unidad.name 
               row << cotiza.tarifa
               row << cotiza.get_processed 
               row << cotiza.comments 
@@ -7690,7 +7688,9 @@ end
 
                nroitem=nroitem + 1
 
-                table_content << row
+              table_content << row
+
+              puts row 
           end
             
     
