@@ -78,9 +78,9 @@
     <th>PRECIO TOTAL </th>
 
   </tr>
+
   <tr>
     <td> 01 </td>
-   
   <td> <%= f.collection_select :tipo_unidad_id , @tipo_unidad , :id, :name, {:prompt => true } , 
    {:style => "width:150px"} %></td>
 
@@ -94,7 +94,7 @@
     <td>  <span id="ac_item_total">0.00</span></td>
   </tr>
 
-<tr>
+  <tr>
     <td> 02 </td>
     <td><%= f.collection_select :tipo_unidad2_id, @tipo_unidad, :id, :name, {:prompt => true }, 
    {:style => "width:150px"} %> </td>
@@ -118,6 +118,47 @@
     <td>  <span id="ac_item_total3">0.00</span></td>
 
   </tr>
+
+  <tr>
+    <td> 04 </td>
+  <td> <%= f.collection_select :tipo_unidad4_id , @tipo_unidad , :id, :name, {:prompt => true } , 
+   {:style => "width:150px"} %></td>
+
+    <td> <%= f.collection_select :config_vehi4_id, @config_vehi , :id, :name, {:prompt => true }  , 
+   {:style => "width:150px"} %> </td>
+
+   <td> <%= f.text_field :descrip4 ,{:style => "width:350px"} %></td>
+
+    <td> <%= f.number_field :qty4, class: :text_field, step: :any %></td>
+    <td> <%= f.number_field :price4, class: :text_field, step: :any %></td>
+    <td>  <span id="ac_item_total4">0.00</span></td>
+  </tr>
+
+  <tr>
+    <td> 05 </td>
+    <td><%= f.collection_select :tipo_unidad5_id, @tipo_unidad, :id, :name, {:prompt => true }, 
+   {:style => "width:150px"} %> </td>
+    <td> <%= f.collection_select :config_vehi5_id, @config_vehi , :id, :name, {:prompt => true }, 
+   {:style => "width:150px"}  %></td>
+    <td> <%= f.text_field :descrip5 ,{:style => "width:350px"} %></td>
+    <td> <%= f.number_field :qty5, class: :text_field, step: :any %></td>
+    <td><%=   f.number_field :price5, class: :text_field, step: :any %></td>
+    <td>  <span id="ac_item_total5">0.00</span> </td>
+
+  </tr>
+  <tr>
+    <td> 06 </td>
+    <td><%= f.collection_select :tipo_unidad6_id, @tipo_unidad, :id, :name,{:prompt => true } , 
+   {:style => "width:150px"} %>  </td>
+    <td> <%= f.collection_select :config_vehi6_id, @config_vehi , :id, :name, {:prompt => true } , 
+   {:style => "width:150px"} %> </td>
+    <td> <%= f.text_field :descrip6 ,{:style => "width:350px"} %></td>
+    <td> <%= f.number_field :qty6, class: :text_field, step: :any %></td>
+    <td><%=   f.number_field :price6, class: :text_field, step: :any %></td>
+    <td>  <span id="ac_item_total6">0.00</span></td>
+
+  </tr>
+
 
 <tr>
     <td> </td>
@@ -238,6 +279,76 @@
       updateItemTotalCot();
     });
 
+
+    $("#cotizacion_qty4").bind("keyup", function() {
+      updateItemTotalCot();
+    });
+    
+    
+    $("#cotizacion_price4").bind("keyup", function() {
+      updateItemTotalCot();
+    });
+
+
+    $("#cotizacion_qty5").bind("keyup", function() {
+      updateItemTotalCot();
+    });
+    
+    
+    $("#cotizacion_price5").bind("keyup", function() {
+      updateItemTotalCot();
+    });
+
+
+    $("#cotizacion_qty6").bind("keyup", function() {
+      updateItemTotalCot();
+    });
+    
+    
+    $("#cotizacion_price6").bind("keyup", function() {
+      updateItemTotalCot()
+    });
+
+
+    $("#cotizacion_qty7").bind("keyup", function() {
+      updateItemTotalCot();
+    });
+    
+    
+    $("#cotizacion_price7").bind("keyup", function() {
+      updateItemTotalCot();
+    });
+
+    $("#cotizacion_qty8").bind("keyup", function() {
+      updateItemTotalCot();
+    });
+    
+    
+    $("#cotizacion_price8").bind("keyup", function() {
+      updateItemTotalCot();
+    });
+
+    $("#cotizacion_qty9").bind("keyup", function() {
+      updateItemTotalCot();
+    });
+    
+    
+    $("#cotizacion_price9").bind("keyup", function() {
+      updateItemTotalCot();
+    });
+
+
+
+    $("#cotizacion_qty10").bind("keyup", function() {
+      updateItemTotalCot();
+    });
+    
+    
+    $("#cotizacion_price10").bind("keyup", function() {
+      updateItemTotalCot();
+    });
+
+
     });
 
 
@@ -253,6 +364,32 @@
 
     var quantity3 = $("#cotizacion_qty3").val();
     var price3  = $("#cotizacion_price3").val();
+
+    
+    var quantity4 = $("#cotizacion_qty4").val();
+    var price4  = $("#cotizacion_price4").val();
+  
+
+    var quantity5 = $("#cotizacion_qty5").val();
+    var price5 = $("#cotizacion_price5").val();
+
+    var quantity6 = $("#cotizacion_qty6").val();
+    var price6  = $("#cotizacion_price6").val();
+
+    var quantity7 = $("#cotizacion_qty7").val();
+    var price7 = $("#cotizacion_price7").val();
+
+    var quantity8 = $("#cotizacion_qty8").val();
+    var price8  = $("#cotizacion_price8").val();
+
+    var quantity9 = $("#cotizacion_qty9").val();
+    var price9 = $("#cotizacion_price9").val();
+
+    var quantity10 = $("#cotizacion_qty10").val();
+    var price10  = $("#cotizacion_price10").val();
+
+
+  
 
 
   
@@ -292,9 +429,99 @@
 
       var total3 = 0;
     }
-    
 
-    var valor_total = total + total2 + total3
+
+    if(isNumeric(quantity4) && isNumeric(price4)) {
+      
+      var total4 = quantity4 * price4 ;
+      
+      $("#ac_item_total4").html(total4.toFixed(2));
+    } else {
+      $("#ac_item_total4").html("0.00");
+
+      var total4 = 0;
+    }
+
+
+
+
+    if(isNumeric(quantity5) && isNumeric(price5)) {
+      
+      var total5 = quantity5 * price5 ;
+      
+      $("#ac_item_total5").html(total5.toFixed(2));
+    } else {
+      $("#ac_item_total5").html("0.00");
+
+      var total5 = 0;
+    }
+
+
+
+    if(isNumeric(quantity6) && isNumeric(price6)) {
+      
+      var total6 = quantity6 * price6 ;
+    
+      $("#ac_item_total6").html(total6.toFixed(2));
+    } else {
+      $("#ac_item_total6").html("0.00");
+
+      var total6 = 0;
+    }
+
+
+
+    if(isNumeric(quantity7) && isNumeric(price7)) {
+      
+      var total7 = quantity7 * price7 ;
+      
+      $("#ac_item_total7").html(total7.toFixed(2));
+    } else {
+      $("#ac_item_total7").html("0.00");
+
+      var total7 = 0;
+    }
+
+
+
+    if(isNumeric(quantity8) && isNumeric(price8)) {
+      
+      var total8 = quantity8 * price8 ;
+      
+      $("#ac_item_total8").html(total8.toFixed(2));
+    } else {
+      $("#ac_item_total8").html("0.00");
+
+      var total8 = 0;
+    }
+
+
+
+    if(isNumeric(quantity9) && isNumeric(price9)) {
+      
+      var total9 = quantity9 * price9 ;
+      
+      $("#ac_item_total9").html(total9.toFixed(2));
+    } else {
+      $("#ac_item_total9").html("0.00");
+
+      var total9 = 0;
+    }
+
+
+    if(isNumeric(quantity10) && isNumeric(price10)) {
+      
+      var total10 = quantity10 * price10;
+      
+      $("#ac_item_total10").html(total3.toFixed(2));
+    } else {
+      $("#ac_item_total10").html("0.00");
+
+      var total10 = 0;
+    }
+
+
+    var valor_total = total + total2 + total3 + total4 + total5 + total6 + total7 + total8 + total9 + total 10 
 
     $("#valor_total").html(valor_total.toFixed(2));
 

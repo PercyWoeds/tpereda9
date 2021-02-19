@@ -93,6 +93,15 @@ class CotizacionsController < ApplicationController
     @cotizacion[:total2] = @cotizacion[:price2] * @cotizacion[:qty2] 
      
     @cotizacion[:total3] = @cotizacion[:price3] * @cotizacion[:qty3] 
+
+    @cotizacion[:total4]  = @cotizacion[:price4] * @cotizacion[:qty4] 
+
+    @cotizacion[:total5] = @cotizacion[:price5] * @cotizacion[:qty5] 
+     
+    @cotizacion[:total6] = @cotizacion[:price6] * @cotizacion[:qty6] 
+
+
+
      
 
     respond_to do |format|
@@ -129,6 +138,7 @@ class CotizacionsController < ApplicationController
     @cotizacion[:total2] = params[:cotizacion][:price2].to_f * params[:cotizacion][:qty2].to_f
      
     @cotizacion[:total3] = params[:cotizacion][:price3].to_f * params[:cotizacion][:qty3].to_f
+
 
 
     respond_to do |format|
@@ -221,9 +231,10 @@ class CotizacionsController < ApplicationController
     @company =Company.find(1) 
 
     @cotizacion = Cotizacion.find(params[:id])
+    
+    @lcName = "COTIZACION-"
   
-  
-    Prawn::Document.generate("app/pdf_output/#{@cotizacion.id}.pdf", 
+    Prawn::Document.generate("app/pdf_output/#{@lcName+@cotizacion.code}.pdf", 
       :page_size => "A4",:margin=> 0 ) do |pdf|
      
        
@@ -251,9 +262,12 @@ class CotizacionsController < ApplicationController
             
             end 
 
-        @lcFileName =  "app/pdf_output/#{@cotizacion.id}.pdf"     
+        @lcFileName =  "app/pdf_output/#{@lcName + @cotizacion.code}.pdf"     
 
     end
+    puts "nombre archivo.."
+    puts @lcFileName1
+
 
     @lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+@lcFileName                
     send_file("#{@lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
@@ -437,6 +451,7 @@ class CotizacionsController < ApplicationController
             row << @cotizacion.total2
             table_content << row 
 
+
             row=[]
             row << "03"
             if !@cotizacion.tipo_unidad3_id.nil?
@@ -458,10 +473,97 @@ class CotizacionsController < ApplicationController
             row << @cotizacion.total3
             table_content << row 
 
+
+            row=[]
+            row << "04"
+            if !@cotizacion.tipo_unidad4_id.nil?
+              row << @cotizacion.get_tipounidad(@cotizacion.tipo_unidad4_id)
+            else 
+              row << ""
+            end 
+
+            if !@cotizacion.config_vehi4_id.nil?
+              puts "cotizacion..."
+              puts @cotizacion.config_vehi4_id
+             row << @cotizacion.get_configvehi(@cotizacion.config_vehi4_id)
+            else
+             row << ""
+            end 
+            row << @cotizacion.descrip4
+            row << @cotizacion.qty4
+            row << @cotizacion.price4
+            row << @cotizacion.total4
+            table_content << row 
+
+
+
+
+            row=[]
+            row << "05"
+            if !@cotizacion.tipo_unidad5_id.nil?
+              row << @cotizacion.get_tipounidad(@cotizacion.tipo_unidad5_id)
+            else
+              row << ""
+            end 
+
+            if !@cotizacion.config_vehi5_id.nil?
+              puts "cotizacion..."
+              puts @cotizacion.config_vehi5_id
+             row << @cotizacion.get_configvehi(@cotizacion.config_vehi5_id)
+            else
+             row << ""
+            end 
+            row << @cotizacion.descrip5
+            row << @cotizacion.qty5
+            row << @cotizacion.price5
+            row << @cotizacion.total5
+            table_content << row 
+
+
+
+
+            row=[]
+            row << "06"
+            if !@cotizacion.tipo_unidad6_id.nil?
+              row << @cotizacion.get_tipounidad(@cotizacion.tipo_unidad6_id)
+            else 
+              row << ""
+            end 
+
+            if !@cotizacion.config_vehi6_id.nil?
+              puts "cotizacion..."
+              puts @cotizacion.config_vehi6_id
+             row << @cotizacion.get_configvehi(@cotizacion.config_vehi6_id)
+            else
+             row << ""
+            end 
+            row << @cotizacion.descrip6
+            row << @cotizacion.qty6
+            row << @cotizacion.price6
+            row << @cotizacion.total6
+            table_content << row 
+
+
+              puts "totales"
+
+              puts @cotizacion.total
+                  puts @cotizacion.total2
+                      puts @cotizacion.total3
+                          puts @cotizacion.total4
+                            puts @cotizacion.total5
+                              puts @cotizacion.total6
+                          
+
+
+
             row=[]
             row << ""
             row << {:content=>"VALOR TOTAL DEL SERVICIO",:colspan => 5 } 
-            row << @cotizacion.total + @cotizacion.total2 + @cotizacion.total3
+            row << @cotizacion.total + @cotizacion.total2 + @cotizacion.total3 +
+              @cotizacion.total4 + @cotizacion.total5 + @cotizacion.total6
+
+            
+
 
             table_content << row 
           
@@ -515,14 +617,14 @@ class CotizacionsController < ApplicationController
               end 
 
 
-              pdf.bounding_box [40,500], :width  => pdf.bounds.width,:border_width=> 0 do
+              pdf.bounding_box [40,450], :width  => pdf.bounds.width,:border_width=> 0 do
               pdf.cell :content => @instruccion1 + @cotizacion.moneda.description + "\n" +  @instruccion5 + 
               @cotizacion.payment.descrip + "\n" +   @instruccion7 , align: :left, valign: :top, size: 9, :text_color => "000000", 
               :border_width => 0 , :font_style => :italic 
               end
 
 
-               pdf.bounding_box [40,410], :width  => pdf.bounds.width,:border_width=> 0 do
+               pdf.bounding_box [40,360], :width  => pdf.bounds.width,:border_width=> 0 do
                
             table_content =[]
               row=[]
@@ -584,7 +686,7 @@ class CotizacionsController < ApplicationController
 
 
 
-              pdf.bounding_box [40,300], :width  => pdf.bounds.width - 50,:border_width=> 0 do
+              pdf.bounding_box [40,250], :width  => pdf.bounds.width - 50,:border_width=> 0 do
               pdf.cell :content => @instruccion2 ,
               align: :left , valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :italic
               end
@@ -1426,26 +1528,70 @@ Muy atentamente, " ,
         :tipo_unidad_id,
         :tipo_unidad2_id,
         :tipo_unidad3_id,
+        :tipo_unidad4_id,
+        :tipo_unidad5_id,
+        :tipo_unidad6_id,
+
         :config_vehi_id,
         :config_vehi2_id,
         :config_vehi3_id,
+
+        :config_vehi4_id,
+        :config_vehi5_id,
+        :config_vehi6_id,
+
+
         :descrip1,
         :descrip2,
         :descrip3, 
+        :descrip4,
+        :descrip5,
+        :descrip6, 
+        :descrip7,
+        :descrip8,
+        :descrip9, 
+        :descrip10, 
+
         :qty,
         :qty2,
         :qty3,
+        :qty4,
+        :qty5,
+        :qty6,
+        :qty7,
+        :qty8,
+        :qty9,
+        :qty10,
+
         :price,
         :price2,
         :price3,
+        :price4,
+        :price5,
+        :price6,
+        :price7,
+        :price8,
+        :price9,
+        :price10,
+
         :total,
         :total2,
         :total3,
+        :total4,
+        :total5,
+        :total6,
+        :total7,
+        :total8,
+        :total9,
+        :total10,
+
+
         :tipounidad1,
         :tipounidad2,
         :tipounidad3,
         :tipounidad4,
         :tipounidad5,
+
   :tm ,:tipocustomer_id )
     end
 end
