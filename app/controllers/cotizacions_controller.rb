@@ -94,7 +94,7 @@ class CotizacionsController < ApplicationController
      
     @cotizacion[:total3] = @cotizacion[:price3] * @cotizacion[:qty3] 
 
-    @cotizacion[:total4]  = @cotizacion[:price4] * @cotizacion[:qty4] 
+    @cotizacion[:total4] = @cotizacion[:price4] * @cotizacion[:qty4] 
 
     @cotizacion[:total5] = @cotizacion[:price5] * @cotizacion[:qty5] 
      
@@ -138,6 +138,13 @@ class CotizacionsController < ApplicationController
     @cotizacion[:total2] = params[:cotizacion][:price2].to_f * params[:cotizacion][:qty2].to_f
      
     @cotizacion[:total3] = params[:cotizacion][:price3].to_f * params[:cotizacion][:qty3].to_f
+
+
+    @cotizacion[:total4] = params[:cotizacion][:price4].to_f * params[:cotizacion][:qty4].to_f 
+
+    @cotizacion[:total5] = params[:cotizacion][:price5].to_f * params[:cotizacion][:qty5].to_f
+     
+    @cotizacion[:total6] = params[:cotizacion][:price6].to_f * params[:cotizacion][:qty6].to_f
 
 
 
