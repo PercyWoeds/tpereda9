@@ -988,7 +988,7 @@ Diana Nathaly Perez Luciano." ,
             row=[]
             row << ""
             row << {:content=>"VALOR TOTAL DEL SERVICIO",:colspan => 5 } 
-            row << @cotizacion.total 
+            row << @cotizacion.total  +  @cotizacion.total2 +  @cotizacion.total3
 
             table_content << row 
           
@@ -1403,7 +1403,7 @@ Muy atentamente, " ,
             row=[]
             row << ""
             row << {:content=>"VALOR TOTAL DEL SERVICIO",:colspan => 5 } 
-            row << @cotizacion.total 
+            row << @cotizacion.total +  @cotizacion.total2 +  @cotizacion.total3
 
             table_content << row 
           
