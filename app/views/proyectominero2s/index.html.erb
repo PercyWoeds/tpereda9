@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Proyectominero2s</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>User</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @proyectominero2s.each do |proyectominero2| %>
+      <tr>
+        <td><%= proyectominero2.code %></td>
+        <td><%= proyectominero2.name %></td>
+        <td><%= proyectominero2.user_id %></td>
+        <td><%= link_to 'Show', proyectominero2 %></td>
+        <td><%= link_to 'Edit', edit_proyectominero2_path(proyectominero2) %></td>
+        <td><%= link_to 'Destroy', proyectominero2, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Proyectominero2', new_proyectominero2_path %>
+
+
+<%= link_to 'Regresa', "companies/reports/reports_basedatosexm/1" %>

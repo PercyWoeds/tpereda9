@@ -4,6 +4,10 @@ require 'sidekiq/web'
   Mnygo::Application.routes.draw do
 
   
+  resources :proyecto_exams
+  resources :proyecto_minero_exams
+  resources :proyectominero3s
+  resources :proyectominero2s
   resources :supplier_types
   resources :tipocustomers
   resources :couts
@@ -1346,6 +1350,8 @@ match 'purchases/do_crear/:id'   => 'purchases#do_crear', via: [:get, :post]
   match 'companies/mantenimiento/:id' => 'companies#mantenimiento', via: [:get, :post]
   match 'companies/bancos/:id' => 'companies#bancos', via: [:get, :post]
   match 'companies/examens/:id' => 'companies#examens', via: [:get, :post]
+  match '/companies/examens02/:id' => 'companies#examens02', via: [:get, :post]
+
   match 'companies/combus/:id' => 'companies#combus', via: [:get, :post]
   resources :companies
 
@@ -1431,7 +1437,10 @@ match 'purchases/do_crear/:id'   => 'purchases#do_crear', via: [:get, :post]
   # Frontpage
  # match 'dashboard' => 'pages#dashboard', via: [:get,s :post]
 
- 
+
+
+
+
   mount Sidekiq::Web, at: '/sidekiq'
 
 

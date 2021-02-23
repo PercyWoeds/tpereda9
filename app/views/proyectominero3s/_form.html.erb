@@ -1,0 +1,33 @@
+<%= simple_form_for(@proyectominero3) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :code %>
+    <%= f.input :name %>
+   
+  </div>
+
+
+
+  
+   <div class="field">
+      <%= f.check_box :formatofecha%>
+      <%= f.label :formatofecha ,"Fecha?", :class => "bold" %>
+      <div class="small">
+        Formato Fecha  ?
+      </div>
+    </div>
+  
+   <div class="field">
+      <%= f.check_box :formatotexto%>
+      <%= f.label :formatotexto ,"Texto ?", :class => "bold" %>
+      <div class="small">
+        Formato Textos?
+      </div>
+    </div>
+
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fecha: 2021-02-22 10:27:55
+  observacion: MyString
+  reference: MyString
+  proyecto_minero: MyString
+
+two:
+  fecha: 2021-02-22 10:27:55
+  observacion: MyString
+  reference: MyString
+  proyecto_minero: MyString

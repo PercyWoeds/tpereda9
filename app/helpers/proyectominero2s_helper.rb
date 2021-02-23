@@ -1,0 +1,2 @@
+module Proyectominero2sHelper
+end

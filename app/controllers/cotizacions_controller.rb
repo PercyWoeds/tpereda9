@@ -736,7 +736,14 @@ class CotizacionsController < ApplicationController
             row << "MODULAR "
             row << @cotizacion.tipounidad5
             table_content << row 
-
+            row=[]
+            row << "CAMACUNA "
+            row << @cotizacion.camacuna 
+            table_content << row 
+             row=[]
+            row << "STAND BY "
+            row << @cotizacion.stand_by 
+            table_content << row 
 
 
           
@@ -761,7 +768,7 @@ class CotizacionsController < ApplicationController
 
 
 
-              pdf.bounding_box [40,250], :width  => pdf.bounds.width - 50,:border_width=> 0 do
+              pdf.bounding_box [40,200], :width  => pdf.bounds.width - 50,:border_width=> 0 do
               pdf.cell :content => @instruccion2 ,
               align: :left , valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :italic
               end
@@ -1153,7 +1160,14 @@ Diana Nathaly Perez Luciano." ,
             row << "MODULAR "
             row << @cotizacion.tipounidad5
             table_content << row 
-
+row=[]
+            row << "CAMACUNA "
+            row << @cotizacion.camacuna 
+            table_content << row 
+             row=[]
+            row << "STAND BY "
+            row << @cotizacion.stand_by 
+            table_content << row 
 
 
           
@@ -1178,7 +1192,7 @@ Diana Nathaly Perez Luciano." ,
 
 
 
-              pdf.bounding_box [40,200], :width  => pdf.bounds.width - 50,:border_width=> 0 do
+              pdf.bounding_box [40,180], :width  => pdf.bounds.width - 50,:border_width=> 0 do
               pdf.cell :content => @instruccion2 ,
               align: :left , valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :italic
               end
@@ -1666,7 +1680,8 @@ Muy atentamente, " ,
         :tipounidad3,
         :tipounidad4,
         :tipounidad5,
-
+        :camacuna,
+        :stand_by,
   :tm ,:tipocustomer_id )
     end
 end

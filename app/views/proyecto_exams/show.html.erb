@@ -1,0 +1,224 @@
+<p id="notice"><%= notice %></p>
+
+
+<p>
+  <strong>Proyecto minero exam:</strong>
+  <%= @proyecto_exam.proyecto_minero.descrip %>
+</p>
+
+
+<form method="get" action="/proyecto_exams" onsubmit="addItemToProyectoExam(); return false;">
+
+<table>
+  <thead>
+    
+  </thead>
+
+<tr>
+
+     <th>
+     </th>
+
+      <% for productItem in @pumps %>
+
+        <% rating_id = productItem.proyectominero2.name  %>
+        
+        <% puts rating_id %>
+        <th>
+          <%="#{rating_id}" %>
+        </th>
+
+        
+    <% end %>
+	</tr>
+<tr>
+
+
+     <th>
+
+     	EMPLEADO 
+     </th>
+
+
+      <% for productItem in @pumps %>
+
+        <% rating2_id = productItem.proyectominero3.name  %>
+        
+        <% puts rating2_id %>
+        <tH>
+          <%="#{rating2_id}" %>
+        </tH>
+
+        
+      <% end %>
+
+
+  </tr>
+     
+  <tbody>
+
+
+<tbody>
+
+    <tr>
+      <td>
+         
+  <div class="field">
+  
+    <%= select_tag(:employee_id,options_from_collection_for_select(@employees,'id','full_name') ,:style=> 'width: 100px' )  %>
+
+  </div>
+
+      </td>
+
+    <% for productItem in @pumps %>
+        <% rating_id = "field_" + productItem.id.to_s %>
+
+        <%if productItem.proyectominero3.formatofecha == "1"%>
+	        <td>
+
+	         <%le_an_gln = Date.today %>
+	          <input type="date" name= "<%="#{rating_id}" %>" id= "<%= "#{rating_id}" %>" value="<%= le_an_gln %>" class="tf_shorty" />
+	        </td>
+
+
+        <% else %>
+
+	        <%le_an_gln = "" %>
+	        <td>
+	          <input type="text" name= "<%="#{rating_id}" %>" id= "<%= "#{rating_id}" %>" value="<%= le_an_gln %>  " class="tf_shorty"   />
+	        </td>
+
+        <% end %>
+
+    <% end %>
+
+   </tr>
+
+
+  </tbody>
+</table>
+
+    <br />
+    <input type="submit" value="Agregar Datos " />
+</form>
+
+<table> 
+<%= hr() %>
+<% nroitem = 1 %>
+    <%  @proyectoexam_details.each do |product| %>
+    
+      <tr>
+        <td>
+
+          <%= nroitem%>
+
+          <% nroitem += 1 %>
+        </td>
+
+
+           <td class="small bordered_bottom bordered_right">
+           
+              <%= product.gasto.descrip  %>
+
+         </td>
+       
+          <td><%= link_to 'Editar',  edit_proyectoexam_proyecto_exam_detail_path(viatico_id: @proyectoexam.id,id: product.id ) %></td>          
+          <td><%= link_to 'Eliminar',[@proyectoexam,product], method: :delete, data: { confirm: 'Esta seguro?' } %></td>
+          
+      </tr>
+    <% end %>
+   <tr>
+      <td colspan="9" class="bordered_bottom bordered_right bold">
+        Total Ingresos
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= %>
+      </td>
+    </tr>
+    
+   <tr> 
+  
+  </table>
+   
+   
+  </tbody>
+
+<br />
+
+
+<div class="button">
+  <%= link_to 'Exportar to PDF', "/proyecto_exams/pdf/#{@proyecto_exam.id}.pdf" %>  
+  <%= link_to 'Regresar ', proyecto_exams_path %>
+</div>
+
+
+
+<%= render 'layouts/autocomplete' %>
+
+
+<script>
+
+function  addItemToProyectoExam() {
+
+  var items = ""; 
+ alert("additem ****"); 
+
+
+ <% for pump in @pumps  do  %>
+
+ var item + "pump.id" = $("field_"+"#pump.id").val(); 
+
+ <% end %>
+
+  var item1 = $("#gastos_id").val(); 
+  var item2 = $("#supplier_id").val();
+
+  var item3 = $("#employee_id").val(); 
+  var item4 = $("#tipomov_id").val();
+
+  var item5 = $("#numero").val(); 
+  var item7 = $("#compro").val(); 
+  var item8 = $("#fecha").val();
+
+  var item9 = $("#importe").val(); 
+  var item10 = $("#detalle").val();
+
+
+  var  item_line = item1 + "|BRK|" +item2  + "|BRK|" +item3 + "|BRK|" + item4 + "|BRK|" 
+                  +item5 + "|BRK|" +item6  + "|BRK|" +item7 + "|BRK|" + item8 + "|BRK|" 
+                  +item9 + "|BRK|" +item10 + "|BRK|"  ;
+
+    $.get('/proyecto_exams/do_grabar/<%= @proyecto_exam.id%>/' ,  {
+      items: item_line 
+    }, 
+    function(data) {
+      $("#list_items").html(data);
+      documentReady();
+    });
+
+    alert("Registro Agregado.");
+
+   
+  
+
+   $("#numero").val("0.00"); 
+  
+
+  $("#compro").val(""); 
+  
+
+  $("#importe").val("0.00"); 
+  $("#detalle").val("");
+
+
+
+}
+
+
+
+
+
+
+
+</script>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210219170927) do
+ActiveRecord::Schema.define(version: 20210223205204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -531,6 +531,8 @@ ActiveRecord::Schema.define(version: 20210219170927) do
     t.float    "qty10"
     t.float    "price10"
     t.float    "total10"
+    t.string   "camacuna"
+    t.string   "stand_by"
   end
 
   create_table "couts", force: :cascade do |t|
@@ -2030,14 +2032,62 @@ ActiveRecord::Schema.define(version: 20210219170927) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "proyecto_exams", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "proyecto_minero_exam_id"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "proyecto_minero_id"
+  end
+
+  create_table "proyecto_minero_exams", force: :cascade do |t|
+    t.datetime "fecha"
+    t.string   "observacion"
+    t.string   "reference"
+    t.integer  "proyecto_minero_id"
+    t.integer  "proyectominero2_id"
+    t.integer  "proyectominero3_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
   create_table "proyecto_mineros", force: :cascade do |t|
     t.string   "code"
     t.datetime "fecha1"
     t.datetime "fecha2"
     t.string   "descrip"
     t.integer  "punto_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.integer  "proyecto_minero_id"
+  end
+
+  create_table "proyectoexam_details", force: :cascade do |t|
+    t.integer  "proyecto_minero_exam_id"
+    t.datetime "fecha"
+    t.datetime "observacion"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "employee_id"
+    t.integer  "proyecto_exam_id"
+  end
+
+  create_table "proyectominero2s", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "proyectominero3s", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "formatofecha"
+    t.string   "formatotexto"
   end
 
   create_table "pumps", force: :cascade do |t|

@@ -401,6 +401,12 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
      employees =  Employee.where(:active => "1").order(:full_name2)
      return employees
   end    
+
+   def get_employees2()
+     employees =  Employee.where(:active => "1").order(:last_name,:first_name)
+     return employees
+  end   
+
   def get_empsubs()
      empsubs = Subcontrat.all 
      return empsubs
@@ -5383,15 +5389,60 @@ def get_facturas_by_day_value_month(fecha1,fecha2,value='total',moneda)
   
 def get_facturas_day_cliente(fecha1,fecha2,cliente)
    
-    @facturas = Factura.where(["total> 0  and  company_id = ? AND fecha >= ? and fecha<= ? and customer_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", cliente ]).order(:customer_id,:moneda_id,:fecha)
+    @facturas = Factura.where(["total> 0  and  company_id = ? AND fecha >= ? and fecha<= ? 
+      and customer_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", cliente ]).order(:customer_id,:moneda_id,:fecha)
     return @facturas
     
  end 
  
-   
 
-  
+ def get_pm
+
+   fechahoy = Date.today()
+   puts "************"
+   puts fechahoy
+
+  a = ProyectoMinero.where(["fecha2 <=? ","#{fechahoy} 23:59:59"] )
+  return a
+
+ end 
+
+def get_pm1
+
+  a = Proyectominero2.all
+  return a
+
+ end 
+   
+def get_pm2
+
+
+  a = Proyectominero3.all 
+  return a
+
+ end 
+
+
+
+ def get_proyecto_exams
+
+    @proyecto_examen =ProyectoExam.find_by_sql(["Select proyecto_minero_exams.id ,
+    concat(proyecto_mineros.descrip,' ',proyectominero2s.name,'  ',proyectominero3s.name )
+     as name 
+    from proyecto_minero_exams   
+    INNER JOIN proyecto_mineros ON proyecto_minero_exams.proyecto_minero_id = proyecto_mineros.id
+    INNER JOIN proyectominero2s ON proyecto_minero_exams.proyectominero2_id = proyectominero2s.id 
+    INNER JOIN proyectominero3s ON proyecto_minero_exams.proyectominero3_id = proyectominero3s.id
+    ORDER BY proyecto_minero_exams.id "])
+    
+    return @proyecto_examen
+    
+ end 
+
+
+
  
 end
 
 
+ 

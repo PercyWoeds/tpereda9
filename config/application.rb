@@ -34,9 +34,9 @@ module Mnygo
   class String
   def to_d
     begin
-      BigDecimal(self)
+    #  BigDecimal(self)
     rescue ArgumentError
-      BigDecimal(0)
+    #  BigDecimal(0)
     end
   end
 end

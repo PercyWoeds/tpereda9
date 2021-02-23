@@ -1,0 +1,48 @@
+<%= simple_form_for(@proyecto_minero_exam) do |f| %>
+  
+
+   <% if @proyecto_minero_exam.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@proyecto_minero_exam.errors.count, "error") %> prohibited this proyecto from being saved:</h2>
+
+      <ul>
+      <% @proyecto_minero_exam.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-inputs">
+
+ <% if @pm.size > 0 %>
+    <td>Proyecto Minero :</td>
+    <td>  <%= f.collection_select :proyecto_minero_id, @pm , :id, :descrip, :prompt => true, class: "ui selection dropdown" %></td>
+
+<br>
+
+
+ <td>Proyecto Minero section 2 :</td>
+    <td>  <%= f.collection_select :proyectominero2_id, @pm1 , :id, :name, :prompt => true, class: "ui selection dropdown" %></td>
+
+    <br>
+
+
+ <td>Proyecto Minero section 3 :</td>
+    <td>  <%= f.collection_select :proyectominero3_id, @pm2 , :id, :name, :prompt => true, class: "ui selection dropdown" %></td>
+
+    <br>
+
+
+   <% else%>
+
+
+    No existen registros vigentes 
+
+   <% end %>
+
+
+  <div class="form-actions">
+    <%= f.button :submit,   class: "ui green submit button" %>
+  </div>
+<% end %>

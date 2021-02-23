@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+
+<h1>Listing Proyecto Minero Exams</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Proyecto </th>
+      <th>Exm Cap </th>
+      <th>Detalle Fecha </th>
+      <th>Opciones </th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @proyecto_minero_exams.each do |proyecto_minero_exam| %>
+      <tr>
+        
+       
+        <td><%= proyecto_minero_exam.proyecto_minero.descrip %></td>
+        <td><%= proyecto_minero_exam.proyectominero2.name %></td>
+        <td><%= proyecto_minero_exam.proyectominero3.name%></td>
+
+        <td><%= link_to 'Show', proyecto_minero_exam %></td>
+        <td><%= link_to 'Edit', edit_proyecto_minero_exam_path(proyecto_minero_exam) %></td>
+        <td><%= link_to 'Destroy', proyecto_minero_exam, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Proyecto minero exam', new_proyecto_minero_exam_path %>
+
+
+<%= link_to 'Regresa', "companies/reports/reports_basedatosexm/1" %>

@@ -3,10 +3,10 @@
   
   <%= hr() %>
 
-  <h3>
+  <h4>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
     <%= link_to "Autorización de gestion nueva o renovacion", "/companies/outputs/#{@company.id}" %>
-  </h3>
+  </h4>
 
   <p>
      Autorizacion de gestion nueva o renovacion.
@@ -14,10 +14,10 @@
   
   <%= hr() %>
 
-   <h3>
+   <h4>
     <%= image_tag("supplier_32.png", :class => "vmiddle") %>
     <%= link_to "Cargo de aprobacion de exm. y cap.", conductors_path %>
-  </h3>
+  </h4>
 
   <p>
      Agregar, editar or eliminar proveedores para tu negocio.
@@ -25,10 +25,10 @@
   <%= hr() %>
 
   
-   <h3>
+   <h4>
     <%= image_tag("supplier_32.png", :class => "vmiddle") %>
     <%= link_to "Status de ingreso  a proyectos mineros" , trucks_path %>
-  </h3>
+  </h4>
 
   <p>
      Agregar, editar or eliminar proveedores para tu negocio.
@@ -40,10 +40,10 @@
 
   
   
-   <h3>
+   <h4>
     <%= image_tag("supplier_32.png", :class => "vmiddle") %>
     <%= link_to "Matriz de inversion para proyectos mineros " , trucks_path %>
-  </h3>
+  </h4>
 
   <p>
      Matriz de inversion para proyectos mineros.
@@ -53,10 +53,10 @@
 
   
   
-   <h3>
+   <h4>
     <%= image_tag("supplier_32.png", :class => "vmiddle") %>
     <%= link_to "Autorización de viaticos para Exm.Med.y capacitaciones " , trucks_path %>
-  </h3>
+  </h4>
 
   <p>
      Matriz de inversion para proyectos mineros.
@@ -71,12 +71,12 @@
 
 <div class="mid_box">
 <%= hr() %>
-  <h3>
+  <h4>
         <div>
     <%= image_tag("clients_32.png", :class => "vmiddle") %>
     <%= link_to "Base de datos examnes medicos y capacitaciones", "/companies/reports/reports_basedatosexm/#{@company.id}" %>
         </div>
-  </h3>
+  </h4>
   
   <p>
      Agregar, editar or eliminar exm.medicos y capacitaciones.
@@ -85,10 +85,10 @@
 <%= hr() %>
 
      <% if @current_user.level == "admin" %>
-  <h3>
+  <h4>
     <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
     <%= link_to "Base de datos de Contacto a minas ", contactopms_path   %>
-  </h3>
+  </h4>
 
   <p>
    Agregar, editar or eliminar contactos a minas 
@@ -97,10 +97,10 @@
   <%= hr() %>
  
   
-  <h3>
+  <h4>
     <%= image_tag("divisions_32.png", :class => "vmiddle") %>
-    <%= link_to "Base de datos de empresas capacitadoras ", supplier__path %>
-  </h3>
+    <%= link_to "Base de datos de empresas capacitadoras ", suppliers_path %>
+  </h4>
 
   <p>
       Agregar, editar or eliminar contactos base de datos de empresas capacitadoras.

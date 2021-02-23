@@ -3,6 +3,12 @@ class ProyectoMinero < ActiveRecord::Base
 	 validates_presence_of :descrip
 	 validates_presence_of :punto_id
 
+    
+	 has_many :proyecto_minero_exams
+	 has_many :proyecto_exams
+
+
+
 	 def generate_rq_number(serie)
     if ProyectoMinero.where("cast(substring(code,1,3)  as int) = ?",serie).maximum("cast(substring(code,5,10)  as int)") == nil 
       self.code = serie.to_s.rjust(3, '0') +"-000001"

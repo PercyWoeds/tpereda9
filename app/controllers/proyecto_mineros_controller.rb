@@ -82,6 +82,6 @@ class ProyectoMinerosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def proyecto_minero_params
-      params.require(:proyecto_minero).permit(:code, :fecha1, :fecha2, :descrip, :punto_id)
+      params.require(:proyecto_minero).permit(:code, :fecha1, :fecha2, :descrip, :punto_id,:proyecto_minero_id)
     end
 end

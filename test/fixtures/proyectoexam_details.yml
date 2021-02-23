@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  proyecto_minero_exam_id: 1
+  fecha: 2021-02-22 14:47:58
+  observacion: 2021-02-22 14:47:58
+
+two:
+  proyecto_minero_exam_id: 1
+  fecha: 2021-02-22 14:47:58
+  observacion: 2021-02-22 14:47:58

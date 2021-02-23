@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Proyecto Exams</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Employee</th>
+      <th>Proyecto minero exam</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @proyecto_exams.each do |proyecto_exam| %>
+      <tr>
+        <td><%= proyecto_exam.employee_id %></td>
+        <td><%= proyecto_exam.proyecto_minero.descrip %></td>
+        <td><%= link_to 'Ver', proyecto_exam %></td>
+        <td><%= link_to 'Editar', edit_proyecto_exam_path(proyecto_exam) %></td>
+        <td><%= link_to 'Eliminar', proyecto_exam, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Proyecto exam', new_proyecto_exam_path %>
