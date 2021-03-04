@@ -274,6 +274,11 @@ require 'sidekiq/web'
   resources :ventaislas  do
     resources :ventaisla_details, except: [:index,:show], controller: "ventaislas/ventaisla_details"
   end 
+
+  resources :proyecto_exams do
+    resources :proyectoexam_details, except: [:index,:show], controller: "proyecto_exams/proyectoexam_details"
+    
+  end
   resources :quotations  do
     resources :quotation_details, except: [:index,:show], controller: "quotations/quotation_details"
   end 
@@ -1431,8 +1436,10 @@ match 'purchases/do_crear/:id'   => 'purchases#do_crear', via: [:get, :post]
   resources :ventaislas
   
 
-
-  resources :viaticos 
+  
+   match 'proyecto_exams/do_grabar/:proyecto_exam_id/:empleado_id/:proyecto_minero_id' => 'proyecto_exams#do_grabar', via: [:get, :post]
+   match 'proyecto_exams/pdf/:id' => 'proyecto_exams#pdf', via: [:get, :post]
+  resources :proyecto_exams 
 
   # Frontpage
  # match 'dashboard' => 'pages#dashboard', via: [:get,s :post]

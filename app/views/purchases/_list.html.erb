@@ -55,11 +55,11 @@
          
                       <td>
           <%= link_to 'Editar',edit_purchase_path(purchase)   %> </td>
-         <%if  @current_user.level == "admin"  %> 
+        
                  <td>       
           <%= link_to 'Eliminar', purchase, method: :delete, data: { confirm: 'Esta seguro de eliminar ?' } %>
            </td>
-        <%end %>
+      
 
       </tr>
     <% end %>

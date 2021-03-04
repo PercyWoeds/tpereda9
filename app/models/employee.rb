@@ -24,6 +24,8 @@ class Employee < ActiveRecord::Base
 
  has_many :couts  
 
+ has_many :proyectoexam_details 
+
   
     
     validates_uniqueness_of :idnumber,:cod_interno

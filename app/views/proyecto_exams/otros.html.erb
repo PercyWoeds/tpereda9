@@ -1,0 +1,69 @@
+ <% for detalle in @detalle  %>
+
+            <% if proyectoitem.proyecto_minero_exam.proyectominero3.formatofecha == "1" %>
+       
+		           <td class="small bordered_bottom bordered_right">
+		           	<%= product.fecha.strftime("%d/%m/%Y")  %>
+		           </td>
+		    <% else %>
+
+		 			<td class="small bordered_bottom bordered_right">
+		           	<%= product.observacion  %>
+		           </td>
+		    <% end %>
+<% end %>
+
+
+
+
+
+    
+    <%  @proyectoexam_details.each do |product| %>
+    
+      <tr>
+        <td>
+
+             <%= product.employee.full_name  %>
+        
+        </td>
+         
+          <td>
+
+             <%= product.proyecto_minero_exam.proyectominero2.name   %>
+        
+        </td>
+       
+ <td>
+
+             <%= product.proyecto_minero_exam.proyectominero3.name   %>
+        
+        </td>
+       
+
+ 	<% if product.proyecto_minero_exam.proyectominero3.formatofecha == "1" %>
+       
+           <td class="small bordered_bottom bordered_right">
+           	<%= product.fecha.strftime("%d/%m/%Y")  %>
+           </td>
+    <% else %>
+
+ 			<td class="small bordered_bottom bordered_right">
+           	<%= product.observacion  %>
+           </td>
+    <% end %>
+    
+                
+          <td><%= link_to 'Eliminar',[@proyecto_exam,product], method: :delete, data: { confirm: 'Esta seguro?' } %></td>
+          
+         </tr>
+    <% end %>
+   <tr>
+      <td colspan="9" class="bordered_bottom bordered_right bold">
+        Total Ingresos
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= %>
+      </td>
+    </tr>
+    
+   <tr> 

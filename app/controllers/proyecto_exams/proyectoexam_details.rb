@@ -36,41 +36,19 @@ class ProyectoExams::ProyectoexamDetailsController < ApplicationController
     
     @proyectoexam_detail = ProyectoexamDetail.new(proyectoexam_detail_params)
     
-    @proyectoexam_detail.proyectoexam_id  = @ventaisla.id
-    
-    @proyectoexam_detail.le_an_gln  = params[:ac_le_an_gln]
-    @proyectoexam_detail.price      = params[:ac_product_price]
-    
-    if @proyectoexam_detail.le_ac_gln < 0.01
-       @proyectoexam_detail.le_ac_gln = @proyectoexam_detail.le_an_gln
-    end      
-          
-     @cantidad =  @proyectoexam_detail.le_an_gln -  @proyectoexam_detail.le_ac_gln
-    
-     @proyectoexam_detail[:quantity] = @cantidad.round(3)
-     @total =   @proyectoexam_detail[:quantity] *  @proyectoexam_detail[:price] 
-     @proyectoexam_detail[:total]   = @total.round(2)
+    @proyectoexam_detail.proyectoexam_id  = @proyecto_exam.id
+   
+   
           
       @employee = Employee.all 
       @valor = Valor.all
     
-     $lcpump_id  = @proyectoexam_detail.pump_id
-     
-     $lc_lectura = @proyectoexam_detail.le_ac_gln
      
     respond_to do |format|
       if @proyectoexam_detail.save
         
-         $lcGalones = @proyectoexam.get_importe_1("galones")
-         $lcImporte = @proyectoexam.get_importe_1("total")
-         
-         @proyectoexam.update_attributes(galones:  $lcGalones ,importe: $lcImporte )
-         
-         @pump = Pump.find($lcpump_id)
-         if @pump != nil
-          @pump.update_attributes(le_an_gln: $lc_lectura)
-         end 
-         
+     
+    
               format.html { redirect_to @proyectoexam, notice: 'Proyecto exam  detail was successfully created.' }
         format.json { render :show, status: :created, location: @proyectoexam }
       else
@@ -123,7 +101,7 @@ class ProyectoExams::ProyectoexamDetailsController < ApplicationController
   private
   
     def set_ventaisla 
-      @proyectoexam  = ProyectoExam.find(params[:ventaisla_id])
+      @proyectoexam  = ProyectoExam.find(params[:proyectoexam_id])
       
     end 
     # Use callbacks to share common setup or constraints between actions.
@@ -133,7 +111,8 @@ class ProyectoExams::ProyectoexamDetailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def proyectoexam_detail_params
-      params.require(:proyectoexam_detail).permit(:pump_id,:le_an_gln,:le_ac_gln,:price,:quantity,:total,:ventaisla_id,:product_id)
+      params.require(:proyectoexam_detail).permit(:employee_id, :proyecto_minero_id,
+        :proyecto_minero_exam_id ,:observacion)
     end
 end
 

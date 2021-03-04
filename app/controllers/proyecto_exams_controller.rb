@@ -5,6 +5,8 @@ class ProyectoExamsController < ApplicationController
   # GET /proyecto_exams.json
   def index
     @proyecto_exams = ProyectoExam.all
+
+
   end
 
   # GET /proyecto_exams/1
@@ -14,7 +16,12 @@ class ProyectoExamsController < ApplicationController
     @employees = @company.get_employees()
     @proyecto_examen  = @company.get_proyecto_exams
 
+
+    @proyecto_examen_empleado = @company.get_proyecto_exam_empleado(@proyecto_exam.proyecto_minero_id) 
+
     @proyectoexam_details= @proyecto_exam.proyectoexam_details
+
+
     
     @rows = 2
   
@@ -23,11 +30,10 @@ class ProyectoExamsController < ApplicationController
     @cols = @pumps.count 
 
     @valor  = Array.new(2) { Array.new(@cols) { "" } }
-
     
 
     for i in 0..0 do
-        puts i
+
 
       for pumps in @pumps do
 
@@ -38,7 +44,7 @@ class ProyectoExamsController < ApplicationController
     end 
    
     for i in 1..1 do
-        puts i
+      
 
       for pumps in @pumps do
 
@@ -47,7 +53,9 @@ class ProyectoExamsController < ApplicationController
        end 
 
     end 
-   
+
+    @proyecto_minero_id = @proyecto_exam.proyecto_minero_id 
+    @proyecto_exam_id = @proyecto_exam.id
 
       
 
@@ -125,6 +133,137 @@ class ProyectoExamsController < ApplicationController
     end
   end
 
+
+
+
+  
+  def do_grabar 
+
+    proyecto_minero_id = params[:proyecto_minero_id]
+    proyecto_exam_id = params[:proyecto_exam_id]
+    empleado_id = params[:empleado_id]
+
+    items = params[:items]
+    @pumps = ProyectoMineroExam.where(proyecto_minero_id: proyecto_minero_id)
+    items_arr = []
+    @products = []
+    i = 0
+    qty = 0 
+    total_qty   = 0
+
+    totales_qty = 0
+    totales_gln = 0
+    puts "empleado.+++++++++"
+    puts empleado_id
+
+    if ProyectoexamDetail.where(proyecto_minero_exam_id: proyecto_minero_id).exists?
+
+              a = ProyectoexamDetail.where(proyecto_minero_exam_id: proyecto_minero_id).delete_all 
+              
+         end 
+
+     puts "items++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+     puts items
+     i = 0
+     parts = items.split("|BRK|")
+     puts "partessss "
+     puts parts
+
+
+      for pumps in @pumps do
+
+        
+       a = pumps.proyectominero3_id
+
+       @blanco  = " "
+
+       proyecto_minero_exam_detail_id = pumps.id 
+
+        if pumps.get_formato_fecha(a) 
+
+          puts "graba detalle fecha "
+          puts parts[i]
+          puts @blanco
+
+
+          proyectoexam_details =  ProyectoexamDetail.new(
+                  proyecto_minero_exam_id:proyecto_minero_exam_detail_id ,
+                  fecha: parts[i], 
+                  observacion: @blanco,  
+                  employee_id: empleado_id  , 
+                  proyecto_exam_id: proyecto_exam_id,
+                  proyecto_minero_id: proyecto_minero_id )
+        else 
+
+
+          puts "graba detalle observacion "
+          puts parts[i]
+          puts @blanco 
+
+         proyectoexam_details =  ProyectoexamDetail.new(
+                    proyecto_minero_exam_id: proyecto_minero_exam_detail_id,
+                    fecha: nil, 
+                    observacion: parts[i] , 
+                    employee_id: empleado_id  ,
+                    proyecto_exam_id: proyecto_exam_id,
+                    proyecto_minero_id: proyecto_minero_id )
+
+        end 
+
+         proyectoexam_details.save
+       i += 1
+
+       end 
+
+
+
+ 
+
+     # ventaislacab = Ventaisla.find(ventaisla_id)
+     #ventaislacab.update_attributes(importe: totales_qty , galones: totales_gln )
+      # render :layout => false
+  end
+  
+
+
+ def pdf
+
+
+   @proyecto_exam  = ProyectoExam.find(params[:id])
+    company = Company.find(1)
+    @company =Company.find(company)
+    @cabecera ="Facturacion"
+    @abajo    ="Examen "
+  @pumps = ProyectoMineroExam.where(proyecto_minero_id: @proyecto_exam.proyecto_minero_id)
+   @proyecto_examen_empleado = @company.get_proyecto_exam_empleado(@proyecto_exam.proyecto_minero_id) 
+
+    @cols = @pumps.count 
+     
+      begin 
+        
+
+        render  pdf: "rpt_proyecto_exam_01",template: "proyecto_exams/rpt_proyecto_exam_01.pdf.erb",
+        locals: {:proyecto_exam => @proyecto_exam} ,
+         :orientation => 'Landscape',
+         :header => {
+           :spacing => 5,
+                           :html => {
+                           :template => 'layouts/pdf-header10.html', 
+                           right: '[page] of [topage]'
+                  }
+               },
+
+               :footer => { :html => { template: 'layouts/pdf-footers.html' }       }  ,   
+               :margin => {bottom: 35} 
+                
+       end   
+
+    
+  end
+
+
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_proyecto_exam
@@ -133,6 +272,6 @@ class ProyectoExamsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def proyecto_exam_params
-      params.require(:proyecto_exam).permit(:employee_id, :proyecto_minero_id)
+      params.require(:proyecto_exam).permit(:employee_id, :proyecto_minero_id,:proyecto_minero_exam_id ,:observacion)
     end
 end

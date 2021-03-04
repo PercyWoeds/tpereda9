@@ -6,4 +6,5 @@ class Proyectominero3 < ActiveRecord::Base
 	 has_many :proyecto_minero_exams
 	 
 	 
+
 end

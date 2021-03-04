@@ -1,3 +1,12 @@
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+
 <p id="notice"><%= notice %></p>
 
 
@@ -7,24 +16,28 @@
 </p>
 
 
+
+
+<div id='container' style='height:200px;width:1200px;overflow-x:scroll'>
+
 <form method="get" action="/proyecto_exams" onsubmit="addItemToProyectoExam(); return false;">
 
-<table>
+<table class="ui right aligned table">
   <thead>
     
   </thead>
 
 <tr>
+  
 
-     <th>
+     <th class="small bordered_bottom bordered_right">
      </th>
 
       <% for productItem in @pumps %>
 
         <% rating_id = productItem.proyectominero2.name  %>
-        
-        <% puts rating_id %>
-        <th>
+       
+        <th class="small bordered_bottom bordered_right">
           <%="#{rating_id}" %>
         </th>
 
@@ -34,7 +47,7 @@
 <tr>
 
 
-     <th>
+     <th class="small bordered_bottom bordered_right">
 
      	EMPLEADO 
      </th>
@@ -44,10 +57,10 @@
 
         <% rating2_id = productItem.proyectominero3.name  %>
         
-        <% puts rating2_id %>
-        <tH>
+        
+        <th class="small bordered_bottom bordered_right">
           <%="#{rating2_id}" %>
-        </tH>
+        </th>
 
         
       <% end %>
@@ -55,19 +68,15 @@
 
   </tr>
      
-  <tbody>
+
 
 
 <tbody>
 
     <tr>
-      <td>
+      <td class="small bordered_bottom bordered_right">
          
-  <div class="field">
-  
-    <%= select_tag(:employee_id,options_from_collection_for_select(@employees,'id','full_name') ,:style=> 'width: 100px' )  %>
-
-  </div>
+    <%=  select_tag(:employee_id,options_from_collection_for_select(@employees,'id','full_name') ,:style=> 'width: 230px' )  %>
 
       </td>
 
@@ -75,7 +84,7 @@
         <% rating_id = "field_" + productItem.id.to_s %>
 
         <%if productItem.proyectominero3.formatofecha == "1"%>
-	        <td>
+	        <td class="small bordered_bottom bordered_right">
 
 	         <%le_an_gln = Date.today %>
 	          <input type="date" name= "<%="#{rating_id}" %>" id= "<%= "#{rating_id}" %>" value="<%= le_an_gln %>" class="tf_shorty" />
@@ -85,7 +94,7 @@
         <% else %>
 
 	        <%le_an_gln = "" %>
-	        <td>
+	        <td class="small bordered_bottom bordered_right">
 	          <input type="text" name= "<%="#{rating_id}" %>" id= "<%= "#{rating_id}" %>" value="<%= le_an_gln %>  " class="tf_shorty"   />
 	        </td>
 
@@ -100,46 +109,116 @@
 </table>
 
     <br />
-    <input type="submit" value="Agregar Datos " />
+   
+
+     <%= submit_tag  "Agregar Datos " ,  class: "ui primary button"   %>
+
+
 </form>
+</div>
 
-<table> 
-<%= hr() %>
-<% nroitem = 1 %>
-    <%  @proyectoexam_details.each do |product| %>
-    
-      <tr>
-        <td>
+<div id='container' style='height:500px;width:1200px;overflow-x:scroll'>
 
-          <%= nroitem%>
-
-          <% nroitem += 1 %>
-        </td>
+<table class="ui right aligned table">
 
 
-           <td class="small bordered_bottom bordered_right">
-           
-              <%= product.gasto.descrip  %>
+<tr>
 
-         </td>
+     <th class="small bordered_bottom bordered_right">
+     </th>
+
+      <% for productItem in @pumps %>
+
+        <% rating_id = productItem.proyectominero2.name  %>
        
-          <td><%= link_to 'Editar',  edit_proyectoexam_proyecto_exam_detail_path(viatico_id: @proyectoexam.id,id: product.id ) %></td>          
-          <td><%= link_to 'Eliminar',[@proyectoexam,product], method: :delete, data: { confirm: 'Esta seguro?' } %></td>
-          
-      </tr>
+        <th class="small bordered_bottom bordered_right">
+          <%="#{rating_id}" %>
+        </th>
+
+        
     <% end %>
-   <tr>
-      <td colspan="9" class="bordered_bottom bordered_right bold">
-        Total Ingresos
-      </td>
-      <td class="bordered_bottom bordered_right bold right">
-        <%= %>
-      </td>
-    </tr>
-    
-   <tr> 
+  </tr>
+<tr>
+
+
+     <th class="small bordered_bottom bordered_right">
+
+      EMPLEADO 
+     </th>
+
+
+      <% for productItem in @pumps %>
+
+        <% rating2_id = productItem.proyectominero3.name  %>
+        
+        
+        <th class="small bordered_bottom bordered_right">
+          <%="#{rating2_id}" %>
+        </tH>
+
+        
+      <% end %>
+
+
+  </tr>
+     
+
+<%= hr() %>
+
+
+      <% for proyectoitem in @proyecto_examen_empleado %>
+
+            
+        
+        <tr>
+         <td  class="small bordered_bottom bordered_left", style="width: 230px" > <%= proyectoitem.employee.full_name   %> <br></td>
+
+
+              <% @detalle = proyectoitem.get_detalle(proyectoitem.employee_id, @proyecto_exam.proyecto_minero_id ) %>
+
+                 <% for detalle in @detalle  %>
+                     
+                    <% if detalle.proyecto_minero_exam.proyectominero3.formatofecha == "1" %>
+
+                         <% if detalle.fecha ==  nil %>
+
+                           <td class="small bordered_bottom bordered_right" >
+                              -
+                           </td>
+
+                         <% else %>
+               
+                           <td class="small bordered_bottom bordered_right" >
+                            <%= detalle.fecha.strftime("%d/%m/%Y")  %>
+                           </td>
+
+                        <% end %>
+                    <% else %>
+
+
+                         
+
+                          <td  class="small bordered_bottom bordered_right">
+                            <%= detalle.observacion  %>
+                           </td>
+
+              
+                    <% end %>
+                <% end %>
+
+
+
+        </tr>
+
+
+
+      
+    <% end %>
+
+
   
   </table>
+</div>
    
    
   </tbody>
@@ -149,6 +228,8 @@
 
 <div class="button">
   <%= link_to 'Exportar to PDF', "/proyecto_exams/pdf/#{@proyecto_exam.id}.pdf" %>  
+  <%= link_to 'Exportar to XLS', "/proyecto_exams/xls/#{@proyecto_exam.id}.pdf" %>  
+
   <%= link_to 'Regresar ', proyecto_exams_path %>
 </div>
 
@@ -161,58 +242,74 @@
 
 function  addItemToProyectoExam() {
 
-  var items = ""; 
- alert("additem ****"); 
+ var x = document.getElementsByTagName("input");
+
+  console.log("x: " + x);
+  console.log("Number of inputs: " + x.length);
 
 
- <% for pump in @pumps  do  %>
 
- var item + "pump.id" = $("field_"+"#pump.id").val(); 
-
- <% end %>
-
-  var item1 = $("#gastos_id").val(); 
-  var item2 = $("#supplier_id").val();
-
-  var item3 = $("#employee_id").val(); 
-  var item4 = $("#tipomov_id").val();
-
-  var item5 = $("#numero").val(); 
-  var item7 = $("#compro").val(); 
-  var item8 = $("#fecha").val();
-
-  var item9 = $("#importe").val(); 
-  var item10 = $("#detalle").val();
+  var arrayOfInputNames = [];
+  var campo_gln ;
+  var campo_dif ;
 
 
-  var  item_line = item1 + "|BRK|" +item2  + "|BRK|" +item3 + "|BRK|" + item4 + "|BRK|" 
-                  +item5 + "|BRK|" +item6  + "|BRK|" +item7 + "|BRK|" + item8 + "|BRK|" 
-                  +item9 + "|BRK|" +item10 + "|BRK|"  ;
+      for (var i = 0; i < x.length; i++) {
+      //for(key in x) {
+        console.log("i: " + i);
+        console.log("value: " + x[i].name);
 
-    $.get('/proyecto_exams/do_grabar/<%= @proyecto_exam.id%>/' ,  {
-      items: item_line 
-    }, 
+        arrayOfInputNames.push(x[i].name );
+
+      }
+
+   var cadena = "" ;
+   var diferencia = 0; 
+   var item_line = "";
+   var items = "";
+
+  fLen = arrayOfInputNames.length;
+
+    for (i = 0; i < fLen; i++) {
+
+       cadena = arrayOfInputNames[i] ;
+
+
+      if (cadena.substring(0,6) == "field_" ){
+
+              campo_ent = cadena;
+              
+             // alert($("input[name="+campo_sal+"]").val());
+              campo_ent_val = $("input[name="+campo_ent+"]").val();
+                      
+              item_line = campo_ent_val + "|BRK|";
+          
+
+              items = items  + item_line ;
+      
+
+            }
+
+            
+        else {
+        
+      }
+
+      
+    }
+
+     var proyecto_minero_id  = <%= @proyecto_minero_id  %> ; 
+     var proyecto_exam_id    = <%= @proyecto_exam_id %> ;
+      var empleados_id  = $("#employee_id").val();
+    
+   
+    $.get('/proyecto_exams/do_grabar/<%= @proyecto_exam_id %>/'+ empleados_id +"/" + proyecto_minero_id,  {
+      items: items
+    },
     function(data) {
       $("#list_items").html(data);
       documentReady();
     });
-
-    alert("Registro Agregado.");
-
-   
-  
-
-   $("#numero").val("0.00"); 
-  
-
-  $("#compro").val(""); 
-  
-
-  $("#importe").val("0.00"); 
-  $("#detalle").val("");
-
-
-
 }
 
 

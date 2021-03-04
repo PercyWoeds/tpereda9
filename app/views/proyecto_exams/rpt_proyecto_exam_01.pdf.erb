@@ -1,0 +1,118 @@
+<html>
+<body>  
+  <h4 ><center>BASE DE DATOS EXAMENES MEDICOS Y CAPACITACIONES </center>   </h4>
+  <h5><center>  </center></h5>
+  <font size="2" face="Courier New" > 
+
+
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  
+<tr bgcolor="#B4D7F7">
+   <th  style="width: 230px" > 
+
+      
+     </th>
+
+      <% for productItem in @pumps %>
+
+        <% rating_id = productItem.proyectominero2.name  %>
+       
+        <tH style="width: 10px" >
+          <%="#{rating_id}" %>
+        </th>
+
+        
+    <% end %>
+  </tr>
+<tr>
+<tr bgcolor="#B4D7F7">
+
+    <th  style="width: 230px" > 
+
+      EMPLEADO 
+     </th >
+
+       
+      <% for productItem in @pumps %>
+
+        <% rating2_id = productItem.proyectominero3.name  %>
+        
+        
+        <tH style="width: 10px" >
+          <%="#{rating2_id}" %>
+        </th>
+
+        
+      <% end %>
+
+
+  </tr>
+     
+  </table>
+
+ <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+
+      <% for proyectoitem in @proyecto_examen_empleado %>
+
+            
+        
+        <tr>
+         <td  style="width: 230px" > 
+                <%= proyectoitem.employee.full_name   %> <br></td>
+
+
+              <% @detalle = proyectoitem.get_detalle(proyectoitem.employee_id, @proyecto_exam.proyecto_minero_id ) %>
+
+                 <% for detalle in @detalle  %>
+                     
+                    <% if detalle.proyecto_minero_exam.proyectominero3.formatofecha == "1" %>
+
+                         <% if detalle.fecha ==  nil %>
+
+                           <td style="width: 10px" >
+                              -
+                           </td>
+
+                         <% else %>
+               
+                           <td style="width: 10px" >
+                            <%= detalle.fecha.strftime("%d/%m/%Y")  %>
+                           </td>
+
+                        <% end %>
+                    <% else %>
+
+
+                         
+
+                          <td style="width: 10px" >
+                            <%= detalle.observacion  %>
+                           </td>
+
+              
+                    <% end %>
+                <% end %>
+
+
+
+        </tr>
+
+
+
+      
+    <% end %>
+
+  </table>
+
+
+
+
+
+
+  
+ 
+  
+
+        
+      </body>
+      </html>
