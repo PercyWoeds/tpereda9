@@ -1,8 +1,11 @@
 <html>
 <body>  
   <h4 ><center>BASE DE DATOS EXAMENES MEDICOS Y CAPACITACIONES </center>   </h4>
-  <h5><center>  </center></h5>
+  <h5>  <center>  <strong>Proyecto minero:</strong>
+  <%= @proyecto_exam.proyecto_minero.descrip %> </center></h5>
   <font size="2" face="Courier New" > 
+
+
 
 
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
@@ -17,7 +20,7 @@
 
         <% rating_id = productItem.proyectominero2.name  %>
        
-        <tH style="width: 10px" >
+        <tH style="width: 100px" >
           <%="#{rating_id}" %>
         </th>
 
@@ -38,7 +41,7 @@
         <% rating2_id = productItem.proyectominero3.name  %>
         
         
-        <tH style="width: 10px" >
+        <tH style="width: 100px" >
           <%="#{rating2_id}" %>
         </th>
 
@@ -69,13 +72,13 @@
 
                          <% if detalle.fecha ==  nil %>
 
-                           <td style="width: 10px" >
+                           <td style="width: 100px" >
                               -
                            </td>
 
                          <% else %>
                
-                           <td style="width: 10px" >
+                           <td style="width: 100px" >
                             <%= detalle.fecha.strftime("%d/%m/%Y")  %>
                            </td>
 
@@ -85,7 +88,7 @@
 
                          
 
-                          <td style="width: 10px" >
+                          <td style="width: 100px" >
                             <%= detalle.observacion  %>
                            </td>
 
