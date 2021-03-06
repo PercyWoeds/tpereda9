@@ -735,6 +735,8 @@ class CotizacionsController < ApplicationController
             row=[]
             row << "MODULAR "
             row << @cotizacion.tipounidad5
+            row << @cotizacion.modularobs 
+
             table_content << row 
             row=[]
             row << "CAMACUNA "
@@ -1159,6 +1161,7 @@ Diana Nathaly Perez Luciano." ,
             row=[]
             row << "MODULAR "
             row << @cotizacion.tipounidad5
+              row << @cotizacion.modularobs 
             table_content << row 
 row=[]
             row << "CAMACUNA "

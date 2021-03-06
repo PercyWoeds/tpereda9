@@ -1554,6 +1554,7 @@ def reportes_st_3
 
     $lcFacturasall = '1'
 
+
     @company=Company.find(1)          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
@@ -7681,7 +7682,9 @@ end
               end
 
               row << cotiza.tipo_unidad.name 
-              row << cotiza.tarifa
+              row << cotiza.total + cotiza.total2 + cotiza.total3 +
+              cotiza.total4 + cotiza.total5 + cotiza.total6
+
               row << cotiza.get_processed 
               row << cotiza.comments 
         
