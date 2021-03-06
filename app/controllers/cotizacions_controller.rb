@@ -146,9 +146,7 @@ class CotizacionsController < ApplicationController
 
 
     @tipocarga = Tipocargue.all 
-
-
-
+    
     @cotizacion = Cotizacion.new(cotizacion_params)
     
     @cotizacion[:code] = @cotizacion.generate_number("1") 

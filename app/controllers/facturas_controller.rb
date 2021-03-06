@@ -7571,9 +7571,28 @@ end
 
     @fecha1 = params[:fecha1]
     @fecha2 = params[:fecha2]
-   
 
+    @texto = ""
+    @zero = 0
+
+
+    Cotizacion.where(descrip1: nil).update_all(descrip1: @texto )
+    Cotizacion.where(descrip2: nil).update_all(descrip2: @texto )
+    Cotizacion.where(descrip3: nil).update_all(descrip3: @texto )
+    Cotizacion.where(descrip4: nil).update_all(descrip4: @texto )
+    Cotizacion.where(descrip5: nil).update_all(descrip5: @texto )
+    Cotizacion.where(descrip6: nil).update_all(descrip6: @texto )
+
+    Cotizacion.where(total: nil).update_all(total: 0 )
+    Cotizacion.where(total2: nil).update_all(total2: 0 )
+    Cotizacion.where(total3: nil).update_all(total3: 0 )
+    Cotizacion.where(total4: nil).update_all(total4: 0 )
+    Cotizacion.where(total5: nil).update_all(total5: 0 )
+    Cotizacion.where(total6: nil).update_all(total6: 0 )
+   
     @cotizacion = @company.get_cotiza(@fecha1,@fecha2)  
+
+
       
     Prawn::Document.generate "app/pdf_output/ost2.pdf" , :page_layout => :landscape , :page_size=> "A4" do |pdf|      
         pdf.font "Helvetica"
@@ -7674,13 +7693,7 @@ end
               row << cotiza.customer.name 
               row << cotiza.punto.name 
               row << cotiza.get_punto(cotiza.punto2_id) 
-
-              if cotiza.tipocargue_id != nil 
-              row << cotiza.tipocargue.name 
-              else 
-              row << " "
-              end
-
+              row << cotiza.descrip1 + cotiza.descrip2 + cotiza.descrip3 + cotiza.descrip4 + cotiza.descrip5 + cotiza.descrip6
               row << cotiza.tipo_unidad.name 
               row << cotiza.total + cotiza.total2 + cotiza.total3 +
               cotiza.total4 + cotiza.total5 + cotiza.total6
