@@ -1662,7 +1662,6 @@ Muy atentamente, " ,
         :price8,
         :price9,
         :price10,
-
         :total,
         :total2,
         :total3,
@@ -1673,13 +1672,12 @@ Muy atentamente, " ,
         :total8,
         :total9,
         :total10,
-
-
         :tipounidad1,
         :tipounidad2,
         :tipounidad3,
         :tipounidad4,
         :tipounidad5,
+        :modularobs,
         :camacuna,
         :stand_by,
   :tm ,:tipocustomer_id )

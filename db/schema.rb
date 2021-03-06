@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210301180600) do
+ActiveRecord::Schema.define(version: 20210306142155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -533,6 +533,7 @@ ActiveRecord::Schema.define(version: 20210301180600) do
     t.float    "total10"
     t.string   "camacuna"
     t.string   "stand_by"
+    t.string   "modularobs"
   end
 
   create_table "couts", force: :cascade do |t|
@@ -2049,6 +2050,7 @@ ActiveRecord::Schema.define(version: 20210301180600) do
     t.integer  "proyectominero3_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.string   "ordeorden"
   end
 
   create_table "proyecto_mineros", force: :cascade do |t|
