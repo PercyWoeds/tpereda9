@@ -25,7 +25,7 @@
   <tbody>
     <% @contactopms.each do |contactopm| %>
       <tr>
-        <td><%= contactopm.proyecto_minero_id %></td>
+        <td><%= contactopm.proyecto_minero.descrip %></td>
         <td><%= link_to 'Ver', contactopm %></td>
         <td><%= link_to 'Editar', edit_contactopm_path(contactopm) %></td>
 
@@ -44,7 +44,7 @@
 
 <%= link_to 'Nuevo', new_contactopm_path,class: "ui primary button"  %>
 
-<%= link_to 'Regresar', "/companies/reports/reports_basedatosexm/1" ,class: "ui primary button"  %>
+<%= link_to 'Regresar', "/companies/examens02/1" ,class: "ui primary button"  %>
 </div>
 
 </div>

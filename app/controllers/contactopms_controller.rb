@@ -13,6 +13,7 @@ class ContactopmsController < ApplicationController
   # GET /contactopms/1
   # GET /contactopms/1.json
   def show
+
   end
 
   # GET /contactopms/new
@@ -29,6 +30,7 @@ class ContactopmsController < ApplicationController
 
   # GET /contactopms/1/edit
   def edit
+     @company = Company.find(1) 
      @proyecto_minero = @company.get_proyecto_minero()
   end
 
@@ -39,8 +41,7 @@ class ContactopmsController < ApplicationController
      @proyecto_minero = @company.get_proyecto_minero()
     @contactopm = Contactopm.new(contactopm_params)
 
-  
-
+    
     respond_to do |format|
 
       if @contactopm.save
@@ -57,6 +58,10 @@ class ContactopmsController < ApplicationController
   # PATCH/PUT /contactopms/1
   # PATCH/PUT /contactopms/1.json
   def update
+
+  @company = Company.find(1)
+  @proyecto_minero = @company.get_proyecto_minero()
+
     respond_to do |format|
       if @contactopm.update(contactopm_params)
         format.html { redirect_to @contactopm, notice: 'Contacto was successfully updated.' }
@@ -87,6 +92,6 @@ class ContactopmsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def contactopm_params
       params.require(:contactopm).permit(:proyecto_minero_id,:code, 
-        :contactopmdetails_attributes => [:id,:contactopm_id, :contacto , :telefono, :_destroy]  )
+        :contactopmdetails_attributes => [:id,:contactopm_id, :contacto ,:email, :telefono, :destroy]  )
     end
 end

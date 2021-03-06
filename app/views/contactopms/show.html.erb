@@ -2,8 +2,44 @@
 
 <p>
   <strong>Proyecto minero:</strong>
-  <%= @contactopm.proyecto_minero_id %>
+  <%= @contactopm.proyecto_minero.descrip  %>
 </p>
 
-<%= link_to 'Edit', edit_contactopm_path(@contactopm) %> |
-<%= link_to 'Back', contactopms_path %>
+
+
+<h3>Contactos </h3>
+
+
+<table>
+
+
+  <thead>
+    <tr>
+      <th>Contacto</th>
+      <th>Email</th>
+      <th>Telefono</th>
+
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% for post in @contactopm.contactopmdetails %>
+
+      <tr>
+        <td><%= post.contacto %></td>
+        <td><%= post.email %></td>
+        <td><%= post.telefono %></td>
+
+        <td><%= link_to 'Editar', edit_contactopm_path(post) %></td>
+
+        <% if @current_user.level == "admin" %>
+        <td><%= link_to 'Eliminar', post , method: :delete, data: { confirm: 'Are you sure?' } %></td>
+         <% end %> 
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Editar', edit_contactopm_path(@contactopm) %>
+<%= link_to 'Regresar ', contactopms_path %>
