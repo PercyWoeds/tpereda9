@@ -20,6 +20,7 @@
        <% for  manifest in @facturas_rpt  %>
 
           <tr>
+            
         
           <td width = "2%" ><%=  nroitem  %>   </td>
           <td width = "5%" ><%= manifest.fecha1.strftime("%d/%m/%Y") %></td>
@@ -31,10 +32,11 @@
           <td width = "8%" align ="left"> <%=  manifest.direccion2  %></td>
 
           <td width = "5%" align ="right"><%=  sprintf("%.2f",manifest.importe) %> </td>
+           <td width = "5%" align ="right"><%=  sprintf("%.2f",manifest.escolta_pen) %> </td>
+          <td width = "5%" align ="right"><%=  sprintf("%.2f",manifest.stand_by_pen) %> </td>
           <td width = "5%" align ="right"><%=  sprintf("%.2f",manifest.empaletizado) %> </td>
           <td width = "5%" align ="right"><%=  sprintf("%.2f",manifest.montacarga) %> </td>
-          <td width = "5%" align ="right"><%=  sprintf("%.2f",manifest.escolta_pen) %> </td>
-          <td width = "5%" align ="right"><%=  sprintf("%.2f",manifest.stand_by_pen) %> </td>
+         
 
           <td width = "5%" align ="right"><%= sprintf("%.2f",manifest.importe2)   %></td>
           <td width = "5%" align ="right"><%= sprintf("%.2f",manifest.escolta)   %></td>
