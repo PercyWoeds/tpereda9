@@ -261,8 +261,6 @@ def build_pdf_header(pdf)
           :width => pdf.bounds.width
         }) do
           columns([0, 2]).font_style = :bold
-
-          
         end
 
 

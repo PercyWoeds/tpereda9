@@ -1,0 +1,2 @@
+json.extract! exmautoriz, :id, :tramit_id, :tipo_tramit_id, :employee_id, :proyecto_minero_id, :supplier_id, :fecha_ingreso, :fecha_vmto, :truck_id, :employee2_id, :tipo_revision_tecnica, :fecha_vmto_rt, :fecha_carga_rt, :obs_rt, :employee3_id, :antecedent_id, :tipo_antecedent_id, :fecha_vmto_ant, :obs_ant, :employee4_id, :curso_cap, :proyecto_minero_id, :fecha_vmto_cap, :obs_cap, :employee5_id, :tramite, :fecha_vmto_ot, :obs_ot, :created_at, :updated_at
+json.url exmautoriz_url(exmautoriz, format: :json)

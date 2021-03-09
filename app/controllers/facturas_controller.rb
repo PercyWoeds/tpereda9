@@ -1598,7 +1598,6 @@ def reportes_st_3
         end   
 
 
-
       when "To Excel" then render xlsx: 'rpt_st_3'
       else render action: "index"
     end

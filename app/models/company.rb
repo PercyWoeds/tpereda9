@@ -334,13 +334,24 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
      suppliers = Supplier.where(company_id: self.id).order(:name)       
     return suppliers
   end
-  
+    def get_supplier_clinica()
+     suppliers = Supplier.where(company_id: self.id, tipoexm: "1").order(:name)       
+    return suppliers
+  end
 
   def get_supplier_name(proveedor)
      suppliers = Supplier.where(company_id: self.id,id: proveedor).order(:name)       
     return suppliers.first.name 
   end
+ def get_revision_tecnica
 
+
+    return   TecnicRevision.order(:name )
+
+
+
+   
+ end
   def get_locations()
 
     locations = Location.where(company_id: self.id).order("name ASC")
@@ -444,6 +455,27 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
            return "Categoria Eliminada."
       end 
   end 
+
+  def get_tramits
+
+
+     return Tramit.order(:code)
+    
+  end
+
+   def get_tipo_tramits
+
+
+     return TipoTramit.order(:code)
+    
+  end
+
+   def get_antecedents
+
+
+     return Antecedent.order(:code)
+    
+  end
   
   def get_empleado_name(id)
      empleado = Employee.find(id)

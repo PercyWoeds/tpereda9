@@ -12,6 +12,9 @@ class Employee < ActiveRecord::Base
   belongs_to :afericion
   belongs_to :tipofaltante
 
+    belongs_to :exmautoriz
+
+
 	
 	has_many :outputs
 	has_many :payroll_details

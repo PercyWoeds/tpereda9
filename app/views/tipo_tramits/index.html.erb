@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Tipo Tramits</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tipo_tramits.each do |tipo_tramit| %>
+      <tr>
+        <td><%= tipo_tramit.code %></td>
+        <td><%= tipo_tramit.name %></td>
+        <td><%= link_to 'Show', tipo_tramit %></td>
+        <td><%= link_to 'Edit', edit_tipo_tramit_path(tipo_tramit) %></td>
+        <td><%= link_to 'Destroy', tipo_tramit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Tipo tramit', new_tipo_tramit_path %>

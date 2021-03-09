@@ -156,6 +156,8 @@ def components2
     
     @pagetitle = @company[:name]
     @locations = Location.where(company_id: @company.id)
+
+    
   end 
 
   def combus 

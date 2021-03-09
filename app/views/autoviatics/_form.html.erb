@@ -1,0 +1,191 @@
+<%= simple_form_for(@autoviatic) do |f| %>
+  <%= f.error_notification %>
+
+<table class="ui right aligned table">
+      <thead>
+        <th class="left aligned"></th>
+        <th>1.Examen Medicos </th>
+        <th> </th>
+        <th></th>
+      </thead>
+      <tbody>
+        <tr>
+
+          <td class="left aligned"> Sucursal:</td>
+          <td><%= f.collection_select :location_id, @locations, :id, :name, :prompt => true %> </td>
+
+           <td class="left aligned">Proyecto Minero</td>
+          <td><%= f.collection_select :proyecto_minero_id, @proyecto_mineros, :id, :descrip, :prompt => true %> </td>
+          
+        
+          <td> </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left aligned">Empleado  </td>
+          <td><%= f.collection_select :employee_id, @employees, :id, :full_name, :prompt => true %> </td>
+
+          <td>Fecha </td>
+          <td><%= f.date_field :fecha %></td>
+
+       
+        </tr>
+          <tr>
+                      <td></td>
+             <td> </td>
+          <td class="left aligned"> Tema </td>
+          <td><%= f.text_field :tema   %> </td>
+
+         
+
+
+       
+        </tr>
+
+         <tr>
+          <td class="left aligned">Clinica/Capacitacion  </td>
+          <td><%= f.collection_select :supplier_id, @suppliers_clinica, :id, :name, :prompt => true %> </td>
+         <td class="left aligned">Asunto  </td>
+          <td> <%= f.collection_select :tramit_id, @tramits, :id, :name, :prompt => true %> </td>
+          <td></td>
+          <td></td>
+        </tr>
+
+
+
+         <tr>
+          <td class="left aligned"> Movilidad </td>
+          <td><%= f.text_field :movilidad  %> </td>
+           <td class="left aligned">Lugar </td>
+          <td><%= f.text_field :lugar1  %> </td>
+          <td></td>
+          <td></td>
+        </tr>
+
+         <tr>
+          <td class="left aligned"> Almuerzo</td>
+          <td><%= f.text_field :almuerzo   %> </td>
+           <td class="left aligned">Lugar </td>
+          <td><%= f.text_field :lugar2  %> </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left aligned"> Otros</td>
+          <td><%= f.text_field :otros  %> </td>
+           <td class="left aligned">Lugar </td>
+          <td><%= f.text_field :lugar3  %> </td>
+          <td></td>
+          <td></td>
+        </tr>
+
+         <tr>
+          <td class="left aligned"> Total </td>
+          <td> <p id= "total_viatico"  align="right" > </p>
+           </td>
+           <td class="left aligned">Observaciones </td>
+          <td><%= f.text_field :obser %> </td>
+          <td></td>
+          <td></td>
+        </tr>
+        
+         <tr>
+          <td class="left aligned">Lugar Ingreso </td>
+          <td><%= f.text_field :lugar_salida %> </td>
+
+           <td class="left aligned">Lugar Salida </td>
+          <td><%= f.text_field :lugar_salida2 %> </td>
+          <td></td>
+          <td></td>
+        </tr>
+
+         <tr>
+          <td class="left aligned"> Hora Ingreso </td>
+          <td><%= f.time_field :hora_ingreso,
+      value: "%H:%M",
+      min: 'hh:mm:ss',
+      max: 'hh:mm:ss' %> </td>
+          
+           <td class="left aligned">Hora Salida </td>
+          <td><%= f.time_field :hora_salida ,
+      value: "%H:%M",
+      min: 'hh:mm:ss',
+      max: 'hh:mm:ss' %> </td>
+          <td></td>
+          <td></td>
+        </tr>
+
+
+
+
+      </tbody>
+</table>
+
+<table style="width:100%">
+
+  <tr>
+    <td>OBSERVACIONES </td>
+    <td><%= f.text_field :obser2  %>  </td>
+   
+    
+  </tr>
+
+</table>
+
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
+
+
+<script type="text/javascript">
+    
+
+
+
+
+
+  $(document).ready(function() {
+
+
+   
+    
+ 
+    $("#autoviatic_movilidad").bind("keyup", function() {
+      updateItem();
+    });
+    $("#autoviatic_almuerzo").bind("keyup", function() {
+      updateItem();
+    });
+    $("#autoviatic_otros").bind("keyup", function() {
+      updateItem();
+    });
+
+  
+    
+
+
+  });
+
+
+   // Update price total for invoice
+  function updateItem() {
+   
+
+    var d1 = $("#autoviatic_movilidad").val();
+    var d2 = $("#autoviatic_almuerzo").val();
+    var d3 = $("#autoviatic_otros").val();
+      
+    var qty  = parseFloat(d1)  + parseFloat(d2)  + parseFloat(d3) ;
+     
+      
+
+       document.getElementById("total_viatico").innerHTML = Number((qty).toFixed(2));
+       
+
+  }
+
+
+</script>

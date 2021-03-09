@@ -5,7 +5,7 @@
 
   <h4>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Autorización de gestion nueva o renovacion", "/companies/outputs/#{@company.id}" %>
+    <%= link_to "Autorización de gestion nueva o renovacion", exmautorizs_path %>
   </h4>
 
   <p>
@@ -16,7 +16,7 @@
 
    <h4>
     <%= image_tag("supplier_32.png", :class => "vmiddle") %>
-    <%= link_to "Cargo de aprobacion de exm. y cap.", conductors_path %>
+    <%= link_to "Cargo de aprobacion de exm. y cap.", exmautorizs_path %>
   </h4>
 
   <p>
@@ -55,7 +55,7 @@
   
    <h4>
     <%= image_tag("supplier_32.png", :class => "vmiddle") %>
-    <%= link_to "Autorización de viaticos para Exm.Med.y capacitaciones " , trucks_path %>
+    <%= link_to "Autorización de viaticos para Exm.Med.y capacitaciones " , autoviatics_path %>
   </h4>
 
   <p>
@@ -99,12 +99,13 @@
   
   <h4>
     <%= image_tag("divisions_32.png", :class => "vmiddle") %>
-    <%= link_to "Base de datos de empresas capacitadoras ", suppliers_path %>
-  </h4>
-
+    <%= link_to "Base de datos de empresas capacitadoras ", "/companies/suppliers/#{@company.id}/1" %>
+   </h4>
+   
   <p>
       Agregar, editar or eliminar contactos base de datos de empresas capacitadoras.
   </p>
+
    <% end %>
   
   

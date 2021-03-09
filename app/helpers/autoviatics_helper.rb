@@ -1,0 +1,2 @@
+module AutoviaticsHelper
+end

@@ -59,3 +59,15 @@
   <%= link_to "CSV", suppliers_path(format: "csv"), multipart: true  %> 
 
 
+
+<% if current_user.level == "examen" || current_user.level == "admin"%>
+<div class="extra content">
+
+
+  <%= link_to 'Reporte ', "/suppliers/pdf/#{@company.id}" ,class:"ui primary button"%>
+ 
+
+
+</div>
+
+<% end %>

@@ -4,6 +4,12 @@ require 'sidekiq/web'
   Mnygo::Application.routes.draw do
 
   
+  resources :autoviatics
+  resources :tecnic_revisions
+  resources :exmautorizs
+  resources :antecedents
+  resources :tipo_tramits
+  resources :tramits
   resources :proyecto_exams
   resources :proyecto_minero_exams
   resources :proyectominero3s
@@ -1119,6 +1125,11 @@ match 'purchases/do_crear/:id'   => 'purchases#do_crear', via: [:get, :post]
   resources :manifests 
 
 
+  match 'exmautorizs/do_email/:id' => 'exmautorizs#do_email', via: [:get, :post]
+  match 'exmautorizs/sendmail/:id' => 'exmautorizs#sendmail', via: [:get, :post]
+  match 'exmautorizs/sendcancelar/:id' => 'exmautorizs#sendcancelar', via: [:get, :post]
+  resources :exmautorizs
+
   match 'requerimientos/do_process/:id' => 'requerimientos#do_process', via: [:get, :post]
   match 'requerimientos/do_anular/:id' => 'requerimientos#do_anular', via: [:get, :post]
   match 'requerimientos/do_cancelar/:id' => 'requerimientos#do_cancelar', via: [:get, :post]
@@ -1132,6 +1143,7 @@ match 'purchases/do_crear/:id'   => 'purchases#do_crear', via: [:get, :post]
 
 
   match 'suppliers/new2/:company_id/'   => 'suppliers#new2', via: [:get, :post]
+  match 'suppliers/pdf/:company_id/'   => 'suppliers#pdf', via: [:get, :post]
 
 
   match 'suppliers/search_ruc/:company_id/'   => 'suppliers#search_ruc', via: [:get, :post]
@@ -1326,6 +1338,10 @@ match 'purchases/do_crear/:id'   => 'purchases#do_crear', via: [:get, :post]
 
   match 'companies/suppliers/:company_id' => 'suppliers#list_suppliers', via: [:get, :post]
 
+
+  match 'companies/suppliers/:company_id/:id' => 'suppliers#list_suppliers', via: [:get, :post]
+
+
   resources :suppliers
   # Gastos
   match 'gastos/new/:company_id' => 'gastos#new', via: [:get, :post]
@@ -1440,6 +1456,21 @@ match 'purchases/do_crear/:id'   => 'purchases#do_crear', via: [:get, :post]
    match 'proyecto_exams/do_grabar/:proyecto_exam_id/:empleado_id/:proyecto_minero_id' => 'proyecto_exams#do_grabar', via: [:get, :post]
    match 'proyecto_exams/pdf/:id' => 'proyecto_exams#pdf', via: [:get, :post]
   resources :proyecto_exams 
+
+   match 'contactopms/pdf/rpt_contactospm_pdf'=> 'contactopms#pdf', via: [:get, :post]
+  resources :contactopms
+
+
+
+match 'exmautorizs/do_process/:id' => 'exmautorizs#do_process', via: [:get, :post]
+match 'exmautorizs/do_anular/:id' => 'exmautorizs#do_anular', via: [:get, :post]
+
+match 'exmautorizs/sendcancelar/:id' => 'exmautorizs#sendcancelar', via: [:get, :post]
+match 'exmautorizs/pdf/:id' => 'exmautorizs#pdf', via: [:get, :post]
+match 'exmautorizs/do_email/:id' => 'exmautorizs#do_email', via: [:get, :post]
+
+
+
 
   # Frontpage
  # match 'dashboard' => 'pages#dashboard', via: [:get,s :post]

@@ -61,11 +61,9 @@
             <%= product.cargo %>
           </td>
          <td class="small bordered_bottom bordered_right">
-         
+           <%= product.correo  %>
           </td>
-         <td class="small bordered_bottom bordered_right">
-             
-          </td>
+        
           
          <td class="small bordered_bottom bordered_right">
             <%= product.telefono %>
@@ -97,5 +95,13 @@
 <div class="button">
   <%= link_to "Invoices for supplier", "/companies/serviceorders/#{@supplier.company.id}?supplier=#{@supplier.id}" %>
   <%= link_to 'Editar', edit_supplier_path(@supplier) %>
+
+
+<% if current_user.level == "examen" || current_user.level == "admin"%>
+<div class="extra content">
+<%= link_to 'Regresar', "/companies/suppliers/#{@supplier.company.id}/1" %>
+<% else %>
+
   <%= link_to 'Regresar', "/companies/suppliers/#{@supplier.company.id}" %>
+<% end %>
 </div>

@@ -14,5 +14,13 @@
 
 <div class="button">
   <%= link_to 'Ver', @supplier %>
+  
+<% if current_user.level == "examen" || current_user.level == "admin"%>
+<div class="extra content">
+<%= link_to 'Regresar', "/companies/suppliers/#{@supplier.company.id}/1" %>
+<% else %>
+
   <%= link_to 'Regresar', "/companies/suppliers/#{@supplier.company.id}" %>
+<% end %>
+
 </div>

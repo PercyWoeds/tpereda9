@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @tramit.code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @tramit.name %>
+</p>
+
+<%= link_to 'Edit', edit_tramit_path(@tramit) %> |
+<%= link_to 'Back', tramits_path %>

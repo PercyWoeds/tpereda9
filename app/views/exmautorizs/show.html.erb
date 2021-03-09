@@ -1,0 +1,450 @@
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+
+
+<div class="ui form segment raised">
+
+
+<h1>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+AUTORIZACIÓN DE GESTIÓN NUEVA O RENOVACIÓN <%= @exmautoriz.code %>
+  
+</h1>
+
+
+
+<table style="width:100%">
+
+  <tr>
+    <td> Fecha </td>
+      <% if @exmautoriz.fecha  != nil %>
+    <td><%= @exmautoriz.fecha.strftime("%d/%m/%Y") %></td>
+    <% else %>
+    <td></td>
+
+    <% end %>
+
+
+
+    <td>       <%= @exmautoriz.tramit.name %> </td>
+    <td>TIPO   <%= @exmautoriz.tipo_tramit.name  %></td>
+    <td></td>
+    <td>  </td>
+    
+  </tr>
+
+  <tr>
+    <td></td>
+    <td></td>
+    <td> </td>
+    
+    <td></td>
+
+    <td>  </td>
+    <td> </td>
+    <td></td>
+    
+  </tr>
+
+
+</table>
+
+
+
+<table class="ui right aligned table">
+      <thead>
+        <th class="left aligned"></th>
+        <th>1.Examen Medicos </th>
+        <th> </th>
+        <th></th>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="left aligned">Empleado  </td>
+
+          <% if @exmautoriz.employee_id != nil %>
+            <td><%=  @exmautoriz.employee.full_name %> </td>
+          <% else %>
+            <td></td>
+          <% end %>
+
+
+          <td></td>
+          <td> </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left aligned">Proyecto Minero</td>
+
+          <% if @exmautoriz.proyecto_minero_id != nil %>
+            <td><%=  @exmautoriz.proyecto_minero.descrip %> </td>
+          <% else %>
+            <td></td>
+          <% end %>
+
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+         <tr>
+          <td class="left aligned">Clinica </td>
+
+            <% if @exmautoriz.supplier_id != nil %>
+            <td><%=  @exmautoriz.supplier.name  %> </td>
+          <% else %>
+            <td></td>
+          <% end %>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+
+
+
+         <tr>
+          <td class="left aligned">Fecha Ingreso </td>
+
+         
+
+            <% if @exmautoriz.fecha_ingreso != nil %>
+            <td><%=  @exmautoriz.fecha_ingreso.strftime("%d/%m/%Y") %> </td>
+          <% else %>
+            <td></td>
+          <% end %>
+
+           <td class="left aligned">Fecha Vmto </td>
+
+
+         
+           <% if @exmautoriz.fecha_vmto != nil %>
+            <td><%=  @exmautoriz.fecha_vmto.strftime("%d/%m/%Y") %> </td>
+          <% else %>
+            <td></td>
+          <% end %>
+
+          <td></td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+</table>
+
+
+<table class="ui right aligned table">
+      <thead>
+        <th class="left aligned"></th>
+        <th>2.Revision Tecnica  </th>
+        <th> </th>
+        <th></th>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="left aligned">Placa   </td>
+
+          <% if @exmautoriz.truck_id != nil %>
+            <td><%=  @exmautoriz.truck.placa %> </td>
+          <% else %>
+            <td></td>
+          <% end %>
+          <td></td>
+          <td> </td>
+          <td></td>
+          <td></td>
+        </tr>
+         <tr>
+          <td class="left aligned">Empleado  </td>
+         <% if @exmautoriz.employee2_id != nil %>
+            <td><%=  @exmautoriz.get_empleado(@exmautoriz.employee2_id) %> </td>
+          <% else %>
+            <td></td>
+          <% end %>
+          <td></td>
+          <td> </td>
+          <td></td>
+          <td></td>
+        </tr>
+         <tr>
+          <td class="left aligned">Tipo Revision Tecnica </td>
+      
+
+          <% if @exmautoriz.tecnic_revision_id != nil %>
+            <td><%=  @exmautoriz.tecnic_revision.name %> </td>
+          <% else %>
+            <td></td>
+          <% end %>
+
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+
+        </tr>
+
+
+         <tr>
+          <td class="left aligned">Fecha Vmto</td>
+       
+
+           <% if @exmautoriz.fecha_vmto_rt != nil %>
+            <td><%=  @exmautoriz.fecha_vmto_rt.strftime("%d/%m/%Y") %> </td>
+          <% else %>
+            <td></td>
+          <% end %>
+
+
+           <td class="left aligned">Fecha Carga </td>
+      
+          <% if @exmautoriz.fecha_carga_rt != nil %>
+            <td><%=  @exmautoriz.fecha_carga_rt.strftime("%d/%m/%Y") %> </td>
+          <% else %>
+            <td></td>
+          <% end %>
+
+          <td></td>
+
+
+          <td></td>
+        </tr>
+
+        <tr>
+          <td class="left aligned"> Observaciones </td>
+      
+
+        
+            <td><%=  @exmautoriz.obs_rt %> </td>
+         
+
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+
+        </tr>
+
+
+        
+      </tbody>
+</table>
+
+
+
+<table class="ui right aligned table">
+      <thead>
+        <th class="left aligned"></th>
+        <th>3.Antecedentes  </th>
+        <th> </th>
+        <th></th>
+      </thead>
+      <tbody>
+       
+         <tr>
+          <td class="left aligned">Empleado  </td>
+          
+          <% if @exmautoriz.employee3_id != nil %>
+            <td><%=  @exmautoriz.get_empleado(@exmautoriz.employee3_id) %> </td>
+          <% else %>
+            <td></td>
+          <% end %>
+
+          <td></td>
+          <td> </td>
+          <td></td>
+          <td></td>
+        </tr>
+         <tr>
+          <td class="left aligned">Tipo Antecedente </td>
+         
+          <% if @exmautoriz.antecedent_id != nil %>
+            <td><%=  @exmautoriz.antecedent.name %> </td>
+          <% else %>
+            <td></td>
+          <% end %>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+
+        </tr>
+
+
+         <tr>
+          <td class="left aligned">Fecha Vmto</td>
+       
+            <% if @exmautoriz.fecha_vmto_ant != nil %>
+            <td><%=  @exmautoriz.fecha_vmto_ant.strftime("%d/%m/%Y") %> </td>
+          <% else %>
+            <td></td>
+          <% end %>
+
+           <td class="left aligned">Observaciones </td>
+         
+            <% if @exmautoriz.obs_ant != nil %>
+            <td><%=  @exmautoriz.obs_ant %> </td>
+          <% else %>
+            <td></td>
+          <% end %>
+          <td></td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+</table>
+
+
+<table class="ui right aligned table">
+      <thead>
+        <th class="left aligned"></th>
+        <th>4.Capacitacion  </th>
+        <th> </th>
+        <th></th>
+      </thead>
+      <tbody>
+       
+         <tr>
+          <td class="left aligned">Empleado  </td>
+         
+
+          <% if @exmautoriz.employee4_id != nil %>
+            <td><%=  @exmautoriz.get_empleado(@exmautoriz.employee4_id) %> </td>
+          <% else %>
+            <td></td>
+          <% end %>
+          <td></td>
+          <td> </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left aligned"> Curso / Capacitacion </td>
+          <td><%=  @exmautoriz.curso_cap %> </td>
+           <td class="left aligned">  </td>
+          <td> </td>
+          <td></td>
+          <td></td>
+        </tr>
+         <tr>
+          <td class="left aligned">Proyecto </td>
+    
+             <% if @exmautoriz.proyecto_minero2_id != nil %>
+            <td><%=  @exmautoriz.get_proyecto_minero2(@exmautoriz.proyecto_minero2_id) %> </td>
+          <% else %>
+            <td></td>
+          <% end %>
+
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+
+        </tr>
+
+
+         <tr>
+          <td class="left aligned">Fecha Vmto</td>
+         <% if @exmautoriz.fecha_vmto_cap != nil %>
+            <td><%=  @exmautoriz.fecha_vmto_cap.strftime("%d/%m/%Y") %> </td>
+          <% else %>
+            <td></td>
+          <% end %>
+
+
+
+           <td class="left aligned">Observaciones </td>
+          <td><%=  @exmautoriz.obs_cap  %> </td>
+          <td></td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+</table>
+
+
+
+<table class="ui right aligned table">
+      <thead>
+        <th class="left aligned"></th>
+        <th>5.Otros   </th>
+        <th> </th>
+        <th></th>
+      </thead>
+      <tbody>
+       
+         <tr>
+          <td class="left aligned">Conductor  </td>
+        
+
+           <% if @exmautoriz.employee5_id != nil %>
+            <td><%=  @exmautoriz.get_empleado(@exmautoriz.employee5_id) %> </td>
+          <% else %>
+            <td></td>
+          <% end %>
+          <td></td>
+          <td> </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left aligned"> Tramite  </td>
+          <td><%=  @exmautoriz.tramite  %> </td>
+           <td class="left aligned">  </td>
+          <td> </td>
+          <td></td>
+          <td></td>
+        </tr>
+               <tr>
+          <td class="left aligned">Fecha Vmto</td>
+       
+
+          <% if @exmautoriz.fecha_vmto_ot != nil %>
+            <td><%=  @exmautoriz.fecha_vmto_ot.strftime("%d/%m/%Y") %> </td>
+          <% else %>
+            <td></td>
+          <% end %>
+
+           <td class="left aligned">Observaciones </td>
+          <td><%=  @exmautoriz.obs_ot  %> </td>
+          <td></td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+</table>
+
+
+<img src=<%="https://chart.googleapis.com/chart?chs=120x120&cht=qr&chl=#{@exmautoriz.code}&choe=UTF-8"%> alt="QR code">
+
+<%= hr() %>
+</div>
+
+
+<div class="button">
+  
+   
+<%= link_to 'Export PDF', "/exmautorizs/pdf/#{@exmautoriz.id}" %>
+  
+<% if @exmautoriz.processed =="0" || @exmautoriz.processed==nil %>
+  <%= link_to 'Aprobar', "/exmautorizs/do_process/#{@exmautoriz.id}" %>
+  <%= link_to 'Editar', edit_exmautoriz_path(@exmautoriz) %>
+  
+<% elsif @exmautoriz.processed =="1" and current_user.level =="admin" %>  
+
+   <%= link_to 'Anular', "/exmautorizs/sendcancelar/#{@exmautoriz.id}" %>
+  
+
+<% end %>
+<%= link_to 'Regresar',exmautorizs_path %>
+</div>

@@ -31,15 +31,22 @@
         <td><%= post.email %></td>
         <td><%= post.telefono %></td>
 
-        <td><%= link_to 'Editar', edit_contactopm_path(post) %></td>
 
-        <% if @current_user.level == "admin" %>
-        <td><%= link_to 'Eliminar', post , method: :delete, data: { confirm: 'Are you sure?' } %></td>
-         <% end %> 
+
+       
       </tr>
     <% end %>
+    
   </tbody>
 </table>
 
+
+<div class="button">
+
+
 <%= link_to 'Editar', edit_contactopm_path(@contactopm) %>
+
+
+
 <%= link_to 'Regresar ', contactopms_path %>
+</div>

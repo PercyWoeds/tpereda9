@@ -1,0 +1,286 @@
+
+ <% if @exmautoriz.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@exmautoriz.errors.count, "error") %> prohibited this invoice from being saved:</h2>
+
+    <ul>
+    <% @exmautoriz.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>       
+
+<div >
+
+
+<%= simple_form_for(@exmautoriz) do |f| %>
+  <%= f.error_notification %>
+
+
+
+<table style="width:100%">
+
+  <tr>
+    <td>Fecha </td>
+    <td><%= f.date_field :fecha  %>  </td>
+    <td>  <%= f.collection_select :tramit_id, @tramits, :id, :name, :prompt => true %> </td>
+    <td>TIPO TRAMITE</td>
+    <td> <%= f.collection_select :tipo_tramit_id, @tipo_tramits, :id, :name, :prompt => true %></td>
+    <td></td>
+    <td>  </td>
+    
+  </tr>
+
+  <tr>
+    <td></td>
+    <td></td>
+    <td> </td>
+    
+    <td></td>
+
+    <td>  </td>
+    <td> </td>
+    <td></td>
+    
+  </tr>
+
+
+</table>
+
+
+
+<table class="ui right aligned table">
+      <thead>
+        <th class="left aligned"></th>
+        <th>1.Examen Medicos </th>
+        <th> </th>
+        <th></th>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="left aligned">Empleado  </td>
+          <td><%= f.collection_select :employee_id, @employees, :id, :full_name, :prompt => true %> </td>
+          <td></td>
+          <td> </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left aligned">Proyecto Minero</td>
+          <td><%= f.collection_select :proyecto_minero_id, @proyecto_mineros, :id, :descrip, :prompt => true %> </td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+         <tr>
+          <td class="left aligned">Clinica </td>
+          <td><%= f.collection_select :supplier_id, @suppliers_clinica, :id, :name, :prompt => true %> </td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+
+
+
+         <tr>
+          <td class="left aligned">Fecha Ingreso </td>
+          <td><%= f.date_field :fecha_ingreso  %> </td>
+           <td class="left aligned">Fecha Vmto </td>
+          <td><%= f.date_field :fecha_vmto  %> </td>
+          <td></td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+</table>
+
+
+<table class="ui right aligned table">
+      <thead>
+        <th class="left aligned"></th>
+        <th>2.Revision Tecnica  </th>
+        <th> </th>
+        <th></th>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="left aligned">Placa   </td>
+          <td><%= f.collection_select :truck_id, @trucks, :id, :placa, :prompt => true %> </td>
+          <td></td>
+          <td> </td>
+          <td></td>
+          <td></td>
+        </tr>
+         <tr>
+          <td class="left aligned">Empleado  </td>
+          <td><%= f.collection_select :employee2_id, @employees, :id, :full_name, :prompt => true %> </td>
+          <td></td>
+          <td> </td>
+          <td></td>
+          <td></td>
+        </tr>
+         <tr>
+          <td class="left aligned">Tipo Revision Tecnica </td>
+          <td><%= f.collection_select :tipo_revision_tecnica, @tecnic_revisions, :id, :name, :prompt => true %> </td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+
+        </tr>
+
+
+         <tr>
+          <td class="left aligned">Fecha Vmto</td>
+          <td><%= f.date_field :fecha_vmto_rt  %> </td>
+           <td class="left aligned">Fecha Carga </td>
+          <td><%= f.date_field :fecha_carga_rt  %> </td>
+          <td></td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+</table>
+
+
+
+<table class="ui right aligned table">
+      <thead>
+        <th class="left aligned"></th>
+        <th>3.Antecedentes  </th>
+        <th> </th>
+        <th></th>
+      </thead>
+      <tbody>
+       
+         <tr>
+          <td class="left aligned">Empleado  </td>
+          <td><%= f.collection_select :employee3_id, @employees, :id, :full_name, :prompt => true %> </td>
+          <td></td>
+          <td> </td>
+          <td></td>
+          <td></td>
+        </tr>
+         <tr>
+          <td class="left aligned">Tipo Antecedente </td>
+          <td><%= f.collection_select :antecedent_id, @antecedents, :id, :name, :prompt => true %> </td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+
+        </tr>
+
+
+         <tr>
+          <td class="left aligned">Fecha Vmto</td>
+          <td><%= f.date_field :fecha_vmto_ant  %> </td>
+           <td class="left aligned">Observaciones </td>
+          <td><%= f.date_field :obs_rt  %> </td>
+          <td></td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+</table>
+
+
+<table class="ui right aligned table">
+      <thead>
+        <th class="left aligned"></th>
+        <th>4.Capacitacion  </th>
+        <th> </th>
+        <th></th>
+      </thead>
+      <tbody>
+       
+         <tr>
+          <td class="left aligned">Empleado  </td>
+          <td><%= f.collection_select :employee4_id, @employees, :id, :full_name, :prompt => true %> </td>
+          <td></td>
+          <td> </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left aligned"> Curso / Capacitacion </td>
+          <td><%= f.text_field :curso_cap %> </td>
+           <td class="left aligned">  </td>
+          <td> </td>
+          <td></td>
+          <td></td>
+        </tr>
+         <tr>
+          <td class="left aligned">Proyecto </td>
+          <td><%= f.collection_select :proyecto_minero2_id, @proyecto_mineros, :id, :descrip, :prompt => true %> </td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+
+        </tr>
+
+
+         <tr>
+          <td class="left aligned">Fecha Vmto</td>
+          <td><%= f.date_field :fecha_vmto_cap  %> </td>
+           <td class="left aligned">Observaciones </td>
+          <td><%= f.text_field :obs_cap  %> </td>
+          <td></td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+</table>
+
+
+
+<table class="ui right aligned table">
+      <thead>
+        <th class="left aligned"></th>
+        <th>5.Otros   </th>
+        <th> </th>
+        <th></th>
+      </thead>
+      <tbody>
+       
+         <tr>
+          <td class="left aligned">Conductor  </td>
+          <td><%= f.collection_select :employee5_id, @employees, :id, :full_name, :prompt => true %> </td>
+          <td></td>
+          <td> </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left aligned"> Tramite  </td>
+          <td><%= f.text_field :tramite  %> </td>
+           <td class="left aligned">  </td>
+          <td> </td>
+          <td></td>
+          <td></td>
+        </tr>
+               <tr>
+          <td class="left aligned">Fecha Vmto</td>
+          <td><%= f.date_field :fecha_vmto_ot  %> </td>
+           <td class="left aligned">Observaciones </td>
+          <td><%= f.text_field :obs_ot  %> </td>
+          <td></td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+</table>
+
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+
+
+<% end %>
+
+</div>

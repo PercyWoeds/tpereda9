@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Tecnic Revisions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tecnic_revisions.each do |tecnic_revision| %>
+      <tr>
+        <td><%= tecnic_revision.code %></td>
+        <td><%= tecnic_revision.name %></td>
+        <td><%= link_to 'Show', tecnic_revision %></td>
+        <td><%= link_to 'Edit', edit_tecnic_revision_path(tecnic_revision) %></td>
+        <td><%= link_to 'Destroy', tecnic_revision, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Tecnic revision', new_tecnic_revision_path %>

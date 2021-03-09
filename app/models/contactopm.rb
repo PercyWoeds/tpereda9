@@ -12,6 +12,13 @@ class Contactopm < ActiveRecord::Base
 
 	 accepts_nested_attributes_for :contactopmdetails , reject_if: proc { |att| att['contacto'].blank?} , :allow_destroy => true
 
+ TABLE_HEADERS = [ "Nro.",
+                   "PROYECTO MINERO ",
+                   "CONTACTO",
+                   "CORREO ELECTRONICO",
+                   "TELEFONO"
+                   ]
+
  
 	def generate_rq_number(serie)
     if Contactopm.where("cast(substring(code,1,3)  as int) = ?",serie).maximum("cast(substring(code,5,10)  as int)") == nil 
@@ -21,5 +28,7 @@ class Contactopm < ActiveRecord::Base
           
 	  end 
   end 
+
+
 
 end

@@ -1,0 +1,59 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tramit_id: 1
+  tipo_tramit_id: 1
+  employee_id: 1
+  proyecto_minero_id: 1
+  supplier_id: 1
+  fecha_ingreso: 2021-03-07 17:02:01
+  fecha_vmto: 2021-03-07 17:02:01
+  truck_id: 1
+  employee2_id: 1
+  tipo_revision_tecnica: MyString
+  fecha_vmto_rt: 2021-03-07 17:02:01
+  fecha_carga_rt: 2021-03-07 17:02:01
+  obs_rt: MyString
+  employee3_id: 1
+  antecedent_id: 1
+  tipo_antecedent_id: 1
+  fecha_vmto_ant: 2021-03-07 17:02:01
+  obs_ant: MyText
+  employee4_id: 1
+  curso_cap: MyString
+  proyecto_minero_id: 1
+  fecha_vmto_cap: 2021-03-07 17:02:01
+  obs_cap: MyText
+  employee5_id: 1
+  tramite: MyText
+  fecha_vmto_ot: 2021-03-07 17:02:01
+  obs_ot: MyText
+
+two:
+  tramit_id: 1
+  tipo_tramit_id: 1
+  employee_id: 1
+  proyecto_minero_id: 1
+  supplier_id: 1
+  fecha_ingreso: 2021-03-07 17:02:01
+  fecha_vmto: 2021-03-07 17:02:01
+  truck_id: 1
+  employee2_id: 1
+  tipo_revision_tecnica: MyString
+  fecha_vmto_rt: 2021-03-07 17:02:01
+  fecha_carga_rt: 2021-03-07 17:02:01
+  obs_rt: MyString
+  employee3_id: 1
+  antecedent_id: 1
+  tipo_antecedent_id: 1
+  fecha_vmto_ant: 2021-03-07 17:02:01
+  obs_ant: MyText
+  employee4_id: 1
+  curso_cap: MyString
+  proyecto_minero_id: 1
+  fecha_vmto_cap: 2021-03-07 17:02:01
+  obs_cap: MyText
+  employee5_id: 1
+  tramite: MyText
+  fecha_vmto_ot: 2021-03-07 17:02:01
+  obs_ot: MyText

@@ -67,6 +67,8 @@
    Agregar, editar or eliminar  modelos.
   </p>
  <% end %>
+
+
 <% if @current_user.level = "admin" %>
   
   <h3>
@@ -77,7 +79,55 @@
   <p>
    Agregar, editar or eliminar  modelos.
   </p>
+
+
+ 
+  <h3>
+    <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
+        <%= link_to "Tramites ", tramits_path  %>
+  </h3>
+
+  <p>
+   Agregar, editar or eliminar  modelos.
+  </p>
+
+  <h3>
+    <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
+        <%= link_to "Tipo tramite ", tipo_tramits_path  %>
+  </h3>
+
+  <p>
+   Agregar, editar or eliminar  modelos.
+  </p>
+
+
+  <h3>
+    <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
+        <%= link_to "Antecedentes ", antecedents_path  %>
+  </h3>
+
+  <p>
+   Agregar, editar or eliminar  modelos.
+  </p>
+
+
+  <h3>
+    <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
+        <%= link_to "Revision Tecnica  ", tecnic_revisions_path  %>
+  </h3>
+
+  <p>
+   Agregar, editar or eliminar  modelos.
+  </p>
+
+
+
+
+
  <% end %>
+
+
+
 
 </div>
 

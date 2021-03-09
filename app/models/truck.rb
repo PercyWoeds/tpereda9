@@ -14,7 +14,10 @@ belongs_to  :clase_cat
 belongs_to  :modelo
 belongs_to  :marca
 
+has_many :exmautorizs
+
 has_many :couts 
+
 
 
  before_destroy :check_for_trucks, prepend: true

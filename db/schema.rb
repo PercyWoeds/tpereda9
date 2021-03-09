@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210306142155) do
+ActiveRecord::Schema.define(version: 20210309162242) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -135,6 +135,13 @@ ActiveRecord::Schema.define(version: 20210306142155) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "antecedents", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "assistances", force: :cascade do |t|
     t.string   "departamento"
     t.string   "nombre"
@@ -186,6 +193,36 @@ ActiveRecord::Schema.define(version: 20210306142155) do
     t.float    "total"
     t.string   "processed"
     t.datetime "date_processed"
+  end
+
+  create_table "autoviatics", force: :cascade do |t|
+    t.integer  "location_id"
+    t.integer  "employee_id"
+    t.datetime "fecha"
+    t.text     "tema"
+    t.integer  "supplier_id"
+    t.string   "asunto"
+    t.integer  "tramit_id"
+    t.float    "movilidad"
+    t.float    "almuerzo"
+    t.float    "otros"
+    t.string   "lugar1"
+    t.string   "lugar2"
+    t.string   "lugar3"
+    t.text     "obser"
+    t.string   "lugar_salida"
+    t.string   "lugar_salida2"
+    t.time     "hora_ingreso"
+    t.time     "hora_salida"
+    t.text     "obser2"
+    t.string   "processed"
+    t.datetime "date_processed"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "code"
+    t.integer  "proyecto_minero_id"
+    t.string   "references"
+    t.string   "proyecto_mineros"
   end
 
   create_table "bank_acounts", force: :cascade do |t|
@@ -1017,6 +1054,44 @@ ActiveRecord::Schema.define(version: 20210306142155) do
     t.string   "cod_interno"
     t.float    "efectivo"
     t.float    "hora_ex"
+  end
+
+  create_table "exmautorizs", force: :cascade do |t|
+    t.integer  "tramit_id"
+    t.integer  "tipo_tramit_id"
+    t.integer  "employee_id"
+    t.integer  "proyecto_minero_id"
+    t.integer  "supplier_id"
+    t.datetime "fecha_ingreso"
+    t.datetime "fecha_vmto"
+    t.integer  "truck_id"
+    t.integer  "employee2_id"
+    t.string   "tipo_revision_tecnica"
+    t.datetime "fecha_vmto_rt"
+    t.datetime "fecha_carga_rt"
+    t.string   "obs_rt"
+    t.integer  "employee3_id"
+    t.integer  "antecedent_id"
+    t.integer  "tipo_antecedent_id"
+    t.datetime "fecha_vmto_ant"
+    t.text     "obs_ant"
+    t.integer  "employee4_id"
+    t.string   "curso_cap"
+    t.datetime "fecha_vmto_cap"
+    t.text     "obs_cap"
+    t.integer  "employee5_id"
+    t.text     "tramite"
+    t.datetime "fecha_vmto_ot"
+    t.text     "obs_ot"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.integer  "proyecto_minero2_id"
+    t.string   "code"
+    t.string   "processed"
+    t.string   "comments"
+    t.integer  "tecnic_revision_id"
+    t.datetime "date_processed"
+    t.datetime "fecha"
   end
 
   create_table "factura_details", force: :cascade do |t|
@@ -2744,6 +2819,7 @@ ActiveRecord::Schema.define(version: 20210306142155) do
     t.integer  "supplier_type_id"
     t.string   "service_type"
     t.text     "lugar"
+    t.string   "tipoexm"
   end
 
   create_table "tanks", force: :cascade do |t|
@@ -2764,6 +2840,13 @@ ActiveRecord::Schema.define(version: 20210306142155) do
     t.float    "varilla"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+  end
+
+  create_table "tecnic_revisions", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "telecredito_details", force: :cascade do |t|
@@ -2830,6 +2913,13 @@ ActiveRecord::Schema.define(version: 20210306142155) do
     t.datetime "updated_at",  null: false
     t.string   "factu"
     t.integer  "tipocar_id"
+  end
+
+  create_table "tipo_tramits", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tipo_unidads", force: :cascade do |t|
@@ -2913,6 +3003,13 @@ ActiveRecord::Schema.define(version: 20210306142155) do
   create_table "tms", force: :cascade do |t|
     t.string   "code"
     t.string   "descrip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tramits", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

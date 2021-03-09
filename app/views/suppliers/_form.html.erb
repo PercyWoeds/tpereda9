@@ -81,17 +81,17 @@
   </div>
 
 <div class="field">
- <%= f.label :tipo1, "Tipo Proveedor " %><br />
+ <%= f.label :tipo1, "Tipo Proveedor Contado - Credito " %><br />
 
-<%= f.select :tipo1,options_from_collection_for_select(@tipoproveedor,'id','name'),  {style: "width: 100px" } %>
-
+<%= f.collection_select :tipo1, @tipoproveedor, :id, :name, :prompt => true %>
 
 </div> 
 
-<div class="field">
- <%= f.label :tipo1, "Categoria Proveedor " %><br />
 
- <%= f.select :tipo1,options_from_collection_for_select(@typeproveedor,'id','name'),  {style: "width: 100px" } %>
+<div class="field">
+ <%= f.label :tipoexm, "Categoria Proveedor " %><br />
+
+   <%= f.collection_select :tipoexm , @typeproveedor, :id, :name, :prompt => true %>
 
 
 </div> 
