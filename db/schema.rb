@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210310163118) do
+ActiveRecord::Schema.define(version: 20210310202919) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1123,8 +1123,8 @@ ActiveRecord::Schema.define(version: 20210310163118) do
     t.string   "return"
     t.datetime "date_processed"
     t.integer  "user_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
     t.datetime "fecha"
     t.string   "serie"
     t.string   "numero"
@@ -1150,6 +1150,7 @@ ActiveRecord::Schema.define(version: 20210310163118) do
     t.integer  "manifest_id"
     t.text     "os_customer"
     t.string   "documento2"
+    t.float    "valor_referencial"
   end
 
   create_table "faltantes", force: :cascade do |t|

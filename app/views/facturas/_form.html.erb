@@ -99,11 +99,16 @@
       <%= f.text_field :contrato  %>
     </div>
 
-  <div class="field">
+    <div class="field">
       <%= f.label :documento2, "Documento Modificar:", :class => "bold"  %> <br/>
       <%= f.text_field :documento2  %>
     </div>
 
+   
+    <div class="field">
+      <%= f.label :valor_referencial, "Valor Referencial  ", :class => "bold" %><br />
+      <%= f.number_field :valor_referencial,:step => 0.1 %>
+    </div>
 
 
     <div class="field" id="list_items">

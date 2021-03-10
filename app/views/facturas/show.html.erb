@@ -64,6 +64,15 @@
 </p>
 <% end %>
 
+
+<% if !@invoice.valor_referencial.nil? %>
+<p>
+  <b>Valor Referencial : </b>
+  <%= @invoice.valor_referencial  %>
+</p>
+<% end %>
+
+
 <%= hr() %>
 
 <h3>
