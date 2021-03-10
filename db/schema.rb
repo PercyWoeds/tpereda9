@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210309162242) do
+ActiveRecord::Schema.define(version: 20210310163118) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1931,6 +1931,38 @@ ActiveRecord::Schema.define(version: 20210309162242) do
     t.integer  "position"
     t.integer  "company_id"
     t.datetime "hidden_at"
+  end
+
+  create_table "payment_notices", force: :cascade do |t|
+    t.string   "code"
+    t.integer  "employee_id"
+    t.string   "asunto"
+    t.datetime "fecha"
+    t.string   "concepto"
+    t.float    "total"
+    t.string   "processed"
+    t.datetime "date_processed"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "company_id"
+  end
+
+  create_table "paymentnotice_details", force: :cascade do |t|
+    t.datetime "fecha_inicio"
+    t.datetime "fecha_culmina"
+    t.float    "total"
+    t.string   "descrip"
+    t.string   "lugar"
+    t.float    "price_unit"
+    t.float    "sub_total"
+    t.float    "igv"
+    t.string   "nro_compro"
+    t.string   "nro_documento"
+    t.string   "observa"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "payment_notice_id"
+    t.float    "qty"
   end
 
   create_table "payments", force: :cascade do |t|

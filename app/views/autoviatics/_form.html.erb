@@ -1,5 +1,16 @@
 <%= simple_form_for(@autoviatic) do |f| %>
-  <%= f.error_notification %>
+ 
+ <% if @autoviatic.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@autoviatic.errors.count, "error") %> prohibited this customer from being saved:</h2>
+
+      <ul>
+      <% @autoviatic.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
 
 <table class="ui right aligned table">
       <thead>

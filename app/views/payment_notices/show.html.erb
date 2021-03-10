@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @payment_notice.code %>
+</p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @payment_notice.employee_id %>
+</p>
+
+<p>
+  <strong>Asunto:</strong>
+  <%= @payment_notice.asunto %>
+</p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @payment_notice.fecha %>
+</p>
+
+<p>
+  <strong>Concepto:</strong>
+  <%= @payment_notice.concepto %>
+</p>
+
+<p>
+  <strong>Total:</strong>
+  <%= @payment_notice.total %>
+</p>
+
+<p>
+  <strong>Processed:</strong>
+  <%= @payment_notice.processed %>
+</p>
+
+<p>
+  <strong>Date processed:</strong>
+  <%= @payment_notice.date_processed %>
+</p>
+
+<%= link_to 'Edit', edit_payment_notice_path(@payment_notice) %> |
+<%= link_to 'Back', payment_notices_path %>

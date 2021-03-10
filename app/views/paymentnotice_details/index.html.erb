@@ -1,0 +1,51 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Paymentnotice Details</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fecha inicio</th>
+      <th>Fecha culmina</th>
+      <th>Total</th>
+      <th>Descrip</th>
+      <th>Lugar</th>
+      <th>Price unit</th>
+      <th>Sub total</th>
+      <th>Igv</th>
+      <th>Total</th>
+      <th>Nro compro</th>
+      <th>Nro documento</th>
+      <th>Observa</th>
+      <th>Payment notices</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @paymentnotice_details.each do |paymentnotice_detail| %>
+      <tr>
+        <td><%= paymentnotice_detail.fecha_inicio %></td>
+        <td><%= paymentnotice_detail.fecha_culmina %></td>
+        <td><%= paymentnotice_detail.total %></td>
+        <td><%= paymentnotice_detail.descrip %></td>
+        <td><%= paymentnotice_detail.lugar %></td>
+        <td><%= paymentnotice_detail.price_unit %></td>
+        <td><%= paymentnotice_detail.sub_total %></td>
+        <td><%= paymentnotice_detail.igv %></td>
+        <td><%= paymentnotice_detail.total %></td>
+        <td><%= paymentnotice_detail.nro_compro %></td>
+        <td><%= paymentnotice_detail.nro_documento %></td>
+        <td><%= paymentnotice_detail.observa %></td>
+        <td><%= paymentnotice_detail.payment_notices %></td>
+        <td><%= link_to 'Show', paymentnotice_detail %></td>
+        <td><%= link_to 'Edit', edit_paymentnotice_detail_path(paymentnotice_detail) %></td>
+        <td><%= link_to 'Destroy', paymentnotice_detail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Paymentnotice detail', new_paymentnotice_detail_path %>

@@ -4,6 +4,8 @@ require 'sidekiq/web'
   Mnygo::Application.routes.draw do
 
   
+  resources :paymentnotice_details
+  resources :payment_notices
   resources :autoviatics
   resources :tecnic_revisions
   resources :exmautorizs
@@ -1464,11 +1466,18 @@ match 'purchases/do_crear/:id'   => 'purchases#do_crear', via: [:get, :post]
 
 match 'exmautorizs/do_process/:id' => 'exmautorizs#do_process', via: [:get, :post]
 match 'exmautorizs/do_anular/:id' => 'exmautorizs#do_anular', via: [:get, :post]
-
 match 'exmautorizs/sendcancelar/:id' => 'exmautorizs#sendcancelar', via: [:get, :post]
 match 'exmautorizs/pdf/:id' => 'exmautorizs#pdf', via: [:get, :post]
 match 'exmautorizs/do_email/:id' => 'exmautorizs#do_email', via: [:get, :post]
 
+
+match 'autoviatics/do_process/:id' => 'autoviatics#do_process', via: [:get, :post]
+match 'autoviatics/do_anular/:id' => 'autoviatics#do_anular', via: [:get, :post]
+match 'autoviatics/sendcancelar/:id' => 'autoviatics#sendcancelar', via: [:get, :post]
+match 'autoviatics/pdf/:id' => 'autoviatics#pdf', via: [:get, :post]
+match 'autoviatics/do_email/:id' => 'autoviatics#do_email', via: [:get, :post]
+
+match 'payment_notices/list_items/:company_id' => 'payment_notices#list_items', via: [:get, :post]
 
 
 

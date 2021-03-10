@@ -3290,7 +3290,7 @@ def newfactura2
     
     pdf.text "Cuentas por cobrar  : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
     pdf.text ""
-    pdf.font "Helvetica" , :size => 7
+    pdf.font "Helvetica" , :size => 6
 
       headers = []
       table_content = []
@@ -3594,8 +3594,7 @@ def newfactura2
 
     lcmonedadolares ="1"
     lcmonedasoles ="2"
-    
-
+  
     #@company.actualizar_fecha2
     #@company.actualizar_detraccion 
 

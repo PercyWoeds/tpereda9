@@ -9,6 +9,7 @@ class Location < ActiveRecord::Base
   has_many :employees
   has_many :quotations 
   has_many :manifests  
+  has_many :autoviatics 
   
   
 end

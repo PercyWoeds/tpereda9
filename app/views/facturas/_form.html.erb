@@ -13,6 +13,8 @@
 
 <%= hr() %>
 
+
+
 <div class="mid_box bordered_right">
   <%= form_for(@invoice) do |f| %>
     <h4>
@@ -184,13 +186,18 @@
   <% end %>
 </div>
 
+
+
 <div class="mid_box">
   <h4>
     Agregar Servicios
   </h4>
   
   <form method="get" action="/services" onsubmit="addItemToInvoice2(); return false;">
-   <strong>Servicio:</strong><br />
+   
+
+
+   strong>Servicio:</strong><br />
     <%= select_tag(:ac_item_id,options_from_collection_for_select(@services,'id','name') ) %>
     <div class="small">
       Ingrese un termino de busqueda para encontrar un producto.

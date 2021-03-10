@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fecha_inicio: 2021-03-09 15:30:14
+  fecha_culmina: 2021-03-09 15:30:14
+  total: 1.5
+  descrip: MyString
+  lugar: MyString
+  price_unit: 1.5
+  sub_total: 1.5
+  igv: 1.5
+  total: 1.5
+  nro_compro: MyString
+  nro_documento: MyString
+  observa: MyString
+  payment_notices_id: 
+
+two:
+  fecha_inicio: 2021-03-09 15:30:14
+  fecha_culmina: 2021-03-09 15:30:14
+  total: 1.5
+  descrip: MyString
+  lugar: MyString
+  price_unit: 1.5
+  sub_total: 1.5
+  igv: 1.5
+  total: 1.5
+  nro_compro: MyString
+  nro_documento: MyString
+  observa: MyString
+  payment_notices_id: 

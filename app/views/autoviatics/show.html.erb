@@ -13,135 +13,168 @@
 
 <div class="ui form segment raised">
 
-<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Location:</strong>
-  <%= @autoviatic.location_id %>
-</p>
 
-<p>
-  <strong>Proyecto minerdo:</strong>
-  <%= @autoviatic.proyecto_minerdo_id %>
-</p>
+<% if @autoviatic.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@autoviatic.errors.count, "error") %> prohibited this customer from being saved:</h2>
 
-<p>
-  <strong>Employee:</strong>
-  <%= @autoviatic.employee_id %>
-</p>
+      <ul>
+      <% @autoviatic.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-<p>
-  <strong>Fecha:</strong>
-  <%= @autoviatic.fecha %>
-</p>
 
-<p>
-  <strong>Tema:</strong>
-  <%= @autoviatic.tema %>
-</p>
 
-<p>
-  <strong>Supplier:</strong>
-  <%= @autoviatic.supplier_id %>
-</p>
 
-<p>
-  <strong>Asunto:</strong>
-  <%= @autoviatic.asunto %>
-</p>
 
-<p>
-  <strong>Tramit:</strong>
-  <%= @autoviatic.tramit_id %>
-</p>
 
-<p>
-  <strong>Movilidad:</strong>
-  <%= @autoviatic.movilidad %>
-</p>
+<table class="ui right aligned table">
+      <thead>
+        <th class="left aligned"></th>
+        <th>1.Examen Medicos </th>
+        <th> </th>
+        <th></th>
+      </thead>
+      <tbody>
+        <tr>
 
-<p>
-  <strong>Almuerzo:</strong>
-  <%= @autoviatic.almuerzo %>
-</p>
+          <td class="left aligned"> Sucursal:</td>
+          <td><%= @autoviatic.location.name %>  </td>
 
-<p>
-  <strong>Otros:</strong>
-  <%= @autoviatic.otros %>
-</p>
+           <td class="left aligned">Proyecto Minero</td>
+          <td><%= @autoviatic.proyecto_minero.descrip  %> </td>
+          
+        
+          <td> </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left aligned">Empleado  </td>
+          <td><%= @autoviatic.employee.full_name  %> </td>
 
-<p>
-  <strong>Lugar1:</strong>
-  <%= @autoviatic.lugar1 %>
-</p>
+          <td>Fecha </td>
+          <td><%= @autoviatic.fecha  %></td>
 
-<p>
-  <strong>Lugar2:</strong>
-  <%= @autoviatic.lugar2 %>
-</p>
+       
+        </tr>
+          <tr>
+                      <td></td>
+             <td> </td>
+          <td class="left aligned"> Tema </td>
+          <td><%= @autoviatic.tema   %> </td>
 
-<p>
-  <strong>Lugar3:</strong>
-  <%= @autoviatic.lugar3 %>
-</p>
+         
 
-<p>
-  <strong>Obser:</strong>
-  <%= @autoviatic.obser %>
-</p>
 
-<p>
-  <strong>Lugar salida:</strong>
-  <%= @autoviatic.lugar_salida %>
-</p>
+       
+        </tr>
 
-<p>
-  <strong>Lugar salida2:</strong>
-  <%= @autoviatic.lugar_salida2 %>
-</p>
+         <tr>
+          <td class="left aligned">Clinica/Capacitacion  </td>
+          <td><%= @autoviatic.supplier.name  %> </td>
+         <td class="left aligned">Asunto  </td>
+          <td> <%= @autoviatic.tramit.name  %> </td>
+          <td></td>
+          <td></td>
+        </tr>
 
-<p>
-  <strong>Hora ingreso:</strong>
-  <%= @autoviatic.hora_ingreso %>
-</p>
 
-<p>
-  <strong>Hora salida:</strong>
-  <%= @autoviatic.hora_salida %>
-</p>
 
-<p>
-  <strong>Obser2:</strong>
-  <%= @autoviatic.obser2 %>
-</p>
+         <tr>
+          <td class="left aligned"> Movilidad </td>
+          <td><%= @autoviatic.movilidad  %> </td>
+           <td class="left aligned">Lugar </td>
+          <td><%= @autoviatic.lugar1  %> </td>
+          <td></td>
+          <td></td>
+        </tr>
 
-<p>
-  <strong>Processed:</strong>
-  <%= @autoviatic.processed %>
-</p>
+         <tr>
+          <td class="left aligned"> Almuerzo</td>
+          <td><%=  @autoviatic.almuerzo   %> </td>
+           <td class="left aligned">Lugar </td>
+          <td><%=  @autoviatic.lugar2  %> </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left aligned"> Otros</td>
+          <td><%=  @autoviatic.otros  %> </td>
+           <td class="left aligned">Lugar </td>
+          <td><%=  @autoviatic.lugar3  %> </td>
+          <td></td>
+          <td></td>
+        </tr>
 
-<p>
-  <strong>Date processed:</strong>
-  <%= @autoviatic.date_processed %>
-</p>
+         <tr>
+          <td class="left aligned"> Total </td>
+          <td> <p id= "total_viatico"  align="right" > </p>
+           </td>
+           <td class="left aligned">Observaciones </td>
+          <td><%=  @autoviatic.obser %> </td>
+          <td></td>
+          <td></td>
+        </tr>
+        
+         <tr>
+          <td class="left aligned">Lugar Ingreso </td>
+          <td><%=  @autoviatic.lugar_salida %> </td>
 
-</div>
+           <td class="left aligned">Lugar Salida </td>
+          <td><%=  @autoviatic.lugar_salida2 %> </td>
+          <td></td>
+          <td></td>
+        </tr>
+
+         <tr>
+          <td class="left aligned"> Hora Ingreso </td>
+          <td><%=  @autoviatic.hora_ingreso %> </td>
+          
+           <td class="left aligned">Hora Salida </td>
+          <td><%=  @autoviatic.hora_salida %> </td>
+          <td></td>
+          <td></td>
+        </tr>
+
+
+
+
+      </tbody>
+</table>
+
+<table style="width:100%">
+
+  <tr>
+    <td>OBSERVACIONES </td>
+    <td><%=  @autoviatic.obser2  %>  </td>
+   
+    
+  </tr>
+
+</table>
+
+
 
 
 <div class="button">
   
    
-<%= link_to 'Export PDF', "/exmautorizs/pdf/#{@exmautoriz.id}" %>
+<%= link_to 'Export PDF', "/autoviatics/pdf/#{@autoviatic.id}" %>
   
-<% if @exmautoriz.processed =="0" || @exmautoriz.processed==nil %>
-  <%= link_to 'Aprobar', "/exmautorizs/do_process/#{@exmautoriz.id}" %>
-  <%= link_to 'Editar', edit_exmautoriz_path(@exmautoriz) %>
+<% if @autoviatic.processed =="0" || @autoviatic.processed==nil %>
+  <%= link_to 'Aprobar', "/autoviatics/do_process/#{@autoviatic.id}" %>
+  <%= link_to 'Editar', edit_autoviatic_path(@autoviatic) %>
   
-<% elsif @exmautoriz.processed =="1" and current_user.level =="admin" %>  
+<% elsif @autoviatic.processed =="1" and current_user.level =="admin" %>  
 
-   <%= link_to 'Anular', "/exmautorizs/sendcancelar/#{@exmautoriz.id}" %>
+   <%= link_to 'Anular', "/autoviatics/sendcancelar/#{@autoviatic.id}" %>
   
 
 <% end %>
-<%= link_to 'Regresar',exmautorizs_path %>
+<%= link_to 'Regresar',autoviatics_path %>
 </div>

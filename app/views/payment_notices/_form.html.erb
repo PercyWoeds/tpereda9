@@ -1,0 +1,333 @@
+
+
+ <% if @payment_notice.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@payment_notice.errors.count, "error") %> prohibited this invoice from being saved:</h2>
+
+    <ul>
+    <% @payment_notice.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>       
+
+
+<%= hr() %>
+
+
+
+
+<div class="mid_box bordered_right">
+  <%= form_for(@payment_notice) do |f| %>
+    <h4>
+       Informacion Documento 
+    </h4>
+
+
+
+  <div class="field">
+    <%= f.label :employee_id, "Empleado : " %><br>
+    <%= f.collection_select :employee_id, @employees, :id, :full_name, :prompt => true %> 
+
+  </div>
+
+
+  <div class="field">
+    <%= f.label :asunto , "Asunto: "%><br>
+    <%= f.text_field :asunto %>
+  </div>
+
+
+  <div class="field">
+    <%= f.label :fecha, "Fecha: " %><br>
+    <%= f.date_field :fecha %>
+  </div>
+
+
+
+  <div class="field">
+    <%= f.label :concepto, "Concepto: " %><br>
+    <%= f.text_area   :concepto %>
+  </div>
+
+    <%= hr() %>
+
+
+    <div class="field">
+      <%= f.label :code, "Code*", :class => "bold"  %><br />
+      <%= f.text_field :code, :onclick => "$(this).select();" %>
+    </div>
+
+
+
+
+    <div class="field" id="list_items">
+      <p class="bold big">Detalle :</p>
+    </div>
+
+  
+    <%= hr() %>
+  
+   <div class="actions">
+      <input type="hidden" name="items" id="items" value="<% if @products_lines %><%= @products_lines %><% end %>" />
+
+    
+      <%= f.hidden_field :company_id %>      
+      <%= f.submit %>
+    </div>
+    
+    <div class="small">
+      Once you're done adding products, don't forget to <strong><%= @action_txt %></strong> your invoice.
+    </div>
+  <% end %>
+</div>
+
+
+<div class="mid_box">
+  <h4>
+    Agregar Detalle pago 
+  </h4>
+
+  
+  <form method="get" action="/payment_notices" onsubmit="addItemToPaymentNotice(); return false;">
+
+     <label for="ac_fecha_inicio"> Fecha Inicio:      </label>
+     <input type="date" id="fecha_inicio" name="fecha_inicio"> 
+     <br />
+
+     <label for="ac_fecha_culmina">Fecha Culminacion:</label>
+     <input type="date" id="fecha_culmina" name="fecha_culmina"> 
+     <br />
+
+    <strong>Cantidad:</strong><br />
+    <input type="text" name="ac_item_quantity" id="ac_item_quantity" value="1" class="tf_short" />
+    <div class="small">
+     Cantidad 
+    </div>
+    <br />
+
+
+    <strong>Descripcion :</strong><br />
+    <input type="text" name="ac_item_descrip" id="ac_item_descrip" value="" class="tf_short" />
+    <div class="small">
+     Descripcion 
+    </div>
+  
+    <br />
+    <strong>Lugar :</strong><br />
+    <input type="text" name="ac_item_lugar" id="ac_item_lugar" value="" class="tf_short" />
+    <div class="small">
+     Lugar  .
+    </div>
+  
+    <br />
+
+
+    <strong>Precio:</strong><br />
+    <input type="text" name="ac_item_price" id="ac_item_price" value="0.00" class="tf_short" />
+    <div class="small">
+      Precio.
+    </div>
+
+    <br />
+    
+    
+    <div>
+      <strong>Total:</strong><br />
+      <span id="ac_item_total">0.00</span>
+    </div>
+    
+    <br />
+
+    
+   <strong>Proyeto Minero :</strong><br />
+    <%= select_tag(:ac_proyecto_minero_id,options_from_collection_for_select(@proyecto_mineros,'id','descrip') ) %>
+    <div class="small">
+      Ingrese un termino de busqueda para encontrar un producto.
+    </div>
+    <br />
+
+
+    
+    <strong> Nro.Documento </strong><br />
+    <input type="text" name="ac_item_doc" id="ac_item_doc" value="" class="tf_short" />
+    <div class="small">
+      Numero de Documento 
+    </div>
+    <br />
+   
+    <strong> Observacion </strong><br />
+    <input type="text" name="ac_item_obser" id="ac_item_obser" value="" class="tf_short" />
+    <div class="small">
+      Observacion
+    </div>
+    <br />
+
+
+    <input type="submit" value="Agregar item a Factura" />
+    
+  </form>
+
+</div>
+  
+
+<%= br() %>
+<br />
+
+<%= render 'layouts/autocomplete' %>
+
+
+<script type="text/javascript">
+
+  $(document).ready(function() {
+
+
+    
+    $("#ac_item_quantity").bind("keyup", function() {
+      updateItemTotalPaymentNotice();
+    });
+    
+    
+    $("#ac_item_price").bind("keyup", function() {
+      updateItemTotalPaymentNotice();
+    });
+    
+   
+    
+    <% if @products_lines %>
+    alert 'holas products_lines';
+      listItemsPaymentNotice();
+    <% end %>
+
+
+  });
+
+
+
+// Add an item to a product kit
+  function addItemToPaymentNotice() {
+
+    alert("ingresa item lllll"); 
+
+    var item = $("#ac_item_descrip").val();
+    
+   if(item != "") {
+        var company_id = $("#payment_notice_company_id").val();
+
+        var item_fi = document.getElementById("fecha_inicio").value;
+
+        var item_fc = document.getElementById("fecha_culmina").value; 
+
+        var item_qty = $("#ac_item_quantity").val(); 
+
+        var item_des  = $("#ac_item_descrip").val();  
+
+        var item_lugar = $("#ac_item_lugar").val();   
+
+        var item_price = $("#ac_item_price").val(); 
+
+        var item_pm = $("#ac_proyecto_minero_id").val(); 
+
+        var item_doc = $("#ac_item_doc").val(); 
+
+        var item_obser = $("#ac_item_obser").val(); 
+
+        var items_arr = $("#items").val().split(",");
+
+
+
+
+      if(item_qty == "" || !isNumeric(item_qty)) {
+        alert("Please enter a valid quantity");
+      } else if(item_price == "" || !isNumeric(item_price)) {
+        alert("Please enter a valid price");
+      } else {
+        var item_line = item_fi + "|BRK|" + item_fc     + "|BRK|" + item_qty   + "|BRK|" 
+                     + item_des + "|BRK|" + item_lugar  + "|BRK|" + item_price + "|BRK|" 
+                     + item_pm  + "|BRK|" + item_doc    + "|BRK|" + item_obser  ;
+        
+        $("#items").val($("#items").val() + "," + item_line);
+
+        alert(item_line);
+
+        listItemsPaymentNotice();
+        
+       
+        $("#ac_item_quantity").val("1");
+        $("#ac_item_descrip").val("");
+        $("#ac_item_lugar").val("");
+        $("#ac_item_price").val("1");
+        $("#ac_item_proyecto_minero_id").val("");
+        $("#ac_item_doc").val("");
+        $("#ac_item_obser").val("");
+
+
+        updateItemTotalPaymentNotice();
+
+      }
+      
+    } else {
+      alert("Please find a guia  to add first.");
+    }
+
+
+  }
+
+
+  function listItemsPaymentNotice() {
+    var items = $("#items").val();
+
+    var company_id = $("#payment_notice_company_id").val();
+    
+    $.get('/payment_notices/list_items/' + company_id, {
+      items: items
+    },
+    function(data) {
+      $("#list_items").html(data);
+      documentReady();
+    });
+  }
+
+
+ // Update price total for invoice
+  function updateItemTotalPaymentNotice() {
+    var quantity = $("#ac_item_quantity").val();
+    var price = $("#ac_item_price").val();
+  
+    
+    if(isNumeric(quantity) && isNumeric(price) ) {
+      
+      var total = quantity * price ;
+
+      $("#ac_item_total").html(total);
+    } else {
+      $("#ac_item_total").html("0.00");
+    }
+  }
+
+function isValidDate(d) {
+  return d instanceof Date && !isNaN(d);
+}
+
+
+function existeFecha(fecha){
+      var fechaf = fecha.split("/");
+      var day = fechaf[0];
+      var month = fechaf[1];
+      var year = fechaf[2];
+      var date = new Date(year,month,'0');
+      if((day-0)>(date.getDate()-0)){
+            return false;
+      }
+      return true;
+}
+
+
+
+
+  
+</script>
+
+
+

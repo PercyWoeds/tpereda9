@@ -35,12 +35,12 @@
   <tbody>
     <% @autoviatics.each do |autoviatic| %>
       <tr>
-        <td><%= autoviatic.location_id %></td>
-        <td><%= autoviatic.proyecto_minero_id %></td>
-        <td><%= autoviatic.employee_id %></td>
-        <td><%= autoviatic.fecha %></td>
+        <td><%= autoviatic.location.name %></td>
+        <td><%= autoviatic.proyecto_minero.descrip %></td>
+        <td><%= autoviatic.employee.full_name  %></td>
+        <td><%= autoviatic.fecha.strftime("%d/%m/%Y") %></td>
         <td><%= autoviatic.tema %></td>
-        <td><%= autoviatic.supplier_id %></td>
+        <td><%= autoviatic.supplier.name %></td>
         
         <td><%= link_to 'Show', autoviatic %></td>
         <td><%= link_to 'Edit', edit_autoviatic_path(autoviatic) %></td>
@@ -52,4 +52,4 @@
 
 <br>
 
-<%= link_to 'New Autoviatic', new_autoviatic_path %>
+<%= link_to 'Nuevo Autorizacion", new_autoviatic_path %>

@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  employee_id: 1
+  asunto: MyString
+  fecha: 2021-03-09 15:27:49
+  concepto: MyString
+  total: 1.5
+  processed: MyString
+  date_processed: 2021-03-09 15:27:49
+
+two:
+  code: MyString
+  employee_id: 1
+  asunto: MyString
+  fecha: 2021-03-09 15:27:49
+  concepto: MyString
+  total: 1.5
+  processed: MyString
+  date_processed: 2021-03-09 15:27:49

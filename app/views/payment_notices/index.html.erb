@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Payment Notices</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Employee</th>
+      <th>Asunto</th>
+      <th>Fecha</th>
+      <th>Concepto</th>
+      <th>Total</th>
+      <th>Processed</th>
+      <th>Date processed</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @payment_notices.each do |payment_notice| %>
+      <tr>
+        <td><%= payment_notice.code %></td>
+        <td><%= payment_notice.employee_id %></td>
+        <td><%= payment_notice.asunto %></td>
+        <td><%= payment_notice.fecha %></td>
+        <td><%= payment_notice.concepto %></td>
+        <td><%= payment_notice.total %></td>
+        <td><%= payment_notice.processed %></td>
+        <td><%= payment_notice.date_processed %></td>
+
+        
+        <td><%= link_to 'Show', payment_notice %></td>
+        <td><%= link_to 'Edit', edit_payment_notice_path(payment_notice) %></td>
+        <td><%= link_to 'Destroy', payment_notice, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Payment notice', new_payment_notice_path %>

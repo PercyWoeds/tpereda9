@@ -1,0 +1,23 @@
+<%= simple_form_for(@paymentnotice_detail) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :fecha_inicio %>
+    <%= f.input :fecha_culmina %>
+    <%= f.input :total %>
+    <%= f.input :descrip %>
+    <%= f.input :lugar %>
+    <%= f.input :price_unit %>
+    <%= f.input :sub_total %>
+    <%= f.input :igv %>
+    <%= f.input :total %>
+    <%= f.input :nro_compro %>
+    <%= f.input :nro_documento %>
+    <%= f.input :observa %>
+    <%= f.association :payment_notices %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
