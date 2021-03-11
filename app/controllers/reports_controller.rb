@@ -1154,6 +1154,15 @@ def rpt_facturas_4
       i += 1
     end
   end
+ def rpt_facturas_dt 
+  
+    @company = Company.find(params[:company_id])
+    @pagetitle = "Facturas Emitidas - Detracciones "    
+    @customers = @company.get_customers()
+    @monedas = Moneda.all 
+   
+  end
+
 
 
 

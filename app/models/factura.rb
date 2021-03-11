@@ -56,7 +56,23 @@ class Factura < ActiveRecord::Base
                      "DOLARES ",
                      "DETRACCION",
                      "OBSERV"]
-  
+  TABLE_HEADERS_dt = ["Nro.","TD",
+                      "Nro.Doc.",
+                     "Fec.Emision",
+                     "Fec.Vmto",
+                     "R.U.C. ",
+                     "Cliente",                 
+                     "Mon.",                                     
+                     "SUBTOTAL",
+                     "IGV",
+                     "IMPORTE",
+                     "VALOR 
+                     REFE
+                     RENCIAL",
+                     "TIPO SERVICIO",
+                     "(%) DETRACCION",
+                     "MONTO 
+                     DETRACCION"]
 
   def self.search(search)
       where("code iLIKE ?", "%#{search}%") 
@@ -635,6 +651,27 @@ def get_tipocambio(dia)
   end
   
 
+  def get_servicio
+
+
+    if InvoiceService.where(factura_id: self.id ).exists?
+         a=  InvoiceService.where(factura_id: self.id )
+        return   a.first.service.name 
+    else
+     return "No tiene detalle "
+    end 
+
+  end 
   
+  def get_detraccion
+  
+    if InvoiceService.where(factura_id: self.id ).exists?
+
+       a = InvoiceService.where(factura_id: self.id )
+     return   a.first.service.tax2 
+    else
+     return 0.00 
+    end 
+  end   
   
 end

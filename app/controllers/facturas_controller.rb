@@ -1421,6 +1421,272 @@ def reportes4
       else render action: "index"
     end
   end
+
+
+def reportes_detraccion 
+    
+
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+   
+
+    @current_user_id = current_user.id 
+    
+    @facturas_rpt = @company.get_facturas_day_todos(@fecha1,@fecha2)          
+   
+    
+
+    case params[:print]
+      when "To PDF" then 
+        begin 
+
+       Prawn::Document.generate "app/pdf_output/rpt_factura_dt.pdf", :page_layout => :landscape  ,:page_size=>"A4"   do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header_dt(pdf)
+        pdf = build_pdf_body_dt(pdf)
+        build_pdf_footer_dt(pdf)
+        @lcFileName =  "app/pdf_output/rpt_factura_dt.pdf"              
+    end     
+   
+
+    send_file("app/pdf_output/rpt_factura_dt.pdf", :type => 'application/pdf', :disposition => 'inline')
+
+
+        end   
+
+
+      when "To Excel" then render xlsx: 'exportxls'
+      else render action: "index"
+    end
+  end
+
+
+#########################################################################
+
+
+
+# reporte completo
+  def build_pdf_header_dt(pdf)
+      
+     pdf.font "Helvetica" , :size => 8
+      image_path = "#{Dir.pwd}/public/images/tpereda2.png"
+
+    
+      
+       table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION INTEGRADO ",:rowspan => 2},"CODIGO ","TP-EC-F-016"], 
+          ["VERSION: ","1"], 
+          ["REPORTES DE FACTURAS EMITIDAS (DETRACCIONES) DEL " +"#{@fecha1}"+ " AL " + "#{@fecha2}","Pagina: ","1 de 1 "] 
+         
+          ])
+      
+
+
+
+       pdf.table(table_content  ,{
+           :position => :center,
+           :width => pdf.bounds.width
+         })do
+           columns([1,2]).font_style = :bold
+            columns([0]).width = 118.55
+            columns([1]).width = 451.34
+            columns([1]).align = :center
+            
+            columns([2]).width = 100
+          
+            columns([3]).width = 100
+      
+         end
+        
+         table_content2 = ([["Fecha : ",Date.today.strftime("%d/%m/%Y")]])
+
+         pdf.table(table_content2,{:position=>:right }) do
+
+            columns([0, 1]).font_style = :bold
+            columns([0, 1]).width = 100
+            
+         end 
+
+         pdf.move_down 2
+      
+      pdf 
+  end   
+
+  def build_pdf_body_dt(pdf)
+    
+    pdf.text " ", :size => 13, :spacing => 4
+    pdf.font "Helvetica" , :size => 6
+
+      headers = []
+      table_content = []
+
+      Factura::TABLE_HEADERS_dt.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content << headers
+
+      nroitem=1
+      @tot_valor_referencial = 0
+      @tot_monto_detraccion = 0
+      @subtotal = 0
+      @tax = 0
+      @importe = 0 
+
+       for  product in @facturas_rpt 
+
+                
+
+                 row = []
+                 row << nroitem.to_s
+                 row <<  product.document.descripshort
+                 row <<  product.code 
+                 row <<  product.fecha.strftime("%d/%m/%Y")
+
+                 row <<  product.fecha2.strftime("%d/%m/%Y")
+
+                 row <<  product.customer.ruc 
+                 row <<  product.customer.name
+                 row <<  product.moneda.symbol
+                 row <<   sprintf("%.2f",product.subtotal.to_s)
+                 row <<   sprintf("%.2f",product.tax.to_s)
+                 row <<   sprintf("%.2f",product.total.to_s)
+                 if product.valor_referencial != nil
+                 row <<   sprintf("%.2f",product.valor_referencial.to_s)
+                 @valor_referencial = product.valor_referencial
+                 else
+                 row << "0.00"
+                 @valor_referencial = 0 
+                 end 
+                 row <<   product.get_servicio
+                 row <<   product.get_detraccion 
+
+                 max_porcentaje_detraccion  =  product.total > @valor_referencial ? product.total  : @valor_referencial
+
+
+                 @monto_detraccion = (product.get_detraccion * max_porcentaje_detraccion ) / 100 
+
+                 row <<    sprintf("%.2f",@monto_detraccion.round(0).to_s)
+
+            table_content << row
+
+                @subtotal += product.subtotal 
+                @tax += product.tax 
+                @importe += product.total 
+
+            nroitem=nroitem + 1
+
+
+         @tot_valor_referencial += @valor_referencial
+
+         @tot_monto_detraccion +=  @monto_detraccion.round(0)
+
+
+             
+        end
+
+
+         row = []
+
+
+         row << ""
+         row << ""
+         row <<  ""
+         row <<  ""
+         row <<  ""
+
+         row <<  ""
+         row <<  "TOTALES "
+         row <<  ""
+         row <<  @subtotal.round(2)
+         row <<  @tax.round(2)
+         row <<  @importe.round(2)
+         row <<  @tot_valor_referencial.round(2)
+         row << ""
+         row << ""
+         row << @tot_monto_detraccion.round(0)
+      
+       
+        table_content << row 
+
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                
+                                          columns([2]).align=:left
+                                  
+                                          columns([3]).align=:left
+                                          columns([4]).align=:left
+                
+                                          columns([5]).align=:left
+                                  
+                                          columns([6]).align=:left
+                                          columns([6]).width = 120
+                                          columns([7]).align=:left
+                
+                                          columns([8]).align=:right
+                                        
+                                          columns([9]).align=:right
+                                          columns([10]).align=:right 
+                
+                                          columns([11]).align=:right
+                                          columns([11]).width = 50
+                                          columns([12]).align=:left 
+
+                                          columns([13]).align=:right
+
+                                          columns([13]).width = 50
+                                          columns([14]).align=:right
+
+                                           columns([14]).width = 50
+                                        end                                          
+      pdf.move_down 10      
+      pdf
+
+
+
+
+    end
+
+    def build_pdf_footer_dt(pdf)
+      
+    
+        table_content3 =[]
+      row = []
+      row << "--------------------------------------------"
+      row << "--------------------------------------------"
+      row << "--------------------------------------------"
+      
+      table_content3 << row 
+      row = []
+      row << " JEFE COMERCIAL  "
+      row << " JEFE FINANZAS "
+      row << " JEFE CONTABILIDAD"
+      
+      table_content3 << row 
+
+      
+          result = pdf.table table_content3, {:position => :center,
+                                        :header => true,  :cell_style => {:border_width => 0},
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:center
+                                          columns([2]).align=:center 
+                                          
+                                        end                             
+
+      pdf      
+      
+  end
+########################################################################
+
+
   
 
 def rpt_monitoreo
@@ -8010,7 +8276,7 @@ def rpt_conductor_pdf
     params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,
       :comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,
       :fecha,:preciocigv,:tipo,:observ,:moneda_id,:detraccion,:factura2,:description,:document_id,
-      :tipoventa_id,:contrato,:ost,:manifest_id,:os_customer ,:documento2,:valor_referencial )
+      :tipoventa_id,:contrato,:ost,:manifest_id,:os_customer ,:documento2,:valor_referencial)
   end
 
 end

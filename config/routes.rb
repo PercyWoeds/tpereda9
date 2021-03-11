@@ -251,6 +251,8 @@ require 'sidekiq/web'
        collection { get  :rpt_st_pdf }
 
      collection { get  :rpt_viatico_1 }
+
+     collection { get  :reportes_detraccion }
     end 
 
   resources :voideds do
@@ -662,6 +664,9 @@ match 'companies/reports/rpt_coti_1_pdf/:company_id' => 'reports#rpt_coti_1_pdf'
   match 'companies/reports/rpt_viatico_pdf/:company_id' => 'reports#rpt_viatico_pdf', via: [:get, :post]
   
   match 'companies/reports/rpt_facturas_all/:company_id' => 'reports#rpt_facturas_all', via: [:get, :post]
+  match 'companies/reports/rpt_facturas_dt/:company_id' => 'reports#rpt_facturas_dt', via: [:get, :post]
+  
+
   match 'companies/reports/rpt_facturas_all2/:company_id' => 'reports#rpt_facturas_all2', via: [:get, :post]
   match 'companies/reports/rpt_facturas_res/:company_id' => 'reports#rpt_facturas_res', via: [:get, :post]
   match 'companies/reports/rpt_st_res/:company_id' => 'reports#rpt_st_res', via: [:get, :post]
