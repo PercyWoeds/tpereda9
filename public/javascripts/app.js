@@ -540,6 +540,8 @@
     $("#items").val(items_final.join(","));
     listItemsInvoice();
   }
+
+  
   // Removes an item from an invoice
   function removeItemFromInvoice2(id) {
     var items = $("#items").val();

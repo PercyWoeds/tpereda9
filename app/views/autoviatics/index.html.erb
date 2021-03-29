@@ -11,18 +11,16 @@
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 
 
-
-
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Autoviatics</h1>
+<h1>Autorizacion de viaticos</h1>
 
 <table>
   <thead>
     <tr>
 
       <th>Location</th>
-      <th>Proyecto minerdo</th>
+      <th>Proyecto minero</th>
       <th>Employee</th>
       <th>Fecha</th>
       <th>Tema</th>
@@ -42,9 +40,11 @@
         <td><%= autoviatic.tema %></td>
         <td><%= autoviatic.supplier.name %></td>
         
-        <td><%= link_to 'Show', autoviatic %></td>
-        <td><%= link_to 'Edit', edit_autoviatic_path(autoviatic) %></td>
-        <td><%= link_to 'Destroy', autoviatic, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Ver', autoviatic %></td>
+        <td><%= link_to 'Editar', edit_autoviatic_path(autoviatic) %></td>
+        <% if current_user.level == "admin"  %> 
+        <td><%= link_to 'Destroy', autoviatic, method: :delete, data: { confirm: 'Are you sure?' } %> </td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -52,4 +52,4 @@
 
 <br>
 
-<%= link_to 'Nuevo Autorizacion", new_autoviatic_path %>
+<%= link_to 'Nuevo Autorizacion', new_autoviatic_path %> 

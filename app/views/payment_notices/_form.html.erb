@@ -44,14 +44,6 @@
     <%= f.date_field :fecha %>
   </div>
 
-
-
-    <div class="field">
-      <%= f.label :code, "Code*", :class => "bold"  %><br />
-      <%= f.text_field :code, :onclick => "$(this).select();" %>
-    </div>
-
-
   <div class="field">
     <%= f.label :concepto, "Concepto: " %><br>
     <%= f.text_area   :concepto %>
@@ -81,6 +73,8 @@
       Once you're done adding products, don't forget to <strong><%= @action_txt %></strong> your invoice.
     </div>
   <% end %>
+
+
 </div>
 
 
@@ -92,6 +86,9 @@
   
   <form method="get" action="/payment_notices" onsubmit="addItemToPaymentNotice(); return false;">
 
+
+
+
      <label for="ac_fecha_inicio"> Fecha Inicio:      </label>
      <input type="date" id="fecha_inicio" name="fecha_inicio"> 
      <br />
@@ -100,55 +97,76 @@
      <input type="date" id="fecha_culmina" name="fecha_culmina"> 
      <br />
 
-    <strong>Cantidad:</strong><br />
-    <input type="text" name="ac_item_quantity" id="ac_item_quantity" value="1" class="tf_short" />
-    <div class="small">
-     Cantidad 
-    </div>
+
+    <table>
+
+      <tr>
+
+      <td>   <input type="text" name="ac_item_quantity" id="ac_item_quantity" value="1" class="tf_short" />
+        <div class="small">
+           Cantidad 
+        </div> 
+      </td>
+
+      <td>
+        
+        <input type="text_area" name="ac_item_descrip" id="ac_item_descrip" value="" class="tf_short" />
+        <div class="small">
+         Descripcion 
+        </div>
+      </td>
+
+      <td>
+        <input type="text" name="ac_item_lugar" id="ac_item_lugar" value="" class="tf_short" />
+        <div class="small">
+         Lugar  .
+        </div>
+
+      </td>
+
+      <td>
+        
+         <input type="text" name="ac_item_price" id="ac_item_price" value="0.00" class="tf_short" />
+        <div class="small">
+          Precio.
+        </div>
+
+      </td>
+
+      <td>
+        
+
+        <div>
+          <strong>Total:</strong><br />
+          <span id="ac_item_total">0.00</span>
+        </div>
+        
+      </td>
+
+      </tr>
+
+
+   
+  </table>
+
+
+
     <br />
 
-
-    <strong>Descripcion :</strong><br />
-    <input type="text" name="ac_item_descrip" id="ac_item_descrip" value="" class="tf_short" />
-    <div class="small">
-     Descripcion 
-    </div>
-  
-    <br />
-    <strong>Lugar :</strong><br />
-    <input type="text" name="ac_item_lugar" id="ac_item_lugar" value="" class="tf_short" />
-    <div class="small">
-     Lugar  .
-    </div>
-  
-    <br />
-
-
-    <strong>Precio:</strong><br />
-    <input type="text" name="ac_item_price" id="ac_item_price" value="0.00" class="tf_short" />
-    <div class="small">
-      Precio.
-    </div>
-
-    <br />
     
-    
-    <div>
-      <strong>Total:</strong><br />
-      <span id="ac_item_total">0.00</span>
-    </div>
-    
-    <br />
-
-    
-   <strong>Proyeto Minero :</strong><br />
+   <strong>Proyecto Minero :</strong><br />
     <%= select_tag(:ac_proyecto_minero_id,options_from_collection_for_select(@proyecto_mineros,'id','descrip') ) %>
     <div class="small">
       Ingrese un termino de busqueda para encontrar un producto.
     </div>
     <br />
 
-
+    <strong> Nro.Compro </strong><br />
+    <input type="text" name="ac_item_compro" id="ac_item_compro" value="" class="tf_short" />
+    <div class="small">
+      Numero de Comprobante
+    </div>
+    <br />
     
     <strong> Nro.Documento </strong><br />
     <input type="text" name="ac_item_doc" id="ac_item_doc" value="" class="tf_short" />
@@ -156,16 +174,18 @@
       Numero de Documento 
     </div>
     <br />
+
+
    
     <strong> Observacion </strong><br />
-    <input type="text" name="ac_item_obser" id="ac_item_obser" value="" class="tf_short" />
+    <input type="text_area" name="ac_item_obser" id="ac_item_obser" value="" class="tf_short" />
     <div class="small">
       Observacion
     </div>
     <br />
 
 
-    <input type="submit" value="Agregar item a Factura" />
+    <input type="submit" value="Agregar item a Aviso" />
     
   </form>
 
@@ -208,8 +228,7 @@
 // Add an item to a product kit
   function addItemToPaymentNotice() {
 
-    alert("ingresa item lllll"); 
-
+  
     var item = $("#ac_item_descrip").val();
     
    if(item != "") {
@@ -229,6 +248,8 @@
 
         var item_pm = $("#ac_proyecto_minero_id").val(); 
 
+        var item_compro = $("#ac_item_compro").val(); 
+
         var item_doc = $("#ac_item_doc").val(); 
 
         var item_obser = $("#ac_item_obser").val(); 
@@ -245,11 +266,11 @@
       } else {
         var item_line = item_fi + "|BRK|" + item_fc     + "|BRK|" + item_qty   + "|BRK|" 
                      + item_des + "|BRK|" + item_lugar  + "|BRK|" + item_price + "|BRK|" 
-                     + item_pm  + "|BRK|" + item_doc    + "|BRK|" + item_obser  ;
+                     + item_pm  + "|BRK|" + item_compro + "|BRK|" + item_doc    + "|BRK|" + item_obser  ;
         
         $("#items").val($("#items").val() + "," + item_line);
 
-        alert(item_line);
+        
 
         listItemsPaymentNotice();
         
@@ -259,6 +280,7 @@
         $("#ac_item_lugar").val("");
         $("#ac_item_price").val("1");
         $("#ac_item_proyecto_minero_id").val("");
+        $("#ac_item_compro").val("");
         $("#ac_item_doc").val("");
         $("#ac_item_obser").val("");
 
@@ -276,9 +298,17 @@
 
 
   function listItemsPaymentNotice() {
+
+   
+
     var items = $("#items").val();
 
+   
+
     var company_id = $("#payment_notice_company_id").val();
+
+   
+
     
     $.get('/payment_notices/list_items/' + company_id, {
       items: items
@@ -325,6 +355,27 @@ function existeFecha(fecha){
 
 
 
+// Removes an item from an invoice
+  function removeItemFromPaymenAdvice(id) {
+
+
+    var items = $("#items").val();
+    var items_arr = items.split(",");
+    var items_final = Array();
+    var i = 0;
+    alert(items); 
+    
+    while(i < items_arr.length) {
+      if(i != id) {
+        items_final[i] = items_arr[i];
+      }
+      i++;
+    }
+    
+    $("#items").val(items_final.join(","));
+    listItemsInvoice();
+  }
+ 
 
   
 </script>

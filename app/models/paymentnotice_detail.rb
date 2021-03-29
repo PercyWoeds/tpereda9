@@ -3,7 +3,9 @@ class PaymentnoticeDetail < ActiveRecord::Base
 
 
 
-  attr_accessible :fecha_inicio,
+
+   
+   validates_presence_of :fecha_inicio,
 			     :fecha_culmina,
 			     :qty,
 			    :descrip,
@@ -14,8 +16,7 @@ class PaymentnoticeDetail < ActiveRecord::Base
 			    :total,
 			    :nro_compro,
 			    :nro_documento,
-			    :observa, :paymentnotice_details_attributes
-
+			    :observa 
 
 		def total_item
 		  if price_unit != nil and qty != nil
@@ -27,5 +28,7 @@ class PaymentnoticeDetail < ActiveRecord::Base
 		end
 
 		end
+
+
 
 end

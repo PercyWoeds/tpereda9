@@ -1,54 +1,10 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Code:</strong>
-  <%= @payment_notice.code %>
+<p class="bold big">
+  Products:
 </p>
 
-<p>
-  <strong>Employee:</strong>
-  <%= @payment_notice.employee_id %>
-</p>
 
-<p>
-  <strong>Asunto:</strong>
-  <%= @payment_notice.asunto %>
-</p>
-
-<p>
-  <strong>Fecha:</strong>
-  <%= @payment_notice.fecha %>
-</p>
-
-<p>
-  <strong>Concepto:</strong>
-  <%= @payment_notice.concepto %>
-</p>
-
-<p>
-  <strong>Total:</strong>
-  <%= @payment_notice.total %>
-</p>
-
-<p>
-  <strong>Processed:</strong>
-  <%= @payment_notice.processed %>
-</p>
-
-<p>
-  <strong>Date processed:</strong>
-  <%= @payment_notice.date_processed %>
-</p>
-
-<table> 
-
-
-<tbody>
-
-      <% total_1 = 0%>
-      <% total_2 = 0%>
-      <% total_3 = 0%>
-       <thead>
+  <table>
+    <thead>
       <tr>
 
         <th class="small bordered_bottom bordered_right">
@@ -102,9 +58,12 @@
 
       </tr>
     </thead>
-
-
-    <% for product in @payment_notice.get_products %>
+    <tbody>
+      <% total_1 = 0%>
+      <% total_2 = 0%>
+      <% total_3 = 0%>
+      
+      <% for product in @products %>
         <tr>
 
           <td> <%= product.fecha_inicio.strftime("%d/%m/%Y")  %> </td>
@@ -155,7 +114,7 @@
       
       <% total_3 = total_1 / 1.18 %>
       <% total_2 = total_1 - total_3 %>
-    
+      
     </tbody>
     
         <tr>
@@ -253,8 +212,8 @@
     
     
   </table>
-<br />
+  
 
 
 
-<%= link_to 'Back', payment_notices_path %>
+  

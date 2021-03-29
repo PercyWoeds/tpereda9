@@ -3613,14 +3613,14 @@ def newfactura2
                   row << "0.00 "
                   row << sprintf("%.2f",product.balance.to_s)
                   if(product.fecha2 < Date.today)   
-                      @totalvencido_dolar += product.balance
+                      @totalvencido_dolar += product.balance.round(2)
                   end  
                 
             else
                   row << sprintf("%.2f",product.balance.to_s)
                   row << "0.00 "
                   if(product.fecha2 < Date.today)   
-                      @totalvencido_soles += product.balance
+                      @totalvencido_soles += product.balance.round(2)
                   end  
                     
                 
@@ -3639,6 +3639,7 @@ def newfactura2
             table_content << row
 
             nroitem = nroitem + 1
+
 
           else
             totals = []            
@@ -3681,9 +3682,9 @@ def newfactura2
 
             if product.moneda_id == 1 
                 row << "0.00 "
-                row << sprintf("%.2f",product.balance.to_s)
+                row << sprintf("%.2f",product.balance.round(2).to_s)
             else
-                row << sprintf("%.2f",product.balance.to_s)
+                row << sprintf("%.2f",product.balance.round(2).to_s)
                 row << "0.00 "
             end 
             row << sprintf("%.2f",product.detraccion.to_s)
