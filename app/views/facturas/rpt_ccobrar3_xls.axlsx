@@ -20,15 +20,47 @@ wb.styles do |s|
     wb.add_worksheet(name: "Basic work sheet") do |sheet|
     
     sheet.add_row ["Td", "Nro.Documento", "Fec.Emision", "Fec.Vmto","Cliente","Obra","Moneda", "Soles ","Dolares","Detracion","Observ." ], :style => title 
+
+     @facturas_rpt = @company.get_pendientes_day_cliente2(@fecha1,@fecha2,@cliente)  
+    
+    
+    total_soles = 0
+    total_dolares = 0
+    total_cliente_soles = 0
+    total_cliente_dolares = 0
+    total_cliente_detraccion = 0 
+    lcmonedasoles   = 2
+    lcmonedadolares = 1
     
    @facturas_rpt.each do |payment|
+   
+        if payment.document_id == 2
+            balance_importe = payment.balance.round(2) * -1
+        else
+            balance_importe = payment.balance.round(2) 
+        end 
+         
+       
+         if balance_importe != 0.00
+           
+
+
+            fechas2 = payment.fecha2 
+
+            sheet.add_row [payment.document.descripshort, payment.code,payment.fecha,payment.fecha2,payment.customer.name,payment.contrato,payment.moneda.symbol,payment.get_importe_balance_soles,payment.get_importe_balance_dolares,payment.detraccion,payment.get_vencido], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency,cadena]        
+            
+            total_cliente_soles += payment.get_importe_balance_soles
+            total_cliente_dolares += payment.get_importe_balance_dolares
+            total_cliente_detraccion += payment.detraccion
+            
+
+         end
+            
         
-        sheet.add_row [payment.document.descripshort, payment.code,payment.fecha,payment.fecha2,payment.customer.name,payment.contrato,payment.moneda.symbol,payment.get_importe_balance_soles,payment.get_importe_balance_dolares,payment.detraccion,payment.get_vencido], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency,cadena]
+   end 
     
-   end
-   
-   sheet.add_row ["","","","","Totales => ","","",@total_cliente_soles,@total_cliente_dolares,@total_cliente_detraccion], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency]
-   
+   sheet.add_row ["","","","","Totales => ","","",total_cliente_soles,total_cliente_dolares,total_cliente_detraccion], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency]
+         
    
 end
 end 

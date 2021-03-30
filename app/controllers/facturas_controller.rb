@@ -3301,12 +3301,7 @@ def newfactura2
     @cliente = params[:customer_id]      
     lcmonedadolares ="1"
     lcmonedasoles ="2"
-    @facturas_rpt = @company.get_pendientes_cliente(@fecha1,@fecha2,@cliente)    
-    
-    @total_cliente_dolares   = @company.get_pendientes_day_customer(@fecha1,@fecha2, @cliente, lcmonedadolares)
-    @total_cliente_soles = @company.get_pendientes_day_customer(@fecha1,@fecha2, @cliente,lcmonedasoles)
-    @total_cliente_detraccion = @company.get_pendientes_day_customer_detraccion(@fecha1,@fecha2, @cliente)
-    
+
     
     case params[:print]
       when "To PDF" then 
@@ -3615,7 +3610,7 @@ def newfactura2
               end 
            
          
-             if balance_importe > 0.00
+             if balance_importe != 0.00
             
                 fechas2 = product.fecha2 
 
@@ -3869,14 +3864,13 @@ def newfactura2
     @fecha2 = params[:fecha2]
     @cliente = params[:customer_id]      
    
-    @facturas_rpt = @company.get_pendientes_cliente(@fecha1,@fecha2,@cliente)  
+    @facturas_rpt = @company.get_pendientes_day_cliente3(@fecha1,@fecha2,@cliente)  
     
     
     
     @dolares = 0
     @soles = 0 
 
-    if @facturas_rpt.size > 0 
 
         Prawn::Document.generate("app/pdf_output/rpt_pendientes.pdf")  do |pdf|
         pdf.font "Helvetica"
@@ -3885,7 +3879,7 @@ def newfactura2
         build_pdf_footer_rpt2(pdf)
 
         $lcFileName =  "app/pdf_output/rpt_pendientes.pdf"              
-    end     
+     
 
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
     send_file("app/pdf_output/rpt_pendientes.pdf", :type => 'application/pdf', :disposition => 'inline')

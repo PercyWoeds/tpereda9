@@ -40,7 +40,7 @@ wb.styles do |s|
         end 
          
        
-         if balance_importe > 0.00
+         if balance_importe != 0.00
            
 
 

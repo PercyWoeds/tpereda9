@@ -2087,6 +2087,13 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
     return @facturas  
     
  end 
+def get_pendientes_day_cliente3(fecha1,fecha2,customer )
+
+    @facturas = Factura.select("customer_id").where([" balance <> 0  and  company_id = ? AND fecha >= ? and fecha<= ? and customer_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",customer ]).group(:customer_id)
+    #@notas = Factura.where([" balance < 0 and document_id = ?  and  company_id = ? AND fecha >= ? and fecha<= ?", "2",self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:customer_id,:moneda_id,:fecha)
+    return @facturas  
+    
+ end 
 
 
  
