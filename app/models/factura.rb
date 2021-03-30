@@ -613,10 +613,10 @@ def get_tipocambio(dia)
        valor = 0
        if self.moneda_id ==1
           if self.document_id   == 2
-                  valor = self.balance
+                  valor = self.balance.round(2)
                     
           else  
-                  valor = self.balance
+                  valor = self.balance.round(2)
           
            end   
           end 
@@ -627,10 +627,10 @@ def get_tipocambio(dia)
        valor = 0
        if self.moneda_id ==2
           if self.document_id   == 2
-                  valor = self.balance
+                  valor = self.balance.round(2)
                     
           else  
-                  valor = self.balance
+                  valor = self.balance.round(2)
           
            end   
           end 
@@ -640,10 +640,10 @@ def get_tipocambio(dia)
        valor = 0
        if self.moneda_id ==1
           if self.document_id   == 2
-                  valor = self.balance
+                  valor = self.balance.round(2)
                     
           else  
-                  valor = self.balance
+                  valor = self.balance.round(2)
           
            end   
           end 

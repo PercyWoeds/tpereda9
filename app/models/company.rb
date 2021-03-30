@@ -2062,6 +2062,7 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
 
  ## Pendientes 
 
+
  def get_pendientes_day(fecha1,fecha2)
 
     @facturas = Factura.where([" balance <> 0  and  company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:customer_id,:moneda_id,:fecha)
@@ -2069,6 +2070,25 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
     return @facturas  
     
  end 
+
+
+ def get_pendientes_day_cliente1(fecha1,fecha2)
+
+    @facturas = Factura.select("customer_id").where([" balance <> 0  and  company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).group(:customer_id)
+    #@notas = Factura.where([" balance < 0 and document_id = ?  and  company_id = ? AND fecha >= ? and fecha<= ?", "2",self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:customer_id,:moneda_id,:fecha)
+    return @facturas  
+    
+ end 
+
+ def get_pendientes_day_cliente2(fecha1,fecha2,customer )
+
+    @facturas = Factura.where([" balance <> 0  and  company_id = ? AND fecha >= ? and fecha<= ? and customer_id =? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",customer]).order(:customer_id,:moneda_id,:fecha)
+    #@notas = Factura.where([" balance < 0 and document_id = ?  and  company_id = ? AND fecha >= ? and fecha<= ?", "2",self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:customer_id,:moneda_id,:fecha)
+    return @facturas  
+    
+ end 
+
+
  
  def get_pendientes_day_value(fecha1,fecha2,value = "balance",moneda)
 

@@ -3274,6 +3274,7 @@ def newfactura2
     #@company.actualizar_detraccion 
     
 
+
     @facturas_rpt = @company.get_pendientes_day(@fecha1,@fecha2)  
 
     case params[:print]
@@ -3516,46 +3517,58 @@ def newfactura2
 ##### reporte de pendientes de pago..
 
   def build_pdf_header_rpt2(pdf)
-      pdf.font "Helvetica" , :size => 8
-     $lcCli  =  @company.name 
-     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+       pdf.font "Helvetica"  , :size => 8
 
-     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
-     $lcHora  = Time.now.to_s
-
-    max_rows = [client_data_headers_rpt.length, invoice_headers_rpt.length, 0].max
-      rows = []
-      (1..max_rows).each do |row|
-        rows_index = row - 1
-        rows[rows_index] = []
-        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
-        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
-      end
-
-      if rows.present?
-
-        pdf.table(rows, {
-          :position => :center,
-          :cell_style => {:border_width => 0},
-          :width => pdf.bounds.width
-        }) do
-          columns([0, 2]).font_style = :bold
-
-        end
-
-        pdf.move_down 10
-
-      end
+     image_path = "#{Dir.pwd}/public/images/tpereda2.png"
+      
+       table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center}, {:content =>"SISTEMA DE GESTIÓN INTEGRADO",:rowspan => 2},"CODIGO ","TP"], 
+          ["VERSION: ","2"], 
+          ["CUENTAS POR COBRAR - CLIENTES ","Pagina: ","1 de 1 "] 
+         
+          ])
+    
 
 
+       pdf.table(table_content  ,{
+           :position => :center,
+           :width => pdf.bounds.width
+         })do
+           columns([1,2]).font_style = :bold
+            columns([0]).width = 118.55
+            columns([1]).width = 261.45
+            columns([1]).align = :center
+            columns([3]).align = :center
+            
+            columns([2]).width = 80
+          
+            columns([3]).width = 80
+      
+         end
+        
+      
+          table_content2 = ([["Fecha : ",Date.today.strftime("%d/%m/%Y")]])
+
+         pdf.table(table_content2,{:position=>:right }) do
+
+            columns([0, 1]).font_style = :bold
+            columns([0, 1]).width = 80
+            
+         end 
+
+     
+        pdf.text "Cuentas por cobrar  : Desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
+    pdf.text ""
+         
+         pdf.move_down 2
+      
+    
       
       pdf 
   end   
 
   def build_pdf_body_rpt2(pdf)
     
-    pdf.text "Cuentas por cobrar  : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
-    pdf.text ""
+    
     pdf.font "Helvetica" , :size => 6
 
       headers = []
@@ -3573,162 +3586,120 @@ def newfactura2
       lcmonedasoles   = 2
       lcmonedadolares = 1
   
-      lcDoc='FT'    
-      lcCliente = @facturas_rpt.first.customer_id 
+     
       @totalvencido_soles = 0
       @totalvencido_dolar = 0
+      total_soles = 0
+      total_dolares = 0 
+      lcDoc = "FT"
       
-       for  product in @facturas_rpt
-       
-        if product.document_id == 2
-            balance_importe = product.balance.round(2) * -1
-        else
-            balance_importe = product.balance.round(2) 
-        end 
-         
-       
-         if balance_importe > 0.00
+       for  detalle in @facturas_rpt
+
+
+
+             @cliente_detalle =   @company.get_pendientes_day_cliente2(@fecha1,@fecha2,detalle.customer_id) 
+
+              total_cliente_soles = 0
+
+              total_cliente_dolares = 0
+
+
+
+
+          for product in @cliente_detalle 
+
+              if product.document_id == 2
+                  balance_importe = product.balance.round(2) * -1
+              else
+                  balance_importe = product.balance.round(2) 
+              end 
            
-          if lcCliente == product.customer_id
-
-            fechas2 = product.fecha2 
-
-            row = []          
-            if product.document 
-              row << product.document.descripshort 
-            else
-              row <<  lcDoc 
-            end 
-            row << product.code
-            row << product.fecha.strftime("%d/%m/%Y")
-            row << product.fecha2.strftime("%d/%m/%Y")
-            dias = (product.fecha2.to_date - product.fecha.to_date).to_i 
+         
+             if balance_importe > 0.00
             
-            row << dias 
-            row << product.customer.name
-            row << product.contrato             
-            row << product.moneda.symbol  
+                fechas2 = product.fecha2 
 
-            if product.moneda_id == 1 
-                  row << "0.00 "
-                  row << sprintf("%.2f",product.balance.to_s)
-                  if(product.fecha2 < Date.today)   
-                      @totalvencido_dolar += product.balance.round(2)
-                  end  
-                
-            else
-                  row << sprintf("%.2f",product.balance.to_s)
-                  row << "0.00 "
-                  if(product.fecha2 < Date.today)   
-                      @totalvencido_soles += product.balance.round(2)
-                  end  
+                row = []          
+                if product.document 
+                  row << product.document.descripshort 
+                else
+                  row <<  lcDoc 
+                end 
+                row << product.code
+                row << product.fecha.strftime("%d/%m/%Y")
+                row << product.fecha2.strftime("%d/%m/%Y")
+                dias = (product.fecha2.to_date - product.fecha.to_date).to_i 
+                row << dias 
+                row << product.customer.name 
+                row << product.contrato             
+                row << product.moneda.symbol  
+
+                if product.moneda_id == 1 
+                      row << "0.00 "
+                      row << sprintf("%.2f",product.balance.to_s)
+                      if(product.fecha2 < Date.today)   
+                          @totalvencido_dolar += product.balance.round(2)
+                      end  
+                    total_cliente_dolares += balance_importe
+                else
+                      row << sprintf("%.2f",product.balance.to_s)
+                      row << "0.00 "
+                      if(product.fecha2 < Date.today)   
+                          @totalvencido_soles += product.balance.round(2)
+                      end  
+                      total_cliente_soles   += balance_importe
                     
+                end
                 
-            end
-            
-            
-            if product.detraccion == nil
-              row <<  "0.00"
-            else  
-              row << sprintf("%.2f",product.detraccion.to_s)
-            end
-            row << product.get_vencido 
-            
-             
-            
-            table_content << row
+                
+                if product.detraccion == nil
+                  row <<  "0.00"
+                else  
+                  row << sprintf("%.2f",product.detraccion.to_s)
+                end
+                row << product.get_vencido 
+                table_content << row
 
-            nroitem = nroitem + 1
+                nroitem = nroitem + 1
+                
+              end 
 
 
-          else
-            totals = []            
-            total_cliente_soles   = 0
-            total_cliente_soles   = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedadolares)
-            total_cliente_dolares = 0
-            total_cliente_dolares = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedasoles)
-            
+        end 
+
+          if (total_cliente_soles != 0 || total_cliente_dolares != 0 )    
+
             row =[]
             row << ""
             row << ""
             row << ""
             row << ""  
             row << "" 
-            row << "" 
+           
             row << "TOTALES POR CLIENTE=> "            
             row << ""
-            row << sprintf("%.2f",total_cliente_dolares.to_s)
+            row << "" 
             row << sprintf("%.2f",total_cliente_soles.to_s)
+            row << sprintf("%.2f",total_cliente_dolares.to_s)
+           
             row << " "
             row << " "
             
             table_content << row
 
-            lcCliente = product.customer_id
 
 
-            row = []          
-            row << product.document.descripshort 
-            row << product.code
-            row << product.fecha.strftime("%d/%m/%Y")
-            row << product.fecha2.strftime("%d/%m/%Y")
-              dias = (product.fecha2.to_date - product.fecha.to_date).to_i 
-            
-            row << dias 
-            row << product.customer.name
-            row << product.contrato
-            
-            row << product.moneda.symbol  
-
-            if product.moneda_id == 1 
-                row << "0.00 "
-                row << sprintf("%.2f",product.balance.round(2).to_s)
-            else
-                row << sprintf("%.2f",product.balance.round(2).to_s)
-                row << "0.00 "
-            end 
-            row << sprintf("%.2f",product.detraccion.to_s)
-            row << product.observ
-
-            
-            table_content << row
+            total_soles += total_cliente_soles.round(2)
+            total_dolares += total_cliente_dolares.round(2)
 
           end 
-          
-        end 
-          
-          
-       
+
         end
 
-            lcCliente = @facturas_rpt.last.customer_id 
-            totals = []            
-            total_cliente = 0
-
-            total_cliente_soles   = 0
-            total_cliente_soles   = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedadolares)
-            total_cliente_dolares = 0
-            total_cliente_dolares = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedasoles)
-            
-            row =[]
-            row << ""
-            row << ""
-            row << ""
-            row << ""  
-            row << ""
-            row << ""          
-            row << "TOTALES POR CLIENTE=> "            
-            row << ""
-            row << sprintf("%.2f",total_cliente_dolares.to_s)
-            row << sprintf("%.2f",total_cliente_soles.to_s)                      
-            row << " "
-            row << " "
-            table_content << row
-
+                
+          
               
-          total_soles   = @company.get_pendientes_day_value(@fecha1,@fecha2, "total",lcmonedasoles)
-          total_dolares = @company.get_pendientes_day_value(@fecha1,@fecha2, "total",lcmonedadolares)
-      
+        
            if $lcxCliente == "0" 
 
           row =[]
@@ -3739,14 +3710,17 @@ def newfactura2
           row << ""  
           row << "TOTALES => "
           row << ""
-          row << ""
+            row << ""
           row << sprintf("%.2f",total_soles.to_s)
           row << sprintf("%.2f",total_dolares.to_s)                    
           row << " "
           row << " "
+          
           table_content << row
           end 
           
+
+
 
           result = pdf.table table_content, {:position => :center,
                                         :header => true,
@@ -3760,6 +3734,7 @@ def newfactura2
                                           columns([5]).align=:left   
                                           columns([5]).width = 100 
                                           columns([6]).align=:right
+                                           columns([6]).width = 50
                                           columns([7]).align=:right
                                           columns([8]).align=:right
                                           columns([9]).align=:right
@@ -3865,7 +3840,7 @@ def newfactura2
     #@company.actualizar_fecha2
     #@company.actualizar_detraccion 
 
-    @facturas_rpt = @company.get_pendientes_day(@fecha1,@fecha2)  
+    @facturas_rpt = @company.get_pendientes_day_cliente1(@fecha1,@fecha2)  
 
       
     Prawn::Document.generate("app/pdf_output/rpt_pendientes.pdf")  do |pdf|
