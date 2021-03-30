@@ -317,34 +317,11 @@ def build_pdf_header(pdf)
 
             columns([0, 1]).font_style = :bold
             columns([0, 1]).width = 540
-            
+            columns([0 ]).background_color = "FFFFCC"
+            columns([0 ]).align = :center 
          end 
 
 
-
-       max_rows = [exm_3.length,exm_3.length, 0].max
-      rows = []
-      (1..max_rows).each do |row|
-        rows_index = row - 1
-        rows[rows_index] = []
-        rows[rows_index] += (exm_3.length >= row ? exm_3[rows_index] : ['',''])
-        
-      end
-
-      if rows.present?
-
-        pdf.table(rows, {
-          :position => :center,
-          :cell_style => {:border_width => 0},
-          :width => pdf.bounds.width 
-        }) do
-          columns([0, 2  ]).font_style = :bold
-
-        end
-
-      
-
-      end
 
        pdf.font "Helvetica" , :size => 5
 
@@ -364,7 +341,7 @@ def build_pdf_header(pdf)
         nro_item = 1
         total_valor = 0 
 
-        
+
        for product in @payment_notice.get_products
 
           row = []   
@@ -392,6 +369,27 @@ def build_pdf_header(pdf)
           total_valor += product.total.round(2)
 
        end 
+
+   
+           row = []
+
+           row << ""
+
+           row << ""
+
+           row << ""
+           row << ""
+           row << ""
+           row << ""
+           row << ""
+           row << ""
+           row << ""
+           row << sprintf("%.2f",total_valor.to_s)
+          
+           row << ""
+           row << ""
+
+           table_content << row
 
        result = pdf.table table_content, {:position => :center,
                                         :header => true,

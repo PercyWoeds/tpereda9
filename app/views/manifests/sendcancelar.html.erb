@@ -1,8 +1,8 @@
 <div class="breadcrumbs">
   <%= link_to "My companies", "/companies" %> &raquo;
   <%= link_to @company.name, @company %> &raquo;
-  <%= link_to "Autorizacion", exmautorizs_path %> &raquo;
-  <%= link_to @exmautoriz.code, @exmautoriz %>
+  <%= link_to "Autorizacion", manifests_path %> &raquo;
+  <%= link_to @manifest.code, @manifest %>
 </div>
 
 <h1>
@@ -13,12 +13,12 @@
 <%= hr() %>
 
 <h3>
-  <%= link_to @exmautoriz.code, @exmautoriz %>
+  <%= link_to @manifest.code, @manifest %>
 </h3>
 
 <%= hr() %>
 
-<form method="post" action="/exmautorizs/do_cancelar/<%= @exmautoriz.id %>">
+<form method="post" action="/manifests/do_cancelar/<%= @manifest.id %>">
   <strong>Motivo de anulación :</strong>
   <input type="text" name="motivo" value="Ingrese motivo de anulación " onclick="$(this).select();" />
   <input type="submit" value="Grabar" class="bold" />
@@ -28,5 +28,5 @@
 
 <div class="button">
 
-  <%= link_to 'Regresar', "/companies/exmautorizs/#{@company.id}" %>
+  <%= link_to 'Regresar', "/companies/manifests/#{@company.id}" %>
 </div>

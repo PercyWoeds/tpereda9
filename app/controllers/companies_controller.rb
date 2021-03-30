@@ -150,6 +150,16 @@ def components2
     @pagetitle = @company[:name]
     @locations = Location.where(company_id: @company.id)
   end 
+
+ def examens01
+     @company = Company.find(params[:id])
+    set_company(@company)
+    
+    @pagetitle = @company[:name]
+    @locations = Location.where(company_id: @company.id)
+
+    
+  end 
  def examens02
      @company = Company.find(params[:id])
     set_company(@company)

@@ -1378,6 +1378,7 @@ match 'purchases/do_crear/:id'   => 'purchases#do_crear', via: [:get, :post]
   match 'companies/mantenimiento/:id' => 'companies#mantenimiento', via: [:get, :post]
   match 'companies/bancos/:id' => 'companies#bancos', via: [:get, :post]
   match 'companies/examens/:id' => 'companies#examens', via: [:get, :post]
+  match '/companies/examens01/:id' => 'companies#examens01', via: [:get, :post]
   match '/companies/examens02/:id' => 'companies#examens02', via: [:get, :post]
 
   match 'companies/combus/:id' => 'companies#combus', via: [:get, :post]
