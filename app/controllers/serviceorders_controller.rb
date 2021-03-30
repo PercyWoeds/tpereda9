@@ -652,9 +652,65 @@ pdf.move_down 5
     @servicebuys  = @company.get_servicebuys()
     @monedas  = @company.get_monedas()
     
+    
     @serviceorder[:subtotal] = @serviceorder.get_subtotal(items)
-    @serviceorder[:tax] = @serviceorder.get_tax(items, @serviceorder[:supplier_id])
+    
+    begin
+      @serviceorder[:tax] = @serviceorder.get_tax(items, @serviceorder[:supplier_id])
+    rescue
+      @serviceorder[:tax] = 0
+    end
+    
     @serviceorder[:total] = @serviceorder[:subtotal] + @serviceorder[:tax]
+
+    @serviceorder[:dolar] = 0 
+
+
+    if @serviceorder[:moneda_id] == 2
+
+      if @serviceorder[:total] >= 700.00
+
+        @serviceorder[:detraccion] = @serviceorder[:total] * @serviceorder[:detracion_percent]/100
+      else
+        @serviceorder[:detraccion] = 0
+      end 
+
+    else
+
+      @dolar1 = @company.get_dolar(@serviceorder[:fecha1].to_date )
+      if @dolar1
+      if @dolar1.compra != nil 
+        if @serviceorder[:total]*@dolar1.compra >= 700.00
+
+          @serviceorder[:detraccion] = @serviceorder[:total] * @serviceorder[:detracion_percent]/100
+
+          @serviceorder[:dolar] = @dolar1.compra 
+        else
+          @serviceorder[:detraccion] = 0
+        end 
+      end 
+     else
+          
+        if  @serviceorder[:total]* 3.22 >= 700.00
+
+          @serviceorder[:detraccion] = @serviceorder[:total] * @serviceorder[:detracion_percent]/100
+
+          @serviceorder[:dolar] = 3.22
+        else
+          @serviceorder[:detraccion] = 0
+        end 
+     end 
+    end 
+    puts "detracion" 
+    puts params[:cbox1]
+    
+    if  params[:cbox1] == "1"
+      
+    else 
+        @serviceorder[:detraccion] = 0
+        
+    end 
+
 
     respond_to do |format|
 

@@ -1484,6 +1484,9 @@ match 'autoviatics/do_email/:id' => 'autoviatics#do_email', via: [:get, :post]
 
 match 'payment_notices/list_items/:company_id' => 'payment_notices#list_items', via: [:get, :post]
 
+match 'payment_notices/do_process/:id' => 'payment_notices#do_process', via: [:get, :post]
+match 'payment_notices/do_anular/:id' => 'payment_notices#do_anular', via: [:get, :post]
+match 'payment_notices/pdf/:id' => 'payment_notices#pdf', via: [:get, :post]
 
 
   # Frontpage

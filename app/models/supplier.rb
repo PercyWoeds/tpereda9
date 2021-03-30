@@ -18,7 +18,8 @@ class Supplier < ActiveRecord::Base
 
 
   has_many :exmautorizs
-
+  has_many :suppliers 
+  
   belongs_to :banks 
 
 

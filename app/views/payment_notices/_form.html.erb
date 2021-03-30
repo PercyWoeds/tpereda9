@@ -27,20 +27,20 @@
 
 
   <div class="field">
-    <%= f.label :employee_id, "Empleado : " %><br>
+    <%= f.label :employee_id, "PARA  : " %><br>
     <%= f.collection_select :employee_id, @employees, :id, :full_name, :prompt => true %> 
 
   </div>
 
 
   <div class="field">
-    <%= f.label :asunto , "Asunto: "%><br>
+    <%= f.label :asunto , "ASUNTO: "%><br>
     <%= f.text_field :asunto %>
   </div>
 
 
   <div class="field">
-    <%= f.label :fecha, "Fecha: " %><br>
+    <%= f.label :fecha, "FECHA: " %><br>
     <%= f.date_field :fecha %>
   </div>
 
@@ -51,6 +51,13 @@
 
     <%= hr() %>
 
+
+
+  <div class="field">
+    <%= f.label :supplier_id, "PROVEEDOR   : " %><br>
+    <%= f.collection_select :supplier_id, @suppliers_clinica, :id, :name, :prompt => true %> 
+
+  </div>
 
 
 

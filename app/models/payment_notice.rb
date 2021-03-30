@@ -1,10 +1,12 @@
 class PaymentNotice < ActiveRecord::Base
-	has_many :paymentnotice_details
-
+    belongs_to :supplier 
+    belongs_to :employee
 
 	 has_many :paymentnotice_details, :dependent => :destroy 
 
    validates_uniqueness_of :code 
+
+
 
 	
  TABLE_HEADERS = [ "Nro.",
@@ -13,6 +15,21 @@ class PaymentNotice < ActiveRecord::Base
                    "CORREO ELECTRONICO",
                    "TELEFONO"
                    ]
+
+
+ TABLE_HEADERS2 = [ "ITEM",
+                   "Fec.Inicio",
+                   "Fec.Culmina ",
+                   "Cant.",
+                   "DESCRIPCIÓN",
+                   "LUGAR",
+                   "PRECIO UNITARIO",
+                   "SUB TOTAL"   ,
+                   "IGV" ,
+                   "TOTAL",
+                   "N° DE COMPROBANTE",
+                   "N°DE DOCUMENTO",
+                   "OBSERVACIÓN"    ]
 
  
 	def generate_rq_number(serie)
@@ -89,5 +106,112 @@ class PaymentNotice < ActiveRecord::Base
     return @itemproducts
   end
   
+
+
+
+  def get_total(items)
+  
+    
+   
+    ret = 0
+    
+   for item in items
+      if(item and item != "")
+        parts = item.split("|BRK|")
+        
+
+        fecha_inicio = parts[0]
+        fecha_culmina = parts[1]
+        qty  = parts[2]
+        descrip  = parts[3]
+        lugar = parts[4]
+        price_unit = parts[5]
+        pm = parts[6]
+        nro_compro  = parts[7]
+        nro_documento   = parts[8]
+        observa  = parts[9]
+
+        total = price_unit.to_f * qty.to_f
+
+
+        return total.round(2)
+
+      end
+    end
+  end
+  
+
+
+  def get_processed
+    if(self.processed == "1")
+      return "Aprobado "
+
+    elsif (self.processed == "2")
+      
+      return "**Anulado **"
+
+    elsif (self.processed == "3")
+
+      return "-Cerrado --"  
+
+    elsif (self.processed == "4")
+
+      return "-Facturado --"  
+
+    else   
+      return "No Aprobado"
+        
+    end
+  end
+
+
+  def process
+    if(self.processed == "1" or self.processed == true)          
+      self.processed="1"
+      self.date_processed = Time.now
+      self.save
+    end
+  end
+  def cerrar
+    if(self.processed == "3" )         
+      
+      self.processed="3"
+      self.date_processed = Time.now
+      self.save
+    end
+  end
+
+  
+  # Process the invoice
+  def anular
+    puts self.processed
+    
+    if(self.processed == "2" )          
+      self.processed="2"
+    
+      self.total = 0
+     
+      self.date_processed = Time.now
+      self.save
+    end
+  end
+
+  def processed_color
+    if(self.processed == "1")
+      return "green"
+    else
+      return "red"
+    end
+  end
+
+  def get_processed_short
+    if(self.processed == "1")
+      return "Si"
+    elsif (self.processed == "3")
+       return "Si"
+    else
+      return "No"
+    end
+  end
    
 end

@@ -12,7 +12,7 @@ class Employee < ActiveRecord::Base
   belongs_to :afericion
   belongs_to :tipofaltante
 
-    belongs_to :exmautoriz
+  belongs_to :exmautoriz
 
 
 	
@@ -28,6 +28,7 @@ class Employee < ActiveRecord::Base
  has_many :couts  
 
  has_many :proyectoexam_details 
+ has_many :payment_notices 
 
   
     

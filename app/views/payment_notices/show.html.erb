@@ -1,4 +1,25 @@
-<p id="notice"><%= notice %></p>
+
+
+
+
+<% if @payment_notice.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@payment_notice.errors.count, "error") %> prohibited this customer from being saved:</h2>
+
+      <ul>
+      <% @payment_notice.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+<p>
+  <h2> <strong>Aviso de Pago </strong> </h2>
+</p>
+
+
 
 <p>
   <strong>Code:</strong>
@@ -6,8 +27,8 @@
 </p>
 
 <p>
-  <strong>Employee:</strong>
-  <%= @payment_notice.employee_id %>
+  <strong>Para :</strong>
+  <%= @payment_notice.employee.full_name %>
 </p>
 
 <p>
@@ -26,13 +47,18 @@
 </p>
 
 <p>
+  <strong>Proveedor :</strong>
+  <%= @payment_notice.supplier.name  %>
+</p>
+
+<p>
   <strong>Total:</strong>
   <%= @payment_notice.total %>
 </p>
 
 <p>
   <strong>Processed:</strong>
-  <%= @payment_notice.processed %>
+  <%= @payment_notice.get_processed %>
 </p>
 
 <p>
@@ -257,4 +283,22 @@
 
 
 
-<%= link_to 'Back', payment_notices_path %>
+<div class="button">
+  
+   
+<%= link_to 'Export PDF', "/payment_notices/pdf/#{@payment_notice.id}" %>
+  
+<% if @payment_notice.processed =="0" || @payment_notice.processed==nil %>
+  <%= link_to 'Aprobar', "/payment_notices/do_process/#{@payment_notice.id}" %>
+
+  
+<% elsif @payment_notice.processed =="1" and current_user.level =="admin" %>  
+
+   <%= link_to 'Anular', "/payment_notices/do_anular/#{@payment_notice.id}" %>
+  
+
+<% end %>
+<%= link_to 'Regresar',payment_notices_path %>
+</div>
+
+

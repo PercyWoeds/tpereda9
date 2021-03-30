@@ -480,7 +480,7 @@ def get_tipocambio(dia)
     return guias.join(",")
   end
   
-    def get_processed
+  def get_processed
     if(self.processed == "1")
       return "Aprobado "
 
@@ -504,9 +504,9 @@ def get_tipocambio(dia)
   
   def get_processed_short
     if(self.processed == "1")
-      return "Yes"
+      return "Si"
     elsif (self.processed == "3")
-       return "Yes"
+       return "Si"
     else
       return "No"
     end
