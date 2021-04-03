@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 1
+  ind: MyString
+  tr: MyString
+  em: MyString
+  lo: MyString
+  tema: MyString
+  fecha: 2021-03-31 11:27:06
+  inicio: 2021-03-31 11:27:06
+  termino: 2021-03-31 11:27:06
+  totalhora: 2021-03-31 11:27:06
+  horaingbase: 2021-03-31 11:27:06
+  observa: MyText
+
+two:
+  employee_id: 1
+  ind: MyString
+  tr: MyString
+  em: MyString
+  lo: MyString
+  tema: MyString
+  fecha: 2021-03-31 11:27:06
+  inicio: 2021-03-31 11:27:06
+  termino: 2021-03-31 11:27:06
+  totalhora: 2021-03-31 11:27:06
+  horaingbase: 2021-03-31 11:27:06
+  observa: MyText

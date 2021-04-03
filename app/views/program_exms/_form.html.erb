@@ -1,0 +1,22 @@
+<%= simple_form_for(@program_exm) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :employee_id %>
+    <%= f.input :ind %>
+    <%= f.input :tr %>
+    <%= f.input :em %>
+    <%= f.input :lo %>
+    <%= f.input :tema %>
+    <%= f.input :fecha %>
+    <%= f.input :inicio %>
+    <%= f.input :termino %>
+    <%= f.input :totalhora %>
+    <%= f.input :horaingbase %>
+    <%= f.input :observa %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

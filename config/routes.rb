@@ -4,6 +4,8 @@ require 'sidekiq/web'
   Mnygo::Application.routes.draw do
 
   
+  resources :program_examen
+  resources :program_exms
   resources :paymentnotice_details
   resources :payment_notices
   resources :autoviatics

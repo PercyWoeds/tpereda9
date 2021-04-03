@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fecha: 2021-03-31 11:47:03
+  code: MyString
+  processed: MyString
+  date_processed: 2021-03-31 11:47:03
+
+two:
+  fecha: 2021-03-31 11:47:03
+  code: MyString
+  processed: MyString
+  date_processed: 2021-03-31 11:47:03

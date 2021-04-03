@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Program Examen</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Code</th>
+      <th>Processed</th>
+      <th>Date processed</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @program_examen.each do |program_examan| %>
+      <tr>
+        <td><%= program_examan.fecha %></td>
+        <td><%= program_examan.code %></td>
+        <td><%= program_examan.processed %></td>
+        <td><%= program_examan.date_processed %></td>
+        <td><%= link_to 'Show', program_examan %></td>
+        <td><%= link_to 'Edit', edit_program_examan_path(program_examan) %></td>
+        <td><%= link_to 'Destroy', program_examan, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Program examan', new_program_examan_path %>

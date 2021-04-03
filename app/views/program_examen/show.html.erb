@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @program_examan.fecha %>
+</p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @program_examan.code %>
+</p>
+
+<p>
+  <strong>Processed:</strong>
+  <%= @program_examan.processed %>
+</p>
+
+<p>
+  <strong>Date processed:</strong>
+  <%= @program_examan.date_processed %>
+</p>
+
+<%= link_to 'Edit', edit_program_examan_path(@program_examan) %> |
+<%= link_to 'Back', program_examen_path %>

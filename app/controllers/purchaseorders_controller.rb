@@ -566,31 +566,6 @@ pdf.move_down 5
     end
 
     if(@company.can_view(current_user))
-      if(params[:ac_supplier] and params[:ac_supplier] != "")
-        @supplier = supplier.find(:first, :conditions => {:company_id => @company.id, :name => params[:ac_supplier].strip})
-
-        if @supplier
-          @purchaseorders = Purchaseorder.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :supplier_id => @supplier.id}, :order => "id DESC")
-        else
-          flash[:error] = "We couldn't find any purchaseorders for that supplier."
-          redirect_to "/companies/purchaseorders/#{@company.id}"
-        end
-      elsif(params[:supplier] and params[:supplier] != "")
-        @supplier = supplier.find(params[:supplier])
-
-        if @supplier
-          @purchaseorders = Purchaseorder.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :supplier_id => @supplier.id}, :order => "id DESC")
-        else
-          flash[:error] = "We couldn't find any purchaseorders for that supplier."
-          redirect_to "/companies/purchaseorders/#{@company.id}"
-        end
-      elsif(params[:location] and params[:location] != "" and params[:division] and params[:division] != "")
-        @purchaseorders = Purchaseorder.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :location_id => params[:location], :division_id => params[:division]}, :order => "id DESC")
-      elsif(params[:location] and params[:location] != "")
-        @purchaseorders = Purchaseorder.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :location_id => params[:location]}, :order => "id DESC")
-      elsif(params[:division] and params[:division] != "")
-        @purchaseorders = Purchaseorder.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :division_id => params[:division]}, :order => "id DESC")
-      else
         if(params[:q] and params[:q] != "")
           fields = ["description", "comments", "code"]
 
@@ -604,7 +579,7 @@ pdf.move_down 5
           @purchaseorders = Purchaseorder.where(company_id:  @company.id).order("id DESC").paginate(:page => params[:page])
           @filters_display = "none"
         end
-      end
+  
     else
       errPerms()
     end
