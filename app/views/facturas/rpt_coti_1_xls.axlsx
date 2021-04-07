@@ -32,7 +32,7 @@ wb.styles do |s|
     sheet.add_row [@texto], :style => [cadena  ]
     
 
-    sheet.add_row ["Item", "Fecha", "Fec.Ing", "Fec.Ope","Fec.Cont.","TD", "Numero","Cliente","Destino","Descrip","Orden","Origen","Destino","Estado"], 
+    sheet.add_row ["Item", "Fecha", "Nro.Cotizacion", "Cliente","Origen.","Destino", "Tipo De Carga","Tipo Unidades","Tarifa","Estado","Observ"], 
     :style => title 
 
 
