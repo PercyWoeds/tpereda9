@@ -61,15 +61,53 @@
     <% @trucks.each do |truck| %>
       <tr>
         <td class="bordered_right bordered_bottom right"><%= truck.placa %></td>
+
+        <%if truck.tipo_unidad_id != nil %>
+
         <td class="bordered_right bordered_bottom right"><%= truck.tipo_unidad.name %></td>
+        <% else %>
+        <td> </td>
+        <% end %>
+
+        <% if truck.config_vehi_id != nil %>
+
         <td class="bordered_right bordered_bottom right"><%= truck.config_vehi.name %></td>
-        
+        <% else %>
+
+         <td> </td>
+        <% end %>
+
+        <% if truck.clase_cat_id != nil %>
+
         <td class="bordered_right bordered_bottom left"><%= truck.clase_cat.name %></td>
+         <% else %>
+
+         <td> </td>
+        <% end %>
         
+         <% if truck.color_vehi_id != nil %>
         <td class="bordered_right bordered_bottom right"><%= truck.color_vehi.name %></td>
+         <% else %>
+
+         <td> </td>
+        <% end %>
+
         <td class="bordered_right bordered_bottom right"><%= truck.anio %></td>
+        <% if truck.modelo_id != nil %>
+
         <td class="bordered_right bordered_bottom right"><%= truck.modelo.descrip %></td>
+          <% else %>
+
+         <td> </td>
+        <% end %>
+          <% if truck.marca_id != nil %>
+
         <td class="bordered_right bordered_bottom right"><%= truck.marca.descrip %></td>
+          <% else %>
+
+         <td> </td>
+        <% end %>
+
 
         <td class="bordered_right bordered_bottom right"><%= truck.certificado %></td>
         <td class="bordered_right bordered_bottom right"><%= truck.ejes %></td>

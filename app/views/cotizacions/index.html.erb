@@ -1,7 +1,24 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Cotizacions</h1>
+<h1> Cotizaciones</h1>
 
+
+
+<h4>Buscar </h4>
+
+<%= form_tag(cotizacions_path, method: :get )  do %>
+  <%= text_field_tag(:search, params[:search])%>
+  <div class="ui buttons">
+   <%= submit_tag "Buscar ",  class: "ui positive button" %>
+  </div>
+<% end %>
+
+<%= link_to "Clear" , cotizacions_path %>
+
+
+<div class="button">
+<%= link_to 'Nueva  Cotizacion', new_cotizacion_path %>
+</div>
 
 <table>
   <thead>
@@ -39,6 +56,10 @@
   </tbody>
 </table>
 
+
+
+
 <br>
 
-<%= link_to 'New Cotizacion', new_cotizacion_path %>
+
+<%= will_paginate @cotizacions %>

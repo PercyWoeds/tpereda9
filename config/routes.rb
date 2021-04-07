@@ -162,6 +162,11 @@ require 'sidekiq/web'
   end 
 
 
+  resources :cotizacions do 
+       collection { get :search }
+  end 
+
+
 
   get 'search_manifests', to: 'manifests#search'
 

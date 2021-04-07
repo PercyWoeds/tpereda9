@@ -146,6 +146,11 @@ def get_processed
     end
   end
 
+  def self.search(search)
+      where("code LIKE ?", "%#{search}%") 
+        
+  end
+
 
 
 

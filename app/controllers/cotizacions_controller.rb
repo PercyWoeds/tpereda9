@@ -4,7 +4,16 @@ class CotizacionsController < ApplicationController
   # GET /cotizacions
   # GET /cotizacions.json
   def index
-    @cotizacions = Cotizacion.all
+    @cotizacions = Cotizacion.order("code desc")
+
+
+  if params[:search]
+    @cotizacions = Cotizacion.search(params[:search]).order("code  DESC").paginate(:page => params[:page]) 
+  else
+    @cotizacions = Cotizacion.all.order("code DESC").paginate(:page => params[:page])  
+  end
+
+
   end
 
 
@@ -28,7 +37,7 @@ class CotizacionsController < ApplicationController
     @tipocarga = Tipocargue.all 
     @monedas = @company.get_monedas()
     @payments = @company.get_payments()
-      @tipocustomers =  @company.get_tipocustomers()
+    @tipocustomers =  @company.get_tipocustomers()
 
 
     @cotizacion[:fecha]= Date.today 
