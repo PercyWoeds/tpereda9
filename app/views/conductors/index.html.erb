@@ -2,6 +2,21 @@
 
 <h1>Listado Conductores</h1>
 
+
+
+<div class="button">
+
+<%= link_to 'Nuevo Conductor', new_conductor_path %>
+
+
+<%= link_to 'Export PDF', "/conductors/pdf/#{@company.id}" %>
+
+<%= link_to 'Export XLS', "/conductors/xls/#{@company.id}" %>
+
+
+</div>
+
+
 <table>
   <thead>
     <tr>
@@ -50,9 +65,7 @@
 <br>
 
 <div class="button">
-
-<%= link_to 'Nuevo Conductor', new_conductor_path %>
-
+   
 
 </div>
 

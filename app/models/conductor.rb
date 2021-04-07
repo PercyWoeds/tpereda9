@@ -49,6 +49,39 @@ class Conductor < ActiveRecord::Base
                      "ANT.PEN.EMISION",
                      "ANT.PEN.VMTO"    ]
 
+
+ TABLE_HEADERS2 = ["Nro.",
+                      "APELLIDOS Y NOMBRES",
+                     "FEC.ING.",
+                     "LUGAR RESIDENCIA ",
+                     "AÑOS EXP.",
+
+                      "DNI.EMISION",
+                     "DNI.CADUCIDAD",
+
+                     "ANT.POL.EMISION",
+                     "ANT.POL.VMTO",
+
+                      "ANT.PEN.EMISION",
+                     "ANT.PEN.VMTO"  ,
+
+
+                      "Nro.LICENCIA",  
+                     "CATEGORIA ",
+                     "EXP.LICENCIA",
+
+
+                     "REVAL.LICENCIA",
+                     "Nro.LICENCIA.",
+                     "EXP.LIC.ESPECIAL",
+                     "REVAL.LIC.ESPECIAL",
+                     "REGISTRO.
+                         IQBF-SUNAT ",
+                   
+                    
+                    
+                     "NIVEL EDUCATIVO"  ]
+
     def self.import(file)
           CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
 
@@ -66,6 +99,18 @@ class Conductor < ActiveRecord::Base
 
 
           end     
+
+    end 
+
+    def get_activo
+
+      if self.active == "1"
+
+           return "VIGENTE"
+
+      else
+           return "NO VIGENTE "
+      end 
 
     end 
 end

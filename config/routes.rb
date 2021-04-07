@@ -1495,6 +1495,7 @@ match 'payment_notices/pdf/:id' => 'payment_notices#pdf', via: [:get, :post]
   # Frontpage
  # match 'dashboard' => 'pages#dashboard', via: [:get,s :post]
 
+match 'conductors/pdf/:id' => 'conductors#pdf', via: [:get, :post]
 
 
 

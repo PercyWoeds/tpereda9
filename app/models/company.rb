@@ -19,7 +19,7 @@ class Company < ActiveRecord::Base
 
 def get_conductor()
    
-   @dato = Conductor.joins(:employee).order("employees.full_name ")
+   @dato = Conductor.joins(:employee).order("employees.lastname,employees.firstname")
 
    return @dato 
  end 

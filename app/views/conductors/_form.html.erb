@@ -1,7 +1,5 @@
 
 
-
-
 <%= simple_form_for(@conductor) do |f| %>
   <% if @conductor.errors.any? %>
     <div id="error_explanation">
@@ -143,7 +141,7 @@
 <tr>   
       <div class="field">
 
-    <td><%= f.label :categoria_especial,"CATEGORIA ESPECIAL:"%><br /></td>
+    <td><%= f.label :categoria_especial,"LICENCIA-CATEGORIA ESPECIAL:"%><br /></td>
 
     <td><%= f.text_field :categoria_especial ,:size=> "120" %></td>
      </div>
@@ -244,6 +242,24 @@
    
 
 
+  <tr>   
+      <div class="field">
+
+    <td><%= f.label :nivel_educativo ,"NIVEL EDUCATIVO:"%><br /></td>
+
+    <td><%= f.text_field :nivel_educativo  %></td>
+     </div>
+
+  
+      <div class="field">
+
+    <td><%= f.label :cv,"DOCUMENTOS: " %><br /></td>
+
+    <td> <%= file_field_tag :cv  %>
+     <%= submit_tag "Importar " %>  </td>
+     </div>
+
+   </tr>
   <tr>
     <td>
      <div class="field">

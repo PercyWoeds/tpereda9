@@ -1,0 +1,74 @@
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
+
+require 'axlsx'
+
+p = Axlsx::Package.new
+wb = xlsx_package.workbook
+wb.styles do |s|
+    date = s.add_style(:format_code => "yyyy-mm-dd", :border => Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+    padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
+    percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
+    title = s.add_style(:bg_color => "FFFF0000", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :left})
+
+    currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
+                              :border=>Axlsx::STYLE_THIN_BORDER)
+    red_negative = wb.styles.add_style :num_fmt => 8
+    comma = wb.styles.add_style :num_fmt => 3
+    super_funk = wb.styles.add_style :format_code => '[Green]#'
+
+    @cotizacion = @company.get_cotiza(@fecha1,@fecha2)  
+
+    
+    wb.add_worksheet(name: "Cotizacion") do |sheet|
+
+    sheet.add_row ["Cotizaciones emitidas Desde : ", @fecha1, " Hasta: ", @fecha2], 
+    :style => [cadena,date,cadena,date ]
+
+   
+    @texto = "POR FECHA DE INGRESO"
+       
+
+    sheet.add_row [@texto], :style => [cadena  ]
+    
+
+    sheet.add_row ["Item", "Fecha", "Fec.Ing", "Fec.Ope","Fec.Cont.","TD", "Numero","Cliente","Destino","Descrip","Orden","Origen","Destino","Estado"], 
+    :style => title 
+
+
+      nroitem=1
+      @fecha10= "-"
+      @fecha20= "-"
+      @fecha40= "-"
+      t1=""
+      t2=""
+      t3=""
+      @valor = 0
+      @total = 0
+
+      
+   @cotizacion.each do |product|
+        
+          
+     @valor = product.descrip1 + product.descrip2 + product.descrip3 + product.descrip4 +  product.descrip5 + product.descrip6
+
+     @total = product.total  + product.total2 + product.total3 +
+              product.total4 + product.total5 + product.total6
+
+          
+        sheet.add_row [nroitem,product.fecha,product.code, product.customer.name, product.punto.name,
+        product.get_punto(product.punto2_id), @valor, product.tipo_unidad.name, @total,
+        product.get_processed, product.comments ],
+         :style => [ currency,date,cadena,cadena,cadena,cadena,currency,cadena,currency,cadena,
+         cadena,cadena,cadena,cadena ]
+      
+        nroitem += 1
+
+   end
+
+  
+   
+end
+end 
+
+    

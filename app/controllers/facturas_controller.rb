@@ -7792,6 +7792,7 @@ end
         when "To Excel" then render xlsx: 'rpt_coti_1_xls'
     
           
+          
         else render action: "index"
       end
   

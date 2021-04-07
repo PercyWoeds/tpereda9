@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210331164703) do
+ActiveRecord::Schema.define(version: 20210404155804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -432,6 +432,12 @@ ActiveRecord::Schema.define(version: 20210331164703) do
     t.string   "anio2"
     t.string   "anio3"
     t.string   "anio4"
+    t.string   "cv"
+    t.string   "cv1"
+    t.string   "cv2"
+    t.string   "cv3"
+    t.string   "niveleducativo"
+    t.string   "nivel_educativo"
   end
 
   add_index "conductors", ["employees_id"], name: "index_conductors_on_employees_id", using: :btree

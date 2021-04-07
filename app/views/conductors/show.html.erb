@@ -1,101 +1,301 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Lugar:</strong>
-  <%= @conductor.lugar %>
-</p>
-
-<p>
-  <strong>Anio:</strong>
-  <%= @conductor.anio %>
-</p>
-
-<p>
-  <strong>Licencia:</strong>
-  <%= @conductor.licencia %>
-</p>
-
-<p>
-  <strong>Categoria:</strong>
-  <%= @conductor.categoria %>
-</p>
-
-<p>
-  <strong>Expedicion licencia:</strong>
-  <%= @conductor.expedicion_licencia %>
-</p>
-
-<p>
-  <strong>Revalidacion licencia:</strong>
-  <%= @conductor.revalidacion_licencia %>
-</p>
-
-<p>
-  <strong>Categoria especial:</strong>
-  <%= @conductor.categoria_especial %>
-</p>
-
-<p>
-  <strong>Expedicion licencia especial:</strong>
-  <%= @conductor.expedicion_licencia_especial %>
-</p>
-
-<p>
-  <strong>Iqbf:</strong>
-  <%= @conductor.iqbf %>
-</p>
-
-<p>
-  <strong>Fecha emision:</strong>
-  <%= @conductor.fecha_emision %>
-</p>
-
-<p>
-  <strong>Dni emision:</strong>
-  <%= @conductor.dni_emision %>
-</p>
-
-<p>
-  <strong>Dni caducidad:</strong>
-  <%= @conductor.dni_caducidad %>
-</p>
-
-<p>
-  <strong>Ap emision:</strong>
-  <%= @conductor.ap_emision %>
-</p>
-
-<p>
-  <strong>Ap caducidad:</strong>
-  <%= @conductor.ap_caducidad %>
-</p>
-
-<p>
-  <strong>Ape emision:</strong>
-  <%= @conductor.ape_emision %>
-</p>
-
-<p>
-  <strong>Ape caducidad:</strong>
-  <%= @conductor.ape_caducidad %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @conductor.user_id %>
-</p>
-
-<p>
-  <strong>Company:</strong>
-  <%= @conductor.company_id %>
-</p>
-
-<p>
-  <strong>Active:</strong>
-  <%= @conductor.active %>
-</p>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 
 
 
-<%= link_to 'Edit', edit_conductor_path(@conductor) %> |
-<%= link_to 'Back', conductors_path %>
+<div class="ui form segment raised">
+
+<h4 class="ui dividing header">  Conductor</h1>
+
+
+<div class="ui form">
+
+ <table style="width:100%">
+ 
+  <tr >
+     <div class="field">
+
+      <td><strong>Nombre  : </strong></td>
+      <td colspan="3">  <%= @conductor.employee.full_name  %></td>
+      <td></td>
+      <td></td>
+
+     </div>  
+
+
+   <tr>   
+      <div class="field">
+
+        <td> <strong>LUGAR DE RESIDENCIA: </strong><br> </td>
+
+        <td><%= @conductor.lugar  %></td>
+    
+     </div>
+
+  
+      <div class="field">
+
+        <td><strong> AÑOS DE EXPERIENCIA LABORAL CERTIFICADOS </strong><br /></td>
+
+        <td><%= @conductor.anio  %></td>
+        
+     </div>
+
+   </tr>
+
+
+   <tr>   
+      <div class="field">
+
+        <td> <strong>AÑOS DE EXPERIENCIA CERTIFICADOS CON CAMIONETA </strong><br /></td>
+
+        <td><%= @conductor.anio1 %></td>
+    
+     </div>
+
+  
+      <div class="field">
+
+        <td> <strong>AÑOS DE EXPERIENCIA CERTIFICADOS CON CAMION </strong><br /></td>
+
+        <td><%= @conductor.anio2  %></td>
+    
+     </div>
+
+   </tr>
+
+   <tr>   
+      <div class="field">
+
+        <td><strong> AÑOS DE EXPERIENCIA CERTIFICADOS CON PLATAFORMA: </strong><br /></td>
+
+        <td><%= @conductor.anio3 %></td>
+    
+     </div>
+
+  
+      <div class="field">
+
+        <td><strong> AÑOS DE EXPERIENCIA CERTIFICADOS CON CAMABAJA </strong> <br /></td>
+
+        <td><%= @conductor.anio4 %></td>
+    
+     </div>
+
+   </tr>
+
+
+
+
+<tr>   
+      <div class="field">
+
+    <td><strong> LICENCIA: </strong><br /></td>
+
+    <td  colspan="3"><%= @conductor.licencia  %></td>
+    <td></td>
+    <td></td>
+     </div>
+
+   </tr>
+
+   <tr>   
+      <div class="field">
+
+    <td> <strong> CATEGORIA: </strong><br /></td>
+
+    <td  colspan="3"><%= @conductor.categoria %></td>
+    <td></td>
+    <td></td>
+     </div>
+
+   </tr>
+
+   
+
+   <tr>   
+      <div class="field">
+
+        <td><strong> EXPEDICION LICENCIA: </strong><br /></td>
+
+        <td><%= @conductor.expedicion_licencia.strftime("%d/%m/%Y")  %></td>
+     </div>
+
+   
+      <div class="field">
+
+        <td> <strong>REVALIDACION LICENCIA: </strong> <br /></td>
+
+        <td><%= @conductor.revalidacion_licencia.strftime("%d/%m/%Y")   %></td>
+     </div>
+
+   </tr>
+
+
+  <tr>   
+      <div class="field">
+
+        <td> <strong>CATEGORIA ESPECIAL: </strong> <br /></td>
+
+        <td><%= @conductor.categoria_especial  %></td>
+     </div>
+
+   </tr>
+
+   
+
+   <tr>   
+      <div class="field">
+
+        <td><strong>EXPEDICION LICENCIA  ESPECIAL </strong> <br /></td>
+
+        <td><%= @conductor.expedicion_licencia_especial.strftime("%d/%m/%Y")   %></td>
+     </div>
+
+      <div class="field">
+
+        <td> <strong>REVALIDACION LICENCIA ESPECIAL </strong>
+        </br/></td>
+
+        <td><%= @conductor.revalidacion_licencia_especial.strftime("%d/%m/%Y") %></td>
+     </div>
+
+   </tr>
+
+   
+
+   <tr>   
+      <div class="field">
+
+        <td> <strong>IQBF </strong><br /></td>
+
+        <td colspan="3"><%= @conductor.iqbf  %></td>
+        <td></td>
+        <td></td>
+     </div>
+
+   </tr>
+
+
+
+
+  <tr>   
+      <div class="field">
+
+      <td> <strong>DNI EMISION  </strong><br /></td>
+
+      <td><%= @conductor.dni_emision.strftime("%d/%m/%Y")  %></td>
+
+     </div>
+
+   
+      <div class="field">
+
+      <td><strong>DNI CADUCIDAD </strong><br /></td>
+
+      <td><%= @conductor.dni_caducidad.strftime("%d/%m/%Y") %></td>
+     </div>
+
+   </tr>
+   
+  <tr>   
+      <div class="field">
+
+        <td><strong>ANTECEDENTES POLICIAL EMISION: </strong> <br /></td>
+
+        <td><%= @conductor.ap_emision.strftime("%d/%m/%Y")   %></td>
+     </div>
+
+      <div class="field">
+
+        <td><strong>ANTECEDENTES POLICIAL CADUCIDAD</strong><br /></td>
+
+        <td><%= @conductor.ap_caducidad.strftime("%d/%m/%Y")  %></td>
+     </div>
+
+   </tr>
+   
+
+    
+  <tr>   
+      <div class="field">
+
+        <td><strong>ANTECEDENTES PENAL EMISION:</strong><br /></td>
+
+        <td><%= @conductor.ape_emision.strftime("%d/%m/%Y")  %></td>
+     </div>
+
+  
+      <div class="field">
+
+        <td><strong>ANTECEDENTES PENAL CADUCIDAD:" </strong><br /> </td>
+
+        <td><%=  @conductor.ape_caducidad.strftime("%d/%m/%Y") %></td>
+     </div>
+
+   </tr>
+   
+
+
+  <tr>
+    
+     <div class="field">
+
+       <td><strong>ACTIVO ? </strong><br /></td>
+
+        <td><%= @conductor.active   %></td>
+     
+    
+    </div>
+
+    <div >
+      <td> </td>
+      <td> </td>
+    </div>
+</td>
+
+<td></td>
+<td></td>
+<td></td>
+
+    </tr>
+
+  
+</table> 
+    
+ <div class="ui button" tabindex="0">
+    
+    <%= link_to 'Editar ', edit_conductor_path(@conductor) %> |
+
+
+  
+    <%= link_to 'Regresar', conductors_path %>
+
+  </div>
+
+
+</form>
+
+
+
+
+
+<style>
+select
+{
+width:80px;
+    }
+</style>
+
+<script>
+
+$('select.dropdown')
+  .dropdown()
+;
+
+</script>
