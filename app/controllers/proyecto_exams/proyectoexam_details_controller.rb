@@ -27,10 +27,40 @@ class ProyectoExams::ProyectoexamDetailsController < ApplicationController
 
   # GET /proyectoexam_details/1/edit
   def edit
-    @employee = Employee.all 
-    @valor = Valor.all
+    @company = Company.find(1)
+    @employees = @company.get_employees2()
+  
+    @detalle = ProyectoexamDetail.where(proyecto_minero_id: params[:proyecto_minero_id],
+                                 employee_id: params[:employee_id])
 
-   @proyecto_minero_exam = ProyectoMineroExam.all 
+    
+    @pumps = ProyectoMineroExam.where(proyecto_minero_id: params[:proyecto_minero_id] )
+    
+    @cols = @pumps.count 
+
+    @valor  = Array.new(2) { Array.new(@cols) { "" } }
+    
+    for i in 0..0 do
+
+       for pumps in @pumps do
+
+        @valor[i].push(pumps.proyectominero2.name)
+
+       end 
+
+    end 
+   
+    for i in 1..1 do
+      
+      for pumps in @pumps do
+
+        @valor[i].push(pumps.proyectominero3.name )
+
+       end 
+
+    end 
+
+    @empleado = Employee.find(params[:employee_id])
 
 
   end

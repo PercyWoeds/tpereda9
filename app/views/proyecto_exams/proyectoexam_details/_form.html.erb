@@ -2,27 +2,104 @@
 <%= simple_form_for [@proyecto_exam, @proyectoexam_detail] do |f| %>
 
 
-  <%= f.error_notification %>
+<table class="ui right aligned table">
+  <thead>
+    
+  </thead>
 
+<tr>
   
-    
-    <div class="field">
-      <%= f.label :proyecto_minero_exam_id, "Proyecto Minero Exam id  "%><br />
-      <%= f.collection_select :proyecto_minero_exam_id, @proyecto_minero_exam , :id, 
-      :proyecto_minero_id, :prompt => true %>
-    </div>
-    
-    <div class="field">
-      <%= f.label :fecha , "Fecha *", :class => "bold" %><br />
-        <%= f.text_field :fecha, value: Time.zone.now.strftime("%d/%m/%Y") %>
 
-    </div>    
+     <th class="small bordered_bottom bordered_right">
+     </th>
+
+      <% for productItem in @pumps %>
+
+        <% rating_id = productItem.proyectominero2.name  %>
+       
+        <th class="small bordered_bottom bordered_right">
+          <%="#{rating_id}" %>
+        </th>
+
+        
+    <% end %>
+  </tr>
+<tr>
+
+
+     <th class="small bordered_bottom bordered_right">
+
+      EMPLEADO 
+     </th>
+
+
+      <% for productItem in @pumps %>
+
+        <% rating2_id = productItem.proyectominero3.name  %>
+        
+        
+        <th class="small bordered_bottom bordered_right">
+          <%="#{rating2_id}" %>
+        </th>
+
+        
+      <% end %>
+
+
+  </tr>
+     
+
+<tbody>
+
+    <tr>
+      <td class="small bordered_bottom bordered_right">
          
+         <%= @empleado.full_name2 %>
+
+      </td>
+
     
-    <div class="field">
-      <%= f.label :observacion, "Observacion: *", :class => "bold" %><br />
-      <%= f.text_field :observacion %>
-    </div>
+                 <% for detalle in @detalle  %>
+
+                     
+                    <% if detalle.proyecto_minero_exam.proyectominero3.formatofecha == "1" %>
+
+                         <% if detalle.fecha ==  nil %>
+
+                           <td class="small bordered_bottom bordered_right" >
+                              -
+                           </td>
+
+                         <% else %>
+               
+                           <td class="small bordered_bottom bordered_right" >
+                            <%= detalle.fecha.strftime("%d/%m/%Y")  %>
+                           </td>
+
+                          
+
+
+                        <% end %>
+
+
+                    <% else %>
+
+
+                          <td  class="small bordered_bottom bordered_right">
+                            <%= detalle.observacion  %>
+                           </td>
+  
+
+              
+                    <% end %>
+                     
+            
+                <% end %>
+
+</tbody>
+
+ </table>
+
 
   <div class="form-actions">
     <%= f.button :submit %>
