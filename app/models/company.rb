@@ -413,8 +413,9 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
      return employees
   end    
 
+
    def get_employees2()
-     employees =  Employee.where(:active => "1").order(:last_name,:first_name)
+     employees =  Employee.where(:active => "1").order(:lastname,:firstname)
      return employees
   end   
 
@@ -1571,7 +1572,7 @@ def get_customer_payments_detail_value(fecha1,fecha2,value="total")
     
     det = 0
 
-    Factura.update_all(:detraccion=> 0)
+    Factura.where("fecha>=? ","2021-03-31 23:59:59").update_all(:detraccion=> 0)
 
     pagonacion = CustomerPayment.where(:bank_acount_id => 6 )
 
@@ -5501,7 +5502,7 @@ def get_pm2
 
 def get_proyecto_exam_empleado(proyecto_minero_id )
 
-  @proyecto_exam_empleado = ProyectoexamDetail.select("employee_id").where(proyecto_minero_id: proyecto_minero_id).group(:employee_id)
+  @proyecto_exam_empleado = ProyectoexamDetail.select("employee_id,proyecto_minero_id ").where(proyecto_minero_id: proyecto_minero_id).group(:employee_id,:proyecto_minero_id)
   return @proyecto_exam_empleado 
 
 

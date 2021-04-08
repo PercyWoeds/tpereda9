@@ -12,10 +12,12 @@ class ProyectoexamDetail < ActiveRecord::Base
 
    def get_detalle(empleado,proyecto_minero )
 
-   	    datos = ProyectoexamDetail.where(proyecto_minero_id: proyecto_minero, employee_id: empleado)
+   	  datos = ProyectoexamDetail.where(proyecto_minero_id: proyecto_minero, employee_id: empleado)
    	    return datos 
 
    	
    end
+
+
 
 end

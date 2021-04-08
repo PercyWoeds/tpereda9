@@ -296,6 +296,8 @@ require 'sidekiq/web'
     resources :proyectoexam_details, except: [:index,:show], controller: "proyecto_exams/proyectoexam_details"
     
   end
+
+  
   resources :quotations  do
     resources :quotation_details, except: [:index,:show], controller: "quotations/quotation_details"
   end 

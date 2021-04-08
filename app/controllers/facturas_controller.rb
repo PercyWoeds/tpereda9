@@ -3271,7 +3271,7 @@ def newfactura2
     @fecha2 = params[:fecha2]
 
     @company.actualizar_fecha2
-    #@company.actualizar_detraccion 
+    @company.actualizar_detraccion 
     
 
 
@@ -3293,7 +3293,7 @@ def newfactura2
     @company=Company.find(1)      
     
      @company.actualizar_fecha2
-     #@company.actualizar_detraccion 
+     @company.actualizar_detraccion 
 
 
     @fecha1 = params[:fecha1]    

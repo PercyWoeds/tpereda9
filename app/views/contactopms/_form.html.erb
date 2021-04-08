@@ -3,17 +3,18 @@
 
 
   <td> Proyecto Minero :</td>
-    <td>  <%= f.collection_select :proyecto_minero_id, @proyecto_minero, :id, :descrip, :prompt => true, class: "ui selection dropdown" %></td>
+  <td><%= f.collection_select :proyecto_minero_id, @proyecto_minero, :id, :descrip, :prompt => true, class: "ui selection dropdown" %></td>
   
 
   <table>
-    <tr>
+   <tr>
    <th style="width: 5%">Item </th>
    <th style="width: 10%">Contacto </th>
    <th style="width: 10%">Email</th>
    <th style="width: 10%">Telefono </th>
    
    <% nroitem = 1 %>
+
    </tr>
 
     <%= f.fields_for :contactopmdetails  do |rq_fields| %>

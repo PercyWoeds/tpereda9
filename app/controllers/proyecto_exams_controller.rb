@@ -13,29 +13,24 @@ class ProyectoExamsController < ApplicationController
   # GET /proyecto_exams/1.json
   def show
     @company = Company.find(1)
-    @employees = @company.get_employees()
+    @employees = @company.get_employees2()
     @proyecto_examen  = @company.get_proyecto_exams
-
 
     @proyecto_examen_empleado = @company.get_proyecto_exam_empleado(@proyecto_exam.proyecto_minero_id) 
 
     @proyectoexam_details= @proyecto_exam.proyectoexam_details
 
-
-    
     @rows = 2
-  
 
     @pumps = ProyectoMineroExam.where(proyecto_minero_id: @proyecto_exam.proyecto_minero_id)
+    
     @cols = @pumps.count 
 
     @valor  = Array.new(2) { Array.new(@cols) { "" } }
     
-
     for i in 0..0 do
 
-
-      for pumps in @pumps do
+       for pumps in @pumps do
 
         @valor[i].push(pumps.proyectominero2.name)
 
@@ -45,7 +40,6 @@ class ProyectoExamsController < ApplicationController
    
     for i in 1..1 do
       
-
       for pumps in @pumps do
 
         @valor[i].push(pumps.proyectominero3.name )
@@ -57,8 +51,7 @@ class ProyectoExamsController < ApplicationController
     @proyecto_minero_id = @proyecto_exam.proyecto_minero_id 
     @proyecto_exam_id = @proyecto_exam.id
 
-      
-
+    
 
   end
 
@@ -67,7 +60,7 @@ class ProyectoExamsController < ApplicationController
 
     @company = Company.find(1)
     @proyecto_exam = ProyectoExam.new
-    @employees = @company.get_employees()
+    @employees = @company.get_employees2()
     @proyecto_examen = @company.get_pm()
     
 

@@ -1,0 +1,30 @@
+
+<%= simple_form_for [@proyecto_exam, @proyectoexam_detail] do |f| %>
+
+
+  <%= f.error_notification %>
+
+  
+    
+    <div class="field">
+      <%= f.label :proyecto_minero_exam_id, "Proyecto Minero Exam id  "%><br />
+      <%= f.collection_select :proyecto_minero_exam_id, @proyecto_minero_exam , :id, 
+      :proyecto_minero_id, :prompt => true %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :fecha , "Fecha *", :class => "bold" %><br />
+        <%= f.text_field :fecha, value: Time.zone.now.strftime("%d/%m/%Y") %>
+
+    </div>    
+         
+    
+    <div class="field">
+      <%= f.label :observacion, "Observacion: *", :class => "bold" %><br />
+      <%= f.text_field :observacion %>
+    </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
