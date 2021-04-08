@@ -3635,7 +3635,7 @@ def newfactura2
                       if(product.fecha2 < Date.today)   
                           @totalvencido_dolar += product.balance.round(2)
                       end  
-                    total_cliente_dolares += balance_importe
+                      total_cliente_dolares += balance_importe
                 else
                       row << sprintf("%.2f",product.balance.to_s)
                       row << "0.00 "
@@ -3653,6 +3653,7 @@ def newfactura2
                   row << sprintf("%.2f",product.detraccion.to_s)
                 end
                 row << product.get_vencido 
+
                 table_content << row
 
                 nroitem = nroitem + 1
@@ -3743,12 +3744,12 @@ def newfactura2
       if $lcxCliente == "1" 
       
       totalxvencer_soles  = total_cliente_soles   - @totalvencido_soles
-      totalxvencer_dolar  = total_cliente_dolar - @totalvencido_dolar
+      totalxvencer_dolar  = total_cliente_dolares - @totalvencido_dolar
       
       pdf.table([  ["Resumen    "," Soles  ", "Dólares "],
               ["Total Vencido    ",sprintf("%.2f",@totalvencido_soles.to_s), sprintf("%.2f",@totalvencido_dolar.to_s)],
               ["Total por Vencer ",sprintf("%.2f",totalxvencer_soles.to_s),sprintf("%.2f",totalxvencer_dolar.to_s)],
-              ["Totales          ",sprintf("%.2f",total_cliente_dolares.to_s),sprintf("%.2f",total_cliente_soles.to_s)]])
+              ["Totales          ",sprintf("%.2f",total_cliente_soles.to_s),sprintf("%.2f",total_cliente_dolares.to_s)]])
               
       end 
       #totales 
