@@ -3742,8 +3742,8 @@ def newfactura2
       
       if $lcxCliente == "1" 
       
-      totalxvencer_soles  = total_cliente_dolares   - @totalvencido_soles
-      totalxvencer_dolar  = total_cliente_soles - @totalvencido_dolar
+      totalxvencer_soles  = total_cliente_soles   - @totalvencido_soles
+      totalxvencer_dolar  = total_cliente_dolar - @totalvencido_dolar
       
       pdf.table([  ["Resumen    "," Soles  ", "Dólares "],
               ["Total Vencido    ",sprintf("%.2f",@totalvencido_soles.to_s), sprintf("%.2f",@totalvencido_dolar.to_s)],
