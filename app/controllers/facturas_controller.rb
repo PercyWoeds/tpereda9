@@ -3848,7 +3848,8 @@ def newfactura2
         $lcFileName =  "app/pdf_output/rpt_pendientes.pdf"              
     end     
 
-    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName 
+
     send_file("app/pdf_output/rpt_pendientes.pdf", :type => 'application/pdf', :disposition => 'inline')
   
 
@@ -3881,11 +3882,11 @@ def newfactura2
 
         $lcFileName =  "app/pdf_output/rpt_pendientes.pdf"              
      
-
+       end 
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
     send_file("app/pdf_output/rpt_pendientes.pdf", :type => 'application/pdf', :disposition => 'inline')
 
-    end 
+    
 
   end
   
