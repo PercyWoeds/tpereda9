@@ -1888,7 +1888,7 @@ def reportes_st_3
     
     @check_proveedor = params[:check_proveedor]
     @proveedor = params[:supplier_id ]
-   # @company.actualizar_fecha2
+    @company.actualizar_fecha2
 
     
 
@@ -3270,9 +3270,9 @@ def newfactura2
     @fecha1 = params[:fecha1]  
     @fecha2 = params[:fecha2]
 
-   # @company.actualizar_fecha2
+   @company.actualizar_fecha2
     #@company.actualizar_detraccion 
-    
+
 
 
     @facturas_rpt = @company.get_pendientes_day(@fecha1,@fecha2)  
@@ -3833,7 +3833,7 @@ def newfactura2
     lcmonedadolares ="1"
     lcmonedasoles ="2"
   
-    #@company.actualizar_fecha2
+    @company.actualizar_fecha2
     #@company.actualizar_detraccion 
 
     @facturas_rpt = @company.get_pendientes_day_cliente1(@fecha1,@fecha2)  
