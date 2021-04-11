@@ -34,18 +34,18 @@ class ProyectoExam < ActiveRecord::Base
 
 
 
-        if pumps.get_formato_fecha(a) 
+       
 
             puts "fecha-..."
 
         	puts @fecha_valor 
         	puts pumps.get_formato_fecha(a) 
 
-        	 if @company.col_is_date?(row['valores']) 
+         if @company.col_is_date?(row['valores']) 
 
         	 	@fecha_valor = row['valores'].to_date 
 
-        	 end     
+        	  
 
 	          proyectoexam_details =  ProyectoexamDetail.new(
 	                  proyecto_minero_exam_id:row['proyecto_minero_exam_id'] ,
