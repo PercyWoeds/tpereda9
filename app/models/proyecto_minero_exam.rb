@@ -13,11 +13,25 @@ class ProyectoMineroExam < ActiveRecord::Base
 
 	 def get_formato_fecha(id)
 
-	 	a =  Proyectominero3.find_by(id: id)
+	 
 
-	 	if a.formatofecha == "1"
 
-	 		return true 
+	 	if Proyectominero3.where(id: id).exists?
+
+
+            a =  Proyectominero3.find(id)
+
+	 		if a.formatofecha == "1"
+
+	 			return true 
+
+	 		else
+
+	 			return false 
+
+	 		end
+	 	else 
+	 		return false 
 
 	 	end 
 
