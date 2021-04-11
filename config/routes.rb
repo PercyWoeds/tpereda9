@@ -294,7 +294,10 @@ require 'sidekiq/web'
 
   resources :proyecto_exams do
     resources :proyectoexam_details, except: [:index,:show], controller: "proyecto_exams/proyectoexam_details"
-    
+     
+     collection { post :import }
+
+
   end
 
   

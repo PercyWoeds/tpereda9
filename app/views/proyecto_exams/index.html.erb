@@ -25,5 +25,21 @@
 </table>
 
 <br>
+<div> 
 
-<%= link_to 'New Proyecto exam', new_proyecto_exam_path %>
+<%= link_to 'Nuevo Proyecto ', new_proyecto_exam_path %>
+
+</div>
+
+
+
+
+
+<h3>Importar Archivo "*.csv"</h3>
+
+<%= form_tag import_proyecto_exams_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
+
