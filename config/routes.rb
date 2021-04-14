@@ -168,6 +168,9 @@ require 'sidekiq/web'
 
 
 
+
+
+
   get 'search_manifests', to: 'manifests#search'
 
   post 'add_manifest', to: 'manifests#add_manifest'
@@ -260,13 +263,18 @@ require 'sidekiq/web'
      collection { get  :rpt_viatico_1 }
 
      collection { get  :reportes_detraccion }
+
+       collection { get :rpt_examen01 }  
+
+
     end 
 
   resources :voideds do
     collection { post :anular }  
    
    end 
-   
+
+  
     
   resources :stocks do
     collection { get :rpt_stocks5 }  
@@ -707,7 +715,9 @@ match 'companies/reports/rpt_coti_1_pdf/:company_id' => 'reports#rpt_coti_1_pdf'
 
   match 'companies/reports/rpt_st_all/:company_id' => 'reports#rpt_st_all', via: [:get, :post]    
   match 'companies/reports/rpt_st_all2/:company_id' => 'reports#rpt_st_all2', via: [:get, :post]    
-  match 'companies/reports/rpt_st_all3/:company_id' => 'reports#rpt_st_all3', via: [:get, :post]    
+  match 'companies/reports/rpt_st_all3/:company_id' => 'reports#rpt_st_all3', via: [:get, :post]  
+
+  match 'companies/reports/rpt_examen01_pdf/:company_id' => 'reports#rpt_examen01_pdf', via: [:get, :post]  
   
   # Company users
 
@@ -1506,6 +1516,7 @@ match 'payment_notices/pdf/:id' => 'payment_notices#pdf', via: [:get, :post]
  # match 'dashboard' => 'pages#dashboard', via: [:get,s :post]
 
 match 'conductors/pdf/:id' => 'conductors#pdf', via: [:get, :post]
+
 
 
 

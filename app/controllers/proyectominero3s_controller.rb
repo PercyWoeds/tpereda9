@@ -71,6 +71,6 @@ class Proyectominero3sController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def proyectominero3_params
-      params.require(:proyectominero3).permit(:code, :name, :user_id,:formatotexto,:formatofecha )
+      params.require(:proyectominero3).permit(:code, :name, :user_id,:formatotexto,:formatofecha,:alert  )
     end
 end

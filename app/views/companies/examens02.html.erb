@@ -14,34 +14,6 @@
   
  
  
-  <%= hr() %>
-
-  
-   <h4>
-    <%= image_tag("supplier_32.png", :class => "vmiddle") %>
-    <%= link_to "Status de ingreso  a proyectos mineros" , trucks_path %>
-  </h4>
-
-  <p>
-     Agregar, editar or eliminar proveedores para tu negocio.
-  </p>
-  <%= hr() %>
-  
-
-
-
-  
-  
-   <h4>
-    <%= image_tag("supplier_32.png", :class => "vmiddle") %>
-    <%= link_to "Matriz de inversion para proyectos mineros " , trucks_path %>
-  </h4>
-
-  <p>
-     Matriz de inversion para proyectos mineros.
-  </p>
-  <%= hr() %>
-  
 
   
   
@@ -56,6 +28,22 @@
   <%= hr() %>
   
   
+  <h4>
+    <%= image_tag("divisions_32.png", :class => "vmiddle") %>
+    <%= link_to "Status de ingresos proyectos mineros, almacenes y puertos ",  "/companies/reports/rpt_examen01_pdf/#{@company.id}" %>
+   </h4>
+   
+  <p>
+      Agregar, editar or eliminar contactos base de datos de empresas capacitadoras.
+  </p>
+
+  
+  
+  
+  <%= hr() %>
+
+
+  
   
   
   
@@ -66,7 +54,7 @@
   <h4>
         <div>
     <%= image_tag("clients_32.png", :class => "vmiddle") %>
-    <%= link_to "Base de datos examnes medicos y capacitaciones", "/companies/reports/reports_basedatosexm/#{@company.id}" %>
+    <%= link_to "Base de datos examenes medicos y capacitaciones", "/companies/reports/reports_basedatosexm/#{@company.id}" %>
         </div>
   </h4>
   
@@ -102,6 +90,8 @@
   
   
   <%= hr() %>
+
+
   
   <h3>
 

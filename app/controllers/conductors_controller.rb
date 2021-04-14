@@ -397,6 +397,6 @@ def pdf
         :revalidacion_licencia, :categoria_especial, :expedicion_licencia_especial,
         :revalidacion_licencia_especial, :iqbf, :fecha_emision, :dni_emision, :dni_caducidad, 
         :ap_emision, :ap_caducidad, :ape_emision, :ape_caducidad, :user_id, :company_id, :active, 
-        :employee_id,:anio1,:anio2,:anio3,:anio4 )
+        :employee_id,:anio1,:anio2,:anio3,:anio4,:cv,:cv1,:cv2,:cv3,:nivel_educativo )
     end
 end

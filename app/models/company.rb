@@ -17,6 +17,7 @@ class Company < ActiveRecord::Base
   has_many :ajusts 
   has_many :manifests 
 
+
 def get_conductor()
    
    @dato = Conductor.joins(:employee).order("employees.lastname,employees.firstname")
@@ -5513,6 +5514,42 @@ end
   def col_is_date?(value)
   (!!(Date.parse(value) rescue nil)) || ((value =~ /\A\d{1,2}-\d{1,2}\z/) === 0)
   end
+
+  def get_proyecto_exams_solo()
+
+       proyecto  = ProyectoExam.order(:id)
+        return proyecto 
+
+
+  end 
+
+
+
+def get_proyecto_exam_empleado_2
+
+
+   fechahoy = Date.today() + 30 
+
+  @proyecto_exam_empleado = ProyectoexamDetail.select("employee_id").where(["fecha <=? ","#{fechahoy} 23:59:59"]).group(:employee_id)
+  return @proyecto_exam_empleado 
+
+
+end 
+
+
+
+def get_proyecto_exam_empleado_3(employee_id)
+
+
+   fechahoy = Date.today() + 30 
+
+  @proyecto_exam_empleado = ProyectoexamDetail.where(["fecha <=? and employee_id =?","#{fechahoy} 23:59:59",employee_id ]).order(:proyecto_exam_id)
+  return @proyecto_exam_empleado 
+
+
+end 
+
+
 end
 
 

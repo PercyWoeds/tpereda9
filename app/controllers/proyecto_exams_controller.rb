@@ -255,12 +255,19 @@ class ProyectoExamsController < ApplicationController
   end
 
 
+  def rpt_examen01
+
+
+    
+
+  end 
+
 
 
 
   def import
       ProyectoExam.import(params[:file])
-       redirect_to root_url, notice: "Empleados importadas."
+       redirect_to root_url, notice: "Informacion importadas."
   end 
   
 
