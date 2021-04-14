@@ -12,4 +12,3 @@ class CatfactMailerJob < ActiveJob::Base
 end
 
 
-end
