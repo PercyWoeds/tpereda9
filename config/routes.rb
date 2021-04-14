@@ -1,6 +1,9 @@
   
 require 'sidekiq/web'
 
+require 'sidekiq/cron/web'
+
+
   Mnygo::Application.routes.draw do
 
   
@@ -1522,6 +1525,8 @@ match 'conductors/pdf/:id' => 'conductors#pdf', via: [:get, :post]
 
 
   mount Sidekiq::Web, at: '/sidekiq'
+
+ 
 
 
   root :to => "pages#frontpage"

@@ -1,0 +1,5 @@
+catfact_mailer_job:
+  cron: "20 14 * * tues"
+  class: "CatfactMailerJob"
+  queue: default
+

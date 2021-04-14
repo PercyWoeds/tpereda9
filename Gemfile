@@ -101,7 +101,7 @@ gem 'redis', '~> 4.2', '>= 4.2.1'
 gem 'fastimage', '~> 2.2'
 
 
-
+gem 'sidekiq-cron'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
