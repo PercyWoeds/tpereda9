@@ -257,6 +257,8 @@
       <td> </td>
       <td> </td>
     </div>
+
+
 </td>
 
 <td></td>
@@ -265,14 +267,55 @@
 
     </tr>
 
+
+    <tr>   
+
+
+       <div class="field">
+
+        <td> </td>
+
+        <td> </td>
+     </div>
+
+
+      <div class="field">
+
+        <td><strong>Documentos :</strong><br /></td>
+
+
+        <% if !@conductor.cv.nil?%>
+        <td><%= link_to @conductor.cv, @conductor.cv_url  %></td>
+        <% end %>
+
+         <% if !@conductor.cv1.nil?%>
+
+          <td><%= link_to @conductor.cv1, @conductor.cv1_url  %></td>
+        <% end %>
+
+         <% if !@conductor.cv2.nil?%>
+            <td><%= link_to @conductor.cv2, @conductor.cv2_url  %></td>
+
+         <%end %>   
+
+          <% if !@conductor.cv3.nil?%>
+              <td><%= link_to @conductor.cv3, @conductor.cv3_url  %></td>
+          <% end %>
+
+     </div>
+
+  
+     
+
+   </tr>
+   
+
   
 </table> 
     
  <div class="ui button" tabindex="0">
     
-    <%= link_to 'Editar ', edit_conductor_path(@conductor) %> |
-
-
+   
   
     <%= link_to 'Regresar', conductors_path %>
 

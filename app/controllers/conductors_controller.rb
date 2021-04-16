@@ -6,7 +6,7 @@ class ConductorsController < ApplicationController
   # GET /conductors
   # GET /conductors.json
   def index
-    @conductors = Conductor.all
+    @conductors = Conductor.order(:employee_id,:created_at ) 
     @company = Company.find(1)
   end
 
@@ -67,6 +67,161 @@ class ConductorsController < ApplicationController
     @company = Company.find(1)
     @empleados = @company.get_employees()
 
+     
+
+     if !params[:cv].empty? 
+
+        @key= params[:cv]
+
+        path = Tempfile.new("data_#{@key}").path
+
+
+        s3 = Aws::S3::Resource.new(region: ENV.fetch("AWS_REGION"),
+        access_key_id: ENV.fetch("AWS_ACCESS_KEY_ID"),
+        secret_access_key: ENV.fetch("AWS_SECRET_ACCESS_KEY"))  
+
+        bucket_name = ENV.fetch("AWS_BUCKET")
+       
+        @s3_obj = s3.bucket(bucket_name).object(@key)
+
+
+         if @s3_obj.exists? && @s3_obj.last_modified.to_date == Date.current
+             
+              @s3_obj.delete
+            
+         end
+
+          File.open(path , 'rb') do |file|
+                    @s3_obj.put(body: file)
+          end
+
+        download_url = @s3_obj.presigned_url(:get)
+
+        puts "link s3 "
+        puts download_url 
+
+        # Record the location of the file
+        
+       
+        @conductor[:cv_url ] = download_url
+       end 
+
+
+     if !params[:cv1].empty? 
+
+        @key= params[:cv1]
+        
+        path = Tempfile.new("data_#{@key}").path
+
+        s3 = Aws::S3::Resource.new(region: ENV.fetch("AWS_REGION"),
+        access_key_id: ENV.fetch("AWS_ACCESS_KEY_ID"),
+        secret_access_key: ENV.fetch("AWS_SECRET_ACCESS_KEY"))  
+
+        bucket_name = ENV.fetch("AWS_BUCKET")
+       
+        @s3_obj = s3.bucket(bucket_name).object(@key)
+
+
+         if @s3_obj.exists? && @s3_obj.last_modified.to_date == Date.current
+             
+              @s3_obj.delete
+            
+         end
+
+          File.open(path , 'rb') do |file|
+                    @s3_obj.put(body: file)
+          end
+
+        download_url = @s3_obj.presigned_url(:get)
+
+        puts "link s3 "
+        puts download_url 
+
+        # Record the location of the file
+        
+       
+        @conductor[:cv1_url ] = download_url
+       end 
+
+
+        if !params[:cv2].empty? 
+
+        @key= params[:cv2]
+
+
+        path = Tempfile.new("data_#{@key}").path
+
+
+        s3 = Aws::S3::Resource.new(region: ENV.fetch("AWS_REGION"),
+        access_key_id: ENV.fetch("AWS_ACCESS_KEY_ID"),
+        secret_access_key: ENV.fetch("AWS_SECRET_ACCESS_KEY"))  
+
+        bucket_name = ENV.fetch("AWS_BUCKET")
+       
+        @s3_obj = s3.bucket(bucket_name).object(@key)
+
+
+         if @s3_obj.exists? && @s3_obj.last_modified.to_date == Date.current
+             
+              @s3_obj.delete
+            
+         end
+
+          File.open(path , 'rb') do |file|
+                    @s3_obj.put(body: file)
+          end
+
+        download_url = @s3_obj.presigned_url(:get)
+
+        puts "link s3 "
+        puts download_url 
+
+        # Record the location of the file
+        
+       
+        @conductor[:cv2_url ] = download_url
+       end 
+
+        if !params[:cv3].empty? 
+
+        @key= params[:cv3]
+        
+        path = Tempfile.new("data_#{@key}").path
+
+        s3 = Aws::S3::Resource.new(region: ENV.fetch("AWS_REGION"),
+        access_key_id: ENV.fetch("AWS_ACCESS_KEY_ID"),
+        secret_access_key: ENV.fetch("AWS_SECRET_ACCESS_KEY"))  
+
+        bucket_name = ENV.fetch("AWS_BUCKET")
+       
+        @s3_obj = s3.bucket(bucket_name).object(@key)
+
+
+         if @s3_obj.exists? && @s3_obj.last_modified.to_date == Date.current
+             
+              @s3_obj.delete
+            
+         end
+
+          File.open(path , 'rb') do |file|
+                    @s3_obj.put(body: file)
+          end
+
+        download_url = @s3_obj.presigned_url(:get)
+
+        puts "link s3 "
+        puts download_url 
+
+        # Record the location of the file
+        
+       
+        @conductor[:cv3_url ] = download_url
+       end 
+     
+
+
+
+
     respond_to do |format|
       if @conductor.save
         format.html { redirect_to @conductor, notice: 'Conductor was successfully created.' }
@@ -83,6 +238,163 @@ class ConductorsController < ApplicationController
   def update
     @company = Company.find(1)
     @empleados = @company.get_employees()
+
+
+     if !params[:cv].empty? 
+
+        @key= params[:cv]
+
+        path = Tempfile.new("data_#{@key}").path
+
+
+        s3 = Aws::S3::Resource.new(region: ENV.fetch("AWS_REGION"),
+        access_key_id: ENV.fetch("AWS_ACCESS_KEY_ID"),
+        secret_access_key: ENV.fetch("AWS_SECRET_ACCESS_KEY"))  
+
+        bucket_name = ENV.fetch("AWS_BUCKET")
+       
+        @s3_obj = s3.bucket(bucket_name).object(@key)
+
+
+         if @s3_obj.exists? && @s3_obj.last_modified.to_date == Date.current
+             
+              @s3_obj.delete
+            
+         end
+
+          File.open(path , 'rb') do |file|
+                    @s3_obj.put(body: file)
+          end
+
+        download_url = @s3_obj.presigned_url(:get)
+
+        puts "link s3 "
+        puts download_url 
+
+        # Record the location of the file
+        
+       
+        @conductor[:cv_url ] = download_url
+       end 
+
+
+     if !params[:cv1].empty? 
+
+        @key= params[:cv1]
+        
+        path = Tempfile.new("data_#{@key}").path
+
+        s3 = Aws::S3::Resource.new(region: ENV.fetch("AWS_REGION"),
+        access_key_id: ENV.fetch("AWS_ACCESS_KEY_ID"),
+        secret_access_key: ENV.fetch("AWS_SECRET_ACCESS_KEY"))  
+
+        bucket_name = ENV.fetch("AWS_BUCKET")
+       
+        @s3_obj = s3.bucket(bucket_name).object(@key)
+
+
+         if @s3_obj.exists? && @s3_obj.last_modified.to_date == Date.current
+             
+              @s3_obj.delete
+            
+         end
+
+          File.open(path , 'rb') do |file|
+                    @s3_obj.put(body: file)
+          end
+
+        download_url = @s3_obj.presigned_url(:get)
+
+        puts "link s3 "
+        puts download_url 
+
+        # Record the location of the file
+        
+       
+        @conductor[:cv1_url ] = download_url
+       end 
+
+
+        if !params[:cv2].empty? 
+
+        @key= params[:cv2]
+
+
+        path = Tempfile.new("data_#{@key}").path
+
+
+        s3 = Aws::S3::Resource.new(region: ENV.fetch("AWS_REGION"),
+        access_key_id: ENV.fetch("AWS_ACCESS_KEY_ID"),
+        secret_access_key: ENV.fetch("AWS_SECRET_ACCESS_KEY"))  
+
+        bucket_name = ENV.fetch("AWS_BUCKET")
+       
+        @s3_obj = s3.bucket(bucket_name).object(@key)
+
+
+         if @s3_obj.exists? && @s3_obj.last_modified.to_date == Date.current
+             
+              @s3_obj.delete
+            
+         end
+
+          File.open(path , 'rb') do |file|
+                    @s3_obj.put(body: file)
+          end
+
+        download_url = @s3_obj.presigned_url(:get)
+
+        puts "link s3 "
+        puts download_url 
+
+        # Record the location of the file
+        
+       
+        @conductor[:cv2_url ] = download_url
+       end 
+
+        if !params[:cv3].empty? 
+
+        @key= params[:cv3]
+        
+        path = Tempfile.new("data_#{@key}").path
+
+        s3 = Aws::S3::Resource.new(region: ENV.fetch("AWS_REGION"),
+        access_key_id: ENV.fetch("AWS_ACCESS_KEY_ID"),
+        secret_access_key: ENV.fetch("AWS_SECRET_ACCESS_KEY"))  
+
+        bucket_name = ENV.fetch("AWS_BUCKET")
+       
+        @s3_obj = s3.bucket(bucket_name).object(@key)
+
+
+         if @s3_obj.exists? && @s3_obj.last_modified.to_date == Date.current
+             
+              @s3_obj.delete
+            
+         end
+
+          File.open(path , 'rb') do |file|
+                    @s3_obj.put(body: file)
+          end
+
+        download_url = @s3_obj.presigned_url(:get)
+
+        puts "link s3 "
+        puts download_url 
+
+        # Record the location of the file
+        
+       
+        @conductor[:cv3_url ] = download_url
+       end 
+
+
+        @conductor[:cv] = params[:cv]
+        @conductor[:cv1] = params[:cv1]
+        @conductor[:cv2] = params[:cv2]
+        @conductor[:cv3] = params[:cv3]
+
     respond_to do |format|
       if @conductor.update(conductor_params)
         format.html { redirect_to @conductor, notice: 'Conductor was successfully updated.' }
@@ -397,6 +709,6 @@ def pdf
         :revalidacion_licencia, :categoria_especial, :expedicion_licencia_especial,
         :revalidacion_licencia_especial, :iqbf, :fecha_emision, :dni_emision, :dni_caducidad, 
         :ap_emision, :ap_caducidad, :ape_emision, :ape_caducidad, :user_id, :company_id, :active, 
-        :employee_id,:anio1,:anio2,:anio3,:anio4,:cv,:cv1,:cv2,:cv3,:nivel_educativo )
+        :employee_id,:anio1,:anio2,:anio3,:anio4,:cv,:cv1,:cv2,:cv3,:nivel_educativo,:cv_url,:cv1_url,:cv2_url,:cv3_url )
     end
 end

@@ -1,6 +1,27 @@
-<h1>Editing Conductor</h1>
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+
+
+<div class="ui form segment raised">
+
+<h4 class="ui dividing header"> Editar Conductor</h1>
+
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @conductor %> |
-<%= link_to 'Back', conductors_path %>
+</div>
+
+<div class="extra content">
+<%= link_to 'Regresar', conductors_path,class: "ui primary button" %>
+
+
+</div>
+

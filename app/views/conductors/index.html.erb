@@ -52,7 +52,7 @@
         <td><%= link_to 'Ver', conductor %></td>
         <td><%= link_to 'Editar', edit_conductor_path(conductor) %></td>
 
-        <%if current_user.level="admin"%>
+        <%if @current_user.level="admin"%>
 
               <td><%= link_to 'Eliminar', conductor, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 

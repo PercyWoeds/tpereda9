@@ -274,6 +274,9 @@ end
 
   def build_pdf_body(pdf)
      pdf.font "Helvetica"  , :size => 6
+
+
+     
     
           ############
 
@@ -567,7 +570,7 @@ def cout_headers3
           
     @cout = Cout.find(params[:id])
      
-    Prawn::Document.generate("app/pdf_output/#{@cout.id}.pdf") do |pdf|
+    Prawn::Document.generate("app/pdf_output/#{@cout.id}.pdf" ,:page_size => "A4",:margin=> 2 ) do |pdf|
         pdf.font "Helvetica"
         pdf = build_pdf_header_1(pdf)
         pdf = build_pdf_body_1(pdf)
@@ -582,14 +585,14 @@ def cout_headers3
   end
   
 def build_pdf_header_1(pdf)
-        pdf.font "Helvetica"  , :size => 8
+        pdf.font "Helvetica"  , :size => 6
      image_path = "#{Dir.pwd}/public/images/tpereda2.png"
 
 
      
        table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD EN EL TRABAJO ",:rowspan => 2},"CODIGO ","TP-FZ-F-014"], 
           ["VERSION: ","4"], 
-          ["LIQUIDACION DE GASTOS DE VIAJE  Nro. " + @cout.code ,"Pagina: ","1 de 1 "] 
+          ["LIQUIDACION DE GASTOS DE VIAJE "  ,"Pagina: ","1 de 1 "] 
          
           ])
         
@@ -600,7 +603,7 @@ def build_pdf_header_1(pdf)
          })do
             columns([1,2]).font_style = :bold
             columns([0]).width = 118.55
-            columns([1]).width = 301.45
+            columns([1]).width = 352.73
             columns([1]).align = :center
             columns([2]).align = :center
             columns([3]).align = :center
@@ -626,12 +629,12 @@ def build_pdf_header_1(pdf)
      pdf.font "Helvetica"  , :size => 6
     
           ############
-                texto_letras = @cout.textify.upcase + " SOLES "
+  texto_letras = @cout.textify.upcase + " SOLES "
 
-tb_text_guias  = [["Fecha :", @cout.fecha.strftime('%d-%m-%Y'), "TBK: " , 
-  "Importe", {:content => @cout.importe.to_s , :font_style => :bold ,:size=> 8  },
-   {:content => "O.S.T.", :font_style => :bold ,:size=> 10 ,:text_color=> "0000FF"  }, 
-   {:content => @cout.tranportorder.code , :font_style => :bold ,:size=> 10 ,:text_color=> "0000FF"  } ]]
+tb_text_guias  = [["Fecha :", @cout.fecha.strftime('%d-%m-%Y'), "TBK: "+@cout.tbk.to_s , 
+  "Importe", {:content => @cout.importe.to_s , :font_style => :bold ,:size=> 6  },
+   {:content => "O.S.T.", :font_style => :bold ,:size=> 6 ,:text_color=> "0000FF"  }, 
+   {:content => @cout.tranportorder.code , :font_style => :bold ,:size=> 6 ,:text_color=> "0000FF"  } ]]
     
       
             pdf.table( tb_text_guias ,:position => :right,
@@ -679,383 +682,44 @@ tb_text_guias  = [["Fecha :", @cout.fecha.strftime('%d-%m-%Y'), "TBK: " ,
       end      
      pdf.font "Helvetica"  , :size => 6
 
+ image_path2 = "#{Dir.pwd}/public/images/CAJA.png"
 
-                  table_content0 = []
-                  headers0 = []
+      pdf.table [  
+      [ {:image => image_path2, :vposition => :center,
+      :fit => [390, 1000]}]
+      ], :width => pdf.bounds.width
 
-              Cout::TABLE_HEADERS.each do |header|
-                cell = pdf.make_cell(:content => header)
-                cell.background_color = "FFFFCC"
-                headers0 << cell
-              end
+  pdf.move_down 10 
+  ########################## rotulo ##########################3
 
-                table_content0 << headers0 
-                nroitem = 0 
-                1.times do |detalle |
 
-                puts 
-                row = []
-                row << ""       
-                row << "  "
 
-                  
+    data2 = [  ["RUTA :"+ @cout.tranportorder.get_punto(@cout.tranportorder.ubication_id) + "  -  "+ @cout.tranportorder.get_punto(@cout.tranportorder.ubication2_id) ,  
+               + "   FECHA SALIDA : "+@cout.tranportorder.fecha1.strftime("%d/%m/%Y") +  "   FECHA LLEGADA : "+@cout.tranportorder.fecha2.strftime("%d/%m/%Y") ," IMPORTE  S/."  +  @cout.importe.to_s ],
+                 [  " PLACA TRACTO/CAMION: " + @cout.tranportorder.truck.placa  + " " + @cout.tranportorder.get_placa(@cout.tranportorder.truck2_id)  ," " ," TBK S/.:" + @cout.tbk.to_s ],
+                 [ " CONDUCTOR DE CARGA  " + @cout.tranportorder.employee.full_name,"SUPERVISOR/APOYO: "+@cout.tranportorder.get_employee(@cout.tranportorder.employee3_id)," TBK DOC.: " + @cout.tbk_documento ],
+                 
+                 [ " CONDUCTOR DE RUTA  : "+@cout.tranportorder.get_employee(@cout.tranportorder.employee2_id)  ],
+                 
+                 ["OBSERVACIONES: ", " "],
+                 [" ", " "],
+                 ["................................ ", " ................................ "],
+                 ["V.B.Recepcion y Despacho ", "          V.B. Responsable"]]
 
-                row << "FT"
-
-                row << " "
-
-                row << "MTC"
-
+                         pdf.bounding_box([0, 200], :width => 550, :height => 200) do
           
-
-                row << " "
-                 row << " "
-
-                table_content0 << row
-
-                nroitem = nroitem + 1     
-
-
-                end 
-
-                 row = []
-                row << " "       
-                row << " "
-
-                row << " "
-
-                row << " "
-
-                row << "TOTAL S/. "
-
-                row << " "
-                row << " "
-                table_content0 << row
-
-
-
-
-
-                  result = pdf.table table_content0 , {:position => :center,
-                                        :header => true,
-                                        :width => pdf.bounds.width ,
-                                          :cell_style => {:height => 15}
-                                        } do 
-                                          columns([0]).align=:center
-                                          columns([1]).width = 50
-                                          columns([1]).align=:left 
-                                          columns([1]).width = 120
-                                          columns([2]).align=:left   
-                                          columns([2]).width = 20                                       
-                                          columns([3]).align=:left 
-                                          columns([3]).width = 20
-                                          columns([4]).align=:left
-                                          columns([4]).width = 80
-                                          columns([5]).align=:right 
-                                          columns([5]).width = 100
-                                          columns([6]).align=:left  
-                                          columns([6]).width = 120 
-                                        
-                                         
-                                        end 
-
-                                   x = @cout.get_egresos_grupo
-
-       for dato in x 
-
-            table_content = ([ [{:content => dato.grupo , :font_style => :bold , :background_color => "FFFFCC" } ] ])
-            
-
-             pdf.table(table_content  ,{
-                 :position => :center,
-                 :width => pdf.bounds.width
-               })do
-                 columns([0]).font_style = :bold
-                
-                 columns([0]).align = :left 
-                
-               end
-
-
-
-                total_importe = 0
-
-                    nroitem = 0 
-
-                      table_content2 = []
-                      1.times do |detalle |
-
-                          puts 
-                          row = []
-                          row << " "       
-                          row << " "
-
-                          row << " "
-
-                          row << " "
-
-                          row << " "
-
-                          row << " "
-                           row << " "
-
-                          table_content2 << row
-
-                          nroitem = nroitem + 1     
-
-                      end 
-
-                  result = pdf.table table_content2, {:position => :center,
-                                        :header => true,
-                                        :width => pdf.bounds.width ,
-                                          :cell_style => {:height => 15}
-                                        } do 
-                                          columns([0]).align=:center
-                                          columns([1]).width = 50
-                                          columns([1]).align=:left 
-                                           columns([1]).width = 120
-                                        
-                                          columns([2]).align=:left   
-                                            columns([2]).width = 20                                       
-                                          columns([3]).align=:left 
-                                            columns([3]).width = 20
-                                          columns([4]).align=:left
-                                           columns([4]).width = 80
-                                          columns([5]).align=:right 
-                                           columns([5]).width = 100
-                                          columns([6]).align=:left  
-                                          columns([6]).width = 120 
-                                        
-                                         
-                                        end 
-
-
-
-                      table_content2 = []
-                      1.times do |detalle |
-
-                          puts 
-                          row = []
-                          row << " "       
-                          row << " "
-
-                          row << " "
-
-                          row << " "
-
-                          row << "TOTAL S/. "
-
-                          row << " "
-                          row << " "
-
-                          table_content2 << row
-
-                          nroitem = nroitem + 1     
-
-                      end 
-
-                  result = pdf.table table_content2, {:position => :center,
-                                        :header => true,
-                                        :width => pdf.bounds.width ,
-                                          :cell_style => {:height => 15}
-                                        } do 
-                                          columns([0]).align=:center
-                                          columns([1]).width = 50
-                                          columns([1]).align=:left 
-                                           columns([1]).width = 120
-                                        
-                                          columns([2]).align=:left   
-                                            columns([2]).width = 20                                       
-                                          columns([3]).align=:left 
-                                            columns([3]).width = 20
-                                          columns([4]).align=:left
-                                           columns([4]).width = 80
-                                          columns([5]).align=:right 
-                                           columns([5]).width = 100
-                                          columns([6]).align=:left  
-                                          columns([6]).width = 120 
-                                        
-                                         
-                                        end 
-
-
-
-               
-
-
-        end 
-
-    pdf.move_down 5
-      @blanco = {:content => " ", :font_style => :bold , :border_width => 0 }
-
-       table_content = ([ [ @blanco,  @blanco, @blanco, @blanco,"GASTO TOTAL  .: "," ", @blanco  ]   ])
-      
-
-       pdf.table(table_content  ,{
-           :position => :center ,
-           :width => pdf.bounds.width
-         })do
-       
-           columns([0]).align=:center
-                                          columns([1]).width = 50
-                                          columns([1]).align=:left 
-                                           columns([1]).width = 120
-                                        
-                                          columns([2]).align=:left   
-                                            columns([2]).width = 20                                       
-                                          columns([3]).align=:left 
-                                            columns([3]).width = 20
-                                          columns([4]).align=:left
-                                           columns([4]).width = 80
-                                          columns([5]).align=:right 
-                                           columns([5]).width = 100
-                                          columns([6]).align=:left  
-                                          columns([6]).width = 120 
-                                        
-      
-         end
-
-         pdf.move_down 5
-
-      importe_rendir = {:content => @cout.importe , :font_style => :bold ,:size=> 10 ,:text_color=> "0000FF" }
-
- table_content = ([ [ @blanco, "VIATICOS POR RENDIR "," ", " "," ",  @cout.importe  , @blanco  ] ,
-[ @blanco, "ENTREGADO EN RUTA "," ", " "," "," ", @blanco  ] ,
-[ @blanco, "TOTAL A  RENDIR "," ", " "," "," ", @blanco  ] 
-
-   ])
-      
-
-       pdf.table(table_content  ,{
-           :position => :center ,
-           :width => pdf.bounds.width
-         })do
-       
-           columns([0]).align=:center
-                                          columns([1]).width = 50
-                                          columns([1]).align=:left 
-                                           columns([1]).width = 120
-                                        
-                                          columns([2]).align=:left   
-                                            columns([2]).width = 20                                       
-                                          columns([3]).align=:left 
-                                            columns([3]).width = 20
-                                          columns([4]).align=:left
-                                           columns([4]).width = 80
-                                          columns([5]).align=:right 
-                                           columns([5]).width = 100
-                                          columns([6]).align=:left  
-                                          columns([6]).width = 120 
-                                        
-      
-         end
-
-         pdf.move_down 5
-
-
- table_content = ([ [ @blanco, "GASTOS REALIZADOS "," ", " "," "," ", @blanco  ] ,
-[ @blanco, "VUELTO "," ", " "," "," ", @blanco  ] ,
-[ @blanco, "DESCUENTO DEL CHOFER"," ", " "," "," ", @blanco  ] ,
-
-[ @blanco, "REEMBOLSO DEL CHOFER"," ", " "," "," ", @blanco  ] 
-
-
-   ])
-      
-
-       pdf.table(table_content  ,{
-           :position => :center ,
-           :width => pdf.bounds.width
-         })do
-       
-           columns([0]).align=:center
-                                          columns([1]).width = 50
-                                          columns([1]).align=:left 
-                                           columns([1]).width = 120
-                                        
-                                          columns([2]).align=:left   
-                                            columns([2]).width = 20                                       
-                                          columns([3]).align=:left 
-                                            columns([3]).width = 20
-                                          columns([4]).align=:left
-                                           columns([4]).width = 80
-                                          columns([5]).align=:right 
-                                           columns([5]).width = 100
-                                          columns([6]).align=:left  
-                                          columns([6]).width = 120 
-                                        
-      
-         end
-
-         pdf.move_down 5
-
-pdf.text "Carga Retorno :"
-pdf.text "Observacion: "
-
- table_content = ([ [ @blanco, "GASTOS CON COMPROBANTE "," ", " "," "," ", @blanco  ] ,
-[ @blanco, "GASTOS SIN COMPROBANTE "," ", " "," "," ", @blanco  ] 
-   ])
-      
-
-       pdf.table(table_content  ,{
-           :position => :center ,
-           :width => pdf.bounds.width
-         })do
-       
-           columns([0]).align=:center
-                                          columns([1]).width = 50
-                                          columns([1]).align=:left 
-                                           columns([1]).width = 120
-                                        
-                                          columns([2]).align=:left   
-                                            columns([2]).width = 20                                       
-                                          columns([3]).align=:left 
-                                            columns([3]).width = 20
-                                          columns([4]).align=:left
-                                           columns([4]).width = 80
-                                          columns([5]).align=:right 
-                                           columns([5]).width = 100
-                                          columns([6]).align=:left  
-                                          columns([6]).width = 120 
-                                        
-      
-         end
-
-         pdf.move_down 5
-    
-  
-       data =[["----------------------------------------------------------","----------------------------------------------------------","----------------------------------------------------------"],
-            ["Elaborado por ","V.B.","V.B."],
-               
-               ["Soledad Silvestre","Asistente de Gerencia","Gerente Administrativo"]
-                ]
-
-           
-            pdf.text " "
-            pdf.table(data  ,{
-                 :position => :center,
-                 :width => pdf.bounds.width,
-                  :cell_style => {:border_width => 0},
-               })do
-                 columns([0,1,2]).font_style = :bold
-                
-                 columns([0]).align = :center
           
-                  columns([1]).align = :center
-                   columns([2]).align = :center
-                  
-
-               end
-
+        pdf.text "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
+        pdf.text "COMPROBANTE DE EGRESO :  " + @cout.code  + "              OST.:  " +  @cout.tranportorder.code ,   :size => 13 
+        
+        
+        pdf.table(data2, :cell_style => { :border_width => 0 }, :column_widths => [223, 223,104] )
+        pdf.text @abajo , :align => :right 
+      end
       
-
-          pdf.move_down 10
-
-
       
+      pdf
 
-
-        pdf
 
     end
 
