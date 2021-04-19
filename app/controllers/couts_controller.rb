@@ -24,6 +24,11 @@ class CoutsController < ApplicationController
       @cout[:fecha] = Date.today 
 
       @cout[:importe] = 0.00
+ @cout[:tbk] = 0.00
+  @cout[:tbk_documento] = ""
+
+  @cout[:ost_exist] = "1"
+
   end
 
   # GET /couts/1/edit

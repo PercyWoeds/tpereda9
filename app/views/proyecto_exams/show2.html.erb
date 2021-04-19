@@ -30,12 +30,105 @@
 
 
 
+<div id='container' style='height:200px;width:1000px;overflow-x:scroll'>
 
-  <td class="small bordered_bottom bordered_right" >
+<form method="get" action="/proyecto_exams" onsubmit="addItemToProyectoExam(); return false;">
 
-   <%= link_to "Nuevo " , new_proyecto_exam_proyectoexam_detail_path(proyecto_exam_id: @proyecto_exam_id )  %>
+<table class="ui right aligned table">
+  <thead>
+    
+  </thead>
 
- </td>
+<tr>
+  
+
+     <th class="small bordered_bottom bordered_right">
+     </th>
+
+      <% for productItem in @pumps %>
+
+        <% rating_id = productItem.proyectominero2.name  %>
+       
+        <th class="small bordered_bottom bordered_right">
+          <%="#{rating_id}" %>
+        </th>
+
+        
+    <% end %>
+	</tr>
+<tr>
+
+
+     <th class="small bordered_bottom bordered_right">
+
+     	EMPLEADO 
+     </th>
+
+
+      <% for productItem in @pumps %>
+
+        <% rating2_id = productItem.proyectominero3.name  %>
+        
+        
+        <th class="small bordered_bottom bordered_right">
+          <%="#{rating2_id}" %>
+        </th>
+
+        
+      <% end %>
+
+
+  </tr>
+     
+
+
+<tbody>
+
+    <tr>
+      <td class="small bordered_bottom bordered_right">
+         
+    <%=  select_tag(:employee_id,options_from_collection_for_select(@employees,'id','full_name2') ,:style=> 'width: 230px' )  %>
+
+      </td>
+
+    <% for productItem in @pumps %>
+        <% rating_id = "field_" + productItem.id.to_s %>
+
+        <%if productItem.proyectominero3.formatofecha == "1"%>
+	        <td class="small bordered_bottom bordered_right">
+
+	         <%le_an_gln = "//" %>
+	          <input type="date" name= "<%="#{rating_id}" %>" id= "<%= "#{rating_id}" %>" value="<%= le_an_gln %>" class="tf_shorty" />
+	        </td>
+
+
+        <% else %>
+
+	        <%le_an_gln = "" %>
+	        <td class="small bordered_bottom bordered_right">
+	          <input type="text" name= "<%="#{rating_id}" %>" id= "<%= "#{rating_id}" %>" value="<%= le_an_gln %>  " class="tf_shorty"   />
+	        </td>
+
+        <% end %>
+
+    <% end %>
+
+   </tr>
+
+
+  </tbody>
+</table>
+
+    <br />
+   
+
+     <%= submit_tag  "Agregar Datos " ,  class: "ui primary button"   %>
+
+
+</form>
+
+</div>
+
 
 
 <div id='container' style='height:500px;width:1000px;overflow-x:scroll'>
@@ -47,11 +140,6 @@
 
      <th class="small bordered_bottom bordered_right">
      </th>
-
-     <th class="small bordered_bottom bordered_right">
-     </th>
-
-
 
       <% for productItem in @pumps %>
 
@@ -70,12 +158,6 @@
      <th class="small bordered_bottom bordered_right">
 
       EMPLEADO 
-     </th>
-
-     <th class="small bordered_bottom bordered_right">
-
-    
-      Vigente ? 
      </th>
 
 
@@ -103,18 +185,12 @@
         <tr>
          <td  class="small bordered_bottom bordered_left", style="width: 230px" >
 
-          <%= proyectoitem.employee.full_name2  %>
+          <%= proyectoitem.employee.full_name2 %>
 
-          <br></td>
-
-         <td>  <%= check_box_tag "Active", proyectoitem.get_empleado_active(proyectoitem.employee_id), (proyectoitem.get_empleado_active(proyectoitem.employee_id) == "1" ? true : false), disabled: true %></td>  
-
-
+             <br></td>
 
               <% @detalle = proyectoitem.get_detalle(proyectoitem.employee_id, 
                                                     @proyecto_exam.proyecto_minero_id ) %>
-
-
 
                  <% for detalle in @detalle  %>
 
@@ -149,10 +225,7 @@
 
               
                     <% end %>
-
-
-                        
-
+                     
             
                 <% end %>
 

@@ -20,6 +20,8 @@ class ProyectoExamsController < ApplicationController
 
     @proyectoexam_details= @proyecto_exam.proyectoexam_details
 
+    
+
     @rows = 2
 
     @pumps = ProyectoMineroExam.where(proyecto_minero_id: @proyecto_exam.proyecto_minero_id)
@@ -51,6 +53,8 @@ class ProyectoExamsController < ApplicationController
     @proyecto_minero_id = @proyecto_exam.proyecto_minero_id 
     @proyecto_exam_id = @proyecto_exam.id
 
+    puts "show"
+    puts  @proyecto_minero_id
     
 
   end
@@ -137,6 +141,8 @@ class ProyectoExamsController < ApplicationController
     empleado_id = params[:empleado_id]
 
     items = params[:items]
+
+
     @pumps = ProyectoMineroExam.where(proyecto_minero_id: proyecto_minero_id)
     items_arr = []
     @products = []
@@ -149,18 +155,16 @@ class ProyectoExamsController < ApplicationController
     puts "empleado.+++++++++"
     puts empleado_id
 
-    if ProyectoexamDetail.where(proyecto_minero_exam_id: proyecto_minero_id).exists?
+   
 
-              a = ProyectoexamDetail.where(proyecto_minero_exam_id: proyecto_minero_id).delete_all 
+    #a = ProyectoexamDetail.where(employee_id: empleado_id, proyecto_exam_id: proyecto_exam_id).delete_all 
               
-         end 
+  
 
-     puts "items++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-     puts items
+   
      i = 0
      parts = items.split("|BRK|")
-     puts "partessss "
-     puts parts
+    
 
 
       for pumps in @pumps do
@@ -209,8 +213,16 @@ class ProyectoExamsController < ApplicationController
        end 
 
 
+    
+    #   respond_to do |format|
 
- 
+    #     puts "rutaaaaa"
+    #   format.html { redirect_to  "/proyecto_exams/#{proyecto_exam_id}", notice: 'Proyecto exam was successfully destroyed.' }
+     
+    # end
+
+
+     
 
      # ventaislacab = Ventaisla.find(ventaisla_id)
      #ventaislacab.update_attributes(importe: totales_qty , galones: totales_gln )

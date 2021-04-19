@@ -17,8 +17,13 @@
         <td><%= proyecto_exam.employee_id %></td>
         <td><%= proyecto_exam.proyecto_minero.descrip %></td>
         <td><%= link_to 'Ver', proyecto_exam %></td>
+
+         <% if @current_user.level != "admin"%>
         <td><%= link_to 'Editar', edit_proyecto_exam_path(proyecto_exam) %></td>
+
+       
         <td><%= link_to 'Eliminar', proyecto_exam, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

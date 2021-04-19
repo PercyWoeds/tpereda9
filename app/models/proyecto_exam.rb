@@ -9,6 +9,8 @@ class ProyectoExam < ActiveRecord::Base
       has_many   :proyecto_minero_exam 
 
 
+   validates_presence_of  :proyecto_minero_id 
+ 
 
 
    TABLE_HEADERS = ["Nro.Item",

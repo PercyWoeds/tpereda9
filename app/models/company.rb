@@ -5503,7 +5503,7 @@ def get_pm2
 
 def get_proyecto_exam_empleado(proyecto_minero_id )
 
-  @proyecto_exam_empleado = ProyectoexamDetail.select("employee_id,proyecto_minero_id ").where(proyecto_minero_id: proyecto_minero_id).group(:employee_id,:proyecto_minero_id)
+  @proyecto_exam_empleado = ProyectoexamDetail.select("employee_id,proyecto_exam_id").where(proyecto_exam_id: proyecto_minero_id).group(:employee_id,:proyecto_exam_id)
   return @proyecto_exam_empleado 
 
 

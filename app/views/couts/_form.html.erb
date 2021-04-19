@@ -15,6 +15,15 @@
 
   <div class="form-inputs">
 
+  
+   <div class="field">
+      <%= f.check_box :ost_exist  %>
+      <%= f.label :ost_exist  ,"OST ?", :class => "bold" %>
+      <div class="small">
+        Es un empleado  ?
+      </div>
+    </div>
+    
 
       <label for="ac_ost" class="bold">ORDEN DE SERVICIO </label><br />
       <input type="text" name="ac_ost" id="ac_ost" value="<% if @ac_ost %><%= @ac_ost %><% end %>" />
@@ -23,13 +32,9 @@
         <strong>Seleccionar ORDEN DE SERVICIO :</strong>
         <span id="selected_ost"><% if @ac_ost %><%= @ac_ost %><% else %><!-- i --><% end %></span>
       </div>
-     </div>
+     
       
 
-       <div class="small">
-        <strong>EMPLEADO :</strong>
-        <span id="ac_employee_id"><% if @ac_ost %><%= @ac_ost %><% else %><!-- i --><% end %></span>
-      </div>
     
 
       <div class="small">
@@ -39,171 +44,79 @@
 
 
 
-  <div class="field">
-    <%= f.label :fecha, "Fecha: *", :class => "bold" %><br />
-    <%= f.date_field :fecha %>
-  </div>
+      <div class="field">
+        <%= f.label :fecha, "Fecha: *", :class => "bold" %><br />
+        <%= f.date_field :fecha %>
+      </div>
+
+
         <div class="field">
-          <%= f.label  :importe,"Importe:  " , :class => "bold"%><br />
+          <%= f.label  :importe,"Efectivo :  " , :class => "bold"%><br />
             <%= f.number_field :importe , step: :any  %>
         </div>
+  
+        <div class="field">
+            <%= f.label  :tbk ,"TBK  :  " , :class => "bold"%><br />
+            <%= f.number_field :tbk  , step: :any  %>
+        </div>
+        <div class="field">
+            <%= f.label  :tbk_documento ,"TBK Documento  :  " , :class => "bold"%><br />
+            <%= f.text_field :tbk_documento  , step: :any  %>
+        </div>
+
+        <table class="ui right aligned table">
+            <thead>
+              <th class="left aligned"></th>
+              <th>Datos</th>
+              <th>Conductor</th>
+              <th></th>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="left aligned">Conductor 1 </td>
+                <td>   <%= f.collection_select :employee_id, @employees, :id, :full_name2, :prompt => true  %></td> 
+                
+                <td>DNI</td>
+                <td> </td>
+                <td>Licencia</td>
+                <td></td>
+              </tr>
 
 
+              <tr>
 
 
-<table class="ui right aligned table">
+                <td class="left aligned"> Transferido a :  </td>
+                  <td>   <%= f.collection_select :employee4_id, @employees, :id, :full_name2, :prompt => true  %></td> 
+                <td></td>
+                <td></td>
+                <td>Licencia</td>
+                <td></td>
+              </tr>
+              
+              
+            </tbody>
+          </table>
+
+    <table class="ui right aligned table">
       <thead>
         <th class="left aligned"></th>
         <th>Datos</th>
         <th>Conductor</th>
         <th></th>
       </thead>
-      <tbody>
-        <tr>
-          <td class="left aligned">Conductor 1 </td>
-          <td> <span id="ac_employee_id"> </td>
-          <td>DNI</td>
-          <td> </td>
-          <td>Licencia</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td class="left aligned">Conductor 2 </td>
-            <td> <span id="ac_employee2_id"></span> </td>
-          <td>DNI</td>
-          <td></td>
-          <td>Licencia</td>
-          <td></td>
-        </tr>
-        
-        
-      </tbody>
+     
     </table>
 
+   
+   <div class="field">
+            <%= f.label  :observa ,"Observación  :  " , :class => "bold"%><br />
+            <%= f.text_area :observa  , step: :any  %>
+    
 
 
-  <table class="ui right aligned table">
-      <thead>
-        <th class="left aligned"></th>
-        <th>Datos</th>
-        <th>Conductor</th>
-        <th></th>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="left aligned">Conductor</td>
-          <td>   <%= f.number_field :peajes, step: :any  %> </td>
-          <td>DNI</td>
-          <td> </td>
-          <td>Licencia</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td class="left aligned">Conductor</td>
-          <td><   <%= f.number_field :lavado , step: :any  %></td>
-          <td>DNI</td>
-          <td></td>
-          <td>Licencia</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td class="left aligned">Conductor</td>
-          <td>   <%= f.number_field :llanta, step: :any  %> </td>
-          <td>DNI</td>
-          <td> </td>
-          <td>Licencia</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td class="left aligned">Conductor</td>
-          <td><   <%= f.number_field :alimento, step: :any  %></td>
-          <td>DNI</td>
-          <td></td>
-          <td>Licencia</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td class="left aligned">Conductor</td>
-          <td><   <%= f.number_field :otros, step: :any  %></td>
-          <td>DNI</td>
-          <td></td>
-          <td>Licencia</td>
-          <td></td>
-        </tr>
-        
-      </tbody>
-    </table>
+    </div> 
 
-
-  <table class="ui right aligned table">
-      <thead>
-        <th class="left aligned"></th>
-        <th>Datos</th>
-        <th>Conductor</th>
-        <th></th>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="left aligned">Conductor</td>
-          <td>   <%= f.number_field :monto_recibido, step: :any  %> </td>
-          <td>DNI</td>
-          <td> </td>
-          <td>Licencia</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td class="left aligned">Conductor</td>
-          <td><   <%= f.number_field :flete , step: :any  %></td>
-          <td>DNI</td>
-          <td></td>
-          <td>Licencia</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td class="left aligned">Conductor</td>
-          <td>   <%= f.number_field :recibido_ruta, step: :any  %> </td>
-          <td>DNI</td>
-          <td> </td>
-          <td>Licencia</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td class="left aligned">Conductor</td>
-          <td><   <%= f.number_field :vuelto, step: :any  %></td>
-          <td>DNI</td>
-          <td></td>
-          <td>Licencia</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td class="left aligned">Conductor</td>
-          <td><   <%= f.number_field :descuento, step: :any  %></td>
-          <td>DNI</td>
-          <td></td>
-          <td>Licencia</td>
-          <td></td>
-        </tr>
-
-         <tr>
-          <td class="left aligned">Conductor</td>
-          <td><   <%= f.number_field :reembolso, step: :any  %></td>
-          <td>DNI</td>
-          <td></td>
-          <td>Licencia</td>
-          <td></td>
-        </tr>
-        
-         <tr>
-          <td class="left aligned">Conductor</td>
-          <td><   <%= f.number_field :flete, step: :any  %></td>
-          <td>DNI</td>
-          <td></td>
-          <td>Licencia</td>
-          <td></td>
-        </tr>
-        
-      </tbody>
-    </table>
     
   </div>
 
@@ -212,6 +125,9 @@
      <%= f.hidden_field :tranportorder_id, :id => "ac_ost_id" %>
     <%= f.button :submit %>
   </div>
+
+
+
 <% end %>
 
 

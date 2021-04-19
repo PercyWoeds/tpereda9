@@ -48,7 +48,7 @@ class TranportordersController < ApplicationController
     @suppliers = @company.get_suppliers()      
     @almacens = @company.get_almacens()
     @puntos =    @ost.get_puntos()
-    @trucks = Truck.all.order(:placa )
+    @trucks = Truck.all.order(:placa).where(estado: "1")
      @employees = @ost.get_employees() 
     
   
@@ -98,7 +98,7 @@ class TranportordersController < ApplicationController
     @puntos =    @tranportorder.get_puntos()
     @employees = @tranportorder.get_employees() 
     
-    @trucks = Truck.all.order(:placa )
+    @trucks = Truck.all.order(:placa ).where(estado: "1")
     @tranportorder[:code] = "#{generate_guid6()}"
     
     @locations = Location.all
@@ -126,7 +126,7 @@ class TranportordersController < ApplicationController
 
     
      @employees = @tranportorder.get_employees() 
-     @trucks    = Truck.all 
+     @trucks    = Truck.all.where(active: "1")
      @locations = Location.all
      @divisions = Division.all 
      
@@ -146,7 +146,7 @@ class TranportordersController < ApplicationController
     @customers = @tranportorder.get_customers()
     @puntos = @tranportorder.get_puntos()
     @employees = @tranportorder.get_employees() 
-    @trucks = Truck.all 
+    @trucks = Truck.all.where(active: "1") 
     @locations = Location.all
     @divisions = Division.all 
   

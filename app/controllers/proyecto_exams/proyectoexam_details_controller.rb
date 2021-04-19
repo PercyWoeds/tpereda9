@@ -1,8 +1,9 @@
 class ProyectoExams::ProyectoexamDetailsController < ApplicationController
 
   
-  before_action :set_proyecto_exam
-  before_action :set_proyectoexam_detail, only: [:show, :edit, :update, :destroy]
+  before_action :set_proyecto_exam, :except=> [:update]
+   
+  before_action :set_proyectoexam_detail, :except=> [:new,:create,:update]
    
   
   # GET /proyectoexam_details
@@ -14,14 +15,25 @@ class ProyectoExams::ProyectoexamDetailsController < ApplicationController
   # GET /proyectoexam_details/1
   # GET /proyectoexam_details/1.json
   def show
+
+      @company= Company.find(1)
+
+      @employees = @company.get_employees2()
+
   end
 
   # GET /proyectoexam_details/new
   def new
-    @proyectoexam_detail = ProyectoExamDetail.new
+
+ @company= Company.find(1)
+
+    @proyectoexam_detail = ProyectoexamDetail.new
+
+     @employees = @company.get_employees2()
+    proyecto_exam = ProyectoExam.find(params[:proyecto_exam_id]) 
   
-    @valor = Valor.all
-  
+    @detalle = ProyectoMineroExam.where(proyecto_minero_id: proyecto_exam.proyecto_minero_id)
+
 
   end
 
@@ -29,8 +41,19 @@ class ProyectoExams::ProyectoexamDetailsController < ApplicationController
   def edit
     @company = Company.find(1)
     @employees = @company.get_employees2()
-  
-    @detalle = ProyectoexamDetail.where(proyecto_minero_id: params[:proyecto_minero_id],
+
+
+
+    puts "ssss"
+
+    puts params[:proyecto_exam_id]
+    puts params[:employee_id]
+
+    proyecto_exam_id = params[:proyecto_exam_id]
+    
+
+
+    @detalle = ProyectoexamDetail.where(proyecto_exam_id: params[:proyecto_exam_id],
                                  employee_id: params[:employee_id])
 
     
@@ -68,49 +91,332 @@ class ProyectoExams::ProyectoexamDetailsController < ApplicationController
   # POST /proyectoexam_details
   # POST /proyectoexam_details.json
   def create
+
+
+    @company = Company.find(1)
+    @employees = @company.get_employees2()
+
+
+    proyecto_minero_id = params[:proyecto_minero_id]
+
+    proyecto_exam_id = params[:proyecto_exam_id]
+
+
+
+    a =  ProyectoExam.find(proyecto_exam_id)
+
+    proyecto_minero_id = a.proyecto_minero_id
+
     
-    @proyectoexam_detail = ProyectoexamDetail.new(proyectoexam_detail_params)
     
-    @proyectoexam_detail.proyectoexam_id  = @proyecto_exam.id
-   
-   
-          
-      @employee = Employee.all 
-      @valor = Valor.all
-    
+    empleado_id = params[:proyectoexam_detail][:employee_id]
      
-    respond_to do |format|
-      if @proyectoexam_detail.save
+
+    puts "********************** create proyecto details ----"
+    puts proyecto_minero_id
+    puts proyecto_exam_id 
+    puts empleado_id
+
+
+     @pumps = ProyectoMineroExam.where(proyecto_minero_id: proyecto_minero_id)
+    items_arr = []
+    @products = []
+    i = 0
+    qty = 0 
+    total_qty   = 0
+
+    totales_qty = 0
+    totales_gln = 0
+    puts "empleado.+++++++++"
+    puts empleado_id
+
+   
+
+    a = ProyectoexamDetail.where(employee_id: empleado_id, proyecto_exam_id: proyecto_exam_id).delete_all 
+              
+  
+
+   
+     i = 0
+    
+      for pumps in @pumps do
+
         
-     
+       a = pumps.proyectominero3_id
+
+       @blanco  = " "
+
+       proyecto_minero_exam_detail_id = pumps.id 
+
+
+
+        if pumps.get_formato_fecha(a) 
+
+          puts "graba detalle fecha++++++++++++++++++++++ "
+
+          method_body = "field_" << a.to_s 
+
+          puts  method_body
+          puts params[method_body]
+          puts @blanco
+
+          parts = ""
+          parts_value =  ""
+
+          params.each do |key,value|
+               Rails.logger.warn "Param #{key}: #{value}"
+
+                 campo = "#{key}"
+
+               if campo[0..5]  == "field_" and campo[6..7].to_i == proyecto_minero_exam_detail_id
+
+                 parts_id = campo[6..7].to_i 
+                 parts_value = "#{value}".to_date
+
+                  puts "field obs++++++++++++++++++"
+                puts campo[0..5] 
+                puts campo[6..7]
+                puts parts_value
+
+               end 
+
+
+
+
+          end
+
+
+
+          proyectoexam_details =  ProyectoexamDetail.new(
+                  proyecto_minero_exam_id:proyecto_minero_exam_detail_id ,
+                  fecha: parts_value, 
+                  observacion: "",  
+                  employee_id: empleado_id  , 
+                  proyecto_exam_id: proyecto_exam_id,
+                  proyecto_minero_id: proyecto_minero_id,
+                  active: "1" )
+        else 
+
+
+          puts "graba detalle observacion "
+          puts parts[i]
+          puts @blanco 
+
+
+          parts = ""
+          parts_value =  ""
+          
+          params.each do |key,value|
+               Rails.logger.warn "Param #{key}: #{value}"
+
+                 campo = "#{key}"
+
+               if campo[0..5]  == "field_" and campo[6..7].to_i == proyecto_minero_exam_detail_id
+
+                puts "field obs++++++++++++++++++"
+                puts campo[0..5] 
+                puts campo[6..7]
+
+                 parts_id = campo[6..7].to_i 
+                 parts_value = "#{value}"
+
+               end 
+
+
+          end
+
+
+         proyectoexam_details =  ProyectoexamDetail.new(
+                    proyecto_minero_exam_id: proyecto_minero_exam_detail_id,
+                    fecha: nil, 
+                    observacion: parts_value, 
+                    employee_id: empleado_id  ,
+                    proyecto_exam_id: proyecto_exam_id,
+                    proyecto_minero_id: proyecto_minero_id,
+                    active:  "1" )
+
+        end 
+
+         proyectoexam_details.save
+       i += 1
+
+       end 
+
+
+
     
-              format.html { redirect_to @proyectoexam, notice: 'Proyecto exam  detail was successfully created.' }
-        format.json { render :show, status: :created, location: @proyectoexam }
-      else
-        format.html { render :new }
-        format.json { render json: @proyectoexam.errors, status: :unprocessable_entity }
-      end
+    respond_to do |format|
+       format.html { redirect_to "/proyecto_exams/#{proyecto_exam_id}", notice: 'Proyecto Exam detail was successfully updated.' }
+        format.json { render :show, status: :ok, location: @proyect_exam }
+     
     end
+
+
   end
 
   # PATCH/PUT /proyectoexam_details/1
   # PATCH/PUT /proyectoexam_details/1.json
   def update
-    @employee = Employee.all 
-    @valor = Valor.all
-    @proyecto_exam =  ProyectoMineroExam.all 
+
+
+    @company = Company.find(1)
+    @employees = @company.get_employees2()
+
+
+
+
+    proyecto_exam_id = params[:proyecto_exam_id]
+
+    a = ProyectoexamDetail.find(params[:id])
+
+    empleado_id = a.employee_id
+   
+    a =  ProyectoExam.find(proyecto_exam_id)
+
+    proyecto_minero_id = a.proyecto_minero_id
+
+
+     @pumps = ProyectoMineroExam.where(proyecto_minero_id: proyecto_minero_id)
+    items_arr = []
+    @products = []
+    i = 0
+    qty = 0 
+    total_qty   = 0
+
+    totales_qty = 0
+    totales_gln = 0
+    puts "empleado.+++++++++"
+    puts empleado_id
+
+
+    active = params[:proyectoexam_detail][:active]
+
+    puts "valor activo ??? "
+
+    puts active 
+   
+
+    a = ProyectoexamDetail.where(employee_id: empleado_id, proyecto_exam_id: proyecto_exam_id).delete_all 
+              
+  
+
+   
+     i = 0
     
-      
+      for pumps in @pumps do
+
+        
+       a = pumps.proyectominero3_id
+
+       @blanco  = " "
+
+       proyecto_minero_exam_detail_id = pumps.id 
+
+
+
+        if pumps.get_formato_fecha(a) 
+
+          puts "graba detalle fecha++++++++++++++++++++++ "
+
+          method_body = "field_" << a.to_s 
+
+          puts  method_body
+          puts params[method_body]
+          puts @blanco
+
+          parts = ""
+          parts_value =  ""
+
+          params.each do |key,value|
+               Rails.logger.warn "Param #{key}: #{value}"
+
+                 campo = "#{key}"
+
+               if campo[0..5]  == "field_" and campo[6..7].to_i == proyecto_minero_exam_detail_id
+
+                 parts_id = campo[6..7].to_i 
+                 parts_value = "#{value}".to_date
+
+                  puts "field obs++++++++++++++++++"
+                puts campo[0..5] 
+                puts campo[6..7]
+                puts parts_value
+
+               end 
+
+
+
+
+          end
+
+
+
+          proyectoexam_details =  ProyectoexamDetail.new(
+                  proyecto_minero_exam_id:proyecto_minero_exam_detail_id ,
+                  fecha: parts_value, 
+                  observacion: "",  
+                  employee_id: empleado_id  , 
+                  proyecto_exam_id: proyecto_exam_id,
+                  proyecto_minero_id: proyecto_minero_id,
+                  active: active  )
+        else 
+
+
+          puts "graba detalle observacion "
+          puts parts[i]
+          puts @blanco 
+
+
+          parts = ""
+          parts_value =  ""
+          
+          params.each do |key,value|
+               Rails.logger.warn "Param #{key}: #{value}"
+
+                 campo = "#{key}"
+
+               if campo[0..5]  == "field_" and campo[6..7].to_i == proyecto_minero_exam_detail_id
+
+                puts "field obs++++++++++++++++++"
+                puts campo[0..5] 
+                puts campo[6..7]
+
+                 parts_id = campo[6..7].to_i 
+                 parts_value = "#{value}"
+
+               end 
+
+
+          end
+
+
+         proyectoexam_details =  ProyectoexamDetail.new(
+                    proyecto_minero_exam_id: proyecto_minero_exam_detail_id,
+                    fecha: nil, 
+                    observacion: parts_value, 
+                    employee_id: empleado_id  ,
+                    proyecto_exam_id: proyecto_exam_id,
+                    proyecto_minero_id: proyecto_minero_id,
+                    active: active  )
+
+        end 
+
+         proyectoexam_details.save
+       i += 1
+
+       end 
+
+
+
+     
+
         
     
     respond_to do |format|
-      if @proyectoexam_detail.update(proyectoexam_detail_params)
-        format.html { redirect_to @proyecto_exam, notice: 'Proyecto Exam detail was successfully updated.' }
-        format.json { render :show, status: :ok, location: @proyect_oexam }
-      else
-        format.html { render :edit }
-        format.json { render json: @proyecto_exam.errors, status: :unprocessable_entity }
-      end
+     
+        format.html { redirect_to "/proyecto_exams/#{proyecto_exam_id}", notice: 'Proyecto Exam detail was successfully updated.' }
+        format.json { render :show, status: :ok, location: @proyect_exam }
+     
     end
   end
 
@@ -131,10 +437,12 @@ class ProyectoExams::ProyectoexamDetailsController < ApplicationController
   end
 
   private
+
     
     # Use callbacks to share common setup or constraints between actions.
    
     # Never trust parameters from the scary internet, only allow the white list through.
+
 
 
     def set_proyecto_exam
@@ -149,7 +457,7 @@ class ProyectoExams::ProyectoexamDetailsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def proyectoexam_detail_params
       params.require(:proyectoexam_detail).permit(:proyecto_minero_exam_id, :fecha, :employee_id ,
-      :proyecto_exam_id , :proyecto_minero_id , :observacion)
+      :proyecto_exam_id , :proyecto_minero_id , :observacion,:active )
     end
 end
 

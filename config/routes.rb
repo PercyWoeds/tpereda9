@@ -1520,6 +1520,8 @@ match 'payment_notices/pdf/:id' => 'payment_notices#pdf', via: [:get, :post]
 
 match 'conductors/pdf/:id' => 'conductors#pdf', via: [:get, :post]
 
+match '/proyecto_exams/:id/proyectoexam_details/:proyectoexam_detail_id' => 'proyecto_exams/proyectoexam_details#update', via: [:get, :post]
+
 
 
 

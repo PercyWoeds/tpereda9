@@ -1,5 +1,5 @@
 
-<%= form_for [@proyecto_exam, @proyectoexam_detail] do |f| %>
+<%= form_for [@proyecto_exam, @proyectoexam_detail]  do |f| %>
 
 
 
@@ -15,46 +15,36 @@
     <tr>
       <td class="small bordered_bottom bordered_right">
          
-         <%= @empleado.full_name2 %>
+    <div class="field">
+      <%= f.label :employee_id,"Empleado  :" %><br />
+      <%= f.collection_select :employee_id, @employees, :id, :full_name2, :prompt => true %>
+      
+      </div>
 
       </td>
-
-
-
-  <td>
-   <div class="field">
-      <%= f.check_box :active%>
-      <%= f.label :active ,"Activo?", :class => "bold" %>
-      <div class="small">
-        Es un empleado vigente  ?
-      </div>
-    </div>
-    
-</td>
-
 
      <tr>    
       <%rating_id = ""%>
     
                  <% for detalle in @detalle  %>
 
-                  <% rating_id = "field_" <<  detalle.proyecto_minero_exam_id.to_s %>
+                  <% rating_id = "field_" <<  detalle.id.to_s %>
 
               <tr>
                     
                      <td>
 
-                        <%=  detalle.proyecto_minero_exam.proyectominero3.formatofecha %>
+                        <%=  detalle.proyectominero3.formatofecha %>
 
 
-                            <td><%= detalle.proyecto_minero_exam.proyectominero2.name   %></td>
+                            <td><%= detalle.proyectominero2.name   %></td>
 
 
-                            <td><%= detalle.proyecto_minero_exam.proyectominero3.name   %></td>
+                            <td><%= detalle.proyectominero3.name   %></td>
 
                      </td>
 
-                    <% if detalle.proyecto_minero_exam.proyectominero3.formatofecha == "1" %>
+                    <% if detalle.proyectominero3.formatofecha == "1" %>
 
                          <% if detalle.fecha ==  nil %>
 
@@ -80,15 +70,8 @@
                       <td> <input type="text" name= "<%="#{rating_id}" %>" id= "<%= "#{rating_id}" %>" value="<%= le_an_gln %>" class="tf_shorty" /></td>
 
                     <% end %>
-
-
-
-
                      
             </tr>
-
-
-
                 <% end %>
 
 </tbody>
@@ -235,11 +218,6 @@ function  addItemToProyectoExamEdit() {
     
 
 }
-
-
-
-
-
 
 
 </script>
