@@ -88,6 +88,18 @@ end
   # PATCH/PUT /employees/1.json
   def update
      @employee[:company_id]=1
+
+     @categorias =Categorium.all 
+    @afps = Afp.all
+    @employee.fecha_nacimiento = Date.today
+    @employee.fecha_ingreso    = Date.today
+    @employee.fecha_cese    = Date.today
+    @locations =Location.all
+    @divisions =Division.all 
+    @ocupacions = Ocupacion.all 
+    @ccostos = Ccosto.all
+
+    
     
     respond_to do |format|
       if @employee.update(employee_params)
