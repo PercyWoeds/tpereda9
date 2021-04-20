@@ -1,7 +1,7 @@
 class Cout < ActiveRecord::Base
 
-
-validates_presence_of :tranportorder_id,:employee_id,:truck_id,:importe  
+self.primary_key = 'id'
+validates_presence_of  :employee_id,:truck_id,:importe,:tbk,:tbk_documento,:truck2_id,:truck3_id   
 
 
 
@@ -23,7 +23,6 @@ belongs_to :tranportorder
 
 
 
-
  def generate_cout_number
     if Cout.where("fecha  >?","2020-08-01 00:00:00")
     	.maximum("cast(substring(code,1,6)  as int)") == nil 
@@ -37,12 +36,12 @@ belongs_to :tranportorder
 
   def textify
 
-    
+       monto_recibido_last = self.importe + self.tbk 
 
-      number = self.monto_recibido.round(2)
+      number = monto_recibido_last.round(2)
       parts = number.to_s.split(".")
       cents = parts.count > 1 ? parts[1].to_s : 0
-      importe = self.monto_recibido.round(2).to_i
+      importe = monto_recibido_last.round(2).to_i
 
      
 
@@ -70,6 +69,32 @@ belongs_to :tranportorder
  end 
 
 
+
+  def get_employee(codigo)
+
+      if   Employee.exists?(:id=> codigo)
+           empleados = Employee.find(codigo)
+           return empleados.full_name
+      else
+           return ""
+      end 
+    end
+
+
+
+    def get_punto(id)
+      punto = Punto.find(id)
+      return punto.name 
+
+    end   
+
+
+    
+    def get_placa(id)
+      placa = Truck.find(id)
+      return placa.placa
+
+    end   
 
 private
 

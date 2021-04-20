@@ -12,13 +12,13 @@
   <%= @cout.fecha.to_date  %>
 </p>
 
-
+ <%if  !@cout.tranportorder.nil? %>
 <p>
   <strong>ORDEN DE SERVICIO :</strong>
   <%= @cout.tranportorder.code  %>
 </p>
 
-
+<% end %>
 
 <p>
   <strong>Empleado : </strong>

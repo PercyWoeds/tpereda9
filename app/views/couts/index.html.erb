@@ -28,7 +28,13 @@
       <tr>
         <td><%= cout.code %></td>
         <td><%= cout.fecha.strftime("%d/%m/%Y") %></td>
+        <%if   !cout.tranportorder.nil? %>
+
         <td><%= cout.tranportorder.code  %></td>
+
+        <% else %>
+        <td> </td>
+        <% end %>
         <td><%= cout.employee.full_name %></td>
        
         <td><%= cout.truck.placa %></td>
@@ -50,6 +56,6 @@
 
   <%= link_to 'Nuevo', new_cout_path %>
   
-<%= link_to 'Cargar OST ', "/companies/couts/do_cargar/#{@company.id}" %>
+   <%= link_to 'Cargar OST ', "/companies/couts/do_cargar/#{@company.id}" %>
 
 </div>

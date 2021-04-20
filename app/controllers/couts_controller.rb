@@ -11,6 +11,14 @@ class CoutsController < ApplicationController
   # GET /couts/1
   # GET /couts/1.json
   def show
+
+
+    @company   = Company.find(1)
+
+       @trucks = @company.get_trucks
+
+      @employees = @company.get_employees2() 
+      @puntos = @company.get_puntos()
   end
 
   # GET /couts/new
@@ -19,7 +27,10 @@ class CoutsController < ApplicationController
 
     @company   = Company.find(1)
 
-      @employees = @company.get_employees() 
+       @trucks = @company.get_trucks
+
+      @employees = @company.get_employees2() 
+      @puntos = @company.get_puntos()
 
       @cout[:fecha] = Date.today 
 
@@ -28,6 +39,9 @@ class CoutsController < ApplicationController
   @cout[:tbk_documento] = ""
 
   @cout[:ost_exist] = "1"
+  @cout[:employee4_id] = 64
+  @cout[:tranportorder_id] = 10079
+
 
   end
 
@@ -36,14 +50,19 @@ class CoutsController < ApplicationController
 
       @company   = Company.find(1)
 
+@trucks = @company.get_trucks
 
+      @employees = @company.get_employees2() 
   end
 
   # POST /couts
   # POST /couts.json
   def create
     @cout = Cout.new(cout_params)
-    @cout[:monto_recibido] = @cout[:importe ] + @cout[:tbk]
+
+     @cout[:code] = @cout.generate_cout_number
+    
+ 
     respond_to do |format|
       if @cout.save
         format.html { redirect_to @cout, notice: 'Cout was successfully created.' }
@@ -526,7 +545,7 @@ end
 
     #{@serviceorder.description}
       client_headers  = [[ "Chofer: ", @cout.employee.full_name ], 
-                          ["Apoyo : ", @cout.tranportorder.get_employee(@cout.tranportorder.employee2_id)] 
+                          ["Apoyo : ", @cout.get_employee(@cout.employee2_id)] 
                           ]
     
       
@@ -534,8 +553,8 @@ end
   end
 
   def cout_headers            
-      cout_headers  = [["Fecha Salida : ",@cout.tranportorder.fecha1.strftime("%d/%m/%Y") ]]
-      cout_headers << ["Fecha Llegada : ",@cout.tranportorder.fecha2.strftime("%d/%m/%Y")]
+      cout_headers  = [["Fecha Salida : ",@cout.fecha1.strftime("%d/%m/%Y") ]]
+      cout_headers << ["Fecha Llegada : ",@cout.fecha2.strftime("%d/%m/%Y")]
       cout_headers << [" ", " " ]
      
      
@@ -543,16 +562,16 @@ end
   end
 
  def cout_headers2         
-      cout_headers2  = [["Desde : ", @cout.tranportorder.get_punto(@cout.tranportorder.ubication_id)]]
+      cout_headers2  = [["Desde : ", @cout.get_punto(@cout.ubication_id)]]
 
-       cout_headers2 << ["Hasta :",@cout.tranportorder.get_punto(@cout.tranportorder.ubication2_id)]
+       cout_headers2 << ["Hasta : ", @cout.get_punto(@cout.ubication2_id)]
        
 
      
       cout_headers2
   end
 def cout_headers3        
-      cout_headers3  = [["Placa : ", @cout.tranportorder.truck.placa + " " + @cout.tranportorder.get_placa(@cout.tranportorder.truck2_id) ] ]
+      cout_headers3  = [["Placa : ", @cout.truck.placa + " " + @cout.get_placa(@cout.truck2_id) ] ]
 
       cout_headers3 << [" "," "]
       cout_headers3 << [" "," "]
@@ -635,11 +654,17 @@ def build_pdf_header_1(pdf)
     
           ############
   texto_letras = @cout.textify.upcase + " SOLES "
+  if !@cout.tranportorder.nil?
+
+  ost =  @cout.tranportorder.code
+  else
+    ost = ""
+  end 
 
 tb_text_guias  = [["Fecha :", @cout.fecha.strftime('%d-%m-%Y'), "TBK: "+@cout.tbk.to_s , 
   "Importe", {:content => @cout.importe.to_s , :font_style => :bold ,:size=> 6  },
    {:content => "O.S.T.", :font_style => :bold ,:size=> 6 ,:text_color=> "0000FF"  }, 
-   {:content => @cout.tranportorder.code , :font_style => :bold ,:size=> 6 ,:text_color=> "0000FF"  } ]]
+   {:content => ost , :font_style => :bold ,:size=> 6 ,:text_color=> "0000FF"  } ]]
     
       
             pdf.table( tb_text_guias ,:position => :right,
@@ -696,26 +721,36 @@ tb_text_guias  = [["Fecha :", @cout.fecha.strftime('%d-%m-%Y'), "TBK: "+@cout.tb
 
   pdf.move_down 10 
   ########################## rotulo ##########################3
+  
+
+
+  if !@cout.tranportorder.nil?
+
+     ost_code = @cout.tranportorder.code
+
+  else
+    ost_code = "-"
+  end 
 
 
 
-    data2 = [  ["RUTA :"+ @cout.tranportorder.get_punto(@cout.tranportorder.ubication_id) + "  -  "+ @cout.tranportorder.get_punto(@cout.tranportorder.ubication2_id) ,  
-               + "   FECHA SALIDA : "+@cout.tranportorder.fecha1.strftime("%d/%m/%Y") +  "   FECHA LLEGADA : "+@cout.tranportorder.fecha2.strftime("%d/%m/%Y") ," IMPORTE  S/."  +  @cout.importe.to_s ],
-                 [  " PLACA TRACTO/CAMION: " + @cout.tranportorder.truck.placa  + " " + @cout.tranportorder.get_placa(@cout.tranportorder.truck2_id)  ," " ," TBK S/.:" + @cout.tbk.to_s ],
-                 [ " CONDUCTOR DE CARGA  " + @cout.tranportorder.employee.full_name,"SUPERVISOR/APOYO: "+@cout.tranportorder.get_employee(@cout.tranportorder.employee3_id)," TBK DOC.: " + @cout.tbk_documento ],
+    data2 = [  ["RUTA :"+ @cout.get_punto(@cout.ubication_id) + "  -  "+ @cout.get_punto(@cout.ubication2_id) ,  
+               + "   FECHA SALIDA : "+@cout.fecha1.strftime("%d/%m/%Y") +  "   FECHA LLEGADA : "+@cout.fecha2.strftime("%d/%m/%Y") ," IMPORTE  S/."  +  @cout.importe.to_s ],
+                 [  " PLACA TRACTO/CAMION: " + @cout.truck.placa  + " " + @cout.get_placa(@cout.truck2_id)  ," " ," TBK S/.:" + @cout.tbk.to_s ],
+                 [ " CONDUCTOR DE CARGA  " + @cout.employee.full_name,"SUPERVISOR/APOYO: "+@cout.get_employee(@cout.employee3_id)," TBK DOC.: " + @cout.tbk_documento ],
                  
-                 [ " CONDUCTOR DE RUTA  : "+@cout.tranportorder.get_employee(@cout.tranportorder.employee2_id)  ],
+                 [ " CONDUCTOR DE RUTA  : "+@cout.get_employee(@cout.employee2_id)  ],
                  
-                 ["OBSERVACIONES: ", " "],
+                 ["OBSERVACIONES: " , @cout.observa ],
                  [" ", " "],
                  ["................................ ", " ................................ "],
-                 ["V.B.Recepcion y Despacho ", "          V.B. Responsable"]]
+                 [" Conductor.:  ", "          V.B."]]
 
                          pdf.bounding_box([0, 200], :width => 550, :height => 200) do
           
           
         pdf.text "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
-        pdf.text "COMPROBANTE DE EGRESO :  " + @cout.code  + "              OST.:  " +  @cout.tranportorder.code ,   :size => 13 
+        pdf.text "COMPROBANTE DE EGRESO :  " + @cout.code  + "              OST.:  " + ost_code  ,   :size => 13 
         
         
         pdf.table(data2, :cell_style => { :border_width => 0 }, :column_widths => [223, 223,104] )
@@ -754,7 +789,8 @@ tb_text_guias  = [["Fecha :", @cout.fecha.strftime('%d-%m-%Y'), "TBK: "+@cout.tb
     def cout_params
       params.require(:cout).permit(:code, :fecha, :importe, :truck_id, :punto_id, :tranportorder_id, :employee_id, :employee2_id, 
         :employee3_id, :peajes, :lavado, :llanta, :alimento, :otros, :monto_recibido, :flete, :recibido_ruta, :vuelto, :descuento, 
-        :reembolso, :flete, :ost_id,:tbk,:tbk_documento)
+        :reembolso, :flete, :ost_id,:tbk,:tbk_documento,:employee4_id,:truck2_id,:truck3_id,:observa,:fecha1,:fecha2,
+        :ubication_id ,:ubication2_id)
     end
 
 end
