@@ -42,6 +42,8 @@ class LgvsController < ApplicationController
       pdf 
   end   
 
+
+
   def build_pdf_body_rpt(pdf)
     
     pdf.text "Listado de Vueltos " +" Emitidas : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
@@ -584,6 +586,7 @@ class LgvsController < ApplicationController
   
   
    def list_items2
+
     
     @company = Company.find(params[:company_id])
     items = params[:items2]
@@ -607,8 +610,8 @@ class LgvsController < ApplicationController
         
         product[:i] = i
         product[:importe] = monto_inicial.to_f
-        product[:detalle] = product.tranportorder.employee.full_name 
-        product[:descrip] = product.tranportorder.truck.placa 
+        product[:detalle] = product.employee.full_name 
+        product[:observa] = product.truck.placa 
         
         total += product[:importe]
         

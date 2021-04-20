@@ -126,7 +126,7 @@ class TranportordersController < ApplicationController
 
     
      @employees = @tranportorder.get_employees() 
-     @trucks    = Truck.all.where(active: "1")
+     @trucks    = Truck.all.where(estado: "1")
      @locations = Location.all
      @divisions = Division.all 
      
@@ -146,7 +146,7 @@ class TranportordersController < ApplicationController
     @customers = @tranportorder.get_customers()
     @puntos = @tranportorder.get_puntos()
     @employees = @tranportorder.get_employees() 
-    @trucks = Truck.all.where(active: "1") 
+    @trucks = Truck.all.where(estado: "1") 
     @locations = Location.all
     @divisions = Division.all 
   
