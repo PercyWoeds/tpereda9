@@ -1554,6 +1554,8 @@ end
       @subtotal = 0
       @tax = 0
       @importe = 0 
+      total_cancelado = 0
+      total_pendiente = 0 
 
        for  product in @facturas_rpt 
 
@@ -1597,6 +1599,8 @@ end
                  if current_user.level !="ventas"
 
                           @detalle_bancos = @company.get_customer_payments_value_customer4(product.id)
+
+                          if @detalle_bancos 
                            for d in @detalle_bancos 
                               diferencia_det = 0
                              row << d.fecha1.strftime("%d/%m/%Y") 
@@ -1605,7 +1609,18 @@ end
                               diferencia_det = product.total - d.total 
                              
                              row << sprintf("%.2f",diferencia_det.to_s)
+
+                             total_cancelado += d.total 
+                             total_pendiente += diferencia_det 
+
                            end 
+                          else
+
+                            row << " "
+                            row << " "
+                            row << " "
+
+                          end
 
                  end 
 
@@ -1614,10 +1629,10 @@ end
             table_content << row
 
                 @subtotal += product.subtotal 
-                @tax += product.tax 
-                @importe += product.total 
+                @tax      += product.tax 
+                @importe  += product.total 
 
-            nroitem=nroitem + 1
+            nroitem +=  1
 
 
          @tot_valor_referencial += @valor_referencial
@@ -1648,6 +1663,9 @@ end
          row << ""
          row << ""
          row << @tot_monto_detraccion.round(0)
+         row << ""
+         row <<  total_cancelado.round(2)
+         row <<  total_pendiente.round(2)
       
        
         table_content << row 
