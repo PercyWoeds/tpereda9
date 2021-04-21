@@ -1525,7 +1525,7 @@ def reportes_detraccion
   def build_pdf_body_dt(pdf)
     
     pdf.text " ", :size => 13, :spacing => 4
-    pdf.font "Helvetica" , :size => 6
+    pdf.font "Helvetica" , :size => 5
 
       headers = []
       table_content = []
@@ -1678,10 +1678,11 @@ end
                                           columns([11]).align=:right
                                           columns([11]).width = 50
                                           columns([12]).align=:left 
+                                           columns([12]).width = 80
 
                                           columns([13]).align=:right
 
-                                          columns([13]).width = 50
+                                          columns([13]).width = 20
                                           columns([14]).align=:right
 
                                            columns([14]).width = 50
