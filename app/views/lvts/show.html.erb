@@ -1,50 +1,50 @@
 <div class="breadcrumbs">
   <%= link_to "My companies", "/companies" %> &raquo;
-  <%= link_to @lgv.company.name, @lgv.company %> &raquo;
-  <%= link_to "lgvs", "/companies/customer_payments/#{@lgv.company.id}" %>
+  <%= link_to @lvt.company.name, @lvt.company %> &raquo;
+  <%= link_to "lvts", "/companies/customer_payments/#{@lvt.company.id}" %>
 </div>
 
 <h1>
   <%= image_tag("invoice_48.png", :class => "vmiddle") %>
-  <%= @lgv.identifier %>
+  <%= @lvt.identifier %>
 </h1>
 
 <%= hr() %>
 
-<% if @lgv.location %>
+<% if @lvt.location %>
   <p>
     <b>Location:</b>
-    <%= link_to @lgv.location.name, @lgv.location %>
+    <%= link_to @lvt.location.name, @lvt.location %>
   </p>
 <% end %>
 
-<% if @lgv.division %>
+<% if @lvt.division %>
   <p>
     <b>Division:</b>
-    <%= link_to @lgv.division.name, @lgv.division %>
+    <%= link_to @lvt.division.name, @lvt.division %>
   </p>
 <% end %>
 
 <p>
   <b>Code:</b>
-  <%= @lgv.code %>
+  <%= @lvt.code %>
 </p>
 
 <p>
     <b>Fecha :</b>
-    <%= @lgv.fecha.strftime("%d/%m/%Y") %>   
+    <%= @lvt.fecha.strftime("%d/%m/%Y") %>   
 </p>
  
 <p>
     <b>Estado: </b>
-    <%= @lgv.get_processed   %>   
+    <%= @lvt.get_processed   %>   
 </p>
 
 
 <%= hr() %>
 
 <h3>
-  Informacion LGV
+  Informacion lvt
 </h3>
 <p>
   <b>Comprobante </b>  
@@ -86,7 +86,7 @@
   <tbody>
     
 
-    <% for product in @lgv.get_lgvs2()%>
+    <% for product in @lvt.get_lvts2()%>
       <tr>
         <td class="small bordered_bottom bordered_right">
             <%= product.compro.code  %>
@@ -151,7 +151,7 @@
   <tbody>
     
 
-    <% for product in @lgv.get_lgvs() %>
+    <% for product in @lvt.get_lvts() %>
       <tr>
           <td class="small bordered_bottom bordered_right">
             <%= product.gasto.code %>
@@ -184,7 +184,7 @@
         Total ingresos
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        <%= money(@lgv.total_ing) %>
+        <%= money(@lvt.total_ing) %>
       </td>
     </tr>
     
@@ -193,7 +193,7 @@
         Total Egresos
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        <%= money(@lgv.total_egreso) %>
+        <%= money(@lvt.total_egreso) %>
       </td>
     </tr>
     <tr>
@@ -201,7 +201,7 @@
         Peajes 
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        <%= money(@lgv.peaje) %>
+        <%= money(@lvt.peaje) %>
       </td>
     </tr>
     <tr>
@@ -209,7 +209,7 @@
         Saldo
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        <%= money(@lgv.saldo) %>
+        <%= money(@lvt.saldo) %>
       </td>
     </tr>
     
@@ -228,7 +228,7 @@
       </td>
       
       <td class="bordered_bottom bordered_right bold right">
-          <%= money(@lgv.devuelto) %>
+          <%= money(@lvt.devuelto) %>
       </td>
     </tr>
     <tr>
@@ -237,7 +237,7 @@
       </td>
       
       <td class="bordered_bottom bordered_right bold right">
-          <%= money(@lgv.descuento) %>
+          <%= money(@lvt.descuento) %>
       </td>
     </tr>
     <tr>
@@ -246,7 +246,7 @@
       </td>
       
       <td class="bordered_bottom bordered_right bold right">
-          <%= money(@lgv.reembolso) %>
+          <%= money(@lvt.reembolso) %>
       </td>
     </tr>
     
@@ -266,24 +266,24 @@
 
 <p>
   <strong>Seller:</strong>
-  <%= link_to @lgv.user.username, @lgv.user %>
+  <%= link_to @lvt.user.username, @lvt.user %>
 </p>
 
 <%= hr() %>
 
 <div class="button">
   
-  <%= link_to 'Exportar to PDF', "/lgvs/pdf/#{@lgv.id}.pdf" %>  
- <% if @lgv.processed == "1" %> 
+  <%= link_to 'Exportar to PDF', "/lvts/pdf/#{@lvt.id}.pdf" %>  
+ <% if @lvt.processed == "1" %> 
 
  <% %>
 
  <% else %>
 
-  <%= link_to 'Procesar', "/lgvs/do_process/#{@lgv.id}" %>
+  <%= link_to 'Procesar', "/lvts/do_process/#{@lvt.id}" %>
 
  <% end %> 
   
-  <%= link_to 'Regresar', "/companies/lgvs/#{@lgv.company.id}" %>
+  <%= link_to 'Regresar', "/companies/lvts/#{@lvt.company.id}" %>
 </div>
 

@@ -133,7 +133,7 @@
   
     <%= hr() %>
     <div class="actions">
-      <input type="hidden" name="items" id="items" value="<% if @lgvs_lines %><%= @lgvs_lines %><% end %>" />
+      <input type="hidden" name="items" id="items" value="<% if @lvts_lines %><%= @lvts_lines %><% end %>" />
       <input type="hidden" name="items2" id="items2" value="<% if @compro_lines %><%= @compro_lines %><% end %>" />
       <%= f.hidden_field :user_id, :id => "ac_user_id" %>
       <%= f.hidden_field :compro_id, :id => "ac_compro_id" %>
@@ -159,7 +159,7 @@
     Agregar Comprobante por rendir 
   </h4>
                                               
-  <form method="get" action="/lgvs" onsubmit="addItemToLgv2(); return false;">
+  <form method="get" action="/lvts" onsubmit="addItemTolvt2(); return false;">
 
     <strong>Documento :</strong><br />
           <input type="text" name="ac_item_compro" id="ac_item_compro" value="" />
@@ -186,7 +186,7 @@
     Agregar informacion egresos comprobante 
   </h5>
   
-  <form method="get" action="/lgvs" onsubmit="addItemTolgv(); return false;">   
+  <form method="get" action="/lvts" onsubmit="addItemTolvt(); return false;">   
   
     
   
@@ -264,13 +264,14 @@
 <%= render 'layouts/autocomplete' %>
 
 <script type="text/javascript">
+
+
   $(document).ready(function() {
 
     
     
     
-    
-   $("#ac_item_compro").autocomplete("/lgvs/ac_compros/<%= @company.id %>", {
+   $("#ac_item_compro").autocomplete("/lvts/ac_compros/<%= @company.id %>", {
       matchSubset: 1,
       matchContains: 1,
       selectFirst: false
@@ -281,7 +282,7 @@
       $("#ac_compro_id").val(data[2]);
     });
     
-    $("#ac_user").autocomplete("/lgvs/ac_user/<%= @company.id %>", {
+    $("#ac_user").autocomplete("/lvts/ac_user/<%= @company.id %>", {
 			matchSubset: 1,
 			matchContains: 1,
       selectFirst: false
@@ -292,8 +293,15 @@
       $("#selected_seller").html(data[0]);
     });    
     
-    <% if @lgvs_lines %>
-      listItemslgv();
+    <% if @lvts_lines %>
+      listItemslvt();
     <% end %>
+
+
+
+
+
+
+
   });
 </script>

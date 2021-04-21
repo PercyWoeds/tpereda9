@@ -970,6 +970,22 @@ WHERE facturas.code = ?',code ])
     return facturas 
  end 
 
+#total ingreos x banco abierto por  factura x banco nacion 
+def get_customer_payments_value_customer4(code)
+
+facturas = CustomerPayment.find_by_sql(['Select customer_payments.id,customer_payment_details.total,customer_payments.fecha1,
+facturas.code as nrofactura,facturas.customer_id,facturas.fecha,customer_payment_details.factory,
+customer_payments.bank_acount_id,customer_payments.code  
+FROM  customer_payment_details   
+INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
+INNER JOIN customer_payments ON customer_payments.id = customer_payment_details.customer_payment_id    
+WHERE facturas.code = ? and customer_payments.bank_acount_id = ?',code , 6 ])
+
+    return facturas 
+ end 
+
+
+
 
  #total banco x cliente
 def get_customer_payments_value_customer(fecha1,fecha2,id,cliente,value)

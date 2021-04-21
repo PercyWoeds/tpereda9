@@ -1,0 +1,40 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %>
+</div>
+
+<h1>
+  <%= image_tag("orders_48.png", :class => "vmiddle") %>
+  
+  Liquidacion de viaticos Telebanking 
+  
+  <% if @customer %>
+    for customer: <%= @customer.name %>
+  <% end %>
+</h1>
+
+
+
+<br />
+<%= render "lvts/list" %>
+
+<br />
+
+<div class="button">
+  <%= link_to 'Nueva Comprobante', "/lvts/new/#{@company.id}" %>
+  
+</div>
+
+<%= will_paginate @lvts %>
+
+<%= render 'layouts/autocomplete' %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#ac_customer").autocomplete("/lvts/ac_customers/<%= @company.id %>", {
+			matchSubset: 1,
+			matchContains: 1,
+      selectFirst: false
+    });
+  });
+</script>

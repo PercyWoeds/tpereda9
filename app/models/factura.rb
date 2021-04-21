@@ -56,6 +56,7 @@ class Factura < ActiveRecord::Base
                      "DOLARES ",
                      "DETRACCION",
                      "OBSERV"]
+
   TABLE_HEADERS_dt = ["Nro.","TD",
                       "Nro.Doc.",
                      "Fec.Emision",
@@ -73,6 +74,30 @@ class Factura < ActiveRecord::Base
                      "(%) DETRACCION",
                      "MONTO 
                      DETRACCION"]
+
+
+TABLE_HEADERS_dt2 = ["Nro.","TD",
+                      "Nro.Doc.",
+                     "Fec.Emision",
+                     "Fec.Vmto",
+                     "R.U.C. ",
+                     "Cliente",                 
+                     "Mon.",                                     
+                     "SUBTOTAL",
+                     "IGV",
+                     "IMPORTE",
+                     "VALOR 
+                     REFE
+                     RENCIAL",
+                     "TIPO SERVICIO",
+                     "(%) DETRACCION",
+                     "MONTO 
+                     DETRACCION",
+                     "Fec.Pago",
+                     "Cancelado",
+                     "Pendiente"
+                     ]
+
 
   def self.search(search)
       where("code iLIKE ?", "%#{search}%") 

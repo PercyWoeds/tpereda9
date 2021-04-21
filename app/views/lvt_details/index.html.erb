@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Lvt Details</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Gasto</th>
+      <th>Document</th>
+      <th>Documento</th>
+      <th>Total</th>
+      <th>Lvt</th>
+      <th>Supplier</th>
+      <th>Td</th>
+      <th>Detalle</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @lvt_details.each do |lvt_detail| %>
+      <tr>
+        <td><%= lvt_detail.fecha %></td>
+        <td><%= lvt_detail.gasto_id %></td>
+        <td><%= lvt_detail.document_id %></td>
+        <td><%= lvt_detail.documento %></td>
+        <td><%= lvt_detail.total %></td>
+        <td><%= lvt_detail.lvt_id %></td>
+        <td><%= lvt_detail.supplier_id %></td>
+        <td><%= lvt_detail.td %></td>
+        <td><%= lvt_detail.detalle %></td>
+        <td><%= link_to 'Show', lvt_detail %></td>
+        <td><%= link_to 'Edit', edit_lvt_detail_path(lvt_detail) %></td>
+        <td><%= link_to 'Destroy', lvt_detail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Lvt detail', new_lvt_detail_path %>

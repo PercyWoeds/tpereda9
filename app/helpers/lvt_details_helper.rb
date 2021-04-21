@@ -1,0 +1,2 @@
+module LvtDetailsHelper
+end

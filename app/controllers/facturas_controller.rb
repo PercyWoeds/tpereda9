@@ -1474,12 +1474,22 @@ def reportes_detraccion
 
     
       
+
+      if current_user.level  == "ventas "
        table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION INTEGRADO ",:rowspan => 2},"CODIGO ","TP-EC-F-016"], 
           ["VERSION: ","1"], 
           ["REPORTES DE FACTURAS EMITIDAS (DETRACCIONES) DEL " +"#{@fecha1}"+ " AL " + "#{@fecha2}","Pagina: ","1 de 1 "] 
          
           ])
-      
+      else
+ table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION INTEGRADO ",:rowspan => 2},"CODIGO ","TP-FZ-F-034"], 
+          ["VERSION: ","1"], 
+          ["REPORTES DE FACTURAS EMITIDAS (DETRACCIONES) DEL " +"#{@fecha1}"+ " AL " + "#{@fecha2}","Pagina: ","1 de 1 "] 
+         
+          ])
+
+
+      end 
 
 
 
@@ -1520,12 +1530,22 @@ def reportes_detraccion
       headers = []
       table_content = []
 
+
+
+if current_user.level  == "ventas "
       Factura::TABLE_HEADERS_dt.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
       end
+else
 
+      Factura::TABLE_HEADERS_dt2.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+end
       table_content << headers
 
       nroitem=1
@@ -1558,10 +1578,12 @@ def reportes_detraccion
                  @valor_referencial = product.valor_referencial
                  else
                  row << "0.00"
+                 
                  @valor_referencial = 0 
                  end 
                  row <<   product.get_servicio
                  row <<   product.get_detraccion 
+
 
                  max_porcentaje_detraccion  =  product.total > @valor_referencial ? product.total  : @valor_referencial
 
@@ -1569,6 +1591,25 @@ def reportes_detraccion
                  @monto_detraccion = (product.get_detraccion * max_porcentaje_detraccion ) / 100 
 
                  row <<    sprintf("%.2f",@monto_detraccion.round(0).to_s)
+
+
+
+                 if curren_user.level !="ventas"
+
+                          @detalle_bancos = @company.get_customer_payments_value_customer3(product.id)
+                           for d in @detalle_bancos 
+                              diferencia_det = 0
+                             row << d.fecha1.strftime("%d/%m/%Y") 
+                             row << sprintf("%.2f",d.total.to_s)
+
+                              diferencia_det = product.total - d.total 
+                             
+                             row << sprintf("%.2f",diferencia_det.to_s)
+                           end 
+
+                 end 
+
+                 
 
             table_content << row
 

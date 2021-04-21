@@ -7,6 +7,7 @@ require 'sidekiq/cron/web'
   Mnygo::Application.routes.draw do
 
   
+  resources :lvt_details
   resources :lvts
   resources :program_examen
   resources :program_exms

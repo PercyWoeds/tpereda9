@@ -7,6 +7,7 @@ class LvtsController < ApplicationController
     before_filter :authenticate_user!, :checkProducts
  ###
  # reporte completo
+
   def build_pdf_header_rpt(pdf)
       pdf.font "Helvetica" , :size => 8
      $lcCli  =  @company.name 
@@ -55,7 +56,7 @@ class LvtsController < ApplicationController
       headers = []
       table_content = []
 
-      Lgv::TABLE_HEADERS4.each do |header|
+      Lvt::TABLE_HEADERS4.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
@@ -68,23 +69,23 @@ class LvtsController < ApplicationController
       t_reembolso = 0
       t_descuento = 0
 
-       for  a in @lgv_rpt 
+       for  a in @lvt_rpt 
        
             row = []          
              row << a.compro.tranportorder.code
              row << a.compro.tranportorder.employee.full_name
-             lcRuta =  a.compro.tranportorder.truck.placa << " - " << a.compro.tranportorder.get_placa(a.compro.tranportorder.truck2_id)
+             lcRuta =  a.compro723.tranportorder.truck.placa << " - " << a.compro.tranportorder.get_placa(a.compro.tranportorder.truck2_id)
              row << lcRuta 
              lcPunto2 = a.compro.tranportorder.get_punto(a.compro.tranportorder.ubication_id) << " Hasta "<< a.compro.tranportorder.get_punto(a.compro.tranportorder.ubication2_id)
              row <<  lcPunto2
              row << a.compro.tranportorder.fecha1.strftime("%d/%m/%Y")
              row << a.compro.tranportorder.fecha2.strftime("%d/%m/%Y")
-             row << a.lgv.devuelto.to_s
-             row << a.lgv.reembolso.to_s
-             row << a.lgv.descuento.to_s
-              t_devuelto  += a.lgv.devuelto
-              t_reembolso += a.lgv.reembolso
-              t_descuento += a.lgv.descuento
+             row << a.lvt.devuelto.to_s
+             row << a.lvt.reembolso.to_s
+             row << a.lvt.descuento.to_s
+              t_devuelto  += a.lvt.devuelto
+              t_reembolso += a.lvt.reembolso
+              t_descuento += a.lvt.descuento
              
              
             lcRuta=""
@@ -143,7 +144,7 @@ class LvtsController < ApplicationController
       pdf
       
   end
- def rpt_lgv2_pdf
+ def rpt_lvt2_pdf
    
 
 
@@ -152,7 +153,7 @@ class LvtsController < ApplicationController
     @fecha2 = params[:fecha2]    
     
 
-    @lgv_rpt = @company.get_lgvs3(@fecha1,@fecha2)      
+    @lvt_rpt = @company.get_lvts3(@fecha1,@fecha2)      
 
 #    respond_to do |format|
 #      format.html    
@@ -186,7 +187,7 @@ class LvtsController < ApplicationController
         pdf.font "Helvetica", :style => :bold do
           pdf.text "R.U.C: 20424092941", :align => :center
           pdf.text "LIQUIDACION GASTOS DE VIAJE", :align => :center
-          pdf.text "#{@lgv.code}", :align => :center,
+          pdf.text "#{@lvt.code}", :align => :center,
                                  :style => :bold
           
         end
@@ -202,7 +203,7 @@ class LvtsController < ApplicationController
     pdf.font "Helvetica" , :size => 8        
     
      
-       a= @lgv.get_lgvs2.first
+       a= @lvt.get_lvts2.first
     
        $lcCli = a.compro.tranportorder.code
        $lcdir1 = a.compro.tranportorder.employee.full_name
@@ -240,7 +241,7 @@ class LvtsController < ApplicationController
       headers = []
       table_content = []
 
-      Lgv::TABLE_HEADERS.each do |header|
+      lvt::TABLE_HEADERS.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
@@ -259,7 +260,7 @@ class LvtsController < ApplicationController
          row << "  "
          row << "MTC "
          row << "  "
-         row << @lgv.peaje 
+         row << @lvt.peaje 
          
          table_content << row
   
@@ -268,7 +269,7 @@ class LvtsController < ApplicationController
 
         
         
-        for  product in @lgv.get_lgvs() 
+        for  product in @lvt.get_lvts() 
             row = []
             row << nroitem.to_s 
             row << product.fecha.strftime("%d/%m/%Y")
@@ -304,7 +305,7 @@ class LvtsController < ApplicationController
       headers2 = []
       table_content2 = []
       
-      Lgv::TABLE_HEADERS2.each do |header|
+      lvt::TABLE_HEADERS2.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers2 << cell
@@ -313,7 +314,7 @@ class LvtsController < ApplicationController
       table_content2 << headers2
       por_rendir = 0
        
-        for  product in @lgv.get_lgvs2() 
+        for  product in @lvt.get_lvts2() 
             row = []
             row  <<  "VIATICOS "
             row  <<  product.compro.code
@@ -347,24 +348,24 @@ class LvtsController < ApplicationController
       
       pdf.move_down 20  
      
-     $lcIngreso   = sprintf("%.2f",@lgv.total_ing.round(2).to_s)  
-     $lcEgreso    = sprintf("%.2f",@lgv.total_egreso.round(2).to_s)  
-     $lcSaldo     = sprintf("%.2f",@lgv.saldo.round(2).to_s)  
+     $lcIngreso   = sprintf("%.2f",@lvt.total_ing.round(2).to_s)  
+     $lcEgreso    = sprintf("%.2f",@lvt.total_egreso.round(2).to_s)  
+     $lcSaldo     = sprintf("%.2f",@lvt.saldo.round(2).to_s)  
      
-     $lcCDevuelto  = @lgv.cdevuelto
-     $lcCReembolso = @lgv.creembolso
-     $lcCDescuento = @lgv.cdescuento
+     $lcCDevuelto  = @lvt.cdevuelto
+     $lcCReembolso = @lvt.creembolso
+     $lcCDescuento = @lvt.cdescuento
 
-     $lcDevuelto  = sprintf("%.2f",@lgv.devuelto.round(2).to_s)  
-     $lcReembolso = sprintf("%.2f",@lgv.reembolso.round(2).to_s)  
-     $lcDescuento = sprintf("%.2f",@lgv.descuento.round(2).to_s)  
+     $lcDevuelto  = sprintf("%.2f",@lvt.devuelto.round(2).to_s)  
+     $lcReembolso = sprintf("%.2f",@lvt.reembolso.round(2).to_s)  
+     $lcDescuento = sprintf("%.2f",@lvt.descuento.round(2).to_s)  
 
      
       
       headers3 = []
       table_content3 = []
       
-      Lgv::TABLE_HEADERS3.each do |header|
+      lvt::TABLE_HEADERS3.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers3 << cell
@@ -420,7 +421,7 @@ class LvtsController < ApplicationController
     
         pdf.text ""
         pdf.text "" 
-        pdf.text "OBSERVACIONES : #{@lgv.comments}", :size => 8, :spacing => 4
+        pdf.text "OBSERVACIONES : #{@lvt.comments}", :size => 8, :spacing => 4
 
         
        data =[ ["Procesado Asis.Finanzas ","V.B.Contador","V.B.Administracion ","V.B. Gerente ."],
@@ -434,7 +435,7 @@ class LvtsController < ApplicationController
             pdf.move_down 10          
                   
         pdf.bounding_box([0, 20], :width => 538, :height => 50) do        
-        pdf.draw_text "Company: #{@lgv.company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom ]
+        pdf.draw_text "Company: #{@lvt.company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom ]
 
       end
 
@@ -442,34 +443,34 @@ class LvtsController < ApplicationController
       
   end   
      
-  # Export lgv to PDF
+  # Export lvt to PDF
 
   def pdf
-    @lgv  =Lgv.find(params[:id])
-    company =@lgv.company_id
+    @lvt  =lvt.find(params[:id])
+    company =@lvt.company_id
     @company =Company.find(company)
   
     
-     $lcFecha1= @lgv.fecha.strftime("%d/%m/%Y") 
-     $lcMon   = @lgv.get_moneda(1)
+     $lcFecha1= @lvt.fecha.strftime("%d/%m/%Y") 
+     $lcMon   = @lvt.get_moneda(1)
      $lcPay= ""
      $lcSubtotal=0
      $lcIgv=0
-     $lcTotal=sprintf("%.2f",@lgv.inicial)
+     $lcTotal=sprintf("%.2f",@lvt.inicial)
 
      $lcDetracion=0
-     $lcAprobado= @lgv.get_processed 
+     $lcAprobado= @lvt.get_processed 
 
 
     $lcEntrega5 =  "FECHA :"
     $lcEntrega6 =  $lcFecha1
 
-    Prawn::Document.generate("app/pdf_output/#{@lgv.id}.pdf") do |pdf|
+    Prawn::Document.generate("app/pdf_output/#{@lvt.id}.pdf") do |pdf|
         pdf.font "Helvetica"
         pdf = build_pdf_header(pdf)
         pdf = build_pdf_body(pdf)
         build_pdf_footer(pdf)
-         $lcFileName =  "app/pdf_output/#{@lgv.id}.pdf"      
+         $lcFileName =  "app/pdf_output/#{@lvt.id}.pdf"      
         
     end     
 
@@ -495,33 +496,33 @@ class LvtsController < ApplicationController
       invoice_headers
   end
   
-  # Process an lgv
+  # Process an lvt
   def do_process
-    @lgv = Lgv.find(params[:id])
-    @lgv[:processed] = "1"
+    @lvt = lvt.find(params[:id])
+    @lvt[:processed] = "1"
     
-    @lgv.process
+    @lvt.process
     
-    flash[:notice] = "The lgv order has been processed."
-    redirect_to @lgv
+    flash[:notice] = "The lvt order has been processed."
+    redirect_to @lvt
   end
   
-  # Do send lgv via email
+  # Do send lvt via email
   def do_email
-    @lgv = Lgv.find(params[:id])
+    @lvt = lvt.find(params[:id])
     @email = params[:email]
     
-    Notifier.lgv(@email, @lgv).deliver
+    Notifier.lvt(@email, @lvt).deliver
     
-    flash[:notice] = "The lgv has been sent successfully."
-    redirect_to "/lgvs/#{@lgv.id}"
+    flash[:notice] = "The lvt has been sent successfully."
+    redirect_to "/lvts/#{@lvt.id}"
   end
 
   
-  # Send lgv via email
+  # Send lvt via email
   def email
-    @lgv = Lgv.find(params[:id])
-    @company = @lgv.company
+    @lvt = lvt.find(params[:id])
+    @company = @lvt.company
   end
   
   # List items
@@ -606,7 +607,7 @@ class LvtsController < ApplicationController
     items = params[:items2]
     items = items.split(",")
     items_arr = []
-    @lgvs = []
+    @lvts = []
     i = 0
     @total_inicial = 0
     total = 0 
@@ -633,7 +634,7 @@ class LvtsController < ApplicationController
         
         @diferencia = 
         
-        @lgvs.push(product)
+        @lvts.push(product)
 
       end
       
@@ -700,10 +701,10 @@ class LvtsController < ApplicationController
     render :layout => false
   end
   
-  # Show lgvs for a company
-  def list_lgvs
+  # Show lvts for a company
+  def list_lvts
     @company = Company.find(1)
-    @pagetitle = "#{@company.name} - lgvs"
+    @pagetitle = "#{@company.name} - lvts"
     @filters_display = "block"
     
     @locations = Location.where(company_id: @company.id).order("name ASC")
@@ -719,11 +720,11 @@ class LvtsController < ApplicationController
     end
   
     if(@company.can_view(current_user))
-         @lgvs = Lgv.all.order('id DESC').paginate(:page => params[:page])
+         @lvts = Lvt.all.order('id DESC').paginate(:page => params[:page])
         if params[:search]
-          @lgvs = Lgv.search(params[:search]).order('id DESC').paginate(:page => params[:page])
+          @lvts = Lvt.search(params[:search]).order('id DESC').paginate(:page => params[:page])
         else
-          @lgvs = Lgv.all.order('id DESC').paginate(:page => params[:page]) 
+          @lvts = Lvt.all.order('id DESC').paginate(:page => params[:page]) 
         end
     
     else
@@ -731,35 +732,35 @@ class LvtsController < ApplicationController
     end
   end
   
-  # GET /lgvs
-  # GET /lgvs.xml
+  # GET /lvts
+  # GET /lvts.xml
   def index
     @companies = Company.where(user_id: current_user.id).order("name")
-    @path = 'lgvs'
-    @pagetitle = "lgvs"
+    @path = 'lvts'
+    @pagetitle = "lvts"
   end
 
-  # GET /lgvs/1
-  # GET /lgvs/1.xml
+  # GET /lvts/1
+  # GET /lvts/1.xml
   def show
-    @lgv = Lgv.find(params[:id])
+    @lvt = Lvt.find(params[:id])
   end
 
-  # GET /lgvs/new
-  # GET /lgvs/new.xml
+  # GET /lvts/new
+  # GET /lvts/new.xml
 
   
   
   def new
-    @pagetitle = "New lgv"
+    @pagetitle = "New lvt"
     @action_txt = "Create"
     
-    @lgv = Lgv.new
-    @lgv[:code] = "#{generate_guid_lgv()}"
-    @lgv[:processed] = "0"
+    @lvt = Lvt.new
+
+    @lvt[:processed] = "0"
     $total_inicial = 0 
     @company = Company.find(params[:company_id])
-    @lgv.company_id = @company.id
+    @lvt.company_id = @company.id
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
@@ -769,149 +770,151 @@ class LvtsController < ApplicationController
     @gastos = Gasto.all 
     
     @ac_user = getUsername()
-    @lgv[:fecha] = Date.today
-    @lgv[:user_id] = getUserId()
+    @lvt[:fecha] = Date.today
+    @lvt[:user_id] = getUserId()
   end
 
 
-  # GET /lgvs/1/edit
+  # GET /lvts/1/edit
   def edit
-    @pagetitle = "Edit lgv"
+    @pagetitle = "Edit lvt"
     @action_txt = "Update"
     
-    @lgv = Lgv.find(params[:id])
-    @company = @lgv.company
-    @ac_customer = @lgv.customer.name
-    @ac_user = @lgv.user.username
+    @lvt = Lvt.find(params[:id])
+    @company = @lvt.company
+    @ac_customer = @lvt.customer.name
+    @ac_user = @lvt.user.username
     
-    @products_lines = @lgv.products_lines
-    @compros_lines= @lgv.compros_lines
+    @products_lines = @lvt.products_lines
+    @compros_lines= @lvt.compros_lines
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
   end
 
-  # POST /lgvs
-  # POST /lgvs.xml
+  # POST /lvts
+  # POST /lvts.xml
   def create
-    @pagetitle = "New lgv"
+    @pagetitle = "New lvt"
     @action_txt = "Create"
      @compros = Compro.all 
      
     items = params[:items].split(",")
     items2 = params[:items2].split(",")
     
-    @lgv = Lgv.new(lgv_params)
+    @lvt = Lvt.new(lvt_params)
+
+    @lvt[:code] = Lvt.generate_cout_number
     
-    @company = Company.find(params[:lgv][:company_id])
+    @company = Company.find(params[:lvt][:company_id])
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @gastos = Gasto.all 
     
     begin
-      @lgv[:inicial] = 0
+      @lvt[:inicial] = 0
     rescue
-      @lgv[:inicial] = 0
+      @lvt[:inicial] = 0
     end 
     
     begin
-      @lgv[:total_ing] = @lgv.get_total_ing(items2)
+      @lvt[:total_ing] = @lvt.get_total_ing(items2)
     rescue 
-      @lgv[:total_ing] = 0
+      @lvt[:total_ing] = 0
     end 
     begin 
-      @lgv[:total_egreso]=  @lgv.get_total_sal(items)
+      @lvt[:total_egreso]=  @lvt.get_total_sal(items)
     rescue 
-      @lgv[:total_egreso]= 0 
+      @lvt[:total_egreso]= 0 
     end 
-    @lgv[:saldo] =@lgv[:total_ing] - @lgv[:total_egreso] -@lgv[:peaje]
+    @lvt[:saldo] =@lvt[:total_ing] - @lvt[:total_egreso] -@lvt[:peaje]
     
-    if(params[:lgv][:user_id] and params[:lgv][:user_id] != "")
-      curr_seller = User.find(params[:lgv][:user_id])
+    if(params[:lvt][:user_id] and params[:lvt][:user_id] != "")
+      curr_seller = User.find(params[:lvt][:user_id])
       @ac_user = curr_seller.username
     end
 
-    @lgv[:code] = @lgv.generate_cout_number
+    @lvt[:code] = @lvt.generate_cout_number
     
     respond_to do |format|
-      if @lgv.save
+      if @lvt.save
         # Create products for kit
-        @lgv.add_products(items)  
-        @lgv.add_products2(items2)  
-        # Check if we gotta process the lgv
-        @lgv.process()
+        @lvt.add_products(items)  
+        @lvt.add_products2(items2)  
+        # Check if we gotta process the lvt
+        @lvt.process()
         
-        format.html { redirect_to(@lgv, :notice => 'lgv was successfully created.') }
-        format.xml  { render :xml => @lgv, :status => :created, :location => @lgv }
+        format.html { redirect_to(@lvt, :notice => 'lvt was successfully created.') }
+        format.xml  { render :xml => @lvt, :status => :created, :location => @lvt }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @lgv.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @lvt.errors, :status => :unprocessable_entity }
       end
     end
   end
   
 
-  # PUT /lgvs/1
-  # PUT /lgvs/1.xml
+  # PUT /lvts/1
+  # PUT /lvts/1.xml
   def update
-    @pagetitle = "Edit lgv"
+    @pagetitle = "Edit lvt"
     @action_txt = "Update"
     
     items = params[:items].split(",")
     
-    @lgv = Lgv.find(params[:id1])
-    @company = @lgv.company
+    @lvt = Lvt.find(params[:id1])
+    @company = @lvt.company
     
     if(params[:ac_customer] and params[:ac_customer] != "")
       @ac_customer = params[:ac_customer]
     else
-      @ac_customer = @lgv.customer.name
+      @ac_customer = @lvt.customer.name
     end
     
-    @products_lines = @lgv.products_lines
+    @products_lines = @lvt.products_lines
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     
-    @lgv[:subtotal] = @lgv.get_subtotal(items)
-    @lgv[:tax] = @lgv.get_tax(items, @lgv[:customer_id])
-    @lgv[:total] = @lgv[:subtotal] + @lgv[:tax]
+    @lvt[:subtotal] = @lvt.get_subtotal(items)
+    @lvt[:tax] = @lvt.get_tax(items, @lvt[:customer_id])
+    @lvt[:total] = @lvt[:subtotal] + @lvt[:tax]
 
 
     respond_to do |format|
-      if @lgv.update_attributes(params[:lgv])
+      if @lvt.update_attributes(params[:lvt])
         # Create products for kit
-        @lgv.delete_products()
-        @lgv.add_products(items)
+        @lvt.delete_products()
+        @lvt.add_products(items)
         
-        # Check if we gotta process the lgv
-        @lgv.process()
+        # Check if we gotta process the lvt
+        @lvt.process()
         
-        format.html { redirect_to(@lgv, :notice => 'lgv was successfully updated.') }
+        format.html { redirect_to(@lvt, :notice => 'lvt was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @lgv.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @lvt.errors, :status => :unprocessable_entity }
       end
     end
   end
 
-  # DELETE /lgvs/1
-  # DELETE /lgvs/1.xml
+  # DELETE /lvts/1
+  # DELETE /lvts/1.xml
   def destroy
-    @lgv = Lgv.find(params[:id])
-    company_id = @lgv[:company_id]
-    @lgv.destroy
+    @lvt = Lvt.find(params[:id])
+    company_id = @lvt[:company_id]
+    @lvt.destroy
 
     respond_to do |format|
-      format.html { redirect_to("/companies/lgvs/" + company_id.to_s) }
+      format.html { redirect_to("/companies/lvts/" + company_id.to_s) }
     end
   end
   
   private
-  def lgv_params
-    params.require(:lgv).permit( :code, :fecha, :lgv_id, :total, :devuelto_texto, :devuelto, :reembolso, :descuento, :observa,
+  def lvt_params
+    params.require(:lvt).permit( :code, :fecha, :lvt_id, :total, :devuelto_texto, :devuelto, :reembolso, :descuento, :observa,
  :company_id, :processed, :user_id,  :tranportorder_id, :comments, :gasto_id, :compro_id, :inicial, :total_ing, :total_egreso, :saldo,:peaje,
  :creembolso,:cdescuento,:cdevuelto)
   end

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  lvt_id: 1
+  importe: 1.5
+  compro_id: 1
+
+two:
+  lvt_id: 1
+  importe: 1.5
+  compro_id: 1

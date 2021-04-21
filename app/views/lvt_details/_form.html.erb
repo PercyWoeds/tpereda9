@@ -1,0 +1,19 @@
+<%= simple_form_for(@lvt_detail) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :fecha %>
+    <%= f.input :gasto_id %>
+    <%= f.input :document_id %>
+    <%= f.input :documento %>
+    <%= f.input :total %>
+    <%= f.input :lvt_id %>
+    <%= f.input :supplier_id %>
+    <%= f.input :td %>
+    <%= f.input :detalle %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
