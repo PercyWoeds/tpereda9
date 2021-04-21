@@ -1615,10 +1615,12 @@ end
 
                            end 
                           else
-                            total_pendiente += product.total 
+                            total_pendiente += monto_detraccion
                             row << " "
                             row << " "
-                            row << " "
+                           
+                            row <<    sprintf("%.2f",@monto_detraccion.round(0).to_s)
+
 
                           end
 
