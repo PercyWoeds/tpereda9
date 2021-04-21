@@ -1615,7 +1615,7 @@ end
 
                            end 
                           else
-                            total_pendiente += d.total 
+                            total_pendiente += product.total 
                             row << " "
                             row << " "
                             row << " "
