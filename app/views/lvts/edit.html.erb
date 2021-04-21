@@ -1,17 +1,17 @@
 <div class="breadcrumbs">
   <%= link_to "My companies", "/companies" %> &raquo;
   <%= link_to @company.name, @company %> &raquo;
-  <%= link_to "lgvs", "/companies/lgvs/#{@company.id}" %> &raquo;
-  <%= link_to @lgv.identifier, @lgv %>
+  <%= link_to "lvts", "/companies/lvts/#{@company.id}" %> &raquo;
+  <%= link_to @lvt.identifier, @lvt %>
 </div>
 
 <h1>
-  <%= image_tag("lgv_48.png", :class => "vmiddle") %>
-  Editing lgv
+  <%= image_tag("lvt_48.png", :class => "vmiddle") %>
+  Editing lvt
 </h1>
 
 <p>
-  To modify the lgv, please fill out the following form.  Fields marked with <strong>*</strong> are required.
+  To modify the lvt, please fill out the following form.  Fields marked with <strong>*</strong> are required.
 </p>
 
 <%= render 'form' %>
@@ -19,6 +19,6 @@
 <%= hr() %>
 
 <div class="button">
-  <%= link_to 'Show', @lgv %>
-  <%= link_to 'Back', "/companies/lgvs/#{@company.id}" %>
+  <%= link_to 'Show', @lvt %>
+  <%= link_to 'Back', "/companies/lvts/#{@company.id}" %>
 </div>

@@ -16,22 +16,22 @@
 
 
 <br />
-<%= render "lgvs/list" %>
+<%= render "lvts/list" %>
 
 <br />
 
 <div class="button">
-  <%= link_to 'Nueva Comprobante', "/lgvs/new/#{@company.id}" %>
+  <%= link_to 'Nueva Comprobante', "/lvts/new/#{@company.id}" %>
   
 </div>
 
-<%= will_paginate @lgvs %>
+<%= will_paginate @lvts %>
 
 <%= render 'layouts/autocomplete' %>
 
 <script type="text/javascript">
   $(document).ready(function() {
-    $("#ac_customer").autocomplete("/lgvs/ac_customers/<%= @company.id %>", {
+    $("#ac_customer").autocomplete("/lvts/ac_customers/<%= @company.id %>", {
 			matchSubset: 1,
 			matchContains: 1,
       selectFirst: false

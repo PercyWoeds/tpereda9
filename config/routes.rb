@@ -847,6 +847,29 @@ match 'companies/reports/rpt_coti_1_pdf/:company_id' => 'reports#rpt_coti_1_pdf'
   match 'companies/lgvs/:id' => 'lgvs#list_lgvs', via: [:get, :post]
   resources :lgvs 
 
+
+
+  match 'lvts/list_items/:company_id' => 'lvts#list_items', via: [:get, :post]
+  match 'lvts/list_items2/:company_id' => 'lvts#list_items2', via: [:get, :post]
+  
+  match 'lvts/ac_documentos/:company_id' => 'lvts#ac_documentos', via: [:get, :post]
+  match 'lvts/ac_compros/:company_id' => 'lvts#ac_compros', via: [:get, :post]
+  match 'lvts/ac_user/:company_id' => 'lvts#ac_user', via: [:get, :post]
+  match 'lvts/ac_customers/:company_id' => 'lvts#ac_customers', via: [:get, :post]
+  match 'lvts/new/:company_id' => 'lvts#new', via: [:get, :post]
+  
+  match 'lvts/do_email/:id' => 'lvts#do_email', via: [:get, :post]
+  match 'lvts/do_process/:id' => 'lvts#do_process', via: [:get, :post]
+  match 'lvts/email/:id' => 'lvts#email', via: [:get, :post]
+  match 'lvts/pdf/:id' => 'lvts#pdf', via: [:get, :post]
+  
+  match 'lvts/rpt_lgv2_pdf/:id' => 'lvts#rpt_lgv2_pdf', via: [:get, :post]
+  match 'companies/lvts/:id' => 'lvts#list_lvts', via: [:get, :post]
+  resources :lgvs 
+
+
+
+
 # Declarations
   
   match 'declarations/list_items/:company_id' => 'invoices#list_items', via: [:get, :post]

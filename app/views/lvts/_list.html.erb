@@ -1,4 +1,4 @@
-<% if @lgvs.count > 0 %>
+<% if @lvts.count > 0 %>
   <table>
     <thead>
       <tr>
@@ -25,39 +25,39 @@
     </thead>
     <tbody>
     
-      <% for lgv  in @lgvs %>
+      <% for lvt  in @lvts %>
         <tr>
           <td class="bordered_right bordered_bottom">
-            <%= link_to lgv.code, lgv, :title => "Ir a factura" %>
+            <%= link_to lvt.code, lvt, :title => "Ir a factura" %>
           </td>
        
           <td class="small bordered_bottom bordered_right">
-            <%= money(lgv.inicial) %>
+            <%= money(lvt.inicial) %>
           </td>
           <td class="small bordered_bottom bordered_right">
-            <%= money(lgv.total_ing) %>
+            <%= money(lvt.total_ing) %>
           </td>
           <td class="small bordered_bottom bordered_right">
-            <%= money(lgv.total_egreso) %>
+            <%= money(lvt.total_egreso) %>
           </td>
           <td class="small bordered_bottom bordered_right">
-            <%= money(lgv.saldo) %>
+            <%= money(lvt.saldo) %>
           </td>
 
           
           <td class="bordered_right bordered_bottom">
-            <%= lgv.fecha.strftime("%d/%m/%Y")  %>
+            <%= lvt.fecha.strftime("%d/%m/%Y")  %>
           </td>
-          <td class="bordered_right bordered_bottom <%= lgv.processed_color %>">
-            <%= lgv.get_processed_short %>
+          <td class="bordered_right bordered_bottom <%= lvt.processed_color %>">
+            <%= lvt.get_processed_short %>
           </td>
           <td class="bordered_right bordered_bottom">
-            <%= link_to "Ver", lgv %>
+            <%= link_to "Ver", lvt %>
           </td>
           <td class="bordered_right bordered_bottom">  
           
             
-          <%= link_to 'Eliminar', lgv, :data=> {:confirm => 'Esta seguro ?'}, :method => :delete  %>           
+          <%= link_to 'Eliminar', lvt, :data=> {:confirm => 'Esta seguro ?'}, :method => :delete  %>           
                   
           </td>
         </tr>
@@ -66,6 +66,6 @@
   </table>
 <% else %>
   <p class="error">
-    We couldn't find any lgv.
+    We couldn't find any lvt.
   </p>
 <% end %>

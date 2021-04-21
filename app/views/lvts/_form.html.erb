@@ -1,8 +1,8 @@
-<% if @lgv.errors.any? %>
+<% if @lvt.errors.any? %>
   <div id="error_explanation">
-    <h2><%= pluralize(@lgv.errors.count, "error") %> prohibited this lgv from being saved:</h2>
+    <h2><%= pluralize(@lvt.errors.count, "error") %> prohibited this lvt from being saved:</h2>
     <ul>
-    <% @lgv.errors.full_messages.each do |msg| %>
+    <% @lvt.errors.full_messages.each do |msg| %>
       <li><%= msg %></li>
     <% end %>
     </ul>
@@ -13,7 +13,7 @@
 
 <div class="mid_box bordered_right">
 
-  <%= form_for(@lgv) do |f| %>
+  <%= form_for(@lvt) do |f| %>
     <h4>
        Informacion Liquidacion de Gastos
        
@@ -143,7 +143,7 @@
     </div>
     
     <div class="small">
-      Once you're done adding customers, don't forget to <strong><%= @action_txt %></strong> your lgv.
+      Once you're done adding customers, don't forget to <strong><%= @action_txt %></strong> your lvt.
     </div>
 
   <% end %>
