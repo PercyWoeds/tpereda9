@@ -1615,7 +1615,7 @@ end
 
                            end 
                           else
-                            total_pendiente += monto_detraccion
+                            total_pendiente += @monto_detraccion
                             row << " "
                             row << " "
                            
