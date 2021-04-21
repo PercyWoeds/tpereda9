@@ -1594,7 +1594,7 @@ end
 
 
 
-                 if curren_user.level !="ventas"
+                 if current_user.level !="ventas"
 
                           @detalle_bancos = @company.get_customer_payments_value_customer3(product.id)
                            for d in @detalle_bancos 
@@ -1609,7 +1609,7 @@ end
 
                  end 
 
-                 
+
 
             table_content << row
 

@@ -2643,7 +2643,6 @@ class CustomerPaymentsController < ApplicationController
       
   end
 
-
   # Export cobrar  to PDF
   def rpt_ccobrar9_pdf
 
