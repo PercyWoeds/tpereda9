@@ -1615,7 +1615,7 @@ end
 
                            end 
                           else
-
+                            total_pendiente += d.total 
                             row << " "
                             row << " "
                             row << " "
