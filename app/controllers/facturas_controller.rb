@@ -1596,7 +1596,7 @@ end
 
                  if current_user.level !="ventas"
 
-                          @detalle_bancos = @company.get_customer_payments_value_customer3(product.id)
+                          @detalle_bancos = @company.get_customer_payments_value_customer4(product.id)
                            for d in @detalle_bancos 
                               diferencia_det = 0
                              row << d.fecha1.strftime("%d/%m/%Y") 

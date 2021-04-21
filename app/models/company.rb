@@ -979,7 +979,7 @@ customer_payments.bank_acount_id,customer_payments.code
 FROM  customer_payment_details   
 INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
 INNER JOIN customer_payments ON customer_payments.id = customer_payment_details.customer_payment_id    
-WHERE facturas.code = ? and customer_payments.bank_acount_id = ?',code , 6 ])
+WHERE facturas.id = ? and customer_payments.bank_acount_id = ?',code , 6 ])
 
     return facturas 
  end 
