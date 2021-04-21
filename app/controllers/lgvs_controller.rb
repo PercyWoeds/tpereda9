@@ -565,6 +565,20 @@ class LgvsController < ApplicationController
         product[:currtotal] = total
         
         @total_pago1  = total     
+
+        puts "totales inicial "
+
+        puts $total_inicial
+
+        puts "total "
+        puts total 
+
+        puts "peakje"
+        puts peaje 
+
+
+
+
         if $total_inicial != nil
           
           @diferencia = $total_inicial -  total - peaje
@@ -818,6 +832,8 @@ class LgvsController < ApplicationController
       @ac_user = curr_seller.username
     end
 
+    @lgv[:code] = @lgv.generate_cout_number
+    
     respond_to do |format|
       if @lgv.save
         # Create products for kit

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210420155153) do
+ActiveRecord::Schema.define(version: 20210421162234) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1569,6 +1569,36 @@ ActiveRecord::Schema.define(version: 20210420155153) do
     t.datetime "updated_at"
   end
 
+  create_table "lvts", force: :cascade do |t|
+    t.string   "code"
+    t.integer  "tranportorder_id"
+    t.datetime "fecha"
+    t.integer  "viatico_id"
+    t.float    "total"
+    t.string   "devuelto_texto"
+    t.float    "devuelto"
+    t.float    "reembolso"
+    t.float    "descuento"
+    t.text     "observa"
+    t.integer  "company_id"
+    t.string   "processed"
+    t.integer  "user_id"
+    t.text     "comments"
+    t.integer  "gasto_id"
+    t.integer  "compro_id"
+    t.float    "inicial"
+    t.float    "total_ing"
+    t.float    "total_egreso"
+    t.float    "saldo"
+    t.integer  "lgv_id"
+    t.float    "peaje"
+    t.string   "cdevuelto"
+    t.string   "cdescuento"
+    t.string   "creembolso"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
   create_table "manifests", force: :cascade do |t|
     t.integer  "customer_id"
     t.string   "solicitante"
@@ -2991,6 +3021,27 @@ ActiveRecord::Schema.define(version: 20210420155153) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.integer  "tipoventa_id"
+  end
+
+  create_table "tmppaycustomers", force: :cascade do |t|
+    t.string   "item"
+    t.string   "customer"
+    t.float    "c_1"
+    t.float    "c_2"
+    t.float    "c_3"
+    t.float    "c_4"
+    t.float    "c_5"
+    t.float    "c_6"
+    t.float    "c_7"
+    t.float    "c_8"
+    t.float    "c_9"
+    t.float    "c_10"
+    t.float    "c_11"
+    t.float    "c_12"
+    t.float    "c_13"
+    t.float    "c_14"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tms", force: :cascade do |t|

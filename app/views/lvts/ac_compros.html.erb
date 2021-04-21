@@ -1,0 +1,8 @@
+<% if @compros %>
+  <% for factura in @compros %>
+
+   <%  valor = factura.importe + factura.tbk  %>
+
+    <%= factura.code %>|BRK|<%= factura.id%> |BRK|<%=valor  %>
+  <% end %>
+<% end %>

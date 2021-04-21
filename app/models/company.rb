@@ -1242,28 +1242,22 @@ def get_customer_payments2(moneda,fecha1,fecha2)
    
    for c in @facturas2
    
-         lcBalance= 0 
+        lcBalance= 0 
          
-         tf = Tempfactura.find_by(year_month: c.year_month, customer_id: c.customer_id)
-       puts "cliente nc"
-       puts c.customer_id
-       puts c.year_month
-       puts c.balance
+       tf = Tempfactura.find_by(year_month: c.year_month, customer_id: c.customer_id)
        
        if tf  
            tf.balance += c.balance 
            tf.save 
        else
          lcbalance = c.balance
-         puts "cliente "
-         puts c.customer_id 
          a= Tempfactura.new(:year_month=> c.year_month,:customer_id => c.customer_id,:balance=>lcbalance)
          a.save 
        end
        
    end 
    
-   @facturas = Tempfactura.order(:customer_id,:year_month) 
+   @facturas = Tempfactura.order(:customer_id,:year_month,:balance ) 
    
   if @facturas.last != nil  
     return @facturas

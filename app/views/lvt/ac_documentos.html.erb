@@ -1,0 +1,5 @@
+<% if @products %>
+  <% for factura in @products %>
+    <%= factura.descrip %>|BRK|<%= factura.id%> |BRK|<%=factura.code %>
+  <% end %>
+<% end %>

@@ -5,10 +5,11 @@ require 'axlsx'
 p = Axlsx::Package.new
 wb = xlsx_package.workbook
 wb.styles do |s|
+
     date = s.add_style(:format_code => "yyyy-mm-dd", :border => Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
     padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
     percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
-    title = s.add_style(:bg_color => "FFFF0000", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
+    title = s.add_style(:bg_color => "ffdbd5d5", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
     cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :left })
 
     currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
@@ -65,11 +66,12 @@ wb.styles do |s|
                     "Oct-2021",
                     "Nov-2021",
                     "Dic-2021", 
-                    "TOTAL   "], :style => title 
+                    "TOTAL   ","%"], :style => title 
     
     @lcCli = @customerpayment_rpt.first.customer_id
     
-    
+   Tmppaycustomer.delete_all
+
     @customerpayment_rpt.each do |customerpayment_rpt|
     
         if @lcCli == customerpayment_rpt.customer_id 
@@ -140,8 +142,30 @@ wb.styles do |s|
                     @total_mes11+
                     @total_mes12
                     
-                    sheet.add_row [nroitem,@lcCliName,@total_anterior,@total_mes01,@total_mes02,@total_mes03,@total_mes04,@total_mes05,@total_mes06,@total_mes07,@total_mes08,@total_mes09,@total_mes10,@total_mes11,@total_mes12,@total_cliente ], :style => [currency,cadena,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency]
-                    
+
+                   a =   Tmppaycustomer.new(item: nroitem , 
+                    customer:  @lcCliName, 
+                    c_1:@total_anterior,
+                    c_2:@total_mes01,
+                    c_3:@total_mes02,
+                    c_4:@total_mes03,
+                    c_5:@total_mes04,
+                    c_6:@total_mes05,
+                    c_7:@total_mes06,
+                    c_8:@total_mes07,
+                    c_9:@total_mes08,
+                    c_10:@total_mes09,
+                    c_11:@total_mes10,
+                    c_12:@total_mes11,
+                    c_13:@total_mes12,
+                    c_14:@total_cliente )
+                   begin 
+                   a.save
+                   rescue 
+                   end 
+
+
+                  
                     ## TOTAL XMES GENERAL
                     @total_anterior_column = @total_anterior_column + @total_anterior
                     @total_mes01_column = @total_mes01_column +@total_mes01
@@ -177,8 +201,6 @@ wb.styles do |s|
                     @total_mes12 = 0
                     @total_cliente = 0 
             
-                   
-          
                          
                       if customerpayment_rpt.year_month.to_f <= 202012
                         @total_anterior = @total_anterior + customerpayment_rpt.balance
@@ -235,10 +257,10 @@ wb.styles do |s|
           #ultimo cliente 
 
          
-         
-
-     
+      
     end 
+
+
      @total_cliente = @total_anterior+
           @total_mes01+
           @total_mes02+
@@ -270,14 +292,88 @@ wb.styles do |s|
             @total_mes12_column = @total_mes12_column +@total_mes12
           
        
-    
-    sheet.add_row [nroitem,@lcCliName,@total_anterior,@total_mes01,@total_mes02,@total_mes03,@total_mes04,@total_mes05,@total_mes06,@total_mes07,@total_mes08,@total_mes09,@total_mes10,@total_mes11,@total_mes12,@total_cliente ], :style => [currency,cadena,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency]
-    sheet.add_row ["","TOTAL GENERAL ",@total_anterior_column,@total_mes01_column,@total_mes02_column,@total_mes03_column,@total_mes04_column,@total_mes05_column,@total_mes06_column,@total_mes07_column,@total_mes08_column,@total_mes09_column,@total_mes10_column,@total_mes11_column,@total_mes12_column,@total_general ], :style => [currency,cadena,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency]    
-  end 
+   
+             a =   Tmppaycustomer.new(item: nroitem , 
+              customer:  @lcCliName, 
+              c_1:@total_anterior,
+              c_2:@total_mes01,
+              c_3:@total_mes02,
+              c_4:@total_mes03,
+              c_5:@total_mes04,
+              c_6:@total_mes05,
+              c_7:@total_mes06,
+              c_8:@total_mes07,
+              c_9:@total_mes08,
+              c_10:@total_mes09,
+              c_11:@total_mes10,
+              c_12:@total_mes11,
+              c_13:@total_mes12,
+              c_14:@total_cliente )
+             begin 
+             a.save
+             rescue 
+             end 
+
+
+
+
+
+
+     @detalle  =  Tmppaycustomer.order("c_14 desc ")
+     nroitem = 1 
+
+     for  detalle in @detalle 
+
+       
+
+         n = (detalle.c_14 / @total_general)*100
+
+      
+         sheet.add_row [nroitem,detalle.customer,
+          detalle.c_1,
+          detalle.c_2,
+          detalle.c_3,
+          detalle.c_4,
+          detalle.c_5,
+          detalle.c_6,
+          detalle.c_7,
+          detalle.c_8,
+          detalle.c_9,
+          detalle.c_10,
+          detalle.c_11,
+          detalle.c_12,
+          detalle.c_13,
+          detalle.c_14,n],
+           :style => [currency,cadena,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency]
+
+          
+            @total_anterior_column = @total_anterior_column + detalle.c_1 
+            @total_mes01_column = @total_mes01_column + detalle.c_2 
+            @total_mes02_column = @total_mes02_column + detalle.c_3
+            @total_mes03_column = @total_mes03_column + detalle.c_4 
+            @total_mes04_column = @total_mes04_column + detalle.c_5
+            @total_mes05_column = @total_mes05_column + detalle.c_6 
+            @total_mes06_column = @total_mes06_column + detalle.c_7
+            @total_mes07_column = @total_mes07_column + detalle.c_8
+            @total_mes08_column = @total_mes08_column + detalle.c_9 
+            @total_mes09_column = @total_mes09_column + detalle.c_10 
+            @total_mes10_column = @total_mes10_column + detalle.c_11
+            @total_mes11_column = @total_mes11_column + detalle.c_12
+            @total_mes12_column = @total_mes12_column + detalle.c_13 
+
+
+
+
+         nroitem += 1 
+
+     end 
+
+
+       sheet.add_row ["","TOTAL GENERAL ",@total_anterior_column,@total_mes01_column,@total_mes02_column,@total_mes03_column,@total_mes04_column,@total_mes05_column,@total_mes06_column,@total_mes07_column,@total_mes08_column,@total_mes09_column,@total_mes10_column,@total_mes11_column,@total_mes12_column,@total_general,"100.0" ], :style => [currency,cadena,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency ]  
+
+
+
 end 
 
-   
- 
-
-
+end 
     

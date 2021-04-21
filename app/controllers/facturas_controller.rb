@@ -4180,8 +4180,7 @@ end
       
       lcCli = @customerpayment_rpt.first.customer_id
       $lcCliName = ""
-    
-
+       Tmppaycustomer.delete_all
      for  customerpayment_rpt in @customerpayment_rpt
 
         if lcCli == customerpayment_rpt.customer_id 
@@ -4256,25 +4255,48 @@ end
             @total_mes11+
             @total_mes12
             
-            row = []
-            row << nroitem.to_s        
-            row << $lcCliName
-            row << sprintf("%.2f",@total_anterior.to_s)
-            row << sprintf("%.2f",@total_mes01.to_s)
-            row << sprintf("%.2f",@total_mes02.to_s)
-            row << sprintf("%.2f",@total_mes03.to_s)
-            row << sprintf("%.2f",@total_mes04.to_s)
-            row << sprintf("%.2f",@total_mes05.to_s)
-            row << sprintf("%.2f",@total_mes06.to_s)
-            row << sprintf("%.2f",@total_mes07.to_s)
-            row << sprintf("%.2f",@total_mes08.to_s)
-            row << sprintf("%.2f",@total_mes09.to_s)
-            row << sprintf("%.2f",@total_mes10.to_s)
-            row << sprintf("%.2f",@total_mes11.to_s)
-            row << sprintf("%.2f",@total_mes12.to_s)
-            row << sprintf("%.2f",@total_cliente.to_s)
+            # row = []
+            # row << nroitem.to_s        
+            # row << $lcCliName
+            # row << sprintf("%.2f",@total_anterior.to_s)
+            # row << sprintf("%.2f",@total_mes01.to_s)
+            # row << sprintf("%.2f",@total_mes02.to_s)
+            # row << sprintf("%.2f",@total_mes03.to_s)
+            # row << sprintf("%.2f",@total_mes04.to_s)
+            # row << sprintf("%.2f",@total_mes05.to_s)
+            # row << sprintf("%.2f",@total_mes06.to_s)
+            # row << sprintf("%.2f",@total_mes07.to_s)
+            # row << sprintf("%.2f",@total_mes08.to_s)
+            # row << sprintf("%.2f",@total_mes09.to_s)
+            # row << sprintf("%.2f",@total_mes10.to_s)
+            # row << sprintf("%.2f",@total_mes11.to_s)
+            # row << sprintf("%.2f",@total_mes12.to_s)
+            # row << sprintf("%.2f",@total_cliente.to_s)
 
-            table_content << row            
+            # table_content << row        
+
+
+             a =   Tmppaycustomer.new(item: nroitem , 
+              customer:  $lcCliName, 
+              c_1:@total_anterior,
+              c_2:@total_mes01,
+              c_3:@total_mes02,
+              c_4:@total_mes03,
+              c_5:@total_mes04,
+              c_6:@total_mes05,
+              c_7:@total_mes06,
+              c_8:@total_mes07,
+              c_9:@total_mes08,
+              c_10:@total_mes09,
+              c_11:@total_mes10,
+              c_12:@total_mes11,
+              c_13:@total_mes12,
+              c_14:@total_cliente )
+             begin 
+             a.save
+             rescue 
+             end 
+
             ## TOTAL XMES GENERAL
             @total_anterior_column = @total_anterior_column + @total_anterior
             @total_mes01_column = @total_mes01_column +@total_mes01
@@ -4380,6 +4402,8 @@ end
           @total_mes10+
           @total_mes11+
           @total_mes12
+
+
             @total_anterior_column = @total_anterior_column + @total_anterior
             @total_mes01_column = @total_mes01_column +@total_mes01
             @total_mes02_column = @total_mes02_column +@total_mes02
@@ -4394,29 +4418,133 @@ end
             @total_mes11_column = @total_mes11_column +@total_mes11
             @total_mes12_column = @total_mes12_column +@total_mes12
           
-            row = []
-            row << nroitem.to_s        
-            row << customerpayment_rpt.customer.name  
-            row << sprintf("%.2f",@total_anterior.to_s)
-            row << sprintf("%.2f",@total_mes01.to_s)
-            row << sprintf("%.2f",@total_mes02.to_s)
-            row << sprintf("%.2f",@total_mes03.to_s)
-            row << sprintf("%.2f",@total_mes04.to_s)
-            row << sprintf("%.2f",@total_mes05.to_s)
-            row << sprintf("%.2f",@total_mes06.to_s)
-            row << sprintf("%.2f",@total_mes07.to_s)
-            row << sprintf("%.2f",@total_mes08.to_s)
-            row << sprintf("%.2f",@total_mes09.to_s)
-            row << sprintf("%.2f",@total_mes10.to_s)
-            row << sprintf("%.2f",@total_mes11.to_s)
-            row << sprintf("%.2f",@total_mes12.to_s)
-            row << sprintf("%.2f",@total_cliente.to_s)
+            # row = []
+            # row << nroitem.to_s        
+            # row << customerpayment_rpt.customer.name  
+            # row << sprintf("%.2f",@total_anterior.to_s)
+            # row << sprintf("%.2f",@total_mes01.to_s)
+            # row << sprintf("%.2f",@total_mes02.to_s)
+            # row << sprintf("%.2f",@total_mes03.to_s)
+            # row << sprintf("%.2f",@total_mes04.to_s)
+            # row << sprintf("%.2f",@total_mes05.to_s)
+            # row << sprintf("%.2f",@total_mes06.to_s)
+            # row << sprintf("%.2f",@total_mes07.to_s)
+            # row << sprintf("%.2f",@total_mes08.to_s)
+            # row << sprintf("%.2f",@total_mes09.to_s)
+            # row << sprintf("%.2f",@total_mes10.to_s)
+            # row << sprintf("%.2f",@total_mes11.to_s)
+            # row << sprintf("%.2f",@total_mes12.to_s)
+            # row << sprintf("%.2f",@total_cliente.to_s)
 
-            table_content << row            
+            # table_content << row       
+
+              a =   Tmppaycustomer.new(item: nroitem , 
+              customer:  customerpayment_rpt.customer.name  , 
+              c_1:@total_anterior,
+              c_2:@total_mes01,
+              c_3:@total_mes02,
+              c_4:@total_mes03,
+              c_5:@total_mes04,
+              c_6:@total_mes05,
+              c_7:@total_mes06,
+              c_8:@total_mes07,
+              c_9:@total_mes08,
+              c_10:@total_mes09,
+              c_11:@total_mes10,
+              c_12:@total_mes11,
+              c_13:@total_mes12,
+              c_14:@total_cliente )
+             begin 
+             a.save
+             rescue 
+             end      
             
 
 
+        # row = []
+        #  row << ""       
+        #  row << " TOTAL GENERAL => "
+        #  row << sprintf("%.2f",@total_anterior_column.to_s)
+        #  row << sprintf("%.2f",@total_mes01_column.to_s)
+        #  row << sprintf("%.2f",@total_mes02_column.to_s)
+        #  row << sprintf("%.2f",@total_mes03_column.to_s)
+        #  row << sprintf("%.2f",@total_mes04_column.to_s)
+        #  row << sprintf("%.2f",@total_mes05_column.to_s)
+        #  row << sprintf("%.2f",@total_mes06_column.to_s)
+        #  row << sprintf("%.2f",@total_mes07_column.to_s)
+        #  row << sprintf("%.2f",@total_mes08_column.to_s)
+        #  row << sprintf("%.2f",@total_mes09_column.to_s)
+        #  row << sprintf("%.2f",@total_mes10_column.to_s)
+        #  row << sprintf("%.2f",@total_mes11_column.to_s)
+        #  row << sprintf("%.2f",@total_mes12_column.to_s)
+        #  row << sprintf("%.2f",@total_general.to_s)
+         
+        #  table_content << row
+
+
+
+
+
+      
+
+     @detalle  =  Tmppaycustomer.order("c_14 desc ")
+     nroitem = 1 
+
+     for  detalle in @detalle 
+
         row = []
+         row << nroitem.to_s 
+         row << detalle.customer 
+         row << sprintf("%.2f",detalle.c_1.to_s)
+         row << sprintf("%.2f",detalle.c_2.to_s)
+         row << sprintf("%.2f",detalle.c_3.to_s)
+         row << sprintf("%.2f",detalle.c_4.to_s)
+         row << sprintf("%.2f",detalle.c_5.to_s)
+         row << sprintf("%.2f",detalle.c_6.to_s)
+         row << sprintf("%.2f",detalle.c_7.to_s)
+         row << sprintf("%.2f",detalle.c_8.to_s)
+         row << sprintf("%.2f",detalle.c_9.to_s)
+         row << sprintf("%.2f",detalle.c_10.to_s)
+         row << sprintf("%.2f",detalle.c_11.to_s)
+         row << sprintf("%.2f",detalle.c_12.to_s)
+         row << sprintf("%.2f",detalle.c_13.to_s)
+         row << sprintf("%.2f",detalle.c_14.to_s)
+
+
+         n = (detalle.c_14 / @total_general)*100
+
+         row << sprintf("%.2f",n.to_s) + "%"
+         
+         table_content << row
+
+
+
+
+            @total_anterior_column = @total_anterior_column + detalle.c_1 
+            @total_mes01_column = @total_mes01_column + detalle.c_2 
+            @total_mes02_column = @total_mes02_column + detalle.c_3
+            @total_mes03_column = @total_mes03_column + detalle.c_4 
+            @total_mes04_column = @total_mes04_column + detalle.c_5
+            @total_mes05_column = @total_mes05_column + detalle.c_6 
+            @total_mes06_column = @total_mes06_column + detalle.c_7
+            @total_mes07_column = @total_mes07_column + detalle.c_8
+            @total_mes08_column = @total_mes08_column + detalle.c_9 
+            @total_mes09_column = @total_mes09_column + detalle.c_10 
+            @total_mes10_column = @total_mes10_column + detalle.c_11
+            @total_mes11_column = @total_mes11_column + detalle.c_12
+            @total_mes12_column = @total_mes12_column + detalle.c_13 
+
+
+
+
+         nroitem += 1 
+
+     end 
+
+
+
+
+         row = []
          row << ""       
          row << " TOTAL GENERAL => "
          row << sprintf("%.2f",@total_anterior_column.to_s)
@@ -4433,16 +4561,21 @@ end
          row << sprintf("%.2f",@total_mes11_column.to_s)
          row << sprintf("%.2f",@total_mes12_column.to_s)
          row << sprintf("%.2f",@total_general.to_s)
+         row << "100%"
          
          table_content << row
 
 
-      result = pdf.table table_content, {:position => :center,
+
+
+     result = pdf.table table_content, {:position => :center,
                                         :header => true,
                                         :width => pdf.bounds.width
                                         } do 
                                           columns([0]).align=:center
                                           columns([1]).align=:left
+                                          columns([1]).width = 180
+
                                           columns([2]).align=:right
                                           columns([3]).align=:right 
                                           columns([4]).align=:right
@@ -4457,8 +4590,10 @@ end
                                           columns([13]).align=:right 
                                           columns([14]).align=:right 
                                           columns([15]).align=:right
-                                          
-                                        end                                          
+                                          columns([16]).align=:right
+                                        end      
+
+
       pdf.move_down 10      
       pdf
 

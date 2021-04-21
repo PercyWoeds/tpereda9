@@ -1,0 +1,57 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  tranportorder_id: 1
+  fecha: 2021-04-21 10:51:14
+  viatico_id: 1
+  total: 1.5
+  devuelto_texto: MyString
+  devuelto: 1.5
+  reembolso: 1.5
+  descuento: 1.5
+  observa: MyText
+  company_id: 1
+  processed: MyString
+  user_id: 1
+  tranportorder_id: 1
+  comments: MyText
+  gasto_id: 1
+  compro_id: 1
+  inicial: 1.5
+  total_ing: 1.5
+  total_egreso: 1.5
+  saldo: 1.5
+  lgv_id: 1
+  peaje: 1.5
+  cdevuelto: MyString
+  cdescuento: MyString
+  creembolso: MyString
+
+two:
+  code: MyString
+  tranportorder_id: 1
+  fecha: 2021-04-21 10:51:14
+  viatico_id: 1
+  total: 1.5
+  devuelto_texto: MyString
+  devuelto: 1.5
+  reembolso: 1.5
+  descuento: 1.5
+  observa: MyText
+  company_id: 1
+  processed: MyString
+  user_id: 1
+  tranportorder_id: 1
+  comments: MyText
+  gasto_id: 1
+  compro_id: 1
+  inicial: 1.5
+  total_ing: 1.5
+  total_egreso: 1.5
+  saldo: 1.5
+  lgv_id: 1
+  peaje: 1.5
+  cdevuelto: MyString
+  cdescuento: MyString
+  creembolso: MyString

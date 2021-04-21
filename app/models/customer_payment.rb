@@ -131,7 +131,7 @@ TABLE_HEADERS9 = ["ITEM",
                     "Oct-21",
                     "Nov-21",
                     "Dic-21",
-                    "TOTAL   "]
+                    "TOTAL   ", " % "]
                    
                    
 def get_banco_moneda(banco)
