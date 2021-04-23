@@ -103,20 +103,20 @@ end
 
 def actual
 
- 			@proyecto_exam   = ProyectoExam.all 
+ 			@proyecto_exam   = ProyectoExam.all  
 
 
 			 for det in @proyecto_exam 
 
 			 	#proyecto minero y empleados 
 
-			       @proyecto_exam_empleado = ProyectoexamDetail.select("employee_id,proyecto_exam_id").where(proyecto_exam_id: @proyecto_exam.id,active: "1").group(:employee_id,:proyecto_exam_id)
+			       @proyecto_exam_empleado = ProyectoexamDetail.select("employee_id,proyecto_exam_id").where(proyecto_exam_id: det.id,active: "1").group(:employee_id,:proyecto_exam_id)
   
 
 					 for detalle in @proyecto_exam_empleado
 
 
-						@examenes = ProyectoMineroExam.where(det.proyecto_minero_id )
+						@examenes = ProyectoMineroExam.where(proyecto_minero_id: det.proyecto_minero_id )
 
 
 					 	for exam in @examenes
@@ -124,11 +124,11 @@ def actual
 
 					 	 if !ProyectoexamDetail.where(proyecto_exam_id: det.id , 
 					 	 	employee_id: detalle.employee_id,
-					 	 	proyecto_minero_id: det.proyecto_minero_id,
+					 	 	proyecto_minero_id: exam.proyecto_minero_id,
 					 	 	proyecto_minero_exam_id: exam.id ).exists 
 
 					          proyectoexam_details =  ProyectoexamDetail.new(
-					                  proyecto_minero_exam_id: exam.id ,
+					                  proyecto_minero_exam_id: exam.acid ,
 					                  fecha: nil, 
 					                  observacion: "",  
 					                  employee_id: detalle.employee_id  , 
@@ -137,6 +137,15 @@ def actual
 					                  active: "1" )
 
 					 	    proyectoexam_details.save
+
+					 	    puts "agrego"
+					 	    puts detalle.employee_id
+					 	    puts "proy exam id "
+					 	    puts  det.id
+
+					 	    puts "proy minero exam id "
+					 	    puts exam.id 
+
 
 
 					 	  end 

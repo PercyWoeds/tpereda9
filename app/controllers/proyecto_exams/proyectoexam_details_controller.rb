@@ -359,6 +359,8 @@ class ProyectoExams::ProyectoexamDetailsController < ApplicationController
                   proyecto_exam_id: proyecto_exam_id,
                   proyecto_minero_id: proyecto_minero_id,
                   active: active  )
+
+
         else 
 
 
@@ -401,7 +403,11 @@ class ProyectoExams::ProyectoexamDetailsController < ApplicationController
 
         end 
 
+         
+
          proyectoexam_details.save
+         ProyectoexamDetail.update_all(active: active ).where(employee_id: empleado_id )
+
        i += 1
 
        end 
