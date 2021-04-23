@@ -101,7 +101,7 @@ def aplica
 end
 
 
-def actualiza 
+def actual
 
  			@proyecto_exam   = ProyectoExam.all 
 
