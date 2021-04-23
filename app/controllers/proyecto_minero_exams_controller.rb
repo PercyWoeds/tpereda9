@@ -98,6 +98,6 @@ class ProyectoMineroExamsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def proyecto_minero_exam_params
-      params.require(:proyecto_minero_exam).permit(:fecha, :observacion, :proyecto_minero_id, :proyectominero2_id,:proyectominero3_id)
+      params.require(:proyecto_minero_exam).permit(:fecha, :observacion, :proyecto_minero_id, :proyectominero2_id,:proyectominero3_id,:orden)
     end
 end
