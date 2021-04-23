@@ -46,41 +46,53 @@ def aplica
  @proyecto_minero = ProyectoMinero.order(:id).where("id < 9 ")
 
 
- for detalle in @proyecto_minero
+		 for detalle in @proyecto_minero
 
-      a = ProyectoMineroExam.new(proyecto_minero_id: detalle.id , proyectominero2_id: 1, proyectominero3_id: 1)
-      a.save
-
-
-      a = ProyectoMineroExam.new(proyecto_minero_id: detalle.id , proyectominero2_id: 1, proyectominero3_id: 2)
- 
-      a.save 
-
-      a = ProyectoMineroExam.new(proyecto_minero_id: detalle.id , proyectominero2_id: 1, proyectominero3_id: 3)
- 	  a.save 
+		      a = ProyectoMineroExam.new(proyecto_minero_id: detalle.id , proyectominero2_id: 1, proyectominero3_id: 1)
+		      a.save
 
 
+		      a = ProyectoMineroExam.new(proyecto_minero_id: detalle.id , proyectominero2_id: 1, proyectominero3_id: 2)
+		 
+		      a.save 
 
- end 
+		      a = ProyectoMineroExam.new(proyecto_minero_id: detalle.id , proyectominero2_id: 1, proyectominero3_id: 3)
+		 	  a.save 
+
+
+       a = ProyectoMineroExam.new(proyecto_minero_id: detalle.id , proyectominero2_id: 1, proyectominero3_id: 1)
+		      a.save
+
+
+		      a = ProyectoMineroExam.new(proyecto_minero_id: detalle.id , proyectominero2_id: 1, proyectominero3_id: 2)
+		 
+		      a.save 
+
+		      a = ProyectoMineroExam.new(proyecto_minero_id: detalle.id , proyectominero2_id: 1, proyectominero3_id: 3)
+		 	  a.save 
 
 
 
- @proyecto_minero = ProyectoMinero.order(:id)
-
-
- for detalle in @proyecto_minero
-
-        @proyecto_minero_exam =  ProyectoMineroExam.order(:id)
-         orden_ex = 1 
-
-		 for detalle in @proyecto_minero_exam 
-
-		 	   ProyectoMineroExam.update_attributes(orden: orden_ex )
-
-		 	   orden_ex  += 1 
 		 end 
 
-end 
+
+
+ 			@proyecto_minero = ProyectoMinero.order(:id)
+
+
+			 for detalle in @proyecto_minero
+
+			        @proyecto_minero_exam =  ProyectoMineroExam.order(:id).where(proyecto_minero_id: detalle.id )
+			         orden_ex = 1 
+
+					 for detalle in @proyecto_minero_exam 
+
+					 	   detalle.update_attributes(orden: orden_ex )
+
+					 	   orden_ex  += 1 
+					 end 
+
+			end 
 
 
 

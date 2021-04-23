@@ -4,7 +4,7 @@ class ProyectoMineroExamsController < ApplicationController
   # GET /proyecto_minero_exams
   # GET /proyecto_minero_exams.json
   def index
-    @proyecto_minero_exams = ProyectoMineroExam.order(:id)
+    @proyecto_minero_exams = ProyectoMineroExam.order(:proyecto_minero_id)
   end
 
   # GET /proyecto_minero_exams/1
