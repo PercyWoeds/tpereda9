@@ -24,7 +24,7 @@ class ProyectoExamsController < ApplicationController
 
     @rows = 2
 
-    @pumps = ProyectoMineroExam.where(proyecto_minero_id: @proyecto_exam.proyecto_minero_id)
+    @pumps = ProyectoMineroExam.where(proyecto_minero_id: @proyecto_exam.proyecto_minero_id).order(:orden)
     
     @cols = @pumps.count 
 

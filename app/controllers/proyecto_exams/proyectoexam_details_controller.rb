@@ -32,7 +32,7 @@ class ProyectoExams::ProyectoexamDetailsController < ApplicationController
      @employees = @company.get_employees2()
     proyecto_exam = ProyectoExam.find(params[:proyecto_exam_id]) 
   
-    @detalle = ProyectoMineroExam.where(proyecto_minero_id: proyecto_exam.proyecto_minero_id)
+    @detalle = ProyectoMineroExam.where(proyecto_minero_id: proyecto_exam.proyecto_minero_id).order(:orden)
 
 
   end
@@ -57,7 +57,7 @@ class ProyectoExams::ProyectoexamDetailsController < ApplicationController
                                  employee_id: params[:employee_id])
 
     
-    @pumps = ProyectoMineroExam.where(proyecto_minero_id: params[:proyecto_minero_id] )
+    @pumps = ProyectoMineroExam.where(proyecto_minero_id: params[:proyecto_minero_id] ).order(:orden)
     
     @cols = @pumps.count 
 
@@ -118,7 +118,7 @@ class ProyectoExams::ProyectoexamDetailsController < ApplicationController
     puts empleado_id
 
 
-     @pumps = ProyectoMineroExam.where(proyecto_minero_id: proyecto_minero_id)
+     @pumps = ProyectoMineroExam.where(proyecto_minero_id: proyecto_minero_id).order(:orden)
     items_arr = []
     @products = []
     i = 0

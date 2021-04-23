@@ -46,34 +46,34 @@ def aplica
  @proyecto_minero = ProyectoMinero.order(:id).where("id < 9 ")
 
 
-		 for detalle in @proyecto_minero
+		 # for detalle in @proyecto_minero
 
-		      a = ProyectoMineroExam.new(proyecto_minero_id: detalle.id , proyectominero2_id: 1, proyectominero3_id: 1)
-		      a.save
+		 #      a = ProyectoMineroExam.new(proyecto_minero_id: detalle.id , proyectominero2_id: 1, proyectominero3_id: 1)
+		 #      a.save
 
 
-		      a = ProyectoMineroExam.new(proyecto_minero_id: detalle.id , proyectominero2_id: 1, proyectominero3_id: 2)
+		 #      a = ProyectoMineroExam.new(proyecto_minero_id: detalle.id , proyectominero2_id: 1, proyectominero3_id: 2)
 		 
-		      a.save 
+		 #      a.save 
 
-		      a = ProyectoMineroExam.new(proyecto_minero_id: detalle.id , proyectominero2_id: 1, proyectominero3_id: 3)
-		 	  a.save 
-
-
-       a = ProyectoMineroExam.new(proyecto_minero_id: detalle.id , proyectominero2_id: 1, proyectominero3_id: 1)
-		      a.save
+		 #      a = ProyectoMineroExam.new(proyecto_minero_id: detalle.id , proyectominero2_id: 1, proyectominero3_id: 3)
+		 # 	  a.save 
 
 
-		      a = ProyectoMineroExam.new(proyecto_minero_id: detalle.id , proyectominero2_id: 1, proyectominero3_id: 2)
+   #     a = ProyectoMineroExam.new(proyecto_minero_id: detalle.id , proyectominero2_id: 1, proyectominero3_id: 1)
+		 #      a.save
+
+
+		 #      a = ProyectoMineroExam.new(proyecto_minero_id: detalle.id , proyectominero2_id: 1, proyectominero3_id: 2)
 		 
-		      a.save 
+		 #      a.save 
 
-		      a = ProyectoMineroExam.new(proyecto_minero_id: detalle.id , proyectominero2_id: 1, proyectominero3_id: 3)
-		 	  a.save 
+		 #      a = ProyectoMineroExam.new(proyecto_minero_id: detalle.id , proyectominero2_id: 1, proyectominero3_id: 3)
+		 # 	  a.save 
 
 
 
-		 end 
+		 # end 
 
 
 
@@ -100,6 +100,54 @@ def aplica
 
 end
 
+
+def actualiza 
+
+ 			@proyecto_exam   = ProyectoExam.all 
+
+
+			 for det in @proyecto_exam 
+
+			 	#proyecto minero y empleados 
+
+			       @proyecto_exam_empleado = ProyectoexamDetail.select("employee_id,proyecto_exam_id").where(proyecto_exam_id: @proyecto_exam.id,active: "1").group(:employee_id,:proyecto_exam_id)
+  
+
+					 for detalle in @proyecto_exam_empleado
+
+
+						@examenes = ProyectoMineroExam.where(det.proyecto_minero_id )
+
+
+					 	for exam in @examenes
+
+
+					 	 if !ProyectoexamDetail.where(proyecto_exam_id: det.id , 
+					 	 	employee_id: detalle.employee_id,
+					 	 	proyecto_minero_id: det.proyecto_minero_id,
+					 	 	proyecto_minero_exam_id: exam.id ).exists 
+
+					          proyectoexam_details =  ProyectoexamDetail.new(
+					                  proyecto_minero_exam_id: exam.id ,
+					                  fecha: nil, 
+					                  observacion: "",  
+					                  employee_id: detalle.employee_id  , 
+					                  proyecto_exam_id: det.id,
+					                  proyecto_minero_id: det.proyecto_minero_id,
+					                  active: "1" )
+
+					 	    proyectoexam_details.save
+
+
+					 	  end 
+
+					 	 end 
+
+					 end 
+
+			end 
+
+end 
 
 
 
