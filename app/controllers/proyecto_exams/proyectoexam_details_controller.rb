@@ -406,7 +406,7 @@ class ProyectoExams::ProyectoexamDetailsController < ApplicationController
          
 
          proyectoexam_details.save
-         ProyectoexamDetail.update_all(active: active ).where(employee_id: empleado_id )
+         ProyectoexamDetail.where( employee_id: empleado_id ).update_all(active: active )
 
        i += 1
 

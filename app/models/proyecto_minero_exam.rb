@@ -111,24 +111,44 @@ def actual
 			 	#proyecto minero y empleados 
 
 			       @proyecto_exam_empleado = ProyectoexamDetail.select("employee_id,proyecto_exam_id").where(proyecto_exam_id: det.id,active: "1").group(:employee_id,:proyecto_exam_id)
-  
+                      
+                     puts "proyecto exam id "
+                      puts det.id 
 
 					 for detalle in @proyecto_exam_empleado
-
+    					 puts "proyecto minero id "
+                         puts det.proyecto_minero_id 
 
 						@examenes = ProyectoMineroExam.where(proyecto_minero_id: det.proyecto_minero_id )
 
 
 					 	for exam in @examenes
 
+						 puts "proyecto minero exam  id "
+                         puts exam.id  
 
-					 	 if !ProyectoexamDetail.where(proyecto_exam_id: det.id , 
+
+					    a =  ProyectoexamDetail.where(proyecto_exam_id: det.id , 
 					 	 	employee_id: detalle.employee_id,
-					 	 	proyecto_minero_id: exam.proyecto_minero_id,
-					 	 	proyecto_minero_exam_id: exam.id ).exists 
+					 	 	proyecto_minero_id: det.proyecto_minero_id,
+					 	 	proyecto_minero_exam_id: exam.id )
+
+
+					 	if  a.size > 0 
+
+					 		
+
+					 		puts "existe "
+
+					 		puts det.id 
+					 		puts detalle.employee_id
+					 		puts det.proyecto_minero_id
+					 		puts exam.id 
+
+					 	else 
 
 					          proyectoexam_details =  ProyectoexamDetail.new(
-					                  proyecto_minero_exam_id: exam.acid ,
+					                  proyecto_minero_exam_id: exam.id ,
 					                  fecha: nil, 
 					                  observacion: "",  
 					                  employee_id: detalle.employee_id  , 
@@ -147,8 +167,8 @@ def actual
 					 	    puts exam.id 
 
 
-
 					 	  end 
+
 
 					 	 end 
 
