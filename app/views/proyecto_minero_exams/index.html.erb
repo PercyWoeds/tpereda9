@@ -6,6 +6,9 @@
 <table>
   <thead>
     <tr>
+
+
+      <th>Orden </th>
       <th>Proyecto </th>
       <th>Exm Cap </th>
       <th>Detalle Fecha </th>
@@ -18,10 +21,11 @@
     <% @proyecto_minero_exams.each do |proyecto_minero_exam| %>
       <tr>
         
-       
+        <td><%= proyecto_minero_exam.orden %></td>
         <td><%= proyecto_minero_exam.proyecto_minero.descrip %></td>
         <td><%= proyecto_minero_exam.proyectominero2.name %></td>
         <td><%= proyecto_minero_exam.proyectominero3.name%></td>
+
 
         <td><%= link_to 'Show', proyecto_minero_exam %></td>
         <td><%= link_to 'Edit', edit_proyecto_minero_exam_path(proyecto_minero_exam) %></td>

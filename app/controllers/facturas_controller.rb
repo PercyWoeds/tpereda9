@@ -1606,7 +1606,7 @@ end
                              row << d.fecha1.strftime("%d/%m/%Y") 
                              row << sprintf("%.2f",d.total.to_s)
 
-                              diferencia_det = product.total - d.total 
+                              diferencia_det = @monto_detraccion - d.total 
                              
                              row << sprintf("%.2f",diferencia_det.to_s)
 

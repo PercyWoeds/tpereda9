@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210421220020) do
+ActiveRecord::Schema.define(version: 20210423155535) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -428,6 +428,10 @@ ActiveRecord::Schema.define(version: 20210421220020) do
     t.datetime "updated_at",                     null: false
     t.datetime "revalidacion_licencia_especial"
     t.string   "idnumber"
+    t.string   "anio1"
+    t.string   "anio2"
+    t.string   "anio3"
+    t.string   "anio4"
     t.string   "cv"
     t.string   "cv1"
     t.string   "cv2"
@@ -661,6 +665,32 @@ ActiveRecord::Schema.define(version: 20210421220020) do
     t.string   "nombre"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "csubdia", force: :cascade do |t|
+    t.string   "ccompro"
+    t.string   "cfeccom"
+    t.string   "ccodmon"
+    t.string   "csitua"
+    t.float    "ctipcam"
+    t.string   "cglosa"
+    t.float    "ctotal"
+    t.string   "ctipo"
+    t.string   "cflag"
+    t.datetime "cdate"
+    t.string   "chora"
+    t.string   "cfeccam"
+    t.string   "cuser"
+    t.string   "corig"
+    t.string   "cform"
+    t.string   "cextor"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "csubdia"
+    t.float    "factory"
+    t.float    "ajuste"
+    t.float    "compen"
+    t.float    "total1"
   end
 
   create_table "csubdiarios", force: :cascade do |t|
@@ -903,6 +933,37 @@ ActiveRecord::Schema.define(version: 20210421220020) do
     t.string   "fullname"
     t.string   "area"
     t.string   "orden"
+  end
+
+  create_table "dsubdia", force: :cascade do |t|
+    t.string   "dcompro"
+    t.string   "dsecue"
+    t.string   "dfeccom"
+    t.string   "dcuenta"
+    t.string   "dcodane"
+    t.string   "dcencos"
+    t.string   "dcodmon"
+    t.string   "ddh"
+    t.float    "dimport"
+    t.string   "dtipdoc"
+    t.string   "dnumdoc"
+    t.string   "dfecdoc"
+    t.string   "dfecven"
+    t.string   "darea"
+    t.string   "dflag"
+    t.string   "dxglosa"
+    t.datetime "ddate"
+    t.string   "dcodane2"
+    t.float    "dusimpor"
+    t.float    "dmnimpor"
+    t.string   "dcodarc"
+    t.string   "dtidref"
+    t.string   "dndoref"
+    t.datetime "dfecref"
+    t.datetime "dbimref"
+    t.float    "digvref"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "dsubdiarios", force: :cascade do |t|
@@ -1263,6 +1324,16 @@ ActiveRecord::Schema.define(version: 20210421220020) do
     t.float    "precio_unitario"
   end
 
+  create_table "inventarios", force: :cascade do |t|
+    t.integer  "almacen_id"
+    t.datetime "fecha"
+    t.string   "descripcion"
+    t.string   "tipo"
+    t.decimal  "total",       precision: 12, scale: 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "inventories", force: :cascade do |t|
     t.integer  "contact_id"
     t.integer  "store_id"
@@ -1328,6 +1399,7 @@ ActiveRecord::Schema.define(version: 20210421220020) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.float    "preciocigv"
+    t.integer  "factura_id"
   end
 
   create_table "invoiceitems", force: :cascade do |t|
@@ -1567,28 +1639,6 @@ ActiveRecord::Schema.define(version: 20210421220020) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "lvt_deliveries", force: :cascade do |t|
-    t.integer  "lvt_id"
-    t.float    "importe"
-    t.integer  "compro_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "lvt_details", force: :cascade do |t|
-    t.datetime "fecha"
-    t.integer  "gasto_id"
-    t.integer  "document_id"
-    t.string   "documento"
-    t.float    "total"
-    t.integer  "lvt_id"
-    t.integer  "supplier_id"
-    t.string   "td"
-    t.string   "detalle"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
   end
 
   create_table "lvts", force: :cascade do |t|
@@ -2094,6 +2144,7 @@ ActiveRecord::Schema.define(version: 20210421220020) do
     t.integer  "marca_id"
     t.integer  "modelo_id"
     t.integer  "products_category_id"
+    t.integer  "Category_id"
     t.integer  "category_id"
     t.integer  "ubica_id"
     t.string   "unidad"
@@ -2186,7 +2237,7 @@ ActiveRecord::Schema.define(version: 20210421220020) do
     t.integer  "proyectominero3_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
-    t.string   "ordeorden"
+    t.integer  "orden"
   end
 
   create_table "proyecto_mineros", force: :cascade do |t|
@@ -2849,6 +2900,13 @@ ActiveRecord::Schema.define(version: 20210421220020) do
     t.string   "code"
   end
 
+  create_table "supplier_types", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "suppliers", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
@@ -2877,6 +2935,17 @@ ActiveRecord::Schema.define(version: 20210421220020) do
     t.text     "lugar"
     t.string   "tipoexm"
   end
+
+  create_table "tanks", force: :cascade do |t|
+    t.string   "comments"
+    t.integer  "product_id"
+    t.integer  "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "tanks", ["company_id"], name: "index_tanks_on_company_id", using: :btree
+  add_index "tanks", ["product_id"], name: "index_tanks_on_product_id", using: :btree
 
   create_table "tanques", force: :cascade do |t|
     t.string   "code"
@@ -3384,4 +3453,6 @@ ActiveRecord::Schema.define(version: 20210421220020) do
   add_foreign_key "products", "stocks"
   add_foreign_key "service_extensions", "servicebuys"
   add_foreign_key "supplier_details", "suppliers"
+  add_foreign_key "tanks", "companies"
+  add_foreign_key "tanks", "products"
 end
