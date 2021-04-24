@@ -632,13 +632,6 @@ class SupplierPaymentsController < ApplicationController
          render  pdf: "VOUCHER",template: "supplier_payments/voucher.pdf.erb",locals: {:facturas => @facturas_rpt},
          :orientation  => 'Portrait',
          :page_size =>  'A4', 
-         :header => {    :spacing => 5,
-                           :html => {
-                     :template => 'layouts/pdf-header.html',
-                           right: '[page] of [topage]',
-                    } 
-                   },
-
          :footer => { :html => { template: 'layouts/pdf-footer2.html' }       }  ,
          :margin => {bottom: 140} 
            

@@ -6,7 +6,6 @@ class ProyectoExamsController < ApplicationController
   def index
     @proyecto_exams = ProyectoExam.all
 
-
   end
 
   # GET /proyecto_exams/1

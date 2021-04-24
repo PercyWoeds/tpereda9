@@ -760,6 +760,8 @@ class LvtsController < ApplicationController
     @lvt[:processed] = "0"
     $total_inicial = 0 
     @company = Company.find(params[:company_id])
+    puts "company"
+    puts params[:company_id]
     @lvt.company_id = @company.id
     
     @locations = @company.get_locations()

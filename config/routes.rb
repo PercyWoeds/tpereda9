@@ -866,7 +866,7 @@ match 'companies/reports/rpt_coti_1_pdf/:company_id' => 'reports#rpt_coti_1_pdf'
   
   match 'lvts/rpt_lgv2_pdf/:id' => 'lvts#rpt_lgv2_pdf', via: [:get, :post]
   match 'companies/lvts/:id' => 'lvts#list_lvts', via: [:get, :post]
-  resources :lgvs 
+  resources :ltvs
 
 
 
