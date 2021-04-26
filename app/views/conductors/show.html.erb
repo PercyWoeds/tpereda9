@@ -154,15 +154,32 @@
 
         <td><strong>EXPEDICION LICENCIA  ESPECIAL </strong> <br /></td>
 
+
+        <% if @conductor.expedicion_licencia_especial != nil %>
+
+
         <td><%= @conductor.expedicion_licencia_especial.strftime("%d/%m/%Y")   %></td>
+
+        <% else %>
+
+        <td></td>
+
+        <% end %>
      </div>
 
       <div class="field">
 
         <td> <strong>REVALIDACION LICENCIA ESPECIAL </strong>
         </br/></td>
+ <% if @conductor.revalidacion_licencia_especial != nil %>
 
         <td><%= @conductor.revalidacion_licencia_especial.strftime("%d/%m/%Y") %></td>
+   <% else %>
+
+        <td></td>
+
+        <% end %>
+        
      </div>
 
    </tr>

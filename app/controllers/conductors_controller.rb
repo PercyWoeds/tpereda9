@@ -422,10 +422,9 @@ class ConductorsController < ApplicationController
   def xls
 
     @company=Company.find(1)          
-    @fecha1 = params[:fecha1]    
-    @fecha2 = params[:fecha2]
+  
 
-    @facturas_rpt = @company.get_facturas_day(@fecha1,@fecha2)      
+    @facturas_rpt = @company.get_conductor     
 
     respond_to do |format|
       format.html    
@@ -598,15 +597,45 @@ def pdf
 
                 row << product.licencia 
                 row << product.categoria
+
+                if  product.expedicion_licencia != nil 
                 row << product.expedicion_licencia.strftime("%d/%m/%Y")
 
+              else 
 
+                row << "-"
+              end 
+              if  product.revalidacion_licencia != nil 
                 row << product.revalidacion_licencia.strftime("%d/%m/%Y")
+
+                  else 
+
+                row << "-"
+              end 
+
+
                 row << product.categoria_especial
+
+
+                if  product.expedicion_licencia_especial != nil 
+
+
                 row << product.expedicion_licencia_especial.strftime("%d/%m/%Y")
+
+else 
+
+                row << "-"
+              end 
+
+              if product.revalidacion_licencia_especial != nil 
+
                 row << product.revalidacion_licencia_especial.strftime("%d/%m/%Y")
 
 
+else 
+
+                row << "-"
+              end 
                 row << product.iqbf 
 
                 row << product.nivel_educativo 
