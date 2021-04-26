@@ -7,6 +7,7 @@ require 'sidekiq/cron/web'
   Mnygo::Application.routes.draw do
 
   
+  resources :viaticotbks
   resources :lvt_details
   resources :lvts
   resources :program_examen
@@ -153,6 +154,13 @@ require 'sidekiq/cron/web'
   resources :viaticos do
     resources :viatico_details, except: [:index,:show], controller: "viaticos/viatico_details"
   end
+
+   resources :viaticotbks do
+    collection { get :search }
+    resources :viaticotbk_details, except: [:index,:show], controller: "viaticotbks/viaticotbk_details"
+  end
+
+
   resources :suppliers  do
     resources :supplier_details, except: [:index,:show], controller: "suppliers/supplier_details"
   end
@@ -170,9 +178,6 @@ require 'sidekiq/cron/web'
   resources :cotizacions do 
        collection { get :search }
   end 
-
-
-
 
 
 
@@ -819,6 +824,36 @@ match 'companies/reports/rpt_coti_1_pdf/:company_id' => 'reports#rpt_coti_1_pdf'
   match 'viaticos/rpt_viatico_pdf' => 'viaticos#rpt_viatico_pdf', via: [:get, :post]
   match 'viaticos/reportxls/:company_id' => 'viaticos#reportxls', via: [:get]
 
+
+
+# Viatico tbk 
+  
+  match 'viaticotbks/list_items/:company_id' => 'viaticotbks#list_items', via: [:get, :post]
+  match 'viaticotbks/ac_documentos/:company_id' => 'viaticotbks#ac_documentos', via: [:get, :post]
+  match 'viaticotbks/ac_cajas/:company_id' => 'viaticotbks#ac_cajas', via: [:get, :post]
+  match 'viaticotbks/ac_osts/:company_id' => 'viaticotbks#ac_osts', via: [:get, :post]
+  match 'viaticotbks/ac_employees/:company_id' => 'viaticotbks#ac_employees', via: [:get, :post]
+  match 'viaticotbks/ac_user/:company_id' => 'viaticotbks#ac_user', via: [:get, :post]
+  match 'viaticotbks/ac_customers/:company_id' => 'viaticotbks#ac_customers', via: [:get, :post]
+  match 'viaticotbks/new/:company_id' => 'viaticotbks#new', via: [:get, :post]
+  match 'viaticotbks/new2/:company_id' => 'viaticotbks#new2', via: [:get, :post]
+  match 'viaticotbks/do_email/:id' => 'viaticotbks#do_email', via: [:get, :post]
+  match 'viaticotbks/do_process/:id' => 'viaticotbks#do_process', via: [:get, :post]
+  match 'viaticotbks/email/:id' => 'viaticotbks#email', via: [:get, :post]
+  match 'viaticotbks/pdf/:id' => 'viaticotbks#pdf', via: [:get, :post]
+  match 'companies/viaticotbks/:company_id' => 'viaticotbks#list_viaticos', via: [:get, :post]
+  
+  match 'viaticotbks/rpt_viatico_pdf/:company_id' => 'viaticotbks#rpt_viatico_pdf', via: [:get, :post]
+  match 'viaticotbks/rpt_viatico_pdf' => 'viaticotbks#rpt_viatico_pdf', via: [:get, :post]
+  match 'viaticotbks/reportxls/:company_id' => 'viaticotbks#reportxls', via: [:get]
+  match 'viaticotbks/search' => 'viaticotbks#search', via: [:get, :post]
+
+get 'search', to: 'viaticotbks#search'
+
+post 'add_friend', to: 'viaticotbks#add_friend'
+
+  resources :viaticotbks 
+
  match 'couts/newviatico/:id' => 'couts#newviatico', via: [:get, :post]
 
  match 'cout/pdf/:id' => 'couts#pdf', via: [:get, :post]
@@ -827,7 +862,7 @@ match 'companies/reports/rpt_coti_1_pdf/:company_id' => 'reports#rpt_coti_1_pdf'
   match 'companies/couts/do_cargar/:company_id' => 'couts#do_cargar', via: [:get, :post]
   match 'couts/do_crear/:id'   => 'couts#do_crear', via: [:get, :post]
 
-  resources :viaticos 
+  resources :couts 
 # lgv
   
   match 'lgvs/list_items/:company_id' => 'lgvs#list_items', via: [:get, :post]

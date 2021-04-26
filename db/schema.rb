@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210423155535) do
+ActiveRecord::Schema.define(version: 20210426145245) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1328,6 +1328,7 @@ ActiveRecord::Schema.define(version: 20210423155535) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.float    "preciocigv"
+    t.integer  "factura_id"
   end
 
   create_table "invoiceitems", force: :cascade do |t|
@@ -3345,6 +3346,50 @@ ActiveRecord::Schema.define(version: 20210423155535) do
     t.string   "cdevuelto"
     t.string   "cdescuento"
     t.string   "creembolso"
+  end
+
+  create_table "viaticotbk_details", force: :cascade do |t|
+    t.integer  "viaticotbk_id"
+    t.datetime "fecha"
+    t.text     "descrip"
+    t.integer  "document_id"
+    t.string   "numero"
+    t.float    "importe"
+    t.text     "detalle"
+    t.string   "tm"
+    t.string   "CurrTotal"
+    t.integer  "tranportorder_id"
+    t.datetime "date_processed"
+    t.string   "ruc"
+    t.integer  "supplier_id"
+    t.integer  "gasto_id"
+    t.integer  "employee_id"
+    t.integer  "destino_id"
+    t.integer  "egreso_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  create_table "viaticotbks", force: :cascade do |t|
+    t.string   "code"
+    t.datetime "fecha1"
+    t.float    "inicial"
+    t.float    "total_ing"
+    t.float    "total_egreso"
+    t.float    "saldo"
+    t.string   "comments"
+    t.integer  "user_id"
+    t.integer  "company_id"
+    t.string   "processed"
+    t.integer  "compro_id"
+    t.datetime "date_processed"
+    t.string   "tipo"
+    t.integer  "caja_id"
+    t.string   "cdevuelto"
+    t.string   "cdescuento"
+    t.string   "creembolso"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "voideds", force: :cascade do |t|

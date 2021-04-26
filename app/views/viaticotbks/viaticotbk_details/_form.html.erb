@@ -1,0 +1,339 @@
+
+
+
+<% if @viaticotbk_detail.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@viaticotbk_detail.errors.count, "error") %> prohibited this viatico from being saved:</h2>
+    <ul>
+    <% @viaticotbk_detail.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= hr() %>
+
+<%= simple_form_for [@viaticotbk, @viaticotbk_detail] do |f| %>
+
+  <div class="form-inputs">
+    
+    <input type="hidden" name="ac_item_id" id="ac_item_id"  />  
+    <input type="hidden" name="ac_supplier_id" id="ac_supplier_id"  />
+    <input type="hidden" name="ac_employee_id" id="ac_employee_id"  />
+    <br />
+    
+  
+    <br />
+    
+   
+    <strong>Destino  :</strong>
+    <br />
+      <%= f.collection_select :destino_id, @destinos , :id, :name , :prompt => true %>
+    <br />
+  
+      
+      <br/>
+  
+
+    <strong>Tipo Ingreso/Egreso  :</strong>
+
+
+    <br />
+      <%= f.collection_select :egreso_id, @egresos , :id, :formatted_name , :prompt => true %>
+    <br />
+  
+      
+    <td>
+      <div class="field">
+      <strong> Fecha :</strong><br /> 
+          <%= f.date_field :fecha ,:style=> 'width: 180px'%>
+      </div>
+      
+    </td>
+
+      <strong>Gasto :</strong>
+    </p>
+      <%= f.collection_select :gasto_id, @gastos , :id, :fullcuenta, :prompt => true %>
+    <br />
+    </div>
+    <td>
+    <br>
+
+      <label for="ac_supplier" class="bold">Proveedor/Empleado*</label><br />
+          
+    <table> 
+    
+  <tr>
+    <td>        
+    <input type="radio" name="tipoproveedor" value="1" checked> Provedor<br>
+    </td>
+    
+    <td><input type="text" name="ac_supplier" id="ac_supplier" value="<% if @ac_supplier %><%= @ac_supplier %><% end %>" />
+        
+     <div class="small">
+        <a href="#" onclick="createSupplierRuc(); return false;">+ Crear nuevo proveedor</a>
+      </div>
+
+
+
+    </td> 
+    
+  </tr>
+
+  <tr>
+    <td><input type="radio" name="tipoproveedor" value="2"> Empleado<br></td>
+    <td>
+      <%= f.collection_select :employee_id, @employees , :id, :full_name , :prompt => true %>
+    </td> 
+
+  </tr>
+  
+      </table>      
+      
+      <div class="small">
+        Ingrese una termino de busqueda 
+      </div>
+    </td>
+    
+      <br />
+
+
+      <div class="small">
+        <strong>Seleccionar proveedor:</strong>
+
+        <span id="selected supplier"><% if @ac_supplier %><%= @ac_supplier %><% else %><!-- i --><% end %></span>
+
+      </div>
+      
+      <strong>Documento:</strong><br />
+    <br />
+      
+      <%= f.collection_select :tm, @documents , :id, :fullname , :prompt => true %>
+    <br />
+    
+    <strong>Nro. Comprobante :</strong><br />
+    
+      <div class="field">
+          <%= f.text_field :numero ,:style=> 'width: 200px'%>
+      </div>
+    
+    <div class="small">
+      Ingrese un termino de busqueda para encontrar un documento 
+    </div>
+    
+    
+  
+    
+    
+    <br />  
+
+    <div >
+      <div class="field">
+       <strong> Importe :</strong><br />
+      <%= f.number_field :importe ,:style=> 'width: 120px' %>
+      </div>
+    </div>
+    
+    
+    <div class="small">
+     Total 
+    </div>
+    <div >
+
+
+     <div class="field">
+      <%= f.label :detalle %><br />
+      <%= f.text_area :detalle %>
+    </div>  
+  
+    
+
+    <br />
+    
+  <%= hr() %>
+
+
+  </div>
+
+  <div class="form-actions">
+
+   
+    <%= f.hidden_field :supplier_id, :id => "ac_supplier_id" %>
+    
+    <%= f.button :submit %>
+  </div>
+<% end %>
+
+
+<%= render 'layouts/autocomplete' %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+  
+    $("#ac_supplier").autocomplete("/purchases/ac_suppliers/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+  
+    $("#ac_supplier").result(function(event, data, formatted) {
+      $("#ac_supplier_id").val(data[2]);
+      $("#selected_supplier").html(data[0]);
+    });
+    
+    $("#ac_employee").autocomplete("/viaticotbks/ac_employees/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+  
+    $("#ac_employee").result(function(event, data, formatted) {
+      $("#ac_employee_id").val(data[2]);
+      $("#selected_employee").html(data[0]);
+    });
+    
+    
+    
+    $("#ac_item").autocomplete("/viaticotbks/ac_osts/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_item").result(function(event, data, formatted) {
+      $("#ac_item_id").val(data[2]);
+      
+      updateItemTotalViaticos();
+    });
+    
+    $("#ac_customer").autocomplete("/viaticotbks/ac_customers/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_customer").result(function(event, data, formatted) {
+      $("#ac_customer_id").val(data[2]);
+      $("#selected_seller").html(data[0]);
+    });    
+    
+    
+    $("#ac_user").autocomplete("/viaticotbks/ac_user/<%= @company.id %>", {
+			matchSubset: 1,
+			matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_user").result(function(event, data, formatted) {
+      $("#ac_user_id").val(data[2]);
+      $("#selected_seller").html(data[0]);
+    });    
+    
+    
+    $("#ac_item_total").bind("keyup", function() {
+      updateItemTotalCP();
+    });
+    
+    
+     $(".cat-code").change(function(){          
+
+                    var getID = this.id;
+                    var value =  document.getElementById(this.id).value;
+
+                    console.log(getID + "with a value of" + value);
+
+                    if (value == 1 ){
+                          document.getElementById("viatico_inicial").value;
+                    }
+                    else if (value == 2){
+                          document.getElementById("viatico_inicial").value;
+                    }
+                });
+                
+    <% if @viaticos_lines %>
+      listItemsViatico();
+    <% end %>
+
+
+  });
+
+ function createSupplierRuc() { 
+  var company_id = 1 ;
+  
+  $.get('/suppliers/new/' + company_id + '?ajax=1', {
+  },
+  function(data) {
+    displayRemote(data);
+    showRemote();
+    
+    $("#new_supplier").bind("submit", function() {
+      event.preventDefault();
+      doCreateSupplierRuc();
+    });
+  });
+}
+
+
+  // Create new customer in the invoice via ajax
+  function doCreateSupplierRuc() {
+    alert("oooo");
+    var company_id = 1 ;
+    var ruc = $("#supplier_ruc").val();
+    var name = $("#supplier_name").val();
+    var email = $("#supplier_email").val();
+    var phone1 = $("#supplier_phone1").val();
+    var phone2 = $("#supplier_phone2").val();
+    var address1 = $("#supplier_address1").val();
+    var address2 = $("#supplier_address2").val();
+    var city = $("#supplier_city").val();
+    var state = $("#supplier_state").val();
+    var zip = $("#supplier_zip").val();
+    var country = $("#supplier_country").val();
+    var comments = $("#supplier_comments").val();
+    
+    if($("#supplier_taxable").attr("checked")) {
+      var taxable = 1;
+    } else {
+      var taxable = 0;
+    }
+    
+    if(name != "") {
+      $.post('/suppliers/create_ajax/' + company_id, {
+        name: name,
+        email: email,
+        phone1: phone1,
+        phone2: phone2,
+        address1: address1,
+        address2: address2,
+        city: city,
+        state: state,
+        zip: zip,
+        country: country,
+        comments: comments,
+        taxable: taxable
+
+      },
+      function(data) {
+        if(data == "error_empty") {
+          alert("Please enter a supplier name");
+        } else if(data == "error") {
+          alert("Ah ocurrido un error grabando el proveedor ,por favor trate otra vez ");
+        } else {
+          var data_arr = data.split("|BRK|");
+          
+          $("#ac_supplier").val(data_arr[1]);
+          $("#ac_supplier_id").val(data_arr[0]);
+          $("#selected_supplier").html(data_arr[1]);
+          
+          hideRemote();
+          alert("Proveedor creado");
+        }
+      });
+    } else {
+      alert("Por favor ingrese un proveedor.");
+    }
+  }
+
+
+</script>

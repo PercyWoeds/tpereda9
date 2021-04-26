@@ -1,0 +1,39 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  fecha1: 2021-04-24 11:51:21
+  inicial: 1.5
+  total_ing: 1.5
+  total_egreso: 1.5
+  saldo: 1.5
+  comments: MyString
+  user_id: 1
+  company_id: 1
+  processed: MyString
+  compro_id: 1
+  date_processed: 2021-04-24 11:51:21
+  tipo: MyString
+  caja_id: 1
+  cdevuelto: MyString
+  cdescuento: MyString
+  creembolso: MyString
+
+two:
+  code: MyString
+  fecha1: 2021-04-24 11:51:21
+  inicial: 1.5
+  total_ing: 1.5
+  total_egreso: 1.5
+  saldo: 1.5
+  comments: MyString
+  user_id: 1
+  company_id: 1
+  processed: MyString
+  compro_id: 1
+  date_processed: 2021-04-24 11:51:21
+  tipo: MyString
+  caja_id: 1
+  cdevuelto: MyString
+  cdescuento: MyString
+  creembolso: MyString

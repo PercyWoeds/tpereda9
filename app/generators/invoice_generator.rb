@@ -261,7 +261,7 @@ class InvoiceGenerator < DocumentGenerator
                 if existe1.size > 0 
                   a<<  "\n GR:" 
                   for guias in  guia.get_guias_remision(guia.id)    
-                     a<< guias.delivery.code<< ", " 
+                     a<< guias.delivery.code << ", " 
                   end     
                 end      
               end
@@ -323,13 +323,36 @@ class InvoiceGenerator < DocumentGenerator
     additional_monetary_totals: [{id: "1001", payable_amount: {value: lcVVenta_a * items, currency: currency}}]}
 
       invoice_data[:lines] = []
-      nro_item = 1 
-      
+         nro_item = 1 
+        tamanio = @invoiceitems.length
+
+
         for detalle_item in @invoiceitems
+
+          puts "lcDes1 +++++++++++++++++++++++++++++++++++++++++++++++++++"
+
+          puts lcDes1 
+          puts "a++++++++++++++++++++++++++++++aaaaa"
+          puts a 
+          puts "fin aaa-------------------"
+
+          puts "nro item "
+          puts nro_item 
+
+
+          puts "tamanio "
+          puts tamanio 
+
+        if nro_item == tamanio 
         
-        lcDes1   = detalle_item.service.name << lcDes << a 
+           lcDes1   = detalle_item.service.name <<   lcDes << a 
+
+        else 
+           lcDes1   = detalle_item.service.name <<  lcDes 
+        end 
+
+
         $lcUnidad20 = "ZZ"
-          
         
         lcCantidad     = detalle_item.cantidad.round(2)  
         #lcTotal0 = detalle_item.cantidad * detalle_item.price_discount
@@ -355,15 +378,24 @@ class InvoiceGenerator < DocumentGenerator
         lcPrecioSigv2   = lcPrecioSigv1.round(0).to_f
         lcPrecioSIgv   =  lcPrecioSigv2.to_i 
         
-        
-              a   =  {id: nro_item.to_s, quantity: lcCantidad, line_extension_amount: {value: lcTotal, currency: currency}, 
+
+
+              a1   =  {id: nro_item.to_s, quantity: lcCantidad, line_extension_amount: {value: lcTotal, currency: currency}, 
            pricing_reference: {alternative_condition_price: {price_amount: {value: lcPrecioCigv, currency: currency}}}, 
            price: {value: lcPrecioSIgv, currency: currency}, tax_totals: [{amount: {value: lcTotal, currency: currency}, type: :igv}], 
            item: {id: nro_item.to_s, description: lcDes1}}
          
-          invoice_data[:lines] << a 
-          
-          nro_item += 1 
+          puts a1 
+
+           puts "nro item "
+          puts nro_item 
+
+          nro_item +=  1 
+
+
+          invoice_data[:lines] << a1 
+
+
          
       
       end 

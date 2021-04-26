@@ -1,47 +1,47 @@
 <div class="breadcrumbs">
   <%= link_to "My companies", "/companies" %> &raquo;
-  <%= link_to @viatico.company.name, @viatico.company %> &raquo;
-  <%= link_to "viaticos", "/companies/customer_payments/#{@viatico.company.id}" %>
+  <%= link_to @viaticotbk.company.name, @viaticotbk.company %> &raquo;
+  <%= link_to "viaticos", "/companies/customer_payments/#{@viaticotbk.company.id}" %>
 </div>
 
 <h1>
   <%= image_tag("invoice_48.png", :class => "vmiddle") %>
-  <%= @viatico.identifier %>
+  <%= @viaticotbk.identifier %>
 </h1>
 
 <%= hr() %>
 
-<% if @viatico.location %>
+<% if @viaticotbk.location %>
   <p>
     <b>Location:</b>
-    <%= link_to @viatico.location.name, @viatico.location %>
+    <%= link_to @viaticotbk.location.name, @viaticotbk.location %>
   </p>
 <% end %>
 
-<% if @viatico.division %>
+<% if @viaticotbk.division %>
   <p>
     <b>Division:</b>
-    <%= link_to @viatico.division.name, @viatico.division %>
+    <%= link_to @viaticotbk.division.name, @viaticotbk.division %>
   </p>
 <% end %>
 
 <p>
   <b>Code:</b>
-  <%= @viatico.code %>
+  <%= @viaticotbk.code %>
 </p>
 <p>
   
-  <strong> <%= @viatico.caja.descrip %></strong>
+  <strong> <%= @viaticotbk.caja.descrip %></strong>
 </p>
 
 <p>
     <b>Fecha entrega:</b>
-    <%= @viatico.fecha1.strftime("%d/%m/%Y") %>   
+    <%= @viaticotbk.fecha1.strftime("%d/%m/%Y") %>   
 </p>
  
 <p>
     <b>Estado: </b>
-    <%= @viatico.get_processed   %>   
+    <%= @viaticotbk.get_processed   %>   
 </p>
 
 
@@ -53,15 +53,41 @@
 
 <p>
   <b>Inicial </b>  
-  <%= link_to @viatico.inicial.round(2) %>
+  <%= link_to @viaticotbk.inicial.round(2) %>
 </p>
 
 
 <div class="button">
-<%= link_to 'Agregar Item', new_viatico_viatico_detail_path(@viatico) %>
+<%= link_to 'Agregar Item', new_viaticotbk_viaticotbk_detail_path(@viaticotbk) %>
 </div> 
 
- 
+
+
+<%= form_tag viaticotbks_path , method: :get ,remote: :true,  :onsubmit=>"return false;"  do   %>
+  <div class="col-md-6">
+    <div class="form-group">
+      <td>Periodo </td>
+        <div class="input-group input-large">
+
+
+          <%= text_field_tag 'search[date_from]' ,@search.date_from %>
+
+         
+
+          <span class="input-group-addon">To</span>
+         <%= text_field_tag 'search[date_to]' ,@search.date_to %>
+             <%= hidden_field_tag 'search[viaticotbk_id]', @viaticotbk.id %>
+
+
+        </div>
+    </div>
+  </div>
+
+<%= submit_tag 'Buscar' %>
+
+<% end %>
+
+
 
 
 <table>
@@ -107,8 +133,10 @@
     
 <%= hr() %>
 
+
+
 <% nroitem = 1 %>
-    <%  @viatico_detail.each do |product| %>
+    <%  @viaticotbk_detail.each do |product| %>
     
       <tr>
 
@@ -158,8 +186,8 @@
               <%=product.detalle %>
           </td>
 
-          <td><%= link_to 'Editar',  edit_viatico_viatico_detail_path(viatico_id: @viatico.id,id: product.id ) %></td>          
-          <td><%= link_to 'Eliminar',[@viatico,product], method: :delete, data: { confirm: 'Esta seguro?' } %></td>
+          <td><%= link_to 'Editar',  edit_viaticotbk_viaticotbk_detail_path(viaticotbk_id: @viaticotbk.id,id: product.id ) %></td>          
+          <td><%= link_to 'Eliminar',[@viaticotbk,product], method: :delete, data: { confirm: 'Esta seguro?' } %></td>
           
       </tr>
 
@@ -170,7 +198,7 @@
         Total Egresos
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        <%= money(@viatico.total_egreso)%>
+        <%= money(@viaticotbk.total_egreso)%>
       </td>
     </tr>
     
@@ -179,7 +207,7 @@
         Saldo
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        <%= money(@viatico.saldo) %>
+        <%= money(@viaticotbk.saldo) %>
       </td>
     </tr>
     
@@ -195,24 +223,31 @@
 
 <p>
   <strong>Seller:</strong>
-  <%= link_to @viatico.user.username, @viatico.user %>
+  <%= link_to @viaticotbk.user.username, @viaticotbk.user %>
 </p>
 
 <%= hr() %>
 
 <div class="button">
-  <%= link_to 'Exportar to PDF', "/viaticos/pdf/#{@viatico.id}.pdf" %>  
+  <%= link_to 'Exportar to PDF', "/viaticotbks/pdf/#{@viaticotbk.id}.pdf" %>  
   
- <% if @viatico.processed == "1" %> 
+ <% if @viaticotbk.processed == "1" %> 
 
  <% %>
 
  <% else %>
 
-  <%= link_to 'Procesar', "/viaticos/do_process/#{@viatico.id}" %>
+  <%= link_to 'Procesar', "/viaticotbks/do_process/#{@viaticotbk.id}" %>
 
  <% end %> 
   
-  <%= link_to 'Regresar', "/companies/viaticos/#{@viatico.company.id}" %>
+  <%= link_to 'Regresar', "/companies/viaticotbks/#{@viaticotbk.company.id}" %>
 </div>
 
+
+
+<script>
+
+
+
+</script>

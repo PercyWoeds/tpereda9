@@ -1,7 +1,7 @@
 <div class="breadcrumbs">
   <%= link_to "My companies", "/companies" %> &raquo;
   <%= link_to @company.name, @company %> &raquo;
-  <%= link_to "lvts", "/companies/lvts/#{@company.id}" %>
+  <%= link_to "viaticotbks", "/companies/viaticotbks/#{@company.id}" %>
 </div>
 
 <h1>
@@ -9,7 +9,7 @@
   Nueva Liquidacion </h1>
 
 <p>
-  Para crear una nuevo doc., por favor llenar el siguiente formulario. Los campos marcados con <strong>*</strong> son obligatorios
+  Para crear una nueva factura, por favor llenar el siguiente formulario. Los campos marcados con <strong>*</strong> son obligatorios
   
 </p>
 
@@ -18,5 +18,6 @@
 <%= hr() %>
 
 <div class="button">
-  <%= link_to 'Back', "/companies/lvts/#{@company.id}" %>
+  <%= link_to 'Back', "/companies/viaticotbks/#{@company.id}" %>
 </div>
+
