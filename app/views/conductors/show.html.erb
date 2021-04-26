@@ -225,14 +225,38 @@
 
         <td><strong>ANTECEDENTES POLICIAL EMISION: </strong> <br /></td>
 
+
+<% if @conductor.ap_emision != nil %>
+
         <td><%= @conductor.ap_emision.strftime("%d/%m/%Y")   %></td>
+
+         <% else %>
+
+        <td></td>
+
+        <% end %>
+        
+
+
+
      </div>
 
       <div class="field">
 
         <td><strong>ANTECEDENTES POLICIAL CADUCIDAD</strong><br /></td>
 
+        <% if @conductor.ap_caducidad != nil %>
+
         <td><%= @conductor.ap_caducidad.strftime("%d/%m/%Y")  %></td>
+  <% else %>
+
+        <td></td>
+
+        <% end %>
+        
+
+
+
      </div>
 
    </tr>
@@ -244,7 +268,17 @@
 
         <td><strong>ANTECEDENTES PENAL EMISION:</strong><br /></td>
 
+         <% if @conductor.ape_emision != nil %>
+
         <td><%= @conductor.ape_emision.strftime("%d/%m/%Y")  %></td>
+
+        <% else %>
+
+        <td></td>
+
+        <% end %>
+
+
      </div>
 
   
@@ -252,7 +286,16 @@
 
         <td><strong>ANTECEDENTES PENAL CADUCIDAD:" </strong><br /> </td>
 
+ <% if @conductor.ape_caducidad != nil %>
+
         <td><%=  @conductor.ape_caducidad.strftime("%d/%m/%Y") %></td>
+
+         <% else %>
+
+        <td></td>
+
+        <% end %>
+        
      </div>
 
    </tr>

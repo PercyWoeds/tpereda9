@@ -6,8 +6,19 @@ class ConductorsController < ApplicationController
   # GET /conductors
   # GET /conductors.json
   def index
-    @conductors = Conductor.order(:employee_id,:created_at ) 
+    @conductors = Conductor.order(:employee_id,:created_at )
+
+
     @company = Company.find(1)
+
+
+ @facturas_rpt = @company.get_conductor   
+ 
+ respond_to do |format|
+    format.html
+    format.xls # { send_data @products.to_csv(col_sep: "\t") }
+  end
+
   end
 
   # GET /conductors/1
@@ -419,7 +430,7 @@ class ConductorsController < ApplicationController
 
 
    
-  def xls
+  def excel
 
     @company=Company.find(1)          
   
@@ -587,10 +598,10 @@ def pdf
               end 
 
 
-              if product.ape_emision != nil 
-                row << product.ape_emision.strftime("%d/%m/%Y")
+              if product.ape_caducidad != nil 
+                row << product.ape_caducidad.strftime("%d/%m/%Y")
               else 
- row << "-"
+            row << "-"
               end 
 
 
@@ -622,7 +633,7 @@ def pdf
 
                 row << product.expedicion_licencia_especial.strftime("%d/%m/%Y")
 
-else 
+              else 
 
                 row << "-"
               end 
@@ -632,7 +643,7 @@ else
                 row << product.revalidacion_licencia_especial.strftime("%d/%m/%Y")
 
 
-else 
+              else 
 
                 row << "-"
               end 

@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+
+
+ TABLE_HEADERS2 = ["Nro.",
+                      "APELLIDOS Y NOMBRES",
+                     "FEC.ING.",
+                     "LUGAR RESIDENCIA ",
+                     "AÑOS EXP.",
+
+                      "DNI.EMISION",
+                     "DNI.CADUCIDAD",
+
+                     "ANT.POL.EMISION",
+                     "ANT.POL.VMTO",
+
+                      "ANT.PEN.EMISION",
+                     "ANT.PEN.VMTO"  ,
+
+
+                      "Nro.LICENCIA",  
+                     "CATEGORIA ",
+                     "EXP.LICENCIA",
+
+
+                     "REVAL.LICENCIA",
+                     "Nro.LICENCIA.",
+                     "EXP.LIC.ESPECIAL",
+                     "REVAL.LIC.ESPECIAL",
+                     "REGISTRO.
+                         IQBF-SUNAT ",
+                   
+                    
+                    
+                     "NIVEL EDUCATIVO"  ]
+        <Cell><Data ss:Type="String">Nro</Data></Cell>
+        <Cell><Data ss:Type="String">APELLIDOS Y NOMBRES</Data></Cell>
+        <Cell><Data ss:Type="String">Fec.Ing</Data></Cell>
+        <Cell><Data ss:Type="String">LUGAR RESIDENCIA</Data></Cell>
+        <Cell><Data ss:Type="String">AÑOS EXP</Data></Cell>
+        <Cell><Data ss:Type="String">DNI.EMISION</Data></Cell>
+        <Cell><Data ss:Type="String">DNI.CADUCIDAD</Data></Cell>
+
+        <Cell><Data ss:Type="String">ANT.POL.EMISION</Data></Cell>
+        <Cell><Data ss:Type="String">ANT.POL.VMTO</Data></Cell>
+
+
+ <Cell><Data ss:Type="String">ANT.PEN.EMISION</Data></Cell>
+
+
+ <Cell><Data ss:Type="String">ANT.PEN.VMTO</Data></Cell>
+
+
+ <Cell><Data ss:Type="String">ANT.POL.EMISION</Data></Cell>
+
+
+ <Cell><Data ss:Type="String">ANT.POL.EMISION</Data></Cell>
+
+
+
+ <Cell><Data ss:Type="String">Nro.LICENCIA</Data></Cell>
+ <Cell><Data ss:Type="String">CATEGORIA</Data></Cell>
+ <Cell><Data ss:Type="String">EXP.LICENCIA</Data></Cell>
+
+
+ <Cell><Data ss:Type="String">REVAL.LICENCIA</Data></Cell>
+ <Cell><Data ss:Type="String">Nro.LICENCIA.</Data></Cell>
+ <Cell><Data ss:Type="String">EXP.LIC.ESPECIAL</Data></Cell>
+  <Cell><Data ss:Type="String">REVAL.LIC.ESPECIAL"</Data></Cell>
+ <Cell><Data ss:Type="String">IQBF SUNAT </Data></Cell>
+ 
+
+
+
+
+      </Row>
+
+      <% nroitem = 1 %>
+    <% @facturas_rpt.each do |product| %>
+      <Row>
+        <Cell><Data ss:Type="String"><%= nroitem.to_s %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.employee.full_name2 %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.employee.fecha_ingreso.strftime("%d/%m/%Y") %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.lugar %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.anio  %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.dni_emision.strftime("%d/%m/%Y") %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.dni_caducidad.strftime("%d/%m/%Y") %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.ap_emision.strftime("%d/%m/%Y") %></Data></Cell>
+
+        <Cell><Data ss:Type="String"><%= product.ap_caducidad.strftime("%d/%m/%Y") %></Data></Cell>
+
+        <Cell><Data ss:Type="String"><%= product.ape_emision.strftime("%d/%m/%Y") %></Data></Cell>
+
+        <Cell><Data ss:Type="String"><%= product.ape_caducidad.strftime("%d/%m/%Y") %></Data></Cell>
+
+        <Cell><Data ss:Type="String"><%=  product.licencia  %></Data></Cell>
+
+        <Cell><Data ss:Type="String"><%= product.categoria %></Data></Cell>
+
+        <Cell><Data ss:Type="String"><%= product.expedicion_licencia.strftime("%d/%m/%Y") %></Data></Cell>
+
+        <Cell><Data ss:Type="String"><%= product.revalidacion_licencia.strftime("%d/%m/%Y") %></Data></Cell>
+
+        <Cell><Data ss:Type="String"><%= product.categoria_especial %></Data></Cell>
+
+
+          <%  if  product.expedicion_licencia_especial != nil %>
+
+
+          <Cell><Data ss:Type="String"><%= product.expedicion_licencia.strftime("%d/%m/%Y") %></Data></Cell>
+
+          <% else  %>
+
+          <Cell><Data ss:Type="String"> </Data></Cell>
+          <% end %>
+          <%  if  product.revalidacion_licencia_especial != nil %>
+
+
+          <Cell><Data ss:Type="String"><%= product.revalidacion_licencia_especial.strftime("%d/%m/%Y") %></Data></Cell>
+
+          <% else  %>
+
+          <Cell><Data ss:Type="String"> </Data></Cell>
+          <% end %>
+
+
+
+        <Cell><Data ss:Type="String"><%=product.iqbf  %></Data></Cell>
+
+        <Cell><Data ss:Type="String"><%=  product.nivel_educativo  %></Data></Cell>
+
+          <% nroitem += 1 %>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>
+

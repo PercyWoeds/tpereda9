@@ -11,10 +11,7 @@ class Conductor < ActiveRecord::Base
    :iqbf,
     :dni_emision,
     :dni_caducidad,
-    :ap_emision,
-    :ap_caducidad,
-    :ape_emision,
-    :ape_caducidad,
+
     :user_id,
     :anio1,
     :anio2,
@@ -47,6 +44,7 @@ class Conductor < ActiveRecord::Base
                      "ANT.POL.VMTO",
                      "ANT.PEN.EMISION",
                      "ANT.PEN.VMTO"    ]
+
 
 
  TABLE_HEADERS2 = ["Nro.",
