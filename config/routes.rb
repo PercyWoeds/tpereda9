@@ -7,6 +7,7 @@ require 'sidekiq/cron/web'
   Mnygo::Application.routes.draw do
 
   
+  resources :pexes
   resources :viaticotbks
   resources :lvt_details
   resources :lvts
@@ -275,7 +276,7 @@ require 'sidekiq/cron/web'
      collection { get  :reportes_detraccion }
 
        collection { get :rpt_examen01 }  
-
+       collection { get :rpt_pex_1 }  
 
     end 
 
@@ -568,6 +569,14 @@ end
  end
 end 
 
+
+
+  resources :pexes do 
+   collection { post :import }
+
+  end  
+
+
   #Manifiesto busqueda de guias
 
   get 'search_mines', to: 'deliveries#search'
@@ -728,7 +737,8 @@ match 'companies/reports/rpt_coti_1_pdf/:company_id' => 'reports#rpt_coti_1_pdf'
   match 'companies/reports/rpt_st_all3/:company_id' => 'reports#rpt_st_all3', via: [:get, :post]  
 
   match 'companies/reports/rpt_examen01_pdf/:company_id' => 'reports#rpt_examen01_pdf', via: [:get, :post]  
-  
+  match 'companies/reports/rpt_pex_1/:company_id' => 'reports#rpt_pex_1', via: [:get, :post]  
+ 
   # Company users
 
   match 'company_users/ac_users' => 'company_users#ac_users', via: [:get, :post]
@@ -1581,6 +1591,8 @@ match 'payment_notices/pdf/:id' => 'payment_notices#pdf', via: [:get, :post]
 match 'conductors/pdf/:id' => 'conductors#pdf', via: [:get, :post]
 
 match '/proyecto_exams/:id/proyectoexam_details/:proyectoexam_detail_id' => 'proyecto_exams/proyectoexam_details#update', via: [:get, :post]
+
+
 
 
 

@@ -2159,7 +2159,8 @@ def reportes05
         
          end              
     end
-  end  
+  end 
+   
   def excel
 
     @company=Company.find(1)          
@@ -8666,10 +8667,115 @@ def rpt_conductor_pdf
 
 #############################################################################################
 
+##### PEX 
+
+#############################################################################################
 
 
 
 
+  def rpt_pex_1 
+  
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+
+    
+
+    @pex_rpt = @company.get_pex_1(@fecha1,@fecha2)
+
+
+    Prawn::Document.generate("app/pdf_output/rpt_pex.pdf") do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header_pex(pdf)
+        pdf = build_pdf_body_pex(pdf)
+        build_pdf_footer_pex(pdf)
+        $lcFileName =  "app/pdf_output/rpt_pex.pdf"              
+    end     
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+    send_file("app/pdf_output/rpt_pex.pdf", :type => 'application/pdf', :disposition => 'inline')
+
+  end
+
+
+# reporte completo
+  def build_pdf_header_pex(pdf)
+      pdf.font "Helvetica" , :size => 8
+    
+      pdf 
+  end   
+
+  def build_pdf_body_pex(pdf)
+    
+  
+    pdf.font "Helvetica" , :size => 6
+
+      headers = []
+      table_content = []
+
+
+
+      @totales1 = 0
+      @totales2 = 0
+      @cantidad = 0
+      nroitem = 1
+      @tipocambio = 1
+      valorcambio = 0
+      valortotal = 0
+
+        
+
+               # my_table = make_table([["..."],["subtable from another table"],["..."]])
+        @pex_rpt.in_groups_of(3).each do |tag_array|
+
+
+             tag_array.each  do |tag|
+
+
+              row = []
+              row << tag.nro_compro
+            
+             table_content << row
+             puts "tag compro "
+             puts tag.nro_compro 
+             end
+         end
+
+
+    
+
+      
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                           columns([2]).align=:left
+                                          
+                                        end                                          
+      pdf.move_down 10      
+      #totales 
+      pdf 
+
+    end
+
+    def build_pdf_footer_pex(pdf)
+           
+                        
+      pdf.text "" 
+      pdf.bounding_box([0, 30], :width => 535, :height => 40) do
+      pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+
+      end
+
+      pdf
+      
+  end
+
+
+
+#############################################################################################
 
 
 

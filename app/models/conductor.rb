@@ -8,7 +8,6 @@ class Conductor < ActiveRecord::Base
   validates_presence_of :lugar,:anio,:licencia,
   :categoria,:expedicion_licencia,:revalidacion_licencia,
    :categoria_especial,
-   :expedicion_licencia_especial,
    :iqbf,
     :dni_emision,
     :dni_caducidad,
@@ -17,12 +16,12 @@ class Conductor < ActiveRecord::Base
     :ape_emision,
     :ape_caducidad,
     :user_id,
-    :revalidacion_licencia_especial,
     :anio1,
     :anio2,
     :anio3,
     :anio4 
    
+
 
 
  TABLE_HEADERS = ["Nro.",

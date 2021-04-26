@@ -1,0 +1,41 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  doc: MyString
+  razon: MyString
+  red: MyString
+  ruc_red: MyString
+  placa: MyString
+  nromiddia: MyString
+  categoria: MyString
+  fecha_inicio: MyString
+  hora_inicio: MyString
+  fecha_fin: MyString
+  hora_fin: MyString
+  fecha_apro: MyString
+  hora_apro: MyString
+  plaza: MyString
+  pista: MyString
+  importe: 1.5
+  nro_compro: MyString
+  fecha_compro: MyString
+
+two:
+  doc: MyString
+  razon: MyString
+  red: MyString
+  ruc_red: MyString
+  placa: MyString
+  nromiddia: MyString
+  categoria: MyString
+  fecha_inicio: MyString
+  hora_inicio: MyString
+  fecha_fin: MyString
+  hora_fin: MyString
+  fecha_apro: MyString
+  hora_apro: MyString
+  plaza: MyString
+  pista: MyString
+  importe: 1.5
+  nro_compro: MyString
+  fecha_compro: MyString

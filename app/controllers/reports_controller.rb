@@ -1703,13 +1703,20 @@ def rpt_purchaseorder4_all
     @viatico = Viatico.find(params[:id])
 
   end
+
+
 def rpt_examen01_pdf 
     @company = Company.find(1)
     @pagetitle = "Resumen ST "    
     @monedas=@company.get_monedas    
+  end
 
 
-    
+def rpt_pex_1 
+
+    @company = Company.find(1)
+    @pagetitle = "Resumen Pex "    
+    @monedas=@company.get_monedas    
   end
 
 

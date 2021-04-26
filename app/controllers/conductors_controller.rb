@@ -418,6 +418,20 @@ class ConductorsController < ApplicationController
   end
 
 
+   
+  def xls
+
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]
+
+    @facturas_rpt = @company.get_facturas_day(@fecha1,@fecha2)      
+
+    respond_to do |format|
+      format.html    
+        format.xls # { send_data @products.to_csv(col_sep: "\t") }
+    end 
+  end 
 
 
 def pdf
@@ -540,15 +554,45 @@ def pdf
                 row << product.employee.fecha_ingreso.strftime("%d/%m/%Y")
                 row << product.lugar 
                 row << product.anio 
+                if product.dni_emision != nil 
                 row << product.dni_emision.strftime("%d/%m/%Y")
+              else
+                row << "-"
+              end 
+
+              if product.dni_caducidad != nil 
                 row << product.dni_caducidad.strftime("%d/%m/%Y")
+                 else
+                row << "-"
+              end 
+
+              if product.ap_emision != nil 
 
                 row << product.ap_emision.strftime("%d/%m/%Y")
+              else
+                row << "-"
+              end 
+
+              if product.ap_caducidad != nil 
                 row << product.ap_caducidad.strftime("%d/%m/%Y")
 
-                row << product.ape_emision.strftime("%d/%m/%Y")
-                row << product.ape_emision.strftime("%d/%m/%Y")
+              else 
+                 row << "-"
+              end 
 
+              if product.ape_emision != nil 
+
+                row << product.ape_emision.strftime("%d/%m/%Y")
+              else
+                  row << "-"
+              end 
+
+
+              if product.ape_emision != nil 
+                row << product.ape_emision.strftime("%d/%m/%Y")
+              else 
+ row << "-"
+              end 
 
 
 

@@ -1523,9 +1523,6 @@ pdf.move_down 2
  
     @datos = @search.Scope 
 
-     respond_to do |format|
-      format.html { redirect_to("/companies/viaticotbks/" + company_id.to_s) }
-    end
 
      
 

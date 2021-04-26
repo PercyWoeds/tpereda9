@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Pexes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Doc</th>
+      <th>Razon</th>
+      <th>Red</th>
+      <th>Ruc red</th>
+      <th>Placa</th>
+      <th>Nromiddia</th>
+      <th>Categoria</th>
+    
+      <th>Importe</th>
+      <th>Nro compro</th>
+      <th>Fecha compro</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pexes.each do |pex| %>
+      <tr>
+        <td><%= pex.doc %></td>
+        <td><%= pex.razon %></td>
+        <td><%= pex.red %></td>
+        <td><%= pex.ruc_red %></td>
+        <td><%= pex.placa %></td>
+        <td><%= pex.nromiddia %></td>
+        <td><%= pex.categoria %></td>
+      
+        <td><%= pex.importe %></td>
+        <td><%= pex.nro_compro %></td>
+        <td><%= pex.fecha_compro %></td>
+        <td><%= link_to 'Show', pex %></td>
+        <td><%= link_to 'Edit', edit_pex_path(pex) %></td>
+        <td><%= link_to 'Destroy', pex, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+
+<%= will_paginate @pexes %>
+
+
+
+
+<%= link_to 'New Pex', new_pex_path %>
+
+
+
+
+<h2>Importar Archivo "*.csv"</h2>
+
+<%= form_tag import_pexes_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+

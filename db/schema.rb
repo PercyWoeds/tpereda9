@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210426145245) do
+ActiveRecord::Schema.define(version: 20210426173820) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2043,6 +2043,29 @@ ActiveRecord::Schema.define(version: 20210426145245) do
     t.integer  "type_payroll_id"
     t.integer  "parameter_id"
     t.datetime "date_processed"
+  end
+
+  create_table "pexes", force: :cascade do |t|
+    t.string   "doc"
+    t.string   "razon"
+    t.string   "red"
+    t.string   "ruc_red"
+    t.string   "placa"
+    t.string   "nromiddia"
+    t.string   "categoria"
+    t.string   "fecha_inicio"
+    t.string   "hora_inicio"
+    t.string   "fecha_fin"
+    t.string   "hora_fin"
+    t.string   "fecha_apro"
+    t.string   "hora_apro"
+    t.string   "plaza"
+    t.string   "pista"
+    t.float    "importe"
+    t.string   "nro_compro"
+    t.string   "fecha_compro"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "products", force: :cascade do |t|

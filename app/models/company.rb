@@ -20,7 +20,7 @@ class Company < ActiveRecord::Base
 
 def get_conductor()
    
-   @dato = Conductor.joins(:employee).order("employees.lastname,employees.firstname")
+   @dato = Conductor.joins(:employee).order("employees.lastname,employees.firstname").where(active: "1")
 
    return @dato 
  end 
@@ -5558,6 +5558,19 @@ def get_proyecto_exam_empleado_3(employee_id)
 
 
 end 
+
+
+
+def get_pex_1(fecha1,fecha2)
+
+
+
+    @pex =   Pex.where(["fecha_compro::timestamptz >= ? and fecha_compro::timestamptz <=? ","#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:placa,:nro_compro)
+    return @pex 
+
+
+end 
+
 
 
 end

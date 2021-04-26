@@ -1,0 +1,28 @@
+<%= simple_form_for(@pex) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :doc %>
+    <%= f.input :razon %>
+    <%= f.input :red %>
+    <%= f.input :ruc_red %>
+    <%= f.input :placa %>
+    <%= f.input :nromiddia %>
+    <%= f.input :categoria %>
+    <%= f.input :fecha_inicio %>
+    <%= f.input :hora_inicio %>
+    <%= f.input :fecha_fin %>
+    <%= f.input :hora_fin %>
+    <%= f.input :fecha_apro %>
+    <%= f.input :hora_apro %>
+    <%= f.input :plaza %>
+    <%= f.input :pista %>
+    <%= f.input :importe %>
+    <%= f.input :nro_compro %>
+    <%= f.input :fecha_compro %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
