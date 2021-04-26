@@ -196,7 +196,23 @@
    
       <div class="field">
 
-    <td><%= f.label :dni_caducidad ,"DNI CADUCIDAD "%><br /></td>
+    <td>
+
+       
+     <div class="field">
+      <%= f.check_box :activedni%>
+      <%= f.label :activedni ,"Sin Caducidad?", :class => "bold" %>
+
+
+      <div class="small">
+        Dni caduca ?
+      </div>
+
+
+    </div>
+
+
+<%= f.label :dni_caducidad ,"DNI CADUCIDAD "%><br /></td>
 
     <td><%= f.date_field :dni_caducidad %></td>
      </div>
@@ -318,6 +334,110 @@
      </div>
 
    </tr>
+
+
+
+  <tr>   
+      <div class="field">
+
+    <td> <br /></td>
+
+    <td></td>
+     </div>
+
+  
+      <div class="field">
+
+        <td><br /></td>
+
+        <td> <%= file_field_tag :cv4  %>
+   
+     </div>
+
+   </tr>
+
+
+  <tr>   
+      <div class="field">
+
+    <td> <br /></td>
+
+    <td></td>
+     </div>
+
+  
+      <div class="field">
+
+        <td><br /></td>
+
+        <td> <%= file_field_tag :cv5  %>
+   
+     </div>
+
+   </tr>
+
+
+  <tr>   
+      <div class="field">
+
+    <td> <br /></td>
+
+    <td></td>
+     </div>
+
+  
+      <div class="field">
+
+        <td><br /></td>
+
+        <td> <%= file_field_tag :cv6  %>
+   
+     </div>
+
+   </tr>
+
+
+  <tr>   
+      <div class="field">
+
+    <td> <br /></td>
+
+    <td></td>
+     </div>
+
+  
+      <div class="field">
+
+        <td><br /></td>
+
+        <td> <%= file_field_tag :cv7  %>
+   
+     </div>
+
+   </tr>
+
+
+  <tr>   
+      <div class="field">
+
+    <td> <br /></td>
+
+    <td></td>
+     </div>
+
+  
+      <div class="field">
+
+        <td><br /></td>
+
+        <td> <%= file_field_tag :cv8  %>
+   
+     </div>
+
+   </tr>
+
+
+
 
 
   <tr>

@@ -91,14 +91,63 @@
         <Cell><Data ss:Type="String"><%= product.lugar %></Data></Cell>
         <Cell><Data ss:Type="String"><%= product.anio  %></Data></Cell>
         <Cell><Data ss:Type="String"><%= product.dni_emision.strftime("%d/%m/%Y") %></Data></Cell>
+
+
+
+        <% if product.activedni == "1"%>
+
+        <Cell><Data ss:Type="String"> SIN CADUCIDAD </Data></Cell>
+
+        <% else %>
+
+
         <Cell><Data ss:Type="String"><%= product.dni_caducidad.strftime("%d/%m/%Y") %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= product.ap_emision.strftime("%d/%m/%Y") %></Data></Cell>
+
+        <% end %>
+
+          <%  if  product.ap_emision != nil %>
+
+             <Cell><Data ss:Type="String"><%= product.ap_emision.strftime("%d/%m/%Y") %></Data></Cell>
+
+          <% else  %>
+
+             <Cell><Data ss:Type="String"> </Data></Cell>
+          <% end %>
+
+
+
+
+
+        <%  if  product.ap_caducidad != nil %>
+
 
         <Cell><Data ss:Type="String"><%= product.ap_caducidad.strftime("%d/%m/%Y") %></Data></Cell>
 
+          <% else  %>
+
+          <Cell><Data ss:Type="String"> </Data></Cell>
+          <% end %>
+
+        <%  if  product.ape_emision != nil %>
+
+
         <Cell><Data ss:Type="String"><%= product.ape_emision.strftime("%d/%m/%Y") %></Data></Cell>
 
+          <% else  %>
+
+          <Cell><Data ss:Type="String"> </Data></Cell>
+          <% end %>
+
+
+        <%  if  product.ape_caducidad != nil %>
+
+
         <Cell><Data ss:Type="String"><%= product.ape_caducidad.strftime("%d/%m/%Y") %></Data></Cell>
+        
+          <% else  %>
+
+          <Cell><Data ss:Type="String"> </Data></Cell>
+          <% end %>
 
         <Cell><Data ss:Type="String"><%=  product.licencia  %></Data></Cell>
 

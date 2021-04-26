@@ -10,8 +10,6 @@ class Conductor < ActiveRecord::Base
    :categoria_especial,
    :iqbf,
     :dni_emision,
-    :dni_caducidad,
-
     :user_id,
     :anio1,
     :anio2,

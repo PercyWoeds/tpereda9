@@ -210,13 +210,30 @@
 
      </div>
 
+
+ 
    
       <div class="field">
 
       <td><strong>DNI CADUCIDAD </strong><br /></td>
 
-      <td><%= @conductor.dni_caducidad.strftime("%d/%m/%Y") %></td>
+
+
+        <% if @conductor.activedni == "1"%>
+
+        <td> "SIN CADUCIDAD "</td>
+
+        <% else %>
+
+          <td><%= @conductor.dni_caducidad.strftime("%d/%m/%Y") %></td>
+
+       <% end %>
+
+
+
      </div>
+
+
 
    </tr>
    
@@ -361,6 +378,32 @@
           <% if !@conductor.cv3.nil?%>
               <td><%= link_to @conductor.cv3, @conductor.cv3_url  %></td>
           <% end %>
+
+        <% if !@conductor.cv4.nil?%>
+        <td><%= link_to @conductor.cv4, @conductor.cv4_url  %></td>
+        <% end %>
+
+         <% if !@conductor.cv5.nil?%>
+
+          <td><%= link_to @conductor.cv5, @conductor.cv5_url  %></td>
+        <% end %>
+
+         <% if !@conductor.cv6.nil?%>
+            <td><%= link_to @conductor.cv6, @conductor.cv6_url  %></td>
+
+         <%end %>   
+
+          <% if !@conductor.cv7.nil?%>
+              <td><%= link_to @conductor.cv7, @conductor.cv7_url  %></td>
+          <% end %>
+
+
+
+          <% if !@conductor.cv8.nil?%>
+              <td><%= link_to @conductor.cv8, @conductor.cv8_url  %></td>
+          <% end %>
+
+
 
      </div>
 
