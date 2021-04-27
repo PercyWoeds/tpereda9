@@ -181,6 +181,11 @@ require 'sidekiq/cron/web'
   end 
 
 
+ resources :couts do 
+       
+        collection { get :update_compro}
+  end 
+
 
   get 'search_manifests', to: 'manifests#search'
 

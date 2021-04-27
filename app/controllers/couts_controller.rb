@@ -137,6 +137,22 @@ def get_employee(id)
 
 end 
 
+def update_compro
+
+
+
+
+     ost = Tranportorder.find_by(params[:ost_code])
+    # map to name and id for use in our options_for_select
+  
+     @puntos = Punto.where(id: ost.punto_id)
+     @empleados = Employee.where(id: ost.empployee_id)
+     @trucks  = Truck.where(id: ost.truck_id )
+
+
+
+end
+
 def do_crear
 
     @company = Company.find(1)

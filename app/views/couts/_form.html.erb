@@ -184,8 +184,8 @@ $(document).ready(function() {
       $("#selected_ost").html(data[0]);
       $("#ac_employee_id").html(data[4]);
       $("#ac_employee2_id").html(data[6]);
-     
-
+      $("#ac_ubication_id").html(data[8]);
+      $("#ac_ubication2_id").html(data[10]);
      });  
 
 
@@ -208,6 +208,20 @@ $(document).ready(function() {
              $('#ac_ost').removeAttr('disabled'); //enable input
             
         }
+    });
+
+
+
+ 
+    $('#ac_ost').change(function() {
+      $.ajax({
+        url: "/couts/update_compro",
+        data: {
+          ost_code  : $('#ac_ost').val()
+
+        },
+        dataType: "script"
+      });
     });
 
 
