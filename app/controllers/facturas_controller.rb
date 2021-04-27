@@ -8725,77 +8725,12 @@ def rpt_conductor_pdf
 
         
 
-               # my_table = make_table([["..."],["subtable from another table"],["..."]])
-        @pex_rpt.in_groups_of(3).each do |tag|
+  
+end
 
 
 
-              if !tag.nil?
-              row = []
-              row << "Comprobante Encontrado"
-
-              row << tag.nro_compro << "LIMA EXPRESA S.A.C."
-
-              row << "Av.El Derby 250,piso 18 "
-
-              row << "Av. El Derby 250, piso 18, Surco"
-              row << "RUC : 20523621212"
-              row << "FACTURA ELECTRONICA"
-              row << " "
-              row << "Numero: " + tag.nro_compro
-
-
-              row << "Fecha de Emision: " + tag.fecha_compro 
-              row << "Aceptado por Sunat: " + tag.fecha_compro 
-              row << "Fecha de Tránsito:" + tag.fecha_fin 
-              row << "Valor del Transito S/ " + tag.importe.to_s
-              tax =tag.importe / 1.18
-              subtotal = tag.importe - tax.round(2)
-              row << "TOTAL VENTAS GRAVADAS S/" + subtotal.round(2).to_s
-
-              row << "IGV - 18.00% S/ " + tax.to_s 
-              row << "IMPORTE TOTAL S/ " + tag.importe.to_s 
-              row << "RUC: 20424092941 "
-              row << "Razon Social: TRANSPORTES PEREDA"
-              row << "S.R.L."
-              row << "Representacion impresa de la Factura"
-              row << "electronica. Podra ser consultada en:"
-              row << "www.limaexpresa.pe"
-              row << "Aut.RI N°0340050001426/SUNAT"
-              row << "25/1/2013"
-              row << "Los derechos de crédito de los montos"
-              row << "representados por este comprobante de"
-              row << "pago han sido cedidos a favor de un"
-              row << "patrimonio fideicometido administrado por"
-              row << "La Fiduciaria S.A., y su pago deberá"
-              row << "realizarse en BCP Cta. Cte.MN No. 193-"
-              row << "2066306-0-76"
-
-                table_content << row
-                 puts "tag compro "
-                 puts tag.nro_compro 
-        
-
-
-             end 
-              
-
-         end
-
-
-    
-
-      
-      result = pdf.table table_content, {:position => :center,
-                                        :header => true,
-                                        :width => pdf.bounds.width
-                                        } do 
-                                          columns([0]).align=:center
-                                          columns([1]).align=:left
-                                           columns([2]).align=:left
-                                          
-                                        end                                          
-      pdf.move_down 10      
+         
       #totales 
       pdf 
 

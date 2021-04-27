@@ -1,0 +1,57 @@
+
+                my_table = pdf.make_table([["Comprobante Encontrado"],
+                  [tag.nro_compro + "LIMA EXPRESA S.A.C."],
+                  ["Av.El Derby 250,piso 18 "],
+                  ["Av. El Derby 250, piso 18, Surco"],
+                  ["RUC : 20523621212"],
+                  ["FACTURA ELECTRONICA"],
+                  [""],
+                  ["Numero: " + tag.nro_compro],
+                  ["Fecha de Emision: " + tag.fecha_compro ],
+                  ["Aceptado por Sunat: " + tag.fecha_compro ],
+                  ["Fecha de Tránsito:" + tag.fecha_fin ],
+                  ["Valor del Transito S/ " + tag.importe.to_s],
+                  ["TOTAL VENTAS GRAVADAS S/" + subtotal.round(2).to_s],
+                  ["IGV - 18.00% S/ " + tax.to_s ],
+                  ["IMPORTE TOTAL S/ " + tag.importe.to_s ],
+                  ["RUC: 20424092941 "],
+                   ["Razon Social: TRANSPORTES PEREDA"],
+                   ["S.R.L."],
+                   ["Representacion impresa de la Factura"],
+                   ["electronica. Podra ser consultada en:"],
+                   ["www.limaexpresa.pe"],
+                   ["Aut.RI N°0340050001426/SUNAT"],
+                   ["25/1/2013"],
+                   [ "Los derechos de crédito de los montos"],
+                   ["representados por este comprobante de"],
+                   ["pago han sido cedidos a favor de un"],
+                   ["patrimonio fideicometido administrado por"],
+                   ["La Fiduciaria S.A., y su pago deberá"],
+                   ["realizarse en BCP Cta. Cte.MN No. 193-"],
+                   ["2066306-0-76"] ])
+
+
+
+ pdf.column_box([0, pdf.cursor], columns: 2, width: pdf.bounds.width) do
+
+
+  @pex_rpt.each do |tag|
+
+
+      if !tag.nil?
+
+
+
+                 tax =tag.importe / 1.18
+                  subtotal = tag.importe - tax.round(2)
+                    my_table = pdf.make_table([[tag.nro_compro ],["subtable from another table"])
+
+                
+
+               pdf.table(my_table)
+
+      end
+
+   
+    move_down 10
+  end
