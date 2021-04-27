@@ -8723,19 +8723,14 @@ def rpt_conductor_pdf
       valorcambio = 0
       valortotal = 0
 
-        
+    
 
-  
+
 end
 
 
 
-         
-      #totales 
-      pdf 
-
-    end
-
+    
     def build_pdf_footer_pex(pdf)
            
                         
