@@ -170,11 +170,16 @@ before_filter :authenticate_user!
             end
             
             if product.tm.to_i != 6
+
               lcDato = product.tranportorder.code << " - " << product.tranportorder.truck.placa<<" - " << product.tranportorder.get_placa(product.tranportorder.truck2_id)
+              
+
               row << lcDato 
               row << product.detalle
               
               row << product.tranportorder.get_punto(product.tranportorder.ubication_id)
+
+
             else
               row << " "
               row << " "
@@ -213,9 +218,7 @@ before_filter :authenticate_user!
                 row << sprintf("%.2f",product.importe)
     
             else
-              row << sprintf("%.2f",product.importe)
-              
-            
+                row << sprintf("%.2f",product.importe)
             end
             
             if product.tm.to_i != 6
@@ -356,10 +359,12 @@ before_filter :authenticate_user!
 
             @total_importe   +=  product.importe 
 
-          
-            row << product.detalle 
-      
-        
+
+              row << product.detalle
+
+
+           
+
             table_content_ing << row
 
 
@@ -449,7 +454,7 @@ before_filter :authenticate_user!
                   table_content2 = []
                   headers = []
 
-              Viaticotbk::TABLE_HEADERS.each do |header|
+              Viaticotbk::TABLE_HEADERS5.each do |header|
                 cell = pdf.make_cell(:content => header)
                 cell.background_color = "FFFFCC"
                 headers << cell
@@ -487,7 +492,20 @@ before_filter :authenticate_user!
 
             total_importe   += product.importe.round(2)
 
-            row << product.detalle 
+          if product.cout_id.nil? 
+          
+            row << product.detalle
+
+            row << " "
+            row << " "
+
+          else 
+            
+            row <<  product.cout.truck.placa + " /  " + product.cout.get_placa(product.cout.truck2_id) +  product.cout.get_placa(product.cout.truck3_id) 
+            row <<  product.cout.get_punto(product.cout.ubication_id) + "  -  "+ product.cout.get_punto(product.cout.ubication2_id) +" EJES:"+ product.cout.tranportorder.get_ejes2(product.cout.tranportorder.id) + "( TBK " + product.cout.code + " )"
+
+            row <<   product.cout.tranportorder.code
+            end 
       
         
             table_content2 << row
@@ -510,15 +528,19 @@ before_filter :authenticate_user!
                                           columns([4]).align=:left
                                           columns([5]).align=:right 
                                           columns([6]).align=:left  
-                                            columns([6]).width = 180 
+
+                                          
                                         
-                                         
+                                          columns([5]).width = 50
+                                          columns([6]).width = 60 
+                                          columns([7]).width = 60
+                                          columns([8]).width = 60
                                         end 
 
          row =[]
          table_content3 = []
-
-
+         puts "tamaniooo"
+         puts pdf.bounds.width
          row << "TOTAL EGRESO S/."
          row << sprintf("%.2f",total_importe)
          table_content3 << row 
@@ -577,10 +599,13 @@ before_filter :authenticate_user!
                })do
                  columns([0]).font_style = :bold
                 
-                 columns([0]).align = :center
-                 columns([0]).width = 100 
+                  columns([0]).align = :center
+                  columns([0]).width = 100 
                   columns([0]).align = :left
-                   columns([1]).align = :right
+                  columns([1]).align = :right
+                  columns([6]).width = 60 
+                  columns([7]).width = 60
+                  columns([8]).width = 60
                   
 
                end
@@ -1107,9 +1132,14 @@ pdf.move_down 2
                     end
                     if product.tm.to_i != 6
                       lcDato = product.tranportorder.code << " - " << product.tranportorder.truck.placa<<" - " << product.tranportorder.get_placa(product.tranportorder.truck2_id)
+                      
+
                       row << lcDato 
                       row << product.detalle
+
                       row << product.tranportorder.get_punto(product.tranportorder.ubication_id)
+
+
                       else
                       row << " "
                       row << " "
@@ -1524,7 +1554,6 @@ pdf.move_down 2
     @datos = @search.Scope 
 
 
-     
 
   end 
 

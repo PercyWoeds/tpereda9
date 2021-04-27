@@ -31,6 +31,8 @@ self.per_page = 20
                      "DETALLE"
                      ]
 
+
+
   TABLE_HEADERS2 = ["TD",
                       "Documento",
                      "Fecha",
@@ -61,6 +63,19 @@ self.per_page = 20
                      "OST ",
                      "DETALLE",
                      "DESTINO"]
+
+
+
+   TABLE_HEADERS5 = ["ITEM",
+                      "FECHA ",
+                     "DESCRIPCION",
+                     "TD",
+                     "NRO DOC.",
+                     "IMPORTE S/.",
+                     "PLACA",
+                     "DESTINO",
+                     "NRO.O.S.T."
+                     ]
   
 
   def self.search(search)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210426210906) do
+ActiveRecord::Schema.define(version: 20210427171007) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -632,6 +632,7 @@ ActiveRecord::Schema.define(version: 20210426210906) do
     t.datetime "fecha2"
     t.string   "detalle"
     t.integer  "i"
+    t.string   "parent"
   end
 
   create_table "cpagar_details", force: :cascade do |t|
@@ -3406,6 +3407,7 @@ ActiveRecord::Schema.define(version: 20210426210906) do
     t.integer  "egreso_id"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.integer  "cout_id"
   end
 
   create_table "viaticotbks", force: :cascade do |t|

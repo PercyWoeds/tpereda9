@@ -247,6 +247,8 @@ class Viaticotbks::ViaticotbkDetailsController < ApplicationController
           a.inicial =  @viaticotbk[:saldo]
           a.save
         end 
+
+        
         format.html { redirect_to @viaticotbk, notice: 'viaticotbk detail was successfully updated.' }
         format.json { render :show, status: :ok, location: @viaticotbk }
       else

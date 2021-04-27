@@ -3,8 +3,10 @@ class CoutsController < ApplicationController
 
   # GET /couts
   # GET /couts.json
+
+
   def index
-    @couts = Cout.all
+    @couts = Cout.order(:code)
       @company = Company.find(1)
   end
 
@@ -50,19 +52,25 @@ class CoutsController < ApplicationController
 
       @company   = Company.find(1)
 
-@trucks = @company.get_trucks
+      @trucks = @company.get_trucks
 
-      @employees = @company.get_employees2() 
+      @puntos = @company.get_puntos()
+     @employees = @company.get_employees2() 
   end
 
   # POST /couts
   # POST /couts.json
   def create
+
+     @company   = Company.find(1)
+
     @cout = Cout.new(cout_params)
 
      @cout[:code] = @cout.generate_cout_number
-    
- 
+     @puntos = @company.get_puntos()
+     @employees = @company.get_employees2() 
+     @trucks = @company.get_trucks
+
     respond_to do |format|
       if @cout.save
         format.html { redirect_to @cout, notice: 'Cout was successfully created.' }
@@ -77,6 +85,12 @@ class CoutsController < ApplicationController
   # PATCH/PUT /couts/1
   # PATCH/PUT /couts/1.json
   def update
+
+     @company   = Company.find(1)
+     @puntos = @company.get_puntos()
+     @employees = @company.get_employees2() 
+@trucks = @company.get_trucks
+
     respond_to do |format|
       if @cout.update(cout_params)
         format.html { redirect_to @cout, notice: 'Cout was successfully updated.' }
@@ -91,11 +105,26 @@ class CoutsController < ApplicationController
   # DELETE /couts/1
   # DELETE /couts/1.json
   def destroy
-    @cout.destroy
-    respond_to do |format|
-      format.html { redirect_to couts_url, notice: 'Cout was successfully destroyed.' }
+
+     @company   = Company.find(1)
+
+    @puntos = @company.get_puntos()
+    @employees = @company.get_employees2() 
+    @trucks = @company.get_trucks
+
+   a = ViaticotbkDetail.find_by(:cout_id=> params[:id])
+   if a 
+        format.html { redirect_to couts_url, notice: 'Compronbante registrado en  Caja, no se puede eliminar' }
+        format.json { render json: a.errors, status: :unprocessable_entity }
+   else 
+      @cout.destroy
+
+      format.html { redirect_to couts_url, notice: 'Comprobante eliminado.' }
       format.json { head :no_content }
     end
+
+
+
   end
 
 def get_employee(id)

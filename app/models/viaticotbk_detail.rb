@@ -11,6 +11,8 @@ class ViaticotbkDetail < ActiveRecord::Base
     belongs_to :document 
 
     belongs_to :egreso
+
+    belongs_to :cout 
     
     def get_detalle
         ret =""

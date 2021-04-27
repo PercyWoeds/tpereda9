@@ -749,6 +749,8 @@ def build_pdf_header_ost(pdf)
           comments = @ost.comments 
 
         end 
+
+        
         
         data2 = [["RUTA :"+ @ost.get_punto(@ost.ubication_id) + "  -  "+ @ost.get_punto(@ost.ubication2_id) ,   "   FECHA: "+ @ost.fecha1.strftime("%d-%m-%Y")+" PLACA TRACTO/CAMION: " + @ost.truck.placa+ " " + @ost.get_placa(@ost.truck2_id)],
                  [ " EJES:"+ @ost.get_ejes2(@ost.id ) +  " ESCOLTA:" +@ost.get_empleado(@ost.employee4_id), "PLACA :"+ @ost.get_placa(@ost.truck2_id)],
