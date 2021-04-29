@@ -1418,6 +1418,7 @@ def reportes4
 
         end   
       when "To Excel" then render xlsx: 'exportxls'
+
       else render action: "index"
     end
   end
@@ -1434,6 +1435,12 @@ def reportes_detraccion
     @current_user_id = current_user.id 
     
     @facturas_rpt = @company.get_facturas_day_todos(@fecha1,@fecha2)          
+
+     @moneda = "2"
+    @total1  = @company.get_facturas_by_day_value(@fecha1,@fecha2,@moneda,"subtotal")  
+    @total2  = @company.get_facturas_by_day_value(@fecha1,@fecha2,@moneda,"tax")  
+    @total3  = @company.get_facturas_by_day_value(@fecha1,@fecha2,@moneda,"total")  
+    
    
     
 
@@ -1456,7 +1463,7 @@ def reportes_detraccion
         end   
 
 
-      when "To Excel" then render xlsx: 'exportxls'
+      when "To Excel" then render xlsx: 'exportxls_dt'
       else render action: "index"
     end
   end
@@ -1567,7 +1574,7 @@ end
                  row <<  product.code 
                  row <<  product.fecha.strftime("%d/%m/%Y")
 
-                 row <<  product.fecha2.sreportes_detracciontrftime("%d/%m/%Y")
+                 row <<  product.fecha2.strftime("%d/%m/%Y")
 
                  row <<  product.customer.ruc 
                  row <<  product.customer.name
@@ -1575,6 +1582,8 @@ end
                  row <<   sprintf("%.2f",product.subtotal.to_s)
                  row <<   sprintf("%.2f",product.tax.to_s)
                  row <<   sprintf("%.2f",product.total.to_s)
+
+
                  if product.valor_referencial != nil
                  row <<   sprintf("%.2f",product.valor_referencial.to_s)
                  @valor_referencial = product.valor_referencial
@@ -1583,6 +1592,8 @@ end
                  
                  @valor_referencial = 0 
                  end 
+
+
                  row <<   product.get_servicio
                  row <<   product.get_detraccion 
 

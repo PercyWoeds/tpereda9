@@ -1,0 +1,120 @@
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
+
+require 'axlsx'
+
+p = Axlsx::Package.new
+wb = xlsx_package.workbook
+wb.styles do |s|
+    date = s.add_style(:format_code => "yyyy-mm-dd", :border => Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+    padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
+    percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
+    title = s.add_style(:bg_color => "FFFF0000", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+
+    currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
+                              :border=>Axlsx::STYLE_THIN_BORDER)
+    red_negative = wb.styles.add_style :num_fmt => 8
+    comma = wb.styles.add_style :num_fmt => 3
+    super_funk = wb.styles.add_style :format_code => '[Green]#'
+    
+    wb.add_worksheet(name: "Basic work sheet") do |sheet|
+    
+    sheet.add_row ["Td", "Nro.Documento", "Fec.Emision", "Fec.Vmto", "R.U.C.","Cliente","Moneda", "Sub Total","IGV.","Importe","Valor Referencial","Tipo Servicio ","% Detraccion","Monto Detraccion","Fecha Pago","Importe","Saldo" ], :style => title 
+
+    @company = Company.find(1)
+
+    total_pendiente = 0
+
+    total_cancelado = 0
+
+   @facturas_rpt.each do |payment|
+
+
+
+
+                 if payment.valor_referencial != nil
+                
+
+                 @valor_referencial = payment.valor_referencial
+
+                 else
+              
+                 @valor_referencial = 0 
+                 end 
+
+                    max_porcentaje_detraccion  =  payment.total > @valor_referencial ? payment.total  : @valor_referencial
+
+
+                   @monto_detraccion = (payment.get_detraccion * max_porcentaje_detraccion ) 
+
+                      
+
+                   @detalle_bancos = @company.get_customer_payments_value_customer4(payment.id)
+
+                         @pago_dt = 0
+                         @diferencia_dt = 0
+                         @monto_detraccion = 0 
+
+                          if payment.valor_referencial != nil
+                          
+
+                               @valor_referencial = payment.valor_referencial
+                           else
+                        
+                               @valor_referencial = 0 
+                           end 
+
+
+                          if @detalle_bancos.size > 0 
+                           for d in @detalle_bancos 
+                      
+                              
+                              @fecha_pago_dt = d.fecha1
+                              @pago_dt  = d.total
+
+                            
+                              @diferencia_det = @monto_detraccion - d.total 
+                            
+
+                             total_cancelado += d.total 
+                             total_pendiente += @diferencia_det 
+
+                           end 
+                          else
+
+                            total_pendiente += @monto_detraccion
+                            @diferencia_dt   = @monto_detraccion
+
+
+
+                          end
+
+        
+        sheet.add_row [payment.document.descripshort, 
+        payment.code,
+        payment.fecha,payment.fecha2,
+        payment.customer.ruc,payment.customer.name,
+        payment.moneda.symbol,
+        payment.subtotal,
+        payment.tax,
+        payment.total,
+        @valor_referencial,
+        payment.get_servicio,
+        payment.get_detraccion ,
+        @monto_detraccion,
+        @fecha_pago,
+        @pago_dt,
+        @diferencia_dt], 
+        :style => [cadena,cadena,date,date,cadena,cadena,cadena,currency,currency,currency,cadena]
+
+
+    
+   end
+   
+   sheet.add_row ["","","","","Totales => ","","",@total1,@total2,@total3], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency]
+   
+   
+end
+end 
+
+    
