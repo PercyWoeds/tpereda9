@@ -12,7 +12,7 @@
   <%= @cout.fecha.to_date  %>
 </p>
 
- <%if  !@cout.tranportorder.nil? %>
+ <%if  @cout.tranportorder_id != 10079 %>
 <p>
   <strong>ORDEN DE SERVICIO :</strong>
   <%= @cout.tranportorder.code  %>

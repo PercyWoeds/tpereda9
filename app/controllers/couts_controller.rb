@@ -730,13 +730,13 @@ def build_pdf_header_1(pdf)
     
           ############
   texto_letras = @cout.textify.upcase + " SOLES "
-  if !@cout.tranportorder.nil?  || @cout.tranportorder_id != 10079
+  if @cout.tranportorder_id != 10079
 
   ost =  @cout.tranportorder.code
   else
   
 
-    ost = ""
+    ost = " "
     
   end 
 
@@ -803,7 +803,7 @@ tb_text_guias  = [["Fecha :", @cout.fecha.strftime('%d-%m-%Y'), "TBK: "+@cout.tb
   
 
 
-  if !@cout.tranportorder.nil?
+  if @cout.tranportorder_id != 10079
 
      ost_code = @cout.tranportorder.code
 
