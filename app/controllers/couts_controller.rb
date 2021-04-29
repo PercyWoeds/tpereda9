@@ -164,10 +164,9 @@ def do_crear
 
     puts "checked "
 
-   puts params[:emp1]
-
-      puts params[:emp2]
-         puts params[:emp3]
+   @placa = 376
+   @placa2 =376
+   @placa3 =376
 
 
     if params[:emp1] == "true"
@@ -189,11 +188,11 @@ def do_crear
         @placa = @tranportorder.truck_id
     end 
  if params[:placa2] == "true"
-        @placa = @tranportorder.truck2_id
+        @placa2 = @tranportorder.truck2_id
     end 
 
  if params[:placa3] == "true"
-        @placa = @tranportorder.truck3_id
+        @placa3 = @tranportorder.truck3_id
     end 
 
 
@@ -213,9 +212,13 @@ def do_crear
     @couts[:importe] = params[:total_importe]
     @couts[:tbk] = params[:tbk]
     @couts[:tbk_documento] = params[:tbk_documento]
-    @couts[:truck_id] = @placa 
+    @couts[:truck_id] = @placa
+      @couts[:truck2_id] = @placa2
+        @couts[:truck3_id] = @placa3    
     @couts[:tranportorder_id] = @tranportorder.id
     @couts[:employee_id] = @employee_id
+
+
     @couts[:peajes] =  0
     @couts[:lavado] = 0
     @couts[:llanta] = 0
@@ -247,7 +250,7 @@ end
 
 def do_cargar
   @company   = Company.find(1)
-   @osts   = Tranportorder.where(["fecha1 >= ?","2020-11-01 00:00:00"]).order("fecha desc ,code desc ").paginate(:page => params[:page])
+   @osts   = Tranportorder.where(["fecha1 >= ?","2021-04-01 00:00:00"]).order("fecha desc ,code desc ").paginate(:page => params[:page])
                  
 end 
 
@@ -255,7 +258,9 @@ end
 def newviatico
 
 
-@tranportorder =   Tranportorder.find(params[:id])
+   @tranportorder =   Tranportorder.find(params[:id])
+
+
 
 
 
