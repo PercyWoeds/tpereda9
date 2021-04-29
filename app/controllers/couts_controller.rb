@@ -40,6 +40,7 @@ class CoutsController < ApplicationController
       @cout[:tbk] = 0.00
       @cout[:tbk_documento] = ""
 
+
       @cout[:ost_exist] = "1"
       @cout[:employee4_id] = 64
       @cout[:tranportorder_id] = 10079
@@ -65,6 +66,7 @@ class CoutsController < ApplicationController
      @company   = Company.find(1)
 
     @cout = Cout.new(cout_params)
+
 
      @cout[:code] = @cout.generate_cout_number
      @puntos = @company.get_puntos()
@@ -614,12 +616,25 @@ end
   end
 
   def cout_headers            
+
+      if @cout.fecha2.nil?
+
+      cout_headers  = [["Fecha Salida : ",@cout.fecha1.strftime("%d/%m/%Y") ]]
+      cout_headers << ["Fecha Llegada : "," "]
+      cout_headers << [" ", " " ]
+     
+     
+      cout_headers
+
+      else 
       cout_headers  = [["Fecha Salida : ",@cout.fecha1.strftime("%d/%m/%Y") ]]
       cout_headers << ["Fecha Llegada : ",@cout.fecha2.strftime("%d/%m/%Y")]
       cout_headers << [" ", " " ]
      
      
       cout_headers
+
+    end 
   end
 
  def cout_headers2         
@@ -715,7 +730,7 @@ def build_pdf_header_1(pdf)
     
           ############
   texto_letras = @cout.textify.upcase + " SOLES "
-  if !@cout.tranportorder.nil?
+  if !@cout.tranportorder.nil? 
 
   ost =  @cout.tranportorder.code
   else
@@ -793,7 +808,23 @@ tb_text_guias  = [["Fecha :", @cout.fecha.strftime('%d-%m-%Y'), "TBK: "+@cout.tb
     ost_code = "-"
   end 
 
+if @cout.fecha2.nil?
 
+
+    data2 = [  ["RUTA :"+ @cout.get_punto(@cout.ubication_id) + "  -  "+ @cout.get_punto(@cout.ubication2_id) ,  
+               + "   FECHA SALIDA : "+@cout.fecha1.strftime("%d/%m/%Y") +  "   FECHA LLEGADA : " ," IMPORTE  S/."  +  @cout.importe.to_s ],
+                 [  " PLACA TRACTO/CAMION: " + @cout.truck.placa  + " " + @cout.get_placa(@cout.truck2_id)  ," " ," TBK S/.:" + @cout.tbk.to_s ],
+                 [ " CONDUCTOR DE CARGA  " + @cout.employee.full_name,"SUPERVISOR/APOYO: "+@cout.get_employee(@cout.employee3_id)," TBK DOC.: " + @cout.tbk_documento ],
+                 
+                 [ " CONDUCTOR DE RUTA  : "+@cout.get_employee(@cout.employee2_id)  ],
+                 
+                 ["OBSERVACIONES: " , @cout.observa ],
+                 [" ", " "],
+                 ["................................ ", " ................................ "],
+                 [" Conductor.:  ", "          V.B."]]
+
+
+else 
 
     data2 = [  ["RUTA :"+ @cout.get_punto(@cout.ubication_id) + "  -  "+ @cout.get_punto(@cout.ubication2_id) ,  
                + "   FECHA SALIDA : "+@cout.fecha1.strftime("%d/%m/%Y") +  "   FECHA LLEGADA : "+@cout.fecha2.strftime("%d/%m/%Y") ," IMPORTE  S/."  +  @cout.importe.to_s ],
@@ -806,6 +837,10 @@ tb_text_guias  = [["Fecha :", @cout.fecha.strftime('%d-%m-%Y'), "TBK: "+@cout.tb
                  [" ", " "],
                  ["................................ ", " ................................ "],
                  [" Conductor.:  ", "          V.B."]]
+
+
+end 
+
 
                          pdf.bounding_box([0, 200], :width => 550, :height => 200) do
           
