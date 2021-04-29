@@ -1564,7 +1564,7 @@ end
                  row = []
                  row << nroitem.to_s
                  row <<  product.document.descripshort
-                 row <<  product.code reportes_detraccion
+                 row <<  product.code 
                  row <<  product.fecha.strftime("%d/%m/%Y")
 
                  row <<  product.fecha2.sreportes_detracciontrftime("%d/%m/%Y")
