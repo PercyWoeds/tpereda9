@@ -5521,6 +5521,8 @@ end
  
 
  
+
+ 
   def col_is_date?(value)
   (!!(Date.parse(value) rescue nil)) || ((value =~ /\A\d{1,2}-\d{1,2}\z/) === 0)
   end

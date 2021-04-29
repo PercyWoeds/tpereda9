@@ -15,11 +15,11 @@ class ProyectoExamsController < ApplicationController
     @employees = @company.get_employees2()
     @proyecto_examen  = @company.get_proyecto_exams
 
-    @proyecto_examen_empleado = @company.get_proyecto_exam_empleado(@proyecto_exam.id) 
+    @proyecto_examen_empleado = @company.get_proyecto_exam_empleado(@proyecto_exam.id)
 
     @proyectoexam_details= @proyecto_exam.proyectoexam_details
 
-    
+
 
     @rows = 2
 

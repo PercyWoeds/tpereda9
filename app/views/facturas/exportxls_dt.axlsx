@@ -9,7 +9,7 @@ wb.styles do |s|
     padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
     percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
     title = s.add_style(:bg_color => "FFFF0000", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
-    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :left})
 
     currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
                               :border=>Axlsx::STYLE_THIN_BORDER)
@@ -19,13 +19,20 @@ wb.styles do |s|
     
     wb.add_worksheet(name: "Basic work sheet") do |sheet|
     
-    sheet.add_row ["Td", "Nro.Documento", "Fec.Emision", "Fec.Vmto", "R.U.C.","Cliente","Moneda", "Sub Total","IGV.","Importe","Valor Referencial","Tipo Servicio ","% Detraccion","Monto Detraccion","Fecha Pago","Importe","Saldo" ], :style => title 
+    sheet.add_row ["Td", "Nro.Documento", "Fec.Emision", "Fec.Vmto", "R.U.C.","Cliente","Moneda", "Sub Total","IGV.","Importe","Valor Referencial","Tipo Servicio ","% Detraccion","Monto Detraccion","Fecha Cancelado","Pendiente" ], :style => title 
 
     @company = Company.find(1)
 
     total_pendiente = 0
 
     total_cancelado = 0
+
+
+         @tot_valor_referencial = 0
+
+         @tot_monto_detraccion = 0
+
+
 
    @facturas_rpt.each do |payment|
 
@@ -89,6 +96,11 @@ wb.styles do |s|
 
                           end
 
+         @tot_valor_referencial += @valor_referencial
+
+         @tot_monto_detraccion +=  @monto_detraccion.round(0)
+
+
         
         sheet.add_row [payment.document.descripshort, 
         payment.code,
@@ -111,7 +123,7 @@ wb.styles do |s|
     
    end
    
-   sheet.add_row ["","","","","Totales => ","","",@total1,@total2,@total3], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency]
+   sheet.add_row ["","","","","Totales => ","","",@total1,@total2,@total3,@tot_valor_referencial,"","",@tot_monto_detraccion,"",total_cancelado,total_pendiente], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency,cadena,currency,currency,date,currency,currency]
    
    
 end
