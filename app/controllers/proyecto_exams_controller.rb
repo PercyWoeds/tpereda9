@@ -76,6 +76,7 @@ class ProyectoExamsController < ApplicationController
     @employees = @company.get_employees2()
     @proyecto_examen   = @company.get_pm()
     @employees = @company.get_employees()
+    
   end
 
   # POST /proyecto_exams

@@ -169,32 +169,23 @@ def do_crear
    @placa3 =376
 
 
-    if params[:emp1] == "true"
+    
         @employee_id = @tranportorder.employee_id
-    end 
- if params[:emp2] == "true"
-        @employee_id = @tranportorder.employee2_id
-    end 
+ 
+        @employee2_id = @tranportorder.employee2_id
 
- if params[:emp3] == "true"
-        @employee_id = @tranportorder.employee3_id
-    end 
- if params[:emp4] == "true"
-        @employee_id = @tranportorder.employee4_id
-    end 
+        @employee3_id = @tranportorder.employee3_id
+ 
+        @employee4_id = @tranportorder.employee4_id
+   
 
-
-    if params[:placa1] == "true"
+  
         @placa = @tranportorder.truck_id
-    end 
- if params[:placa2] == "true"
+    
         @placa2 = @tranportorder.truck2_id
-    end 
-
- if params[:placa3] == "true"
+  
         @placa3 = @tranportorder.truck3_id
-    end 
-
+    
 
     @couts = Cout.new
     @couts[:code] = @couts.generate_cout_number
@@ -213,10 +204,19 @@ def do_crear
     @couts[:tbk] = params[:tbk]
     @couts[:tbk_documento] = params[:tbk_documento]
     @couts[:truck_id] = @placa
-      @couts[:truck2_id] = @placa2
-        @couts[:truck3_id] = @placa3    
+    @couts[:truck2_id] = @placa2
+    @couts[:truck3_id] = @placa3    
     @couts[:tranportorder_id] = @tranportorder.id
     @couts[:employee_id] = @employee_id
+    @couts[:employee2_id] = @employee2_id
+    @couts[:employee3_id] = @employee3_id
+    @couts[:employee4_id] = @employee4_id
+
+   @couts[:ubication_id] =@tranportorder.ubication_id
+    @couts[:ubication2_id] =@tranportorder.ubication2_id
+   
+ @couts[:fecha1] =  @tranportorder.fecha1
+ @couts[:fecha2] =   @tranportorder.fecha2
 
 
     @couts[:peajes] =  0

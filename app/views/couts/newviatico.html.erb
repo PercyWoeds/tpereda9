@@ -47,7 +47,7 @@
 
   <div class="field">
       <strong>Fecha Emision :</strong><br />
-      <input type="date" name="fecha" value="2020-11-30"  style = "width: 150px" >
+      <input type="date" name="fecha" value="2021-04-29"  style = "width: 150px" >
     </div>
 
  <div class="field">
@@ -74,7 +74,7 @@
   <tr>
     <td><strong>Conductor de carga:</strong></td>
     <td> <%= @tranportorder.employee.full_name %></td> 
-    <td><%= check_box_tag :emp1, checked = true %> </td>
+  
 
     <td><strong> De</strong></td>
     <td> <%= @tranportorder.get_punto(@tranportorder.ubication_id) %></td>
@@ -85,8 +85,7 @@
   <tr>
     <td><strong>Conductor de ruta </strong></td>
     <td> <%= @tranportorder.get_empleado(@tranportorder.employee2_id) %></td> 
-     <td><%= check_box_tag :emp2, checked = false %> </td>
-
+  
      <td>A : </td>
     <td> <%= @tranportorder.get_punto(@tranportorder.ubication2_id) %></td> 
 
@@ -96,7 +95,7 @@
  <tr>
     <td><strong>Conductor Escolta  </strong></td>
     <td><%= @tranportorder.get_empleado(@tranportorder.employee4_id) %> </td> 
-     <td><%= check_box_tag :emp3, checked = false %> </td>
+    
      <td>Fecha/Hora Salida  </td>
     <td><%= @tranportorder.fecha1.strftime('%d-%m-%Y') %> </td> 
   </tr>
@@ -106,7 +105,7 @@
  <tr>
     <td><strong> Supervisor / Apoyo </strong>  </td>
     <td><%= @tranportorder.get_empleado(@tranportorder.employee3_id) %> </td> 
-    <td><%= check_box_tag :emp4, checked = false %> </td>
+ 
     <td>  </td>
     <td> </td> 
   </tr>
@@ -115,19 +114,19 @@
   <tr>
     <td><strong>Vehiculo: </strong></td>
     <td> <%= @tranportorder.truck.placa %></td> 
-   <td><%= check_box_tag :placa1, checked = true %> </td>
+  
     <td> </td> 
   </tr>
   <tr>
     <td><strong>Vehiculo 2 : </strong></td>
     <td> <%= @tranportorder.get_placa(@tranportorder.truck2_id) %></td> 
-   <td><%= check_box_tag :placa2, checked = true %> </td>
+   
     <td> </td> 
   </tr>
    <tr>
     <td><strong>Escolta  </strong></td>
     <td><%= @tranportorder.get_placa(@tranportorder.truck3_id)  %> </td> 
-    <td><%= check_box_tag :placa3, checked = true %> </td>
+
     <td> </td> 
   </tr>
 
