@@ -250,8 +250,18 @@ end
 
 def do_cargar
   @company   = Company.find(1)
-   @osts   = Tranportorder.where(["fecha1 >= ?","2021-04-01 00:00:00"]).order("fecha desc ,code desc ").paginate(:page => params[:page])
-                 
+
+   if params[:search]
+           
+          
+        @osts   = Tranportorder.search(params[:search]).where(["fecha1 >= ?","2021-04-01 00:00:00"]).order("fecha desc ,code desc ").paginate(:page => params[:page])
+     
+    else
+              
+        @osts = Tranportorder.where(["fecha1 >= ?","2021-04-01 00:00:00"]).order("fecha desc ,code desc ").paginate(:page => params[:page])
+
+    end
+
 end 
 
 
@@ -260,7 +270,7 @@ def newviatico
 
    @tranportorder =   Tranportorder.find(params[:id])
 
-
+    
 
 
 
@@ -840,7 +850,7 @@ tb_text_guias  = [["Fecha :", @cout.fecha.strftime('%d-%m-%Y'), "TBK: "+@cout.tb
       params.require(:cout).permit(:code, :fecha, :importe, :truck_id, :punto_id, :tranportorder_id, :employee_id, :employee2_id, 
         :employee3_id, :peajes, :lavado, :llanta, :alimento, :otros, :monto_recibido, :flete, :recibido_ruta, :vuelto, :descuento, 
         :reembolso, :flete, :ost_id,:tbk,:tbk_documento,:employee4_id,:truck2_id,:truck3_id,:observa,:fecha1,:fecha2,
-        :ubication_id ,:ubication2_id)
+        :ubication_id ,:ubication2_id,:search)
     end
 
 end

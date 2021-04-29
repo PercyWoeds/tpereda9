@@ -184,6 +184,9 @@ require 'sidekiq/cron/web'
  resources :couts do 
        
         collection { get :update_compro}
+        collection { get :buscar}
+
+
   end 
 
 
@@ -286,7 +289,9 @@ require 'sidekiq/cron/web'
     end 
 
   resources :voideds do
-    collection { post :anular }  
+    collection { post :anular } 
+
+
    
    end 
 
@@ -1602,7 +1607,8 @@ match '/proyecto_exams/:id/proyectoexam_details/:proyectoexam_detail_id' => 'pro
 
 
 
-
+ match 'companies/couts/:company_id' => 'couts#do_cargar', via: [:get, :post]
+  resources :cous 
 
 
 

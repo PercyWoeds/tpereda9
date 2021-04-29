@@ -12,6 +12,7 @@ class ProyectoExams::ProyectoexamDetailsController < ApplicationController
     @proyectoexam_details = ProyectoexamDetail.all
   end
 
+
   # GET /proyectoexam_details/1
   # GET /proyectoexam_details/1.json
   def show
@@ -53,8 +54,15 @@ class ProyectoExams::ProyectoexamDetailsController < ApplicationController
     
 
 
-    @detalle = ProyectoexamDetail.where(proyecto_exam_id: params[:proyecto_exam_id],
-                                 employee_id: params[:employee_id])
+   # @detalle = ProyectoexamDetail.where(proyecto_exam_id: params[:proyecto_exam_id],employee_id: params[:employee_id])
+
+
+    @detalle = ProyectoexamDetail.joins("INNER JOIN proyecto_minero_exams ON  
+       proyecto_minero_exams.id = proyectoexam_details.proyecto_minero_exam_id ")
+      .where(proyecto_exam_id: params[:proyecto_exam_id],employee_id: params[:employee_id]).order("proyecto_minero_exams.orden")
+  
+
+    
 
     
     @pumps = ProyectoMineroExam.where(proyecto_minero_id: params[:proyecto_minero_id] ).order(:orden)

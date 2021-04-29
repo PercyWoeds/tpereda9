@@ -19,8 +19,14 @@
 </p>
 
 
-
-
+<div class="small">
+  <form method="get" action="/companies/couts/<%= @company.id %>">
+    <strong>Buscar :</strong>
+    <input type="text" name="search" value="<% if @q_org %><%= @q_org %><% end %>" class="small" style="width: 250px;" onclick="$(this).select();" />
+    <input type="submit" value="Find" class="bold small_btn" />
+    <a href="/companies/couts/<%= @company.id %>" > Limpiar</a>
+  </form>
+</div>
 
 
 <% if @osts.count > 0 %>

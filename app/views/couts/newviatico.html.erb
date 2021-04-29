@@ -121,13 +121,13 @@
   <tr>
     <td><strong>Vehiculo 2 : </strong></td>
     <td> <%= @tranportorder.get_placa(@tranportorder.truck2_id) %></td> 
-   <td><%= check_box_tag :placa2, checked = false %> </td>
+   <td><%= check_box_tag :placa2, checked = true %> </td>
     <td> </td> 
   </tr>
    <tr>
     <td><strong>Escolta  </strong></td>
     <td><%= @tranportorder.get_placa(@tranportorder.truck3_id)  %> </td> 
-    <td><%= check_box_tag :placa3, checked = false %> </td>
+    <td><%= check_box_tag :placa3, checked = true %> </td>
     <td> </td> 
   </tr>
 
