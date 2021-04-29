@@ -37,12 +37,12 @@ class CoutsController < ApplicationController
       @cout[:fecha] = Date.today 
 
       @cout[:importe] = 0.00
- @cout[:tbk] = 0.00
-  @cout[:tbk_documento] = ""
+      @cout[:tbk] = 0.00
+      @cout[:tbk_documento] = ""
 
-  @cout[:ost_exist] = "1"
-  @cout[:employee4_id] = 64
-  @cout[:tranportorder_id] = 10079
+      @cout[:ost_exist] = "1"
+      @cout[:employee4_id] = 64
+      @cout[:tranportorder_id] = 10079
 
 
   end

@@ -1564,10 +1564,10 @@ end
                  row = []
                  row << nroitem.to_s
                  row <<  product.document.descripshort
-                 row <<  product.code 
+                 row <<  product.code reportes_detraccion
                  row <<  product.fecha.strftime("%d/%m/%Y")
 
-                 row <<  product.fecha2.strftime("%d/%m/%Y")
+                 row <<  product.fecha2.sreportes_detracciontrftime("%d/%m/%Y")
 
                  row <<  product.customer.ruc 
                  row <<  product.customer.name
@@ -1608,7 +1608,7 @@ end
 
                               diferencia_det = @monto_detraccion - d.total 
                              
-                             row << sprintf("%.2f",diferencia_det.to_s)
+                             row << sprintf("%.2f",diferencia_det.round(0).to_s)
 
                              total_cancelado += d.total 
                              total_pendiente += diferencia_det 
