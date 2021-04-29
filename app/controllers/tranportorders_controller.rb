@@ -198,14 +198,30 @@ class TranportordersController < ApplicationController
 
 
    a = Delivery.find_by(:tranportorder_id=> params[:id])
+
+
    if a 
         format.html { redirect_to tranportorders_url, notice: 'Orden tiene guias asignadas no se puede eliminar' }
         format.json { render json: a.errors, status: :unprocessable_entity }
    else 
+
+      b = Cout.find_by(:tranportorder_id=> params[:id])
+
+
+      if b
+
+        format.html { redirect_to tranportorders_url, notice: 'Orden tiene Viaticos asignadas no se puede eliminar' }
+        format.json { render json: a.errors, status: :unprocessable_entity }
+
+      else
+
+
       @tranportorder.destroy
 
       format.html { redirect_to tranportorders_url, notice: 'Tranportorder was successfully destroyed.' }
       format.json { head :no_content }
+
+       end
     end
 
     

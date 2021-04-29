@@ -108,12 +108,9 @@ class CoutsController < ApplicationController
 
      @company   = Company.find(1)
 
-    @puntos = @company.get_puntos()
-    @employees = @company.get_employees2() 
-    @trucks = @company.get_trucks
-
-   a = ViaticotbkDetail.find_by(:cout_id=> params[:id])
-   if a 
+    respond_to do |format|
+       a = ViaticotbkDetail.find_by(:cout_id=> params[:id])
+    if a 
         format.html { redirect_to couts_url, notice: 'Compronbante registrado en  Caja, no se puede eliminar' }
         format.json { render json: a.errors, status: :unprocessable_entity }
    else 
@@ -123,9 +120,13 @@ class CoutsController < ApplicationController
       format.json { head :no_content }
     end
 
-
+  end
 
   end
+
+
+
+
 
 def get_employee(id)
 
@@ -254,7 +255,7 @@ def do_cargar
    if params[:search]
            
           
-        @osts   = Tranportorder.search(params[:search]).where(["fecha1 >= ?","2021-04-01 00:00:00"]).order("fecha desc ,code desc ").paginate(:page => params[:page])
+        @osts   = Tranportorder.search(params[:search]).where(["fecha1 >= ?","2021-03-01 00:00:00"]).order("fecha desc ,code desc ").paginate(:page => params[:page])
      
     else
               
