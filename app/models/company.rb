@@ -5513,7 +5513,10 @@ def get_pm2
 
 def get_proyecto_exam_empleado(proyecto_minero_id )
 
-  @proyecto_exam_empleado = ProyectoexamDetail.select("employee_id,proyecto_exam_id").where(proyecto_exam_id: proyecto_minero_id,active: "1").group(:employee_id,:proyecto_exam_id)
+ # @proyecto_exam_empleado = ProyectoexamDetail.select("employee_id,proyecto_exam_id").where(proyecto_exam_id: proyecto_minero_id,active: "1").group(:employee_id,:proyecto_exam_id)
+  
+@proyecto_exam_empleado = ProyectoexamDetail.select("employee_id,proyecto_exam_id").group(:employee_id,:proyecto_exam_id)
+  
   return @proyecto_exam_empleado 
 
 
@@ -5522,7 +5525,7 @@ end
 
  
 
- 
+
   def col_is_date?(value)
   (!!(Date.parse(value) rescue nil)) || ((value =~ /\A\d{1,2}-\d{1,2}\z/) === 0)
   end

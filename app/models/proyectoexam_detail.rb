@@ -16,7 +16,8 @@ class ProyectoexamDetail < ActiveRecord::Base
    def get_detalle(empleado,proyecto_minero )
 
    	  datos = ProyectoexamDetail.where(proyecto_minero_id: proyecto_minero, employee_id: empleado)
-      .joins("INNER JOIN proyecto_minero_exams ON  proyectoexam_details.proyecto_minero_exam_id = proyecto_minero_exams.id").order("proyecto_minero_exams.orden")
+      .joins("INNER JOIN proyecto_minero_exams ON  
+        proyectoexam_details.proyecto_minero_exam_id = proyecto_minero_exams.id").order("proyecto_minero_exams.orden")
       return datos 
 
    	
