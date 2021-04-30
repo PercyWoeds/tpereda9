@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210427191904) do
+ActiveRecord::Schema.define(version: 20210430023041) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -633,6 +633,7 @@ ActiveRecord::Schema.define(version: 20210427191904) do
     t.string   "detalle"
     t.integer  "i"
     t.string   "parent"
+    t.string   "carr"
   end
 
   create_table "cpagar_details", force: :cascade do |t|

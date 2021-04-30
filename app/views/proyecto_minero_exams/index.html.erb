@@ -29,7 +29,11 @@
 
         <td><%= link_to 'Show', proyecto_minero_exam %></td>
         <td><%= link_to 'Edit', edit_proyecto_minero_exam_path(proyecto_minero_exam) %></td>
+<% if @current_user.level != "admin"%>
+
         <td><%= link_to 'Destroy', proyecto_minero_exam, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+        <% end %>
       </tr>
     <% end %>
   </tbody>

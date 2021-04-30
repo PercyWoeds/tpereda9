@@ -35,12 +35,24 @@
         <span id="selected_ost"><% if @ac_ost %><%= @ac_ost %><% else %><!-- i --><% end %></span>
       </div>
      
-    
+
+  
+
 
       <div class="small">
         Ingrese una termino de busqueda para encontrar una orden de servicio 
       </div>
       <br />
+
+
+
+   <div class="field">
+      <%= f.check_box :carr %>
+      <%= f.label :carr ,"Comprobante en carretera ?", :class => "bold" %>
+      <div class="small">
+        Comprobante en carretera ?
+      </div>
+    </div>
 
 
 

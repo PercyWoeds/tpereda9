@@ -43,7 +43,7 @@ class CoutsController < ApplicationController
 
       @cout[:ost_exist] = "1"
       @cout[:employee4_id] = 64
-      @cout[:tranportorder_id] = 10079
+      @cout[:tranportorder_id] = 222
 
 
   end
@@ -730,7 +730,7 @@ def build_pdf_header_1(pdf)
     
           ############
   texto_letras = @cout.textify.upcase + " SOLES "
-  if @cout.tranportorder_id != 10079
+  if @cout.tranportorder_id != 222
 
   ost =  @cout.tranportorder.code
   else
@@ -803,7 +803,7 @@ tb_text_guias  = [["Fecha :", @cout.fecha.strftime('%d-%m-%Y'), "TBK: "+@cout.tb
   
 
 
-  if @cout.tranportorder_id != 10079
+  if @cout.tranportorder_id != 222
 
      ost_code = @cout.tranportorder.code
 
@@ -889,7 +889,7 @@ end
       params.require(:cout).permit(:code, :fecha, :importe, :truck_id, :punto_id, :tranportorder_id, :employee_id, :employee2_id, 
         :employee3_id, :peajes, :lavado, :llanta, :alimento, :otros, :monto_recibido, :flete, :recibido_ruta, :vuelto, :descuento, 
         :reembolso, :flete, :ost_id,:tbk,:tbk_documento,:employee4_id,:truck2_id,:truck3_id,:observa,:fecha1,:fecha2,
-        :ubication_id ,:ubication2_id,:search)
+        :ubication_id ,:ubication2_id,:search,:carr )
     end
 
 end

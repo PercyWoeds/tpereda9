@@ -20,6 +20,14 @@ class ViaticotbkSearch
  		for detalle in a 
 
 
+        if detalle.tbk > 0 
+
+              @importe =  detalle.tbk  
+
+         else 
+             @importe =  0 
+
+        end 
   
  		    d =	 ViaticotbkDetail.new
 
@@ -27,7 +35,7 @@ class ViaticotbkSearch
             d.fecha         = detalle.fecha   
             d.document_id = 10 
             d.numero = detalle.code
-            d.importe = detalle.tbk  
+            d.importe = @importe 
             d.detalle = " "
             d.tm = "10"
             d.tranportorder_id = detalle.tranportorder_id

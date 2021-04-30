@@ -12,11 +12,27 @@
   <%= @cout.fecha.to_date  %>
 </p>
 
- <%if  @cout.tranportorder_id != 10079 %>
+ <%if  @cout.tranportorder_id != 222 %>
 <p>
   <strong>ORDEN DE SERVICIO :</strong>
   <%= @cout.tranportorder.code  %>
 </p>
+
+<% end %>
+
+
+ <%if  @cout.carr == "1" %>
+
+       <p>
+        <strong> Comprobante en Carretera </strong>
+        
+       </p>
+
+ <% else %>
+      <p>
+        <strong> Comprobante :</strong>
+    
+      </p>
 
 <% end %>
 

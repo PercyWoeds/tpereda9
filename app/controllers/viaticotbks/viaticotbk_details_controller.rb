@@ -261,25 +261,38 @@ class Viaticotbks::ViaticotbkDetailsController < ApplicationController
   # DELETE /viaticotbk_details/1
   # DELETE /viaticotbk_details/1.json
   def destroy
-      @cajas = Caja.all      
-      if @viaticotbk_detail.destroy
+      @cajas = Caja.all    
+
+
+        a =  Cout.find(@viaticotbk_detail.cout_id)
+
+        a.parent = nil
+
+        a.save 
+
+ 
+      if  @viaticotbk_detail.destroy
+
+
          begin
-      @viaticotbk[:inicial] = @viaticotbk.get_total_inicial
-    rescue
-      @viaticotbk[:inicial] = 0
-    end 
-    
-    begin
-      @viaticotbk[:total_ing] = @viaticotbk.get_total_ing
-    rescue 
-      @viaticotbk[:total_ing] = 0
-    end 
-    begin 
-      @viaticotbk[:total_egreso]=  @viaticotbk.get_total_sal
-    rescue 
-      @viaticotbk[:total_egreso]= 0 
-    end 
-    @viaticotbk[:saldo] = @viaticotbk[:inicial] +  @viaticotbk[:total_ing] - @viaticotbk[:total_egreso]
+          @viaticotbk[:inicial] = @viaticotbk.get_total_inicial
+        rescue
+          @viaticotbk[:inicial] = 0
+        end 
+        
+        begin
+          @viaticotbk[:total_ing] = @viaticotbk.get_total_ing
+        rescue 
+          @viaticotbk[:total_ing] = 0
+        end 
+        begin 
+          @viaticotbk[:total_egreso]=  @viaticotbk.get_total_sal
+        rescue 
+          @viaticotbk[:total_egreso]= 0 
+        end 
+        @viaticotbk[:saldo] = @viaticotbk[:inicial] +  @viaticotbk[:total_ing] - @viaticotbk[:total_egreso]
+
+
         @viaticotbk.save
         
          if @viaticotbk.caja_id == 1 
