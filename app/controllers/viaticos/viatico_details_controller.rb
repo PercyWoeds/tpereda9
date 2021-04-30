@@ -128,7 +128,7 @@ def agregar
 
     @egresos = Egreso.order(:code)
 
-    
+
 
      @purchase_nuevo = Purchase.find(params[:purchase_id])
 
@@ -140,7 +140,7 @@ def agregar
       detalle.document_id =  @purchase_nuevo.document_id
       detalle.numero = @purchase_nuevo.documento 
       detalle.importe = @purchase_nuevo.total_amount 
-      detalle.detalle = ""
+      detalle.detalle = @purchase_nuevo.comments 
       detalle.tm = "1"
       detalle.supplier_id = @purchase_nuevo.supplier_id 
       detalle.gasto_id = 338
