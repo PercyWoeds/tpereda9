@@ -2,7 +2,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
   
   before_action :set_viatico 
   
-  before_action :set_viatico_detail, :except=> [:new,:create]
+  before_action :set_viatico_detail, :except=> [:new,:new2,:create,:agregar]
 
   
   # GET /viatico_details
@@ -42,6 +42,174 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     company_id = @company.id
     
   end
+ def new2
+
+    @viatico_detail = ViaticoDetail.new
+     @gastos = Gasto.order(:codigo)
+    @egresos = Egreso.order(:code)
+    
+    @company = Company.find(1)
+    
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+    @documents =  @company.get_documents_area("OPE")
+
+
+    @cajas = Caja.all      
+    @viatico_detail[:fecha] = Date.today 
+    @destinos = Destino.all
+    @employees = @company.get_employees 
+    company_id = @company.id
+  end
+
+  def new2
+    @pagetitle = "Nuevo Viatico"
+    @action_txt = "Create"
+
+     @gastos = Gasto.order(:codigo)
+    @egresos = Egreso.order(:code)
+    
+    @company = Company.find(1)
+    
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+    @documents =  @company.get_documents_area("OPE")
+    @suppliers = @company.get_suppliers 
+
+    @cajas = Caja.all      
+  
+    @destinos = Destino.all
+    @employees = @company.get_employees 
+    company_id = @company.id
+    
+
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+    @documents =  @company.get_documents_area("OPE")
+    @moneda = @company.get_monedas 
+
+
+
+
+    fecha1 ="2021-01-01"   
+       if  params[:search] != ""
+
+           @purchases = Purchase.where("documento ilike ? ",  "%#{params[:search]}%").order("date1 DESC","documento DESC").paginate(:page => params[:page])
+           puts "else 2 "
+
+        else
+          @purchases = Purchase.order('date1 DESC',"documento DESC").where(status: nil,user_id: 9).paginate(:page => params[:page]) 
+        end
+
+
+     puts "new2 "
+    @viatico.company_id = @company.id    
+   
+  end
+
+
+
+ def ac_facturas
+    @docs = Purchase.where(["company_id =  ? and (documento iLIKE ? )",params[:company_id], "%" + params[:q] + "%"])   
+    render :layout => false
+  end
+
+def agregar
+ @company = Company.find(1)
+    @viatico = Viatico.find(params[:viatico_id])
+     @cajas = Caja.all     
+
+      @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+    @documents = @company.get_documents()
+    @cajas = Caja.all      
+    @destinos = Destino.all
+    @employees = @company.get_employees 
+
+    @egresos = Egreso.order(:code)
+
+    
+
+     @purchase_nuevo = Purchase.find(params[:purchase_id])
+
+      detalle = ViaticoDetail.new 
+
+      detalle.viatico_id= params[:viatico_id]
+      detalle.fecha =  @purchase_nuevo.date1 
+      detalle.descrip= nil 
+      detalle.document_id =  @purchase_nuevo.document_id
+      detalle.numero = @purchase_nuevo.documento 
+      detalle.importe = @purchase_nuevo.total_amount 
+      detalle.detalle = ""
+      detalle.tm = "1"
+      detalle.supplier_id = @purchase_nuevo.supplier_id 
+      detalle.gasto_id = 338
+      detalle.employee_id =  64
+      detalle.destino_id = 1
+      detalle.egreso_id = 5
+      
+    
+
+        respond_to do |format|
+
+      if detalle.save
+          begin
+          @viatico[:inicial] = @viatico.get_total_inicial
+          rescue
+          @viatico[:inicial] = 0
+          end 
+
+          begin
+          @viatico[:total_ing] = @viatico.get_total_ing
+          rescue 
+          @viatico[:total_ing] = 0
+          end 
+
+          begin 
+          @viatico[:total_egreso]=  @viatico.get_total_sal
+          rescue 
+          @viatico[:total_egreso]= 0 
+          end 
+  
+   
+
+           @viatico[:saldo] = @viatico[:inicial] +  @viatico[:total_ing] - @viatico[:total_egreso]
+
+
+         @viatico.save 
+
+          if @viatico.caja_id == 1 
+          a = @cajas.find(1)
+          a.inicial =  @viatico[:saldo]
+          a.save
+          end 
+          if @viatico.caja_id == 2
+          a = @cajas.find(2)
+          a.inicial =  @viatico[:saldo]
+          a.save
+          end 
+          if @viatico.caja_id == 3 
+          a = @cajas.find(3)
+          a.inicial =  @viatico[:saldo]
+          a.save
+          end 
+          if @viatico.caja_id == 4 
+          a = @cajas.find(4)
+          a.inicial =  @viatico[:saldo]
+          a.save
+          end 
+
+
+         format.html { redirect_to @viatico, notice: 'Viatico Detalle fue creado satisfactoriamente.' }
+         format.json { render :show, status: :created, location: @viatico }
+       else
+         format.html { render :new }
+         format.json { render json: @viatico_detail.errors, status: :unprocessable_entity }
+       end
+     end
+
+
+end 
 
   # GET /viatico_details/1/edit
   def edit
@@ -57,9 +225,6 @@ class Viaticos::ViaticoDetailsController < ApplicationController
 
     @egresos = Egreso.order(:code)
     
-    
-    
-
     
     if @viatico_detail.supplier_id != nil
     @supplier = Supplier.find(@viatico_detail.supplier_id)
@@ -119,32 +284,30 @@ class Viaticos::ViaticoDetailsController < ApplicationController
      @viatico_detail.fecha = params[:viatico_detail][:fecha] << zeros 
     
      respond_to do |format|
-      if @viatico_detail.save
-         begin
-      @viatico[:inicial] = @viatico.get_total_inicial
-    rescue
-      @viatico[:inicial] = 0
-    end 
-    
-    begin
-      @viatico[:total_ing] = @viatico.get_total_ing
-    rescue 
-      @viatico[:total_ing] = 0
-    end 
-    
-    begin 
-      @viatico[:total_egreso]=  @viatico.get_total_sal
-    rescue 
-      @viatico[:total_egreso]= 0 
-    end 
-    puts "valooooo"
-     puts @viatico[:inicial]
-    puts  @viatico[:total_ing]
-    puts @viatico[:total_egreso]
 
+
+      if @viatico_detail.save
+          begin
+          @viatico[:inicial] = @viatico.get_total_inicial
+          rescue
+          @viatico[:inicial] = 0
+          end 
+
+          begin
+          @viatico[:total_ing] = @viatico.get_total_ing
+          rescue 
+          @viatico[:total_ing] = 0
+          end 
+
+          begin 
+          @viatico[:total_egreso]=  @viatico.get_total_sal
+          rescue 
+          @viatico[:total_egreso]= 0 
+          end 
+  
    
 
-    @viatico[:saldo] = @viatico[:inicial] +  @viatico[:total_ing] - @viatico[:total_egreso]
+           @viatico[:saldo] = @viatico[:inicial] +  @viatico[:total_ing] - @viatico[:total_egreso]
 
 
          @viatico.save 
@@ -153,22 +316,22 @@ class Viaticos::ViaticoDetailsController < ApplicationController
           a = @cajas.find(1)
           a.inicial =  @viatico[:saldo]
           a.save
-        end 
-        if @viatico.caja_id == 2
+          end 
+          if @viatico.caja_id == 2
           a = @cajas.find(2)
           a.inicial =  @viatico[:saldo]
           a.save
-        end 
-        if @viatico.caja_id == 3 
+          end 
+          if @viatico.caja_id == 3 
           a = @cajas.find(3)
           a.inicial =  @viatico[:saldo]
           a.save
-        end 
-        if @viatico.caja_id == 4 
+          end 
+          if @viatico.caja_id == 4 
           a = @cajas.find(4)
           a.inicial =  @viatico[:saldo]
           a.save
-        end 
+          end 
 
 
          format.html { redirect_to @viatico, notice: 'Viatico Detalle fue creado satisfactoriamente.' }
@@ -322,4 +485,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
       
       params.require(:viatico_detail).permit(:fecha, :descrip, :document_id, :numero, :importe, :detalle, :tm, :CurrTotal, :tranportorder_id,:date_processed,:ruc,:supplier_id,:gasto_id,:employee_id,:destino_id,:egreso_id)
     end
+
+
+
 end

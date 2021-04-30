@@ -153,7 +153,14 @@ require 'sidekiq/cron/web'
   resources :manifestships
 
   resources :viaticos do
-    resources :viatico_details, except: [:index,:show], controller: "viaticos/viatico_details"
+   
+        resources :viatico_details, except: [:index,:show], controller:  "viaticos/viatico_details" do
+        collection { get :new2 }    
+        collection { get :search_viatico_viatico_details }
+        collection { get :agregar }    
+      end 
+
+
   end
 
    resources :viaticotbks do
@@ -1611,6 +1618,9 @@ match '/proyecto_exams/:id/proyectoexam_details/:proyectoexam_detail_id' => 'pro
   resources :cous 
 
 
+  match 'viatico_details/ac_facturas/:company_id' => 'viatico_details#ac_facturas', via: [:get, :post]
+  
+ match 'viaticos/viatico_details/new2/:id'   => 'viaticos_viatico_details#new2', via: [:get, :post]
 
   mount Sidekiq::Web, at: '/sidekiq'
 

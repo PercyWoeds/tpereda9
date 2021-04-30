@@ -7,6 +7,8 @@ require "open-uri"
 class ViaticosController < ApplicationController
 before_filter :authenticate_user!
 
+
+
   def reportxls
     @company=Company.find(1)      
    
@@ -965,22 +967,6 @@ pdf.move_down 2
     
   end
 
-  def new2
-    @pagetitle = "Nuevo Viatico"
-    @action_txt = "Create"
-    
-    @viatico = Viatico.new
-    @cajas = Caja.all 
-    @company = Company.find(params[:company_id])
-    @locations = @company.get_locations()
-    @divisions = @company.get_divisions()
-    
-    @company = Company.find(params[:company_id])
-
-    @viatico.company_id = @company.id    
-   
-  end
-
 
   def update_inicial
     # updates songs based on artist selected
@@ -1503,6 +1489,8 @@ pdf.move_down 2
 
     
   end
+
+  
 
 
   

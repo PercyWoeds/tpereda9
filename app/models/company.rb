@@ -314,6 +314,15 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
     return documents
   end
 
+
+  
+
+  def get_documents()
+     documents = Document.where(company_id: self.id).order(:descripshort)
+       
+    return documents
+  end
+
   def get_documents_area(dato)
      documents = Document.where(company_id: self.id,area: dato).order(:descripshort)
        
@@ -2439,6 +2448,12 @@ def get_pendientes_day_customer_detraccion(fecha1,fecha2,cliente)
   
     def get_purchases_5(fecha1,fecha2,proveedor)
     @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ?  and supplier_id = ? and status =?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",proveedor,nil ]).order(:supplier_id,:moneda_id,:date1)    
+    return @purchases 
+  end
+  def get_purchases_10
+     fecha1 ="2021-01-01"
+
+      @purchases = Purchase.where([" company_id = ? AND date1 >= ? ", self.id, "#{fecha1} 00:00:00" ]).order(:supplier_id,:moneda_id,:date1).paginate(:page => params[:page])   
     return @purchases 
   end
 
