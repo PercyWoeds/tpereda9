@@ -53,9 +53,39 @@
 </h3>
 
 <p>
-  <b>Inicial </b>  
-  <%= link_to @viaticolgv.inicial.round(2) %>
+ <h3> Inicial : <%= link_to @viaticolgv.inicial.round(2) %></h3>
 </p>
+
+
+
+
+  <h4>
+    Agregar Comprobante por rendir 
+  </h4>
+                                              
+  <form method="get" action="/viaticolgvs" onsubmit="addItemToLgv2(); return false;">
+
+    <strong>Documento :</strong><br />
+          <input type="text" name="ac_item_compro" id="ac_item_compro" value="" />
+          <div class="small">
+            Ingrese un termino de busqueda para encontrar un documento 
+          </div>
+    
+          <br />
+
+          <strong>Importe :</strong><br />
+      
+          <input type="text" name="ac_item_inicial" id="ac_item_inicial" value="" class="tf_short" readonly />
+          <div class="small">
+            Importe entregado en comprobante.
+          </div>
+          <br />
+    
+    <input type="submit" value="Agregar Comprobante" />
+
+  </form>
+
+
 
 
 <div class="button">
@@ -221,3 +251,24 @@
   <%= link_to 'Regresar', "/companies/viaticolgvs/#{@viaticolgv.company.id}" %>
 </div>
 
+
+
+<%= render 'layouts/autocomplete' %>
+
+
+<script>
+
+   $("#ac_item_compro").autocomplete("/lgvs/ac_compros/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_item_compro").result(function(event, data, formatted) {
+      $("#ac_item_inicial").val(data[4]);
+      $("#ac_compro_id").val(data[2]);
+    });
+    
+
+
+</script>

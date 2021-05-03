@@ -282,7 +282,7 @@ self.per_page = 20
 
   def get_egresos
 
-      @viaticos_egresos = Egreso.where("id> 1")
+      @viaticos_egresos = Egreso.where("id> 1 and extension <> ?","TBK")
 
   end 
 

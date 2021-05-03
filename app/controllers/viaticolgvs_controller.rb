@@ -109,6 +109,14 @@ class ViaticolgvsController < ApplicationController
 
       
        for  product in @viaticolgv.get_viaticos_cheque() 
+              
+
+              puts "dddd" 
+
+             puts product.egreso_id   
+
+            puts product.detalle
+
             row = []
             row << nroitem.to_s        
             row << product.fecha.strftime("%d/%m/%Y") 
@@ -294,9 +302,11 @@ class ViaticolgvsController < ApplicationController
 
         for  egresos  in @viaticolgv.get_ingresos() 
 
+
+
            puts egresos.name 
 
-         @detalle_ing= egresos.get_detalle_egreso(@viaticolgv.id,egresos.id)
+         @detalle_ing= egresos.get_detalle_egresolgv(@viaticolgv.id,egresos.id)
 
 
             table_content = ([ [egresos.name  ]   ])
@@ -431,7 +441,7 @@ class ViaticolgvsController < ApplicationController
        for  egresos  in @viaticolgv.get_egresos() 
 
 
-         @detalle = egresos.get_detalle_egreso(@viaticolgv.id,egresos.id)
+         @detalle = egresos.get_detalle_egresolgv(@viaticolgv.id,egresos.id)
 
         
          
@@ -929,8 +939,7 @@ pdf.move_down 2
   # GET /viaticos/1
   # GET /viaticos/1.xml
   def show
-    
-    
+    @company  = Company.find(1)     
     @viaticolgv = Viaticolgv.find(params[:id])
     
     @viaticolgv_detail = @viaticolgv.viaticolgv_details

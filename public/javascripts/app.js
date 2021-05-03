@@ -1722,7 +1722,7 @@ function addItemToLgv2() {
     var item = $("#ac_item_compro").val();
     
    if(item != "") {
-      var company_id = $("#lgv_company_id").val();
+      var company_id = $("#viaticolgv_company_id").val();
       var item_id = $("#ac_compro_id").val();        
       var inicial = $("#ac_item_inicial").val();        
       
@@ -1746,9 +1746,9 @@ function addItemToLgv2() {
 
   function listItemsLgv2() {
     var items2 = $("#items2").val();
-    var company_id = $("#lgv_company_id").val();
+    var company_id = $("#viaticolgv_company_id").val();
     
-    $.get('/lgvs/list_items2/' + company_id, {
+    $.get('/viaticolgvs/list_items2/' + company_id, {
       items2: items2
     },
     function(data) {

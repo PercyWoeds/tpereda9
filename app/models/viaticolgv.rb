@@ -280,18 +280,20 @@ self.per_page = 20
   end
   def get_viaticos
       @viaticos = ViaticoDetail.where("viaticolgv_id = ? ",self.id).order(:destino_id,:id,:document_id)
+      return  @viaticos
   end
 
   def get_egresos
 
       @viaticos_egresos = Egreso.where("id> 1")
-
+      return @viaticos_egresos
   end 
 
 
   def get_ingresos
 
       @viaticos_egresos = Egreso.where(id: 1  )
+      return  @viaticos_egresos
 
   end 
 
@@ -300,13 +302,16 @@ self.per_page = 20
 
       @viaticos = ViaticolgvDetail.select("sum(importe)  as total ").where("viaticolgv_id = ? and egreso_id > 1 ",self.id).group(:viaticolgv_id).order(:viaticolgv_id)
 
- if @viaticos
+       if @viaticos
 
         return @viaticos.first.total 
 
       else
         return 0 
       end 
+
+      return @viaticos
+
   end 
 
 
@@ -320,6 +325,7 @@ self.per_page = 20
       else
         return 0 
       end 
+    return @viaticos
 
   end 
 
