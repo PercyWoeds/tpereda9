@@ -4,9 +4,24 @@
   xmlns:x="urn:schemas-microsoft-com:office:excel"
   xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
   xmlns:html="http://www.w3.org/TR/REC-html40">
+ 
+ <Styles>
+
+    <Style ss:ID="s62">
+  
+       <Interior ss:Color="#FF0800" ss:Pattern="Solid"/>
+      
+    </Style>
+   </Styles>
+   
+
+ 
+
   <Worksheet ss:Name="Sheet1">
+ 
     <Table>
-      <Row>
+
+          <Row>
 
 
         <Cell><Data ss:Type="String">Nro</Data></Cell>
@@ -45,6 +60,8 @@
 
       </Row>
 
+     <% previous_day = Date.today  %>
+
       <% nroitem = 1 %>
     <% @facturas_rpt.each do |product| %>
       <Row>
@@ -53,6 +70,7 @@
         <Cell><Data ss:Type="String"><%= product.employee.fecha_ingreso.strftime("%d/%m/%Y") %></Data></Cell>
         <Cell><Data ss:Type="String"><%= product.lugar %></Data></Cell>
         <Cell><Data ss:Type="String"><%= product.anio  %></Data></Cell>
+
         <Cell><Data ss:Type="String"><%= product.dni_emision.strftime("%d/%m/%Y") %></Data></Cell>
 
 
@@ -63,14 +81,18 @@
 
         <% else %>
 
-
-        <Cell><Data ss:Type="String"><%= product.dni_caducidad.strftime("%d/%m/%Y") %></Data></Cell>
-
+           <% if product.dni_caducidad <=  previous_day    %>
+            <Cell ss:StyleID="s62" > <Data ss:Type="String"> <%= product.dni_caducidad.strftime("%d/%m/%Y") %> </Data></Cell>
+            
+           <% else%> 
+            <Cell > <Data ss:Type="String"> <%= product.dni_caducidad.strftime("%d/%m/%Y") %>  </Data></Cell>
+            
+           <% end %>
         <% end %>
 
           <%  if  product.ap_emision != nil %>
 
-             <Cell><Data ss:Type="String"><%= product.ap_emision.strftime("%d/%m/%Y") %></Data></Cell>
+             <Cell > <Data ss:Type="String"><%= product.ap_emision.strftime("%d/%m/%Y") %></Data></Cell>
 
           <% else  %>
 
@@ -84,7 +106,14 @@
         <%  if  product.ap_caducidad != nil %>
 
 
-        <Cell><Data ss:Type="String"><%= product.ap_caducidad.strftime("%d/%m/%Y") %></Data></Cell>
+       
+         <% if product.ap_caducidad <=  previous_day    %>
+            <Cell ss:StyleID="s62" > <Data ss:Type="String"> <%= product.ap_caducidad.strftime("%d/%m/%Y") %> </Data></Cell>
+            
+           <% else%> 
+            <Cell > <Data ss:Type="String"> <%= product.ap_caducidad.strftime("%d/%m/%Y") %>  </Data></Cell>
+            
+           <% end %>
 
           <% else  %>
 
@@ -105,7 +134,13 @@
         <%  if  product.ape_caducidad != nil %>
 
 
-        <Cell><Data ss:Type="String"><%= product.ape_caducidad.strftime("%d/%m/%Y") %></Data></Cell>
+             <% if product.ape_caducidad <=  previous_day    %>
+            <Cell ss:StyleID="s62" > <Data ss:Type="String"> <%= product.ape_caducidad.strftime("%d/%m/%Y") %> </Data></Cell>
+            
+           <% else%> 
+            <Cell > <Data ss:Type="String"> <%= product.ape_caducidad.strftime("%d/%m/%Y") %>  </Data></Cell>
+            
+           <% end %>
         
           <% else  %>
 
@@ -118,7 +153,15 @@
 
         <Cell><Data ss:Type="String"><%= product.expedicion_licencia.strftime("%d/%m/%Y") %></Data></Cell>
 
-        <Cell><Data ss:Type="String"><%= product.revalidacion_licencia.strftime("%d/%m/%Y") %></Data></Cell>
+
+         <% if product.revalidacion_licencia <=  previous_day    %>
+            <Cell ss:StyleID="s62" > <Data ss:Type="String"> <%= product.revalidacion_licencia.strftime("%d/%m/%Y") %> </Data></Cell>
+            
+           <% else%> 
+            <Cell > <Data ss:Type="String"> <%= product.revalidacion_licencia.strftime("%d/%m/%Y") %>  </Data></Cell>
+            
+           <% end %>
+
 
         <Cell><Data ss:Type="String"><%= product.categoria_especial %></Data></Cell>
 
@@ -135,11 +178,17 @@
           <%  if  product.revalidacion_licencia_especial != nil %>
 
 
-          <Cell><Data ss:Type="String"><%= product.revalidacion_licencia_especial.strftime("%d/%m/%Y") %></Data></Cell>
-
+           <% if product.revalidacion_licencia_especial <=  previous_day    %>
+            <Cell ss:StyleID="s62" > <Data ss:Type="String"> <%= product.revalidacion_licencia_especial.strftime("%d/%m/%Y") %> </Data></Cell>
+            
+           <% else%> 
+            <Cell > <Data ss:Type="String"> <%= product.revalidacion_licencia_especial.strftime("%d/%m/%Y") %>  </Data></Cell>
+            
+           <% end %>
           <% else  %>
 
           <Cell><Data ss:Type="String"> </Data></Cell>
+
           <% end %>
 
 
