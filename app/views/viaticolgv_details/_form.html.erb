@@ -1,0 +1,28 @@
+<%= simple_form_for(@viaticolgv_detail) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :viatico_id %>
+    <%= f.input :fecha %>
+    <%= f.input :descrip %>
+    <%= f.input :document_id %>
+    <%= f.input :numero %>
+    <%= f.input :importe %>
+    <%= f.input :detalle %>
+    <%= f.input :tm %>
+    <%= f.input :CurrTotal %>
+    <%= f.input :tranportorder_id %>
+    <%= f.input :date_processed %>
+    <%= f.input :ruc %>
+    <%= f.input :supplier_id %>
+    <%= f.input :gasto_id %>
+    <%= f.input :employee_id %>
+    <%= f.input :destino_id %>
+    <%= f.input :egreso_id %>
+    <%= f.association :viaticolgv %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

@@ -1,0 +1,51 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  fecha1: 2021-05-01 19:48:13
+  inicial: 1.5
+  total_ing: 1.5
+  total_egreso: 1.5
+  saldo: 1.5
+  comments: MyString
+  user_id: 1
+  company_id: 1
+  processed: MyString
+  compro_id: 1
+  date_processed: 2021-05-01 19:48:13
+  tipo: MyString
+  caja_id: 1
+  cdevuelto: MyString
+  cdescuento: MyString
+  creembolso: MyString
+  fecha_devuelto: 2021-05-01 19:48:13
+  fecha_descuento: 2021-05-01 19:48:13
+  fecha_reembolso: 2021-05-01 19:48:13
+  cdevuelto_importe: 1.5
+  cdescuento_importe: 1.5
+  creembolso_importe: 1.5
+
+two:
+  code: MyString
+  fecha1: 2021-05-01 19:48:13
+  inicial: 1.5
+  total_ing: 1.5
+  total_egreso: 1.5
+  saldo: 1.5
+  comments: MyString
+  user_id: 1
+  company_id: 1
+  processed: MyString
+  compro_id: 1
+  date_processed: 2021-05-01 19:48:13
+  tipo: MyString
+  caja_id: 1
+  cdevuelto: MyString
+  cdescuento: MyString
+  creembolso: MyString
+  fecha_devuelto: 2021-05-01 19:48:13
+  fecha_descuento: 2021-05-01 19:48:13
+  fecha_reembolso: 2021-05-01 19:48:13
+  cdevuelto_importe: 1.5
+  cdescuento_importe: 1.5
+  creembolso_importe: 1.5

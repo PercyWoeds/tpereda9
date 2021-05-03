@@ -1,0 +1,2 @@
+module ViaticolgvDetailsHelper
+end

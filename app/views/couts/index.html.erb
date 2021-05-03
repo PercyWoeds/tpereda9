@@ -28,12 +28,12 @@
       <tr>
         <td><%= cout.code %></td>
         <td><%= cout.fecha.strftime("%d/%m/%Y") %></td>
-        <%if   !cout.tranportorder.nil? %>
+        <%if   cout.tranportorder_id != 222 %>
 
         <td><%= cout.tranportorder.code  %></td>
 
         <% else %>
-        <td> </td>
+        <td>  </td>
         <% end %>
         <td><%= cout.employee.full_name %></td>
        

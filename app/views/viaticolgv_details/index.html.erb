@@ -1,0 +1,61 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Viaticolgv Details</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Viatico</th>
+      <th>Fecha</th>
+      <th>Descrip</th>
+      <th>Document</th>
+      <th>Numero</th>
+      <th>Importe</th>
+      <th>Detalle</th>
+      <th>Tm</th>
+      <th>Currtotal</th>
+      <th>Tranportorder</th>
+      <th>Date processed</th>
+      <th>Ruc</th>
+      <th>Supplier</th>
+      <th>Gasto</th>
+      <th>Employee</th>
+      <th>Destino</th>
+      <th>Egreso</th>
+      <th>Viaticolgv</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @viaticolgv_details.each do |viaticolgv_detail| %>
+      <tr>
+        <td><%= viaticolgv_detail.viatico_id %></td>
+        <td><%= viaticolgv_detail.fecha %></td>
+        <td><%= viaticolgv_detail.descrip %></td>
+        <td><%= viaticolgv_detail.document_id %></td>
+        <td><%= viaticolgv_detail.numero %></td>
+        <td><%= viaticolgv_detail.importe %></td>
+        <td><%= viaticolgv_detail.detalle %></td>
+        <td><%= viaticolgv_detail.tm %></td>
+        <td><%= viaticolgv_detail.CurrTotal %></td>
+        <td><%= viaticolgv_detail.tranportorder_id %></td>
+        <td><%= viaticolgv_detail.date_processed %></td>
+        <td><%= viaticolgv_detail.ruc %></td>
+        <td><%= viaticolgv_detail.supplier_id %></td>
+        <td><%= viaticolgv_detail.gasto_id %></td>
+        <td><%= viaticolgv_detail.employee_id %></td>
+        <td><%= viaticolgv_detail.destino_id %></td>
+        <td><%= viaticolgv_detail.egreso_id %></td>
+        <td><%= viaticolgv_detail.viaticolgv %></td>
+        <td><%= link_to 'Show', viaticolgv_detail %></td>
+        <td><%= link_to 'Edit', edit_viaticolgv_detail_path(viaticolgv_detail) %></td>
+        <td><%= link_to 'Destroy', viaticolgv_detail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Viaticolgv detail', new_viaticolgv_detail_path %>

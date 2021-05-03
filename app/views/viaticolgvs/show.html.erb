@@ -1,0 +1,223 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @viaticolgv.company.name, @viaticolgv.company %> &raquo;
+  <%= link_to "viaticos", "/companies/customer_payments/#{@viaticolgv.company.id}" %>
+</div>
+
+<h1>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  <%= @viaticolgv.identifier %>
+</h1>
+
+<%= hr() %>
+
+<% if @viaticolgv.location %>
+  <p>
+    <b>Location:</b>
+    <%= link_to @viaticolgv.location.name, @viaticolgv.location %>
+  </p>
+<% end %>
+
+<% if @viaticolgv.division %>
+  <p>
+    <b>Division:</b>
+    <%= link_to @viaticolgv.division.name, @viaticolgv.division %>
+  </p>
+<% end %>
+
+<p>
+  <b>Code:</b>
+  <%= @viaticolgv.code %>
+</p>
+<p>
+  
+  <strong> <%= @viaticolgv.caja.descrip %></strong>
+</p>
+
+<p>
+    <b>Fecha entrega:</b>
+    <%= @viaticolgv.fecha1.strftime("%d/%m/%Y") %>   
+</p>
+ 
+<p>
+    <b>Estado: </b>
+    <%= @viaticolgv.get_processed   %>   
+</p>
+
+
+
+<%= hr() %>
+
+<h3>
+  Informacion Pago
+</h3>
+
+<p>
+  <b>Inicial </b>  
+  <%= link_to @viaticolgv.inicial.round(2) %>
+</p>
+
+
+<div class="button">
+<%= link_to 'Agregar Item', new_viaticolgv_viaticolgv_detail_path(@viaticolgv) %>
+
+
+<%= link_to 'Buscar Documento', new2_viaticolgv_viaticolgv_details_path(@viaticolgv) 
+%>  
+</div> 
+
+ 
+
+
+<table>
+  <thead>
+    <tr>
+     
+      <th>
+        Item
+      </th>
+
+       <th>
+        ingreso/Egreso
+      </th>
+
+       <th>
+        Fecha
+      </th>
+      
+      
+      <th>
+        Descripcion 
+      </th>
+      
+      
+      <th>
+        Nro.Documento   </th>
+      
+      <th>
+        Importe S/.
+      </th>
+      
+      
+      <th>
+        Detalle
+      </th>
+        <th>
+        Opciones 
+      </th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    
+<%= hr() %>
+
+<% nroitem = 1 %>
+    <%  @viaticolgv_detail.each do |product| %>
+    
+      <tr>
+
+        <td class="small bordered_bottom bordered_right">
+        <%= nroitem %>
+        </td>
+
+        <td class="small bordered_bottom bordered_right">
+             <%if product.egreso %>  
+              <%= product.egreso.name  %>
+               <%else%>
+
+              <%end %>
+          </td>
+
+        <td class="small bordered_bottom bordered_right">
+
+             <%=product.fecha.strftime("%d/%m/%Y") %>
+
+          </td>
+          
+        
+         <td class="small bordered_bottom bordered_right">
+           <%if product.supplier_id !=  2570 %>
+            <%= product.supplier.name %>
+          <%else%>
+           <%if  product.employee != 64 %>
+            <%= product.employee.full_name %>
+            <%end %>
+          <%end %>
+          </td>
+         
+        
+          
+          <td class="small bordered_bottom bordered_right">
+            
+              <%= product.document.descripshort << "-" << product.numero    %>
+          </td>
+
+
+          <td class="small bordered_bottom bordered_left">
+            <%= money(product.importe) %>
+          </td>
+
+
+           <td class="small bordered_bottom bordered_right">
+              <%=product.detalle %>
+          </td>
+
+          <td><%= link_to 'Editar',  edit_viaticolgv_viaticolgv_detail_path(viaticolgv_id: @viaticolgv.id,id: product.id ) %></td>          
+          <td><%= link_to 'Eliminar',[@viaticolgv,product], method: :delete, data: { confirm: 'Esta seguro?' } %></td>
+          
+      </tr>
+
+      <% nroitem += 1 %>
+    <% end %>
+   <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        Total Egresos
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@viaticolgv.total_egreso)%>
+      </td>
+    </tr>
+    
+   <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        Saldo
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@viaticolgv.saldo) %>
+      </td>
+    </tr>
+    
+   
+   
+  </tbody>
+</table>
+<br />
+
+
+<br />
+
+
+<p>
+  <strong>Seller:</strong>
+  <%= link_to @viaticolgv.user.username, @viaticolgv.user %>
+</p>
+
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Exportar to PDF', "/viaticolgvs/pdf/#{@viaticolgv.id}.pdf" %>  
+  
+ <% if @viaticolgv.processed == "1" %> 
+
+ <% %>
+
+ <% else %>
+
+  <%= link_to 'Procesar', "/viaticolgvs/do_process/#{@viaticolgv.id}" %>
+
+ <% end %> 
+  
+  <%= link_to 'Regresar', "/companies/viaticolgvs/#{@viaticolgv.company.id}" %>
+</div>
+

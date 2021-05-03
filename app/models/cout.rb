@@ -91,11 +91,24 @@ belongs_to :tranportorder
 
     
     def get_placa(id)
+
+    if   Truck.where(id: id).exists? 
+
+   
+
       placa = Truck.find(id)
+
+
+
       return placa.placa
 
-    end   
+    else 
+      return ""
 
+    end   
+  end 
+
+  
 private
 
 

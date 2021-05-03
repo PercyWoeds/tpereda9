@@ -7,6 +7,7 @@ require 'sidekiq/cron/web'
   Mnygo::Application.routes.draw do
 
   
+  resources :viaticolgv_details
   resources :pexes
   resources :viaticotbks
   resources :lvt_details
@@ -163,6 +164,19 @@ require 'sidekiq/cron/web'
 
   end
 
+
+   resources :viaticolgvs do
+   
+        resources :viaticolgv_details, except: [:index,:show], controller:  "viaticolgvs/viaticolgv_details" do
+        collection { get :new2 }    
+        collection { get :search_viatico_viatico_details }
+        collection { get :agregar } 
+      end 
+
+
+  end
+
+ 
    resources :viaticotbks do
     collection { get :search }
     resources :viaticotbk_details, except: [:index,:show], controller: "viaticotbks/viaticotbk_details"
@@ -874,6 +888,32 @@ match 'companies/reports/rpt_coti_1_pdf/:company_id' => 'reports#rpt_coti_1_pdf'
   match 'viaticotbks/rpt_viatico_pdf' => 'viaticotbks#rpt_viatico_pdf', via: [:get, :post]
   match 'viaticotbks/reportxls/:company_id' => 'viaticotbks#reportxls', via: [:get]
   match 'viaticotbks/search' => 'viaticotbks#search', via: [:get, :post]
+
+
+
+# Viaticos
+  
+  match 'viaticolgvs/list_items/:company_id' => 'viaticolgvs#list_items', via: [:get, :post]
+  match 'viaticolgvs/ac_documentos/:company_id' => 'viaticolgvs#ac_documentos', via: [:get, :post]
+  match 'viaticolgvs/ac_cajas/:company_id' => 'viaticolgvs#ac_cajas', via: [:get, :post]
+  match 'viaticolgvs/ac_osts/:company_id' => 'viaticolgvs#ac_osts', via: [:get, :post]
+  match 'viaticolgvs/ac_employees/:company_id' => 'viaticolgvs#ac_employees', via: [:get, :post]
+  match 'viaticolgvs/ac_user/:company_id' => 'viaticolgvs#ac_user', via: [:get, :post]
+  match 'viaticolgvs/ac_customers/:company_id' => 'viaticolgvs#ac_customers', via: [:get, :post]
+  match 'viaticolgvs/new/:company_id' => 'viaticolgvs#new', via: [:get, :post]
+  match 'viaticolgvs/new2/:company_id' => 'viaticolgvs#new2', via: [:get, :post]
+  match 'viaticolgvs/do_email/:id' => 'viaticolgvs#do_email', via: [:get, :post]
+  match 'viaticolgvs/do_process/:id' => 'viaticolgvs#do_process', via: [:get, :post]
+  match 'viaticolgvs/email/:id' => 'viaticolgvs#email', via: [:get, :post]
+  match 'viaticolgvs/pdf/:id' => 'viaticolgvs#pdf', via: [:get, :post]
+  match 'companies/viaticolgvs/:company_id' => 'viaticolgvs#list_viaticos', via: [:get, :post]
+  
+  match 'viaticolgvs/rpt_viatico_pdf/:company_id' => 'viaticolgvs#rpt_viatico_pdf', via: [:get, :post]
+  match 'viaticolgvs/rpt_viatico_pdf' => 'viaticolgvs#rpt_viatico_pdf', via: [:get, :post]
+  match 'viaticolgvs/reportxls/:company_id' => 'viaticolgvs#reportxls', via: [:get]
+
+
+
 
 get 'search', to: 'viaticotbks#search'
 

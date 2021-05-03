@@ -1,0 +1,224 @@
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
+
+require 'axlsx'
+
+p = Axlsx::Package.new
+wb = xlsx_package.workbook
+wb.styles do |s|
+    date = s.add_style(:format_code => "yyyy-mm-dd", :border => Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :left},:sz=>8)
+    padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
+    percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
+    title = s.add_style(:bg_color => "FFFF0000", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
+    title2= s.add_style  :bg_color => "0000FF", :fg_color => "FF", :sz => 9, :alignment => { :horizontal=> :center }
+    title3= s.add_style  :bg_color => "ddeded", :fg_color => "00", :sz => 8, :alignment => { :horizontal=> :center } ,:border=>Axlsx::STYLE_THIN_BORDER
+    title4= s.add_style  :bg_color => "FF", :fg_color => "00", :sz => 16, :alignment => { :horizontal=> :center },:bold=>true 
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :left},:sz=>8)
+    
+
+     title5 = s.add_style  :bg_color => "FDFD96", :fg_color => "00", :sz => 8, :alignment => { :horizontal=> :center } ,:border=>Axlsx::STYLE_THIN_BORDER
+
+
+    currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
+                              :border=>Axlsx::STYLE_THIN_BORDER,:sz=>8)
+    red_negative = wb.styles.add_style :num_fmt => 8
+    comma = wb.styles.add_style :num_fmt => 3
+    super_funk = wb.styles.add_style :format_code => '[Green]#'
+    
+    wb.add_worksheet(name: "Viaticos") do |sheet|
+    
+      sheet.add_row [" ",
+                      "LISTADO DE ", @viaticos_rpt.first.caja.descrip
+                     ], :style => [title4,title4,title4]
+        
+    
+    
+   @viaticos_rpt.each do |payment|
+
+
+
+
+      sheet.add_row ["", "","","","","", "","",""],
+          :style => [cadena,cadena,currency,currency,currency,currency,cadena]
+
+
+      sheet.add_row ["CODE: ",
+                      "CODIGO:",
+                     "SALDO INICIAL",
+                     "INGRESO",
+                     "EGRESO",                                         
+                     "SALDO"," "," "," " ], :style => [title5,title5,title5,title5,title5,title5,title5]
+
+
+                     
+      sheet.add_row ["",payment.code,payment.inicial,payment.total_ing,payment.total_egreso,payment.saldo,""],
+          :style => [cadena,cadena,currency,currency,currency,currency,cadena,cadena,cadena]
+
+
+     @viatico = Viatico.find(payment.id )
+                  
+                      
+                  
+        for  egresos  in @viatico.get_ingresos() 
+
+         
+
+           @detalle_ing= egresos.get_detalle_egreso(@viatico.id,egresos.id)
+            
+
+           sheet.add_row [ " " , " " , egresos.name ,"" ,"","" ," "], :style => [title3,title3,title3,title3,title3,title3  ]
+
+
+           @viatico_last = Viatico.where("id < ? ", @viatico.id).order("id DESC").first # last - 1
+
+         
+
+          if !@viatico_last.nil?
+         
+            sheet.add_row [" "," ","SALDO ANTERIOR AL " , @viatico_last.fecha1,"",@viatico.inicial,""], :style => [cadena,cadena,cadena,date,cadena,currency ,cadena]
+          else 
+            sheet.add_row [" "," ","SALDO ANTERIOR AL " ," "], :style => [cadena,cadena ,cadena]
+          end 
+          
+      
+            @total_importe = 0 
+            @total_importe   +=  @viatico.inicial 
+              nroitem = 0 
+          for product in @detalle_ing 
+
+            lcProveedor = ""
+            lcEmpleado  = ""
+
+        
+            if product.supplier_id !=  2570 
+              lcProveedor= product.supplier.name
+            else
+
+              if  product.employee != 64
+                 lcEmpleado = product.employee.full_name
+              end 
+            end 
+
+           
+            @total_importe   += product.importe 
+
+        
+  
+
+            sheet.add_row [nroitem,product.fecha,lcProveedor,lcEmpleado, product.document.descripshort ,product.numero.to_s,product.importe ,  product.detalle ], :style => [cadena,date,cadena,cadena,cadena,cadena,currency,cadena  ]
+
+
+
+            nroitem=nroitem + 1     
+
+          end 
+
+
+
+
+          sheet.add_row [" "," ","TOTAL INGRESO S/."," "," ",@total_importe," "], :style => [cadena,cadena,cadena,cadena,cadena, currency ,cadena]
+
+
+      
+          for  egresos  in @viatico.get_egresos() 
+
+
+            @detalle = egresos.get_detalle_egreso(@viatico.id,egresos.id)
+
+            table_content = ([ [egresos.name + " " + egresos.extension  ]   ])
+            
+          sheet.add_row [ " "," ",egresos.name , egresos.extension,"","","" ], :style => [cadena,cadena,title3,cadena,cadena,cadena,cadena ]
+          
+          sheet.add_row [ "ITEM",
+                      "FECHA ",
+                     "DESCRIPCION",
+                     "TD",
+                     "NRO DOCUMENTO",
+                     "IMPORTE S/.",
+                     "DETALLE" ], :style => [ cadena ,cadena , cadena ,cadena ,cadena ,cadena ,cadena  ]
+         
+             
+                total_importe = 0
+                nroitem = 1 
+
+              
+          for product in @detalle 
+
+              lcProveedor = ""
+              lcEmpleado =""
+
+
+              if product.supplier_id !=  2570 
+                lcProveedor =  product.supplier.name
+              else
+
+                if  product.employee != 64
+                lcProveedor = product.employee.full_name
+                end 
+              end 
+          
+               sheet.add_row [ nroitem,
+                      product.fecha,
+                     lcProveedor,
+                     product.document.descripshort ,
+                     product.numero,
+                     product.importe,
+                     product.detalle ], :style => [ cadena ,date, cadena ,cadena ,cadena ,currency ,cadena  ]
+         
+
+               nroitem += 1  
+
+                total_importe   += product.importe.round(2) 
+
+
+          end 
+
+
+
+          sheet.add_row [" "," ","TOTAL EGRESO S/."," "," ",total_importe," "], :style => [cadena,cadena, title3 ,cadena,cadena, currency,cadena ]
+
+    
+       end 
+
+
+          sheet.add_row [" "," "," "," "," ",total_importe," "], :style => [cadena,cadena, title3 ,cadena,cadena, cadena,cadena ]
+
+
+       total_egresos = 0
+       table_content_footer = []
+
+       if !@viatico.get_egresos_suma().nil?
+        for  egresos1  in @viatico.get_egresos_suma() 
+
+           total_egresos += egresos1.total.round(2) 
+           
+           sheet.add_row [" "," ",egresos1.egreso.name ,egresos1.total.round(2) ,"","",""], :style => [cadena,cadena, title3 ,currency,cadena,cadena,cadena ]
+
+
+        end 
+
+        end 
+
+         sheet.add_row [" "," ","TOTAL EGRESOS S/." ,total_egresos.round(2),"" ,"",""], :style => [cadena,cadena, title3 ,currency ,cadena,cadena,cadena]
+
+
+        sheet.add_row [" "," ","SALDO EN CAJA S/." ,@total_importe - total_egresos ,"","",""], :style => [cadena,cadena, title3 ,currency,cadena,cadena,cadena ]
+     
+
+
+      end 
+    
+                    
+                      
+              
+              
+   end
+   
+    
+   
+   
+end
+
+
+end 
+
+    

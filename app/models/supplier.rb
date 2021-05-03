@@ -3,6 +3,9 @@ class Supplier < ActiveRecord::Base
   validates_uniqueness_of :ruc
   
   belongs_to :company
+
+  belongs_to :supplier_type 
+  
   
   has_many :products
   has_many :restocks
@@ -14,7 +17,6 @@ class Supplier < ActiveRecord::Base
   has_many :outputs
   has_many :freepagars
   has_many :autoviatico 
-  has_many :supplier_type 
 
 
   has_many :exmautorizs
@@ -22,7 +24,7 @@ class Supplier < ActiveRecord::Base
   
   belongs_to :banks 
 
-
+  
 
 
   self.per_page = 20

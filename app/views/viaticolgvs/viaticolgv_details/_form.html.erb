@@ -1,20 +1,22 @@
 
 
 
-<% if @viatico_detail.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= pluralize(@viatico_detail.errors.count, "error") %> prohibited this viatico from being saved:</h2>
-    <ul>
-    <% @viatico_detail.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
-
 <%= hr() %>
 
-<%= simple_form_for [@viatico, @viatico_detail] do |f| %>
+<%= simple_form_for [@viaticolgv, @viaticolgv_detail ] do |f| %>
+
+<% if  @viaticolgv_detail.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize( @viaticolgv_detail.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+      <%  @viaticolgv_detail.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
 
   <div class="form-inputs">
     
@@ -75,8 +77,6 @@
         <a href="#" onclick="createSupplierRuc(); return false;">+ Crear nuevo proveedor</a>
       </div>
 
-
-
     </td> 
     
   </tr>
@@ -122,10 +122,7 @@
       Ingrese un termino de busqueda para encontrar un documento 
     </div>
     
-    
-  
-    
-    
+        
     <br />  
 
     <div >
@@ -139,9 +136,7 @@
     <div class="small">
      Total 
     </div>
-
     <div >
-
      <div class="field">
       <%= f.label :detalle %><br />
       <%= f.text_area :detalle %>
@@ -154,17 +149,13 @@
   <%= hr() %>
 
 
-
   <div class="form-actions">
 
    
     <%= f.hidden_field :supplier_id, :id => "ac_supplier_id" %>
     
-    <%= f.button :submit, "Grabar comprobante"%>
+    <%= f.button :submit,"Grabar LGV" %>
   </div>
-
-
-
 <% end %>
 
 

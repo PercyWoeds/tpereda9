@@ -1,0 +1,41 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  viatico_id: 1
+  fecha: 2021-05-01 19:56:02
+  descrip: MyText
+  document_id: 1
+  numero: MyString
+  importe: 1.5
+  detalle: MyText
+  tm: MyString
+  CurrTotal: 1.5
+  tranportorder_id: 1
+  date_processed: 2021-05-01 19:56:02
+  ruc: MyString
+  supplier_id: 1
+  gasto_id: 1
+  employee_id: 1
+  destino_id: 1
+  egreso_id: 1
+  viaticolgv_id: 
+
+two:
+  viatico_id: 1
+  fecha: 2021-05-01 19:56:02
+  descrip: MyText
+  document_id: 1
+  numero: MyString
+  importe: 1.5
+  detalle: MyText
+  tm: MyString
+  CurrTotal: 1.5
+  tranportorder_id: 1
+  date_processed: 2021-05-01 19:56:02
+  ruc: MyString
+  supplier_id: 1
+  gasto_id: 1
+  employee_id: 1
+  destino_id: 1
+  egreso_id: 1
+  viaticolgv_id: 

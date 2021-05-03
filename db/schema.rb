@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210430023041) do
+ActiveRecord::Schema.define(version: 20210502005602) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3367,6 +3367,59 @@ ActiveRecord::Schema.define(version: 20210430023041) do
     t.integer  "egreso_id"
   end
 
+  create_table "viaticolgv_details", force: :cascade do |t|
+    t.integer  "viatico_id"
+    t.datetime "fecha"
+    t.text     "descrip"
+    t.integer  "document_id"
+    t.string   "numero"
+    t.float    "importe"
+    t.text     "detalle"
+    t.string   "tm"
+    t.float    "CurrTotal"
+    t.integer  "tranportorder_id"
+    t.datetime "date_processed"
+    t.string   "ruc"
+    t.integer  "supplier_id"
+    t.integer  "gasto_id"
+    t.integer  "employee_id"
+    t.integer  "destino_id"
+    t.integer  "egreso_id"
+    t.integer  "viaticolgv_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "viaticolgv_details", ["viaticolgv_id"], name: "index_viaticolgv_details_on_viaticolgv_id", using: :btree
+
+  create_table "viaticolgvs", force: :cascade do |t|
+    t.string   "code"
+    t.datetime "fecha1"
+    t.float    "inicial"
+    t.float    "total_ing"
+    t.float    "total_egreso"
+    t.float    "saldo"
+    t.string   "comments"
+    t.integer  "user_id"
+    t.integer  "company_id"
+    t.string   "processed"
+    t.integer  "compro_id"
+    t.datetime "date_processed"
+    t.string   "tipo"
+    t.integer  "caja_id"
+    t.string   "cdevuelto"
+    t.string   "cdescuento"
+    t.string   "creembolso"
+    t.datetime "fecha_devuelto"
+    t.datetime "fecha_descuento"
+    t.datetime "fecha_reembolso"
+    t.float    "cdevuelto_importe"
+    t.float    "cdescuento_importe"
+    t.float    "creembolso_importe"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
   create_table "viaticos", force: :cascade do |t|
     t.string   "code"
     t.datetime "fecha1"
@@ -3449,4 +3502,5 @@ ActiveRecord::Schema.define(version: 20210430023041) do
   add_foreign_key "products", "stocks"
   add_foreign_key "service_extensions", "servicebuys"
   add_foreign_key "supplier_details", "suppliers"
+  add_foreign_key "viaticolgv_details", "viaticolgvs"
 end
