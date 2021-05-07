@@ -37,9 +37,11 @@ class ViaticolgvsController < ApplicationController
      
        table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD EN EL TRABAJO ",:rowspan => 2},"CODIGO ","TP-FZ-F-018"], 
           ["VERSION: ","4"], 
-          ["LIQUIDACION DE CAJA-LGV ","Pagina: ","1 de 1 "] 
+          ["LIQUIDACION DE CAJA-LGV " +  @viaticolgv.code,"Pagina: ","1 de 1 "] 
          
           ])
+
+
       
 
        pdf.table(table_content  ,{
@@ -67,18 +69,81 @@ class ViaticolgvsController < ApplicationController
          pdf.table(table_content2,{:position=>:right }) do
 
             columns([0, 1]).font_style = :bold
-            columns([0, 1]).width = 100
+           
             
          end 
 
          pdf.move_down 2
 
-         table_content3 = ([["LIQ N°: ",@viaticolgv.code ]])
 
-         pdf.table(table_content3,{:position=>:right }) do
+          @viaticolgv_cout = @viaticolgv.get_comprobante_ingreso
 
-            columns([0, 1]).font_style = :bold
-            columns([0, 1]).width = 100
+       
+
+
+          if  !@viaticolgv_cout.nil? 
+
+
+
+
+               @viatico_cab =  @viaticolgv_cout.first
+
+
+
+                if @viatico_cab.cout.tranportorder_id != 222
+
+                  viatico_cab_ost =  @viatico_cab.cout.tranportorder.code
+                else
+                
+
+                  viatico_cab_ost  = " "
+                  
+                end 
+
+               viatico_cab_chofer  =   @viatico_cab.cout.employee.full_name2
+               viatico_cab_chofer2 =   @viatico_cab.cout.get_employee(@viatico_cab.cout.employee2_id)
+               viatico_cab_fecha1  =  @viatico_cab.cout.fecha1.strftime("%d/%m/%Y") 
+
+               lcFechaSalida =  @viatico_cab.cout.fecha2.nil? ? " " : @viatico_cab.cout.fecha2.strftime("%d/%m/%Y")
+
+               viatico_cab_fecha2  =  lcFechaSalida
+
+               viatico_cab_placa  = @viatico_cab.cout.truck.placa 
+
+               viatico_cab_desde  = @viatico_cab.cout.get_punto( @viatico_cab.cout.ubication_id)
+               viatico_cab_hasta  = @viatico_cab.cout.get_punto( @viatico_cab.cout.ubication2_id)
+
+
+          else
+
+               viatico_cab_chofer  = ""
+               viatico_cab_chofer2 = ""
+               viatico_cab_fecha1  = ""
+          
+
+               viatico_cab_fecha2  = ""
+
+               viatico_cab_placa   = ""
+
+               viatico_cab_desde   = ""
+               viatico_cab_hasta   = ""
+          
+          end   
+
+
+
+         
+
+         table_content3 = ([ ["Chofer:  ",viatico_cab_chofer , "OST:", viatico_cab_ost ],
+                             ["Apoyo :  ",viatico_cab_chofer2, "Fecha Salida: " , viatico_cab_fecha1  ],
+                             ["Placa :  ",viatico_cab_placa, "Fecha Llegada: ", lcFechaSalida  ],
+                             ["Desde :  ",viatico_cab_desde , "Hasta: " , viatico_cab_hasta  ],
+          ])
+
+         pdf.table(table_content3,{:position=>:right, :width => pdf.bounds.width  } ) do
+
+            columns([0, 2]).font_style = :bold
+            columns([0, 2]).width = 100
             
          end 
 
@@ -303,10 +368,7 @@ class ViaticolgvsController < ApplicationController
         for  egresos  in @viaticolgv.get_ingresos() 
 
 
-
-           puts egresos.name 
-
-         @detalle_ing= egresos.get_detalle_egresolgv(@viaticolgv.id,egresos.id)
+         @detalle_ing = egresos.get_detalle_egresolgv(@viaticolgv.id,egresos.id)
 
 
             table_content = ([ [egresos.name  ]   ])
@@ -438,7 +500,7 @@ class ViaticolgvsController < ApplicationController
 
    pdf.move_down 10  
       ###EGRESOS 
-       for  egresos  in @viaticolgv.get_egresos() 
+       for  egresos  in @viaticolgv.get_egresoslgv() 
 
 
          @detalle = egresos.get_detalle_egresolgv(@viaticolgv.id,egresos.id)
@@ -455,7 +517,7 @@ class ViaticolgvsController < ApplicationController
                })do
                  columns([0]).font_style = :bold
                 
-                 columns([0]).align = :center
+                 columns([0]).align = :left
                 
                end
 
@@ -565,67 +627,204 @@ class ViaticolgvsController < ApplicationController
     end
 
     def build_pdf_footer(pdf)
+
+
+ pdf.move_down 10  
+
+    @viaticolgv_cout = @viaticolgv.get_comprobante_ingreso 
+
+
+
+
+if  !@viaticolgv_cout.nil? 
+
+
+  total_comp = 0 
+
+  table_content1 =  []
+
+   row = []
+
+
+    @viaticolgv_cout.each do |product|
+       
+             
+            row = []
+              if product.cout.carr != "0"   
+        
+              row << "Viaticos por rendir "       
+              else 
+              row << "Entregado en ruta  "       
+              end 
+        
+              row << product.document.descripshort +  product.numero
+
+              row << product.fecha.strftime("%d/%m/%Y") 
+              row  <<  product.importe.round(2) 
+
+                table_content1 << row 
+
+
+              total_comp += product.importe.round(2)   
+
+      end
+
+    
+
+          row = []
+            
+
+
+        row << "Total a rendir   "
+
+        row  << ""
+
+        row  << ""
+
+        row <<  total_comp.round(2)
+
+
+
+ else 
+        row << "No hay comprobantes"
+  end
+
+ table_content1 << row
+
+
+ result = pdf.table table_content1, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width/2
+                                        } do 
+                                        
+                                                                             
+                                         columns([0]).width = 100 
+                                          columns([0]).font_style = :bold
+                                          columns([0]).align = :right
+                                          columns([1]).align = :right
+                                          columns([3]).align = :right
+                  
+                                        end 
+
+ pdf.move_down 10  
+
+
+ table_content2 =  []
+
+  row = []
+
+   row << "Gastos Realizados. " 
+   row << ""
+   row << ""
+   row << @viaticolgv.total_egreso.round(2)
+   table_content2 << row
+
+
+   row = []
+
+   row << "Vuelto. " 
+   row << ""
+   row << @viaticolgv.fecha_devuelto.strftime("%d/%m/%Y")
+   row << @viaticolgv.cdevuelto_importe 
+   table_content2 << row
+
+   row = []
+
+   row << "Descuento del chofer. " 
+   row << ""
+   row << @viaticolgv.fecha_descuento.strftime("%d/%m/%Y")
+   row << @viaticolgv.cdescuento_importe 
+   table_content2 << row
+
+
+   row = []
+
+   row << "Reembolso del chofer  " 
+   row << ""
+   row << @viaticolgv.fecha_reembolso.strftime("%d/%m/%Y")
+   row << @viaticolgv.creembolso_importe 
+   table_content2 << row
+
+
+
+ result = pdf.table table_content2, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width/2
+                                        } do 
+                                        
+                                                                             
+                                         columns([0]).width = 100 
+                                          columns([0]).font_style = :bold
+                                          columns([0]).align = :left
+                                          columns([1]).align = :right
+                                           columns([3]).align = :right
+                                        end 
+
+
+
+ # pdf.move_down 10  
+    
       
-      total_egresos = 0
-      table_content_footer = []
-    for  egresos  in @viaticolgv.get_egresos_suma() 
+ #      total_egresos = 0
+ #      table_content_footer = []
+ #    for  egresos  in @viaticolgv.get_egresos_suma() 
 
-       total_egresos += egresos.total.round(2) 
+ #       total_egresos += egresos.total.round(2) 
 
 
-       row =[]
-       row << egresos.egreso.name 
-       row << egresos.total.round(2)
-       table_content_footer << row 
+ #       row =[]
+ #       row << egresos.egreso.name 
+ #       row << egresos.total.round(2)
+ #       table_content_footer << row 
 
-    end 
+ #    end 
 
-      row = []
-      row << "TOTAL EGRESOS S/.:"
-      row << sprintf("%.2f",total_egresos.round(2))
+ #      row = []
+ #      row << "TOTAL EGRESOS S/.:"
+ #      row << sprintf("%.2f",total_egresos.round(2))
 
-        table_content_footer << row 
-         pdf.table(table_content_footer  ,{
-                 :position => :center,
-                 :width => pdf.bounds.width/3
-               })do
-                 columns([0]).font_style = :bold
+ #        table_content_footer << row 
+ #         pdf.table(table_content_footer  ,{
+ #                 :position => :center,
+ #                 :width => pdf.bounds.width/3
+ #               })do
+ #                 columns([0]).font_style = :bold
                 
-                 columns([0]).align = :center
-                 columns([0]).width = 100 
-                  columns([0]).align = :left
-                   columns([1]).align = :right
+ #                 columns([0]).align = :center
+ #                 columns([0]).width = 100 
+ #                  columns([0]).align = :left
+ #                   columns([1]).align = :right
                   
 
-               end
+ #               end
 
 
 
 
-row = []
-table_content_footer2=[]
+# row = []
+# table_content_footer2=[]
 
-row << "SALDO EN CAJA  S/.:"
-row << sprintf("%.2f",@total_importe - total_egresos)
+# row << "DIFERENCIA S/.:"
+# row << sprintf("%.2f",@total_importe - total_egresos)
+
+#  pdf.move_down 10  
 
 
-pdf.move_down 2
+ # table_content_footer2 << row 
 
- table_content_footer2 << row 
-
-             pdf.table(table_content_footer2  ,{
-                 :position => :center,
-                 :width => pdf.bounds.width/3
-               })do
-                 columns([0]).font_style = :bold
+ #             pdf.table(table_content_footer2  ,{
+ #                 :position => :center,
+ #                 :width => pdf.bounds.width/3
+ #               })do
+ #                 columns([0]).font_style = :bold
                 
-                columns([0]).align = :center
-                columns([0]).width = 100 
-                columns([0]).align = :left
-                columns([1]).align = :right
+ #                columns([0]).align = :center
+ #                columns([0]).width = 100 
+ #                columns([0]).align = :left
+ #                columns([1]).align = :right
                   
 
-               end
+ #               end
 
 
 total_resumen = 0
@@ -647,6 +846,7 @@ end
 row = []
 
 row << "TOTAL : "
+
 row << sprintf("%.2f",total_resumen)
 table_content_footer3 << row 
 
@@ -655,8 +855,8 @@ pdf.move_down 2
  
 
              pdf.table(table_content_footer3  ,{
-                 :position => :left,
-                 :width => pdf.bounds.width/4
+                 :position => :center,
+                 :width => pdf.bounds.width/3
                })do
                  columns([0]).font_style = :bold
                 
@@ -833,6 +1033,92 @@ pdf.move_down 2
     render :layout => false
   end
   
+  
+  def list_items2
+
+    
+    @company = Company.find(params[:company_id])
+    items = params[:items2]
+    items = items.split(",")
+    items_arr = []
+    @lgvs = []
+    i = 0
+    @total_inicial = 0
+    total = 0 
+    monto_inicial = 0
+    $total_inicial= 0
+    @viaticolgv_d = Viaticolgv.last 
+
+    for item in items
+      if item != ""
+        parts = item.split("|BRK|")
+
+        id      = parts[0]  
+        monto_inicial = parts[1]
+        
+        product = Cout.find(id.to_i)
+        
+        product[:i] = i
+        product[:importe] = monto_inicial.to_f
+        product[:detalle] = product.employee.full_name 
+        product[:observa] = product.truck.placa 
+        
+        total += product[:importe]
+        
+        @total_inicial  = total 
+
+        @viaticolgv_d.actualiza(parts)
+
+        $total_inicial= @total_inicial
+        i += 1
+      end
+    end  
+
+    render :layout => false
+  end 
+
+
+  def list_items3
+
+    
+    @viaticolgv = Viaticolgv.find(params[:viaticolgv_id])
+
+
+    items = params[:items3]
+    items = items.split(",")
+    items_arr = []
+    @lgvs = []
+    i = 0
+    @total_inicial = 0
+    total = 0 
+    monto_inicial = 0
+    puts "items 3....."
+
+    puts items   
+
+    @viaticolgv_d = Viaticolgv.last 
+
+    for item in items
+      if item != ""
+        parts = item.split("|BRK|")
+       
+
+          @viaticolgv.fecha_devuelto     = parts[1]
+          @viaticolgv.fecha_descuento    = parts[2]
+          @viaticolgv.fecha_reembolso    = parts[3]
+          @viaticolgv.cdevuelto_importe  = parts[4]
+          @viaticolgv.cdescuento_importe = parts[5]
+          @viaticolgv.creembolso_importe = parts[6]
+          @viaticolgv.save
+
+      end
+    end  
+
+    render :layout => false
+  end 
+
+
+
   # Autocomplete for documento
   def ac_documentos
     @products = Compro.where(["company_id = ? AND code LIKE ? ", params[:company_id], "%" + params[:q] + "%"])
@@ -941,6 +1227,7 @@ pdf.move_down 2
   def show
     @company  = Company.find(1)     
     @viaticolgv = Viaticolgv.find(params[:id])
+     @egresos = Egreso.where(["extension = ? or extension = ?", "LGV","ALL"]).order(:code)
     
     @viaticolgv_detail = @viaticolgv.viaticolgv_details
     
@@ -972,7 +1259,7 @@ pdf.move_down 2
     @cajas = Caja.all 
     
     @gastos = Gasto.order(:descrip)
-    
+   
     @ac_user = getUsername()
     @viaticolgv[:fecha1] = Date.today 
     @viaticolgv[:user_id] = getUserId()
@@ -1308,8 +1595,7 @@ pdf.move_down 2
     @documents = @company.get_documents()
     @cajas = Caja.all 
     @gastos = Gasto.order(:descrip)
-  
-    @locations = @company.get_locations()
+       @locations = @company.get_locations()
     @divisions = @company.get_divisions()
   end
 
@@ -1394,7 +1680,7 @@ pdf.move_down 2
     @documents = @company.get_documents()
     @cajas = Caja.all      
     @gastos = Gasto.order(:descrip)
-    
+     
     
     @viaticolgv[:inicial] = @viaticolgv.get_total_inicial 
     @viaticolgv[:total_ing] = @viaticolgv.get_total_ing

@@ -10,6 +10,8 @@ class ViaticolgvDetail < ActiveRecord::Base
     belongs_to :document 
 
     belongs_to :egreso
+
+    belongs_to :cout
     
     def get_detalle
         ret =""
@@ -18,5 +20,6 @@ class ViaticolgvDetail < ActiveRecord::Base
         end 
         return ret 
     end 
+
 
 end

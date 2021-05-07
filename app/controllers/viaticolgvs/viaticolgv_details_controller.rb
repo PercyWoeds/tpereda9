@@ -31,7 +31,8 @@ class Viaticolgvs::ViaticolgvDetailsController < ApplicationController
   def new
      @viaticolgv_detail = ViaticolgvDetail.new
     @gastos = Gasto.order(:codigo)
-    @egresos = Egreso.order(:code)
+    @egresos = Egreso.where(["extension = ? or extension = ?", "LGV","ALL"]).order(:code)
+   
     
     @company = Company.find(1)
     
@@ -50,9 +51,11 @@ class Viaticolgvs::ViaticolgvDetailsController < ApplicationController
 
     @viaticolgv_detail = ViaticolgvDetail.new
      @gastos = Gasto.order(:codigo)
-    @egresos = Egreso.order(:code)
+     @egresos = Egreso.where(["extension = ? or extension = ?", "LGV","ALL"]).order(:code)
+   
     
-    @company = Company.find(1)
+
+        @company = Company.find(1)
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
@@ -71,8 +74,8 @@ class Viaticolgvs::ViaticolgvDetailsController < ApplicationController
     @action_txt = "Create"
 
      @gastos = Gasto.order(:codigo)
-    @egresos = Egreso.order(:code)
-    
+     @egresos = Egreso.where(["extension = ? or extension = ?", "LGV","ALL"]).order(:code)
+   
     @company = Company.find(1)
     
     @locations = @company.get_locations()
@@ -130,9 +133,8 @@ def agregar
     @destinos = Destino.all
     @employees = @company.get_employees 
 
-    @egresos = Egreso.order(:code)
-
-
+      @egresos = Egreso.where(["extension = ? or extension = ?", "LGV","ALL"]).order(:code)
+   
 
      @purchase_nuevo = Purchase.find(params[:purchase_id])
 
@@ -202,6 +204,11 @@ def agregar
           a.inicial =  @viaticolgv[:saldo]
           a.save
           end 
+          if @viaticolgv.caja_id == 7 
+          a = @cajas.find(4)
+          a.inicial =  @viaticolgv[:saldo]
+          a.save
+          end 
 
 
          format.html { redirect_to @viaticolgv, notice: 'Viaticolgv Detalle fue creado satisfactoriamente.' }
@@ -227,7 +234,7 @@ end
     @destinos = Destino.all
     @employees = @company.get_employees 
 
-    @egresos = Egreso.order(:code)
+    @egresos = Egreso.where(["extension = ? or extension = ?", "LGV","ALL"]).order(:code)
     
     
     if @viaticolgv_detail.supplier_id != nil
@@ -259,8 +266,8 @@ end
     @cajas = Caja.all      
     @destinos = Destino.all
     @employees = @company.get_employees 
-     @egresos = Egreso.order(:code)
-    
+    @egresos = Egreso.where(["extension = ? or extension = ?", "LGV","ALL"]).order(:code)
+   
 
 
     @viaticolgv_detail = ViaticolgvDetail.new(viaticolgv_detail_params)    
@@ -308,7 +315,6 @@ end
           end 
   
    
-
            @viaticolgv[:saldo] = @viaticolgv[:inicial] +  @viaticolgv[:total_ing] - @viaticolgv[:total_egreso]
 
 
@@ -374,7 +380,8 @@ end
 
     @destinos = Destino.all
     
-    @egresos = Egreso.order(:code)
+    @egresos = Egreso.where(["extension = ? or extension = ?", "LGV","ALL"]).order(:code)
+   
 
     @viaticolgv_detail = ViaticolgvDetail.find(params[:id]) 
     @viaticolgv_detail.viatico_id  = @viaticolgv.id 
@@ -539,7 +546,9 @@ end
     # Never trust parameters from the scary internet, only allow the white list through.
     def viaticolgv_detail_params
       
-      params.require(:viaticolgv_detail).permit(:fecha, :descrip, :document_id, :numero, :importe, :detalle, :tm, :CurrTotal, :tranportorder_id,:date_processed,:ruc,:supplier_id,:gasto_id,:employee_id,:destino_id,:egreso_id)
+      params.require(:viaticolgv_detail).permit(:fecha, :descrip, :document_id, :numero, :importe, :detalle, :tm,
+       :CurrTotal, :tranportorder_id,:date_processed,:ruc,:supplier_id,:gasto_id,:employee_id,:destino_id,
+       :egreso_id,:cout_id )
     end
 
 

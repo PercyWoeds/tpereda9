@@ -9,7 +9,12 @@ self.per_page = 20
   validates_presence_of :company_id,  :code, :user_id,:inicial,:fecha1,:caja_id
   validates_uniqueness_of :code, scope: :caja_id
   
-  
+   validates :cdevuelto_importe,  numericality: { greater_than_or_equal_to: 1 }
+   validates :cdescuento_importe, numericality: { greater_than_or_equal_to: 1 }
+   validates :creembolso_importe, numericality: { greater_than_or_equal_to: 1 }
+   
+
+
   belongs_to :company
   belongs_to :location
   belongs_to :division
@@ -290,6 +295,18 @@ self.per_page = 20
 
   end 
 
+  def get_egresoslgv
+
+      @viaticos_egresos = Egreso.where("id> 1 and extension = ?","LGV")
+
+  end 
+
+    def get_egresoslgv2
+
+      @viaticos_egresos = Egreso.where("id> 1 and extension = ?","LGV-TOTAL")
+
+  end 
+
 
   def get_ingresos
 
@@ -443,9 +460,7 @@ self.per_page = 20
       
     end 
     
-    
-    
-    
+       
     ruc = ""
     gasto = 0
     i= 0  
@@ -572,4 +587,106 @@ self.per_page = 20
  end 
 
   
+    def actualiza(parts) 
+
+      @viaticolgv = Viaticolgv.find(self.id) 
+ 
+          id            = parts[0]  
+          monto_inicial = parts[1] 
+
+          product = Cout.find(id.to_i)
+          detalle = ViaticolgvDetail.new 
+
+          detalle.viaticolgv_id= self.id 
+          detalle.fecha =  product.fecha 
+          detalle.descrip= nil 
+          detalle.document_id =  10
+          detalle.numero = product.code
+          detalle.importe = monto_inicial
+
+          detalle.detalle = ""
+          detalle.tm = "1"
+          detalle.supplier_id = 2570 
+          detalle.gasto_id = 338
+          detalle.employee_id =  product.employee_id
+          detalle.destino_id = 1
+          detalle.egreso_id = 1
+          detalle.cout_id = product.id 
+
+
+      if detalle.save
+          begin
+          @viaticolgv[:inicial] = @viaticolgv.get_total_inicial
+          rescue
+          @viaticolgv[:inicial] = 0
+          end 
+
+          begin
+          @viaticolgv[:total_ing] = @viaticolgv.get_total_ing
+          rescue 
+          @viaticolgv[:total_ing] = 0
+          end 
+
+          begin 
+          @viaticolgv[:total_egreso]=  @viaticolgv.get_total_sal
+          rescue 
+          @viaticolgv[:total_egreso]= 0 
+          end 
+  
+          @viaticolgv[:saldo] = @viaticolgv[:inicial] +  @viaticolgv[:total_ing] - @viaticolgv[:total_egreso]
+
+
+        if  @viaticolgv.save 
+
+          if @viaticolgv.caja_id == 1 
+          a = @cajas.find(1)
+          a.inicial =  @viaticolgv[:saldo]
+          a.save
+          end 
+          if @viaticolgv.caja_id == 2
+          a = @cajas.find(2)
+          a.inicial =  @viaticolgv[:saldo]
+          a.save
+          end 
+          if @viaticolgv.caja_id == 3 
+          a = @cajas.find(3)
+          a.inicial =  @viaticolgv[:saldo]
+          a.save
+          end 
+          if @viaticolgv.caja_id == 4 
+          a = @cajas.find(4)
+          a.inicial =  @viaticolgv[:saldo]
+          a.save
+          end 
+          if @viaticolgv.caja_id == 7 
+          a = @cajas.find(7)
+          a.inicial =  @viaticolgv[:saldo]
+          a.save
+          end 
+    
+        end         
+        
+        
+      end
+
+
+  end 
+
+
+
+   def get_comprobante_ingreso
+
+    puts "ccc"
+
+    puts self.id 
+
+
+         @dato = ViaticolgvDetail.where([ "viaticolgv_id  = ? and egreso_id = ? and document_id = ? and cout_id IS NOT NULL ", self.id,1,10 ] )
+
+
+         return @dato
+   end 
+
+
+
 end

@@ -172,6 +172,19 @@ class Viaticotbks::ViaticotbkDetailsController < ApplicationController
           a.save
         end 
 
+        if @viaticotbk.caja_id == 5
+          a = @cajas.find(5)
+          a.inicial =  @viaticotbk[:saldo]
+          a.save
+        end 
+
+         if @viaticotbk.caja_id == 6
+          a = @cajas.find(6)
+          a.inicial =  @viaticotbk[:saldo]
+          a.save
+        end 
+
+
 
          format.html { redirect_to @viaticotbk, notice: 'viaticotbk Detalle fue creado satisfactoriamente.' }
          format.json { render :show, status: :created, location: @viaticotbk }
@@ -224,6 +237,7 @@ class Viaticotbks::ViaticotbkDetailsController < ApplicationController
     rescue 
       @viaticotbk[:total_egreso]= 0 
     end 
+    
     @viaticotbk[:saldo] = @viaticotbk[:inicial] +  @viaticotbk[:total_ing] - @viaticotbk[:total_egreso]
         @viaticotbk.save
         
@@ -244,6 +258,17 @@ class Viaticotbks::ViaticotbkDetailsController < ApplicationController
         end 
         if @viaticotbk.caja_id == 4 
           a = @cajas.find(4)
+          a.inicial =  @viaticotbk[:saldo]
+          a.save
+        end 
+        if @viaticotbk.caja_id == 5
+          a = @cajas.find(5)
+          a.inicial =  @viaticotbk[:saldo]
+          a.save
+        end 
+
+         if @viaticotbk.caja_id == 6
+          a = @cajas.find(6)
           a.inicial =  @viaticotbk[:saldo]
           a.save
         end 
@@ -315,6 +340,19 @@ class Viaticotbks::ViaticotbkDetailsController < ApplicationController
           a.inicial =  @viaticotbk[:saldo]
           a.save
         end 
+
+         if @viaticotbk.caja_id == 5
+          a = @cajas.find(5)
+          a.inicial =  @viaticotbk[:saldo]
+          a.save
+        end 
+
+         if @viaticotbk.caja_id == 6
+          a = @cajas.find(6)
+          a.inicial =  @viaticotbk[:saldo]
+          a.save
+        end 
+
   
       flash[:notice]= "Item fue eliminado satisfactoriamente "
       redirect_to @viaticotbk

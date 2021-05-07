@@ -1662,6 +1662,14 @@ match '/proyecto_exams/:id/proyectoexam_details/:proyectoexam_detail_id' => 'pro
   
  match 'viaticos/viatico_details/new2/:id'   => 'viaticos_viatico_details#new2', via: [:get, :post]
 
+
+ match 'viaticolgvs/list_items2/:company_id' => 'viaticolgvs#list_items2', via: [:get, :post]
+ match 'viaticolgvs/list_items3/:viaticolgv_id' => 'viaticolgvs#list_items3', via: [:get, :post]
+
+ 
+
+
+
   mount Sidekiq::Web, at: '/sidekiq'
 
  

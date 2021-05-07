@@ -212,6 +212,7 @@
       $("#ac_item_total").html("0.00");
     }
   }
+  
 
 
   // Add an item to a product kit

@@ -58,7 +58,6 @@
 
 
 
-
   <h4>
     Agregar Comprobante por rendir 
   </h4>
@@ -80,17 +79,24 @@
             Importe entregado en comprobante.
           </div>
           <br />
-    
+
+
+     <input type="hidden" name="items2" id="items2" value="<% if @compro_lines %><%= @compro_lines %><% end %>" />
+
+    <input type="hidden" name="compro_id" id="ac_compro_id"  />
+        
     <input type="submit" value="Agregar Comprobante" />
 
   </form>
 
-   <div class="field" id="list_items">
-        <p class="bold big">Detalle gastos :</p>
-      </div>
+   
 
 
 <div class="button">
+
+   
+    
+
 <%= link_to 'Agregar Item', new_viaticolgv_viaticolgv_detail_path(@viaticolgv) %>
 
 
@@ -186,7 +192,7 @@
           </td>
 
 
-          <td class="small bordered_bottom bordered_left">
+          <td class="bordered_bottom bordered_right  right">
             <%= money(product.importe) %>
           </td>
 
@@ -204,8 +210,7 @@
     <% end %>
    <tr>
       <td colspan="5" class="bordered_bottom bordered_right bold">
-        Total Egresos
-      </td>
+        Gasto Total         </td>
       <td class="bordered_bottom bordered_right bold right">
         <%= money(@viaticolgv.total_egreso)%>
       </td>
@@ -219,15 +224,184 @@
         <%= money(@viaticolgv.saldo) %>
       </td>
     </tr>
+
+
     
    
    
   </tbody>
 </table>
-<br />
+
+<p>  
+<br>
+</p>
+
+  <%   @viaticolgv_cout = @viaticolgv.get_comprobante_ingreso %>
+
+<table>
+
+<% if  !@viaticolgv_cout.nil?  %> 
+
+
+<% total_comp = 0 %>
+ <% @viaticolgv_cout.each do |product| %>
+       <tr>
+
+       <td colspan="5" class="bordered_bottom bordered_right bold">
+         <%= nroitem %>   </td>
+
+           <% if product.cout.carr != "0"    %>
+
+            <td colspan="5" class="bordered_bottom bordered_right bold">
+            Viaticos por rendir         </td>
+
+        <% else %>
+        <td colspan="5" class="bordered_bottom bordered_right bold">
+            Entregado en ruta         </td>
+        <% end %>
+        <td class="small bordered_bottom bordered_right">
+        <%= product.document.descripshort   %>
+        </td>
+         <td class="small bordered_bottom bordered_right">
+        <%= product.numero %>
+        </td>
+
+        <td class="small bordered_bottom bordered_right">
+
+             <%if product.egreso %>  
+              <%= product.egreso.name  %>
+               <%else%>
+
+              <%end %>
+          </td>
+
+        <td class="small bordered_bottom bordered_right">
+
+             <%=product.fecha.strftime("%d/%m/%Y") %>
+
+        </td>
+       
+          <td class="small bordered_bottom bordered_right">
+            <%= money(product.importe) %>
+          </td>
+        </tr>
+
+        <%  total_comp += product.importe   %>
+
+ <% end %>
+
+<tr>
+
+    <td class="small bordered_bottom bordered_right">
+    </td>
+
+    <td class="small bordered_bottom bordered_right">
+    </td>
+    
+    <td class="small bordered_bottom bordered_right">
+    </td>
+    
+    <td class="small bordered_bottom bordered_right">
+    </td>
+    
+    <td class="small bordered_bottom bordered_right">
+    </td>
+    
+
+      <td colspan="9" class="bordered_bottom bordered_right bold">
+        Total a rendir        </td>
+
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(total_comp)%>
+      </td>
+
+    </tr>
+
+  
+  </tbody>
+</table>
+
+<% else %>
+         <td colspan="5" class="bordered_bottom bordered_right bold">
+        No hay comprobantes        </td>
+
+
+
+<% end %>
 
 
 <br />
+<br />
+
+<%nroitem = 1 %>
+   
+  
+                                        
+  <form method="get" action="/viaticolgvs" onsubmit="addItemToLgv3(); return false;">
+          <table>
+
+
+            <tr>
+              <td  class="bordered_bottom bordered_right bold">
+               Gastos realizados   </td>
+
+               <td class="bordered_bottom bordered_right bold">
+                      -   </td>
+            
+                <td class=" bordered_bottom bold bordered_right">
+                  <%= money(@viaticolgv.total_egreso)%>       </td>
+
+            </tr>            
+             <tr> 
+
+             <td  class="bordered_bottom bordered_right bold">
+               Vuelto   </td>
+                <td class="small bordered_bottom bold bordered_right">
+                   <input type="date" name="ac_vuelto_date" id="ac_vuelto_date" value= <%= @viaticolgv.fecha_devuelto.to_date  %> />    </td>
+
+                
+              <td class="bordered_bottom bordered_right bold">
+                 <input type="text" name="ac_vuelto_doc" id="ac_vuelto_doc" value= <%= @viaticolgv.try(:cdevuelto_importe) %> >      </td>
+ 
+             </tr>
+
+
+             <td  class="bordered_bottom bordered_right bold">
+               Descuento del Chofer    </td>
+                <td class="small bordered_bottom bold bordered_right">
+                  <input type="date" name="ac_descto_date" id="ac_descto_date" value=<%=@viaticolgv.fecha_descuento.to_date %> >   </td>
+
+                
+              <td class="bordered_bottom bordered_right bold">
+                 <input type="text" name="ac_descto_doc" id="ac_descto_doc" value= <%= @viaticolgv.cdescuento_importe%> >        </td>
+ 
+             </tr>
+
+
+              <td  class="bordered_bottom bordered_right bold">
+               Reembolso  del Chofer    </td>
+                <td class="small bordered_bottom bold bordered_right">
+                 <input type="date" name="ac_reembolso_date" id="ac_reembolso_date" value=<%= @viaticolgv.fecha_reembolso %> /> </td>
+
+                
+              <td class="bordered_bottom bordered_right bold">
+                 <input type="text" name="ac_reembolso_doc" id="ac_reembolso_doc" value=<%= @viaticolgv.creembolso_importe %> >        </td>
+ 
+             </tr>
+
+
+
+
+          </table>
+       
+    <input type="hidden" name="items3" id="items3" value="<% if @compro_lines2 %><%= @compro_lines2 %><% end %>" />
+ 
+        
+    <input type="submit" value="Grabar datos " />
+
+  </form>
+
+
 
 
 <p>
@@ -263,6 +437,7 @@
    $(document).ready(function() {
 
 
+    
    $("#ac_item_compro").autocomplete("/lgvs/ac_compros/<%= @company.id %>", {
       matchSubset: 1,
       matchContains: 1,
@@ -274,18 +449,15 @@
       $("#ac_compro_id").val(data[2]);
     });
 
-
      });
 
 
 
 function addItemToLgv2() {
 
-  alert("aaa");
     var item = $("#ac_item_compro").val();
 
-    alert(ac_item_compro);
-    
+       
    if(item != "") {
       var company_id = "1";
       var item_id = $("#ac_compro_id").val();        
@@ -302,7 +474,7 @@ function addItemToLgv2() {
         $("#ac_item_compro").val("");
         $("#ac_item_inicial").val("");
         $("#ac_compro_id").val("");      
-      
+        $("#items2").val("");     
     } else {
       alert("Por favor ingreso informacion de comprobante.");
     }
@@ -310,6 +482,7 @@ function addItemToLgv2() {
 
 
   function listItemsLgv2() {
+
     var items2 = $("#items2").val();
     var company_id = "1";
     
@@ -343,7 +516,108 @@ function addItemToLgv2() {
 
   
 
+function addItemToLgv3() {
+
+    
+    var item = $("#ac_vuelto_doc").val();
+
+    if(item != "")   {
+      var item_id = <%= @viaticolgv.id %>; 
+
+      var vuelto_fecha   = $("#ac_vuelto_date").val(); 
+      var descto_fecha   = $("#ac_descto_date").val(); 
+      var reem_fecha     = $("#ac_reembolso_date").val(); 
+
+      var vuelto_importe = $("#ac_vuelto_doc").val();        
+      var descto_importe = $("#ac_descto_doc").val();    
+      var reem_importe   = $("#ac_reembolso_doc").val();      
+      
+      var items_arr = $("#items3").val().split(",");
+      
+      var item_line = item_id + "|BRK|" + vuelto_fecha + "|BRK|" + descto_fecha   + "|BRK|" + 
+                                           reem_fecha  + "|BRK|" + vuelto_importe + "|BRK|"+
+                                        descto_importe + "|BRK|" + reem_importe;
+         
+        $("#items3").val($("#items3").val() + "," + item_line );
+
+        listItemsLgv3();
+        
+        $("#ac_vuelto_doc").val("");
+        $("#ac_descto_doc").val("");
+        $("#ac_reembolso_doc").val("");  
+
+        $("#ac_vuelto_date").val("");
+        $("#ac_descto_date").val("");
+        $("#ac_reembolso_date").val("");  
+        
+
+         $("#items3").val("");     
+
+    } else {
+      alert("Por favor ingreso informacion de comprobante.");
+    }
+  }
 
 
+  function listItemsLgv3() {
+
+    alert("Registro actualizado !"); 
+
+    var items3 = $("#items3").val();
+    var company_id = <%= @viaticolgv.id %>  ; 
+    
+    $.get('/viaticolgvs/list_items3/' + company_id, {
+      items3: items3
+    },
+    function(data) {
+      $("#list_items3").html(data);
+      documentReady();
+    });
+
+  }
+
+
+
+
+
+  // Update price total for invoice
+  function updateItemLgv() {
+  
+
+    var saldo_lgv  = $("#viaticolgv_saldo").val();
+    var vuelto_lgv = $("#ac_vuelto_doc").val();
+    var dscto_lgv  = $("#ac_descto_doc").val();
+    var reem_lgv   = $("#ac_reembolso_doc").val();
+    alert(saldo_lgv); 
+
+
+    if(isNumeric(saldo_lgv) && isNumeric(vuelto_lgv) && isNumeric(dscto_lgv) &&  isNumeric(reem_lgv)) {
+      
+      var total = saldo_lgv +  vuelto_lgv - dscto_lgv + reem_lgv;
+      
+
+      if (total < 0 ) { 
+     
+        
+        document.ac_descto_doc.ac_descto_doc.value = total ;
+      }
+
+    else { 
+
+          document.ac_reembolso_doc.ac_reembolso_doc.value = total ;
+
+    }
+
+
+    } else {
+      $("#ac_vuelto_doc").html("0.00");
+
+      $("#ac_descto_doc").html("0.00");
+      $("#ac_reembolso_doc").html("0.00");
+    }
+
+
+  }
+  
 
 </script>
