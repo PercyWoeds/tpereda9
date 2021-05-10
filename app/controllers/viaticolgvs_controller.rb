@@ -1264,7 +1264,10 @@ pdf.move_down 2
     @viaticolgv[:fecha1] = Date.today 
     @viaticolgv[:user_id] = getUserId()
     
-    
+    @viaticolgv[:cdevuelto]  = 0 
+    @viaticolgv[:cdescuento]  = 0
+    @viaticolgv[:creembolso]  = 0
+
   end
 
 
