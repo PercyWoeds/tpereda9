@@ -11,8 +11,8 @@
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
   
 <tr bgcolor="#B4D7F7">
-   <th  style="width: 230px" > 
-
+      <th  style="width: 230px" > 
+   
       
      </th>
 
@@ -27,12 +27,14 @@
         
     <% end %>
   </tr>
+
+  
 <tr>
 <tr bgcolor="#B4D7F7">
 
     <th  style="width: 230px" > 
 
-      EMPLEADO 
+      EMPLEADO  
      </th >
 
        
@@ -60,8 +62,11 @@
             
         
         <tr>
-         <td  style="width: 230px" > 
-                <%= proyectoitem.employee.full_name   %> <br></td>
+               <td  style="width: 230px" > 
+
+                <%= proyectoitem.employee.full_name   %> <br>
+
+              </td>
 
 
               <% @detalle = proyectoitem.get_detalle(proyectoitem.employee_id, @proyecto_exam.proyecto_minero_id ) %>
@@ -83,6 +88,7 @@
                            </td>
 
                         <% end %>
+
                     <% else %>
 
 

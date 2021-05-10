@@ -182,10 +182,10 @@ self.per_page = 20
   end 
 
   def generate_viatico_number(serie)
-    if Viatico.where("caja_id = ?",serie).maximum("cast(code  as int)") == nil 
+    if Viaticolgv.where("caja_id = ?",serie).maximum("cast(code  as int)") == nil 
       self.code = "000001"
     else
-    self.code = Viatico.where("caja_id  = ?",serie).maximum("cast(code  as int)").next.to_s.rjust(6, '0') 
+    self.code = Viaticolgv.where("caja_id  = ?",serie).maximum("cast(code  as int)").next.to_s.rjust(6, '0') 
           
     end 
     

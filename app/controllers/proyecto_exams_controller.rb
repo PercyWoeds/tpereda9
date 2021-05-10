@@ -20,7 +20,6 @@ class ProyectoExamsController < ApplicationController
     @proyectoexam_details= @proyecto_exam.proyectoexam_details
 
 
-
     @rows = 2
 
     @pumps = ProyectoMineroExam.where(proyecto_minero_id: @proyecto_exam.proyecto_minero_id).order(:orden)
@@ -48,6 +47,7 @@ class ProyectoExamsController < ApplicationController
        end 
 
     end 
+
 
     @proyecto_minero_id = @proyecto_exam.proyecto_minero_id 
     @proyecto_exam_id = @proyecto_exam.id
@@ -230,7 +230,6 @@ class ProyectoExamsController < ApplicationController
   end
   
 
-
  def pdf
 
 
@@ -241,6 +240,8 @@ class ProyectoExamsController < ApplicationController
     @abajo    ="Examen "
 
     @pumps = ProyectoMineroExam.where(proyecto_minero_id: @proyecto_exam.proyecto_minero_id).order(:orden)
+
+
    @proyecto_examen_empleado = @company.get_proyecto_exam_empleado(@proyecto_exam.proyecto_minero_id) 
 
     @cols = @pumps.count 
@@ -251,7 +252,8 @@ class ProyectoExamsController < ApplicationController
         render  pdf: "rpt_proyecto_exam_01",template: "proyecto_exams/rpt_proyecto_exam_01.pdf.erb",
         locals: {:proyecto_exam => @proyecto_exam} ,
          :orientation => 'Landscape',
-         :header => {
+           :page_size => 'A3', 
+           :header => {
            :spacing => 5,
                            :html => {
                            :template => 'layouts/pdf-header10.html', 
