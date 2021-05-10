@@ -1,0 +1,46 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %>
+</div>
+
+<h1>
+  <%= image_tag("reports_48.png", :class => "vmiddle") %>
+  Reportes
+</h1>
+
+<div class="mid_box bordered_right">
+  <h3>
+    Caja
+  </h3>
+    <p class="big">
+       
+        <%= link_to "Reporte de caja ", "/companies/reports/reports_caja/#{@company.id}" %>
+    
+</p>
+
+  <p class="big">
+    <%= link_to "LIQUIDACIÓN DE GASTOS DE VIAJE (LGV) - SERVICIOS LOCALES ", "/companies/reports/rpt_caja_1/#{@company.id}" %>
+  </p>
+  
+  <h3>
+    Orden de Servicio de Transporte
+  </h3>
+  
+  <p class="big">
+    <%= link_to "Orden de Servicio Transporte", "/companies/reports/rpt_ost_1/#{@company.id}" %>
+  </p>
+  
+
+  <p class="big">
+    <%= link_to "Orden de Servicio Transporte - Trazabilidad", "/companies/reports/rpt_ost_2/#{@company.id}" %>  </p>
+  </p>
+  <p class="big">
+    <%= link_to "Orden de servicio - OST ", "/companies/reports/rpt_ost_3/#{@company.id}" %>  </p>
+  </p>
+  
+</div>
+
+<div class="mid_box">
+</div>
+
+<%= br() %>

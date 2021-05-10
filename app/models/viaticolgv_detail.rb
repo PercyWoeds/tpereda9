@@ -11,8 +11,10 @@ class ViaticolgvDetail < ActiveRecord::Base
 
     belongs_to :egreso
 
-    belongs_to :cout
-    
+ 
+    belongs_to :cout 
+
+
     def get_detalle
         ret =""
         if self.tranportorder.code !="9999" 
@@ -20,6 +22,6 @@ class ViaticolgvDetail < ActiveRecord::Base
         end 
         return ret 
     end 
-
+    
 
 end

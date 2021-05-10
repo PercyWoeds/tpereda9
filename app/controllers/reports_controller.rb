@@ -1720,4 +1720,20 @@ def rpt_pex_1
   end
 
 
+def reports_caja  
+
+    @company = Company.find(1)
+    @pagetitle = "Resumen Pex "    
+    @monedas=@company.get_monedas    
+  end
+
+
+def rpt_caja_1
+  
+    @company = Company.find(1)
+    @pagetitle = "Resumen Pex "    
+    @monedas=@company.get_monedas    
+  end
+
+
 end

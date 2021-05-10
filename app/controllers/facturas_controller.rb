@@ -1472,7 +1472,6 @@ def reportes_detraccion
 #########################################################################
 
 
-
 # reporte completo
   def build_pdf_header_dt(pdf)
       

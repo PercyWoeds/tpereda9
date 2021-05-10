@@ -239,7 +239,8 @@ class ProyectoExamsController < ApplicationController
     @company =Company.find(company)
     @cabecera ="Facturacion"
     @abajo    ="Examen "
-  @pumps = ProyectoMineroExam.where(proyecto_minero_id: @proyecto_exam.proyecto_minero_id)
+
+    @pumps = ProyectoMineroExam.where(proyecto_minero_id: @proyecto_exam.proyecto_minero_id).order(:orden)
    @proyecto_examen_empleado = @company.get_proyecto_exam_empleado(@proyecto_exam.proyecto_minero_id) 
 
     @cols = @pumps.count 

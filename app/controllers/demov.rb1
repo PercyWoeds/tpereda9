@@ -1,0 +1,35 @@
+
+                   row = []
+                 row << nroitem.to_s
+                 row <<   product.code
+                 row <<   product.fecha1.nil? ?  "-" : product.fecha1.strftime("%d/%m/%Y")
+                 row <<   product.fecha2.nil? ?  "-" : product.fecha2.strftime("%d/%m/%Y")
+                 row <<   product.get_placa(product.truck_id).concat(" / ",product.get_placa(product.truck2_id))
+                 row <<   product.get_punto(product.ubication_id).concat( " - " ,product.get_punto(product.ubication2_id))
+
+                 row <<   product.get_empleado(product.employee_id)
+
+                 row <<    product.carr == nil ? product.code : "-"
+
+                 row <<   product.carr == nil ? product.importe  : "-"
+                 row <<   product.carr == "1" ? product.code : "-"
+                  
+                 row <<   product.carr == "1" ? product.importe : "-"
+
+                 row <<   sprintf("%.2f",product.total_egreso.to_s)
+
+                 rendido = product.total_egreso - product.cdescuento_importe
+
+                 row <<   sprintf("%.2f",rendido.to_s)
+
+                 row <<    product.cdevuelto 
+
+                 row <<   sprintf("%.2f",product.cdevuelto_importe.to_s)
+
+                 row <<    product.cdescuento 
+
+                 row <<   sprintf("%.2f",product.cdescuento_importe.to_s)
+                 
+                 row <<    product.creembolso  
+
+                 row <<   sprintf("%.2f",product.creembolso_importe.to_s)

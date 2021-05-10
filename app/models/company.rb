@@ -5593,6 +5593,34 @@ end
 
 
 
+
+def get_viaticolgv(fecha1,fecha2)
+
+
+ @caja =  Viaticolgv.find_by_sql( ['Select couts.code, couts.fecha1 ,couts.fecha2,couts.id,couts.tranportorder_id,
+  couts.truck_id,couts.truck2_id,couts.ubication_id,couts.ubication2_id,couts.employee_id,couts.carr,viaticolgv_details.importe ,
+    viaticolgvs.total_egreso,
+  viaticolgvs.cdevuelto,viaticolgvs.cdevuelto_importe,
+  viaticolgvs.cdescuento,viaticolgvs.cdescuento_importe,
+  viaticolgvs.creembolso,viaticolgvs.creembolso_importe 
+  from viaticolgv_details   
+INNER JOIN couts ON   viaticolgv_details.cout_id = couts.id
+INNER JOIN viaticolgvs ON viaticolgvs.id = viaticolgv_details.viaticolgv_id  
+WHERE viaticolgvs.fecha1 >= ? and viaticolgvs.fecha1  <=? and   
+  viaticolgv_details.viaticolgv_id  = ? and viaticolgv_details.egreso_id = ? and viaticolgv_details.document_id = ?
+and viaticolgv_details.cout_id IS NOT NULL', "#{fecha1} 00:00:00","#{fecha2} 23:59:59", self.id,1,10])
+
+
+
+#@caja =   Viaticolgv.select("viaticolgv_details.cout.code").joins(:viaticolgv_details).where(["viaticolgvs.fecha1 >= ? and viaticolgvs.fecha1  <=? and   
+ # viaticolgv_details.viaticolgv_id  = ? and viaticolgv_details.egreso_id = ? and viaticolgv_details.document_id = ?
+ # and viaticolgv_details.cout_id IS NOT NULL","#{fecha1} 00:00:00","#{fecha2} 23:59:59", self.id,1,10]).order("viaticolgv_details.numero")
+
+return @caja 
+
+
+end 
+
 end
 
 

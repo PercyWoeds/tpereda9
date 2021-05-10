@@ -1,3 +1,4 @@
+
   
 require 'sidekiq/web'
 
@@ -90,6 +91,7 @@ require 'sidekiq/cron/web'
   resources :quintos
   resources :fiveparameters
   resources :tms
+
   resources :payrollbonis
   resources :categoria
   resources :bankdetails
@@ -172,6 +174,11 @@ require 'sidekiq/cron/web'
         collection { get :search_viatico_viatico_details }
         collection { get :agregar } 
       end 
+
+      collection { get :reportes1}
+      collection { get :reportes2}
+      collection { get :reportes3}
+
 
 
   end
@@ -769,7 +776,14 @@ match 'companies/reports/rpt_coti_1_pdf/:company_id' => 'reports#rpt_coti_1_pdf'
 
   match 'companies/reports/rpt_examen01_pdf/:company_id' => 'reports#rpt_examen01_pdf', via: [:get, :post]  
   match 'companies/reports/rpt_pex_1/:company_id' => 'reports#rpt_pex_1', via: [:get, :post]  
- 
+
+
+  match 'companies/reports/reports_caja/:company_id' => 'reports#reports_caja', via: [:get, :post]    
+  
+  match 'companies/reports/rpt_caja_1/:company_id' => 'reports#rpt_caja_1', via: [:get, :post]    
+  
+
+
   # Company users
 
   match 'company_users/ac_users' => 'company_users#ac_users', via: [:get, :post]

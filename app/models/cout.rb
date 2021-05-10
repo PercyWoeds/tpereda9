@@ -9,7 +9,7 @@ belongs_to :employee
 belongs_to :truck 
 belongs_to :tranportorder
 
-belongs_to :viaticolgv_details 
+belongs_to :viaticolgv_detail 
 
 
   

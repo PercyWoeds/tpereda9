@@ -67,6 +67,32 @@ self.per_page = 20
                      "OST ",
                      "DETALLE",
                      "DESTINO"]
+
+
+
+  TABLE_HEADERS5 = ["Nro.","TD",
+                     "FECHA SALIDA.",
+                     "FECHA LLEGADA",
+                     "PLACA",
+                     "DESTINO",
+                     "CONDUCTOR",                 
+                     "N° OST",                                     
+                     "C.E.",
+                     "MONTO",
+                     "C.E.",
+                     "MONTO",
+                     "TOTAL EGRESOS",
+                     "RENDIMIENTO",
+                        "C.I.",
+                     "MONTO",
+                        "C.I.",
+                     "DSCTO.",
+                        "C.I.",
+                     "REMB.",
+                     "FIRMA LGV",
+                     "FIRMA FLETE VUELTOS",
+                     "FIRMA LGV INFORME" ]
+                    
   
 
   def self.search(search)
@@ -114,6 +140,46 @@ self.per_page = 20
   end 
 
 
+    def get_punto(id)
+      punto = Punto.find(id)
+      return punto.name 
+
+    end   
+
+
+    
+    def get_placa(id)
+
+    if   Truck.where(id: id).exists? 
+
+   
+
+      placa = Truck.find(id)
+
+
+
+      return placa.placa
+
+    else 
+      return ""
+
+    end   
+  end 
+
+  def get_empleado(id)
+
+    if   Employee.where(id: id).exists? 
+
+     placa = Employee.find(id)
+
+     return placa.full_name2
+
+    else 
+      return ""
+
+    end   
+
+  end 
 
   def generate_viatico_number(serie)
     if Viatico.where("caja_id = ?",serie).maximum("cast(code  as int)") == nil 
@@ -142,6 +208,26 @@ self.per_page = 20
     subtotal = self.inicial
     
     return subtotal 
+    
+  end
+
+  def get_ost(id) 
+
+
+    if   Tranportorder.where(id: id).exists? 
+
+   
+
+      ost = Tranportorder.find(id)
+
+
+
+      return ost.code 
+    else 
+      return "-"
+
+    end   
+
     
   end
   
@@ -676,12 +762,7 @@ self.per_page = 20
 
    def get_comprobante_ingreso
 
-    puts "ccc"
-
-    puts self.id 
-
-
-         @dato = ViaticolgvDetail.where([ "viaticolgv_id  = ? and egreso_id = ? and document_id = ? and cout_id IS NOT NULL ", self.id,1,10 ] )
+       @dato = ViaticolgvDetail.where([ "viaticolgv_id  = ? and egreso_id = ? and document_id = ? and cout_id IS NOT NULL ", self.id,1,10 ] )
 
 
          return @dato

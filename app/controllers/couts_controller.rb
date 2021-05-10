@@ -193,15 +193,7 @@ def do_crear
     @couts = Cout.new
     @couts[:code] = @couts.generate_cout_number
 
-    puts "code ----"
-
-    puts @couts[:code]
-    puts @employee_id
-    
-    puts @placa 
-    
-
-
+   
     @couts[:fecha] =  params[:fecha]
     @couts[:importe] = params[:total_importe]
     @couts[:tbk] = params[:tbk]
@@ -730,6 +722,7 @@ def build_pdf_header_1(pdf)
     
           ############
   texto_letras = @cout.textify.upcase + " SOLES "
+  
   if @cout.tranportorder_id != 222
 
   ost =  @cout.tranportorder.code
