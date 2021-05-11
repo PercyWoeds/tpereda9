@@ -306,7 +306,16 @@ self.per_page = 20
 
     
 
-      @viaticotbks_egresos = Egreso.where(["id> 1 and extension = ? or extension = ?","TBK","ALL"]).order(:orden)
+      @viaticotbks_egresos = Egreso.where(["id> 1 and extension = ? ","TBK"]).order(:orden)
+
+  end 
+
+
+  def get_egresos_tbk0
+
+    
+
+      @viaticotbks_egresos = Egreso.where(["id> 1 and extension = ? or extension = ?  ","TBK","ALL"]).order(:orden)
 
   end 
 
