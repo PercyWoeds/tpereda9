@@ -502,7 +502,7 @@ before_filter :authenticate_user!
           else 
             
             row <<  product.cout.truck.placa + " /  " + product.cout.get_placa(product.cout.truck2_id) +  product.cout.get_placa(product.cout.truck3_id) 
-            row <<  product.cout.get_punto(product.cout.ubication_id) + "  -  "+ product.cout.get_punto(product.cout.ubication2_id) +" EJES:"+ product.cout.tranportorder.get_ejes2(product.cout.tranportorder.id) + "( TBK " + product.cout.code + " )"
+            row <<  product.cout.get_punto(product.cout.ubication_id) + "  -  "+ product.cout.get_punto(product.cout.ubication2_id) +" EJES:"+ product.cout.tranportorder.get_ejes2(product.cout.tranportorder.id) + "( TBK " + product.cout.tbk_documento + " )"
 
             row <<   product.cout.tranportorder.code
             end 
