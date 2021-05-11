@@ -1646,7 +1646,15 @@ pdf.move_down 2
       
     @viaticolgv[:code] = @viaticolgv.generate_viatico_number( @viaticolgv[:caja_id]) 
 
- 
+  
+    @viaticolgv[:cdevuelto_importe]  = 0 
+    @viaticolgv[:cdescuento_importe]  = 0
+    @viaticolgv[:creembolso_importe]  = 0
+
+    @viaticolgv[:fecha_devuelto]   = Date.today
+    @viaticolgv[:fecha_descuento]  = Date.today
+    @viaticolgv[:fecha_reembolso]  = Date.today
+
 
     respond_to do |format|
       if @viaticolgv.save

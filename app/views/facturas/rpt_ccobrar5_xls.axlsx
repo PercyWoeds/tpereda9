@@ -347,19 +347,7 @@ wb.styles do |s|
            :style => [currency,cadena,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency]
 
           
-            @total_anterior_column = @total_anterior_column + detalle.c_1 
-            @total_mes01_column = @total_mes01_column + detalle.c_2 
-            @total_mes02_column = @total_mes02_column + detalle.c_3
-            @total_mes03_column = @total_mes03_column + detalle.c_4 
-            @total_mes04_column = @total_mes04_column + detalle.c_5
-            @total_mes05_column = @total_mes05_column + detalle.c_6 
-            @total_mes06_column = @total_mes06_column + detalle.c_7
-            @total_mes07_column = @total_mes07_column + detalle.c_8
-            @total_mes08_column = @total_mes08_column + detalle.c_9 
-            @total_mes09_column = @total_mes09_column + detalle.c_10 
-            @total_mes10_column = @total_mes10_column + detalle.c_11
-            @total_mes11_column = @total_mes11_column + detalle.c_12
-            @total_mes12_column = @total_mes12_column + detalle.c_13 
+           
 
 
 

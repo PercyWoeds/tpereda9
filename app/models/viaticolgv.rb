@@ -9,9 +9,9 @@ self.per_page = 20
   validates_presence_of :company_id,  :code, :user_id,:inicial,:fecha1,:caja_id
   validates_uniqueness_of :code, scope: :caja_id
   
-   validates :cdevuelto_importe,  numericality: { greater_than_or_equal_to: 1 }
-   validates :cdescuento_importe, numericality: { greater_than_or_equal_to: 1 }
-   validates :creembolso_importe, numericality: { greater_than_or_equal_to: 1 }
+   validates :cdevuelto_importe,  numericality: { greater_than_or_equal_to: 0 }
+   validates :cdescuento_importe, numericality: { greater_than_or_equal_to: 0 }
+   validates :creembolso_importe, numericality: { greater_than_or_equal_to: 0 }
    
 
 
