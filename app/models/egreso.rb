@@ -11,10 +11,19 @@ class Egreso < ActiveRecord::Base
     	
       
     end
+
+
 def get_detalle_egreso(viatico_id,id)
      
       @viaticos = ViaticoDetail.where("viatico_id = ? and egreso_id = ?",viatico_id, id).order(:fecha,:id,:document_id)
   end
+
+  
+def get_detalle_ingresotbk(viatico_id,id)
+      lcCheque = 6
+      @viaticos = ViaticotbkDetail.where("viaticotbk_id = ? and egreso_id = ?",viatico_id, id).order(:fecha,:id,:document_id)
+      return @viaticos
+ end  
 
   
 def get_detalle_egresotbk(viatico_id,id)

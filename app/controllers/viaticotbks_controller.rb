@@ -295,7 +295,7 @@ before_filter :authenticate_user!
            puts egresos.name 
 
 
-         @detalle_ing= egresos.get_detalle_egresotbk(@viaticotbk.id,egresos.id)
+         @detalle_ing= egresos.get_detalle_ingresotbk(@viaticotbk.id,egresos.id)
 
 
             table_content = ([ [egresos.name  ]   ])
