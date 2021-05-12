@@ -476,8 +476,7 @@ end
 
             [{:content => "RECIBIDO POR :", :font_style => :bold , :border_width => 0 },"......................................................................................."],
             [{:content => "DNI.:", :font_style => :bold , :border_width => 0 },"......................................................................................."],
-            [{:content => "AYUDANTE.:", :font_style => :bold , :border_width => 0 },"......................................................................................."],
-            [{:content => "OBSERVACION.:", :font_style => :bold , :border_width => 0 },@cout.observa]
+            [{:content => "AYUDANTE.:", :font_style => :bold , :border_width => 0 },"......................................................................................."]
            
            
                          
@@ -512,18 +511,18 @@ end
                   ]
 
 
-            #  pdf.table( tb_text_direccion ,:position => :right,
-            #                                   :width => pdf.bounds.width,
-            #                                    :cell_style => {:height => 17}
-            #                                         ) do
-            #   columns([0,1,2]).width = 80
-            #   columns([0]).font_style = :bold
+             pdf.table( tb_text_direccion ,:position => :right,
+                                              :width => pdf.bounds.width,
+                                               :cell_style => {:height => 17}
+                                                    ) do
+              columns([0,1,2]).width = 80
+              columns([0]).font_style = :bold
 
 
-            #  columns([0]).align = :center
+             columns([0]).align = :center
           
-            #   columns([2,5]).align = :right
-            # end
+              columns([2,5]).align = :right
+            end
       
 
           pdf.move_down 20
@@ -544,7 +543,7 @@ end
             end
       
 
-          pdf.move_down 25
+          pdf.move_down 10
 
 
       
@@ -560,7 +559,10 @@ end
         pdf.text ""
         pdf.text "" 
 
-     
+        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+        pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+
+      end
 
       pdf
       
@@ -577,20 +579,11 @@ end
           
     @cout = Cout.find(params[:id])
      
-    Prawn::Document.generate("app/pdf_output/#{@cout.id}.pdf" ) do |pdf|
-
+    Prawn::Document.generate("app/pdf_output/#{@cout.id}.pdf") do |pdf|
         pdf.font "Helvetica"
         pdf = build_pdf_header(pdf)
         pdf = build_pdf_body(pdf)
-
         build_pdf_footer(pdf)
-        pdf = build_pdf_header(pdf)
-        pdf = build_pdf_body(pdf)
-        build_pdf_footer(pdf)
-
-
-       
-
         @lcFileName =  "app/pdf_output/#{@cout.id}.pdf"      
         
     end     

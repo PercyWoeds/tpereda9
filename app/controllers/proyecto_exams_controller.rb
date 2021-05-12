@@ -248,7 +248,6 @@ class ProyectoExamsController < ApplicationController
      
       begin 
         
-
         render  pdf: "rpt_proyecto_exam_01",template: "proyecto_exams/rpt_proyecto_exam_01.pdf.erb",
         locals: {:proyecto_exam => @proyecto_exam} ,
          :orientation => 'Landscape',

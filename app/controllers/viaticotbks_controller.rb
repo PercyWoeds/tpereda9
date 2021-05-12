@@ -35,7 +35,7 @@ before_filter :authenticate_user!
      
        table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD EN EL TRABAJO ",:rowspan => 2},"CODIGO ","TP-FZ-F-018"], 
           ["VERSION: ","4"], 
-          ["LIQUIDACION DE CAJA ","Pagina: ","1 de 1 "] 
+          ["LIQUIDACION DE VIATICOS TELEBANKING ","Pagina: ","1 de 1 "] 
          
           ])
       
