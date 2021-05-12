@@ -4511,27 +4511,6 @@ end
 
             # table_content << row       
 
-              a =   Tmppaycustomer.new(item: nroitem , 
-              customer:  customerpayment_rpt.customer.name  , 
-              c_1:@total_anterior,
-              c_2:@total_mes01,
-              c_3:@total_mes02,
-              c_4:@total_mes03,
-              c_5:@total_mes04,
-              c_6:@total_mes05,
-              c_7:@total_mes06,
-              c_8:@total_mes07,
-              c_9:@total_mes08,
-              c_10:@total_mes09,
-              c_11:@total_mes10,
-              c_12:@total_mes11,
-              c_13:@total_mes12,
-              c_14:@total_cliente )
-             begin 
-             a.save
-             rescue 
-             end      
-            
 
 
         # row = []
@@ -4589,8 +4568,6 @@ end
          row << sprintf("%.2f",n.to_s) + "%"
          
          table_content << row
-
-
 
 
             @total_anterior_column = @total_anterior_column + detalle.c_1 
