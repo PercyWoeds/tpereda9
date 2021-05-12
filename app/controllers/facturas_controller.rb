@@ -4254,6 +4254,7 @@ end
       lcCli = @customerpayment_rpt.first.customer_id
       $lcCliName = ""
        Tmppaycustomer.delete_all
+
      for  customerpayment_rpt in @customerpayment_rpt
 
         if lcCli == customerpayment_rpt.customer_id 
@@ -4536,7 +4537,19 @@ end
 
 
 
-
+         @total_anterior_column = 0
+            @total_mes01_column = 0
+            @total_mes02_column = 0
+            @total_mes03_column = 0
+            @total_mes04_column = 0
+            @total_mes05_column = 0
+            @total_mes06_column = 0
+            @total_mes07_column = 0
+            @total_mes08_column = 0
+            @total_mes09_column = 0
+            @total_mes10_column = 0
+            @total_mes11_column = 0
+            @total_mes12_column = 0
       
 
      @detalle  =  Tmppaycustomer.order("c_14 desc ")
