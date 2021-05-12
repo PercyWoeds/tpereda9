@@ -471,10 +471,26 @@ end
 
 
 
+       table_content_tbk = ([ ["TBK DOCUMENTO .: ", @cout.tbk_documento  ]   ])
+      
+
+       pdf.table(table_content_tbk  ,{
+           :position => :right ,
+           :width => pdf.bounds.width/4 
+         })do
+           columns([0]).font_style = :bold
+          
+            columns([0]).align = :center
+      
+         end
+
+         pdf.move_down 2
+         
+
 
             tb_text_guias2 = [ [{:content => "FIRMA:", :font_style => :bold , :border_width => 0 },"......................................................................................."],
 
-            [{:content => "RECIBIDO POR :", :font_style => :bold , :border_width => 0 },"......................................................................................."],
+            [{:content => "RECIBIDO POR :", :font_style => :bold , :border_width => 0 },@cout.employee.full_name ],
             [{:content => "DNI.:", :font_style => :bold , :border_width => 0 },"......................................................................................."],
             [{:content => "AYUDANTE.:", :font_style => :bold , :border_width => 0 },"......................................................................................."],
             [{:content => "OBSERVACION.:", :font_style => :bold , :border_width => 0 },@cout.observa]
@@ -544,7 +560,7 @@ end
             end
       
 
-          pdf.move_down 25
+          pdf.move_down 40
 
 
       
