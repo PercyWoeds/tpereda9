@@ -627,7 +627,7 @@ end
 
 
 
-       table_content_tbk = ([ ["TBK DOCUMENTO .: ", @cout.tbk_documento  ]   ])
+       table_content_tbk = ([ ["TBK Nro.: ", @cout.tbk_documento  ]   ])
       
 
        pdf.table(table_content_tbk  ,{
@@ -644,10 +644,10 @@ end
          
 
 
-            tb_text_guias2 = [ [{:content => "FIRMA:", :font_style => :bold , :border_width => 0 },"......................................................................................."],
+            tb_text_guias2 = [ [{:content => "     ", :font_style => :bold , :border_width => 0 },"......................................................................................."],
 
             [{:content => "RECIBIDO POR :", :font_style => :bold , :border_width => 0 },@cout.employee.full_name ],
-            [{:content => "DNI.:", :font_style => :bold , :border_width => 0 },"......................................................................................."],
+            [{:content => "DNI.:", :font_style => :bold , :border_width => 0 },@cout.employee.idnumber ],
             [{:content => "AYUDANTE.:", :font_style => :bold , :border_width => 0 },"......................................................................................."],
             [{:content => "OBSERVACION.:", :font_style => :bold , :border_width => 0 },@cout.observa]
            
@@ -702,7 +702,7 @@ end
 
 
             tb_text_direccion = [ ["-------------------------------------------------------","               ","----------------------------------------"],
-            ["RENDIDO","                    ","V.B."]]               
+            ["FIRMA CONDUCTOR","                    ","V.B."]]               
 
              pdf.table( tb_text_direccion ,:position => :center,
                                               :width => pdf.bounds.width , :cell_style=>{:border_width =>0}
