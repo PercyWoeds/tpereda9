@@ -587,7 +587,7 @@ end
         pdf.move_down 5
 
 
-      tb_text_guias = [ [{:content => "DESTINO . "+ @cout.tranportorder.get_punto(@cout.tranportorder.ubication_id ), :font_style => :bold , :border_width => 0 },
+      tb_text_guias = [ [{:content => "DESTINO . "+ @cout.get_punto(@cout.ubication2_id ), :font_style => :bold , :border_width => 0 },
                              {:content => "  ", :font_style => :bold , :border_width => 0 }, 
                               {:content => "  ", :font_style => :bold , :border_width => 0 } ],
 
