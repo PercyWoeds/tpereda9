@@ -1484,6 +1484,14 @@ pdf.move_down 2
           a.numero = @viaticotbk.correlativo2(@viaticotbk[:code])
           a.save
         end 
+       if @viaticotbk.caja_id == 5 
+          a = @cajas.find(5)
+          a.inicial =  @viaticotbk[:saldo]
+          a.numero = @viaticotbk.correlativo2(@viaticotbk[:code])
+          a.save
+        end 
+
+
         
         format.html { redirect_to(@viaticotbk, :notice => 'viaticotbk was successfully updated.') }
         format.xml  { head :ok }
