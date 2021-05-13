@@ -10,37 +10,141 @@
 
 <div class="mid_box bordered_right">
   <h3>
-    Caja
+    Liquidacion de Caja - todas
   </h3>
+
+
     <p class="big">
        
-        <%= link_to "Reporte de caja ", "/companies/reports/reports_caja/#{@company.id}" %>
+        <%= link_to "Reporte de liquidacion de caja -todos los formatos ", "/companies/reports/rpt_viatico_pdf/#{@company.id}" %>
     
-</p>
+     </p>
+
+    <p class="big">
+       
+        <%= link_to "Reporte de Adelanto de Sueldos ", "/companies/reports/rpt_viatico_pdf/#{@company.id}" %>
+    
+     </p>
+
+
+
+    <p class="big">
+       
+        <%= link_to "Reporte de Pagos realizados por proveedor ", "/companies/reports/rpt_viatico_pdf/#{@company.id}" %>
+    
+     </p>
+
+
+
+
+    <p class="big">
+       
+        <%= link_to "Reporte total de compras ", "/companies/reports/rpt_viatico_pdf/#{@company.id}" %>
+    
+     </p>
+
+ <h3>
+    Liquidacion de Viaticos Telebanking - Efectivo
+  </h3>
+
+
+
+
+
+
+    <p class="big">
+       
+        <%= link_to "Reporte Viaticos entregados por conductor ", "/companies/reports/rpt_viatico_pdf/#{@company.id}" %>
+    
+     </p>
+
+
+    <p class="big">
+       
+        <%= link_to "Reporte Viaticos entregados por placa ", "/companies/reports/rpt_viatico_pdf/#{@company.id}" %>
+    
+     </p>
+
+
+
+
+    <p class="big">
+       
+        <%= link_to "Reporte Viaticos entregados por destino ", "/companies/reports/rpt_viatico_pdf/#{@company.id}" %>
+    
+     </p>
+
+
+
+
+ <h3>
+
+  Ingreso de vueltos
+      </h3>
+
+
+    <p class="big">
+       
+        <%= link_to "Reporte por fecha  ", "/companies/reports/rpt_viatico_pdf/#{@company.id}" %>
+    
+     </p>
+
+
+
+
+    <p class="big">
+       
+        <%= link_to "Reporte por conductor ", "/companies/reports/rpt_viatico_pdf/#{@company.id}" %>
+    
+     </p>
+
+
+
+  <h3>
+   LGV Servicios Locales </h3>
+
 
   <p class="big">
     <%= link_to "LIQUIDACIÓN DE GASTOS DE VIAJE (LGV) - SERVICIOS LOCALES ", "/companies/reports/rpt_caja_1/#{@company.id}" %>
   </p>
   
-  <h3>
-    Orden de Servicio de Transporte
-  </h3>
-  
-  <p class="big">
-    <%= link_to "Orden de Servicio Transporte", "/companies/reports/rpt_ost_1/#{@company.id}" %>
-  </p>
-  
-
-  <p class="big">
-    <%= link_to "Orden de Servicio Transporte - Trazabilidad", "/companies/reports/rpt_ost_2/#{@company.id}" %>  </p>
-  </p>
-  <p class="big">
-    <%= link_to "Orden de servicio - OST ", "/companies/reports/rpt_ost_3/#{@company.id}" %>  </p>
-  </p>
   
 </div>
 
+
+
 <div class="mid_box">
+
+  <h3>
+    LGV Servicios provincia 
+  </h3>
+  
+  <p class="big">
+    <%= link_to "LIQUIDACIÓN DE GASTOS DE VIAJE (LGV) - SERVICIOS PROVINCIA ", "/companies/reports/rpt_caja_1/#{@company.id}" %>
+  </p>
+  
+
+  <p class="big">
+    <%= link_to "Reporte de Descuentos y Reembolsos" ,"/companies/reports/rpt_caja_1/#{@company.id}" %>
+  </p>
+
+
+  <p class="big">
+    <%= link_to "Reporte de gastos total segun comprobante", "/companies/reports/rpt_ost_2/#{@company.id}" %>  </p>
+  </p>
+  <p class="big">
+    <%= link_to "Reporte de gastos por conductor", "/companies/reports/rpt_ost_3/#{@company.id}" %>  </p>
+  </p>
+
+  <h3>
+    Control de LGV Provincia 
+  </h3>
+  
+  <p class="big">
+    <%= link_to "Reporte pendiente por rendir  ", "/companies/reports/rpt_caja_1/#{@company.id}" %>
+  </p>
+
+
 </div>
 
 <%= br() %>
