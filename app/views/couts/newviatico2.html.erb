@@ -1,0 +1,257 @@
+
+
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @tranportorder.company.name, @tranportorder.company %> &raquo;
+  <%= link_to "tranports", "/companies/tranportorders/#{@tranportorder.company.id}" %>
+</div>
+
+
+<h1>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+
+
+  COMPROBANTE EGRESO VIATICO 
+  
+</h1>
+<h3>
+  <form method="get" action="/couts/do_crear2/<%= @tranportorder.id%>  ">
+
+  ORDEN DE SERVICIO DE TRANSPORTE <%= @tranportorder.code %>
+  
+</h3>
+
+<%= hr() %>
+
+<% if @tranportorder.location %>
+  <p>
+    <b>Location:</b>
+    <%= link_to @tranportorder.location.name, @tranportorder.location %>
+  </p>
+<% end %>
+
+<% if @tranportorder.division %>
+  <p>
+    <b>Division:</b>
+    <%= link_to @tranportorder.division.name, @tranportorder.division %>
+  </p>
+<% end %>
+
+
+
+<p>
+  <b>Code:</b>
+  <%= @tranportorder.code %>
+</p>
+
+
+  <div class="field">
+      <strong>Fecha Emision :</strong><br />
+      <input type="date" name="fecha" value="2021-04-29"  style = "width: 150px" >
+    </div>
+
+ <div class="field">
+     <strong> Efectivo S/. :</strong><br />
+     <input id="total_importe" name="total_importe"  step="any" type="number" />
+</div>
+
+ <div class="field">
+     <strong> TBK S/. :</strong><br />
+     <input id="tbk" name="tbk"  step="any" type="number" />
+</div>
+
+
+ <div class="field">
+     <strong> Nro Comprobante  TBK  :</strong><br />
+     <input type="text" id="tbk_documento" name="tbk_documento"  />
+</div>
+
+
+<%= hr() %>
+
+<table style="width:100%">
+  
+  <tr>
+    <td><strong>Conductor de carga:</strong></td>
+    <td> <%= @tranportorder.employee.full_name %></td> 
+  
+
+    <td><strong> De</strong></td>
+    <td> <%= @tranportorder.get_punto(@tranportorder.ubication_id) %></td>
+  </tr>
+
+  
+  
+  <tr>
+    <td><strong>Conductor de ruta </strong></td>
+    <td> <%= @tranportorder.get_empleado(@tranportorder.employee2_id) %></td> 
+  
+     <td>A : </td>
+    <td> <%= @tranportorder.get_punto(@tranportorder.ubication2_id) %></td> 
+
+   
+  </tr>
+ 
+ <tr>
+    <td><strong>Conductor Escolta  </strong></td>
+    <td><%= @tranportorder.get_empleado(@tranportorder.employee4_id) %> </td> 
+    
+     <td>Fecha/Hora Salida  </td>
+    <td><%= @tranportorder.fecha1.strftime('%d-%m-%Y') %> </td> 
+  </tr>
+
+
+
+ <tr>
+    <td><strong> Supervisor / Apoyo </strong>  </td>
+    <td><%= @tranportorder.get_empleado(@tranportorder.employee3_id) %> </td> 
+ 
+    <td>  </td>
+    <td> </td> 
+  </tr>
+
+
+  <tr>
+    <td><strong>Vehiculo: </strong></td>
+    <td> <%= @tranportorder.truck.placa %></td> 
+  
+    <td> </td> 
+  </tr>
+  <tr>
+    <td><strong>Vehiculo 2 : </strong></td>
+    <td> <%= @tranportorder.get_placa(@tranportorder.truck2_id) %></td> 
+   
+    <td> </td> 
+  </tr>
+   <tr>
+    <td><strong>Escolta  </strong></td>
+    <td><%= @tranportorder.get_placa(@tranportorder.truck3_id)  %> </td> 
+
+    <td> </td> 
+  </tr>
+
+
+  <tr>
+    <td>Ejes </td>
+    <td> <%= @tranportorder.get_ejes2(@tranportorder.id ) %> </td> 
+    <td></td>
+    <td></td> 
+  </tr>
+
+  
+  
+    
+  
+</table>
+
+<%= hr() %>
+
+<div>
+   
+<table>
+  <thead>
+    <tr>
+      <th>
+        Solicitud de Transporte 
+       </th> 
+
+       <th>
+        Cliente 
+       </th> 
+      <th>
+        Guias     
+       </th> 
+
+      <th>
+        Fecha     
+       </th> 
+      
+    </tr>
+  </thead>
+
+    <tbody>
+    <% for productItem in @tranportorder.get_sts() %>
+      <tr>
+        <td><%= productItem.code %></td>
+        <td><%= productItem.get_customers(productItem.customer_id) %></td>
+        <td><%= productItem.solicitante %></td>
+        <td><%= productItem.fecha1.strftime("%Y-%m-%d") %></td>
+      
+      </tr>
+
+    <% end %>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right">
+        &nbsp;
+      </td>
+    </tr>
+    
+  </tbody>
+
+</table>
+<br />
+
+  </div>
+<%= hr() %>
+
+
+
+ <div>
+    <b><strong>Guias en blanco </strong></b>
+    <br />
+    <br />
+    <%= format_text(@tranportorder.description) %>
+  </div>
+<%= hr() %>
+
+
+
+
+
+
+  <div>
+    <b><trong> Observaciones :</trong></b>
+    <br />
+    <br />
+    
+  </div>
+  <%= hr() %>
+
+
+<br />
+
+<div>
+  <strong><%= @tranportorder.get_processed %></strong>
+  <% if @tranportorder.processed == "1" and @tranportorder.date_processed %>
+    <%= doDate(@tranportorder.date_processed) %>
+  <% end %>
+</div>
+
+
+<p>
+  <strong>Seller:</strong>
+  <%= link_to @tranportorder.user.username, @tranportorder.user %>
+</p>
+
+<%= hr() %>
+
+
+
+<img src=<%="https://chart.googleapis.com/chart?chs=120x120&cht=qr&chl=#{@tranportorder.code}&choe=UTF-8"%> alt="QR code">
+
+<%= hr() %>
+<div class="button">  
+
+   
+    <input type="submit" value="Grabar Comprobante " />
+
+</div>
+
+  </form>
+
+<div class="button">  
+
+
+<%= link_to 'Regresar', tranportorders_path %>
+
+</div>

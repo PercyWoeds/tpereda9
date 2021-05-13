@@ -1,4 +1,6 @@
 <%= simple_form_for(@cout) do |f| %>
+
+
    <% if @cout.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@cout.errors.count, "error") %> prohibited this customer from being saved:</h2>
@@ -164,6 +166,7 @@
   <div class="form-actions">
 
      <%= f.hidden_field :tranportorder_id, :id => "ac_ost_id" %>
+     <%= f.hidden_field :tipo_compro  %>
     <%= f.button :submit %>
   </div>
 

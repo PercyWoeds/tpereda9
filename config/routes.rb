@@ -937,11 +937,17 @@ post 'add_friend', to: 'viaticotbks#add_friend'
 
  match 'couts/newviatico/:id' => 'couts#newviatico', via: [:get, :post]
 
+ match 'couts/new2/:id' => 'couts#new2', via: [:get, :post]
+ match 'couts/list_couts/:id' => 'couts#list_couts', via: [:get, :post]
+ match 'couts/newviatico2/:id' => 'couts#newviatico2', via: [:get, :post]
+
  match 'cout/pdf/:id' => 'couts#pdf', via: [:get, :post]
  match 'cout/pdf1/:id' => 'couts#pdf1', via: [:get, :post]
 
   match 'companies/couts/do_cargar/:company_id' => 'couts#do_cargar', via: [:get, :post]
   match 'couts/do_crear/:id'   => 'couts#do_crear', via: [:get, :post]
+  match 'companies/couts/do_cargar2/:company_id' => 'couts#do_cargar2', via: [:get, :post]
+  match 'couts/do_crear2/:id'   => 'couts#do_crear2', via: [:get, :post]
 
   resources :couts 
 # lgv

@@ -45,8 +45,40 @@ class CoutsController < ApplicationController
       @cout[:employee4_id] = 64
       @cout[:tranportorder_id] = 222
 
+      @cout[:tipo_compro] = "0"
+  end
+
+
+  def new2
+    @cout = Cout.new
+
+    @company   = Company.find(1)
+
+       @trucks = @company.get_trucks
+
+      @employees = @company.get_employees2() 
+      @puntos = @company.get_puntos()
+
+      @cout[:fecha] = Date.today 
+
+      @cout[:importe] = 0.00
+      @cout[:tbk] = 0.00
+      @cout[:tbk_documento] = ""
+
+
+      @cout[:ost_exist] = "1"
+      @cout[:employee4_id] = 64
+      @cout[:tranportorder_id] = 222
+      @cout[:tipo_compro] = "1"
 
   end
+
+
+  def list_couts
+
+      @couts = Cout.where(tipo_compro: "1").order(:code)
+      @company = Company.find(1)
+  end 
 
   # GET /couts/1/edit
   def edit
@@ -68,10 +100,13 @@ class CoutsController < ApplicationController
     @cout = Cout.new(cout_params)
 
 
-     @cout[:code] = @cout.generate_cout_number
+     @cout[:code] = @cout.generate_cout_number( @cout[:tipo_compro] )
      @puntos = @company.get_puntos()
      @employees = @company.get_employees2() 
      @trucks = @company.get_trucks
+
+      putc "compri tipo "
+     puts @cout[:tipo_compro]
 
     respond_to do |format|
       if @cout.save
@@ -191,7 +226,7 @@ def do_crear
     
 
     @couts = Cout.new
-    @couts[:code] = @couts.generate_cout_number
+    @couts[:code] = @couts.generate_cout_number("0")
 
    
     @couts[:fecha] =  params[:fecha]
@@ -243,7 +278,115 @@ def do_crear
 
 end 
 
+
+
+def do_crear2
+
+    @company = Company.find(1)
+
+    @action_txt = "do_crear2" 
+    @tranportorder = Tranportorder.find(params[:id] ) 
+
+    puts params[:total_importe]
+
+    puts "checked "
+
+   @placa = 376
+   @placa2 =376
+   @placa3 =376
+
+
+    
+        @employee_id = @tranportorder.employee_id
+ 
+        @employee2_id = @tranportorder.employee2_id
+
+        @employee3_id = @tranportorder.employee3_id
+ 
+        @employee4_id = @tranportorder.employee4_id
+   
+
+  
+        @placa = @tranportorder.truck_id
+    
+        @placa2 = @tranportorder.truck2_id
+  
+        @placa3 = @tranportorder.truck3_id
+    
+
+    @couts = Cout.new
+    @couts[:code] = @couts.generate_cout_number("1")
+
+   
+    @couts[:fecha] =  params[:fecha]
+    @couts[:importe] = params[:total_importe]
+    @couts[:tbk] = params[:tbk]
+    @couts[:tbk_documento] = params[:tbk_documento]
+    @couts[:truck_id] = @placa
+    @couts[:truck2_id] = @placa2
+    @couts[:truck3_id] = @placa3    
+    @couts[:tranportorder_id] = @tranportorder.id
+    @couts[:employee_id] = @employee_id
+    @couts[:employee2_id] = @employee2_id
+    @couts[:employee3_id] = @employee3_id
+    @couts[:employee4_id] = @employee4_id
+
+   @couts[:ubication_id] =@tranportorder.ubication_id
+    @couts[:ubication2_id] =@tranportorder.ubication2_id
+   
+ @couts[:fecha1] =  @tranportorder.fecha1
+ @couts[:fecha2] =   @tranportorder.fecha2
+
+
+    @couts[:peajes] =  0
+    @couts[:lavado] = 0
+    @couts[:llanta] = 0
+    @couts[:alimento] = 0
+    @couts[:otros] = 0
+    @couts[:monto_recibido] = params[:total_importe].to_f +  params[:tbk].to_f
+    @couts[:flete] = 0
+    @couts[:recibido_ruta] = 0
+    @couts[:vuelto] = 0
+    @couts[:descuento] = 0
+    @couts[:reembolso] = 0
+
+     @couts[:tipo_compro] = "1"
+
+     respond_to do |format|
+       if    @couts.save           
+        
+          format.html { redirect_to( "/couts/list_couts/1"  , :notice => 'Comprobante fue grabada con exito .') }
+          format.xml  { render :xml => @couts, :status => :created, :location => @couts}
+        else
+
+          format.html { redirect_to("/companies/couts/do_cargar2/#{@company.id}", :notice  => 'Ocurrio un error .') }
+          format.xml  { render :xml => @couts.errors, :status => :unprocessable_entity }
+        end 
+        
+      end
+
+
+end 
+
 def do_cargar
+  @company   = Company.find(1)
+
+   if params[:search]
+           
+          
+        @osts   = Tranportorder.search(params[:search]).where(["fecha1 >= ?","2021-03-01 00:00:00"]).order("fecha desc ,code desc ").paginate(:page => params[:page])
+     
+    else
+              
+        @osts = Tranportorder.where(["fecha1 >= ?","2021-04-01 00:00:00"]).order("fecha desc ,code desc ").paginate(:page => params[:page])
+
+    end
+
+end 
+
+
+
+def do_cargar2
   @company   = Company.find(1)
 
    if params[:search]
@@ -267,8 +410,14 @@ def newviatico
 
     
 
+end 
+
+def newviatico2
 
 
+   @tranportorder =   Tranportorder.find(params[:id])
+
+    
 
 end 
 
@@ -317,11 +466,18 @@ end
         pdf.font "Helvetica"  , :size => 8
      image_path = "#{Dir.pwd}/public/images/tpereda2.png"
 
+       if @cout.tipo_compro == "1"     
 
-     
+          local = "LOCALES"
+
+       else
+          local = "" 
+       end 
+
+
        table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD EN EL TRABAJO ",:rowspan => 2},"CODIGO ","TP-FZ-F-009"], 
           ["VERSION: ","2"], 
-          ["COMPROBANTE DE EGRESO   Nro. " + @cout.code ,"Pagina: ","1 de 1 "] 
+          ["COMPROBANTE DE EGRESO "+ local +" Nro. "  + @cout.code ,"Pagina: ","1 de 1 "] 
          
           ])
         
@@ -905,7 +1061,7 @@ end
       params.require(:cout).permit(:code, :fecha, :importe, :truck_id, :punto_id, :tranportorder_id, :employee_id, :employee2_id, 
         :employee3_id, :peajes, :lavado, :llanta, :alimento, :otros, :monto_recibido, :flete, :recibido_ruta, :vuelto, :descuento, 
         :reembolso, :flete, :ost_id,:tbk,:tbk_documento,:employee4_id,:truck2_id,:truck3_id,:observa,:fecha1,:fecha2,
-        :ubication_id ,:ubication2_id,:search,:carr )
+        :ubication_id ,:ubication2_id,:search,:carr,:tipo_compro )
     end
 
 end

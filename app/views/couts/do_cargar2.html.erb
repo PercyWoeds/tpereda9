@@ -1,0 +1,102 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Comprobantes", couts_path %>
+</div>
+
+
+<p id="notice"><%= notice %></p>
+
+
+<h2>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  Nueva Comprobante egreso Local
+
+</h2>
+
+<p>
+  Para crear una nuevo comprobante , por favor llenar el siguiente formulario. Los campos marcados con <strong>*</strong> son obligatorios
+  
+</p>
+
+
+<div class="small">
+  <form method="get" action="/companies/couts/<%= @company.id %>">
+    <strong>Buscar :</strong>
+    <input type="text" name="search" value="<% if @q_org %><%= @q_org %><% end %>" class="small" style="width: 250px;" onclick="$(this).select();" />
+    <input type="submit" value="Find" class="bold small_btn" />
+    <a href="/companies/couts/<%= @company.id %>" > Limpiar</a>
+  </form>
+</div>
+
+
+<% if @osts.count > 0 %>
+  <table>
+    <thead>
+      <tr>
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
+          Code 
+        </th>
+        <th class="bordered_right bordered_bottom" style="width: 350px;">
+          Cliente 
+        </th>
+        <th class="bordered_right bordered_bottom">
+          Moneda
+        </th>      
+        <th class="bordered_right bordered_bottom">
+          Total
+        </th>
+        <th class="bordered_right bordered_bottom">
+          Date
+        </th>
+        <th class="bordered_right bordered_bottom">
+          Processed
+        </th>
+        <th class="bordered_right bordered_bottom" colspan="3">
+          Options
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <% for detalle in @osts %>
+        <tr>
+          <td class="bordered_right bordered_bottom">
+            <%= detalle.code  %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+
+            <% if detalle.customer.nil?  %>
+
+            <%= " " %>
+
+            <% else %>
+
+               <%=   detalle.customer.name  %>
+
+           <% end %>    
+
+          </td>
+         
+          <td class="bordered_right bordered_bottom">
+            <%= link_to "Ver", "/couts/newviatico2/#{detalle.id}" %>
+          </td>
+
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="error">
+    We couldn't find any osts
+  </p>
+<% end %>
+
+
+<%= will_paginate @osts %>
+
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Regresar', "/companies/couts/do_cargar2/#{@company.id}" %>
+</div>

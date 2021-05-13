@@ -424,7 +424,7 @@ before_filter :authenticate_user!
 
    pdf.move_down 10  
       ###EGRESOS 
-       for  egresos  in @viatico.get_egresos() 
+       for  egresos  in @viatico.get_egresos_caja() 
 
 
          @detalle = egresos.get_detalle_egreso(@viatico.id,egresos.id)

@@ -206,6 +206,16 @@
 <% end %>
 
 
+<% if @cout.tipo_compro == "1" %>
+
+
+ <%= link_to 'Regresar', "/couts/list_couts/1" %>
+
+<%else%>
+
+
 <%= link_to 'Regresar', couts_path %>
+
+<% end  %>
 
 </div>

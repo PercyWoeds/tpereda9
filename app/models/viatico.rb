@@ -286,7 +286,20 @@ self.per_page = 20
 
   end 
 
+  def get_egresos_caja
 
+      @viaticos_egresos = Egreso.where("id> 1 and extension = ?","caja")
+
+  end 
+
+ def get_egresos_tbk
+
+      @viaticos_egresos = Egreso.where("id> 1 and extension = ?","TBK")
+
+  end 
+
+ 
+ 
   def get_ingresos
 
       @viaticos_egresos = Egreso.where(id: 1  )
