@@ -644,7 +644,7 @@ end
          
 
 
-            tb_text_guias2 = [ [{:content => "     ", :font_style => :bold , :border_width => 0 },"......................................................................................."],
+            tb_text_guias2 = [ [{:content => "     ", :font_style => :bold , :border_width => 0 }," "],
 
             [{:content => "RECIBIDO POR :", :font_style => :bold , :border_width => 0 },@cout.employee.full_name ],
             [{:content => "DNI.:", :font_style => :bold , :border_width => 0 },@cout.employee.idnumber ],
@@ -661,7 +661,8 @@ end
                                               :cell_style => {:height => 17 ,:border_width =>0}
                                                     ) do
 
-            row(0).font_style = :bold
+              row(0).font_style = :bold
+
                columns([0]).align = :left 
                columns([0]).width = 80
             end
@@ -716,7 +717,7 @@ end
             end
       
 
-          pdf.move_down 40
+          pdf.move_down 50
 
 
       
