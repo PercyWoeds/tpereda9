@@ -567,7 +567,7 @@ end
 
       tb_text_guias = [ [{:content => "LA CANTIDAD DE : " + texto_letras, :font_style => :bold , :border_width => 0 },
                             {:content => "PLACA ", :font_style => :bold , :border_width => 0 } , 
-                            @cout.truck.placa ],
+                            @cout.truck.placa + " / " + @cout.get_placa(@cout.truck2_id)],
 
 
                         ]
