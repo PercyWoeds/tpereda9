@@ -288,7 +288,7 @@ self.per_page = 20
 
   def get_egresos_caja
 
-      @viaticos_egresos = Egreso.where("id> 1 and extension = ?","caja")
+      @viaticos_egresos = Egreso.where("id> 1 and extension = ?","CAJA")
 
   end 
 
@@ -299,7 +299,7 @@ self.per_page = 20
   end 
 
  
- 
+
   def get_ingresos
 
       @viaticos_egresos = Egreso.where(id: 1  )
