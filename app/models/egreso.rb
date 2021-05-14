@@ -40,7 +40,7 @@ def get_detalle_egresotbk(viatico_id,id)
                  INNER JOIN couts ON couts.id  = viaticotbk_details.cout_id 
                   where viaticotbk_id = ? and egreso_id = ? order by couts.code ',viatico_id, id])
 
-  if viatico_id == 17  
+  if egreso_id == 17  
 
    return @viaticos + @viaticos0
 
