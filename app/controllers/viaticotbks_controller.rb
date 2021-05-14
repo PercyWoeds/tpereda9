@@ -1516,6 +1516,7 @@ pdf.move_down 2
   
   
 
+
   def client_data_headers_rpt
       client_headers  = [["Empresa  :", $lcCli ]]
       client_headers << ["Direccion :", $lcdir1]
