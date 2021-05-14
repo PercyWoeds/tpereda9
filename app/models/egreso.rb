@@ -25,18 +25,30 @@ def get_detalle_ingresotbk(viatico_id,id)
       return @viaticos
  end  
 
+
   
 def get_detalle_egresotbk(viatico_id,id)
       lcCheque = 6
-      @viaticos0 = ViaticotbkDetail.where("viaticotbk_id = ? and egreso_id = ?",viatico_id, 17).order(:fecha,:id,:document_id)
-  
 
+
+        
+        @viaticos0 = ViaticotbkDetail.where("viaticotbk_id = ? and egreso_id = ?",viatico_id, 17).order(:fecha,:id,:document_id)
+  
+     
             @viaticos =        ViaticotbkDetail.find_by_sql([' Select viaticotbk_details.*  
                  from viaticotbk_details 
                  INNER JOIN couts ON couts.id  = viaticotbk_details.cout_id 
                   where viaticotbk_id = ? and egreso_id = ? order by couts.code ',viatico_id, id])
-   return @viaticos + @viaticos0 
 
+  if viatico_id == 17  
+
+   return @viaticos + @viaticos0
+
+ else
+
+  return @viaticos 
+
+ end  
 
   end
 
