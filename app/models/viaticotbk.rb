@@ -354,10 +354,12 @@ self.per_page = 20
   end 
 
  
-
   def get_egresos_suma
 
-     @viaticotbks = ViaticotbkDetail.select("egreso_id,sum(importe)  as total ").where("viaticotbk_id = ? and egreso_id > 1 ",self.id).group(:egreso_id).order(:egreso_id)
+     @viaticotbk_suma = ViaticotbkDetail.select("egresos.name", "SUM(importe) as total ").
+    where("viaticotbk_id = ? and viaticotbk_details.egreso_id > 1 ",self.id).joins(:egreso).group("egresos.name").order("egresos.name")
+  
+   return  @viaticotbk_suma 
 
   end 
 

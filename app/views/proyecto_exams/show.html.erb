@@ -42,6 +42,7 @@
 <table class="ui right aligned table">
 
 
+
 <tr>
 
      <th class="small bordered_bottom bordered_right">
@@ -184,6 +185,8 @@
 
 <div class="button">
   <%= link_to 'Exportar to PDF', "/proyecto_exams/pdf/#{@proyecto_exam.id}.pdf" %>  
+  <%= link_to 'Exportar to PDF2', "/proyecto_exams/pdf2/#{@proyecto_exam.id}.pdf" %>  
+  
   <%= link_to 'Exportar to XLS', "/proyecto_exams/xls/#{@proyecto_exam.id}.pdf" %>  
 
   <%= link_to 'Regresar ', proyecto_exams_path %>

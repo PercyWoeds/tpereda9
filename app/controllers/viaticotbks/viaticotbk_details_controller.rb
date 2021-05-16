@@ -238,6 +238,8 @@ class Viaticotbks::ViaticotbkDetailsController < ApplicationController
       @viaticotbk[:total_egreso]= 0 
     end 
     
+
+    
     @viaticotbk[:saldo] = @viaticotbk[:inicial] +  @viaticotbk[:total_ing] - @viaticotbk[:total_egreso]
         @viaticotbk.save
         

@@ -74,6 +74,7 @@ class CoutsController < ApplicationController
   end
 
 
+
   def list_couts
 
       @couts = Cout.where(tipo_compro: "1").order(:code)
@@ -105,7 +106,7 @@ class CoutsController < ApplicationController
      @employees = @company.get_employees2() 
      @trucks = @company.get_trucks
 
-      putc "compri tipo "
+     puts "compri tipo "
      puts @cout[:tipo_compro]
 
     respond_to do |format|
@@ -543,8 +544,8 @@ end
      pdf.move_down 5
 
       tb_text_guias = [ [{:content => "RECIBI DE : TRANSPORTE PEREDA SRL. ", :font_style => :bold , :border_width => 0 },
-                            {:content => "TBK S/. ", :font_style => :bold , :border_width => 0 } , 
-                            @cout.tbk],
+                            {:content => "TBK S/. " , :font_style => :bold , :border_width => 0 } , 
+                            {:content =>  @cout.tbk.to_s , :font_style => :bold ,:size=> 6 ,:text_color=> "ffd000"  } ],
 
 
                         ]
@@ -610,7 +611,19 @@ end
 
 
 
-       table_content = ([ ["OST SALIDA  .: ", @cout.tranportorder.code   ]   ])
+  if @cout.tranportorder_id != 222
+
+    ost =  @cout.tranportorder.code
+  else
+  
+
+    ost = " "
+    
+  end 
+
+
+       table_content = ([ [ {:content => "O.S.T." , :font_style => :bold ,:size=> 6 ,:text_color=> "ffd000"  },
+         {:content => ost , :font_style => :bold ,:size=> 6 ,:text_color=> "ffd000"  }]    ])
       
 
        pdf.table(table_content  ,{

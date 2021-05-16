@@ -228,6 +228,7 @@ class ProyectoExamsController < ApplicationController
      #ventaislacab.update_attributes(importe: totales_qty , galones: totales_gln )
       # render :layout => false
   end
+
   
 
  def pdf
@@ -269,12 +270,286 @@ class ProyectoExamsController < ApplicationController
   end
 
 
-  def rpt_examen01
+
+
+ def pdf2
+
+
+
+   @proyecto_exam  = ProyectoExam.find(params[:id])
+    company = Company.find(1)
+    @company =Company.find(company)
+    @cabecera ="Facturacion"
+    @abajo    ="Examen "
+
+    @pumps = ProyectoMineroExam.where(proyecto_minero_id: @proyecto_exam.proyecto_minero_id).order(:orden)
+
+
+   @proyecto_examen_empleado = @company.get_proyecto_exam_empleado(@proyecto_exam.proyecto_minero_id) 
+
+    @cols = @pumps.count 
+
+
+      Prawn::Document.generate "app/pdf_output/rpt_examen01.pdf" , :page_layout => :landscape , :page_size=> "A4" do |pdf|      
+                pdf.font "Helvetica"
+                pdf = build_pdf_header_1(pdf)
+                pdf = build_pdf_body_1(pdf)
+                build_pdf_footer_1(pdf)
+                $lcFileName =  "app/pdf_output/rpt_examen01.pdf"      
+                
+            end     
+            #send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+            send_file("app/pdf_output/rpt_examen01.pdf", :type => 'application/pdf', :disposition => 'inline')
 
 
     
+  end
 
-  end 
+
+
+
+
+##-----------------------------------------------------------------------------------
+## REPORTE 2
+##-----------------------------------------------------------------------------------
+  def build_pdf_header_1(pdf)
+
+       pdf.font "Helvetica"  , :size => 8
+     image_path = "#{Dir.pwd}/public/images/tpereda2.png"
+
+      @fecha_hoy = Date.today + 30 
+
+       table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center },
+        {:content => "SISTEMA DE GESTIÓN DE INTEGRADO ",
+          :rowspan => 2},"CODIGO ","TP-EC-F-003"], 
+          ["VERSION: ","03"], 
+          ["STATUS DE INGRESOS A PROYECTOS MINEROS, ALMACENES Y/O PUERTOS : " + @fecha_hoy.strftime("%d/%m/%Y") ,"Pagina: ","1 de 1 "] 
+         
+          ])
+        
+
+       pdf.table(table_content  ,{
+           :position => :center,
+           :width => pdf.bounds.width
+         })do
+            columns([1,2]).font_style = :bold
+            columns([0]).width = 118.55
+            columns([1]).width = 531.34
+            columns([1]).align = :center
+            columns([2]).align = :center
+            columns([3]).align = :center
+            columns([2]).width = 60
+            columns([3]).width = 60
+
+         end
+      
+         pdf.move_down 2
+
+
+         table_content2 = ([["Fecha : ",Date.today.strftime("%d/%m/%Y")]])
+
+         pdf.table(table_content2,{:position=>:right }) do
+
+            columns([0, 1]).font_style = :bold
+            columns([0, 1]).width = 100
+            
+         end 
+         
+      pdf 
+
+
+
+  end  
+
+    def build_pdf_body_1(pdf)
+    
+    pdf.text ""
+    pdf.font_families.update("Open Sans" => {
+          :normal => "app/assets/fonts/OpenSans-Regular.ttf",
+          :italic => "app/assets/fonts/OpenSans-Italic.ttf",
+        })
+
+        pdf.font "Open Sans",:size => 6
+
+      headers = []
+      headers0 = []
+      table_content = []
+
+
+
+    @pumps = ProyectoMineroExam.where(proyecto_minero_id: @proyecto_exam.proyecto_minero_id).order(:orden)
+    
+    @cols = @pumps.count + 1
+   puts "col "
+   puts @cols 
+
+     @valor  = Array.new(2) { Array.new(@cols) }
+
+        @valor[0].insert(0, " ")
+
+        @valor[1].insert(0, "EMPLEADO ")
+        i = 1
+       for pumps in @pumps do
+          @valor[0].insert(i, pumps.proyectominero2.name)
+          i += 1
+       end 
+
+        i =  1
+   
+      for pumps in @pumps do
+
+          @valor[1].insert(i, pumps.proyectominero3.name)
+              i += 1  
+
+       end 
+
+
+
+     @valor[0].compact.each do |header|605
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+
+     @valor[1].compact.each do |header|605
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers0 << cell
+      end
+
+      table_content << headers
+       table_content << headers0
+
+      nroitem = 1
+
+
+
+
+
+
+      for proyectoitem in @proyecto_examen_empleado 
+        
+        
+           row  = []
+           row << proyectoitem.employee.full_name2  
+
+          
+
+
+               @detalle = proyectoitem.get_detalle(proyectoitem.employee_id, 
+                                                    @proyecto_exam.proyecto_minero_id ) 
+
+
+
+                 for detalle in @detalle  
+
+                     
+                    if detalle.proyecto_minero_exam.proyectominero3.formatofecha == "1" 
+
+                          if detalle.fecha ==  nil 
+
+                            row << "" 
+
+                           
+
+                         else
+                          
+
+                          row << detalle.fecha.strftime("%d/%m/%Y") 
+                           
+
+
+
+                         end
+
+
+                     else 
+
+                          
+                           row <<  detalle.observacion 
+              
+                     end 
+
+                        
+
+            
+                end 
+
+
+                table_content << row 
+    
+    end
+
+
+
+
+       
+
+              result = pdf.table table_content, {:position => :center,
+                                                :header => true,
+                                                :width => pdf.bounds.width
+                                                } do 
+                                                  columns([0]).align=:center
+                                                  columns([1]).align=:center 
+                                                  columns([2]).align=:left
+                                                  columns([3]).align=:left
+                                                  columns([4]).align=:left  
+                                                  columns([5]).align=:left 
+                                                  columns([6]).align=:left
+                                                  columns([7]).align=:left 
+                                                  columns([8]).align=:left
+                                                  columns([9]).align=:left
+                                                  columns([10]).align=:left
+                                                  columns([11]).align=:left
+                                                  columns([12]).align=:left  
+                                                
+                                                  
+
+
+
+                                                end                                          
+              pdf.move_down 10      
+              pdf
+
+    end
+
+
+    def build_pdf_footer_1(pdf)
+
+      table_content3 =[]
+            row = []
+            row << "--------------------------------------------"
+            row << "--------------------------------------------"
+            row << "--------------------------------------------"
+            
+            table_content3 << row 
+            row = []
+            row << "V.B.VENTAS "
+            row << "V.B.GERENCIA"
+            row << "V.B.CONTABILIDAD"
+            
+            table_content3 << row 
+
+            
+                result = pdf.table table_content3, {:position => :center,
+                                              :header => true,  :cell_style => {:border_width => 0},
+                                              :width => pdf.bounds.width
+                                              } do 
+                                                columns([0]).align=:center
+                                                columns([1]).align=:center
+                                                columns([2]).align=:center 
+                                                
+                                              end                             
+
+            pdf      
+  end
+
+#############################################################################################
+
+##### PEX 
+
+#############################################################################################
 
 
 

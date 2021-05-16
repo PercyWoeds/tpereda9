@@ -1635,6 +1635,9 @@ match 'purchases/do_crear/:id'   => 'purchases#do_crear', via: [:get, :post]
   
    match 'proyecto_exams/do_grabar/:proyecto_exam_id/:empleado_id/:proyecto_minero_id' => 'proyecto_exams#do_grabar', via: [:get, :post]
    match 'proyecto_exams/pdf/:id' => 'proyecto_exams#pdf', via: [:get, :post]
+  match 'proyecto_exams/pdf2/:id' => 'proyecto_exams#pdf2', via: [:get, :post]
+
+
   resources :proyecto_exams 
 
    match 'contactopms/pdf/rpt_contactospm_pdf'=> 'contactopms#pdf', via: [:get, :post]

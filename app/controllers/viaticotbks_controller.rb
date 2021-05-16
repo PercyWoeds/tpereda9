@@ -582,7 +582,7 @@ before_filter :authenticate_user!
 
 
        row =[]
-       row << egresos.egreso.name 
+       row << egresos.name 
        row << egresos.total.round(2)
        table_content_footer << row 
 
