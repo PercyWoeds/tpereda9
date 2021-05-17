@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Provins</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Ubigeo</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @provins.each do |provin| %>
+      <tr>
+        <td><%= provin.code %></td>
+        <td><%= provin.name %></td>
+        <td><%= provin.ubigeo %></td>
+        <td><%= link_to 'Show', provin %></td>
+        <td><%= link_to 'Edit', edit_provin_path(provin) %></td>
+        <td><%= link_to 'Destroy', provin, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Provin', new_provin_path %>
+
+
+
+
+
+
+<h3>Importar Archivo "*.csv"</h3>
+
+<%= form_tag import_provins_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
+

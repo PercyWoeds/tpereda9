@@ -1,3 +1,7 @@
+
+
+<%= render 'layouts/charts' %>
+
 <%= form_for(@employee) do |f| %>
   <% if @employee.errors.any? %>
     <div id="error_explanation">
@@ -196,6 +200,32 @@
     <%= f.label :fecha_nacimiento, "Fecha Nacimiento:" %><br>
     <%= f.date_field :fecha_nacimiento  %>
   </div>
+
+    <div class="field">
+      <%= f.label :dpto_id ,"Departamento :"%><br />
+   
+
+ <%= f.select :dpto_id, options_for_select(@dptos.collect { |dpto| [dpto.name.titleize, dpto.id] }, 1), {}, { id: 'dpto_select' } %>
+  </p>
+
+    </div>
+
+     <div class="field">
+      <%= f.label :provin_id ,"Provincia :"%><br />
+
+      <%= select_tag(:provin_id,options_from_collection_for_select(@provins,'id','name'),:id => "provincia_select"  ) %>
+    
+
+    </div>
+
+     <div class="field">
+      <%= f.label :distrito_id ,"Distrito :"%><br />
+       <%= select_tag(:distrito_id,options_from_collection_for_select(@distritos,'id','name'),:id => "distrito_select"  ) %>
+    
+      
+    </div>
+
+
   <div class="field">
     <%= f.label :fecha_ingreso, "Fecha Ingreso:" %><br>
     <%= f.date_field :fecha_ingreso  %>
@@ -222,3 +252,31 @@
     <%= f.submit %>
   </div>
 <% end %>
+
+
+
+
+  <script type="text/javascript">
+
+
+$(document).ready(function() {
+  
+ 
+   
+    
+    $('#provincia_select').change(function() {
+      $.ajax({
+        url: "/employees/update_distritos",
+        data: {
+          provincia_id : $('#provincia_select').val()
+
+        },
+        dataType: "script"
+      });
+    });
+
+    
+
+  });
+  
+  </script>

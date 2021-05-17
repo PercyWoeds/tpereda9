@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @distrito.code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @distrito.name %>
+</p>
+
+<p>
+  <strong>Ubigeo:</strong>
+  <%= @distrito.ubigeo %>
+</p>
+
+<%= link_to 'Edit', edit_distrito_path(@distrito) %> |
+<%= link_to 'Back', distritos_path %>

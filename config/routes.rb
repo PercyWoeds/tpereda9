@@ -8,6 +8,9 @@ require 'sidekiq/cron/web'
   Mnygo::Application.routes.draw do
 
   
+  resources :distritos
+  resources :provins
+  resources :dptos
   resources :viaticolgv_details
   resources :pexes
   resources :viaticotbks
@@ -380,6 +383,21 @@ require 'sidekiq/cron/web'
     
   end 
     
+  resources :dptos do 
+   collection { post :import }
+
+  end  
+
+
+  resources :provins do 
+   collection { post :import }
+
+  end  
+  resources :distritos do 
+   collection { post :import }
+
+  end  
+
   
   resources :viaticos do 
     collection { get :rpt_viatico_pdf    }
@@ -582,8 +600,18 @@ end
   end 
   
   resources :employees do
-    collection { post :import }
+
+       collection { post :import }
+
+       collection { get :update_distritos}
+     
+      
   end 
+
+get 'employees/update_provincias', as: 'update_provincias'
+resources :employees
+
+
   resources :trucks do
     collection { post :import }
   end 

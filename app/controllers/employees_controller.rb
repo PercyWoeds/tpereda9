@@ -30,6 +30,8 @@ end
   # GET /employees/1
   # GET /employees/1.json
   def show
+
+
   end
 
   # GET /employees/new
@@ -48,6 +50,10 @@ end
     @employee[:hora_ex]=0
     @employee[:efectivo]=0
 
+    @dptos = Dpto.all 
+    @provins = Provin.all 
+    @distritos = Distrito.all 
+
     
   end
 
@@ -60,6 +66,11 @@ end
     @ocupacions = Ocupacion.all 
     @ccostos = Ccosto.all
       @employee[:company_id]=1
+
+        @dptos = Dpto.all 
+    @provins = Provin.all 
+    @distritos = Distrito.all 
+
   end
 
   # POST /employees
@@ -73,6 +84,13 @@ end
     @ccostos = Ccosto.all
       @employee[:company_id]=1
     @afps = Afp.all
+
+      @dptos = Dpto.all 
+    @provins = Provin.all 
+    @distritos = Distrito.all 
+
+
+
     respond_to do |format|
       if @employee.save
         format.html { redirect_to @employee, notice: 'Employee was successfully created.' }
@@ -98,6 +116,11 @@ end
     @divisions =Division.all 
     @ocupacions = Ocupacion.all 
     @ccostos = Ccosto.all
+
+      @dptos = Dpto.all 
+    @provins = Provin.all 
+    @distritos = Distrito.all 
+
 
     
     
@@ -127,10 +150,45 @@ end
     
   end 
   end
+
+
   def ac_employees
     @employees = Employee.where(["company_id = ? AND (idnumber LIKE ? OR full_name  iLIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])  
     render :layout => false
   end
+
+
+
+
+  def update_provincias
+
+     dpto_id = Dpto.find_by(code: params[:dpto_id])
+    # map to name and id for use in our options_for_select
+     puts "upppdaeteeeeeeeeeeeeeeeeeeee"
+     puts dpto_id
+
+     @provincias = Provincia.where("SUBSTRING(code,1,2) = ?",dpto_id )
+     @distritos  = Distrito.where("SUBSTRING(code,3,2) = ?",@provincias.first)
+
+     
+    respond_to do |format|
+      format.js
+    end
+
+
+  end
+
+
+  def update_distritos
+
+     provincia_id =  params[:provincia_id]
+     @distritos  = Distrito.where("SUBSTRING(code,3,2) = ?",provincia_id)
+    
+
+
+  end
+
+  
 
 
   private

@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @dpto.code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @dpto.name %>
+</p>
+
+<p>
+  <strong>Ubigeo:</strong>
+  <%= @dpto.ubigeo %>
+</p>
+
+<%= link_to 'Edit', edit_dpto_path(@dpto) %> |
+<%= link_to 'Back', dptos_path %>

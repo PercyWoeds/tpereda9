@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210512230238) do
+ActiveRecord::Schema.define(version: 20210516163451) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -902,6 +902,14 @@ ActiveRecord::Schema.define(version: 20210512230238) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "distritos", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.string   "ubigeo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "divisions", force: :cascade do |t|
     t.integer  "company_id"
     t.integer  "location_id"
@@ -921,6 +929,14 @@ ActiveRecord::Schema.define(version: 20210512230238) do
     t.string   "fullname"
     t.string   "area"
     t.string   "orden"
+  end
+
+  create_table "dptos", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.string   "ubigeo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "dsubdiarios", force: :cascade do |t|
@@ -1033,6 +1049,9 @@ ActiveRecord::Schema.define(version: 20210512230238) do
     t.string   "cod_interno"
     t.float    "efectivo"
     t.float    "hora_ex"
+    t.integer  "dpto_id"
+    t.integer  "provin_id"
+    t.integer  "distrito_id"
   end
 
   create_table "exmautorizs", force: :cascade do |t|
@@ -2188,6 +2207,14 @@ ActiveRecord::Schema.define(version: 20210512230238) do
     t.text     "observa"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "provins", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.string   "ubigeo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "proyecto_exams", force: :cascade do |t|

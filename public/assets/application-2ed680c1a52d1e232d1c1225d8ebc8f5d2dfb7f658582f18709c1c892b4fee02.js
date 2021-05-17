@@ -996,6 +996,27 @@ module.exports = Sunat;
 
 
 }).call(this);
+$ ->
+  $(document).on 'change', '#dpto_select', (evt) ->
+    $.ajax 'update_provincias',
+      type: 'GET'
+      dataType: 'script'
+      data: {
+        dpto_id: $("#dpto_select option:selected").val()
+      }
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log("AJAX Error: #{textStatus}")
+      success: (data, textStatus, jqXHR) ->
+        console.log("Dynamic location select OK!")
+;
+(function() {
+
+
+}).call(this);
+(function() {
+
+
+}).call(this);
 (function() {
 
 
@@ -1894,6 +1915,14 @@ $(function() {
 
 
 }).call(this);
+(function() {
+
+
+}).call(this);
+(function() {
+
+
+}).call(this);
 "use strict";
 var request = require("request");
 var cheerio = require("cheerio");
@@ -2326,6 +2355,18 @@ module.exports = new Scraper();
 
 }).call(this);
 
+(function() {
+
+
+}).call(this);
+(function() {
+
+
+}).call(this);
+(function() {
+
+
+}).call(this);
 (function() {
 
 

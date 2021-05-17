@@ -882,7 +882,7 @@ def pdf
     @facturas_rpt = @company.get_conductor 
 
 
-        Prawn::Document.generate "app/pdf_output/TP_EC_F009.pdf" , :page_layout => :landscape ,:page_size=>"A4"  do |pdf|
+        Prawn::Document.generate "app/pdf_output/TP_EC_F009.pdf" , :page_layout => :landscape ,:page_size=>"A3"  do |pdf|
             pdf.font "Helvetica"
             pdf = build_pdf_header_rpt8a(pdf)
             pdf = build_pdf_body_rpt8a(pdf)
@@ -923,7 +923,7 @@ def pdf
          })do
            columns([1,2]).font_style = :bold
             columns([0]).width = 118.55
-            columns([1]).width = 451.34
+            columns([1]).width = 800.00 
             columns([1]).align = :center
             
             columns([2]).width = 100
@@ -988,9 +988,19 @@ def pdf
                 row << nroitem.to_s
                 row << product.employee.lastname + product.employee.firstname
               
-             
+                row << product.employee.idnumber 
+
+                row << product.employee.phone1 + " " + product.employee.phone2
+
+                row << product.employee.email1 + " "  + product.employee.email2
+
+
+                row << product.employee.fecha_nacimiento.strftime("%d/%m/%Y")
+
                 row << product.employee.fecha_ingreso.strftime("%d/%m/%Y")
-                row << product.lugar 
+
+
+                 row << product.lugar 
                 row << product.anio 
                 if product.dni_emision != nil 
                 row << product.dni_emision.strftime("%d/%m/%Y")
