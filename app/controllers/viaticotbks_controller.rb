@@ -515,7 +515,7 @@ before_filter :authenticate_user!
             else
             
 
-             row = " "
+             row << " "
               
             end 
 
