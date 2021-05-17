@@ -101,13 +101,13 @@ class CoutsController < ApplicationController
     @cout = Cout.new(cout_params)
 
 
-     @cout[:code] = @cout.generate_cout_number( @cout[:tipo_compro] )
+     @cout[:code] = @cout.generate_cout_number("0" )
      @puntos = @company.get_puntos()
      @employees = @company.get_employees2() 
      @trucks = @company.get_trucks
 
      puts "compri tipo "
-     puts @cout[:tipo_compro]
+      @cout[:tipo_compro] = "0"
 
     respond_to do |format|
       if @cout.save
