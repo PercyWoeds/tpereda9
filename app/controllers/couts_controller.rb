@@ -261,7 +261,7 @@ def do_crear
     @couts[:vuelto] = 0
     @couts[:descuento] = 0
     @couts[:reembolso] = 0
-
+    @couts[:tipo_compro] = "0"
     
      respond_to do |format|
        if    @couts.save           
