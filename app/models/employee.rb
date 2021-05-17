@@ -83,6 +83,14 @@ class Employee < ActiveRecord::Base
 
 	private 
 
+
+
+  def set_distrito 
+    self.lugar ="#{self.distrito.name} #{self.provin.name} #{self.dpto.name} ".strip    
+        
+  end 
+  
+
 	def set_full_name
 		self.full_name ="#{self.firstname} #{self.lastname}".strip		
         self.flujo = 0

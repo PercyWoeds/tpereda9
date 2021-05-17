@@ -545,7 +545,7 @@ end
 
       tb_text_guias = [ [{:content => "RECIBI DE : TRANSPORTE PEREDA SRL. ", :font_style => :bold , :border_width => 0 },
                             {:content => "TBK S/. " , :font_style => :bold , :border_width => 0 } , 
-                            {:content =>  @cout.tbk.to_s , :font_style => :bold ,:size=> 6 ,:text_color=> "ffd000"  } ],
+                            {:content =>  @cout.tbk.to_s , :font_style => :bold ,:size=> 6 ,:text_color=> "141000"  } ],
 
 
                         ]
@@ -622,8 +622,8 @@ end
   end 
 
 
-       table_content = ([ [ {:content => "O.S.T." , :font_style => :bold ,:size=> 6 ,:text_color=> "ffd000"  },
-         {:content => ost , :font_style => :bold ,:size=> 6 ,:text_color=> "ffd000"  }]    ])
+       table_content = ([ [ {:content => "O.S.T." , :font_style => :bold ,:size=> 6 ,:text_color=> "141000"  },
+         {:content => ost , :font_style => :bold ,:size=> 6 ,:text_color=> "141000"  }]    ])
       
 
        pdf.table(table_content  ,{

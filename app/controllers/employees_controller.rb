@@ -34,8 +34,26 @@ end
 
   end
 
+
+  # Autocomplete for customers
+  def ac_distritos
+   
+
+       @distritos = Distrito.find_by_sql("Select distritos.id,distritos.code, distritos.name as a,provins.name as b,
+     dptos.name  as c
+    from distritos INNER JOIN provins ON SUBSTRING(distritos.code,3,2) = SUBSTRING(provins.code,1,2)
+                   INNER JOIN dptos on SUBSTRING(provins.code,1,2) = SUBSTRING(dptos.code,1,2) ")
+
+       
+    render :layout => false
+  end
+
+
+
   # GET /employees/new
   def new
+    @company = Company.find(1)
+
     @employee = Employee.new
     @categorias =Categorium.all 
     @afps = Afp.all
@@ -52,9 +70,12 @@ end
 
     @dptos = Dpto.all 
     @provins = Provin.all 
-    @distritos = Distrito.all 
 
-    
+
+    @distritos = Distrito.find_by_sql("Select distritos.id,distritos.code, distritos.name as a,provins.name as b,
+     dptos.name  as c
+    from distritos INNER JOIN provins ON SUBSTRING(distritos.code,3,2) = SUBSTRING(provins.code,1,2)
+                   INNER JOIN dptos on SUBSTRING(provins.code,1,2) = SUBSTRING(dptos.code,1,2) ")
   end
 
   # GET /employees/1/edit
@@ -170,7 +191,7 @@ end
      @provincias = Provincia.where("SUBSTRING(code,1,2) = ?",dpto_id )
      @distritos  = Distrito.where("SUBSTRING(code,3,2) = ?",@provincias.first)
 
-     
+
     respond_to do |format|
       format.js
     end
@@ -199,6 +220,6 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_params
-      params.require(:employee).permit(:firstname, :lastname, :address1, :address2, :city, :state, :zip, :country, :phone1, :phone2, :email1, :email2, :company_id,:licencia,:idnumber,:active,:afp_id,:onp,:sueldo,:file_nro,:fecha_nacimiento,:fecha_ingreso,:fecha_cese,:sexo_id,:estado_civil_id,:asignacion,:comision_flujo,:ocupacion_id,:planilla,:division_id,:location_id,:carnet_seguro,:cusspp,:ccosto_id,:categoria_id,:interasistence,:cod_interno,:efectivo,:hora_ex)
+      params.require(:employee).permit(:firstname, :lastname, :address1, :address2, :city, :state, :zip, :country, :phone1, :phone2, :email1, :email2, :company_id,:licencia,:idnumber,:active,:afp_id,:onp,:sueldo,:file_nro,:fecha_nacimiento,:fecha_ingreso,:fecha_cese,:sexo_id,:estado_civil_id,:asignacion,:comision_flujo,:ocupacion_id,:planilla,:division_id,:location_id,:carnet_seguro,:cusspp,:ccosto_id,:categoria_id,:interasistence,:cod_interno,:efectivo,:hora_ex,:dpto_id,:provin_id,:distrito_id)
     end
 end

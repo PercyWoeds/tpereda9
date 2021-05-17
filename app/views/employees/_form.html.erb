@@ -201,30 +201,24 @@
     <%= f.date_field :fecha_nacimiento  %>
   </div>
 
-    <div class="field">
-      <%= f.label :dpto_id ,"Departamento :"%><br />
-   
+  
 
- <%= f.select :dpto_id, options_for_select(@dptos.collect { |dpto| [dpto.name.titleize, dpto.id] }, 1), {}, { id: 'dpto_select' } %>
-  </p>
 
-    </div>
-
-     <div class="field">
-      <%= f.label :provin_id ,"Provincia :"%><br />
-
-      <%= select_tag(:provin_id,options_from_collection_for_select(@provins,'id','name'),:id => "provincia_select"  ) %>
-    
-
-    </div>
-
-     <div class="field">
-      <%= f.label :distrito_id ,"Distrito :"%><br />
-       <%= select_tag(:distrito_id,options_from_collection_for_select(@distritos,'id','name'),:id => "distrito_select"  ) %>
-    
+ <label for="ac_distrito" class="bold">Lugar Nacimiento *</label><br />
+      <input type="text" name="ac_distrito" id="ac_distrito" value="<% if @distritos %><%= @distritos %><% end %>" />
       
-    </div>
+      
+      <div class="small">
+        Ingrese una termino de busqueda para encontrar distrito lugar nacimiento.
+      </div>
+      <br />
 
+
+      <div class="small">
+        <strong>Seleccionar cliente:</strong>
+        <span id="selected_distrito"><% if @ac_distrito %><%= @ac_distrito %><% else %><!-- i --><% end %></span>
+      </div>
+     </div>
 
   <div class="field">
     <%= f.label :fecha_ingreso, "Fecha Ingreso:" %><br>
@@ -254,7 +248,7 @@
 <% end %>
 
 
-
+<%= render 'layouts/autocomplete' %>
 
   <script type="text/javascript">
 
@@ -263,18 +257,16 @@ $(document).ready(function() {
   
  
    
-    
-    $('#provincia_select').change(function() {
-      $.ajax({
-        url: "/employees/update_distritos",
-        data: {
-          provincia_id : $('#provincia_select').val()
-
-        },
-        dataType: "script"
-      });
+    $("#ac_distrito").autocomplete("/employees/ac_distritos/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
     });
-
+    
+    $("#ac_distrito").result(function(event, data, formatted) {
+      $("#ac_distrito_id").val(data[2]);
+      $("#selected_distrito").html(data[0]);
+    });        
     
 
   });
