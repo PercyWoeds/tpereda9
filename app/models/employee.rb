@@ -81,6 +81,25 @@ class Employee < ActiveRecord::Base
 		
 	end 
 
+  def get_distrito(id)
+
+     
+     @distritos = Distrito.find_by_sql(["Select distritos.id,distritos.code, distritos.name as a,provins.name as b,
+     dptos.name  as c
+    from distritos INNER JOIN provins ON SUBSTRING(distritos.code,1,4) = SUBSTRING(provins.code,1,4)
+                   INNER JOIN dptos on SUBSTRING(provins.code,1,2) = SUBSTRING(dptos.code,1,2) 
+                   WHERE  (distritos.id = ? )", id ])
+
+
+     
+
+     return @distritos.last.a + " - " +  @distritos.last.b + " - "+@distritos.last.c  
+
+
+  end
+  
+
+
 	private 
 
 

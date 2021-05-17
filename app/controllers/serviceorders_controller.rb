@@ -505,8 +505,11 @@ pdf.move_down 5
     
     @serviceorder = Serviceorder.find(params[:id])
     @company = @serviceorder.company
+
     @ac_supplier = @serviceorder.supplier.name
+
     @ac_user = @serviceorder.user.username
+    
     @suppliers = @company.get_suppliers()
     @servicebuys  = @company.get_servicebuys()
     @serviceexts  = ServiceExtension.all 

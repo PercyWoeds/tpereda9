@@ -39,12 +39,14 @@ end
   def ac_distritos
    
 
-       @distritos = Distrito.find_by_sql("Select distritos.id,distritos.code, distritos.name as a,provins.name as b,
-     dptos.name  as c
-    from distritos INNER JOIN provins ON SUBSTRING(distritos.code,3,2) = SUBSTRING(provins.code,1,2)
-                   INNER JOIN dptos on SUBSTRING(provins.code,1,2) = SUBSTRING(dptos.code,1,2) ")
 
-       
+       @distritos = Distrito.find_by_sql(["Select distritos.id,distritos.code, distritos.name as a,provins.name as b,
+     dptos.name  as c
+    from distritos INNER JOIN provins ON SUBSTRING(distritos.code,1,4) = SUBSTRING(provins.code,1,4)
+                   INNER JOIN dptos on SUBSTRING(provins.code,1,2) = SUBSTRING(dptos.code,1,2) 
+                   WHERE  (distritos.name iLIKE ? )",  "%" + params[:q] + "%"])
+
+
     render :layout => false
   end
 
@@ -72,14 +74,13 @@ end
     @provins = Provin.all 
 
 
-    @distritos = Distrito.find_by_sql("Select distritos.id,distritos.code, distritos.name as a,provins.name as b,
-     dptos.name  as c
-    from distritos INNER JOIN provins ON SUBSTRING(distritos.code,3,2) = SUBSTRING(provins.code,1,2)
-                   INNER JOIN dptos on SUBSTRING(provins.code,1,2) = SUBSTRING(dptos.code,1,2) ")
+    
   end
 
   # GET /employees/1/edit
   def edit
+
+     @company = Company.find(1)
     @categorias =Categorium.all 
     @afps = Afp.all
     @locations =Location.all
@@ -92,11 +93,27 @@ end
     @provins = Provin.all 
     @distritos = Distrito.all 
 
+    if !@employee.distrito_id.nil?
+
+      @ac_distrito0 = Distrito.find(@employee.distrito_id) 
+      @ac_distrito  = @ac_distrito0.name 
+
+       @ac_distrito_id  = @employee.distrito_id
+    
+    else
+       @ac_distrito = " "
+       @ac_distrito_id = @employee.distrito_id
+    end 
+  
+
+
   end
 
   # POST /employees
   # POST /employees.json
   def create
+
+     @company = Company.find(1)
     @employee = Employee.new(employee_params)
     @categorias =Categorium.all 
      @locations =Location.all
@@ -126,7 +143,9 @@ end
   # PATCH/PUT /employees/1
   # PATCH/PUT /employees/1.json
   def update
-     @employee[:company_id]=1
+
+     @company = Company.find(1)
+     @employee[:company_id] = 1
 
      @categorias =Categorium.all 
     @afps = Afp.all
@@ -138,7 +157,7 @@ end
     @ocupacions = Ocupacion.all 
     @ccostos = Ccosto.all
 
-      @dptos = Dpto.all 
+    @dptos = Dpto.all 
     @provins = Provin.all 
     @distritos = Distrito.all 
 
@@ -220,6 +239,10 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_params
-      params.require(:employee).permit(:firstname, :lastname, :address1, :address2, :city, :state, :zip, :country, :phone1, :phone2, :email1, :email2, :company_id,:licencia,:idnumber,:active,:afp_id,:onp,:sueldo,:file_nro,:fecha_nacimiento,:fecha_ingreso,:fecha_cese,:sexo_id,:estado_civil_id,:asignacion,:comision_flujo,:ocupacion_id,:planilla,:division_id,:location_id,:carnet_seguro,:cusspp,:ccosto_id,:categoria_id,:interasistence,:cod_interno,:efectivo,:hora_ex,:dpto_id,:provin_id,:distrito_id)
+      params.require(:employee).permit(:firstname, :lastname, :address1, :address2, :city, :state, :zip, :country,
+       :phone1, :phone2, :email1, :email2, :company_id,:licencia,:idnumber,:active,:afp_id,:onp,:sueldo,:file_nro,
+       :fecha_nacimiento,:fecha_ingreso,:fecha_cese,:sexo_id,:estado_civil_id,:asignacion,:comision_flujo,
+       :ocupacion_id,:planilla,:division_id,:location_id,:carnet_seguro,:cusspp,:ccosto_id,:categoria_id,
+       :interasistence,:cod_interno,:efectivo,:hora_ex,:dpto_id,:provin_id,:distrito_id)
     end
 end

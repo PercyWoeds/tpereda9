@@ -609,6 +609,9 @@ end
   end 
 
 get 'employees/update_provincias', as: 'update_provincias'
+
+match 'employees/ac_distritos/:company_id' => 'employees#ac_distritos', via: [:get, :post]
+
 resources :employees
 
 

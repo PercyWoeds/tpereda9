@@ -205,7 +205,7 @@
 
 
  <label for="ac_distrito" class="bold">Lugar Nacimiento *</label><br />
-      <input type="text" name="ac_distrito" id="ac_distrito" value="<% if @distritos %><%= @distritos %><% end %>" />
+      <input type="text" name="ac_distrito" id="ac_distrito" value="<% if @ac_distrito %> <%= @ac_distrito %><% end %>" />
       
       
       <div class="small">
@@ -243,6 +243,10 @@
   
 </div>
    <div class="form-actions">
+
+     <%= f.hidden_field :distrito_id, :id => "ac_distrito_id" %>
+
+
     <%= f.submit %>
   </div>
 <% end %>

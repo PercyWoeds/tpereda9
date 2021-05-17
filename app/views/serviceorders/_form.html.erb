@@ -17,6 +17,7 @@
        Informacion Order de Servicio 
     </h3>
 
+
     <label for="ac_supplier" class="bold">Proveedor*</label><br />
 <input type="text" name="ac_supplier" id="ac_supplier" value="<% if @ac_supplier %><%= @ac_supplier %><% end %>" />
       
@@ -132,7 +133,7 @@
   
     <div class="field">
       <label for="ac_user" class="bold">Seller*</label><br />
-      <input type="text" name="ac_user" id="ac_user" value="<% if @ac_user %><%= @ac_user %><% end %>" />
+      <input type="text" name="ac_user" id="ac_user" value="<% if @ac_user %><%= @ac_user %> <% end %>" />
 
       <div class="small">
         Enter a search term to find a user.

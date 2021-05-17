@@ -994,14 +994,37 @@ def pdf
 
                 row << product.employee.email1 + " "  + product.employee.email2
 
-
+                
                 row << product.employee.fecha_nacimiento.strftime("%d/%m/%Y")
+
+
+                if !product.employee.distrito_id.nil?
+
+                   d_id = product.employee.distrito_id 
+                  
+                  row <<  product.employee.get_distrito(d_id)  
+                  
+                
+                else
+                   row << " "
+                   
+                end 
+
+
+                row << product.lugar 
 
                 row << product.employee.fecha_ingreso.strftime("%d/%m/%Y")
 
+                row << product.anio
+                row << product.anio1
 
-                 row << product.lugar 
-                row << product.anio 
+                row << product.anio2
+
+                row << product.anio3
+                row << product.anio4
+
+
+              
                 if product.dni_emision != nil 
                 row << product.dni_emision.strftime("%d/%m/%Y")
               else
@@ -1112,35 +1135,7 @@ def pdf
          
         
               
-          
-          row =[]
-           row << ""
-          row << ""
-          row << ""
-          row << ""
-          row << ""
-          
-          row << ""
-          row << ""
-          
-          row << ""
-          
-          row << ""
-          row << ""
-          row << ""                 
-          row << " "
-          row << " "
-          row << " "
-        
-          row << " "
-
-
-
-
-
-          
-          table_content << row
-          
+         
 
           result = pdf.table table_content, {:position => :center,
                                         :header => true,

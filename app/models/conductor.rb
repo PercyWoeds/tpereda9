@@ -46,12 +46,24 @@ class Conductor < ActiveRecord::Base
 
 
  TABLE_HEADERS2 = ["Nro.",
-                      "APELLIDOS Y NOMBRES",
-                     "FEC.ING.",
-                     "LUGAR RESIDENCIA ",
-                     "AÑOS EXP.",
 
-                      "DNI.EMISION",
+
+                      "APELLIDOS Y NOMBRES",
+                      "N° DNI",
+                      "N° CELULAR ",
+                      "CORREO ELECTRÓNICO",
+                      "FEC.NACIMIENTO",
+                      "LUGAR NACIMIENTO",
+                      "DOMICILIO",
+                     "FEC.ING.",
+                    
+                     "AÑOS EXP.LABORAL CERTIFICADOS",
+                     "AÑOS DE EXPERIENCIA CERTIFICADOS CON CAMIONETA",
+                     "AÑOS DE EXPERIENCIA CERTIFICADOS CON CAMION",
+                     "AÑOS DE EXPERIENCIA CERTIFICADOS CON PLATAFORMA:",
+                     "AÑOS DE EXPERIENCIA CERTIFICADOS CON CAMABAJA",
+
+                     "DNI.EMISION",
                      "DNI.CADUCIDAD",
 
                      "ANT.POL.EMISION",
