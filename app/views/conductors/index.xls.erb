@@ -82,13 +82,47 @@
       <Row>
         <Cell><Data ss:Type="String"><%= nroitem.to_s %></Data></Cell>
         <Cell><Data ss:Type="String"><%= product.employee.full_name2 %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= product.employee.fecha_ingreso.strftime("%d/%m/%Y") %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= product.lugar %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= product.anio  %></Data></Cell>
-
-        <Cell><Data ss:Type="String"><%= product.dni_emision.strftime("%d/%m/%Y") %></Data></Cell>
 
 
+        <Cell><Data ss:Type="String"><%=product.employee.idnumber  %></Data></Cell>
+
+         <Cell><Data ss:Type="String"><%= product.employee.phone1 + " " + product.employee.phone2 %></Data></Cell>
+
+         <Cell><Data ss:Type="String"><%= product.employee.email1 + " "  + product.employee.email2 %></Data></Cell>
+
+         <Cell><Data ss:Type="String"><%=product.employee.fecha_nacimiento.strftime("%d/%m/%Y")
+ %></Data></Cell>
+            <% if !product.employee.distrito_id.nil? %>
+
+                 <%  d_id = product.employee.distrito_id  %>
+                  
+                  row <<  product.employee.get_distrito(d_id)  
+                  
+                  <Cell><Data ss:Type="String"><%= product.employee.get_distrito(d_id)   %></Data></Cell>
+                
+              <%  else %>
+                 <Cell><Data ss:Type="String">   </Data></Cell>
+           
+                   
+              <%  end  %>
+ 
+         <Cell><Data ss:Type="String"><%= product.lugar  %></Data></Cell>
+         <Cell><Data ss:Type="String"><%= product.employee.fecha_ingreso.strftime("%d/%m/%Y") %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.anio   %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.anio1  %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.anio2  %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.anio3  %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.anio4  %></Data></Cell>
+
+
+          <%  if product.dni_emision != nil  %>
+                  <Cell><Data ss:Type="String"><%= product.dni_emision.strftime("%d/%m/%Y") %></Data></Cell>
+             <% else %>
+               <Cell><Data ss:Type="String">  </Data></Cell>
+
+             <% end  %>
+
+      
 
         <% if product.activedni == "1"%>
 

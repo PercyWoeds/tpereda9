@@ -8,6 +8,8 @@ require "open-uri"
 class ViaticotbksController < ApplicationController
 before_filter :authenticate_user!
 
+
+
   def reportxls
     @company=Company.find(1)      
    
@@ -166,8 +168,7 @@ before_filter :authenticate_user!
             else
               row << sprintf("%.2f",product.importe)
               
-            
-            end
+             end
             
             if product.tm.to_i != 6
 
@@ -423,8 +424,7 @@ before_filter :authenticate_user!
       end 
 
 
-  
-      
+   
 
 
    pdf.move_down 10  
@@ -1580,7 +1580,6 @@ pdf.move_down 2
 
 
   end 
-
 
   
   private

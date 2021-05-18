@@ -1811,11 +1811,24 @@ pdf.move_down 2
   def reportes1
 
 
-    @company=Company.find(1)          
+    @company=Company.find(1)    
+
+
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
    
+     @cliente_check = params[:check_cliente]
     
+   
+    if @cliente_check == "true"
+      @customer = ""
+      @customer_name = ""
+    else
+      @customer = params[:customer_id]
+      @customer_name =  @company.get_cliente_name(@customer)
+    end
+
+
     @cajas = @company.get_viaticolgv(@fecha1,@fecha2)          
 
     

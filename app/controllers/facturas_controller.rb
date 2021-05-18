@@ -8749,6 +8749,270 @@ end
 #############################################################################################
 
 
+ def rpt_viatico_10
+
+    @company=Company.find(1)   
+    @employee_id = params[:employee_id]   
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]
+      @tiporeporte = params[:fecha6]
+
+
+    @check_cliente =  params[:check_cliente]
+
+
+    if @tiporeporte == "1"
+
+      @tipo_compro = "1"
+
+    else
+      @tipo_compro = "0"
+    end 
+
+
+
+        if @check_cliente == "true"
+              @detalle = @company.comprobante_detalle(@fecha1,@fecha2,"null", @tipo_compro )
+          else
+              @detalle = @company.comprobante_detalle(@fecha1,@fecha2,@employee_id, @tipo_compro )
+          end 
+    case params[:print]
+        when "To PDF" then 
+
+          begin
+
+             Prawn::Document.generate "app/pdf_output/TP_CM_F_015.pdf" , :page_layout => :landscape ,:page_size=>"A4"  do |pdf|
+                  pdf.font "Helvetica"
+                  pdf = build_pdf_header_10(pdf)
+                  pdf = build_pdf_body_10(pdf)
+                  build_pdf_footer_10(pdf)
+
+                  $lcFileName =  "app/pdf_output/TP_CM_F_015.pdf"              
+              end     
+              $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+              send_file("app/pdf_output/TP_CM_F_015.pdf", :type => 'application/pdf', :disposition => 'inline')  
+
+         end    
+           
+
+        when "Excel" then render xlsx: 'rpt_viatico10_xls'
+    
+          
+        else render action: "index"
+      end
+
+  end
+
+
+
+ 
+  def build_pdf_header_10(pdf)
+      
+     pdf.font "Helvetica" , :size => 8
+      image_path = "#{Dir.pwd}/public/images/tpereda2.png"
+
+    
+         
+ table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION INTEGRADO ",:rowspan => 2},"CODIGO ","NN"], 
+          ["VERSION: ","NN"], 
+          ["REPORTE DE VIATICOS POR EMPLEADO  - " + "#{@fecha1}"+ " AL " + "#{@fecha2}","Pagina: ","1 de 1 "] 
+         
+          ])
+
+
+
+       pdf.table(table_content  ,{
+           :position => :center,
+           :width => pdf.bounds.width
+         })do
+           columns([1,2]).font_style = :bold
+            columns([0]).width = 118.55
+            columns([1]).width = 451.34
+            columns([1]).align = :center
+            
+            columns([2]).width = 100
+          
+            columns([3]).width = 100
+      
+         end
+        
+         table_content2 = ([["Fecha : ",Date.today.strftime("%d/%m/%Y")]])
+
+         pdf.table(table_content2,{:position=>:right }) do
+
+            columns([0, 1]).font_style = :bold
+            columns([0, 1]).width = 100
+            
+         end 
+
+         pdf.move_down 2
+      
+      pdf 
+  end   
+
+
+
+
+
+  def build_pdf_body_10(pdf)
+  
+    pdf.text " ", :size => 13, :spacing => 4
+    
+      pdf.font "Helvetica" , :size => 5      
+      headers = []
+      table_content = []
+      table_content0 = []
+      table_content2 = []
+      table_content3 = []
+
+      headers_ing = []
+     nroitem = 1
+       @total_importe = 0
+
+         
+
+         pdf.move_down 1
+         row =[]
+       
+
+      pdf.move_down 10  
+      ###EGRESOS 
+       
+
+              
+              
+                  
+
+              Viaticotbk::TABLE_HEADERS5.each do |header|
+                cell = pdf.make_cell(:content => header)
+                cell.background_color = "FFFFCC"
+                headers << cell
+              end
+
+              table_content2 << headers
+
+
+
+             
+                total_importe = 0
+
+              
+          for product in @detalle 
+
+           
+            row = []
+
+            row << nroitem.to_s        
+            row << product.fecha.strftime("%d/%m/%Y") 
+
+               
+
+            if  product.employee != 64
+            row <<   product.employee.full_name
+          else
+            row  <<  " " 
+            end 
+         
+
+            row << "CE"
+            
+            row << product.code 
+           if @tipo_compro == "2"
+            row << sprintf("%.2f",product.tbk)
+          else
+             row << sprintf("%.2f",product.importe)
+          end 
+
+            total_importe   += product.importe.round(2)
+
+          
+            
+            row <<  product.truck.placa + " /  " + product.get_placa(product.truck2_id) +  product.get_placa(product.truck3_id) 
+            row <<  product.get_punto(product.ubication_id) + "  -  "+ product.get_punto(product.ubication2_id) +" EJES:"+ product.tranportorder.get_ejes2(product.tranportorder.id) + "( TBK " + product.tbk_documento + " )"
+
+                     
+            if product.tranportorder_id != 222
+
+              
+            row <<   product.tranportorder.code
+
+
+
+            else
+            
+
+             row << " "
+              
+            end 
+
+
+           
+        
+            table_content2 << row
+
+            nroitem=nroitem + 1     
+
+
+         end 
+          result = pdf.table table_content2, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                        
+                                          columns([1]).align=:left 
+                                          columns([2]).align=:left                                          
+                                          columns([3]).align=:left 
+                                          columns([4]).align=:left
+                                          columns([5]).align=:right 
+                                          columns([6]).align=:left  
+
+                                          
+
+                                        end 
+
+              #resumen 
+
+      
+       
+       
+
+      pdf.move_down 10  
+      pdf
+
+    end
+
+ def build_pdf_footer_10(pdf)
+      
+    
+        table_content3 =[]
+      row = []
+      row << "--------------------------------------------"
+      row << "--------------------------------------------"
+      row << "--------------------------------------------"
+      
+      table_content3 << row 
+      row = []
+      row << " JEFE COMERCIAL  "
+      row << " JEFE FINANZAS "
+      row << " JEFE CONTABILIDAD"
+      
+      table_content3 << row 
+
+      
+          result = pdf.table table_content3, {:position => :center,
+                                        :header => true,  :cell_style => {:border_width => 0},
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:center
+                                          columns([2]).align=:center 
+                                          
+                                        end                             
+
+      pdf      
+      
+  end
 
 
 

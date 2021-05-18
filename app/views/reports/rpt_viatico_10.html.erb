@@ -1,0 +1,99 @@
+<%= render 'layouts/charts' %>
+<%
+invoices_subtotal = 0
+invoices_tax = 0
+invoices_total = 0
+subtotals = []
+taxes = []
+totals = []
+%>
+
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Reports", "/companies/reports/#{@company.id}" %>
+</div>
+
+<h1>
+  <%= image_tag("reports_48.png", :class => "vmiddle") %>
+   Reporte Viaticos entregados por conductor 
+</h1>
+
+
+ <%= form_tag(rpt_viatico_10_facturas_path, :method => "get") do %>
+
+
+
+<br>
+ <select id="fecha6" name="fecha6" >
+  <option value="" selected disabled hidden>Selecionar Reporte</option>
+  <option value="1"> Efectivo</option>
+  <option value="2"> TBK </option>
+  
+   </select>
+<br>
+
+
+   <div class="field">
+            <input id="check_cliente" name="check_cliente" type="checkbox" value="true" checked />
+          <div class="small">
+            Todos los empleados 
+          </div>
+        </div>
+        
+  
+   <div class="field">
+  <%= select_tag(:employee_id,options_from_collection_for_select(@employees,'id','full_name2'),:id => "customer_select"  ) %>
+  </div>
+
+
+<p> </p>
+  <div class="field">
+      <input type="date" name="fecha1" value = <%= Date.today %>  style = "width: 150px" >
+    </div>
+
+  <div class="field">
+    <input type="date" name="fecha2" value=<%= Date.today %> style = "width: 150px" >
+  </div>
+
+
+
+ <%= submit_tag  "To PDF", :name => "print"  %>
+  <%= submit_tag "Excel", :name => "print" %>
+<% end %>
+
+
+<br />
+
+
+<script>
+
+$(document).ready(function() {
+  
+  if ($('#check_cliente').is(":checked")) {
+      $('#customer_select').attr('disabled', true); //disable input
+   }
+   else {
+      $('#customer_select').removeAttr('disabled'); //enable input
+   }
+   
+   
+   $('#check_cliente').click(function () {
+        //check if checkbox is checked
+        if ($(this).is(':checked')) {
+
+           $('#customer_select').attr('disabled', true); //disable input
+
+        } else {
+             $('#customer_select').removeAttr('disabled'); //enable input
+            
+        }
+    });
+
+
+
+
+  });
+  
+  </script>
+  

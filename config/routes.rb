@@ -186,10 +186,16 @@ require 'sidekiq/cron/web'
 
   end
 
+
+
  
    resources :viaticotbks do
     collection { get :search }
     resources :viaticotbk_details, except: [:index,:show], controller: "viaticotbks/viaticotbk_details"
+
+   
+
+
   end
 
 
@@ -312,10 +318,16 @@ require 'sidekiq/cron/web'
 
      collection { get  :rpt_viatico_1 }
 
-     collection { get  :reportes_detraccion }
+      collection { get  :reportes_detraccion }
 
        collection { get :rpt_examen01 }  
        collection { get :rpt_pex_1 }  
+
+    collection { get  :rpt_viatico_10 }
+    collection { get  :rpt_viatico_20 }
+    collection { get  :rpt_viatico_30 }
+
+
 
     end 
 
@@ -1428,6 +1440,12 @@ match 'purchases/do_crear/:id'   => 'purchases#do_crear', via: [:get, :post]
   match '/reports/rpt_viaticos_1/:id' => 'reports#rpt_viaticos_1', via: [:get, :post]
 
   
+  match 'companies/reports/rpt_viatico_10/:id' => 'reports#rpt_viatico_10', via: [:get, :post]
+
+  match 'companies/reports/rpt_viatico_20/:id' => 'reports#rpt_viatico_20', via: [:get, :post]
+
+  match 'companies/reports/rpt_viatico_30/:id' => 'reports#rpt_viatico_30', via: [:get, :post]
+
   resources :customer_payments
   match 'inventories_detaisl/additems/:company_id' => 'additems#list', via: [:get, :post]  
   resources :inventory_details

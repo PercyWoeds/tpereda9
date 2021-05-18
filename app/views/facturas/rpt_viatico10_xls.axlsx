@@ -1,0 +1,76 @@
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
+
+require 'axlsx'
+
+p = Axlsx::Package.new
+wb = xlsx_package.workbook
+wb.styles do |s|
+    date = s.add_style(:format_code => "yyyy-mm-dd", :border => Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+    padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
+    percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
+    title = s.add_style(:bg_color => "FFFF0000", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :left})
+
+    currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
+                              :border=>Axlsx::STYLE_THIN_BORDER)
+    red_negative = wb.styles.add_style :num_fmt => 8
+    comma = wb.styles.add_style :num_fmt => 3
+    super_funk = wb.styles.add_style :format_code => '[Green]#'
+    
+    wb.add_worksheet(name: "Basic work sheet") do |sheet|
+
+
+
+
+    
+    sheet.add_row   ["ITEM",
+                     "FECHA ",
+                     "DESCRIPCION",
+                     "TD",
+                     "NRO DOC.",
+                     "IMPORTE S/.",
+                     "PLACA",
+                     "DESTINO",
+                     "NRO.O.S.T." ]  , 
+    :style => title 
+    nroitem = 1
+
+   @detalle.each do |product|
+             
+                         
+            if  product.employee != 64
+              empleado =   product.employee.full_name
+            else
+              empleado =  " " 
+            end 
+                      
+            
+            if @tipo_compro == "2"
+              valor = sprintf("%.2f",product.tbk)
+            else
+              valor =  sprintf("%.2f",product.importe)
+            end 
+
+                               
+            if product.tranportorder_id != 222
+               ost =  product.tranportorder.code
+            else
+              ost = " "
+            end 
+
+           nroitem +=  1 
+          sheet.add_row [nroitem.to_s, 
+         product.fecha, empleado, "CE",product.code ,valor,
+         product.truck.placa + " /  " + product.get_placa(product.truck2_id) +  product.get_placa(product.truck3_id),
+         product.get_punto(product.ubication_id) + "  -  "+ product.get_punto(product.ubication2_id) +" EJES:"+ product.tranportorder.get_ejes2(product.tranportorder.id) + "( TBK " + product.tbk_documento + " )",
+         ost ], :style => [ cadena,date, cadena,cadena,cadena,currency,
+         cadena,cadena,cadena ]
+      
+   end
+
+   
+   
+end
+end 
+
+    

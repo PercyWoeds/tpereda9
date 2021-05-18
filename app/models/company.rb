@@ -5621,6 +5621,25 @@ return @caja
 
 end 
 
+
+def comprobante_detalle(fecha1,fecha2,empleado,tipo ) 
+
+
+      if empleado == "null"
+     @viaticos = Cout.where(["fecha >=? and fecha <=? and tipo_compro = ? ","#{fecha1} 00:00:00","#{fecha2} 23:59:59",tipo ]).order(:code)
+     else
+
+     @viaticos = Cout.where(["fecha >=? and fecha <=? and employee_id = ? and tipo_compro = ? ","#{fecha1} 00:00:00","#{fecha2} 23:59:59",empleado,tipo ]).order(:code)
+   
+
+      end   
+
+
+end  
+
+
+
+
 end
 
 
