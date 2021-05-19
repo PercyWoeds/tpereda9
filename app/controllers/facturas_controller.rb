@@ -8878,10 +8878,7 @@ end
       pdf.move_down 10  
       ###EGRESOS 
        
-
-              
-              
-                  
+                 
 
               Viaticotbk::TABLE_HEADERS5.each do |header|
                 cell = pdf.make_cell(:content => header)
@@ -8917,7 +8914,7 @@ end
             row << "CE"
             
             row << product.code 
-           if @tipo_compro == "2"
+           if @tipo_compro == "0"
             row << sprintf("%.2f",product.tbk)
           else
              row << sprintf("%.2f",product.importe)

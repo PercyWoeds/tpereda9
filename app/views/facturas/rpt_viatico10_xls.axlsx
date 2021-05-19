@@ -45,7 +45,7 @@ wb.styles do |s|
             end 
                       
             
-            if @tipo_compro == "2"
+            if @tipo_compro == "0"
               valor = sprintf("%.2f",product.tbk)
             else
               valor =  sprintf("%.2f",product.importe)
