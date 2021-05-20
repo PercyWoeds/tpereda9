@@ -535,7 +535,7 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
     rescue
       # nothing
     end
-    
+   
     begin
       deleteFile(img_name_size("public#{self.logo}", 200))
     rescue
@@ -5641,6 +5641,52 @@ return @caja
 
 
 end 
+
+
+
+def get_viatico2(fecha1,fecha2,caja )
+
+
+ @caja =  Viatico.find_by_sql( ["Select viaticos.*,viatico_details.* 
+  from viaticos
+ INNER JOIN viatico_details ON   viatico_details.viatico_id = viaticos.id
+ INNER JOIN suppliers ON   viatico_details.supplier_id = suppliers.id
+ where viaticos.caja_id = ? and viaticos.fecha1 >= ?  and viaticos.fecha1 <= ?
+  and viatico_details.supplier_id <> 2570  order by suppliers.name  ",caja,
+  "#{fecha1} 00:00:00","#{fecha2} 23:59:59"])
+
+return @caja 
+
+
+end 
+
+
+
+
+
+def get_factura_3(fecha1,fecha2,value = "total",moneda)
+    
+    facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",moneda])
+    if facturas
+    ret=0  
+    for factura in facturas
+     
+     
+        if(value == "subtotal")
+          ret -= factura.subtotal
+        elsif(value == "tax")
+          ret -= factura.tax
+        else         
+          ret -= factura.total
+        end
+   
+    end
+    end 
+
+    return ret
+  
+ end  
+
 
 
 def comprobante_detalle(fecha1,fecha2,empleado,tipo ) 

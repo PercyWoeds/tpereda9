@@ -1,0 +1,97 @@
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
+
+require 'axlsx'
+
+p = Axlsx::Package.new
+wb = xlsx_package.workbook
+wb.styles do |s|
+    date = s.add_style(:format_code => "yyyy-mm-dd", :border => Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :left},:sz=>8)
+    padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
+    percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
+    title = s.add_style(:bg_color => "FFFF0000", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
+    title2= s.add_style  :bg_color => "0000FF", :fg_color => "FF", :sz => 9, :alignment => { :horizontal=> :center }
+    title3= s.add_style  :bg_color => "ddeded", :fg_color => "00", :sz => 8, :alignment => { :horizontal=> :center } ,:border=>Axlsx::STYLE_THIN_BORDER
+    title4= s.add_style  :bg_color => "FF", :fg_color => "00", :sz => 16, :alignment => { :horizontal=> :center },:bold=>true 
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :left},:sz=>8)
+    
+
+     title5 = s.add_style  :bg_color => "FDFD96", :fg_color => "00", :sz => 8, :alignment => { :horizontal=> :center } ,:border=>Axlsx::STYLE_THIN_BORDER
+
+
+    currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
+                              :border=>Axlsx::STYLE_THIN_BORDER,:sz=>8)
+    red_negative = wb.styles.add_style :num_fmt => 8
+    comma = wb.styles.add_style :num_fmt => 3
+    super_funk = wb.styles.add_style :format_code => '[Green]#'
+    
+    wb.add_worksheet(name: "Viaticos") do |sheet|
+    
+      sheet.add_row [" ",
+                      "Reporte de Adelanto de Sueldos " +  "#{@caja_name}"  + "#{@fecha1}"+ " AL " + "#{@fecha2}"], :style => [title4,title4,title4]
+        
+    
+          sheet.add_row [ "ITEM",
+                      "FECHA ",
+                     "DESCRIPCION",
+                     "TD",
+                     "NRO DOCUMENTO",
+                     "IMPORTE S/.",
+                     "DETALLE",
+                      "NRO.LIQ." ], :style => [ cadena ,cadena , cadena ,cadena ,cadena ,cadena ,cadena  ]
+         
+       
+          total_importe = 0
+          nroitem = 1 
+                       
+           @cajas.each do |product|
+
+              lcProveedor = ""
+              lcEmpleado  = ""
+
+
+              if product.supplier_id !=  2570 
+                lcProveedor =  product.get_proveedor(product.supplier_id)
+              else
+
+               if !product.employee_id.nil?
+
+                  if  product.employee_id != 64
+                    lcProveedor = product.get_empleado(product.employee_id)
+                  end 
+
+                else
+                  lcProveedor = " "
+                end 
+
+              end 
+          
+               sheet.add_row [ nroitem,
+                      product.fecha,
+                     lcProveedor,
+                     product.document.descripshort ,
+                     product.numero,
+                     product.importe,
+                     product.detalle,product.code ], :style => [ cadena ,date, cadena ,cadena ,cadena ,currency ,cadena,cadena  ]
+         
+
+               nroitem += 1  
+
+              total_importe   += product.importe.round(2) 
+
+
+          end 
+
+              
+      
+
+         sheet.add_row [" "," ","TOTAL  S/.","" ," ",total_importe.round(2)," " ,"",""], :style => [cadena,cadena, title3 ,cadena ,cadena,currency,cadena,cadena]
+
+
+
+
+                        
+end
+
+end 
+
+    
