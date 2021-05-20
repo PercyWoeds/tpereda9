@@ -440,7 +440,7 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
   end 
   
   def get_puntos()
-    puntos = Punto.all 
+    puntos = Punto.all.order(:name) 
     return puntos
   end
 
@@ -5596,7 +5596,6 @@ end
 
 def get_viaticolgv(fecha1,fecha2)
 
-
  @caja =  Viaticolgv.find_by_sql( ['Select couts.code, couts.fecha1 ,couts.fecha2,couts.id,couts.tranportorder_id,
   couts.truck_id,couts.truck2_id,couts.ubication_id,couts.ubication2_id,couts.employee_id,couts.carr,viaticolgv_details.importe ,
     viaticolgvs.total_egreso,
@@ -5622,6 +5621,28 @@ return @caja
 end 
 
 
+
+def get_viatico(fecha1,fecha2,caja )
+
+
+ @caja =  Viatico.find_by_sql( ["Select viaticos.*,viatico_details.* 
+  from viaticos
+ INNER JOIN viatico_details ON   viatico_details.viatico_id = viaticos.id
+ where viaticos.caja_id = ? and viaticos.fecha1 >= ?  and viaticos.fecha1 <= ? and egreso_id  = 9 ",caja,
+  "#{fecha1} 00:00:00","#{fecha2} 23:59:59"])
+
+
+
+#@caja =   Viaticolgv.select("viaticolgv_details.cout.code").joins(:viaticolgv_details).where(["viaticolgvs.fecha1 >= ? and viaticolgvs.fecha1  <=? and   
+ # viaticolgv_details.viatieager_loadcolgv_id  = ? and viaticolgv_details.egreso_id = ? and viaticolgv_details.document_id = ?
+ # and viaticolgv_details.cout_id IS NOT NULL","#{fecha1} 00:00:00","#{fecha2} 23:59:59", self.id,1,10]).order("viaticolgv_details.numero")
+
+return @caja 
+
+
+end 
+
+
 def comprobante_detalle(fecha1,fecha2,empleado,tipo ) 
 
 
@@ -5637,6 +5658,38 @@ def comprobante_detalle(fecha1,fecha2,empleado,tipo )
 
 end  
 
+
+def comprobante_detalle2(fecha1,fecha2,empleado,tipo ) 
+
+
+      if empleado == "null"
+     @viaticos = Cout.where(["fecha >=? and fecha <=? and tipo_compro = ? ","#{fecha1} 00:00:00","#{fecha2} 23:59:59",tipo ]).order(:code)
+     else
+
+     @viaticos = Cout.where(["fecha >=? and fecha <=? and truck_id = ? and tipo_compro = ? ","#{fecha1} 00:00:00","#{fecha2} 23:59:59",empleado,tipo ]).order(:code)
+   
+
+      end   
+
+
+end  
+
+
+
+def comprobante_detalle3(fecha1,fecha2,empleado,tipo ) 
+
+
+      if empleado == "null"
+     @viaticos = Cout.where(["fecha >=? and fecha <=? and tipo_compro = ? ","#{fecha1} 00:00:00","#{fecha2} 23:59:59",tipo ]).order(:code)
+     else
+
+     @viaticos = Cout.where(["fecha >=? and fecha <=? and ubication2_id = ? and tipo_compro = ? ","#{fecha1} 00:00:00","#{fecha2} 23:59:59",empleado,tipo ]).order(:code)
+   
+
+      end   
+
+
+end  
 
 
 

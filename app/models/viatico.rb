@@ -61,6 +61,16 @@ self.per_page = 20
                      "DETALLE",
                      "DESTINO"]
   
+ TABLE_HEADERS5  = ["ITEM",
+                      "FECHA",
+                     "EMPLEADO",
+                     "COMPROBANTE",
+                     "NUMERO",                                         
+                     "IMPORTE",
+                     "DETALLE ",
+                     "NRO.LIQ."
+                    ]
+  
 
   def self.search(search)
       where("code LIKE ?", "%#{search}%") 
@@ -575,5 +585,30 @@ self.per_page = 20
    end 
  end 
 
+
+  def get_proveedor(id)
+
+if   a= Supplier.where(id: id ).exists? 
+
+           category = Supplier.find(id)
+
+           return category.name
+      else
+
+           return "proveedor no existe."
+      end 
+  end
+
+  def get_empleado(id)
+    if   a= Employee.where(id: id ).exists? 
+
+           category = Employee.find(id)
+
+           return category.full_name2 
+      else
+
+           return "Employee no existe."
+      end 
+  end  
   
 end

@@ -1589,17 +1589,29 @@ def rpt_purchaseorder4_all
     
   end
 
-  def rpt_caja2_pdf
-    @company = Company.find(params[:company_id])    
-    @pagetitle = "Listado de vueltos y fletes "    
-  end
+  def rpt_caja_2
+        @company = Company.find(params[:company_id])    
+        @pagetitle = "Listado de vueltos y fletes "
+
+      @cajas =Caja.order(:descrip)
+  
+  end    
+def rpt_caja_3
+        @company = Company.find(params[:company_id])    
+        @pagetitle = "Listado de vueltos y fletes "
+
+      @cajas =Caja.order(:descrip)
+  
+  end  
   def rpt_viatico_pdf
     @company = Company.find(params[:company_id])    
     @pagetitle = "Listado de viaticos "    
     
     @cajas =Caja.order(:descrip)
-    
   end
+
+
+
   def reports_cexamen 
     @company = Company.find(params[:company_id])    
     @pagetitle = "Listado de Examen Medicos  "    
@@ -1720,6 +1732,8 @@ def rpt_purchaseorder4_all
     @monedas=@company.get_monedas    
    @employees = @company.get_employees2  
 
+   @trucks  =  @company.get_trucks
+
   end
 
  def rpt_viatico_30 
@@ -1727,6 +1741,8 @@ def rpt_purchaseorder4_all
     @pagetitle = "Resumen ST "    
     @monedas=@company.get_monedas    
      @employees = @company.get_employees2 
+     @puntos = @company.get_puntos 
+
   end
 
 

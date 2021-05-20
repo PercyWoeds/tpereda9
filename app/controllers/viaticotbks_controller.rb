@@ -9,7 +9,6 @@ class ViaticotbksController < ApplicationController
 before_filter :authenticate_user!
 
 
-
   def reportxls
     @company=Company.find(1)      
    

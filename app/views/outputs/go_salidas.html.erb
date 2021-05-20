@@ -8,11 +8,11 @@
 
 
 <div class="small">
-  <form method="get" action="/companies/outputs/<%= @company.id %>">
+  <form method="get" action="/outputs/go_salidas/<%= @company.id %>">
     <strong>Buscar :</strong>
     <input type="text" name="search" value="<% if @q_org %><%= @q_org %><% end %>" class="small" style="width: 250px;" onclick="$(this).select();" />
     <input type="submit" value="Find" class="bold small_btn" />
-    <a href="/companies/outputs/<%= @company.id %>" > Limpiar</a>
+    <a href="/outputs/go_salidas/<%= @company.id %>" > Limpiar</a>
   </form>
 </div>
   

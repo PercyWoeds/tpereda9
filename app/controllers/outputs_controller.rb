@@ -1016,7 +1016,7 @@ def build_pdf_header(pdf)
     @company = Company.find(1)
 
 
-       if(@company.can_view(current_user))
+    if(@company.can_view(current_user))
       
        @outputs = Output.all.order('id DESC').paginate(:page => params[:page])
        

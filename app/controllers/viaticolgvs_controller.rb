@@ -1542,6 +1542,7 @@ pdf.move_down 2
     pdf
       
   end
+
   
   def rpt_viatico_pdf
 
@@ -1808,6 +1809,8 @@ pdf.move_down 2
     
   end
 
+################################################################################################################
+
   def reportes1
 
 
@@ -1817,17 +1820,7 @@ pdf.move_down 2
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
    
-     @cliente_check = params[:check_cliente]
-    
-   
-    if @cliente_check == "true"
-      @customer = ""
-      @customer_name = ""
-    else
-      @customer = params[:customer_id]
-      @customer_name =  @company.get_cliente_name(@customer)
-    end
-
+  
 
     @cajas = @company.get_viaticolgv(@fecha1,@fecha2)          
 
@@ -2056,6 +2049,263 @@ Viaticolgv::TABLE_HEADERS5.each do |header|
 
 
 
+################################################################################################################
+
+  def reportes2
+
+
+    @company=Company.find(1)    
+
+
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+
+
+   @caja_id = params[:caja_id]  
+
+      
+   @caja_name = " "
+    case @caja_id
+
+      when "1"
+        @cajas = @company.get_viatico(@fecha1,@fecha2,1)  
+         @caja_name = " "
+
+      when "2"
+        @cajas = @company.get_viatico(@fecha1,@fecha2,2)  
+        puts "caja 2"
+        puts @caja_id 
+        @caja_name = "CAJA CHICA "
+
+      when "3"
+         @cajas = @company.get_viatico(@fecha1,@fecha2,3)  
+        @caja_name = "CAJA CHICA "
+      when  "4"
+        @cajas = @company.get_viatico(@fecha1,@fecha2,4)  
+         @caja_name = "CAJA CHICA "
+      when   "5"
+        @cajas = @company.get_viaticotbk(@fecha1,@fecha2)  
+         @caja_name = "CAJA CHICA "
+      when "6"
+        @cajas = @company.get_viaticotbk_efe(@fecha1,@fecha2)  
+         @caja_name = "CAJA CHICA "
+
+       when "7"
+        @cajas = @company.get_viaticolgv(@fecha1,@fecha2)  
+         @caja_name = "CAJA CHICA "
+
+
+      else
+       puts  "Error: capacity has an invalid value "
+      end        
+
+    
+
+    case params[:print]
+      when "To PDF" then 
+        begin 
+
+       Prawn::Document.generate "app/pdf_output/rpt_caja_02.pdf", :page_size=>"A4"   do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header_2b(pdf)
+        pdf = build_pdf_body_2b(pdf)
+        build_pdf_footer_2b(pdf)
+        @lcFileName =  "app/pdf_output/rpt_caja_02.pdf"              
+    end     
+   
+
+    send_file("app/pdf_output/rpt_caja_02.pdf", :type => 'application/pdf', :disposition => 'inline')
+
+
+        end   
+
+
+      when "To Excel" then render xlsx: 'rpt_caja_02'
+      else render action: "index"
+    end
+
+  end  
+
+  
+
+#########################################################################
+
+
+# reporte completo
+  def build_pdf_header_2b(pdf)
+      
+     pdf.font "Helvetica" , :size => 8
+      image_path = "#{Dir.pwd}/public/images/tpereda2.png"
+
+
+
+    
+         
+ table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION INTEGRADO ",:rowspan => 2},"CODIGO ","TP-FZ-F-033"], 
+          ["VERSION: ","1"], 
+          ["Reporte de Adelanto de Sueldos " +  "#{@caja_name}"  + "#{@fecha1}"+ " AL " + "#{@fecha2}","Pagina: ","1 de 1 "] 
+         
+          ])
+
+
+
+       pdf.table(table_content  ,{
+           :position => :center,
+           :width => pdf.bounds.width
+         })do
+           columns([1,2]).font_style = :bold
+            columns([0]).width = 118.55
+            columns([1]).width = 204.73
+            columns([1]).align = :center
+            
+            columns([2]).width = 100
+          
+            columns([3]).width = 100
+      
+         end
+        
+         table_content2 = ([["Fecha : ",Date.today.strftime("%d/%m/%Y")]])
+
+         pdf.table(table_content2,{:position=>:right }) do
+
+            columns([0, 1]).font_style = :bold
+            columns([0, 1]).width = 100
+            
+         end 
+
+         pdf.move_down 2
+      
+      pdf 
+  end   
+
+  def build_pdf_body_2b(pdf)
+    
+    pdf.text " ", :size => 13, :spacing => 4
+    pdf.font "Helvetica" , :size => 5
+
+      headers = []
+      table_content = []
+
+      header_text = [ {content: "Text", colspan: 4}]
+
+
+      Viatico::TABLE_HEADERS5.each do |header|
+
+
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+
+
+        headers << cell
+      end
+
+
+  table_content <<  headers 
+
+
+  
+      nroitem=1
+      @tot_valor_referencial = 0
+      @tot_monto_detraccion = 0
+      @subtotal = 0
+      @tax = 0
+      @importe = 0 
+      total_cancelado = 0
+      total_pendiente = 0 
+      @total_importe = 0
+      @cajas.each do |product|
+        # this would cause a N+1 query if we didn't eager load.
+        
+            rendido = 0
+
+ 
+            row = []
+            row << nroitem.to_s        
+            row << product.fecha.strftime("%d/%m/%Y") 
+
+            if product.supplier_id !=  2570 
+              row <<  product.get_proveedor(product.supplier_id)
+            else
+              if !product.employee_id.nil?       
+              if  product.employee_id != 64 
+              row <<   product.get_empleado(product.employee_id)
+              end 
+            else
+              row << " "
+              end 
+
+            end 
+
+            row << product.document.descripshort 
+            
+            row << product.numero.to_s
+         
+            row << sprintf("%.2f",product.importe)
+
+            @total_importe   +=  product.importe 
+
+          
+            row << product.detalle 
+
+            row << product.code 
+      
+
+                 table_content << row
+
+               
+                 nroitem +=  1
+
+        end
+
+
+       
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          
+                                        end                                          
+      pdf.move_down 10      
+      pdf
+
+
+
+
+    end
+
+    def build_pdf_footer_2b(pdf)
+      
+    
+        table_content3 =[]
+      row = []
+      row << "--------------------------------------------"
+      row << "--------------------------------------------"
+      row << "--------------------------------------------"
+      
+      table_content3 << row 
+      row = []
+      row << " JEFE COMERCIAL  "
+      row << " JEFE FINANZAS "
+      row << " JEFE CONTABILIDAD"
+      
+      table_content3 << row 
+
+      
+          result = pdf.table table_content3, {:position => :center,
+                                        :header => true,  :cell_style => {:border_width => 0},
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:center
+                                          columns([2]).align=:center 
+                                          
+                                        end                             
+
+      pdf      
+      
+  end
+########################
   
   private
   def viaticolgv_params

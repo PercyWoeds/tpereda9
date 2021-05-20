@@ -825,6 +825,10 @@ match 'companies/reports/rpt_coti_1_pdf/:company_id' => 'reports#rpt_coti_1_pdf'
   
   match 'companies/reports/rpt_caja_1/:company_id' => 'reports#rpt_caja_1', via: [:get, :post]    
   
+  match 'companies/reports/rpt_caja_2/:company_id' => 'reports#rpt_caja_2', via: [:get, :post]    
+  
+  match 'companies/reports/rpt_caja_3/:company_id' => 'reports#rpt_caja_3', via: [:get, :post]    
+  
 
 
   # Company users
