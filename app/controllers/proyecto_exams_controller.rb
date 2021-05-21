@@ -16,6 +16,7 @@ class ProyectoExamsController < ApplicationController
     @proyecto_examen  = @company.get_proyecto_exams
 
     @proyecto_examen_empleado = @company.get_proyecto_exam_empleado(@proyecto_exam.id)
+    
 
     @proyectoexam_details= @proyecto_exam.proyectoexam_details
 
@@ -404,7 +405,6 @@ class ProyectoExamsController < ApplicationController
        end 
 
 
-
      @valor[0].compact.each do |header|605
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
@@ -424,22 +424,14 @@ class ProyectoExamsController < ApplicationController
       nroitem = 1
 
 
-
-
-
-
       for proyectoitem in @proyecto_examen_empleado 
         
         
            row  = []
            row << proyectoitem.employee.full_name2  
 
-          
-
-
                @detalle = proyectoitem.get_detalle(proyectoitem.employee_id, 
                                                     @proyecto_exam.proyecto_minero_id ) 
-
 
 
                  for detalle in @detalle  
@@ -447,19 +439,31 @@ class ProyectoExamsController < ApplicationController
                      
                     if detalle.proyecto_minero_exam.proyectominero3.formatofecha == "1" 
 
-                          if detalle.fecha ==  nil 
+                         if detalle.fecha ==  nil 
 
                             row << "" 
 
-                           
 
                          else
-                          
+                            if detalle.proyecto_minero_exam.proyectominero3.alert == "1"  
 
-                          row << detalle.fecha.strftime("%d/%m/%Y") 
+                              if Date.today.to_date  >=  detalle.fecha.to_date
+
+                              row << pdf.make_cell(:content =>detalle.fecha.strftime("%d/%m/%Y") ,
+                                :background_color => 'FF0000', :text_color => "FFFFFF")  
+
+                              else
+
+                                 row << detalle.fecha.strftime("%d/%m/%Y") 
+
+                              end
+
+                            else 
+
+                                row << detalle.fecha.strftime("%d/%m/%Y") 
+
+                            end 
                            
-
-
 
                          end
 

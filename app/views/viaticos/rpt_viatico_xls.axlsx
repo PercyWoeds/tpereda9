@@ -119,7 +119,7 @@ wb.styles do |s|
 
 
       
-          for  egresos  in @viatico.get_egresos() 
+          for  egresos  in @viatico.get_egresos_caja() 
 
 
             @detalle = egresos.get_detalle_egreso(@viatico.id,egresos.id)

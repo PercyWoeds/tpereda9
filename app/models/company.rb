@@ -5528,9 +5528,18 @@ def get_pm2
 
 def get_proyecto_exam_empleado(proyecto_minero_id )
 
- @proyecto_exam_empleado = ProyectoexamDetail.select("employee_id,proyecto_exam_id").where(proyecto_exam_id: proyecto_minero_id, active: "1").group(:employee_id,:proyecto_exam_id)
-  
-#@proyecto_exam_empleado = ProyectoexamDetail.select("employee_id,proyecto_exam_id").group(:employee_id,:proyecto_exam_id)
+  # @proyecto_exam_empleado = ProyectoexamDetail.select("employee_id,proyecto_exam_id").
+  # where(proyecto_exam_id: proyecto_minero_id, active: "1").group(:employee_id,:proyecto_exam_id)
+
+  @proyecto_exam_empleado = ProyectoexamDetail.find_by_sql(
+    [ 'Select  proyectoexam_details.employee_id,proyectoexam_details.proyecto_exam_id 
+    from proyectoexam_details
+  INNER JOIN proyecto_exams ON proyectoexam_details.proyecto_exam_id =  proyecto_exams.id
+  INNER JOIN employees ON proyectoexam_details.employee_id  = employees.id 
+  Where proyectoexam_details.proyecto_exam_id = ?  and  proyectoexam_details.active = ? 
+  group by proyectoexam_details.employee_id,
+  proyectoexam_details.proyecto_exam_id,employees.full_name2
+  order by employees.full_name2',proyecto_minero_id,"1"])
   
   return @proyecto_exam_empleado 
 
@@ -5565,6 +5574,54 @@ def get_proyecto_exam_empleado_2
 
 
 end 
+
+
+def get_proyecto_exam_actualiza_condicion(proyecto_minero) 
+
+    @company = Company.find(1)
+   fechahoy = Date.today.to_date 
+
+
+ 
+    @proyecto_examen_empleado = @company.get_proyecto_exam_empleado(proyecto_minero)
+
+ 
+      for proyectoitem in @proyecto_examen_empleado         
+                 
+         @detalle = proyectoitem.get_detalle(proyectoitem.employee_id,proyecto_minero) 
+
+           for detalle in @detalle  
+
+
+              if detalle.proyecto_minero_exam.proyectominero3.formatofecha == "1" 
+
+               if !detalle.fecha.nil?
+              if Date.today.to_date  >=  detalle.fecha.to_date
+      
+                if detalle.proyecto_minero_exam.proyectominero3.id == 6 
+
+                   ProyectoexamDetail.update_attributes(observacion: "NO APTITUD INMEDIATA").
+                   where(proyecto_exam_id: detalle.proyecto_minero_exam_id,
+                    proyecto_minero_id: detalle.proyecto_minero_id ,employee_id: detalle.employee_id)
+
+                   puts "actualizar_purchase_monthyeartu"
+
+                end 
+                end   
+               end
+             end 
+
+            end
+
+      end 
+
+
+         
+    
+end
+
+
+
 
 
 

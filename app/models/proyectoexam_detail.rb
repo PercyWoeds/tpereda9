@@ -22,6 +22,8 @@ class ProyectoexamDetail < ActiveRecord::Base
 
    	
    end
+
+
    
 
    def  get_empleado_active (id)
