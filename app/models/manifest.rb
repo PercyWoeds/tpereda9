@@ -11,13 +11,13 @@ belongs_to :punto
 belongs_to :tipocargue 
 
 
-
   has_and_belongs_to_many :tranportorders, :join_table => "manifestships"
 
 
 validates_presence_of :location_id, :code,:customer_id,:fecha1,:tipocargue_id,:especificacion,:fecha2,:direccion1,:direccion2,:contacto1,:telefono1,:contacto2,:telefono2,:importe,:importe2,:empaletizado,:montacarga,:escolta,:stand_by,:escolta_pen,:stand_by_pen  
-validates_uniqueness_of :code
 
+validates_uniqueness_of :code
+  
 
   def get_customers()
     customers = Customer.order(:name)

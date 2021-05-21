@@ -156,13 +156,7 @@ class ProyectoExamsController < ApplicationController
     puts "empleado.+++++++++"
     puts empleado_id
 
-   
-
-    #a = ProyectoexamDetail.where(employee_id: empleado_id, proyecto_exam_id: proyecto_exam_id).delete_all 
-              
-  
-
-   
+      
      i = 0
      parts = items.split("|BRK|")
     
@@ -445,6 +439,7 @@ class ProyectoExamsController < ApplicationController
 
 
                          else
+                          
                             if detalle.proyecto_minero_exam.proyectominero3.alert == "1"  
 
                               if Date.today.to_date  >=  detalle.fecha.to_date

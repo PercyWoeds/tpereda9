@@ -5579,8 +5579,7 @@ end
 def get_proyecto_exam_actualiza_condicion(proyecto_minero) 
 
     @company = Company.find(1)
-   fechahoy = Date.today.to_date 
-
+    fechahoy = Date.today.to_date 
 
  
     @proyecto_examen_empleado = @company.get_proyecto_exam_empleado(proyecto_minero)
@@ -5596,19 +5595,35 @@ def get_proyecto_exam_actualiza_condicion(proyecto_minero)
               if detalle.proyecto_minero_exam.proyectominero3.formatofecha == "1" 
 
                if !detalle.fecha.nil?
-              if Date.today.to_date  >=  detalle.fecha.to_date
+                 if Date.today.to_date  >=  detalle.fecha.to_date
+
+                    puts "detaa"
+                    puts detalle.proyecto_minero_exam.proyectominero3.id
       
-                if detalle.proyecto_minero_exam.proyectominero3.id == 6 
+                   condicion_sino =   ProyectoMineroExam.where(proyectominero3_id: 6 ,
+                    proyecto_minero_id: proyecto_minero , proyectominero2_id: 5  )
 
-                   ProyectoexamDetail.update_attributes(observacion: "NO APTITUD INMEDIATA").
-                   where(proyecto_exam_id: detalle.proyecto_minero_exam_id,
-                    proyecto_minero_id: detalle.proyecto_minero_id ,employee_id: detalle.employee_id)
+                   if condicion_sino.length  > 0
 
-                   puts "actualizar_purchase_monthyeartu"
+                        proyecto_detail = ProyectoexamDetail.find_by( proyecto_minero_exam_id: condicion_sino.last.id ,
+                          proyecto_minero_id: detalle.proyecto_minero_id ,employee_id: detalle.employee_id)
 
-                end 
+                          proyecto_detail.update_attributes(observacion: "NO APTITUD INMEDIATA")
+                        
+                         puts "actualizar_purchase_monthyeartu"
+
+                         puts condicion_sino.last.id
+                   else 
+
+                         puts "no hay condicion ya fuiste..."
+
+                   end 
+
+                 
                 end   
                end
+
+
              end 
 
             end

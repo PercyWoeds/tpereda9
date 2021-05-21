@@ -110,11 +110,8 @@
          <td>  <%= check_box_tag "Active", proyectoitem.get_empleado_active(proyectoitem.employee_id), (proyectoitem.get_empleado_active(proyectoitem.employee_id) == "1" ? true : false), disabled: true %></td>  
 
 
-
-
               <% @detalle = proyectoitem.get_detalle(proyectoitem.employee_id, 
                                                     @proyecto_exam.proyecto_minero_id ) %>
-
 
 
                  <% for detalle in @detalle  %>
@@ -130,11 +127,31 @@
                            </td>
 
                          <% else %>
-               
-                           <td class="small bordered_bottom bordered_right" >
-                            <%= detalle.fecha.strftime("%d/%m/%Y")  %>
-                           </td>
+                         <%  if detalle.proyecto_minero_exam.proyectominero3.alert == "1" %>
+                               
+                              <%   if Date.today.to_date  >=  detalle.fecha.to_date %>
 
+                                  
+
+                               <td style="background-color:red " ,  class="small bordered_bottom bordered_right " >
+                                    <%= detalle.fecha.strftime("%d/%m/%Y")  %>
+                               </td>
+
+
+                             <%    else %>
+
+                                      <td class="small bordered_bottom bordered_right" >
+                                    <%= detalle.fecha.strftime("%d/%m/%Y")  %>
+                                   </td>
+                              <%    end %>
+
+                        <%    else %>
+
+                                     <td class="small bordered_bottom bordered_right" >
+                                    <%= detalle.fecha.strftime("%d/%m/%Y")  %>
+                                   </td>
+
+                              <%    end %>
 
 
                         <% end %>

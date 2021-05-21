@@ -8,7 +8,6 @@ class ViaticosController < ApplicationController
 before_filter :authenticate_user!
 
 
-
   def reportxls
     @company=Company.find(1)      
    
@@ -416,10 +415,6 @@ before_filter :authenticate_user!
 
 
       end 
-
-
-  
-      
 
 
    pdf.move_down 10  
