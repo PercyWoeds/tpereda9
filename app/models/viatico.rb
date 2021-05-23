@@ -208,6 +208,91 @@ self.per_page = 20
   
     return subtotal
   end
+
+
+  def get_total_saldo_documento
+    subtotal = 0
+      
+    @viatico_details = ViaticoDetail.where(viatico_id: self.id,document_id: 1 )
+    
+  for item in  @viatico_details 
+  
+    
+         
+        if item.egreso_id == 1
+            total = 0
+          else
+            total = item.importe
+          end 
+        
+        begin
+          subtotal += total
+        rescue
+        end
+        
+      end
+ @viatico_details = ViaticoDetail.where(viatico_id: self.id,document_id: 7 )
+    
+  for item in  @viatico_details 
+  
+    
+         
+        if item.egreso_id == 1
+            total = 0
+          else
+            total = item.importe
+          end 
+        
+        begin
+          subtotal += total
+        rescue
+        end
+        
+      end
+
+@viatico_details = ViaticoDetail.where(viatico_id: self.id,document_id: 3 )
+    
+  for item in  @viatico_details 
+  
+    
+         
+        if item.egreso_id == 1
+            total = 0
+          else
+            total = item.importe
+          end 
+        
+        begin
+          subtotal += total
+        rescue
+        end
+        
+      end
+
+
+@viatico_details = ViaticoDetail.where(viatico_id: self.id,document_id: 2 )
+    
+  for item in  @viatico_details 
+  
+    
+         
+        if item.egreso_id == 1
+            total = 0
+          else
+            total = item.importe
+          end 
+        
+        begin
+          subtotal -= total
+        rescue
+        end
+        
+      end
+
+    return subtotal
+  end
+
+  
   
   
   def delete_products()
@@ -384,12 +469,6 @@ self.per_page = 20
 
 
   
-  def get_invoices_details
-
-  
-    
-  end 
-
   def get_products2(id)    
     @itemproducts = InvoiceService.find_by_sql(['Select invoice_services.price,
       invoice_services.quantity,invoice_services.discount,invoice_services.total,services.name 

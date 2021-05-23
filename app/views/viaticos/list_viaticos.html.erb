@@ -6,8 +6,9 @@
 <h1>
   <%= image_tag("orders_48.png", :class => "vmiddle") %>
   
- Liquidacion de caja
-  
+ Liquidacion   <%= @caja.descrip %> 
+
+
   <% if @customer %>
     for customer: <%= @customer.name %>
   <% end %>

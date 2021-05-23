@@ -3918,7 +3918,9 @@ def newfactura2
         pdf = build_pdf_body_rpt2(pdf)
         build_pdf_footer_rpt2(pdf)
 
-        $lcFileName =  "app/pdf_output/rpt_pendientes.pdf"              
+        $lcFileName =  "app/pdf_output/rpt_pendientes.pdf"     
+
+               
     end     
 
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName 

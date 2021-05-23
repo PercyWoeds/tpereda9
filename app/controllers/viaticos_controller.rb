@@ -8,6 +8,8 @@ class ViaticosController < ApplicationController
 before_filter :authenticate_user!
 
 
+
+
   def reportxls
     @company=Company.find(1)      
    
@@ -31,14 +33,34 @@ before_filter :authenticate_user!
       pdf.font "Helvetica"  , :size => 8
      image_path = "#{Dir.pwd}/public/images/tpereda2.png"
 
-
+   if @viatico.caja_id == 2
      
        table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD EN EL TRABAJO ",:rowspan => 2},"CODIGO ","TP-FZ-F-018"], 
           ["VERSION: ","4"], 
           ["LIQUIDACION DE CAJA ","Pagina: ","1 de 1 "] 
          
           ])
-      
+    end 
+
+
+ if @viatico.caja_id == 3
+     
+       table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD EN EL TRABAJO ",:rowspan => 2},"CODIGO ","TP-FZ-F-024"], 
+          ["VERSION: ","1"], 
+          ["LIQUIDACION DE CAJA - COMPRA DE REPUESTOS ","Pagina: ","1 de 1 "] 
+         
+          ])
+    end 
+
+
+     if @viatico.caja_id == 4
+     
+       table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD EN EL TRABAJO ",:rowspan => 2},"CODIGO ","TP-FZ-F-025"], 
+          ["VERSION: ","1"], 
+          ["LIQUIDACION DE CAJA - AREQUIPA","Pagina: ","1 de 1 "] 
+         
+          ])
+    end 
 
        pdf.table(table_content  ,{
            :position => :center,
@@ -418,8 +440,33 @@ before_filter :authenticate_user!
 
 
    pdf.move_down 10  
+
+
+
+
       ###EGRESOS 
-       for  egresos  in @viatico.get_egresos_caja() 
+
+    
+     if @viatico.caja_id  == 2
+
+        @viatico_egresos = Egreso.order(:orden).where("id> 1 and  extension = ? or extension =  ? or extension  =  ?","ALL","CAJA","CAJA-ALL")
+
+     end    
+    if @viatico.caja_id  == 3
+
+        @viatico_egresos = Egreso.order(:orden).where("id> 1 and extension = ?  ","ALL" )
+
+     end    
+      if @viatico.caja_id  == 4
+
+       @viatico_egresos = Egreso.order(:orden).where("id> 1 and extension = ? or extension =  ? or extension  =  ? ","ALL","CAJA-AQP","CAJA-ALL" )
+
+     end    
+     
+    
+
+
+       for  egresos  in @viatico_egresos
 
 
          @detalle = egresos.get_detalle_egreso(@viatico.id,egresos.id)
@@ -427,7 +474,7 @@ before_filter :authenticate_user!
         
          
 
-            table_content = ([ [egresos.name + " " + egresos.extension  ]   ])
+            table_content = ([ [egresos.name   ]   ])
             
 
              pdf.table(table_content  ,{
@@ -652,6 +699,9 @@ pdf.move_down 2
 
 
  pdf.move_down 30
+
+
+ 
 
 
         
@@ -880,7 +930,9 @@ pdf.move_down 2
   
   # Show viaticos for a company
   def list_viaticos
-    @company = Company.find(params[:company_id])
+    @company = Company.find(1)
+    @caja  = Caja.find(params[:id])
+  
     @pagetitle = "#{@company.name} - Viaticos"
     @filters_display = "block"
     
@@ -888,20 +940,13 @@ pdf.move_down 2
     @divisions = Division.where(company_id: @company.id).order("name ASC")
     
     
-    if(params[:location] and params[:location] != "")
-      @sel_location = params[:location]
-    end
-    
-    if(params[:division] and params[:division] != "")
-      @sel_division = params[:division]
-    end
-  
     if(@company.can_view(current_user))
-         @viaticos = Viatico.all.order('id DESC').paginate(:page => params[:page])
+         @viaticos = Viatico.where(caja_id: params[:id]).order('id DESC').paginate(:page => params[:page])
+
         if params[:search]
-          @viaticos = Viatico.search(params[:search]).order('id DESC').paginate(:page => params[:page])
+          @viaticos = Viatico.where(caja_id: params[:id]).search(params[:search]).order('id DESC').paginate(:page => params[:page])
         else
-          @viaticos = Viatico.all.order('id DESC').paginate(:page => params[:page]) 
+          @viaticos = Viatico.where(caja_id: params[:id]).order('id DESC').paginate(:page => params[:page]) 
         end
     
     else

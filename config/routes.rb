@@ -15,7 +15,7 @@ require 'sidekiq/cron/web'
   resources :pexes
   resources :viaticotbks
   resources :lvt_details
-  resources :lvts
+  resources :lvtsn
   resources :program_examen
   resources :program_exms
   resources :paymentnotice_details
@@ -933,7 +933,7 @@ match 'companies/reports/rpt_coti_1_pdf/:company_id' => 'reports#rpt_coti_1_pdf'
   match 'viaticos/do_process/:id' => 'viaticos#do_process', via: [:get, :post]
   match 'viaticos/email/:id' => 'viaticos#email', via: [:get, :post]
   match 'viaticos/pdf/:id' => 'viaticos#pdf', via: [:get, :post]
-  match 'companies/viaticos/:company_id' => 'viaticos#list_viaticos', via: [:get, :post]
+  match 'companies/viaticos/:id' => 'viaticos#list_viaticos', via: [:get, :post]
   
   match 'viaticos/rpt_viatico_pdf/:company_id' => 'viaticos#rpt_viatico_pdf', via: [:get, :post]
   match 'viaticos/rpt_viatico_pdf' => 'viaticos#rpt_viatico_pdf', via: [:get, :post]
@@ -1756,9 +1756,12 @@ match '/proyecto_exams/:id/proyectoexam_details/:proyectoexam_detail_id' => 'pro
  match 'viaticolgvs/list_items3/:viaticolgv_id' => 'viaticolgvs#list_items3', via: [:get, :post]
 
  
+ match 'viaticos/new2/:id' => 'viaticos#new2', via: [:get, :post]
+ match 'viaticos/list_viaticos/:id' => 'viaticos#list_viaticos', via: [:get, :post]
 
-
-
+ match 'viaticos/newviatico2/:id' => 'viaticos#newviatico2', via: [:get, :post]
+ match 'viaticos/do_crear/:id'   => 'viaticos#do_crear', via: [:get, :post]
+  
   mount Sidekiq::Web, at: '/sidekiq'
 
  

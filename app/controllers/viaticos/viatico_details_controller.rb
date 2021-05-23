@@ -28,7 +28,24 @@ class Viaticos::ViaticoDetailsController < ApplicationController
   def new
     @viatico_detail = ViaticoDetail.new
     @gastos = Gasto.order(:codigo)
-    @egresos = Egreso.order(:code)
+
+    
+     if @viatico.caja_id  == 2
+
+        @egresos = Egreso.order(:orden).where("extension = ? or extension =  ? or extension  =  ?","ALL","CAJA","CAJA-ALL")
+
+     end    
+    if @viatico.caja_id  == 3
+
+         @egresos = Egreso.order(:orden).where("extension = ?  ","ALL" )
+
+     end    
+      if @viatico.caja_id  == 4
+
+        @egresos = Egreso.order(:orden).where("extension = ? or extension =  ? or extension  =  ? ","ALL","CAJA-AQP","CAJA-ALL" )
+
+     end    
+     
     
     @company = Company.find(1)
     
@@ -41,6 +58,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     @employees = @company.get_employees 
     company_id = @company.id
     
+
   end
  def new2
 
