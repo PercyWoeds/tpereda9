@@ -5629,14 +5629,8 @@ def get_proyecto_exam_actualiza_condicion(proyecto_minero)
             end
 
       end 
-
-
-         
     
 end
-
-
-
 
 
 
@@ -5682,10 +5676,21 @@ WHERE viaticolgvs.fecha1 >= ? and viaticolgvs.fecha1  <=? and
 and viaticolgv_details.cout_id IS NOT NULL', "#{fecha1} 00:00:00","#{fecha2} 23:59:59", self.id,1,10])
 
 
+return @caja 
 
-#@caja =   Viaticolgv.select("viaticolgv_details.cout.code").joins(:viaticolgv_details).where(["viaticolgvs.fecha1 >= ? and viaticolgvs.fecha1  <=? and   
- # viaticolgv_details.viaticolgv_id  = ? and viaticolgv_details.egreso_id = ? and viaticolgv_details.document_id = ?
- # and viaticolgv_details.cout_id IS NOT NULL","#{fecha1} 00:00:00","#{fecha2} 23:59:59", self.id,1,10]).order("viaticolgv_details.numero")
+
+end 
+
+
+def get_viaticolgv_total(fecha1,fecha2)
+
+ @caja =  Viaticolgv.find_by_sql( ['Select viaticolgvs.importe 
+  from viaticolgv_details   
+  INNER JOIN viaticolgvs ON viaticolgvs.id = viaticolgv_details.viaticolgv_id  
+  WHERE viaticolgvs.fecha1 >= ? and viaticolgvs.fecha1  <=? and   
+  viaticolgv_details.viaticolgv_id  = ? and viaticolgv_details.egreso_id = ? and viaticolgv_details.document_id = ?
+and viaticolgv_details.cout_id IS NOT NULL', "#{fecha1} 00:00:00","#{fecha2} 23:59:59", self.id,1,10])
+
 
 return @caja 
 

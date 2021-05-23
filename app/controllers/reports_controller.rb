@@ -1596,13 +1596,39 @@ def rpt_purchaseorder4_all
       @cajas =Caja.order(:descrip)
   
   end    
-def rpt_caja_3
+
+  def rpt_caja_3
         @company = Company.find(params[:company_id])    
         @pagetitle = "Listado de vueltos y fletes "
 
       @cajas =Caja.order(:descrip)
   
   end  
+
+  def rpt_caja_4
+        @company = Company.find(params[:company_id])    
+        @pagetitle = "Listado de vueltos y fletes "
+
+      @cajas =Caja.order(:descrip)
+  
+  end  
+
+  def rpt_caja_5
+        @company = Company.find(params[:company_id])    
+        @pagetitle = "Listado de vueltos y fletes "
+
+      @cajas =Caja.order(:descrip)
+  
+  end  
+
+def rpt_caja_6
+        @company = Company.find(params[:company_id])    
+        @pagetitle = "Listado de vueltos y fletes "
+
+      @cajas =Caja.order(:descrip)
+  
+  end  
+
   def rpt_viatico_pdf
     @company = Company.find(params[:company_id])    
     @pagetitle = "Listado de viaticos "    

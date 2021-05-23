@@ -14,7 +14,8 @@ class ViaticotbkSearch
     end
 
     def scope
-    	 a = Cout.where('fecha BETWEEN ? AND ? and parent IS NULL ',@date_from,@date_to )
+
+        	 a = Cout.where(['fecha BETWEEN ? AND ? and parent IS NULL ',"#{@date_from} 00:00:00","#{@date_to} 23:59:59"])
 
 
  		for detalle in a 

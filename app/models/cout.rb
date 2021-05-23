@@ -5,6 +5,8 @@ validates_presence_of  :employee_id,:truck_id,:importe,:tbk,:tbk_documento,:truc
 
 validates :code  , uniqueness:{ scope:[:tipo_compro]}
 
+validates :code, length: { minimum: 0, allow_nil: false, message: "can't be nil" }
+
 
 belongs_to :employee
 belongs_to :truck 
@@ -23,31 +25,36 @@ belongs_to :viaticolgv_detail
                      "DETALLE"
                      ]
 
+  
 
-
- def generate_cout_number(tipo_compro)
+ def generate_cout_number(tipo_compro) 
 
   if tipo_compro == "1"
 
-    if Cout.where("fecha  >? and tipo_compro = ? ","2020-08-01 00:00:00","1")
-    	.maximum("cast(substring(code,1,6)  as int)") == nil 
+
+    if Cout.where(" tipo_compro = ? ","1").maximum("cast(substring(code,1,6)  as int)").nil? 
       	 self.code = "000001"
+         puts  "codigo vacio....u"
     else
-   		 self.code = Cout.where("fecha  >?  and tipo_compro = ?","2020-08-01 00:00:00","1").maximum("cast(substring(code,1,6)  as int)").next.to_s.rjust(6, '0') 
+   		   self.code = Cout.where("tipo_compro = ?","1").maximum("cast(substring(code,1,6)  as int)").next.to_s.rjust(6, '0') 
           
     end 
 
-  else
+  end 
 
-    if Cout.where("fecha  >? and tipo_compro <> ? ","2020-08-01 00:00:00","1")
-      .maximum("cast(substring(code,1,6)  as int)") == nil 
+   if tipo_compro == "0"
+
+
+    if Cout.where(" tipo_compro = ? ","0").maximum("cast(substring(code,1,6)  as int)").nil? 
          self.code = "000001"
     else
-       self.code = Cout.where("fecha  >? and tipo_compro <> ?","2020-08-01 00:00:00","1").maximum("cast(substring(code,1,6)  as int)").next.to_s.rjust(6, '0') 
+         self.code = Cout.where("tipo_compro = ?","0").maximum("cast(substring(code,1,6)  as int)").next.to_s.rjust(6, '0') 
           
     end 
   end 
-    
+
+  return self.code 
+
   end
 
 

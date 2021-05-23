@@ -35,10 +35,10 @@ class CoutsController < ApplicationController
       @puntos = @company.get_puntos()
 
       @cout[:fecha] = Date.today 
-
+      @cout[:fecha1] = Date.today 
       @cout[:importe] = 0.00
       @cout[:tbk] = 0.00
-      @cout[:tbk_documento] = ""
+      @cout[:tbk_documento] = "-"
 
 
       @cout[:ost_exist] = "1"
@@ -46,7 +46,9 @@ class CoutsController < ApplicationController
       @cout[:tranportorder_id] = 222
 
       @cout[:tipo_compro] = "0"
+
   end
+
 
 
   def new2
@@ -60,10 +62,11 @@ class CoutsController < ApplicationController
       @puntos = @company.get_puntos()
 
       @cout[:fecha] = Date.today 
+       @cout[:fecha1] = Date.today 
 
       @cout[:importe] = 0.00
       @cout[:tbk] = 0.00
-      @cout[:tbk_documento] = ""
+      @cout[:tbk_documento] = "-"
 
 
       @cout[:ost_exist] = "1"
@@ -101,13 +104,17 @@ class CoutsController < ApplicationController
     @cout = Cout.new(cout_params)
 
 
-     @cout[:code] = @cout.generate_cout_number("0" )
+     @cout[:code] = @cout.generate_cout_number( @cout[:tipo_compro])
      @puntos = @company.get_puntos()
      @employees = @company.get_employees2() 
      @trucks = @company.get_trucks
 
-     puts "compri tipo "
-      @cout[:tipo_compro] = "0"
+     puts "compro tipo " 
+
+     puts  @cout[:tipo_compro] 
+     puts  @cout[:code]
+
+   ##   @cout[:tipo_compro] = "0"
 
     respond_to do |format|
       if @cout.save

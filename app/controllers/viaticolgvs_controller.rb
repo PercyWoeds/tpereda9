@@ -26,8 +26,7 @@ class ViaticolgvsController < ApplicationController
         else render action: "index"
       end
   end
-  
-     
+       
   def build_pdf_header(pdf)
 
       pdf.font "Helvetica"  , :size => 8
@@ -949,7 +948,7 @@ pdf.move_down 2
   
   # Process an viaticolgv
   def do_process
-    @viaticolgv = viaticolgv.find(params[:id])
+    @viaticolgv = Viaticolgv.find(params[:id])
     @viaticolgv[:processed] = "1"
     
     @viaticolgv.process
@@ -2565,6 +2564,483 @@ Viaticolgv::TABLE_HEADERS5.each do |header|
       
   end
 
+
+
+################################################################################################################
+
+  def reportes5
+
+
+    @company=Company.find(1)    
+
+
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+   
+  
+
+    @cajas = @company.get_viaticolgv(@fecha1,@fecha2)          
+
+    
+
+    case params[:print]
+      when "To PDF" then 
+        begin 
+
+       Prawn::Document.generate "app/pdf_output/rpt_caja_05.pdf", :page_layout => :landscape  ,:page_size=>"A4"   do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header_5(pdf)
+        pdf = build_pdf_body_5(pdf)
+        build_pdf_footer_5(pdf)
+        @lcFileName =  "app/pdf_output/rpt_caja_05.pdf"              
+    end     
+   
+
+    send_file("app/pdf_output/rpt_caja_05.pdf", :type => 'application/pdf', :disposition => 'inline')
+
+
+        end   
+
+
+      when "To Excel" then render xlsx: 'rpt_caja_05'
+      else render action: "index"
+    end
+
+  end  
+
+  
+
+#########################################################################
+
+
+# reporte completo
+  def build_pdf_header_5(pdf)
+      
+     pdf.font "Helvetica" , :size => 8
+      image_path = "#{Dir.pwd}/public/images/tpereda2.png"
+
+    
+         
+ table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION INTEGRADO ",:rowspan => 2},"CODIGO ","TP-FZ-F-033"], 
+          ["VERSION: ","1"], 
+          ["REPORTE DE DESCUENTOS Y REEMBOLSOS " + "#{@fecha1}"+ " AL " + "#{@fecha2}","Pagina: ","1 de 1 "] 
+         
+          ])
+
+
+
+       pdf.table(table_content  ,{
+           :position => :center,
+           :width => pdf.bounds.width
+         })do
+           columns([1,2]).font_style = :bold
+            columns([0]).width = 118.55
+            columns([1]).width = 451.34
+            columns([1]).align = :center
+            
+            columns([2]).width = 100
+          
+            columns([3]).width = 100
+      
+         end
+        
+         table_content2 = ([["Fecha : ",Date.today.strftime("%d/%m/%Y")]])
+
+         pdf.table(table_content2,{:position=>:right }) do
+
+            columns([0, 1]).font_style = :bold
+            columns([0, 1]).width = 100
+            
+         end 
+
+         pdf.move_down 2
+      
+      pdf 
+  end   
+
+  def build_pdf_body_5(pdf)
+    
+    pdf.text " ", :size => 13, :spacing => 4
+    pdf.font "Helvetica" , :size => 5
+
+      headers = []
+      table_content = []
+
+      header_text = [ {content: "Text", colspan: 4}]
+
+
+Viaticolgv::TABLE_HEADERS5.each do |header|
+
+
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+
+
+        headers << cell
+      end
+
+
+  table_content <<  headers 
+
+
+  
+      nroitem=1
+      @tot_valor_referencial = 0
+      @tot_monto_detraccion = 0
+      @subtotal = 0
+      @tax = 0
+      @importe = 0 
+      total_cancelado = 0
+      total_pendiente = 0 
+
+       for  product in @cajas
+
+             if product.cdescuento_importe > 0  || product.creembolso_importe > 0 
+                  rendido = 0
+
+                  row = []
+                  row << nroitem.to_s
+                  row <<   product.code
+                  product.fecha1.nil? ? row << "-" : row << product.fecha1.strftime("%d/%m/%Y")
+                  product.fecha2.nil? ? row <<  "-" :  row << product.fecha2.strftime("%d/%m/%Y")
+
+                  row <<   product.get_placa(product.truck_id).concat(" / ",product.get_placa(product.truck2_id))
+                  row <<   product.get_punto(product.ubication_id).concat( " - " ,product.get_punto(product.ubication2_id))
+
+                  row <<   product.get_empleado(product.employee_id)
+
+
+                   product.tranportorder_id.nil?  ? row << "-" : row << product.get_ost(product.tranportorder_id)
+
+                  product.carr == "0" ? row << product.code :  row << "-"
+
+                  product.carr == "0" ? row <<  product.importe  : row << "-"
+
+                  product.carr == "1" ? row << product.code : row << "-"
+                  
+                  product.carr == "1" ?  row << product.importe : row << "0.0"
+
+                 row <<   sprintf("%.2f",product.total_egreso.to_s)
+
+                 rendido = product.total_egreso - product.cdescuento_importe
+
+               
+
+                 row <<   sprintf("%.2f",rendido.to_s)
+
+                 row <<    product.cdevuelto 
+
+                 row <<   sprintf("%.2f",product.cdevuelto_importe.to_s)
+
+                 row <<    product.cdescuento 
+
+                 row <<   sprintf("%.2f",product.cdescuento_importe.to_s)
+                 
+                 row <<    product.creembolso  
+
+                 row <<   sprintf("%.2f",product.creembolso_importe.to_s)
+
+                 row <<  " "
+                 row <<  " "
+                 row <<  " "
+
+                 table_content << row
+
+               
+                 nroitem +=  1
+
+             end 
+
+        end
+
+
+       
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          
+                                        end                                          
+      pdf.move_down 10      
+      pdf
+
+
+
+
+    end
+
+    def build_pdf_footer_5(pdf)
+      
+    
+        table_content3 =[]
+      row = []
+      row << "--------------------------------------------"
+      row << "--------------------------------------------"
+      row << "--------------------------------------------"
+      
+      table_content3 << row 
+      row = []
+      row << " JEFE COMERCIAL  "
+      row << " JEFE FINANZAS "
+      row << " JEFE CONTABILIDAD"
+      
+      table_content3 << row 
+
+      
+          result = pdf.table table_content3, {:position => :center,
+                                        :header => true,  :cell_style => {:border_width => 0},
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:center
+                                          columns([2]).align=:center 
+                                          
+                                        end                             
+
+      pdf      
+      
+  end
+########################################################################
+
+
+
+
+################################################################################################################
+
+  def reportes6
+
+
+    @company=Company.find(1)    
+
+
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    
+
+    @cajas = @company.get_viaticolgv(@fecha1,@fecha2)          
+
+    
+
+    case params[:print]
+      when "To PDF" then 
+        begin 
+
+       Prawn::Document.generate "app/pdf_output/rpt_caja_06.pdf", :page_layout => :landscape  ,:page_size=>"A4"   do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header_6(pdf)
+        pdf = build_pdf_body_6(pdf)
+        build_pdf_footer_6(pdf)
+        @lcFileName =  "app/pdf_output/rpt_caja_06.pdf"              
+    end     
+   
+
+    send_file("app/pdf_output/rpt_caja_06.pdf", :type => 'application/pdf', :disposition => 'inline')
+
+
+        end   
+
+
+      when "To Excel" then render xlsx: 'rpt_caja_06'
+      else render action: "index"
+    end
+
+  end  
+
+  
+
+#########################################################################
+
+
+# reporte completo
+  def build_pdf_header_6(pdf)
+      
+     pdf.font "Helvetica" , :size => 8
+      image_path = "#{Dir.pwd}/public/images/tpereda2.png"
+
+    
+         
+ table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION INTEGRADO ",:rowspan => 2},"CODIGO ","TP-FZ-F-014"], 
+          ["VERSION: ","1"], 
+          ["REPORTE DE DESCUENTOS Y REEMBOLSOS " + "#{@fecha1}"+ " AL " + "#{@fecha2}","Pagina: ","1 de 1 "] 
+         
+          ])
+
+
+
+       pdf.table(table_content  ,{
+           :position => :center,
+           :width => pdf.bounds.width
+         })do
+           columns([1,2]).font_style = :bold
+            columns([0]).width = 118.55
+            columns([1]).width = 451.34
+            columns([1]).align = :center
+            
+            columns([2]).width = 100
+          
+            columns([3]).width = 100
+      
+         end
+        
+         table_content2 = ([["Fecha : ",Date.today.strftime("%d/%m/%Y")]])
+
+         pdf.table(table_content2,{:position=>:right }) do
+
+            columns([0, 1]).font_style = :bold
+            columns([0, 1]).width = 100
+            
+         end 
+
+         pdf.move_down 2
+      
+      pdf 
+  end   
+
+  def build_pdf_body_6(pdf)
+    
+    pdf.text " ", :size => 13, :spacing => 4
+    pdf.font "Helvetica" , :size => 5
+
+      headers = []
+      table_content = []
+
+      header_text = [ {content: "Text", colspan: 4}]
+
+
+Viaticolgv::TABLE_HEADERS5.each do |header|
+
+
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+
+
+        headers << cell
+      end
+
+
+  table_content <<  headers 
+
+
+  
+      nroitem=1
+      @tot_valor_referencial = 0
+      @tot_monto_detraccion = 0
+      @subtotal = 0
+      @tax = 0
+      @importe = 0 
+      total_cancelado = 0
+      total_pendiente = 0 
+
+       for  product in @cajas
+
+             if product.cdescuento_importe > 0  || product.creembolso_importe > 0 
+                  rendido = 0
+
+                  row = []
+                  row << nroitem.to_s
+                  row <<   product.code
+                  product.fecha1.nil? ? row << "-" : row << product.fecha1.strftime("%d/%m/%Y")
+                  product.fecha2.nil? ? row <<  "-" :  row << product.fecha2.strftime("%d/%m/%Y")
+
+                  row <<   product.get_placa(product.truck_id).concat(" / ",product.get_placa(product.truck2_id))
+                  row <<   product.get_punto(product.ubication_id).concat( " - " ,product.get_punto(product.ubication2_id))
+
+                  row <<   product.get_empleado(product.employee_id)
+
+
+                   product.tranportorder_id.nil?  ? row << "-" : row << product.get_ost(product.tranportorder_id)
+
+                  product.carr == "0" ? row << product.code :  row << "-"
+
+                  product.carr == "0" ? row <<  product.importe  : row << "-"
+
+                  product.carr == "1" ? row << product.code : row << "-"
+                  
+                  product.carr == "1" ?  row << product.importe : row << "0.0"
+
+                 row <<   sprintf("%.2f",product.total_egreso.to_s)
+
+                 rendido = product.total_egreso - product.cdescuento_importe
+
+               
+
+                 row <<   sprintf("%.2f",rendido.to_s)
+
+                 row <<    product.cdevuelto 
+
+                 row <<   sprintf("%.2f",product.cdevuelto_importe.to_s)
+
+                 row <<    product.cdescuento 
+
+                 row <<   sprintf("%.2f",product.cdescuento_importe.to_s)
+                 
+                 row <<    product.creembolso  
+
+                 row <<   sprintf("%.2f",product.creembolso_importe.to_s)
+
+                 row <<  " "
+                 row <<  " "
+                 row <<  " "
+
+                 table_content << row
+
+               
+                 nroitem +=  1
+
+             end 
+
+        end
+
+
+       
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          
+                                        end                                          
+      pdf.move_down 10      
+      pdf
+
+
+
+
+    end
+
+    def build_pdf_footer_6(pdf)
+      
+    
+        table_content3 =[]
+      row = []
+      row << "--------------------------------------------"
+      row << "--------------------------------------------"
+      row << "--------------------------------------------"
+      
+      table_content3 << row 
+      row = []
+      row << " JEFE COMERCIAL  "
+      row << " JEFE FINANZAS "
+      row << " JEFE CONTABILIDAD"
+      
+      table_content3 << row 
+
+      
+          result = pdf.table table_content3, {:position => :center,
+                                        :header => true,  :cell_style => {:border_width => 0},
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:center
+                                          columns([2]).align=:center 
+                                          
+                                        end                             
+
+      pdf      
+      
+  end
+########################################################################
 
 
   

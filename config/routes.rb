@@ -183,6 +183,14 @@ require 'sidekiq/cron/web'
       collection { get :reportes3}
 
 
+      collection { get :reportes5}
+
+      collection { get :reportes6}
+      collection { get :reportes7}
+      collection { get :reportes8}
+
+
+
 
   end
 
@@ -829,7 +837,12 @@ match 'companies/reports/rpt_coti_1_pdf/:company_id' => 'reports#rpt_coti_1_pdf'
   
   match 'companies/reports/rpt_caja_3/:company_id' => 'reports#rpt_caja_3', via: [:get, :post]    
   
-
+  match 'companies/reports/rpt_caja_4/:company_id' => 'reports#rpt_caja_4', via: [:get, :post]    
+  
+  match 'companies/reports/rpt_caja_5/:company_id' => 'reports#rpt_caja_5', via: [:get, :post]    
+  
+  match 'companies/reports/rpt_caja_6/:company_id' => 'reports#rpt_caja_6', via: [:get, :post]    
+  
 
   # Company users
 

@@ -3589,9 +3589,9 @@ def newfactura2
 
      image_path = "#{Dir.pwd}/public/images/tpereda2.png"
       
-       table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center}, {:content =>"SISTEMA DE GESTIÓN INTEGRADO",:rowspan => 2},"CODIGO ","TP"], 
-          ["VERSION: ","2"], 
-          ["CUENTAS POR COBRAR - CLIENTES ","Pagina: ","1 de 1 "] 
+       table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center}, {:content =>"SISTEMA DE GESTIÓN INTEGRADO",:rowspan => 2},"CODIGO ","TP-FZ-F-035"], 
+          ["VERSION: ","1"], 
+          ["ESTADO DE CUENTAS POR COBRAR - CLIENTES ","Pagina: ","1 de 1 "] 
          
           ])
     
