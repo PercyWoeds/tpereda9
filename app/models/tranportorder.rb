@@ -3,12 +3,14 @@ self.per_page = 20
 
 	validates_presence_of :location_id,:division_id,:code,:employee_id,:employee2_id,:employee3_id,:ubication_id,:ubication2_id,:truck_id,:truck2_id, :truck3_id
 	validates_presence_of :fecha1,:fecha2 ,:customer_id 	
-     validates_uniqueness_of :code
+  validate :is_valid_fecha1?
+  validate :is_valid_fecha2?
+  validates_uniqueness_of :code
 
 	belongs_to :company
-  	belongs_to :location
-  	belongs_to :division 
-  	belongs_to :user  
+	belongs_to :location
+	belongs_to :division 
+	belongs_to :user  
 	belongs_to :customer
 	belongs_to :employee
 	belongs_to :punto 
@@ -483,6 +485,51 @@ def anular
     return a  
 
     
+  end
+
+
+
+  private
+
+  def is_valid_fecha1?
+
+    if((fecha1.is_a?(Date) rescue ArgumentError) == ArgumentError)
+      errors.add(:fecha1, 'Sorry, Fecha mal ingredada.')
+    end
+
+    begin
+      fecha1.to_date
+     rescue
+      errors.add(:fecha1, "must be a date")
+    else
+      if fecha1 > (DateTime.now + 1.month )
+        errors.add(:fecha1, "Fecha no puede estar en el futuro ")
+      elsif fecha1 < (DateTime.now - 1.month )
+        errors.add(:fecha1, "Fecha no puede ser hace 1 mes antes  ")
+      end
+    end
+
+  end
+
+
+  def is_valid_fecha2?
+
+    if((fecha2.is_a?(Date) rescue ArgumentError) == ArgumentError)
+      errors.add(:fecha2, 'Sorry, Fecha mal ingredada.')
+    end
+
+    begin
+      fecha2.to_date
+     rescue
+      errors.add(:fecha2, "must be a date")
+    else
+      if fecha2 > (DateTime.now + 1.month )
+        errors.add(:fecha2, "Fecha no puede estar en el futuro ")
+      elsif fecha1 < (DateTime.now - 1.month )
+        errors.add(:fecha2, "Fecha no puede ser hace 1 mes antes  ")
+      end
+    end
+
   end
 
 
