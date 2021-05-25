@@ -188,7 +188,7 @@ self.per_page = 20
     self.code = Viaticolgv.where("caja_id  = ?",serie).maximum("cast(code  as int)").next.to_s.rjust(6, '0') 
           
     end 
-    
+    return self.code 
   end
 
   def correlativo      

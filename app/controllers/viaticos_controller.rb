@@ -699,17 +699,45 @@ pdf.move_down 2
 
 
  pdf.move_down 30
+  puts   " 989898998"
 
+  puts  @viatico[:importe_saldo_ant ] 
+  puts  @viatico[:importe_saldo_egreso]
+  puts  @viatico[:importe_saldo_final] 
 
- 
+  fecha_saldo_ant    = @viatico[:fecha_saldo_ant].nil? ? " " :  @viatico[:fecha_saldo_ant].strftime("%d/%m/%Y")
+  fecha_saldo_final  = @viatico[:fecha_saldo_final].nil? ? " " :  @viatico[:fecha_saldo_final].strftime("%d/%m/%Y")
+
+        
+       data2 =[["SALDO POR RENDIR SR.HELBERT ",fecha_saldo_ant, @viatico[:importe_saldo_ant ] ],
+               ["SALDO POR RENDIR SR.HELBERT ",fecha_saldo_final , @viatico[:importe_saldo_egreso] ],
+               ["SALDO POR RENDIR SR.HELBERT ", " ", @viatico[:importe_saldo_final] ]]
+
+            pdf.text " "
+            pdf.table(data2 ,{
+                 :position => :center,
+                 :width => pdf.bounds.width / 2,
+                  :cell_style => {:border_width => 0},
+               })do
+                 columns([0,1,2]).font_style = :bold
+                
+                 columns([0]).align = :center
+          
+                  columns([1]).align = :center
+                   columns([2]).align = :center
+                  
+
+               end
+
+            pdf.move_down 10          
+                  
 
 
         
        data =[["----------------------------------------------------------","----------------------------------------------------------","----------------------------------------------------------"],
             ["Elaborado por ","V.B.","V.B."],
                
-               ["Soledad Silvestre","Asistente de Gerencia","Gerente Administrativo"]
-                ]
+               ["Soledad Silvestre","Asistente de Gerencia","Gerente Administrativo"] ]
 
            
             pdf.text " "
@@ -1354,14 +1382,12 @@ pdf.move_down 2
     @viatico = Viatico.new(viatico_params)
     @company = Company.find(params[:viatico][:company_id])
     
- 
+   @viatico[:code] =   @viatico.generate_viatico_number(params[:viatico][:caja_id])
 
-    begin
-      @viatico[:inicial] = @viatico.get_total_inicial
-    rescue
-      @viatico[:inicial] = 0
-    end 
-    
+
+   puts  "Nuevo viatico"
+   puts  @viatico[:code]
+
     begin
       @viatico[:total_ing] = @viatico.get_total_ing
     rescue 
@@ -1374,18 +1400,23 @@ pdf.move_down 2
     end 
     
     @viatico[:saldo] = @viatico[:inicial] +  @viatico[:total_ing] - @viatico[:total_egreso]
-    
+
+
+     puts  "Nuevo viatico****"
+
+
+     puts  @viatico[:fecha_saldo_ant]
+     puts @viatico[:importe_saldo_ant]
+
+
+
     if(params[:viatico][:user_id] and params[:viatico][:user_id] != "")
       curr_seller = User.find(params[:viatico][:user_id])
       @ac_user = curr_seller.username
     end
 
 
-      
-    @viatico[:code] = @viatico.generate_viatico_number( @viatico[:caja_id]) 
-
- 
-
+       
     respond_to do |format|
       if @viatico.save
         # Create products for kit
@@ -1536,7 +1567,9 @@ pdf.move_down 2
   
   private
   def viatico_params
-    params.require(:viatico).permit(:code, :fecha1, :inicial, :total_ing, :total_egreso, :saldo, :comments, :user_id, :company_id, :processed,:caja_id)
+    params.require(:viatico).permit(:code, :fecha1, :inicial, :total_ing, :total_egreso, :saldo, :comments, 
+      :user_id, :company_id, :processed,:caja_id,  :cdevuelto, :cdescuento, :creembolso, :fecha_saldo_ant,
+      :fecha_saldo_final, :importe_saldo_ant, :importe_saldo_final, :importe_documento,:importe_saldo_egreso)
   end
 
 end

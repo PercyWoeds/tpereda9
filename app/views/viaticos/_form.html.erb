@@ -1,3 +1,4 @@
+
 <% if @viatico.errors.any? %>
   <div id="error_explanation">
     <h2><%= pluralize(@viatico.errors.count, "error") %> prohibited this viatico from being saved:</h2>
@@ -83,6 +84,9 @@
       
       <%= f.hidden_field :user_id, :id => "ac_user_id" %>
       <%= f.hidden_field :caja_id, :id => "ac_caja_id" %>
+      <%= f.hidden_field :fecha_saldo_ant, :id => "viatico_fecha_saldo_ant" %>
+      <%= f.hidden_field :importe_saldo_ant, :id => "viatico_importe_saldo_ant" %>
+      
       <%= f.hidden_field :company_id %>
 
       <%= f.submit %>
@@ -116,8 +120,10 @@
       $("#ac_caja_id").val(data[2]);
       $("#selected_caja").html(data[0]);
       $("#viatico_inicial").val(data[4]);
-      
       $("#viatico_code").val(data[6]);
+      $("#viatico_fecha_saldo_ant").val(data[8]);
+      $("#viatico_importe_saldo_ant").val(data[10]);
+
       
     });
     

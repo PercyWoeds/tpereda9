@@ -6112,14 +6112,14 @@ def reporte_asistencia3
 
     
       if @tipo == "1"
-       table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD OCUPACIONAL",:rowspan => 2},"CODIGO ","TP-CM-F-015 "], 
-          ["VERSION: ","3"], 
+       table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION INTEGRADO",:rowspan => 2},"CODIGO ","TP-LOG-F-015 "], 
+          ["VERSION: ","4"], 
           ["REPORTE DE FACTURAS CREDITO - LIMA ","Pagina: ","1 de 1 "] 
          
           ])
       else
-       table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD OCUPACIONAL",:rowspan => 2},"CODIGO ","TP-CM-F-015 "], 
-          ["VERSION: ","3"], 
+       table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION INTEGRADO",:rowspan => 2},"CODIGO ","TP-LOG-F-015 "], 
+          ["VERSION: ","4"], 
           ["REPORTE DE FACTURAS CONTADO - LIMA ","Pagina: ","1 de 1 "] 
          
           ])

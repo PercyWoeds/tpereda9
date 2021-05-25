@@ -328,6 +328,38 @@ end
            @viatico[:saldo] = @viatico[:inicial] +  @viatico[:total_ing] - @viatico[:total_egreso]
 
 
+         
+          if @viatico[:caja_id] == 3
+
+            begin
+                @viatico[:importe_documento] = @viatico.get_total_saldo_documento
+            rescue
+                @viatico[:importe_documento] = 0
+            end 
+
+         
+            begin
+                @viatico[:fecha_saldo_final] = params[:viatico_detail][:fecha]
+            rescue
+                @viatico[:fecha_saldo_final] = nil
+            end 
+
+           
+
+
+            begin
+                @viatico[:importe_saldo_egreso]  =  @viatico[:total_egreso] -  @viatico[:importe_documento] 
+                @viatico[:importe_saldo_final]   =  @viatico[:importe_saldo_ant] +   @viatico[:importe_saldo_egreso]
+          
+            rescue
+                @viatico[:importe_saldo_egreso] = 0
+                @viatico[:importe_saldo_final]  = 0
+
+            end 
+
+          end
+
+
          @viatico.save 
 
           if @viatico.caja_id == 1 
@@ -376,7 +408,7 @@ end
     @destinos = Destino.all
     
     @egresos = Egreso.order(:code)
-
+    ()
     @viatico_detail = ViaticoDetail.find(params[:id]) 
     @viatico_detail.viatico_id  = @viatico.id 
     @viatico_detail.fecha = params[:viatico_detail][:fecha]
@@ -402,7 +434,43 @@ end
     rescue 
       @viatico[:total_egreso]= 0 
     end 
+
+
     @viatico[:saldo] = @viatico[:inicial] +  @viatico[:total_ing] - @viatico[:total_egreso]
+
+    
+   
+    if @viatico[:caja_id] == 3
+
+      begin
+          @viatico[:importe_documento] = @viatico.get_total_saldo_documento
+      rescue
+          @viatico[:importe_documento] = 0
+      end 
+
+   
+      begin
+          @viatico[:fecha_saldo_final] = params[:viatico_detail][:fecha]
+      rescue
+          @viatico[:fecha_saldo_final] = nil
+      end 
+
+     
+
+
+      begin
+          @viatico[:importe_saldo_egreso]  =  @viatico[:total_egreso] -  @viatico[:importe_documento] 
+          @viatico[:importe_saldo_final]   =  @viatico[:importe_saldo_ant] +   @viatico[:importe_saldo_egreso]
+    
+      rescue
+          @viatico[:importe_saldo_egreso] = 0
+          @viatico[:importe_saldo_final]  = 0
+
+      end 
+
+    end
+
+
         @viatico.save
         
          if @viatico.caja_id == 1 
@@ -418,6 +486,8 @@ end
         if @viatico.caja_id == 3 
           a = @cajas.find(3)
           a.inicial =  @viatico[:saldo]
+          a.saldo_inicial   =  @viatico[:importe_saldo_final] 
+          a.fecha_inicial   =  @viatico[:fecha_saldo_final] 
           a.save
         end 
         if @viatico.caja_id == 4 
@@ -425,6 +495,9 @@ end
           a.inicial =  @viatico[:saldo]
           a.save
         end 
+
+ 
+
         format.html { redirect_to @viatico, notice: 'Viatico detail was successfully updated.' }
         format.json { render :show, status: :ok, location: @viatico }
       else
@@ -456,6 +529,39 @@ end
       @viatico[:total_egreso]= 0 
     end 
     @viatico[:saldo] = @viatico[:inicial] +  @viatico[:total_ing] - @viatico[:total_egreso]
+
+
+    
+         
+          if @viatico[:caja_id] == 3
+
+            begin
+                @viatico[:importe_documento] = @viatico.get_total_saldo_documento
+            rescue
+                @viatico[:importe_documento] = 0
+            end 
+
+         
+            begin
+                @viatico[:fecha_saldo_final] = params[:viatico_detail][:fecha]
+            rescue
+                @viatico[:fecha_saldo_final] = nil
+            end 
+
+           
+
+
+            begin
+                @viatico[:importe_saldo_egreso]  =  @viatico[:total_egreso] -  @viatico[:importe_documento] 
+                @viatico[:importe_saldo_final]   =  @viatico[:importe_saldo_ant] +   @viatico[:importe_saldo_egreso]
+          
+            rescue
+                @viatico[:importe_saldo_egreso] = 0
+                @viatico[:importe_saldo_final]  = 0
+
+            end 
+
+          end
         @viatico.save
         
          if @viatico.caja_id == 1 
@@ -501,7 +607,13 @@ end
     # Never trust parameters from the scary internet, only allow the white list through.
     def viatico_detail_params
       
-      params.require(:viatico_detail).permit(:fecha, :descrip, :document_id, :numero, :importe, :detalle, :tm, :CurrTotal, :tranportorder_id,:date_processed,:ruc,:supplier_id,:gasto_id,:employee_id,:destino_id,:egreso_id)
+      params.require(:viatico_detail).permit(:fecha, :descrip, :document_id, :numero, :importe, :detalle, :tm, :CurrTotal, :tranportorder_id,:date_processed,:ruc,:supplier_id,:gasto_id,:employee_id,:destino_id,:egreso_id,
+      :fecha_saldo_ant,
+     :fecha_saldo_final,
+    :importe_saldo_ant,
+    :importe_saldo_final,
+    :importe_documento,
+    :importe_saldo_egreso)
     end
 
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210523170646) do
+ActiveRecord::Schema.define(version: 20210525132018) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -259,9 +259,11 @@ ActiveRecord::Schema.define(version: 20210523170646) do
   create_table "cajas", force: :cascade do |t|
     t.string   "descrip"
     t.float    "inicial"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.string   "numero"
+    t.datetime "fecha_inicial"
+    t.float    "saldo_inicial"
   end
 
   create_table "carts", force: :cascade do |t|
@@ -3457,8 +3459,8 @@ ActiveRecord::Schema.define(version: 20210523170646) do
     t.float    "total_ing"
     t.float    "total_egreso"
     t.float    "saldo"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.string   "comments"
     t.integer  "user_id"
     t.integer  "company_id"
@@ -3470,6 +3472,12 @@ ActiveRecord::Schema.define(version: 20210523170646) do
     t.string   "cdevuelto"
     t.string   "cdescuento"
     t.string   "creembolso"
+    t.datetime "fecha_saldo_ant"
+    t.datetime "fecha_saldo_final"
+    t.float    "importe_saldo_ant"
+    t.float    "importe_saldo_final"
+    t.float    "importe_documento"
+    t.float    "importe_saldo_egreso"
   end
 
   create_table "viaticotbk_details", force: :cascade do |t|
