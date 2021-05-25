@@ -6114,13 +6114,13 @@ def reporte_asistencia3
       if @tipo == "1"
        table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION INTEGRADO",:rowspan => 2},"CODIGO ","TP-LOG-F-015 "], 
           ["VERSION: ","4"], 
-          ["REPORTE DE FACTURAS CREDITO - LIMA ","Pagina: ","1 de 1 "] 
+          ["REPORTE DE FACTURAS CREDITO - LIMA ","PAGINA : ","1 de 1 "] 
          
           ])
       else
        table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION INTEGRADO",:rowspan => 2},"CODIGO ","TP-LOG-F-015 "], 
           ["VERSION: ","4"], 
-          ["REPORTE DE FACTURAS CONTADO - LIMA ","Pagina: ","1 de 1 "] 
+          ["REPORTE DE FACTURAS CONTADO - LIMA ","PAGINA : ","1 de 1 "] 
          
           ])
         
@@ -6143,7 +6143,7 @@ def reporte_asistencia3
       
          end
         
-         table_content2 = ([["Fecha : ",Date.today.strftime("%d/%m/%Y")]])
+         table_content2 = ([["FECHA : ",Date.today.strftime("%d/%m/%Y")]])
 
          pdf.table(table_content2,{:position=>:right }) do
 
