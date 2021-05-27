@@ -6,6 +6,7 @@ invoices_total = 0
 subtotals = []
 taxes = []
 totals = []
+
 %>
 <div class="breadcrumbs">
   <%= link_to "My companies", "/companies" %> &raquo;
@@ -53,10 +54,10 @@ totals = []
 
   
   <div class="field">
-    <input type="date" name="fecha1" value="2020-10-05" style = "width: 150px" >
+    <input type="date" name="fecha1" value= <%= Date.today() - 7.day %> style = "width: 150px" >
   </div>
 	<div class="field">
-		<input type="date" name="fecha2" value="2020-10-31" style = "width: 150px" >
+		<input type="date" name="fecha2" value= <%= Date.today  %> style = "width: 150px" >
   </div>
 
   

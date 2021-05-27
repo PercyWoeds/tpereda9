@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Vuelto Details</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Cout</th>
+      <th>Importe</th>
+      <th>Flete</th>
+      <th>Egreso</th>
+      <th>Total</th>
+      <th>Observa</th>
+      <th>Vuelto</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @vuelto_details.each do |vuelto_detail| %>
+      <tr>
+        <td><%= vuelto_detail.fecha %></td>
+        <td><%= vuelto_detail.cout_id %></td>
+        <td><%= vuelto_detail.importe %></td>
+        <td><%= vuelto_detail.flete %></td>
+        <td><%= vuelto_detail.egreso %></td>
+        <td><%= vuelto_detail.total %></td>
+        <td><%= vuelto_detail.observa %></td>
+        <td><%= vuelto_detail.vuelto %></td>
+        <td><%= link_to 'Show', vuelto_detail %></td>
+        <td><%= link_to 'Edit', edit_vuelto_detail_path(vuelto_detail) %></td>
+        <td><%= link_to 'Destroy', vuelto_detail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Vuelto detail', new_vuelto_detail_path %>

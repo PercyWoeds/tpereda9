@@ -8,6 +8,8 @@ require 'sidekiq/cron/web'
   Mnygo::Application.routes.draw do
 
   
+  resources :vuelto_details
+  resources :vueltos
   resources :distritos
   resources :provins
   resources :dptos
@@ -161,6 +163,16 @@ require 'sidekiq/cron/web'
   resources :viaticos do
    
         resources :viatico_details, except: [:index,:show], controller:  "viaticos/viatico_details" do
+        collection { get :new2 }    
+        collection { get :search_viatico_viatico_details }
+        collection { get :agregar }    
+      end 
+
+
+  end
+ resources :vueltos do
+   
+        resources :vuelto_details, except: [:index,:show], controller:  "vueltos/vuelto_details" do
         collection { get :new2 }    
         collection { get :search_viatico_viatico_details }
         collection { get :agregar }    
@@ -1511,7 +1523,14 @@ match 'purchases/do_crear/:id'   => 'purchases#do_crear', via: [:get, :post]
 
   match '/stocks/do_stocks/:company_id' => 'stocks#do_stocks', via: [:get, :post]
 
-  resources :stocks 
+
+
+  resources :stocks
+
+
+
+  match '/tranportorders/do_stocks/:company_id' => 'tranportorders#do_stocks', via: [:get, :post]
+  resources  :tranportorders 
     
   # Products kits
   match 'products_kits/list_items/:company_id' => 'products_kits#list_items', via: [:get, :post]

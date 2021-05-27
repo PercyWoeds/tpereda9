@@ -132,6 +132,63 @@ TABLE_HEADERS2 = ["NRO.COTIZACION",
                      "CHV",
                      "N.EJES"
                      ]
+
+
+
+
+TABLE_HEADERS_OST3 = ["NRO.COTIZACION",
+                     "FECHA 
+                     ST.",
+                     "NRO.
+                     ST",
+                     "CLIENTE",
+                     "CARGA",
+                     "TIPO DE CARGA ",
+                     "ORIGEN",
+                  
+                     "DESTINO",
+                     "USD ",
+                     "S/.FLETE",
+                     "FECHA 
+                     DE OST",
+                     "NRO.
+                     OST",
+                     "CONDUCTOR 
+                     INICIAL 
+                     SERVICIO",
+                     "CONDUCTOR 
+                     FINAL DEL 
+                     SERVICIO ",
+                     "PLACA 
+                       TRACTO ",
+                     "PLACA
+                     CAMION",
+                     "PLACA 
+                     SEMIREMOLQUE",                     
+                     "TIPO 
+                       UNIDAD ",
+                     "PESO",
+                     "ESCOLTA",
+                     "NRO.ORDEN
+                     SERVICIO",
+                     "PLACA",
+                     "CONDUCTOR",
+                     "G.TRANSPORTISTA
+                     PEREDA ",
+                     "G.REMITENTE CLIENTE ",
+                     "FECHA LLEGADA
+                     LIMA ",
+                     "FECHA 
+                     LIQUI",
+                     "COMENTARIOS",
+                    
+                     "ESTATUS 
+                     SERVICIO",
+                     
+                     "CULMINO SERVICIO"
+                    
+                   
+                     ]
 	def self.search(search)
 		  where("code LIKE ?", "%#{search}%") 
   		  

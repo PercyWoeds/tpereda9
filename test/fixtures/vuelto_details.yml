@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fecha: 2021-05-25 17:05:16
+  cout_id: 1
+  importe: 1.5
+  flete: 1.5
+  egreso: 1.5
+  total: 1.5
+  observa: MyText
+  vuelto_id: 
+
+two:
+  fecha: 2021-05-25 17:05:16
+  cout_id: 1
+  importe: 1.5
+  flete: 1.5
+  egreso: 1.5
+  total: 1.5
+  observa: MyText
+  vuelto_id: 

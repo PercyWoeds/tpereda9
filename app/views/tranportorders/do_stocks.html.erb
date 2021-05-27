@@ -1,0 +1,66 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %>
+  <% if @view_restock %>
+    &raquo;
+    <%= link_to "Stocks", "/companies/stocks/#{@company.id}" %>
+  <% end %>
+</div>
+
+<h1>
+  <%= image_tag("products_48.png", :class => "vmiddle") %>
+  <% if not @view_restock %>
+    Consulta de OST 
+  <% else %>
+    Products that need restocking
+  <% end %>
+</h1>
+
+<div >
+  <form method="get" action="/tranportorders/do_stocks/<%= @company.id %>">
+
+
+    <strong>Buscar por Placa 1 :</strong>
+    <input type="text" name="search" value="<% if @q_org %><%= @q_org %><% end %>"  onclick="$(this).select();" />
+
+    <br>
+
+    <strong>Buscar por Placa 2 :</strong>
+    <input type="text" name="search3" value="<% if @q_org %><%= @q_org %><% end %>"  onclick="$(this).select();" />
+
+  <br>
+    <strong>Buscar por Chofer  :</strong>
+    <input type="text" name="search2" value="<% if @q_org %><%= @q_org %><% end %>"  onclick="$(this).select();" />
+  <br>
+
+<p> Desde</p>
+
+<%= select_tag(:year, options_for_select(@years, @year), :style =>"width: 100px" )  %>
+
+<%= select_tag(:month, options_for_select(@months, @month), :style =>"width: 100px" ) %>
+<br>
+
+    <p> Hasta</p>
+
+<%= select_tag(:year1, options_for_select(@years, @year), :style =>"width: 100px" ) %>
+
+<%= select_tag(:month1, options_for_select(@months, @month), :style =>"width: 100px" ) %>
+<br>
+
+    <input type="submit" value="Buscar"  />
+    <a href="/tranportorders/do_stocks/<%= @company.id %>" >Limpia </a>
+  </form>
+</div>
+
+
+
+<%= render "tranportorders/list"%>
+
+<br />
+
+
+<div class="button">
+  
+  <%= link_to 'Regresar', "/companies/showcase/#{@company.id}" %>
+</div>
+

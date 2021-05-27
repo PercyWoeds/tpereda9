@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @vuelto_detail.fecha %>
+</p>
+
+<p>
+  <strong>Cout:</strong>
+  <%= @vuelto_detail.cout_id %>
+</p>
+
+<p>
+  <strong>Importe:</strong>
+  <%= @vuelto_detail.importe %>
+</p>
+
+<p>
+  <strong>Flete:</strong>
+  <%= @vuelto_detail.flete %>
+</p>
+
+<p>
+  <strong>Egreso:</strong>
+  <%= @vuelto_detail.egreso %>
+</p>
+
+<p>
+  <strong>Total:</strong>
+  <%= @vuelto_detail.total %>
+</p>
+
+<p>
+  <strong>Observa:</strong>
+  <%= @vuelto_detail.observa %>
+</p>
+
+<p>
+  <strong>Vuelto:</strong>
+  <%= @vuelto_detail.vuelto %>
+</p>
+
+<%= link_to 'Edit', edit_vuelto_detail_path(@vuelto_detail) %> |
+<%= link_to 'Back', vuelto_details_path %>

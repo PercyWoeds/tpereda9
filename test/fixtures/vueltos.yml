@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  fecha: 2021-05-25 16:58:02
+  user_id: 1
+  processed: MyString
+  date_processed: 2021-05-25 16:58:02
+  total: 1.5
+
+two:
+  code: MyString
+  fecha: 2021-05-25 16:58:02
+  user_id: 1
+  processed: MyString
+  date_processed: 2021-05-25 16:58:02
+  total: 1.5

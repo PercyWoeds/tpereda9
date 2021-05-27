@@ -5815,6 +5815,43 @@ def comprobante_detalle3(fecha1,fecha2,empleado,tipo )
 end  
 
 
+def get_ost_detalle1 (fecha1,mes1,fecha2,mes2,busqueda ) 
+
+ @osts =  Tranportorder.find_by_sql(['Select DISTINCT tranportorders.*    from  tranportorders
+      INNER JOIN trucks ON tranportorders.truck_id = trucks.id
+      INNER JOIN employees on  tranportorders.employee_id  = employees.id 
+      WHERE EXTRACT(YEAR FROM tranportorders.fecha1) >= ?  and  EXTRACT(MONTH FROM tranportorders.fecha1) >= ? and
+            EXTRACT(YEAR FROM tranportorders.fecha2) <= ?  and  EXTRACT(MONTH FROM tranportorders.fecha2) <= ? and 
+            trucks.placa ilike ? 
+      ORDER BY tranportorders.fecha   ' ,fecha1 ,mes1 ,fecha2,mes2, busqueda ])
+  return @osts
+end
+
+def get_ost_detalle2 (fecha1,mes1,fecha2,mes2,busqueda ) 
+
+ @osts =  Tranportorder.find_by_sql(['Select DISTINCT tranportorders.*    from  tranportorders
+      INNER JOIN employees on  tranportorders.employee_id  = employees.id 
+      WHERE EXTRACT(YEAR FROM tranportorders.fecha1) >= ?  and  EXTRACT(MONTH FROM tranportorders.fecha1) >= ? and
+            EXTRACT(YEAR FROM tranportorders.fecha2) <= ?  and  EXTRACT(MONTH FROM tranportorders.fecha2) <= ? and 
+            employees.full_name ilike ? 
+      ORDER BY tranportorders.fecha   ' ,fecha1 ,mes1 ,fecha2,mes2, busqueda ])
+  return @osts
+end
+
+
+def get_ost_detalle3 (fecha1,mes1,fecha2,mes2,busqueda ) 
+
+ @osts =  Tranportorder.find_by_sql(['Select DISTINCT tranportorders.*    from  tranportorders
+      INNER JOIN trucks ON tranportorders.truck2_id = trucks.id
+      INNER JOIN employees on  tranportorders.employee_id  = employees.id 
+      WHERE EXTRACT(YEAR FROM tranportorders.fecha1) >= ?  and  EXTRACT(MONTH FROM tranportorders.fecha1) >= ? and
+            EXTRACT(YEAR FROM tranportorders.fecha2) <= ?  and  EXTRACT(MONTH FROM tranportorders.fecha2) <= ? and 
+            trucks.placa ilike ? 
+      ORDER BY tranportorders.fecha   ' ,fecha1 ,mes1 ,fecha2,mes2, busqueda ])
+  return @osts
+end
+
+
 
 end
 

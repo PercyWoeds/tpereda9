@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210525132018) do
+ActiveRecord::Schema.define(version: 20210525220516) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3533,6 +3533,32 @@ ActiveRecord::Schema.define(version: 20210525132018) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "vuelto_details", force: :cascade do |t|
+    t.datetime "fecha"
+    t.integer  "cout_id"
+    t.float    "importe"
+    t.float    "flete"
+    t.float    "egreso"
+    t.float    "total"
+    t.text     "observa"
+    t.integer  "vuelto_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "vuelto_details", ["vuelto_id"], name: "index_vuelto_details_on_vuelto_id", using: :btree
+
+  create_table "vueltos", force: :cascade do |t|
+    t.string   "code"
+    t.datetime "fecha"
+    t.integer  "user_id"
+    t.string   "processed"
+    t.datetime "date_processed"
+    t.float    "total"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
   add_foreign_key "assistances", "inasists"
   add_foreign_key "conductors", "employees"
   add_foreign_key "contactopmdetails", "contactopms"
@@ -3541,4 +3567,5 @@ ActiveRecord::Schema.define(version: 20210525132018) do
   add_foreign_key "service_extensions", "servicebuys"
   add_foreign_key "supplier_details", "suppliers"
   add_foreign_key "viaticolgv_details", "viaticolgvs"
+  add_foreign_key "vuelto_details", "vueltos"
 end

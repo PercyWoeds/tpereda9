@@ -1,0 +1,201 @@
+
+
+
+
+<div class="mid_box bordered_right">
+
+<%= simple_form_for(@vuelto_detail) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+
+
+  
+
+
+     <div class="field">
+      <strong> Fecha :</strong><br /> 
+          <%= f.date_field :fecha ,:style=> 'width: 180px'%>
+      </div>
+
+  
+    <div >
+      <div class="field">
+       <strong> Importe :</strong><br />
+      <%= f.number_field :importe ,:style=> 'width: 120px' %>
+      </div>
+    </div>
+
+    <div >
+      <div class="field">
+       <strong> Flete :</strong><br />
+      <%= f.number_field :flete ,:style=> 'width: 120px' %>
+      </div>
+    </div>
+
+    <div >
+      <div class="field">
+       <strong> Egreso :</strong><br />
+      <%= f.number_field :egreso ,:style=> 'width: 120px' %>
+      </div>
+    </div>
+
+    <div class="field">
+      <%= f.label :observa %><br />
+      <%= f.text_area :observa %>
+    </div>  
+
+  
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
+
+</div>
+
+
+<div class="mid_box">
+  <h4>
+    Agregar Comprobante Egreso 
+  </h4>
+  
+  <form method="get" action="/vueltos" onsubmit="addItemToCout(); return false;">
+   
+
+
+     <input type="hidden" name="ac_item_cout" id="ac_item_cout" value="" />
+    <strong>  :</strong><br />
+
+    <input type="text" name="ac_item" id="ac_item" value="" />
+        <div class="small">
+          Ingrese un termino de busqueda para encontrar un producto.
+        </div>
+    <br />    
+    
+    <div class="small">
+        <strong>Seleccionar Comprobante Egreso :</strong>
+        <span id="selected_sts"><% if @ac_customer %><%= @ac_customer %><% else %><!-- i --><% end %></span>
+      </div>
+     </div>
+    
+    <strong> Importe :</strong><br />
+    <input type="text" name="ac_item_vuelto" id="ac_item_vuelto" value="1" class="tf_short" />
+    <div class="small">
+     importe de vuelto.
+    </div>
+    <br />
+    
+    
+    <br />
+    <input type="submit" value="Agregar item a Factura" />
+    
+  </form>
+  
+  
+  <%= hr() %>
+
+</div>
+  
+
+<%= render 'layouts/autocomplete' %>
+
+
+<script type="text/javascript">
+
+  $(document).ready(function() {
+
+
+  
+
+
+     $("#ac_item4").autocomplete("/vueltos/ac_couts/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_item4").result(function(event, data, formatted) {
+      $("#ac_item_st").val(data[2]);    
+      $("#selected_st").html(data[0]);      
+    });
+
+
+    
+    $("#ac_item_quantity").bind("keyup", function() {
+      updateItemTotal();
+    });
+    
+    
+    $("#ac_item_price").bind("keyup", function() {
+      updateItemTotal();
+    });
+    
+    $("#ac_item_discount").bind("keyup", function() {
+      updateItemTotal();
+    });
+    
+    <% if @products_lines %>
+    alert 'holas products_lines';
+      listItemsInvoice2();
+    <% end %>
+
+   <% if @guias_lines %>
+    alert 'holas guias_lines';
+      listItemsdelivery2();
+    <% end %>
+
+
+      <% if @sts_lines %>
+    alert 'holas guias_lines';
+      listItemsdeliveryST();
+    <% end %>
+
+  });
+
+
+
+// Add an item to a product kit
+  function addItemToSolicitudT() {
+
+    var item = $("#ac_item4").val();
+    
+   if(item != "") {
+      var company_id = $("#factura_company_id").val();
+      var item_id = $("#ac_item_st").val();        
+      var items_arr = $("#items3").val().split(",");
+      var item_line = item_id + "|BRK|" ;
+        
+        $("#items3").val($("#items3").val() + "," + item_line );
+
+        listItemsdeliveryST();
+        
+        $("#ac_item_st").val("");
+        $("#ac_item4").val("");      
+      
+    } else {
+      alert("Please find a guia  to add first.");
+    }
+  }
+
+
+  function listItemsdeliveryST() {
+    var items3 = $("#items3").val();
+
+    var company_id = $("#factura_company_id").val();
+    
+    $.get('/facturas/list_items3/' + company_id, {
+      items3: items3
+    },
+    function(data) {
+      $("#list_items3").html(data);
+      documentReady();
+    });
+  }
+
+
+
+  
+</script>

@@ -1,0 +1,254 @@
+
+
+<% if @stocks.count > 0 %>
+  <table>
+    <thead>
+
+
+
+     <%  Tranportorder::TABLE_HEADERS_OST3.compact.each do |header| %>
+
+      <th class="bordered_right bordered_bottom" style="width: 100px;">
+               
+            <%= header %>
+      </th>
+        
+     <% end %>
+
+
+
+
+    </thead>
+    <tbody>
+
+       <%  nroitem =   0 %>
+      <% for orden in @stocks %>
+        <tr>
+        
+
+
+     <%    st  = orden.get_manifest  
+  
+            @importe_st = 0 
+
+            if st.nil? %> 
+
+
+            <td class="bordered_right bordered_bottom right">
+            
+            </td>
+
+            <td class="bordered_right bordered_bottom right">
+            
+            </td>
+
+            <td class="bordered_right bordered_bottom right">
+            
+            </td>
+
+            <td class="bordered_right bordered_bottom right">
+            
+            </td>
+
+            <td class="bordered_right bordered_bottom right">
+            
+            </td>
+
+            <td class="bordered_right bordered_bottom right">
+            
+            </td>
+
+            <td class="bordered_right bordered_bottom right">
+            
+            </td>
+
+            <td class="bordered_right bordered_bottom right">
+            
+            </td>
+
+            <td class="bordered_right bordered_bottom right">
+            
+            </td>
+
+            <td class="bordered_right bordered_bottom right">
+            
+            </td>
+
+
+            
+          <%  else  %>
+
+              
+              <td class="bordered_right bordered_bottom right">
+                <%=  nroitem%>
+              </td>
+
+              <td class="bordered_right bordered_bottom right">
+              <%=  st.fecha1.strftime("%d/%m/%Y") %>
+              </td>
+
+              <td class="bordered_right bordered_bottom right">
+              <%=  st.code %>
+              </td>
+
+        <td class="bordered_right bordered_bottom right">
+              <%=  st.customer.name  %>
+              </td>
+
+
+        <td class="bordered_right bordered_bottom right">
+              <%=  st.especificacion  %>
+              </td>
+
+
+<td class="bordered_right bordered_bottom right">
+              <%=  st.tipocargue.name  %>
+              </td>
+
+<td class="bordered_right bordered_bottom right">
+              <%=  st.direccion1  %>
+              </td>
+
+
+<td class="bordered_right bordered_bottom right">
+              <%=  st.direccion2 %>
+              </td>
+<td class="bordered_right bordered_bottom right">
+              <%=  money(st.importe2) %>
+              </td>
+<td class="bordered_right bordered_bottom right">
+              <%=  money(st.importe) %>
+              </td>
+            
+            
+          <%    @importe_st = st.importe
+
+            end  %>
+<td class="bordered_right bordered_bottom right">
+              <%=  orden.fecha1.strftime("%d/%m/%Y")  %>
+              </td>
+<td class="bordered_right bordered_bottom right">
+              <%=  orden.code  %>
+              </td>
+
+
+             <td class="bordered_right bordered_bottom right">
+              <%=  orden.employee.full_name %>
+              </td>
+ <td class="bordered_right bordered_bottom right">
+              <%=  orden.get_empleado(orden.employee2_id) %>
+              </td>
+ <td class="bordered_right bordered_bottom right">
+              <%=   orden.truck.placa  %>
+              </td>
+
+      <td class="bordered_right bordered_bottom right">
+              <%=   orden.get_placa(orden.truck2_id)   %>
+              </td>  
+
+              <td class="bordered_right bordered_bottom right">
+              <%=   orden.get_placa(orden.truck3_id)    %>
+              </td>  
+
+              <td class="bordered_right bordered_bottom right">
+              <%=    orden.get_tipounidad(orden.truck_id)    %>
+              </td>  
+
+               <td class="bordered_right bordered_bottom right">
+              <%=    orden.get_ejes2(orden.id )  %>
+              </td>  
+
+    
+
+
+          <%  @destino =  orden.get_punto(orden.ubication_id) +"-" + orden.get_punto(orden.ubication2_id) %> 
+
+           <td class="bordered_right bordered_bottom right">
+              <%=   orden.get_propio(orden.truck3_id)   %>
+              </td>  
+
+
+              <td class="bordered_right bordered_bottom right">
+              <%=    orden.code    %>
+              </td> 
+
+              <td class="bordered_right bordered_bottom right">
+              <%=   orden.get_placa(orden.truck3_id)    %>
+              </td> 
+   <td class="bordered_right bordered_bottom right">
+              <%=  orden.get_empleado(orden.employee4_id)   %>
+              </td> 
+
+
+
+
+          <%  nroitem = nroitem + 1
+            @guias = orden.get_delivery(orden.id) 
+
+                lcGuiaCode = ""
+                lcGuiaDes  = ""
+                lcFecha1 = ""
+                lcFecha2 = ""
+                lcComments = ""
+                lcOstFecha1 = ""
+                lcOstFecha2 = ""
+                lcpendiente ="PENDIENTE"
+
+               for guias in @guias   
+
+
+                  lcGuiaCode  << guias.code + "\n"
+
+
+                  lcGuiaDes   << guias.description + "\n"
+
+                  lcFecha1    << guias.fecha1.to_s[0..10] + "\n"
+
+                  lcFecha2    << guias.created_at.to_s[0..10] + "\n"
+
+                  lcComments  << guias.comments + "\n"
+                  lcOstFecha1 << orden.fecha1.to_s[0..10] + "\n"
+                  lcOstFecha2 << orden.fecha2.to_s[0..10] + "\n"
+
+                  lcpendiente = "LIQUIDADO"
+               end  %>
+ <td class="bordered_right bordered_bottom right">
+              <%=  lcGuiaCode    %>
+              </td> 
+
+ <td class="bordered_right bordered_bottom right">
+              <%=  lcGuiaDes   %>
+              </td> 
+  <td class="bordered_right bordered_bottom right">
+              <%=  lcFecha1   %>
+              </td> 
+<td class="bordered_right bordered_bottom right">
+              <%=  lcFecha2   %>
+              </td> 
+<td class="bordered_right bordered_bottom right">
+              <%= orden.get_processed %>
+              </td> 
+<td class="bordered_right bordered_bottom right">
+              <%= lcpendiente%>
+              </td> 
+              <td class="bordered_right bordered_bottom right">
+              <%= lcOstFecha2%>
+              </td> 
+              
+                            
+          
+
+
+
+  </tr>
+
+
+      <% end %>
+    </tbody>
+  </table>
+
+<% else %>
+  <p class="error">
+    We couldn't find any Osts.
+  </p>
+<% end %>

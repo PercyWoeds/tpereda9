@@ -1,0 +1,18 @@
+<%= simple_form_for(@vuelto) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+  
+
+   <div class="field">
+   <%= f.text_field :fecha, value: Time.zone.now.strftime("%d/%m/%Y") %>
+   </div>
+
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
+

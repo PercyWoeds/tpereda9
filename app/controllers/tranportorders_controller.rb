@@ -18,7 +18,6 @@ class TranportordersController < ApplicationController
   end
 
 
-
   def cargar
     @lcProcesado='1'
     @company = Company.find(1)
@@ -1191,6 +1190,63 @@ row = []
       end
   end 
 
+
+  def do_stocks
+
+    @company = Company.find(params[:company_id])
+    @pagetitle = "#{@company.name} - Stocks "
+
+
+    if(params[:year] and params[:year].numeric?)
+      @year = params[:year].to_i
+    else
+      @year = Time.now.year
+    end
+    
+    if(params[:month] and params[:month].numeric?)
+      @month = params[:month].to_i
+    else
+      @month = Time.now.month
+    end
+    
+    if(@month < 10)
+      month_s = "0#{@month}"
+    else
+      month_s = @month.to_s
+    end
+    
+    curr_year = Time.now.year
+    c_year = curr_year
+    c_month = 1
+    
+    @years = []
+    @months = monthsArr
+    @month_name = @months[@month - 1][0]
+    
+    
+    
+    while(c_year > Time.now.year - 2)
+      @years.push(c_year)
+      c_year -= 1
+    end
+
+
+        if(params[:search] and params[:search] != "") 
+            @stocks =  @company.get_ost_detalle1( params[:year],params[:month],params[:year1],params[:month1],"%"+ params[:search]+"%")
+  
+        elsif(params[:search3] and  params[:search3] != "") 
+            @stocks =  @company.get_ost_detalle3( params[:year],params[:month],params[:year1],params[:month1],"%"+ params[:search3]+"%")
+  
+        elsif(params[:search2] and  params[:search2] != "")  
+          @stocks =  @company.get_ost_detalle2( params[:year],params[:month],params[:year1],params[:month1],"%"+ params[:search3]+"%")
+  
+         else  
+          @stocks = Tranportorder.where("fecha >= ? ","2021-01-01 00:00:00").paginate(:page => params[:page]) 
+        end
+        
+       return @stocks
+    
+  end 
 
   private
     # Use callbacks to share common setup or constraints between actions.

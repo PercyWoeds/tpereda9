@@ -1,7 +1,8 @@
 <div class="mid_box bordered_right">
   
 
-  
+ 
+
   <h3>
     <%= image_tag("products_32.png", :class => "vmiddle") %>
     <%= link_to "Comprobante Egreso ", couts_path %>
@@ -61,6 +62,30 @@
   <%= hr() %>
 
   
+  
+  <h3>
+    <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
+    <%= link_to "Liquidacion de Viaticos telebanking  ","/companies/viaticotbks/#{@company.id}" %>
+  </h3>
+
+  <p>
+   Agregar, editar or eliminar Liquidacion de viaticos telebanking por conductor
+  </p>
+
+  <%= hr() %>
+
+
+  <h3>
+    <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
+    <%= link_to "Ingreso de Vueltos ",vueltos_path %>
+  </h3>
+
+  <p>
+   Agregar, editar or eliminar Liquidacion de viaticos telebanking por conductor
+  </p>
+
+  <%= hr() %>
+
 
   <h3>
     <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
@@ -74,17 +99,6 @@
   <%= hr() %>
 
 
-  
-  <h3>
-    <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
-    <%= link_to "Liquidacion de Viaticos telebanking  ","/companies/viaticotbks/#{@company.id}" %>
-  </h3>
-
-  <p>
-   Agregar, editar or eliminar Liquidacion de viaticos telebanking por conductor
-  </p>
-
-  <%= hr() %>
 </div>
 
 <div class="mid_box">
@@ -101,6 +115,7 @@
     Gastos 
   </p>
 
+<%= hr() %>
 
 <% if current_user.level =="admin"%>
   <h3>
@@ -115,6 +130,21 @@
 
 <% end %>
 
+
+<%= hr() %>
+
+  
+ <h3>
+      <div>
+        <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
+        <%= link_to "Consulta OST", "/tranportorders/do_stocks/#{@company.id}" %>
+      </div>
+  </h3>
+  <p>
+    Egresos
+  </p>
+
+
 <%= hr() %>
   <h3>
         <div>
@@ -126,3 +156,4 @@
   <p>
     Reporte de viaticos 
   </p>
+<%= hr() %>
