@@ -432,8 +432,7 @@ class ProyectoExamsController < ApplicationController
 
                  for detalle in @detalle  
 
-                  if detalle.proyecto_minero_exam.proyectominero3_id   == 6  and !detalle.proyecto_minero_exam.empty?
-
+                 
                     if detalle.proyecto_minero_exam.proyectominero3.formatofecha == "1" 
 
                          if detalle.fecha ==  nil 
@@ -475,10 +474,7 @@ class ProyectoExamsController < ApplicationController
 
                     end      
 
-                 else
-
-                  row  = []  
-                end 
+                  
 
 
                 table_content << row 
