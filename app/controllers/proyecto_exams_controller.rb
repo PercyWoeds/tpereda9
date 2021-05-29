@@ -8,6 +8,7 @@ class ProyectoExamsController < ApplicationController
 
   end
 
+
   # GET /proyecto_exams/1
   # GET /proyecto_exams/1.json
   def show
@@ -421,16 +422,18 @@ class ProyectoExamsController < ApplicationController
       for proyectoitem in @proyecto_examen_empleado 
         
         
-           row  = []
-           row << proyectoitem.employee.full_name2  
 
                @detalle = proyectoitem.get_detalle(proyectoitem.employee_id, 
                                                     @proyecto_exam.proyecto_minero_id ) 
 
 
+                    row  = []
+                   row << proyectoitem.employee.full_name2  
+
                  for detalle in @detalle  
 
-                     
+                  if detalle.proyecto_minero_exam.proyectominero3_id   == 6  and !detalle.proyecto_minero_exam.empty?
+
                     if detalle.proyecto_minero_exam.proyectominero3.formatofecha == "1" 
 
                          if detalle.fecha ==  nil 
@@ -470,9 +473,11 @@ class ProyectoExamsController < ApplicationController
               
                      end 
 
-                        
+                    end      
 
-            
+                 else
+
+                  row  = []  
                 end 
 
 

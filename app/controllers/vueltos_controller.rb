@@ -11,8 +11,6 @@ class VueltosController < ApplicationController
   # GET /vueltos/1.json
   def show
 
-
-    
     @vuelto  = Vuelto.find(params[:id])
     
     @vuelto_detail =  @vuelto.vuelto_details
@@ -77,6 +75,44 @@ class VueltosController < ApplicationController
     end
   end
 
+
+  def ac_couts 
+    @couts = Cout.where([" (code  iLIKE ?)", "%" + params[:q] + "%"])
+   
+    render :layout => false
+  end
+
+  def list_items3
+    
+    @company = Company.find(1)
+    items = params[:items3]
+    items = items.split(",")
+    items_arr = []
+    @guias = []
+    i = 0
+    puts "item list items3 "
+    puts items 
+    
+    for item in items
+      if item != ""
+        parts = item.split("|BRK|")
+
+        puts parts
+
+        id = parts[0]      
+        product = Cout.find(id.to_i)
+        product[:i] = i
+
+        @guias.push(product)
+
+      end
+      
+      i += 1
+    end
+
+    render :layout => false
+  end 
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_vuelto

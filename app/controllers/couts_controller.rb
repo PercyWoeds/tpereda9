@@ -485,7 +485,7 @@ end
 
        table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD EN EL TRABAJO ",:rowspan => 2},"CODIGO ","TP-FZ-F-009"], 
           ["VERSION: ","3"], 
-          ["COMPROBANTE DE EGRESO VIATICO "+ local +" Nro. "  + @cout.code ,"Pagina: ","1 de 1 "] 
+          ["COMPROBANTE DE EGRESO VIATICO "+ local +" Nro. "  + @cout.code ,"PAGINA : ","1 de 1 "] 
          
           ])
         
@@ -531,7 +531,7 @@ end
 
       tb_text_guias = [ [{:content => "FECHA  : " + @cout.fecha.strftime("%d/%m/%Y"), :font_style => :bold , :border_width => 0 }, 
                          {:content => "S/.", :font_style => :bold ,:size=> 8,:border_width => 0 }  , 
-                         {:content =>  @cout.importe.to_s , :font_style => :bold ,:size=> 8,:text_color=> "141000",:background_color => "ffff00"  } ],
+                         {:content =>  @cout.importe.to_s , :font_style => :bold ,:size=> 8,:text_color=> "141000",:background_color => "FFFFCC"  } ],
 
 
                         ]
@@ -553,7 +553,7 @@ end
 
       tb_text_guias = [ [{:content => "RECIBI DE : TRANSPORTE PEREDA SRL. ", :font_style => :bold , :border_width => 0 },
                             {:content => "TBK S/. " , :font_style => :bold ,:size=> 8, :border_width => 0 } , 
-                            {:content =>  @cout.tbk.to_s , :font_style => :bold ,:size=> 8,:text_color=> "141000"  ,:background_color => "ffff00"} ],
+                            {:content =>  @cout.tbk.to_s , :font_style => :bold ,:size=> 8,:text_color=> "141000"  ,:background_color => "FFFFCC"} ],
 
 
                         ]

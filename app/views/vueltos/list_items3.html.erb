@@ -1,0 +1,27 @@
+<p class="bold big">
+  Comprobante de Egresos: 
+</p>
+
+
+  <table>
+    <thead>
+      <tr>
+        <th class="small bordered_bottom bordered_right">
+          Comprobantes: 
+        </th>
+       
+      </tr>
+    </thead>
+    <tbody>
+      <% for product in @guias %>
+        <tr>
+          <td class="small bordered_bottom bordered_right" style="width: 220px;">
+            <a href="#" onclick="removeItemFromSt2(<%= product.i %>); return false;" title="Eliminar desde OST."><%= product.code %></a>
+            [<a href="#" onclick="removeItemFromSt2(<%= product.i %>); return false;" title="
+            Eliminar desde OST.">X</a>]
+          </td>
+       
+        </tr>
+      <% end %>
+    </tbody>
+  </table>

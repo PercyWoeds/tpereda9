@@ -40,6 +40,11 @@
       </div>
     </div>
 
+    <div class="field" id="list_items3">
+      <p class="bold big">Detalle :</p>
+    </div>
+
+
     <div class="field">
       <%= f.label :observa %><br />
       <%= f.text_area :observa %>
@@ -49,7 +54,11 @@
 
   </div>
 
+
   <div class="form-actions">
+<input type="hidden" name="items" id="items" value="<% if @products_lines %><%= @products_lines %><% end %>" />
+
+
     <%= f.button :submit %>
   </div>
 <% end %>
@@ -74,14 +83,10 @@
           Ingrese un termino de busqueda para encontrar un producto.
         </div>
     <br />    
-    
-    <div class="small">
-        <strong>Seleccionar Comprobante Egreso :</strong>
-        <span id="selected_sts"><% if @ac_customer %><%= @ac_customer %><% else %><!-- i --><% end %></span>
-      </div>
-     </div>
+  
     
     <strong> Importe :</strong><br />
+
     <input type="text" name="ac_item_vuelto" id="ac_item_vuelto" value="1" class="tf_short" />
     <div class="small">
      importe de vuelto.
@@ -108,85 +113,64 @@
   $(document).ready(function() {
 
 
-  
-
-
-     $("#ac_item4").autocomplete("/vueltos/ac_couts/<%= @company.id %>", {
+     $("#ac_item").autocomplete("/vueltos/ac_couts/<%= @company.id %>", {
       matchSubset: 1,
       matchContains: 1,
       selectFirst: false
     });
     
-    $("#ac_item4").result(function(event, data, formatted) {
-      $("#ac_item_st").val(data[2]);    
-      $("#selected_st").html(data[0]);      
+    $("#ac_item").result(function(event, data, formatted) {
+      $("#ac_item_cout").val(data[2]);    
+      $("#selected_st").html(data[0]); 
+      $("#ac_item_vuelto").val(data[4]);        
+      
+    
     });
 
 
-    
-    $("#ac_item_quantity").bind("keyup", function() {
-      updateItemTotal();
-    });
-    
-    
-    $("#ac_item_price").bind("keyup", function() {
-      updateItemTotal();
-    });
-    
-    $("#ac_item_discount").bind("keyup", function() {
-      updateItemTotal();
-    });
     
     <% if @products_lines %>
     alert 'holas products_lines';
-      listItemsInvoice2();
+      listItemsCout();
     <% end %>
 
-   <% if @guias_lines %>
-    alert 'holas guias_lines';
-      listItemsdelivery2();
-    <% end %>
-
-
-      <% if @sts_lines %>
-    alert 'holas guias_lines';
-      listItemsdeliveryST();
-    <% end %>
-
+   
   });
 
 
 
 // Add an item to a product kit
-  function addItemToSolicitudT() {
+  function addItemToCout() {
 
-    var item = $("#ac_item4").val();
+    var item = $("#ac_item_vuelto").val();
+
+    alert(item);
     
    if(item != "") {
-      var company_id = $("#factura_company_id").val();
-      var item_id = $("#ac_item_st").val();        
-      var items_arr = $("#items3").val().split(",");
-      var item_line = item_id + "|BRK|" ;
+      
+      var item_id    = $("#ac_item_cout").val();        
+      var items_arr  = $("#items").val().split(",");
+      var item_line  = item_id + "|BRK|" ;
         
-        $("#items3").val($("#items3").val() + "," + item_line );
+        $("#items").val($("#items").val() + "," + item_line );
 
-        listItemsdeliveryST();
+        listItemsCout();
         
-        $("#ac_item_st").val("");
-        $("#ac_item4").val("");      
+        $("#ac_item_cout").val("");
+        $("#ac_item_vuelto").val("");      
       
     } else {
-      alert("Please find a guia  to add first.");
+      alert("Please find a cout   to add first.");
     }
   }
 
 
-  function listItemsdeliveryST() {
-    var items3 = $("#items3").val();
+  function listItemsCout() {
+    var items3 = $("#items").val();
 
-    var company_id = $("#factura_company_id").val();
+    var company_id = 1 ;
     
-    $.get('/facturas/list_items3/' + company_id, {
+    $.get('/vueltos/list_items3/' + company_id, {
       items3: items3
     },
     function(data) {

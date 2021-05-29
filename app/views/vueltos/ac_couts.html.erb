@@ -1,0 +1,5 @@
+<% if @couts %>
+  <% for couts in @couts %>
+    <%= couts.code %>|BRK|<%= couts.id %> |BRK|<%= couts.tbk +  couts.importe  %>
+  <% end %>
+<% end %>

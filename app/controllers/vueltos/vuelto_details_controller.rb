@@ -14,10 +14,13 @@ class Vueltos::VueltoDetailsController < ApplicationController
   # GET /vuelto_details/1
   # GET /vuelto_details/1.json
   def show
+      @company   =  Company.find(1)
+
   end
 
   # GET /vuelto_details/new
   def new
+    @company   =  Company.find(1)
     @vuelto_detail = VueltoDetail.new
 
 
@@ -32,11 +35,13 @@ class Vueltos::VueltoDetailsController < ApplicationController
 
   # GET /vuelto_details/1/edit
   def edit
+    @company   =  Company.find(1)
   end
 
   # POST /vuelto_details
   # POST /vuelto_details.json
   def create
+    @company   =  Company.find(1)
     @vuelto_detail = VueltoDetail.new(vuelto_detail_params)
 
     respond_to do |format|

@@ -1020,6 +1020,8 @@ post 'add_friend', to: 'viaticotbks#add_friend'
   match 'couts/do_crear/:id'   => 'couts#do_crear', via: [:get, :post]
   match 'companies/couts/do_cargar2/:company_id' => 'couts#do_cargar2', via: [:get, :post]
   match 'couts/do_crear2/:id'   => 'couts#do_crear2', via: [:get, :post]
+  match 'vueltos/list_items3/:id' => 'vueltos#list_items3', via: [:get, :post]
+  match 'vueltos/ac_couts/:company_id' => 'vueltos#ac_couts', via: [:get, :post]  
 
   resources :couts 
 # lgv
