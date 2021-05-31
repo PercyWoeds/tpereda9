@@ -9,7 +9,30 @@ class ProyectoMineroExam < ActiveRecord::Base
 	belongs_to :proyecto_exam 
 	
 
+ def get_brevete(id)
 
+ 	   if   a = Conductor.where(employee_id: id ).exists? 
+
+           empleado = Conductor.find_by(employee_id: id )
+
+           if empleado.categoria_especial ==  "A4"
+
+           	  return empleado.revalidacion_licencia_especial
+           else 
+
+			  return ""
+
+           end 
+
+           
+      else
+
+           return ""
+      end 
+   
+
+
+ end 
 
 	 def get_formato_fecha(id)
 

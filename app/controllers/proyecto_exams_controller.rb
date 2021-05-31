@@ -281,7 +281,7 @@ class ProyectoExamsController < ApplicationController
     @pumps = ProyectoMineroExam.where(proyecto_minero_id: @proyecto_exam.proyecto_minero_id).order(:orden)
 
 
-   @proyecto_examen_empleado = @company.get_proyecto_exam_empleado(@proyecto_exam.proyecto_minero_id) 
+   @proyecto_examen_empleado = @company.get_proyecto_exam_empleado_pdf(@proyecto_exam.proyecto_minero_id) 
 
     @cols = @pumps.count 
 
@@ -365,14 +365,14 @@ class ProyectoExamsController < ApplicationController
           :italic => "app/assets/fonts/OpenSans-Italic.ttf",
         })
 
-        pdf.font "Open Sans",:size => 6
+        pdf.font "Open Sans",:size => 5
 
       headers = []
       headers0 = []
       table_content = []
 
 
-
+    pdf.text "PROYECTO MINERO : " + @proyecto_exam.proyecto_minero.descrip 
     @pumps = ProyectoMineroExam.where(proyecto_minero_id: @proyecto_exam.proyecto_minero_id).order(:orden)
     
     @cols = @pumps.count + 1
@@ -419,7 +419,7 @@ class ProyectoExamsController < ApplicationController
       nroitem = 1
 
 
-      for proyectoitem in @proyecto_examen_empleado 
+      for proyectoitem in @proyecto_examen_empleado                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
         
         
 
@@ -427,12 +427,29 @@ class ProyectoExamsController < ApplicationController
                                                     @proyecto_exam.proyecto_minero_id ) 
 
 
-                    row  = []
+                   row  = []
                    row << proyectoitem.employee.full_name2  
 
                  for detalle in @detalle  
 
-                 
+                
+                   if detalle.proyecto_minero_exam.proyectominero2_id == 8
+
+                       
+                    
+
+                      a =  detalle.proyecto_minero_exam.get_brevete(proyectoitem.employee_id)
+                       if a  != "" 
+                        puts   "fecha.-..********************************************************..." 
+                        puts a 
+                        row << a.strftime("%d/%m/%Y")
+                       else 
+
+                          row << "" 
+                       end 
+                   
+
+                   else 
                     if detalle.proyecto_minero_exam.proyectominero3.formatofecha == "1" 
 
                          if detalle.fecha ==  nil 
@@ -471,8 +488,10 @@ class ProyectoExamsController < ApplicationController
                            row <<  detalle.observacion 
               
                      end 
+                   end 
 
-                    end      
+                  
+             end      
 
                   
 

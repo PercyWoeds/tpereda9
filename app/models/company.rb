@@ -5536,7 +5536,7 @@ def get_proyecto_exam_empleado(proyecto_minero_id )
     from proyectoexam_details
   INNER JOIN proyecto_exams ON proyectoexam_details.proyecto_exam_id =  proyecto_exams.id
   INNER JOIN employees ON proyectoexam_details.employee_id  = employees.id 
-  Where proyectoexam_details.proyecto_exam_id = ?  and  proyectoexam_details.active = ? 
+  Where proyectoexam_details.proyecto_exam_id = ?  and  proyectoexam_details.active = ?
   group by proyectoexam_details.employee_id,
   proyectoexam_details.proyecto_exam_id,employees.full_name2
   order by employees.full_name2',proyecto_minero_id,"1"])
@@ -5546,6 +5546,25 @@ def get_proyecto_exam_empleado(proyecto_minero_id )
 
 end 
  
+def get_proyecto_exam_empleado_pdf(proyecto_minero_id )
+
+  # @proyecto_exam_empleado = ProyectoexamDetail.select("employee_id,proyecto_exam_id").
+  # where(proyecto_exam_id: proyecto_minero_id, active: "1").group(:employee_id,:proyecto_exam_id)
+
+  @proyecto_exam_empleado = ProyectoexamDetail.find_by_sql(
+    [ 'Select  proyectoexam_details.employee_id,proyectoexam_details.proyecto_exam_id 
+    from proyectoexam_details
+  INNER JOIN proyecto_exams ON proyectoexam_details.proyecto_exam_id =  proyecto_exams.id
+  INNER JOIN employees ON proyectoexam_details.employee_id  = employees.id 
+  Where proyectoexam_details.proyecto_exam_id = ?  and  proyectoexam_details.active = ? and  proyectoexam_details.observacion = ? 
+  group by proyectoexam_details.employee_id,
+  proyectoexam_details.proyecto_exam_id,employees.full_name2
+  order by employees.full_name2',proyecto_minero_id,"1","APTO"])
+  
+  return @proyecto_exam_empleado 
+
+
+end 
 
  
 
