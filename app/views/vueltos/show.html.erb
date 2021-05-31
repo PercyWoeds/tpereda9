@@ -7,38 +7,20 @@
 
 <p>
   <strong>Fecha:</strong>
-  <%= @vuelto.fecha %>
+  <%= @vuelto.fecha.to_date %>
 </p>
 
-<p>
-  <strong>User:</strong>
-  <%= @vuelto.user_id %>
-</p>
+
 
 <p>
   <strong>Processed:</strong>
-  <%= @vuelto.processed %>
+  <%= @vuelto.get_processed %>
 </p>
 
 <p>
   <strong>Date processed:</strong>
   <%= @vuelto.date_processed %>
 </p>
-
-<p>
-  <strong>Total:</strong>
-  <%= @vuelto.total %>
-</p>
-
- 
-
-
-<div class="button">
-<%= link_to 'Agregar Item', new_vuelto_vuelto_detail_path(@vuelto) %>
-
-</div> 
-
- 
 
 <table>
   <thead>
@@ -48,9 +30,7 @@
         Item
       </th>
 
-       <th>
-        ingreso/Egreso
-      </th>
+       
 
        <th>
         Fecha
@@ -58,26 +38,31 @@
       
       
       <th>
-        Descripcion 
+        Importe 
       </th>
       
       
       <th>
-        Nro.Documento   </th>
+        Flete S/. </th>
       
       <th>
-        Importe S/.
+        Egreso S/.
       </th>
       
       
       <th>
-        Detalle
+        Total S/.
       </th>
-        <th>
+
+
+      <th>
+        Observa 
+      </th>
+
+      <th>
         Opciones 
-      </th>
       
-    </tr>
+       </tr>
   </thead>
   <tbody>
     
@@ -85,6 +70,8 @@
 
 
 <% nroitem = 1 %>
+
+<%  total   =   0 %>
     <%  @vuelto_detail.each do |product| %>
     
       <tr>
@@ -115,7 +102,7 @@
           </td>
 
            <td class="small bordered_bottom bordered_right">
-              <%=product.detalle %>
+              <%=product.observa %>
           </td>
 
           <td><%= link_to 'Editar',  edit_viatico_viatico_detail_path(viatico_id: @vuelto.id,id: product.id ) %></td>          
@@ -124,13 +111,15 @@
       </tr>
 
       <% nroitem += 1 %>
+      <% total  += product.total %>
+
     <% end %>
    <tr>
       <td colspan="5" class="bordered_bottom bordered_right bold">
         Total Egresos
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        <%= money(@vuelto.total)%>
+        <%= money(total)%>
       </td>
     </tr>
     

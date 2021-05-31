@@ -709,6 +709,8 @@ pdf.move_down 2
   fecha_saldo_final  = @viatico[:fecha_saldo_final].nil? ? " " :  @viatico[:fecha_saldo_final].strftime("%d/%m/%Y")
 
         
+    if @viatico.caja_id ==  3
+
        data2 =[["SALDO POR RENDIR SR.HELBERT ",fecha_saldo_ant, @viatico[:importe_saldo_ant ] ],
                ["SALDO POR RENDIR SR.HELBERT ",fecha_saldo_final , @viatico[:importe_saldo_egreso] ],
                ["SALDO POR RENDIR SR.HELBERT ", " ", @viatico[:importe_saldo_final] ]]
@@ -728,6 +730,10 @@ pdf.move_down 2
                   
 
                end
+
+    end 
+
+
 
             pdf.move_down 10          
                   

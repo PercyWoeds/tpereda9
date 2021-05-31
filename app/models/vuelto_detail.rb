@@ -1,8 +1,6 @@
 class VueltoDetail < ActiveRecord::Base
  
-
  
-  
   
     belongs_to :cout 
     belongs_to :vuelto

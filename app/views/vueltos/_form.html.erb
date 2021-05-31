@@ -1,18 +1,186 @@
-<%= simple_form_for(@vuelto) do |f| %>
+
+
+<% if @vuelto.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@vuelto.errors.count, "error") %> prohibited this vuelto from being saved:</h2>
+    <ul>
+    <% @vuelto.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= hr() %>
+
+<div class="mid_box bordered_right">
+
+<%= simple_form_for [@vuelto]  do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
+
+
   
 
-   <div class="field">
-   <%= f.text_field :fecha, value: Time.zone.now.strftime("%d/%m/%Y") %>
-   </div>
 
+     <div class="field">
+      <strong> Fecha :</strong><br /> 
+          <%= f.date_field :fecha ,:style=> 'width: 180px'%>
+      </div>
+
+  
+    <div class="field" id="list_items3">
+      <p class="bold big">Detalle :</p>
+    </div>
+
+  
 
   </div>
 
+
   <div class="form-actions">
+<input type="hidden" name="items" id="items" value="<% if @products_lines %><%= @products_lines %><% end %>" />
+
+
     <%= f.button :submit %>
   </div>
 <% end %>
 
+</div>
+
+
+<div class="mid_box">
+  <h4>
+    Agregar Comprobante Egreso 
+  </h4>
+  
+  <form method="get" action="/vueltos" onsubmit="addItemToCout(); return false;">
+   
+
+
+     <input type="hidden" name="ac_item_cout" id="ac_item_cout" value="" />
+    
+
+
+    <input type="date" name="ac_item_fecha" id="ac_item_fecha" value = <%= Date.today  %> />
+        <div class="small">
+          Ingrese un termino de busqueda para encontrar un producto.
+        </div>
+    <br />    
+<strong>  Comprobante de Egreso </strong><br />
+
+    <input type="text" name="ac_item" id="ac_item" value="" />
+        <div class="small">
+          Ingrese un termino de busqueda para encontrar un producto.
+        </div>
+    <br />    
+  
+    
+    <strong> Importe :</strong><br />
+
+    <input type="text" name="ac_item_vuelto" id="ac_item_vuelto" value="1" class="tf_short" />
+    <div class="small">
+     importe de vuelto.
+    </div>
+    <br />
+    
+    
+    <br />
+    <input type="submit" value="Agregar item a Factura" />
+    
+  </form>
+  
+  
+  <%= hr() %>
+
+</div>
+  
+
+<%= render 'layouts/autocomplete' %>
+
+
+<script type="text/javascript">
+
+  $(document).ready(function() {
+
+
+     $("#ac_item").autocomplete("/vueltos/ac_couts/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_item").result(function(event, data, formatted) {
+      $("#ac_item_cout").val(data[2]);    
+      $("#selected_st").html(data[0]); 
+      $("#ac_item_vuelto").val(data[4]);        
+         
+      
+      
+      
+    
+    });
+
+
+    
+    <% if @products_lines %>
+    alert 'holas products_lines';
+      listItemsCout();
+    <% end %>
+
+   
+  });
+
+
+
+// Add an item to a product kit
+  function addItemToCout() {
+
+    var item = $("#ac_item_vuelto").val();
+
+    alert(item);
+    
+   if(item != "") {
+      
+      var item_id    = $("#ac_item_cout").val();        
+      var items_arr  = $("#items").val().split(",");
+      var importe   = $("#ac_item_vuelto").val();
+      var fechas  = $("#ac_item_fecha").val();
+      
+
+
+      var item_line = item_id + "|BRK|" + importe + "|BRK|" + fechas;
+      
+        $("#items").val($("#items").val() + "," + item_line);
+
+        listItemsCout();
+
+        
+        $("#ac_item_cout").val("");
+        $("#ac_item_vuelto").val("");      
+      
+    } else {
+      alert("Please find a cout   to add first.");
+    }
+  }
+
+
+  function listItemsCout() {
+    var items3 = $("#items").val();
+
+    var company_id = 1 ;
+    
+    $.get('/vueltos/list_items3/' + company_id, {
+      items3: items3
+    },
+    function(data) {
+      $("#list_items3").html(data);
+      documentReady();
+    });
+  }
+
+
+
+  
+</script>

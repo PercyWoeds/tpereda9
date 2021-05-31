@@ -1,10 +1,22 @@
 
 
 
+<% if @vuelto_detail.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@vuelto_detail.errors.count, "error") %> prohibited this vuelto from being saved:</h2>
+    <ul>
+    <% @vuelto_detail.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= hr() %>
 
 <div class="mid_box bordered_right">
 
-<%= simple_form_for(@vuelto_detail) do |f| %>
+<%= simple_form_for [@vuelto, @vuelto_detail]  do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
@@ -19,27 +31,6 @@
       </div>
 
   
-    <div >
-      <div class="field">
-       <strong> Importe :</strong><br />
-      <%= f.number_field :importe ,:style=> 'width: 120px' %>
-      </div>
-    </div>
-
-    <div >
-      <div class="field">
-       <strong> Flete :</strong><br />
-      <%= f.number_field :flete ,:style=> 'width: 120px' %>
-      </div>
-    </div>
-
-    <div >
-      <div class="field">
-       <strong> Egreso :</strong><br />
-      <%= f.number_field :egreso ,:style=> 'width: 120px' %>
-      </div>
-    </div>
-
     <div class="field" id="list_items3">
       <p class="bold big">Detalle :</p>
     </div>
@@ -150,11 +141,14 @@
       
       var item_id    = $("#ac_item_cout").val();        
       var items_arr  = $("#items").val().split(",");
-      var item_line  = item_id + "|BRK|" ;
-        
-        $("#items").val($("#items").val() + "," + item_line );
+      var importe   = $("#ac_item_vuelto").val();
+
+      var item_line = item_id + "|BRK|" + importe ;
+      
+        $("#items").val($("#items").val() + "," + item_line);
 
         listItemsCout();
+
         
         $("#ac_item_cout").val("");
         $("#ac_item_vuelto").val("");      

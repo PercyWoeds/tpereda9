@@ -174,7 +174,7 @@ require 'sidekiq/cron/web'
    
         resources :vuelto_details, except: [:index,:show], controller:  "vueltos/vuelto_details" do
         collection { get :new2 }    
-        collection { get :search_viatico_viatico_details }
+      
         collection { get :agregar }    
       end 
 
@@ -1022,6 +1022,10 @@ post 'add_friend', to: 'viaticotbks#add_friend'
   match 'couts/do_crear2/:id'   => 'couts#do_crear2', via: [:get, :post]
   match 'vueltos/list_items3/:id' => 'vueltos#list_items3', via: [:get, :post]
   match 'vueltos/ac_couts/:company_id' => 'vueltos#ac_couts', via: [:get, :post]  
+  match 'vueltos/pdf/:id' => 'vueltos#pdf', via: [:get, :post]
+
+match 'vueltos/do_process/:id' => 'vueltos#do_process', via: [:get, :post]
+  
 
   resources :couts 
 # lgv

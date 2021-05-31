@@ -25,6 +25,22 @@ self.per_page = 20
                      "DETALLE"
                      ]
 
+   TABLE_HEADERS2 = ["ITEM",
+                      "FECHA ",
+                     "COMPRO",
+                     "CONDUCTOR",
+                     "PLACA",
+                     "DESTINO",
+                     "DESCRIPCION",
+
+                     "VUELTO S/.",
+                     "FLETE S/.",
+                     "EGRESO S/.",
+                     "TOTAL  S/.",
+                     "VB.
+                      ASISTENTE GERENCIA",
+                     "VB. GERENTE ADMIN."
+                     ]
   
 
   def self.search(search)
@@ -247,31 +263,36 @@ self.per_page = 20
   end
   
   def add_products(items)
+
+     items = items 
+     items = items.split(",")
+     total   = 0 
     for item in items
       if(item and item != "")
         parts = item.split("|BRK|")
         
         id       = parts[0]
-        quantity = parts[1]
-        detalle1 = parts[2]
-        tm1      = parts[3]
-        detalle2 = parts[5]
-        fecha    = parts[6]
-        ac_supplier = parts[7]
-        gasto      = parts[8]
-        empleado   = parts[9]
-        
-        total    =  quantity.to_f
-        
-          product = Tranportorder.find(id.to_i)
-          
-          new_invoice_product = ViaticoDetail.new(:viatico_id => self.id,:descrip=> detalle2,:importe=> total ,:detalle=> detalle1,:tm=>tm1,:tranportorder_id=> product.id,:fecha=>fecha,:supplier_id =>ac_supplier.to_i ,:gasto_id=> gasto.to_i,:employee_id=> empleado )
+        importe  = parts[1].to_f
+        fecha     = parts[2].to_date 
+         
+        puts "detalle...."
 
-          new_invoice_product.save
-          if tm1.to_i != 6
-            new_compro = Compro.new(:ost_id=> self.id ,:importe=> total,:detalle=>detalle1,:company_id=>1,:location_id=>1,:division_id=>1,:tranportorder_id=>product.id,:code=>detalle2,:fecha=>fecha)
-            new_compro.save 
-          end
+        
+        total    +=  importe
+        
+       
+          puts id 
+        puts importe
+        puts fecha 
+        puts total 
+        puts self.id 
+
+
+          new_vuelto_product = VueltoDetail.new(fecha: fecha , cout_id: id , importe: importe, flete: 0, egreso: 0,total: total , observa: "-", vuelto_id: self.id )
+          begin                       
+          new_vuelto_product.save
+          rescue 
+          end 
           
     
       end
@@ -632,4 +653,10 @@ if   a= Supplier.where(id: id ).exists?
            return "Employee no existe."
       end 
   end  
+
+
+
+
+
+
 end

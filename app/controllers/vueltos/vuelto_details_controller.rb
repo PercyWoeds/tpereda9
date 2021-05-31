@@ -44,8 +44,24 @@ class Vueltos::VueltoDetailsController < ApplicationController
     @company   =  Company.find(1)
     @vuelto_detail = VueltoDetail.new(vuelto_detail_params)
 
+    items = params[:items]
+     puts "0ddddd"
+         
+     puts   params[:vuelto_detail][:fecha]
+
+     puts   params[:vuelto_detail][:observa]
+
+     puts items 
+
     respond_to do |format|
+
+      
+
       if @vuelto_detail.save
+
+         @vuelto.add_products(items,params[:vuelto_detail][:fecha],params[:vuelto_detail][:observa] )        
+        # Check if we gotta process the ajust
+    
         format.html { redirect_to @vuelto_detail, notice: 'Vuelto detail was successfully created.' }
         format.json { render :show, status: :created, location: @vuelto_detail }
       else
