@@ -144,6 +144,7 @@
 
 <div class="button">
   <%= link_to 'Exportar to PDF', "/vueltos/pdf/#{@vuelto.id}.pdf" %>  
+  <%= link_to 'Exportar Resumen', "/vueltos/pdf2/#{@vuelto.id}.pdf" %>  
   
  <% if @vuelto.processed == "1" %> 
 

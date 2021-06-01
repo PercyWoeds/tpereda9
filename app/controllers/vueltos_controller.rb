@@ -33,6 +33,7 @@ class VueltosController < ApplicationController
 
   # GET /vueltos/1/edit
   def edit
+    @company   =  Company.find(1)
   end
 
   # POST /vueltos
@@ -387,6 +388,247 @@ def build_pdf_footer(pdf)
   end   
      
 
+
+
+  def pdf2
+    @vuelto =  Vuelto.find(params[:id])
+    
+    @company =Company.find(1)
+    company =  @company.id
+    
+    Prawn::Document.generate "app/pdf_output/#{@vuelto.id}.pdf" , :page_layout => :landscape   do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header2(pdf)
+        pdf = build_pdf_body2(pdf)
+        build_pdf_footer2(pdf)
+        @lcFileName =  "app/pdf_output/#{@vuelto.id}.pdf"      
+        
+    end     
+
+    @lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+@lcFileName
+                
+    send_file("#{@lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+
+
+  end
+
+     
+  def build_pdf_header2(pdf)
+
+      pdf.font "Helvetica"  , :size => 8
+     image_path = "#{Dir.pwd}/public/images/tpereda2.png"
+
+
+     
+       table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD EN EL TRABAJO ",:rowspan => 2},"CODIGO ","TP-FZ-F-015"], 
+          ["VERSION: ","2"], 
+          ["RESUMEN SEMANAL DE VUELTOS DE VIAJE  ","PAGINA: ","1 de 1 "] 
+         
+          ])
+      
+
+       pdf.table(table_content  ,{
+           :position => :center,
+           :width => pdf.bounds.width
+         })do
+            columns([1,2]).font_style = :bold
+            columns([0]).width = 118.55
+            columns([1]).width = 481.45
+            columns([1]).align = :center
+            columns([2]).align = :center
+            columns([3]).align = :center
+
+            columns([2]).width = 60
+
+            columns([3]).width = 60
+
+         end
+        
+      
+        
+         pdf.move_down 2
+         table_content2 = ([["Fecha : ",@vuelto.fecha.strftime("%d/%m/%Y")]])
+
+         pdf.table(table_content2,{:position=>:right }) do
+
+            columns([0, 1]).font_style = :bold
+            columns([0, 1]).width = 100
+            
+         end 
+
+         pdf.move_down 2
+
+         table_content3 = ([["LIQ N°: ",@vuelto.code ]])
+
+         pdf.table(table_content3,{:position=>:right }) do
+
+            columns([0, 1]).font_style = :bold
+            columns([0, 1]).width = 100
+            
+         end 
+
+         pdf.move_down 2
+      
+         pdf 
+  end   
+
+
+
+  def build_pdf_body2(pdf)
+  
+    pdf.text " ", :size => 13, :spacing => 4
+    
+      pdf.font "Helvetica" , :size => 5      
+      headers = []
+      table_content = []
+      table_content0 = []
+      table_content2 = []
+      table_content3 = []
+
+      headers_ing = []
+      table_content_ing = []
+
+
+      Vuelto::TABLE_HEADERS2.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers_ing  << cell
+      end
+
+      table_content2 << headers_ing 
+
+  
+       nroitem = 1
+       @total_importe = 0
+
+      @vuelto_detail =  @vuelto.vuelto_details
+
+
+ 
+
+      
+       
+       table_content = ([ [  {:content =>"VUELTOS ",:colspan => 2},{:content =>" " } ," " ,{:content =>"VUELTOS 01 ",:colspan => 2}  ], 
+          ["DIA ","MONTO"," "," ","DIA ","MONTO"], 
+          [@vuelto.fecha.strftime("%d/%m/%Y"), @vuelto.total ," "," "," "," "],
+          [" " , " "," "," "," "," "],
+          ["TOTAL S/. ", @vuelto.total ," "," ","TOTAL S/.  ", " "]
+         
+          ])
+      
+
+       pdf.table(table_content  ,{
+           :position => :center,
+           :width => pdf.bounds.width
+         })do
+            columns([0,1,4,5]).font_style = :bold
+           
+            
+            columns([0]).align = :center
+            columns([1]).align = :center
+            columns([4]).align = :center
+            columns([5]).align = :center
+
+            columns([2]).width = 80
+
+            columns([3]).width = 80
+
+         end
+        
+      
+      pdf.move_down 10  
+
+
+
+       table_content = ([ [  {:content =>"INGRESO DE VUELTOS ",:colspan => 1},@vuelto.total  ], 
+          ["INGRESO DE VUELTOS 01",""], 
+          ["TOTAL DE SEMANA  ", @vuelto.total ],
+          [" " , " "],
+          ["OBSERV. ",  " " ]
+         
+          ])
+      
+
+       pdf.table(table_content  ,{
+           :position => :center,
+           :width => pdf.bounds.width   / 3
+         })do
+            columns([0,1,4,5]).font_style = :bold
+           
+            
+            columns([0]).align = :center
+            columns([1]).align = :center
+            columns([4]).align = :center
+            columns([5]).align = :center
+
+            columns([2]).width = 80
+
+            columns([3]).width = 80
+
+         end
+        
+      
+      pdf.move_down 10  
+      pdf
+
+    end
+def build_pdf_footer2(pdf)
+
+
+      @valores =  @company.get_min_max(params[:id])
+
+      if @valores.length > 1
+
+        @valores_min = @valores.last.dmin.to_s
+        @valores_max = @valores.last.dmax.to_s 
+
+
+      else
+
+        @valores_min = " " 
+        @valores_max = " " 
+
+
+
+      end 
+      puts " ***********************************************  " 
+      puts  @valores_min
+      puts  @valores_max
+
+ pdf.move_down 30
+      
+       pdf.text "Ingresos del " + @valores_min +   " al  " + @valores_max +"se Deposito el " + @vuelto.fecha.strftime("%d/%m/%Y"), size: 11 
+       pdf.text "El voucher original se presente con el reporte " , size: 11 
+        
+       data =[["----------------------------------------------------------","----------------------------------------------------------","----------------------------------------------------------"],
+            ["Elaborado por ","V.B.","V.B."],
+               
+               ["Soledad Silvestre","Asistente de Gerencia","Gerente Administrativo"]
+                ]
+
+           
+            pdf.text " "
+            pdf.table(data  ,{
+                 :position => :center,
+                 :width => pdf.bounds.width,
+                  :cell_style => {:border_width => 0},
+               })do
+                 columns([0,1,2]).font_style = :bold
+                
+                 columns([0]).align = :center
+          
+                  columns([1]).align = :center
+                   columns([2]).align = :center
+                  
+
+               end
+
+            pdf.move_down 10          
+      
+      pdf
+      
+  end   
+     
 
   private
     # Use callbacks to share common setup or constraints between actions.

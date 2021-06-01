@@ -6216,16 +6216,29 @@ def reporte_asistencia3
                 row << product.date2.strftime("%d/%m/%Y")
                 row << product.date3.strftime("%d/%m/%Y")
 
+                if product.document_id  == 2
+
+                  importe_f = product.total_amount * -1
+
+
+                else
+                  importe_f = product.total_amount
+
+                end   
+
                 if product.moneda_id == 1 
                     row << "0.00 "
-                    row << sprintf("%.2f",product.total_amount.to_s)
-                    total_dolares  += product.total_amount 
+                    row << sprintf("%.2f",importe_f.to_s)
+
+                    total_dolares  += importe_f 
                
                 else
-                    row << sprintf("%.2f",product.total_amount.to_s)
+                    row << sprintf("%.2f",importe_f.to_s)
                     row << "0.00 "
-                    total_soles += product.total_amount  
+                    total_soles += importe_f 
                 end 
+
+
                 row << product.get_destino 
                 row << product.user.username 
                 row << product.get_observacion 
@@ -6260,17 +6273,27 @@ def reporte_asistencia3
                 row << product.date2.strftime("%d/%m/%Y")
                 row << product.date3.strftime("%d/%m/%Y")
 
-              if product.moneda_id == 1 
-                  row << "0.00 "
-                  row << sprintf("%.2f",product.total_amount.to_s)
-                  total_dolares  += product.total_amount 
-             
-              else
-                  row << sprintf("%.2f",product.total_amount.to_s)
-                  row << "0.00 "
-                  total_soles += product.total_amount  
+             if product.document_id  == 2
 
-              end 
+                  importe_f = product.total_amount * -1
+
+
+                else
+                  importe_f = product.total_amount
+
+                end   
+
+                if product.moneda_id == 1 
+                    row << "0.00 "
+                    row << sprintf("%.2f",importe_f.to_s)
+
+                    total_dolares  += importe_f 
+               
+                else
+                    row << sprintf("%.2f",importe_f.to_s)
+                    row << "0.00 "
+                    total_soles += importe_f 
+                end 
               row << product.get_destino 
               row << product.user.username 
               row << product.comments

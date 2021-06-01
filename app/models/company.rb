@@ -5871,6 +5871,18 @@ def get_ost_detalle3 (fecha1,mes1,fecha2,mes2,busqueda )
 end
 
 
+  def get_min_max(id)
+     
+     @dato  = Vuelto.find_by_sql(['SELECT 
+          min(fecha) AS dmin
+         ,max(fecha) AS dmax
+         FROM  vuelto_details 
+         WHERE vuelto_id = ? group by vuelto_id ' , id] )
+
+   return  @dato
+    
+  end
+    
 
 end
 
