@@ -78,7 +78,7 @@ class SuppliersController < ApplicationController
     @pagetitle = "Suppliers - #{@supplier.name}"
     @bancos = @company.get_banks()
     @supplier_detail = @supplier.supplier_details
- @tipoproveedor =@company.get_tipoproveedor()
+    @tipoproveedor =@company.get_tipoproveedor()
   end
 
   # GET /suppliers/new

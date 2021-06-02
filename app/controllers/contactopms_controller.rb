@@ -85,15 +85,14 @@ class ContactopmsController < ApplicationController
     end
   end
 
-
+  
  
    def pdf
 
     @company = Company.find(1)
     
     @rpt_contactopms = Contactopm.select("contactopms.*, 
-      contactopmdetails.contacto,contactopmdetails.email, contactopmdetails.telefono").joins(:contactopmdetails).order(:proyecto_minero_id)
-
+      contactopmdetails.*").joins(:contactopmdetails).order("contactopms.proyecto_minero_id,contactopmdetails.sucursal,contactopmdetails.contacto")
 
     Prawn::Document.generate "app/pdf_output/rpt_contactopms.pdf", :page_layout => :landscape  ,:page_size=>"A4"   do |pdf|
         pdf.font "Helvetica"
@@ -117,9 +116,9 @@ class ContactopmsController < ApplicationController
 
     
       
-       table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION INTEGRADO ",:rowspan => 2},"CODIGO ","TP-EC-F-011"], 
+       table_content = ([ [{:image => image_path, :rowspan => 3  , position: :center, vposition: :center}, {:content =>"SISTEMA DE GESTION INTEGRADO ",:rowspan => 2 , valign: :center },"CODIGO ","TP-EC-F-011"], 
           ["VERSION: ","2"], 
-          ["BASE DE DATOS DE CONTACTO A MINAS","Pagina: ","1 de 1 "] 
+          ["BASE DE DATOS DE CONTACTO A MINAS","PAGINA: ","1 de 1 "] 
          
           ])
       
@@ -141,7 +140,7 @@ class ContactopmsController < ApplicationController
       
          end
         
-         table_content2 = ([["Fecha : ",Date.today.strftime("%d/%m/%Y")]])
+         table_content2 = ([["FECHA : ",Date.today.strftime("%d/%m/%Y")]])
 
          pdf.table(table_content2,{:position=>:right }) do
 
@@ -178,11 +177,13 @@ class ContactopmsController < ApplicationController
                  row << nroitem.to_s
 
                  row <<  product.proyecto_minero.descrip
-
+                 row <<  product.sucursal 
                  row <<  product.contacto 
+                 row <<  product.cargo
                  row <<  product.email 
+                 row <<  product.celular
                  row <<  product.telefono 
-
+                 row <<  product.observa  
 
     
             table_content << row
@@ -256,6 +257,6 @@ class ContactopmsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def contactopm_params
       params.require(:contactopm).permit(:proyecto_minero_id,:code, 
-        :contactopmdetails_attributes => [:id,:contactopm_id, :contacto ,:email, :telefono, :destroy]  )
+        :contactopmdetails_attributes => [:id,:contactopm_id, :contacto ,:email, :telefono, :sucursal, :cargo,:celular,:observa,:destroy]  )
     end
 end

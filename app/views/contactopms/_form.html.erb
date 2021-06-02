@@ -9,9 +9,14 @@
   <table>
    <tr>
    <th style="width: 5%">Item </th>
+   <th style="width: 10%">Sucursal </th>
    <th style="width: 10%">Contacto </th>
+   <th style="width: 10%">Cargo</th>
    <th style="width: 10%">Email</th>
+   <th style="width: 10%">Celular </th>
+
    <th style="width: 10%">Telefono </th>
+   <th style="width: 10%">Observa. </th>
    
    <% nroitem = 1 %>
 
@@ -22,9 +27,15 @@
     <tr>
 
     <td style="width: 5%">  <%= nroitem %> </td>
+    <td style="width: 10%">  <%= rq_fields.text_field :sucursal, :size=>"30" %></td>
+
     <td style="width: 10%">  <%= rq_fields.text_field :contacto , :size=>"30" %></td>
+     <td style="width: 10%">  <%= rq_fields.text_field :cargo , :size=>"30" %></td>
     <td style="width: 10%">  <%= rq_fields.text_field :email , :size=>"30" %></td>
+    <td style="width: 10%">  <%= rq_fields.text_field :celular , :size=>"30"%></td>
+ 
     <td style="width: 10%">  <%= rq_fields.text_field :telefono , :size=>"30"%></td>
+    <td style="width: 10%">  <%= rq_fields.text_field :observa, :size=>"30"%></td>
 
     
     </tr>

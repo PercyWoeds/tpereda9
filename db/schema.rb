@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210525220516) do
+ActiveRecord::Schema.define(version: 20210602173713) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -475,6 +475,10 @@ ActiveRecord::Schema.define(version: 20210525220516) do
     t.integer  "contactopm_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "sucursal"
+    t.string   "cargo"
+    t.string   "celular"
+    t.string   "observa"
   end
 
   add_index "contactopmdetails", ["contactopm_id"], name: "index_contactopmdetails_on_contactopm_id", using: :btree

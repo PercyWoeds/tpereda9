@@ -69,6 +69,6 @@ class ContactopmdetailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def contactopmdetail_params
-      params.require(:contactopmdetail).permit(:contacto, :email, :telefono, :contactopm_id)
+      params.require(:contactopmdetail).permit(:sucursal, :contacto, :email, :telefono,:cargo,:celular,:observa, :contactopm_id)
     end
 end

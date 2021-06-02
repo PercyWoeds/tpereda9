@@ -14,9 +14,13 @@ class Contactopm < ActiveRecord::Base
 
  TABLE_HEADERS = [ "Nro.",
                    "PROYECTO MINERO ",
+                   "SUCURSAL",
                    "CONTACTO",
+                   "CARGO",
                    "CORREO ELECTRONICO",
-                   "TELEFONO"
+                   "CELULAR",
+                   "TELEFONO",
+                   "OBSERVA."              
                    ]
 
  
