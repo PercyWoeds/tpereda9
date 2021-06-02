@@ -6218,7 +6218,7 @@ def reporte_asistencia3
 
                 if product.document_id  == 2
 
-                  importe_f = product.total_amount * -1
+                  importe_f = product.total_amount 
 
 
                 else
@@ -6275,7 +6275,7 @@ def reporte_asistencia3
 
              if product.document_id  == 2
 
-                  importe_f = product.total_amount * -1
+                  importe_f = product.total_amount 
 
 
                 else
