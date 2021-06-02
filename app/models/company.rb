@@ -5588,7 +5588,7 @@ def get_proyecto_exam_empleado_2
 
    fechahoy = Date.today() + 30 
 
-  @proyecto_exam_empleado = ProyectoexamDetail.select("employee_id").where(["fecha <=? ","#{fechahoy} 23:59:59"]).group(:employee_id)
+  @proyecto_exam_empleado = ProyectoexamDetail.select("employee_id").where(["fecha <=? and active  = ?","#{fechahoy} 23:59:59","1"]).group(:employee_id)
   return @proyecto_exam_empleado 
 
 

@@ -8522,9 +8522,9 @@ def rpt_conductor_pdf
 
        table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center },
         {:content => "SISTEMA DE GESTIÓN DE INTEGRADO ",
-          :rowspan => 2},"CODIGO ","TP-EC-F-003"], 
+          :rowspan => 2, valign: :center },"CODIGO ","TP-EC-F-003"], 
           ["VERSION: ","03"], 
-          ["STATUS DE INGRESOS A PROYECTOS MINEROS, ALMACENES Y/O PUERTOS : " + @fecha_hoy.strftime("%d/%m/%Y") ,"Pagina: ","1 de 1 "] 
+          ["STATUS DE INGRESOS A PROYECTOS MINEROS, ALMACENES Y/O PUERTOS : " + @fecha_hoy.strftime("%d/%m/%Y") ,"PAGINA : ","1 de 1 "] 
          
           ])
         

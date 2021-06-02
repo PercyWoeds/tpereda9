@@ -60,9 +60,7 @@ class ProyectoExams::ProyectoexamDetailsController < ApplicationController
     @detalle = ProyectoexamDetail.joins("INNER JOIN proyecto_minero_exams ON  
        proyecto_minero_exams.id = proyectoexam_details.proyecto_minero_exam_id ")
       .where(proyecto_exam_id: params[:proyecto_exam_id],employee_id: params[:employee_id]).order("proyecto_minero_exams.orden")
-  
 
-    
 
     
     @pumps = ProyectoMineroExam.where(proyecto_minero_id: params[:proyecto_minero_id] ).order(:orden)
@@ -336,23 +334,31 @@ class ProyectoExams::ProyectoexamDetailsController < ApplicationController
           parts_value =  ""
 
           params.each do |key,value|
-               Rails.logger.warn "Param #{key}: #{value}"
+           Rails.logger.warn "Param #{key}: #{value}"
 
                  campo = "#{key}"
 
-               if campo[0..5]  == "field_" and campo[6..7].to_i == proyecto_minero_exam_detail_id
+              if campo.length == 8
+
+                if campo[0..5]  == "field_" and campo[6..7].to_i == proyecto_minero_exam_detail_id
 
                  parts_id = campo[6..7].to_i 
                  parts_value = "#{value}".to_date
 
-                  puts "field obs++++++++++++++++++"
-                puts campo[0..5] 
-                puts campo[6..7]
-                puts parts_value
 
-               end 
+                end 
+
+              else 
+               if campo[0..5]  == "field_" and campo[6..8].to_i == proyecto_minero_exam_detail_id
+
+                 parts_id = campo[6..8].to_i 
+                 parts_value = "#{value}".to_date
 
 
+                end 
+
+
+              end 
 
 
           end
@@ -385,16 +391,29 @@ class ProyectoExams::ProyectoexamDetailsController < ApplicationController
 
                  campo = "#{key}"
 
-               if campo[0..5]  == "field_" and campo[6..7].to_i == proyecto_minero_exam_detail_id
+              
+              if campo.length == 8
 
-                puts "field obs++++++++++++++++++"
-                puts campo[0..5] 
-                puts campo[6..7]
+                if campo[0..5]  == "field_" and campo[6..7].to_i == proyecto_minero_exam_detail_id
 
                  parts_id = campo[6..7].to_i 
                  parts_value = "#{value}"
 
-               end 
+
+                end 
+
+              else 
+               if campo[0..5]  == "field_" and campo[6..8].to_i == proyecto_minero_exam_detail_id
+
+                 parts_id = campo[6..8].to_i 
+                 parts_value = "#{value}"
+
+
+                end 
+
+
+              end 
+
 
 
           end
