@@ -8,7 +8,6 @@ class ProyectoExamsController < ApplicationController
 
   end
 
-
   # GET /proyecto_exams/1
   # GET /proyecto_exams/1.json
   def show

@@ -113,7 +113,10 @@
               <% @detalle = proyectoitem.get_detalle(proyectoitem.employee_id, 
                                                     @proyecto_exam.id ) %>
 
+   
 
+
+                <% if @detalle.length > 0 %>
                  <% for detalle in @detalle  %>
 
 
@@ -184,8 +187,16 @@
 
         </tr>
 
+        <% else %>
 
 
+                          <td  class="small bordered_bottom bordered_right">
+                            No hay informacion de empleados 
+                           </td>
+  
+
+      
+       <% end %>
       
     <% end %>
 
