@@ -1578,12 +1578,12 @@ def get_customer_payments_detail_value(fecha1,fecha2,value="total")
  
   def actualizar_purchase_fecha2
 
-    facturas = Factura.where(:fecha2 => nil )
+    facturas = Purchase.where(:date2 => nil )
     for factura in facturas
-        fact =  Factura.find(factura.id)
+        fact =  Purchase.find(factura.id)
         days = fact.payment.day 
         fechas2 = factura.fecha + days.days           
-        fact.update_attributes(:fecha2=>fechas2)   
+        fact.update_attributes(:date2 =>fechas2)   
     end 
 
  end

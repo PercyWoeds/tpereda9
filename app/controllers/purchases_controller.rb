@@ -2653,13 +2653,12 @@ result = pdf.table table_content3, {:position => :center,
     
     @tipomoneda = params[:moneda_id]
 
-    @company.actualizar_purchase_fecha2
+     @company.actualizar_purchase_fecha2
     @company.actualizar_purchase_monthyear
 
     Freepagar.delete_all 
 
     @customerpayment_rpt = @company.get_supplier_payments2(@tipomoneda,@fecha1,@fecha2)
-
     
 
     Prawn::Document.generate "app/pdf_output/rpt_customerpayment2.pdf", :page_layout => :landscape ,:page_size=>"A3"  do |pdf|        
