@@ -70,7 +70,7 @@
             <td width="10%" align="right"><%= sprintf("%.2f",compra.balance.to_s) %> </td>
             </tr>       
             </table>
-
+  
              <%  nroitem = nroitem + 1 %>
              <% tot_1 += compra.total_amount %> 
              <% tot_2 += compra.charge %>
@@ -79,7 +79,9 @@
 
              <% end %>
 
-            <%end %>
+            <% end %>
+          <%end %>
+          
              <% if tot_4.round(2) != 0.00 %>
 
             <table style=  'font-size:80% ;width:100%'>       
@@ -99,6 +101,8 @@
             </table>
             <% end %>
 
+
+
             <%  totg1 += tot_1 %>                  
                <%  totg2 += tot_2 %> 
                <%  totg3 += tot_3 %>                  
@@ -111,7 +115,6 @@
 
 
             <%end %>
-          <% end %>
          
 
           
