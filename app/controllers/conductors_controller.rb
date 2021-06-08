@@ -456,6 +456,7 @@ class ConductorsController < ApplicationController
   # PATCH/PUT /conductors/1.json
   def update
     @company = Company.find(1)
+
     @empleados = @company.get_employees()
 
 
@@ -831,6 +832,22 @@ class ConductorsController < ApplicationController
         @conductor[:cv6] = params[:cv6]
         @conductor[:cv7] = params[:cv7]
         @conductor[:cv8] = params[:cv8]
+
+        puts "1xxxxxxxxxxxxxxxxxxxxxxxx"
+         puts  @conductor[:active]
+         puts @conductor.employee_id
+         puts params[:active]
+
+
+      if   params[:active] == "1"
+           ProyectoexamDetail.where( employee_id: @conductor.employee_id).update_all(active:"1" )
+           Employee.where(id: @conductor.employee_id).update_all(active:"1" )
+           puts "activar"
+      else
+            ProyectoexamDetail.where( employee_id: @conductor.employee_id).update_all(active:"0" )
+           Employee.where(id: @conductor.employee_id).update_all(active:"0" )
+           puts "desactivara"
+      end 
 
 
 

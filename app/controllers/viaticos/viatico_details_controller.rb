@@ -16,7 +16,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
   def show
     @gastos = Gasto.all
     @company = Company.find(1)
-    @locations = @company.get_locations()
+    @locations =4 @company.get_locations()
     @divisions = @company.get_divisions()
     @documents = @company.get_documents()
     @cajas = Caja.all      

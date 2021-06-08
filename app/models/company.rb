@@ -424,7 +424,13 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
   end    
 
 
-   def get_employees2()
+  def get_employees2()
+     employees =  Employee.where(:active => "1").order(:lastname,:firstname)
+     return employees
+  end   
+
+
+  def get_employees3()
      employees =  Employee.where(:active => "1").order(:lastname,:firstname)
      return employees
   end   
@@ -5367,7 +5373,7 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
 
   def get_purchases_by_moneda_prov2(fecha1,fecha2,moneda,proveedor)  
     
-    @purchases = Purchase.where([" company_id = ? and date3 >= ? and date3 <= ? and moneda_id = ?  and supplier_id = ?  and round(balance::numeric,2 ) <> ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda, proveedor,"0.00"]).order(:supplier_id,:date3)    
+    @purchases = Purchase.where([" company_id = ? and date3 >= ? and date3 <= ? and moneda_id = ?  and supplier_id = ?  and round(balance::numeric,2 ) <> ?  ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda, proveedor,"0.00",1449,"2021-06-08 00:00:00","2020-06-08 23:59:59" ]).order(:supplier_id,:date3)    
     return @purchases 
   end
 

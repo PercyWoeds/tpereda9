@@ -932,10 +932,14 @@ end
   
   end 
   def process_menos
+
+
     if self.tipo =="0"
       
 
     if(self.processed == "1" or self.processed == true  )
+
+      
       
 
      
