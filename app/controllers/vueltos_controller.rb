@@ -50,8 +50,7 @@ class VueltosController < ApplicationController
     respond_to do |format|
       if @vuelto.save
 
-       
-        @vuelto.add_products(items)
+    
         @vuelto.process()
 
 
@@ -166,8 +165,8 @@ class VueltosController < ApplicationController
 
 
      
-       table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD EN EL TRABAJO ",:rowspan => 2},"CODIGO ","TP-FZ-F-015"], 
-          ["VERSION: ","2"], 
+       table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center  }, {:content =>"SISTEMA DE GESTION INTEGRADO ",:rowspan => 2},"CODIGO ","TP-FZ-F-015"], 
+          ["VERSION: ","3"], 
           ["INGRESO DE VUELTOS  ","PAGINA: ","1 de 1 "] 
          
           ])
@@ -249,8 +248,7 @@ class VueltosController < ApplicationController
 
       @vuelto_detail =  @vuelto.vuelto_details
 
-     
-
+    
         for  product  in @vuelto_detail
 
            row = []
@@ -259,19 +257,15 @@ class VueltosController < ApplicationController
 
             row << product.fecha.strftime("%d/%m/%Y") 
 
-            row <<  product.cout.code 
-        
-            table_content2 << row
+            row <<  product.code 
 
-            @total_importe   += product.total.round(2)
-
-            row <<  product.cout.employee.full_name
+            row <<  product.employee.full_name
       
-            row <<  product.cout.truck.placa + " / " + product.cout.get_placa(product.cout.truck2_id) +  product.cout.get_placa(product.cout.truck3_id) 
+            row <<  product.truck.placa + " / " + product.get_placa(product.truck2_id) +  product.get_placa(product.truck3_id) 
             
-            row <<  product.cout.get_punto(product.cout.ubication_id) + "  -  "+ product.cout.get_punto(product.cout.ubication2_id) +" EJES:"+ product.cout.tranportorder.get_ejes2(product.cout.tranportorder.id) + "( TBK " + product.cout.tbk_documento + " )"
+            row <<  product.get_punto(product.ubication_id) + "  -  "+ product.get_punto(product.ubication2_id) 
 
-            row << "VUELTO DE VIAJE "
+            row << product.observa 
             row << sprintf("%.2f",product.importe)
 
 
@@ -286,15 +280,15 @@ class VueltosController < ApplicationController
             row << " "
 
             row << "  "
-            
+
+            table_content2 << row
+
+            @total_importe   += product.total.round(2)
 
         end 
 
       pdf.move_down 10  
       ###EGRESOS 
-
-
-
 
                result = pdf.table table_content2, {:position => :center,
                                         :header => true,
@@ -309,11 +303,15 @@ class VueltosController < ApplicationController
                                           columns([5]).align=:right 
                                           columns([6]).align=:left  
 
+                                          columns([7]).align=:right 
+                                          columns([8]).align=:right 
+                                          columns([9]).align=:right
+                                          columns([10]).align=:right 
+
                                         
-                                          columns([5]).width = 50
-                                          columns([6]).width = 60 
-                                          columns([7]).width = 60
-                                          columns([8]).width = 60
+                                         
+                                          columns([11]).width = 60
+                                          columns([12]).width = 60
                                         end 
 
 
@@ -361,7 +359,7 @@ def build_pdf_footer(pdf)
        data =[["----------------------------------------------------------","----------------------------------------------------------","----------------------------------------------------------"],
             ["Elaborado por ","V.B.","V.B."],
                
-               ["Soledad Silvestre","Asistente de Gerencia","Gerente Administrativo"]
+               ["Coordinadora de Finanzas","Asistente de Gerencia","Gerente Administrativo"]
                 ]
 
            
@@ -420,8 +418,8 @@ def build_pdf_footer(pdf)
 
 
      
-       table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD EN EL TRABAJO ",:rowspan => 2},"CODIGO ","TP-FZ-F-015"], 
-          ["VERSION: ","2"], 
+       table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center }, {:content =>"SISTEMA DE GESTION DE INTEGRADO ",:rowspan => 2},"CODIGO ","TP-FZ-F-015"], 
+          ["VERSION: ","3"], 
           ["RESUMEN SEMANAL DE VUELTOS DE VIAJE  ","PAGINA: ","1 de 1 "] 
          
           ])
@@ -508,11 +506,11 @@ def build_pdf_footer(pdf)
 
       
        
-       table_content = ([ [  {:content =>"VUELTOS ",:colspan => 2},{:content =>" " } ," " ,{:content =>"VUELTOS 01 ",:colspan => 2}  ], 
-          ["DIA ","MONTO"," "," ","DIA ","MONTO"], 
-          [@vuelto.fecha.strftime("%d/%m/%Y"), @vuelto.total ," "," "," "," "],
-          [" " , " "," "," "," "," "],
-          ["TOTAL S/. ", @vuelto.total ," "," ","TOTAL S/.  ", " "]
+       table_content = ([ [  {:content =>"VUELTOS ",:colspan => 2},{:content =>"  ",:colspan => 2,:rowspan  => 5 , :border_width => 0 } ,{:content =>"VUELTOS 01 ",:colspan => 2}  ], 
+          ["DIA ","MONTO","DIA ","MONTO"], 
+          [@vuelto.fecha.strftime("%d/%m/%Y"), @vuelto.total ," "," "],
+          [" " , " "," "," "],
+          ["TOTAL S/. ", @vuelto.total ,"TOTAL S/.  ", " "]
          
           ])
       
@@ -536,7 +534,7 @@ def build_pdf_footer(pdf)
          end
         
       
-      pdf.move_down 10  
+      pdf.move_down 50
 
 
 
@@ -597,13 +595,14 @@ def build_pdf_footer2(pdf)
 
  pdf.move_down 30
       
-       pdf.text "Ingresos del " + @valores_min +   " al  " + @valores_max +"se Deposito el " + @vuelto.fecha.strftime("%d/%m/%Y"), size: 11 
-       pdf.text "El voucher original se presente con el reporte " , size: 11 
-        
+       # pdf.text "Ingresos del " + @valores_min +   " al  " + @valores_max +"se Deposito el " + @vuelto.fecha.strftime("%d/%m/%Y"), size: 11 
+       # pdf.text "El voucher original se presente con el reporte " , size: 11 
+        pdf.text @vuelto.observa  , size: 11 
+
        data =[["----------------------------------------------------------","----------------------------------------------------------","----------------------------------------------------------"],
             ["Elaborado por ","V.B.","V.B."],
                
-               ["Soledad Silvestre","Asistente de Gerencia","Gerente Administrativo"]
+               ["Coordinadora de Finanzas ","Asistente de Gerencia","Gerente Administrativo"]
                 ]
 
            
@@ -638,6 +637,6 @@ def build_pdf_footer2(pdf)
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def vuelto_params
-      params.require(:vuelto).permit(:code, :fecha, :user_id, :processed, :date_processed, :total)
+      params.require(:vuelto).permit(:code, :fecha, :user_id, :processed, :date_processed, :total,:observa )
     end
 end

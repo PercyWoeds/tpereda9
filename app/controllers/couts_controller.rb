@@ -6,8 +6,14 @@ class CoutsController < ApplicationController
 
 
   def index
-    @couts = Cout.order(:code)
+
+
+    @couts = Cout.order("code desc").paginate(:page => params[:page])
+
       @company = Company.find(1)
+
+
+
   end
 
   # GET /couts/1
@@ -45,7 +51,9 @@ class CoutsController < ApplicationController
       @cout[:employee4_id] = 64
       @cout[:tranportorder_id] = 222
 
-      @cout[:tipo_compro] = "0"
+      @cout[:tipo_compro] = params[:id]
+      puts "1sss tipo compro"
+      puts @cout[:tipo_compro]
 
   end
 
@@ -72,7 +80,11 @@ class CoutsController < ApplicationController
       @cout[:ost_exist] = "1"
       @cout[:employee4_id] = 64
       @cout[:tranportorder_id] = 222
-      @cout[:tipo_compro] = "1"
+      @cout[:tipo_compro] = params[:id]
+      puts "1sss tipo compro"
+      puts @cout[:tipo_compro]
+
+
 
   end
 
@@ -80,8 +92,22 @@ class CoutsController < ApplicationController
 
   def list_couts
 
-      @couts = Cout.where(tipo_compro: "1").order(:code)
+    
       @company = Company.find(1)
+
+
+    if(@company.can_view(current_user))
+         @couts = Cout.where(tipo_compro: params[:id]).order('code DESC').paginate(:page => params[:page])
+
+        if params[:search]
+          @couts  = Cout.where(tipo_compro: params[:id]).search(params[:search]).order('code DESC').paginate(:page => params[:page])
+        else
+          @couts  = Cout.where(tipo_compro: params[:id]).order('code DESC').paginate(:page => params[:page]) 
+        end
+    
+    else
+      errPerms()
+    end
   end 
 
   # GET /couts/1/edit

@@ -968,7 +968,7 @@ match 'companies/reports/rpt_coti_1_pdf/:company_id' => 'reports#rpt_coti_1_pdf'
   match 'viaticotbks/do_process/:id' => 'viaticotbks#do_process', via: [:get, :post]
   match 'viaticotbks/email/:id' => 'viaticotbks#email', via: [:get, :post]
   match 'viaticotbks/pdf/:id' => 'viaticotbks#pdf', via: [:get, :post]
-  match 'companies/viaticotbks/:company_id' => 'viaticotbks#list_viaticos', via: [:get, :post]
+  match 'companies/viaticotbks/:id' => 'viaticotbks#list_viaticos', via: [:get, :post]
   
   match 'viaticotbks/rpt_viatico_pdf/:company_id' => 'viaticotbks#rpt_viatico_pdf', via: [:get, :post]
   match 'viaticotbks/rpt_viatico_pdf' => 'viaticotbks#rpt_viatico_pdf', via: [:get, :post]

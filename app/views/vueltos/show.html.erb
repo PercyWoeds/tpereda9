@@ -22,6 +22,12 @@
   <%= @vuelto.date_processed %>
 </p>
 
+
+<div class="button">
+<%= link_to 'Agregar Item', new_vuelto_vuelto_detail_path(@vuelto) %>
+
+</div> 
+
 <table>
   <thead>
     <tr>
@@ -30,6 +36,9 @@
         Item
       </th>
 
+       <th>
+        Code 
+      </th>
        
 
        <th>
@@ -80,6 +89,12 @@
         <%= nroitem %>
         </td>
 
+          <td class="small bordered_bottom bordered_right">
+
+             <%=product.code %>
+
+          </td>
+
         <td class="small bordered_bottom bordered_right">
 
              <%=product.fecha.strftime("%d/%m/%Y") %>
@@ -105,7 +120,8 @@
               <%=product.observa %>
           </td>
 
-          <td><%= link_to 'Editar',  edit_viatico_viatico_detail_path(viatico_id: @vuelto.id,id: product.id ) %></td>          
+
+          <td><%= link_to 'Editar',  edit_vuelto_vuelto_detail_path(vuelto_id: @vuelto.id,id: product.id ) %></td>          
           <td><%= link_to 'Eliminar',[@vuelto,product], method: :delete, data: { confirm: 'Esta seguro?' } %></td>
           
       </tr>
@@ -140,6 +156,12 @@
   <%= link_to @vuelto.user.username, @vuelto.user %>
 </p>
 
+
+<p>
+<strong>Observacion :</strong>
+<%= @vuelto.observa %>
+
+</p>  
 <%= hr() %>
 
 <div class="button">

@@ -1388,8 +1388,7 @@ pdf.move_down 2
     @viatico = Viatico.new(viatico_params)
     @company = Company.find(params[:viatico][:company_id])
     
-   @viatico[:code] =   @viatico.generate_viatico_number(params[:viatico][:caja_id])
-
+    @viatico[:code] =   @viatico.generate_viatico_number(params[:viatico][:caja_id])
 
    puts  "Nuevo viatico"
    puts  @viatico[:code]

@@ -3,10 +3,10 @@
 
  
 
-  <h3>
+  <h4>
     <%= image_tag("products_32.png", :class => "vmiddle") %>
-    <%= link_to "Comprobante Egreso ", couts_path %>
-  </h3>
+    <%= link_to "Comprobante Egreso ", "/couts/list_couts/0" %>
+  </h4>
 
   <p>
     Agregar, editar or eliminar liquidacion de viaticos/cajas que tu negocio ofrece.
@@ -14,10 +14,10 @@
 
   <%= hr() %>
 
-  <h3>
+  <h4>
     <%= image_tag("products_32.png", :class => "vmiddle") %>
     <%= link_to "Comprobante Egreso Local ", "/couts/list_couts/1" %>
-  </h3>
+  </h4>
 
   <p>
     Agregar, editar or eliminar liquidacion de viaticos/cajas que tu negocio ofrece.
@@ -26,10 +26,10 @@
   <%= hr() %>
 
 
-  <h3>
+  <h4>
     <%= image_tag("products_32.png", :class => "vmiddle") %>
     <%= link_to "Liquidacion Caja ","/companies/viaticos/2" %>
-  </h3>
+  </h4>
 
   <p>
     Agregar, editar or eliminar liquidacion de viaticos/cajas que tu negocio ofrece.
@@ -38,10 +38,10 @@
   <%= hr() %>
 
 
-  <h3>
+  <h4>
     <%= image_tag("products_32.png", :class => "vmiddle") %>
     <%= link_to "Liquidacion Caja - Compra de repuestos","/companies/viaticos/3" %>
-  </h3>
+  </h4>
 
   <p>
     Agregar, editar or eliminar liquidacion de viaticos/cajas que tu negocio ofrece.
@@ -50,10 +50,10 @@
   <%= hr() %>
 
   
-  <h3>
+  <h4>
     <%= image_tag("products_32.png", :class => "vmiddle") %>
     <%= link_to "Liquidacion Caja - Arequipa ","/companies/viaticos/4" %>
-  </h3>
+  </h4>
 
   <p>
     Agregar, editar or eliminar liquidacion de viaticos/cajas que tu negocio ofrece.
@@ -63,10 +63,22 @@
 
   
   
-  <h3>
+ 
+  <h4>
     <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
-    <%= link_to "Liquidacion de Viaticos telebanking  ","/companies/viaticotbks/#{@company.id}" %>
-  </h3>
+    <%= link_to "Liquidacion de Viaticos - efectivos ","/companies/viaticotbks/6" %>
+  </h4>
+
+  <p>
+   Agregar, editar or eliminar Liquidacion de viaticos telebanking por conductor
+  </p>
+
+  <%= hr() %>
+
+  <h4>
+    <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
+    <%= link_to "Liquidacion de Viaticos - telebanking ","/companies/viaticotbks/5" %>
+  </h4>
 
   <p>
    Agregar, editar or eliminar Liquidacion de viaticos telebanking por conductor
@@ -75,10 +87,10 @@
   <%= hr() %>
 
 
-  <h3>
+  <h4>
     <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
     <%= link_to "Ingreso de Vueltos ",vueltos_path %>
-  </h3>
+  </h4>
 
   <p>
    Agregar, editar or eliminar Liquidacion de viaticos telebanking por conductor
@@ -87,10 +99,10 @@
   <%= hr() %>
 
 
-  <h3>
+  <h4>
     <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
     <%= link_to "Liquidacion de viaje por conductor ","/companies/viaticolgvs/#{@company.id}" %>
-  </h3>
+  </h4>
 
   <p>
    Agregar, editar or eliminar Liquidacion de viaje por conductor
@@ -105,12 +117,12 @@
   
   
   
-  <h3>
+  <h4>
       <div>
         <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
         <%= link_to "Gastos", gastos_path  %>
       </div>
-  </h3>
+  </h4>
   <p>
     Gastos 
   </p>
@@ -118,12 +130,12 @@
 <%= hr() %>
 
 <% if current_user.level =="admin"%>
-  <h3>
+  <h4>
       <div>
         <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
         <%= link_to "Egresos", egresos_path  %>
       </div>
-  </h3>
+  </h4>
   <p>
     Egresos
   </p>
@@ -134,25 +146,25 @@
 <%= hr() %>
 
   
- <h3>
+ <h4>
       <div>
         <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
         <%= link_to "Consulta OST", "/tranportorders/do_stocks/#{@company.id}" %>
       </div>
-  </h3>
+  </h4>
   <p>
     Egresos
   </p>
 
 
 <%= hr() %>
-  <h3>
+  <h4>
         <div>
           <%= image_tag("divisions_32.png", :class => "vmiddle") %>
           <%= link_to "Reportes" , "/companies/reports/reports_caja/#{@company.id}" %>
            
         </div>
-  </h3>
+  </h4>
   <p>
     Reporte de viaticos 
   </p>

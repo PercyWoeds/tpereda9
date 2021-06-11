@@ -7,12 +7,11 @@ self.per_page = 20
 
   validates_presence_of   :code, :user_id,:fecha,:processed 
   validates_uniqueness_of :code 
-  
 
   
   
   belongs_to :user
-
+  
   has_many   :vuelto_details , :dependent => :destroy
   
   
@@ -655,6 +654,29 @@ if   a= Supplier.where(id: id ).exists?
   end  
 
 
+
+    def get_total 
+
+    facturas = VueltoDetail.where(vuelto_id: self.id)
+     ret = 0  
+
+
+    if facturas
+    
+
+      for factura in facturas      
+       
+          ret += factura.total
+        
+      end
+    end 
+
+
+    return ret
+   
+    
+
+    end 
 
 
 

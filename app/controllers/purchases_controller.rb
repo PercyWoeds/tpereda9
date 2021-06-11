@@ -5,14 +5,12 @@ include ProductsHelper
 include PurchasesHelper
 
 
-
 class PurchasesController < ApplicationController
 $: << Dir.pwd  + '/lib'
     before_action :authenticate_user!
     
     require "open-uri"
 
- 
 
   def show
     @purchase = Purchase.find(params[:id])
@@ -3369,11 +3367,11 @@ def newfactura2
   # POST /purchases.xml
   def create
 
-      @pagetitle = "Nueva Compra"
+    @pagetitle = "Nueva Compra"
     @action_txt = "Crear"
   
     @purchase = Purchase.new(purchase_params)
-    
+
     if  params[:purchase][:status] == "1"
           @company = Company.find(params[:purchase][:company_id])
           

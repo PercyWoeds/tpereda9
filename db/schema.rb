@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210602173713) do
+ActiveRecord::Schema.define(version: 20210610171505) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3632,8 +3632,15 @@ ActiveRecord::Schema.define(version: 20210602173713) do
     t.float    "total"
     t.text     "observa"
     t.integer  "vuelto_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "employee_id"
+    t.integer  "ubication_id"
+    t.integer  "ubication2_id"
+    t.integer  "truck_id"
+    t.integer  "truck2_id"
+    t.integer  "truck3_id"
+    t.string   "code"
   end
 
   add_index "vuelto_details", ["vuelto_id"], name: "index_vuelto_details_on_vuelto_id", using: :btree
@@ -3647,6 +3654,7 @@ ActiveRecord::Schema.define(version: 20210602173713) do
     t.float    "total"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.text     "observa"
   end
 
   add_foreign_key "assistances", "inasists"

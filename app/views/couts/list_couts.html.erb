@@ -1,8 +1,28 @@
 
 
+<% if params[:id] ==  "0"%>
+
+<h1>Comprobantes de Egresos  </h1>
+
+<% else %>
+
+<h1>Comprobantes de Egresos Locales </h1>
+
+<% end %>
 
 
-<h1>Comprobantes de Egresos Locales  </h1>
+
+<div class="small">
+  <form method="get" action="/couts/list_couts/<%= params[:id]%>">
+    <strong>Buscar :</strong>
+    <input type="text" name="search" value="<% if @q_org %><%= @q_org %><% end %>" class="small" style="width: 250px;" onclick="$(this).select();" />
+    <input type="submit" value="Buscar " class="bold small_btn" />
+    <a href="/couts/list_couts/<%= params[:id]%>" > Limpiar</a>
+  </form>
+</div>
+  
+<br />
+
 
 <table>
   <thead>
@@ -51,6 +71,8 @@
 </table>
 
 <br>
+<%= will_paginate @couts %>
+
 
 <div class="button">
 

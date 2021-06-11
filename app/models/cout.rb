@@ -133,6 +133,10 @@ belongs_to :viaticolgv_detail
     end   
   end 
 
+  def self.search(search)
+      where("code LIKE ?", "%#{search}%") 
+        
+  end
   
 private
 

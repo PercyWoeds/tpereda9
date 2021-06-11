@@ -295,11 +295,10 @@ class ProyectoExams::ProyectoexamDetailsController < ApplicationController
     puts empleado_id
 
 
-    active = params[:proyectoexam_detail][:active]
+    # active = params[:proyectoexam_detail][:active]
 
     puts "valor activo ??? "
 
-    puts active 
    
 
     a = ProyectoexamDetail.where(employee_id: empleado_id, proyecto_exam_id: proyecto_exam_id).delete_all 
@@ -371,8 +370,7 @@ class ProyectoExams::ProyectoexamDetailsController < ApplicationController
                   observacion: "",  
                   employee_id: empleado_id  , 
                   proyecto_exam_id: proyecto_exam_id,
-                  proyecto_minero_id: proyecto_minero_id,
-                  active: active  )
+                  proyecto_minero_id: proyecto_minero_id  )
 
 
         else 
@@ -425,8 +423,7 @@ class ProyectoExams::ProyectoexamDetailsController < ApplicationController
                     observacion: parts_value, 
                     employee_id: empleado_id  ,
                     proyecto_exam_id: proyecto_exam_id,
-                    proyecto_minero_id: proyecto_minero_id,
-                    active: active  )
+                    proyecto_minero_id: proyecto_minero_id )
 
         end 
 
@@ -434,9 +431,9 @@ class ProyectoExams::ProyectoexamDetailsController < ApplicationController
 
          proyectoexam_details.save
          
-         ProyectoexamDetail.where( employee_id: empleado_id ).update_all(active: active )
+       #   ProyectoexamDetail.where( employee_id: empleado_id ).update_all(active: active )
 
-       i += 1
+       # i += 1
 
        end 
 

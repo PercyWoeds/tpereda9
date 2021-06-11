@@ -15,7 +15,21 @@ class ViaticotbkSearch
 
     def scope
 
-        	 a = Cout.where(['fecha BETWEEN ? AND ? and parent IS NULL ',"#{@date_from} 00:00:00","#{@date_to} 23:59:59"])
+      @viaticotbk = Viaticotbk.find(@viaticotbk_id)
+
+      if @viaticotbk.caja_id  == 5 
+
+           tipo_comprobante = "0"
+      end 
+
+      if @viaticotbk.caja_id  == 6
+
+           tipo_comprobante = "1"
+      end 
+      
+
+
+        	 a = Cout.where(['fecha BETWEEN ? AND ? and parent IS NULL and tipo_compro = ?  ',"#{@date_from} 00:00:00","#{@date_to} 23:59:59",tipo_comprobante])
 
 
  		for detalle in a 
@@ -57,7 +71,9 @@ class ViaticotbkSearch
        end 
 
 
-    @viaticotbk = Viaticotbk.find(@viaticotbk_id)
+    
+
+
 
    begin
       @viaticotbk[:inicial] = @viaticotbk.get_total_inicial

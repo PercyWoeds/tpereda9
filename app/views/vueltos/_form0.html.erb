@@ -13,22 +13,25 @@
 
 <%= hr() %>
 
-
+<div class="mid_box bordered_right">
 
 <%= simple_form_for [@vuelto]  do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
 
+
+  
+
+
      <div class="field">
       <strong> Fecha :</strong><br /> 
           <%= f.date_field :fecha ,:style=> 'width: 180px'%>
-     </div>
+      </div>
 
   
-    <div class="field" >
+    <div class="field" id="list_items3">
       <p class="bold big">Detalle :</p>
-      <%= f.text_area :observa %>
     </div>
 
   
@@ -37,13 +40,62 @@
 
 
   <div class="form-actions">
+<input type="hidden" name="items" id="items" value="<% if @products_lines %><%= @products_lines %><% end %>" />
+
+
     <%= f.button :submit %>
   </div>
-
-
 <% end %>
 
+</div>
 
+
+<div class="mid_box">
+  <h4>
+    Agregar Comprobante Egreso 
+  </h4>
+  
+  <form method="get" action="/vueltos" onsubmit="addItemToCout(); return false;">
+   
+
+
+     <input type="hidden" name="ac_item_cout" id="ac_item_cout" value="" />
+    
+
+
+    <input type="date" name="ac_item_fecha" id="ac_item_fecha" value = <%= Date.today  %> />
+        <div class="small">
+          Ingrese un termino de busqueda para encontrar un producto.
+        </div>
+    <br />    
+<strong>  Comprobante de Egreso </strong><br />
+
+    <input type="text" name="ac_item" id="ac_item" value="" />
+        <div class="small">
+          Ingrese un termino de busqueda para encontrar un producto.
+        </div>
+    <br />    
+  
+    
+    <strong> Importe :</strong><br />
+
+    <input type="text" name="ac_item_vuelto" id="ac_item_vuelto" value="1" class="tf_short" />
+    <div class="small">
+     importe de vuelto.
+    </div>
+    <br />
+    
+    
+    <br />
+    <input type="submit" value="Agregar item a Factura" />
+    
+  </form>
+  
+  
+  <%= hr() %>
+
+</div>
+  
 
 <%= render 'layouts/autocomplete' %>
 
@@ -63,7 +115,10 @@
       $("#ac_item_cout").val(data[2]);    
       $("#selected_st").html(data[0]); 
       $("#ac_item_vuelto").val(data[4]);        
-        
+         
+      
+      
+      
     
     });
 

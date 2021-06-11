@@ -14,36 +14,102 @@
 
 <%= hr() %>
 
-<div class="mid_box bordered_right">
+
 
 <%= simple_form_for [@vuelto, @vuelto_detail]  do |f| %>
+
+
   <%= f.error_notification %>
 
   <div class="form-inputs">
 
-
-  
-
-
-     <div class="field">
-      <strong> Fecha :</strong><br /> 
+ 
+       <div class="field">
+       <strong> Fecha :</strong><br /> 
           <%= f.date_field :fecha ,:style=> 'width: 180px'%>
       </div>
 
+<table class="ui right aligned table">
+  <thead>
+    <th class="left aligned"></th>
+    <th>Datos</th>
+    <th>Conductor</th>
+    <th></th>
+  </thead>
+  <tbody>
+
+
+    <tr>
+      <td class="left aligned">Conductor </td>
+      <td>   <%= f.collection_select :employee_id, @employees, :id, :full_name2, :prompt => true  %></td> 
+      
+     
+    </tr>
+
+    <tr>
+     <td>Ruta Desde: </td>
+        <td>  <%= f.collection_select :ubication_id, @puntos, :id, :name, :prompt => true %></td>
+      <td>Hacia :</td>
+      <td>  <%= f.collection_select :ubication2_id, @puntos, :id, :name, :prompt => true %></td>
+
+    </tr>
+
+    
+  </tbody>
+</table>
+
+<TABLE>
+  <tr>
+    <td><strong>Vehiculo: </strong></td>
+    <td><%= f.collection_select :truck_id, @trucks, :id, :placa, :prompt => true  %></td> 
+                
+   <td> </td>
+    <td> </td> 
+  </tr>
+  <tr>
+    <td><strong>Vehiculo 2 : </strong></td>
+    <td><%= f.collection_select :truck2_id, @trucks, :id, :placa, :prompt => true  %></td> 
+   <td>  </td>
+    <td> </td> 
+  </tr>
+   <tr>
+    <td><strong>Escolta  </strong></td>
+    <td><%= f.collection_select :truck3_id, @trucks, :id, :placa, :prompt => true  %></td> 
+    <td> </td>
+    <td> </td> 
+  </tr>
+
+   </TABLE>
+<TABLE>
+
+   <thead>
+             
+              <th><strong>Importe:  </strong></th>
+              <th><strong>Flete:  </strong></th>
+              <th><strong>Egreso:  </strong></th>
+
+            </thead>
+            <tbody>
+
+  <tr>
+    <td><%= f.number_field :importe ,:style=> 'width: 120px' %></td>         
+    <td><%= f.number_field :flete ,:style=> 'width: 120px' %></td>
+    <td> <%= f.number_field :egreso  ,:style=> 'width: 120px' %></td> 
+  </tr>
   
-    <div class="field" id="list_items3">
-      <p class="bold big">Detalle :</p>
-    </div>
+</tbody>
+   </TABLE>
 
-
-    <div class="field">
-      <%= f.label :observa %><br />
-      <%= f.text_area :observa %>
-    </div>  
-
+   <div class="field">
+            <%= f.label  :observa ,"Observación  :  " , :class => "bold"%><br />
+            <%= f.text_area :observa  , step: :any  %>
   
-
+    </div> 
+    
   </div>
+
+
+
 
 
   <div class="form-actions">
@@ -52,51 +118,13 @@
 
     <%= f.button :submit %>
   </div>
+
+
 <% end %>
 
-</div>
 
 
-<div class="mid_box">
-  <h4>
-    Agregar Comprobante Egreso 
-  </h4>
   
-  <form method="get" action="/vueltos" onsubmit="addItemToCout(); return false;">
-   
-
-
-     <input type="hidden" name="ac_item_cout" id="ac_item_cout" value="" />
-    <strong>  :</strong><br />
-
-    <input type="text" name="ac_item" id="ac_item" value="" />
-        <div class="small">
-          Ingrese un termino de busqueda para encontrar un producto.
-        </div>
-    <br />    
-  
-    
-    <strong> Importe :</strong><br />
-
-    <input type="text" name="ac_item_vuelto" id="ac_item_vuelto" value="1" class="tf_short" />
-    <div class="small">
-     importe de vuelto.
-    </div>
-    <br />
-    
-    
-    <br />
-    <input type="submit" value="Agregar item a Factura" />
-    
-  </form>
-  
-  
-  <%= hr() %>
-
-</div>
-  
-
-<%= render 'layouts/autocomplete' %>
 
 
 <script type="text/javascript">

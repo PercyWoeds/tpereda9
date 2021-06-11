@@ -924,7 +924,7 @@ pdf.move_down 2
   
   # Show viaticotbks for a company
   def list_viaticos
-    @company = Company.find(params[:company_id])
+    @company = Company.find(1)
     @pagetitle = "#{@company.name} - viaticotbks"
     @filters_display = "block"
     
@@ -943,11 +943,12 @@ pdf.move_down 2
  
 
     if(@company.can_view(current_user))
-         @viaticotbks = Viaticotbk.all.order('id DESC').paginate(:page => params[:page])
+         @viaticotbks = Viaticotbk.where(caja_id: params[:id]).order('id DESC').paginate(:page => params[:page])
+
         if params[:search]
-          @viaticotbks = Viaticotbk.search(params[:search]).order('id DESC').paginate(:page => params[:page])
+          @viaticotbks = Viaticotbk.where(caja_id: params[:id]).search(params[:search]).order('id DESC').paginate(:page => params[:page])
         else
-          @viaticotbks = Viaticotbk.all.order('id DESC').paginate(:page => params[:page]) 
+          @viaticotbks = Viaticotbk.where(caja_id: params[:id]).order('id DESC').paginate(:page => params[:page]) 
         end
     
     else
