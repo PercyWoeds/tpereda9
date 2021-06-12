@@ -1915,7 +1915,6 @@ def reportes_st_3
       @local_name =  @company.get_local_name(@local)
       @facturas_rpt = @company.get_st_mes(@fecha1,@fecha2,@local) 
     end 
-  
 
 
     case params[:print]
@@ -8082,11 +8081,11 @@ end
      image_path = "#{Dir.pwd}/public/images/tpereda2.png"
 
 
-       table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center },
-        {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD EN EL TRABAJO ",
-          :rowspan => 2},"CODIGO ","TP-CL-F-009"], 
-          ["VERSION: ","02"], 
-          ["REPORTE DE COTIZACIONES DEL " + @fecha1 + "  al " + @fecha2 ,"Pagina: ","1 de 1 "] 
+       table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center  },
+        {:content =>"SISTEMA DE GESTION INTEGRADO ",
+          :rowspan => 2, valign: :center},"CODIGO ","TP-CL-F-009"], 
+          ["VERSION: ","03"], 
+          ["REPORTE DE COTIZACIONES DEL " + @fecha1 + "  al " + @fecha2 ,"PAGINA: ","1 de 1 "] 
          
           ])
         
