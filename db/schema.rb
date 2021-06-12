@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210610171505) do
+ActiveRecord::Schema.define(version: 20210612175923) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -598,6 +598,12 @@ ActiveRecord::Schema.define(version: 20210610171505) do
     t.string   "camacuna"
     t.string   "stand_by"
     t.string   "modularobs"
+    t.string   "qty_text1"
+    t.string   "qty_text2"
+    t.string   "qty_text3"
+    t.string   "qty_text4"
+    t.string   "qty_text5"
+    t.string   "qty_text6"
   end
 
   create_table "couts", force: :cascade do |t|

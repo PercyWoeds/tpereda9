@@ -320,7 +320,7 @@ class CotizacionsController < ApplicationController
       :page_size => "A4",:margin=> 0 ) do |pdf|
      
        
-      
+
       pdf.font "Helvetica"
       pdf = build_pdf_header2(pdf)
 
@@ -335,8 +335,8 @@ class CotizacionsController < ApplicationController
       end 
 
         if @cotizacion.tipocustomer_id == 3
-          pdf = build_pdf_body3(pdf)
-          build_pdf_footer3(pdf)
+          pdf = build_pdf_body5(pdf)
+        
       end 
 
         if @cotizacion.tipocustomer_id == 4
@@ -1573,10 +1573,263 @@ Muy atentamente, " ,
 
   end 
 
-  ##CLIENTE NUEVOOOOOO
+  ##CLIENTE ALQUILER UNIDAD 
 
-  
-  
+
+
+  def build_pdf_body5(pdf)
+
+              pdf.font "Times-Roman"  , :size => 9
+
+              image_path = "#{Dir.pwd}/public/images/cotizacion2.jpg"
+
+              table_content0 = []
+
+              table_content0 = ([[{:image => image_path, :fit => [pdf.bounds.width, pdf.bounds.height] }] ])
+
+              pdf.table(table_content0,{ 
+              :position => :right,
+              :width => pdf.bounds.width,
+              :cell_style => {:border_width => 0} }) do
+                   columns([0]).font_style = :bold
+              end 
+
+
+       pdf.canvas do 
+    
+              pdf.bounding_box [340,760 ], :width  => pdf.bounds.width,:border_width=> 0  do
+              pdf.cell :content=>"Lima , "+I18n.l(@cotizacion.fecha.to_date, locale: :es ,format: :long )   , align: :right , valign: :top, size: 11  , :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic  
+              end
+
+              pdf.bounding_box [20,750], :width  => pdf.bounds.width,:border_width=> 0 do
+
+              pdf.cell :content=> "COTIZACIÓN N°. :"+@cotizacion.code + "\n"+
+              "Señores :" + "\n" + @cotizacion.customer.name + "\n" +
+              @cotizacion.customer.ruc + "\n" +
+              "Atención:" + "\n" + 
+                 @cotizacion.customer.sr + " : "+ @cotizacion.customer.contacto , align: :left, valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic
+              end
+
+              pdf.bounding_box [20,680], :width  => pdf.bounds.width,:border_width=> 0 do
+              pdf.cell :content=> "Es grato dirigirnos  a usted  para comunicarle que de acuerdo a su solicitud, nuestro precio por el servicio" +"\n" + "solicitado es el siguiente. :",
+              align: :left, valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :italic
+              end
+
+
+              pdf.font "Times-Roman"  , :size => 8
+              pdf.bounding_box [40,650], :width  => pdf.bounds.width,:border_width=> 0 do
+               pdf.cell :content=> "LUGAR ALQUILER: " + "  " + @cotizacion.punto.name + "-" + @cotizacion.get_punto(@cotizacion.punto2_id),
+                align: :left, valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic
+              end
+
+
+              pdf.bounding_box [40,630], :width  => pdf.bounds.width,:border_width=> 0 do
+              pdf.cell :content=> "ESPECIFICACIONES  : " ,
+              align: :left, valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic
+              end
+
+
+              pdf.bounding_box [50,620], :width  => pdf.bounds.width,:border_width=> 0 do
+              pdf.cell :content=> @cotizacion.especifica ,
+              align: :left, valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :italic
+              end
+         
+              pdf.bounding_box [40,610], :width  => pdf.bounds.width,:border_width=> 0 do
+              pdf.cell :content=> "IMPORTE DEL SERVICIO  : " ,
+              align: :left, valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :bold_italic
+              end
+
+
+              pdf.font "Times-Roman"  , :size => 6
+
+
+               pdf.bounding_box [40,595], :width  => pdf.bounds.width* 0.9 ,:border_width=> 0 do
+
+              table_content =[]
+
+
+              row=[]
+              
+
+             row << "ITEM"
+             
+             row << "DESCRIPCION"
+             row << "CANTIDAD"
+             row << "PRECIO
+             UNITARIO"
+             row << "PRECIO 
+             TOTAL"
+
+             table_content << row 
+             puts "apdfdfd"
+             puts row 
+
+
+            row=[]
+
+            row << "01"
+
+          
+            row << @cotizacion.descrip1
+            row << @cotizacion.qty_text1
+            row << @cotizacion.price
+            row << @cotizacion.total 
+            table_content << row 
+
+
+            row=[]
+
+            row << "02"
+           
+            row << @cotizacion.descrip2
+            row << @cotizacion.qty_text2
+            row << @cotizacion.price2
+            row << @cotizacion.total2
+            table_content << row 
+
+            row=[]
+            row << "03"
+           
+           
+            row << @cotizacion.descrip3
+            row << @cotizacion.qty_text3
+            row << @cotizacion.price3
+            row << @cotizacion.total3
+            table_content << row 
+
+            row=[]
+            row << ""
+            row << {:content=>"VALOR TOTAL DEL SERVICIO",:colspan => 3} 
+            row << @cotizacion.total  +  @cotizacion.total2 +  @cotizacion.total3
+
+            table_content << row 
+          
+
+            pdf.table table_content , {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+
+                                        } do 
+                                          rows([0]).font_style = :bold
+                                          columns([0]).align=:center
+                                          columns([0]).width = 40
+                                  
+                                          columns([1]).align = :left
+                                          columns([1]).width = 240
+
+                                          columns([2]).align = :left
+                                          columns([2]).width = 80
+
+                                          columns([3]).align = :right
+                                          columns([3]).width = 105.752
+
+                                          columns([4]).align = :right
+                                          columns([4]).width = 70
+
+                                         
+                                        end 
+               #tabl bouxing                            
+               end 
+
+              
+
+              if @cotizacion.tipocustomer_id == 1 
+
+                texto = Instruccion.find(7)
+
+                @instruccion1 = texto.description1
+                @instruccion2 = texto.description2
+                @instruccion3 = texto.description3
+                @instruccion4 = texto.description4
+                @instruccion5 = texto.instruccion6
+                @instruccion7 = texto.instruccion7
+                @instruccion8 = texto.instruccion8
+                @instruccion9 = texto.instruccion9
+                @instruccion10 = texto.instruccion10
+
+              end 
+
+              if @cotizacion.tipocustomer_id == 2
+
+                texto = Instruccion.find(8)
+
+                @instruccion1 = texto.description1
+                @instruccion2 = texto.description2
+                @instruccion3 = texto.description3
+                @instruccion4 = texto.description4
+                @instruccion5 = texto.instruccion6
+                @instruccion7 = texto.instruccion7
+                @instruccion8 = texto.instruccion8
+                @instruccion9 = texto.instruccion9
+                @instruccion10 = texto.instruccion10
+
+              end 
+
+
+               if @cotizacion.tipocustomer_id == 3
+
+                texto = Instruccion.find(9)
+
+                @instruccion1 = texto.description1
+                @instruccion2 = texto.description2
+                @instruccion3 = texto.description3
+                @instruccion4 = texto.description4
+                @instruccion5 = texto.instruccion6
+                @instruccion7 = texto.instruccion7
+                @instruccion8 = texto.instruccion8
+                @instruccion9 = texto.instruccion9
+                @instruccion10 = texto.instruccion10
+
+              end 
+               if @cotizacion.tipocustomer_id == 4
+
+                texto = Instruccion.find(10)
+
+                @instruccion1 = texto.description1
+                @instruccion2 = texto.description2
+                @instruccion3 = texto.description3
+                @instruccion4 = texto.description4
+                @instruccion5 = texto.instruccion6
+                @instruccion7 = texto.instruccion7
+                @instruccion8 = texto.instruccion8
+                @instruccion9 = texto.instruccion9
+                @instruccion10 = texto.instruccion10
+
+              end 
+
+              pdf.bounding_box [40,480], :width  => pdf.bounds.width,:border_width=> 0 do
+              pdf.cell :content => @instruccion1 + @cotizacion.moneda.description + "\n" +  @instruccion5 + 
+              @cotizacion.payment.descrip + "\n" +  @instruccion7  , align: :left, valign: :top, size: 9, :text_color => "000000", 
+              :border_width => 0 , :font_style => :italic 
+              end
+
+               
+
+ pdf.bounding_box [40,350], :width  => pdf.bounds.width - 50,:border_width=> 0 do
+              pdf.cell :content => "Se expide la presente Cotización, con el fin de dar su conformidad y pronta respuesta.
+Muy atentamente, 
+Diana Nathaly Perez Luciano.
+Coordinadora de Ventas." ,
+              align: :left , valign: :top, size: 9, :text_color => "000000", :border_width => 0 ,:font_style => :italic
+              end
+
+
+
+
+              
+
+
+            
+          #end canvas 
+                
+          end 
+
+
+
+
+        pdf 
+
+  end 
 
     def build_pdf_footer4(pdf)
 
@@ -1661,6 +1914,13 @@ Muy atentamente, " ,
         :qty8,
         :qty9,
         :qty10,
+
+        :qty_text1,
+        :qty_text2,
+        :qty_text3,
+        :qty_text4,
+        :qty_text5,
+        :qty_text6,
 
         :price,
         :price2,
