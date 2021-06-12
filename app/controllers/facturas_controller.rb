@@ -1917,6 +1917,7 @@ def reportes_st_3
     end 
   
 
+
     case params[:print]
       when "To PDF" then 
         begin 

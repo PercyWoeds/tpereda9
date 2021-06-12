@@ -3042,7 +3042,6 @@ Viaticolgv::TABLE_HEADERS5.each do |header|
   end
 ########################################################################
 
-
   
   private
   def viaticolgv_params

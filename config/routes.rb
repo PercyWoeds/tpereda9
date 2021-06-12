@@ -185,7 +185,9 @@ require 'sidekiq/cron/web'
    resources :viaticolgvs do
    
         resources :viaticolgv_details, except: [:index,:show], controller:  "viaticolgvs/viaticolgv_details" do
-        collection { get :new2 }    
+        collection { get :new2 }   
+        collection { get :new3 }    
+
         collection { get :search_viatico_viatico_details }
         collection { get :agregar } 
       end 
@@ -988,6 +990,7 @@ match 'companies/reports/rpt_coti_1_pdf/:company_id' => 'reports#rpt_coti_1_pdf'
   match 'viaticolgvs/ac_customers/:company_id' => 'viaticolgvs#ac_customers', via: [:get, :post]
   match 'viaticolgvs/new/:company_id' => 'viaticolgvs#new', via: [:get, :post]
   match 'viaticolgvs/new2/:company_id' => 'viaticolgvs#new2', via: [:get, :post]
+
   match 'viaticolgvs/do_email/:id' => 'viaticolgvs#do_email', via: [:get, :post]
   match 'viaticolgvs/do_process/:id' => 'viaticolgvs#do_process', via: [:get, :post]
   match 'viaticolgvs/email/:id' => 'viaticolgvs#email', via: [:get, :post]

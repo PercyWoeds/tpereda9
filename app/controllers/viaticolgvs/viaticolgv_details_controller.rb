@@ -47,6 +47,7 @@ class Viaticolgvs::ViaticolgvDetailsController < ApplicationController
     
     
   end
+
  def new2
 
     @viaticolgv_detail = ViaticolgvDetail.new
@@ -112,6 +113,32 @@ class Viaticolgvs::ViaticolgvDetailsController < ApplicationController
      puts "new2 "
     @viaticolgv.company_id = @company.id    
    
+  end
+
+
+
+
+
+ def new3
+
+    @viaticolgv_detail = ViaticolgvDetail.new
+     @gastos = Gasto.order(:codigo)
+     @egresos = Egreso.where(["extension = ? or extension = ?", "LGV","ALL"]).order(:code)
+   
+    
+
+        @company = Company.find(1)
+    
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+    @documents = @company.get_documents_area("OPE")
+
+
+    @cajas = Caja.all      
+    @viaticolgv_detail[:fecha] = Date.today 
+    @destinos = Destino.all
+    @employees = @company.get_employees 
+    company_id = @company.id
   end
 
 

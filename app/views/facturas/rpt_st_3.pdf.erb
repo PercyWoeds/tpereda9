@@ -15,6 +15,8 @@
 
       <% total_soles =  0%>
       <% total_dolares  =  0%>
+      <% total_linea_soles =  0%>
+      <% total_linea_dolares  =  0%>
       <% total_linea =  0%>
       
        <% for  manifest in @facturas_rpt  %>
@@ -23,7 +25,7 @@
         
           <td width= "5%" ><%=  nroitem  %>   </td>
           
-          <td width = "50%" align ="left"><%= manifest.customer.name   %> </td>
+          <td width = "45%" align ="left"><%= manifest.customer.name   %> </td>
 
 
           <td width = "5%" align ="right"><%=  sprintf("%.2f",manifest.importe1) %> </td>
@@ -35,12 +37,12 @@
           <td width = "5%" align ="right"><%=  sprintf("%.2f",manifest.importe5)   %></td>
           <td width = "5%" align ="right"><%=  sprintf("%.2f",manifest.importe6)   %></td>
           
-         <% total_linea = manifest.importe1 + manifest.importe2 + manifest.importe3 + 
-          manifest.importe4 + manifest.importe5 +  manifest.importe6 + manifest.importe7 + 
-           manifest.importe8 %>
         
+        <% total_linea_soles   = manifest.importe1 + manifest.importe2 + manifest.importe3 + manifest.importe7 + manifest.importe8 + manifest.importe6  %>
+        <% total_linea_dolares = manifest.importe4 + manifest.importe5%>
       
-          <td width = "5%" align ="right"> <%= sprintf("%.2f",total_linea)  %>  </td>
+          <td width = "5%" align ="right"> <%= sprintf("%.2f",total_linea_soles)  %>  </td>
+          <td width = "5%" align ="right"> <%= sprintf("%.2f",total_linea_dolares)  %>  </td>
 
           </tr>
           <% nroitem += 1 %>  
@@ -54,7 +56,8 @@
           <% total_8 += manifest.importe8 %>
           
           
-         <%  total_linea = 0  %>
+         <%  total_linea_soles = 0  %>
+         <%  total_linea_dolares = 0  %>
          <% end %>
 
       <hr>  
@@ -63,7 +66,7 @@
      <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
      <tr bgcolor="#B4D7F7">
           <td width = "5%" align ="center"></td>
-          <td width = "50%" align ="center">Totales  </td>
+          <td width = "45%" align ="center">Totales  </td>
 
           <td width = "5%" align ="right"><%= sprintf("%.2f",total_1)   %></td>
           <td width = "5%" align ="right"><%= sprintf("%.2f",total_7)   %></td>
@@ -75,7 +78,7 @@
           <td width = "5%" align ="right"><%= sprintf("%.2f",total_5)   %></td>
           <td width = "5%" align ="right"><%= sprintf("%.2f",total_6)   %></td>
           <td width = "5%" align ="right"> </td>
-
+          <td width = "5%" align ="right"> </td>
 
       
           

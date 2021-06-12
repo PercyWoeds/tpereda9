@@ -48,46 +48,14 @@
 
 <%= hr() %>
 
-<h3>
+<h4>
   Informacion Pago
-</h3>
+</h4>
 
 <p>
- <h3> Inicial : <%= link_to @viaticolgv.inicial.round(2) %></h3>
+ <h4> Inicial : <%= link_to @viaticolgv.inicial.round(2) %></h4>
 </p>
 
-
-
-  <h4>
-    Agregar Comprobante por rendir 
-  </h4>
-                                              
-  <form method="get" action="/viaticolgvs" onsubmit="addItemToLgv2(); return false;">
-
-    <strong>Documento :</strong><br />
-          <input type="text" name="ac_item_compro" id="ac_item_compro" value="" />
-          <div class="small">
-            Ingrese un termino de busqueda para encontrar un documento 
-          </div>
-    
-          <br />
-
-          <strong>Importe :</strong><br />
-      
-          <input type="text" name="ac_item_inicial" id="ac_item_inicial" value="" class="tf_short" readonly />
-          <div class="small">
-            Importe entregado en comprobante.
-          </div>
-          <br />
-
-
-     <input type="hidden" name="items2" id="items2" value="<% if @compro_lines %><%= @compro_lines %><% end %>" />
-
-    <input type="hidden" name="compro_id" id="ac_compro_id"  />
-        
-    <input type="submit" value="Agregar Comprobante" />
-
-  </form>
 
    
 
@@ -95,7 +63,7 @@
 <div class="button">
 
    
-    
+<%=   link_to 'Agregar Item', new3_viaticolgv_viaticolgv_details_path(@viaticolgv)   %>
 
 <%= link_to 'Agregar Item', new_viaticolgv_viaticolgv_detail_path(@viaticolgv) %>
 
