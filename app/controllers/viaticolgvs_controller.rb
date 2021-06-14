@@ -3130,7 +3130,7 @@ def do_crear2
     @couts[:ubication2_id] =@tranportorder.ubication2_id
      
    @couts[:fecha1] =  @tranportorder.fecha1
-   7@couts[:fecha2] =   @tranportorder.fecha277
+   @couts[:fecha2] =   @tranportorder.fecha2
 
 
     @couts[:peajes] =  0
