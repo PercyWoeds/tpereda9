@@ -2,7 +2,7 @@ class Viaticolgvs::ViaticolgvDetailsController < ApplicationController
   
   before_action :set_viaticolgv 
   
-  before_action :set_viaticolgv_detail, :except=> [:new,:new2,:create,:agregar]
+  before_action :set_viaticolgv_detail, :except=> [:new,:new2,:new3,:create,:agregar]
 
 
 
@@ -124,7 +124,6 @@ class Viaticolgvs::ViaticolgvDetailsController < ApplicationController
     @viaticolgv_detail = ViaticolgvDetail.new
      @gastos = Gasto.order(:codigo)
      @egresos = Egreso.where(["extension = ? or extension = ?", "LGV","ALL"]).order(:code)
-   
     
 
         @company = Company.find(1)

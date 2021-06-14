@@ -1784,7 +1784,8 @@ match '/proyecto_exams/:id/proyectoexam_details/:proyectoexam_detail_id' => 'pro
 
  match 'viaticolgvs/list_items2/:company_id' => 'viaticolgvs#list_items2', via: [:get, :post]
  match 'viaticolgvs/list_items3/:viaticolgv_id' => 'viaticolgvs#list_items3', via: [:get, :post]
-
+ match 'companies/viaticolgvs/do_cargar2/:id'   => 'viaticolgvs#do_cargar2', via: [:get, :post]
+ match 'viaticolgvs/newviatico2/:id' => 'viaticolgvs#newviatico2', via: [:get, :post]
  
  match 'viaticos/new2/:id' => 'viaticos#new2', via: [:get, :post]
  match 'viaticos/list_viaticos/:id' => 'viaticos#list_viaticos', via: [:get, :post]

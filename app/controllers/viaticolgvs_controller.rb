@@ -3042,7 +3042,134 @@ Viaticolgv::TABLE_HEADERS5.each do |header|
   end
 ########################################################################
 
+
+def do_cargar2
+  @company   = Company.find(1)
+
+   if params[:search]
+           
+          
+        @osts   = Tranportorder.search(params[:search]).where(["fecha1 >= ?","2021-03-01 00:00:00"]).order("code ,fecha desc").paginate(:page => params[:page])
+     
+    else
+              
+        @osts = Tranportorder.where(["fecha1 >= ?","2021-04-01 00:00:00"]).order("code ,fecha desc ").paginate(:page => params[:page])
+
+    end
+
+end 
+
+
+
+
+def newviatico2
+
+
+   @tranportorder =   Tranportorder.find(params[:id])
+
+    
+
+end 
   
+
+
+
+
+def do_crear2
+
+    @company = Company.find(1)
+
+    @action_txt = "do_crear2" 
+    @tranportorder = Tranportorder.find(params[:id] ) 
+
+    puts params[:total_importe]
+
+    puts "checked "
+
+   @placa = 376
+   @placa2 =376
+   @placa3 =376
+
+
+    
+        @employee_id = @tranportorder.employee_id
+ 
+        @employee2_id = @tranportorder.employee2_id
+
+        @employee3_id = @tranportorder.employee3_id
+ 
+        @employee4_id = @tranportorder.employee4_id
+   
+
+  
+        @placa = @tranportorder.truck_id
+    
+        @placa2 = @tranportorder.truck2_id
+  
+        @placa3 = @tranportorder.truck3_id
+    
+
+    @couts = Cout.new
+    @couts[:code] = @couts.generate_cout_number("9")
+
+   
+    @couts[:fecha] =  params[:fecha]
+    @couts[:importe] = params[:total_importe]
+    @couts[:tbk] = params[:tbk]
+    @couts[:tbk_documento] = params[:tbk_documento]
+    @couts[:truck_id] = @placa
+    @couts[:truck2_id] = @placa2
+    @couts[:truck3_id] = @placa3    
+    @couts[:tranportorder_id] = @tranportorder.id
+    @couts[:employee_id] = @employee_id
+    @couts[:employee2_id] = @employee2_id
+    @couts[:employee3_id] = @employee3_id
+    @couts[:employee4_id] = @employee4_id
+
+   @couts[:ubication_id] =@tranportorder.ubication_id
+    @couts[:ubication2_id] =@tranportorder.ubication2_id
+     
+   @couts[:fecha1] =  @tranportorder.fecha1
+   7@couts[:fecha2] =   @tranportorder.fecha277
+
+
+    @couts[:peajes] =  0
+    @couts[:lavado] = 0
+    @couts[:llanta] = 0
+    @couts[:alimento] = 0
+    @couts[:otros] = 0
+    @couts[:monto_recibido] = params[:total_importe].to_f +  params[:tbk].to_f
+    @couts[:flete] = 0
+    @couts[:recibido_ruta] = 0
+    @couts[:vuelto] = 0
+    @couts[:descuento] = 0
+    @couts[:reembolso] = 0
+
+     @couts[:tipo_compro] = "1"
+
+     respond_to do |format|
+       if    @couts.save           
+        
+          format.html { redirect_to( "/viaticolgvs/list_viaticos/1"  , :notice => 'Comprobante fue grabada con exito .') }
+          format.xml  { render :xml => @couts, :status => :created, :location => @couts}
+        else
+
+          format.html { redirect_to("companies/viaticolgvs/do_cargar2/#{@company.id}", :notice  => 'Ocurrio un error .') }
+          format.xml  { render :xml => @couts.errors, :status => :unprocessable_entity }
+        end 
+        
+      end
+
+
+end   
+
+
+
+
+
+
+
+
   private
   def viaticolgv_params
     params.require(:viaticolgv).permit(:code, :fecha1, :inicial, :total_ing, :total_egreso, :saldo, :comments, :user_id, :company_id, :processed,:caja_id)

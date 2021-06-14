@@ -1000,7 +1000,7 @@ pdf.move_down 2
   # GET /viaticos/1.xml
   def show
     
-    
+  
     @viatico = Viatico.find(params[:id])
     
     @viatico_detail = @viatico.viatico_details
