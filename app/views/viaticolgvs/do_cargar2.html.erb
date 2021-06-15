@@ -7,6 +7,14 @@
 
 <p id="notice"><%= notice %></p>
 
+<% if @couts.errors.any? %>
+    <ul>
+    <% @couts.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  <% end %>
+
 
 <h2>
   <%= image_tag("invoice_48.png", :class => "vmiddle") %>

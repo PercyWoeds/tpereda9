@@ -3154,8 +3154,9 @@ def do_crear2
           format.xml  { render :xml => @couts, :status => :created, :location => @couts}
         else
 
-          format.html { redirect_to("companies/viaticolgvs/do_cargar2/#{@company.id}", :notice  => 'Ocurrio un error .') }
+          format.html { redirect_to("/companies/viaticolgvs/do_cargar2/#{@company.id}", :notice  => 'Ocurrio un error .') }
           format.xml  { render :xml => @couts.errors, :status => :unprocessable_entity }
+          
         end 
         
       end
