@@ -8,6 +8,7 @@ require 'sidekiq/cron/web'
   Mnygo::Application.routes.draw do
 
   
+  resources :activities
   resources :vuelto_details
   resources :vueltos
   resources :distritos
@@ -373,6 +374,13 @@ require 'sidekiq/cron/web'
    collection { post :import }
 
   end  
+
+
+  resources :activities do 
+   collection { post :import }
+
+  end  
+
 
   resources :conductors do 
    collection { post :import }

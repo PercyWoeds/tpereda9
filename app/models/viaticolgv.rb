@@ -675,6 +675,7 @@ self.per_page = 20
   
     def actualiza(parts) 
 
+     @cajas = Caja.all 
       @viaticolgv = Viaticolgv.find(self.id) 
  
           id            = parts[0]  

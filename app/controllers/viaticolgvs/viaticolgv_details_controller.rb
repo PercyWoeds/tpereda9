@@ -5,7 +5,6 @@ class Viaticolgvs::ViaticolgvDetailsController < ApplicationController
   before_action :set_viaticolgv_detail, :except=> [:new,:new2,:new3,:create,:agregar]
 
 
-
   
   # GET /viatico_details
   # GET /viatico_details.json

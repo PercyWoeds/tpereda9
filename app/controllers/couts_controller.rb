@@ -144,7 +144,7 @@ class CoutsController < ApplicationController
 
     respond_to do |format|
       if @cout.save
-        format.html { redirect_to @cout, notice: 'Cout was successfully created.' }
+        format.html { redirect_to  "/couts/list_couts/#{@cout[:tipo_compro]}", notice: 'Cout was successfully created.' }
         format.json { render :show, status: :created, location: @cout }
       else
         format.html { render :new }

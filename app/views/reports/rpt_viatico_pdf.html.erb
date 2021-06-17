@@ -14,11 +14,11 @@
   <%= form_tag url_for(:controller => 'viaticos', :action => 'reportxls'), :method => "get" do %>
  
  	<div class="field">
-    <input type="date" name="fecha1" value="2020-11-01" style = "width: 150px" >
+    <input type="date" name="fecha1" value= <%= Date.today - 30 %> style = "width: 150px" >
   </div>
 
 	<div class="field">
-		<input type="date" name="fecha2" value="2020-12-21" style = "width: 150px" >
+		<input type="date" name="fecha2" value=<%= Date.today%>  style = "width: 150px" >
   </div>
 
   <div class="field">

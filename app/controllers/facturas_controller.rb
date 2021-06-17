@@ -1960,7 +1960,7 @@ def reportes_st_3
     
     @check_proveedor = params[:check_proveedor]
     @proveedor = params[:supplier_id ]
-    @company.actualizar_fecha2
+    # @company.actualizar_fecha2
 
     
 
@@ -3072,7 +3072,6 @@ def newfactura2
       else render action: "index"
     end
   end
-
 
 
 
@@ -6193,7 +6192,7 @@ def reporte_asistencia3
        for  product in @facturas_rpt
 
         
-        if product.user_id == 9 || product.user_id == 2 
+        if product.user_id == 9 || product.user_id == 2 || product.user_id == 1
         case @tipo 
          when "1"
 
@@ -6428,6 +6427,7 @@ def reporte_asistencia3
 
   # Export serviceorder to PDF
   def rpt_purchase6
+
 
     @company=Company.find(1)          
     @fecha1 = params[:fecha1]    

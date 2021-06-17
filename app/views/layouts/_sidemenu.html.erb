@@ -244,6 +244,26 @@
                         </div><!--//item-->
                     <% end %>
 
+
+                     <%if @current_user.level == "mnto" || @current_user.level == "admin"  %>
+
+                        <div class="item item-green col-md-4 col-sm-6 col-xs-6">
+                            <div class="item-inner">
+                                <div class="icon-holder">
+                                    <i class="icon fa fa-paper-plane"></i>
+                                </div><!--//icon-holder-->
+                                <h3 class="title">Mantenimiento</h3>
+                                <p class="intro">Registro de mantenimiento </p>
+                                <%= link_to "", "/companies/mantenimiento/#{@company.id}", class: "link" %>
+                                 <span></span>
+
+                                
+                            </div><!--//item-inner-->
+                        </div><!--//item-->
+
+                    <% end %>
+                  
+
                 </div><!--//cards-->
             </div><!--//cards-->
             </div><!--//container-->

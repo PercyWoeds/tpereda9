@@ -3110,7 +3110,7 @@ def do_crear2
     
 
     @couts = Cout.new
-    @couts[:code] = @couts.generate_cout_number("9")
+    @couts[:code] = @couts.generate_cout_number("2")
 
    
     @couts[:fecha] =  params[:fecha]
@@ -3145,12 +3145,21 @@ def do_crear2
     @couts[:descuento] = 0
     @couts[:reembolso] = 0
 
-     @couts[:tipo_compro] = "1"
+     @couts[:tipo_compro] = "2"
+
+    
+     @viaticolgv_d  = Viaticolgv.last 
 
      respond_to do |format|
-       if    @couts.save           
+       if    @couts.save       
+
+           parts  = Array.new(2) # => [nil,nil]
+           parts[0] = @couts.id 
+           parts[1] = @couts.importe 
+
+            @viaticolgv_d.actualiza(parts)
         
-          format.html { redirect_to( "/viaticolgvs/list_viaticos/1"  , :notice => 'Comprobante fue grabada con exito .') }
+          format.html { redirect_to( "/companies/viaticolgvs/1"  , :notice => 'Comprobante interno fue grabada con exito .') }
           format.xml  { render :xml => @couts, :status => :created, :location => @couts}
         else
 

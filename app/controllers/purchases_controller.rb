@@ -3412,32 +3412,32 @@ def newfactura2
 
           end 
 
-      begin
-         if @tipodocumento == 2
-          @purchase[:tax_amount] = @purchase[:tax_amount]*-1
-         else
-          @purchase[:tax_amount] = @purchase[:tax_amount]
-         end 
-      rescue
-          @purchase[:tax_amount] = 0
-      end
+          begin
+             if @tipodocumento == 2
+              @purchase[:tax_amount] = @purchase[:tax_amount]*-1
+             else
+              @purchase[:tax_amount] = @purchase[:tax_amount]
+             end 
+          rescue
+              @purchase[:tax_amount] = 0
+          end
 
-        @purchase[:location_id] = 1
-        @purchase[:division_id] = 1    
-        @purchase[:date3]  =   @purchase[:date2] + @purchase.get_dias_vmto(@purchase[:payment_id]).days  
-        
-        @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]  + @purchase[:inafecto]
-        @purchase[:charge]  = 0
+          @purchase[:location_id] = 1
+          @purchase[:division_id] = 1    
+          @purchase[:date3]  =   @purchase[:date2] + @purchase.get_dias_vmto(@purchase[:payment_id]).days  
+          
+          @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]  + @purchase[:inafecto]
+          @purchase[:charge]  = 0
 
 
-    if @purchase[:payment_id]  == 1 
-      @purchase[:pago] = @purchase[:total_amount]
-      @purchase[:balance] =  0.00 
-    
-    else 
-      @purchase[:pago] = 0
-      @purchase[:balance] =   @purchase[:total_amount]
-    end 
+          if @purchase[:payment_id]  == 1 
+            @purchase[:pago] = @purchase[:total_amount]
+            @purchase[:balance] =  0.00 
+          
+          else 
+            @purchase[:pago] = 0
+            @purchase[:balance] =   @purchase[:total_amount]
+          end 
 
     
     
@@ -3505,12 +3505,13 @@ def newfactura2
     @almacens = @company.get_almacens()
     
       @purchase[:date3]  =   @purchase[:date2] + @purchase.get_dias_vmto(@purchase[:payment_id]).days  
-  
+
+
 
     @tipodocumento = @purchase[:document_id]
     
     if @tipodocumento == 2
-      @purchase[:payable_amount] = @purchase.get_subtotal(items) 
+      @purchase[:payable_amount] = @purchase.get_subtotal(items) * -1
     else
       @purchase[:payable_amount] = @purchase.get_subtotal(items)
     end    
@@ -3518,7 +3519,7 @@ def newfactura2
 
     begin
        if @tipodocumento == 2
-        @purchase[:tax_amount] = @purchase.get_tax(items, @purchase[:supplier_id])  
+        @purchase[:tax_amount] = @purchase.get_tax(items, @purchase[:supplier_id]) * -1  
         else
         @purchase[:tax_amount] = @purchase.get_tax(items, @purchase[:supplier_id])
        end 
@@ -3539,7 +3540,7 @@ def newfactura2
     
     else 
       @purchase[:pago] = 0
-      @purchase[:balance] =   @purchase[:total_amount]
+      @purchase[:balance] =   @purchase[:total_amount] 
        @purchase[:tipo]    = 1
     end 
 

@@ -52,9 +52,14 @@ wb.styles do |s|
                      
       sheet.add_row ["",payment.code,payment.inicial,payment.total_ing,payment.total_egreso,payment.saldo,""],
           :style => [cadena,cadena,currency,currency,currency,currency,cadena,cadena,cadena]
+      
+      if payment.caja_id  == 5 or  @payment.caja_id  == 6
+          @viatico = Viaticotbk.find(payment.id)
+      else
 
+          @viatico = Viatico.find(payment.id)
 
-     @viatico = Viatico.find(payment.id )
+     end 
                   
                       
                   
@@ -118,11 +123,41 @@ wb.styles do |s|
           sheet.add_row [" "," ","TOTAL INGRESO S/."," "," ",@total_importe," "], :style => [cadena,cadena,cadena,cadena,cadena, currency ,cadena]
 
 
+     if payment.caja_id  == 2
+
+        @viatico_egresos = Egreso.order(:orden).where("id> 1 and  extension = ? or extension =  ? or extension  =  ?","ALL","CAJA","CAJA-ALL")
+
+     end    
+    if payment.caja_id  == 3
+
+        @viatico_egresos = Egreso.order(:orden).where("id> 1 and extension = ?  ","ALL" )
+
+     end    
+      if payment.caja_id  == 4
+
+       @viatico_egresos = Egreso.order(:orden).where("id> 1 and extension = ? or extension =  ? or extension  =  ? ","ALL","CAJA-AQP","CAJA-ALL" )
+
+     end    
+     
+     if payment.caja_id  == 5 or  payment.caja_id  == 6
+
+       @viaticotbk =  Viaticotbk.last
+       @viatico_egresos = @viaticotbk.get_egresos_tbk()
+
+
+     end    
+
       
-          for  egresos  in @viatico.get_egresos_caja() 
+          for  egresos  in @viatico_egresos
 
 
-            @detalle = egresos.get_detalle_egreso(@viatico.id,egresos.id)
+               
+
+              if payment.caja_id  == 5 or  payment.caja_id  == 6
+                 @detalle = egresos.get_detalle_egresotbk(@viaticotbk.id,egresos.id)
+              else 
+                 @detalle = egresos.get_detalle_egreso(payment.id,egresos.id)
+              end 
 
             table_content = ([ [egresos.name + " " + egresos.extension  ]   ])
             
@@ -185,19 +220,38 @@ wb.styles do |s|
 
        total_egresos = 0
        table_content_footer = []
-
-       if !@viatico.get_egresos_suma().nil?
-        for  egresos1  in @viatico.get_egresos_suma() 
-
-           total_egresos += egresos1.total.round(2) 
-           
-           sheet.add_row [" "," ",egresos1.egreso.name ,egresos1.total.round(2) ,"","",""], :style => [cadena,cadena, title3 ,currency,cadena,cadena,cadena ]
+        
+       if payment.caja_id  == 5 or  payment.caja_id  == 6
 
 
-        end 
+          for  egresos  in @viaticotbk.get_egresos_suma() 
 
-        end 
+             total_egresos += egresos.total.round(2) 
 
+
+             row =[]
+             row << egresos.name 
+             row << egresos.total.round(2)
+             table_content_footer << row 
+
+          end 
+
+
+       else 
+
+       
+             if !@viatico.get_egresos_suma().nil?
+              for  egresos1  in @viatico.get_egresos_suma() 
+
+                 total_egresos += egresos1.total.round(2) 
+                 
+                 sheet.add_row [" "," ",egresos1.egreso.name ,egresos1.total.round(2) ,"","",""], :style => [cadena,cadena, title3 ,currency,cadena,cadena,cadena ]
+
+
+              end 
+
+              end 
+      end 
          sheet.add_row [" "," ","TOTAL EGRESOS S/." ,total_egresos.round(2),"" ,"",""], :style => [cadena,cadena, title3 ,currency ,cadena,cadena,cadena]
 
 

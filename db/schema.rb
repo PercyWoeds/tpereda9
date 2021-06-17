@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210612175923) do
+ActiveRecord::Schema.define(version: 20210617025831) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,14 @@ ActiveRecord::Schema.define(version: 20210612175923) do
   add_index "accounts", ["tax_in_out"], name: "index_accounts_on_tax_in_out", using: :btree
   add_index "accounts", ["type"], name: "index_accounts_on_type", using: :btree
   add_index "accounts", ["updater_id"], name: "index_accounts_on_updater_id", using: :btree
+
+  create_table "activities", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.string   "extra"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "addresses", force: :cascade do |t|
     t.string   "address"

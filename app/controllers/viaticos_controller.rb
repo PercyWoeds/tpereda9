@@ -15,13 +15,49 @@ before_filter :authenticate_user!
    
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]
-    $caja_id = params[:caja_id]
-    @viaticos_rpt = @company.get_viaticos0(@fecha1,@fecha2,$caja_id)    
-    
-    
+    @caja_id = params[:caja_id]
+
+    if  @caja_id ==   "5" or  @caja_id ==   "6"
+       @viaticos_rpt = @company.get_viaticos1(@fecha1,@fecha2,@caja_id)    
+    else
+       @viaticos_rpt = @company.get_viaticos0(@fecha1,@fecha2,@caja_id)    
+    end 
       case params[:print]
         when "To PDF" then 
-            redirect_to :action => "rpt_viatico_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2] 
+          begin
+            
+          
+              Prawn::Document.generate("app/pdf_output/rpt_caja.pdf") do |pdf|
+              pdf.font "Helvetica"
+
+                  for viatico in @viaticos_rpt do 
+
+                    if  @caja_id ==   "5" or  @caja_id ==   "6"
+                      @viatico =  Viaticotbk.find(viatico.id)  
+                    else
+                     @viatico =  Viatico.find(viatico.id)   
+                    end 
+
+                    
+
+                    pdf.font "Helvetica"
+                    pdf = build_pdf_header(pdf)
+                    pdf = build_pdf_body_2(pdf)
+                    build_pdf_footer(pdf)
+                   end 
+          
+                end 
+
+                $lcFileName =  "app/pdf_output/rpt_caja.pdf"    
+
+               $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+              send_file("app/pdf_output/rpt_caja.pdf", :type => 'application/pdf', :disposition => 'inline')
+            
+           
+          end 
+
+
+           
         when "To Excel" then render xlsx: 'rpt_viatico_xls'
         else render action: "index"
       end
@@ -58,6 +94,17 @@ before_filter :authenticate_user!
        table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD EN EL TRABAJO ",:rowspan => 2},"CODIGO ","TP-FZ-F-025"], 
           ["VERSION: ","1"], 
           ["LIQUIDACION DE CAJA - AREQUIPA","Pagina: ","1 de 1 "] 
+         
+          ])
+    end 
+
+
+
+     if @viatico.caja_id == 5 or @viatico.caja_id == 6
+     
+       table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center }, {:content =>"SISTEMA DE GESTION DE LA CALIDAD, SEGURIDAD VIAL,SEGURIDAD Y SALUD EN EL TRABAJO ",:rowspan => 2},"CODIGO ","TP-FZ-F-025"], 
+          ["VERSION: ","1"], 
+          ["LIQUIDACION DE TELEBANKING ","Pagina: ","1 de 1 "] 
          
           ])
     end 
@@ -463,16 +510,22 @@ before_filter :authenticate_user!
 
      end    
      
-    
+     if @viatico.caja_id  == 5 or  @viatico.caja_id  == 6
+
+       @viaticotbk =  Viaticotbk.last
+       @viatico_egresos = @viaticotbk.get_egresos_tbk()
+
+
+     end    
 
 
        for  egresos  in @viatico_egresos
 
-
-         @detalle = egresos.get_detalle_egreso(@viatico.id,egresos.id)
-
-        
-         
+        if @viatico.caja_id  == 5 or  @viatico.caja_id  == 6
+           @detalle = egresos.get_detalle_egresotbk(@viaticotbk.id,egresos.id)
+        else 
+           @detalle = egresos.get_detalle_egreso(@viatico.id,egresos.id)
+        end 
 
             table_content = ([ [egresos.name   ]   ])
             
@@ -596,6 +649,25 @@ before_filter :authenticate_user!
       
       total_egresos = 0
       table_content_footer = []
+      
+ if @viatico.caja_id  == 5 or  @viatico.caja_id  == 6
+
+
+    for  egresos  in @viaticotbk.get_egresos_suma() 
+
+       total_egresos += egresos.total.round(2) 
+
+
+       row =[]
+       row << egresos.name 
+       row << egresos.total.round(2)
+       table_content_footer << row 
+
+    end 
+
+
+ else 
+
     for  egresos  in @viatico.get_egresos_suma() 
 
        total_egresos += egresos.total.round(2) 
@@ -607,6 +679,8 @@ before_filter :authenticate_user!
        table_content_footer << row 
 
     end 
+
+  end 
 
       row = []
       row << "TOTAL EGRESOS S/.:"
@@ -660,8 +734,11 @@ total_resumen = 0
 
 
 table_content_footer3=[]
-
-@detalle1 = @viatico.get_viatico_suma
+if @viatico.caja_id  == 5 or  @viatico.caja_id  == 6
+   @detalle1 = @viaticotbk.get_viaticotbk_suma
+else 
+   @detalle1 = @viatico.get_viatico_suma
+end 
 
 for detalle1 in @detalle1
 row = []
@@ -1319,37 +1396,10 @@ pdf.move_down 2
     @company=Company.find(1)      
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]
-    
-    @viaticos_rpt = @company.get_viaticos0(@fecha1,@fecha2,$caja_id)    
-    
-     if @viaticos_rpt.size > 0 
-    
+    @caja_id = params[:caja_id]
+    @viaticos_rpt = @company.get_viaticos0(@fecha1,@fecha2,@caja_id)    
 
-      Prawn::Document.generate("app/pdf_output/rpt_caja.pdf") do |pdf|
-      pdf.font "Helvetica"
 
-      for viatico in @viaticos_rpt do 
-
-        @viatico =  Viatico.find(viatico.id) 
-      
-        pdf.font "Helvetica"
-        pdf = build_pdf_header(pdf)
-        pdf = build_pdf_body_2(pdf)
-        build_pdf_footer(pdf)
-        
-       end 
-  
-    
-        
-     
-      end 
-
-        $lcFileName =  "app/pdf_output/rpt_caja.pdf"    
-
-       $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
-      send_file("app/pdf_output/rpt_caja.pdf", :type => 'application/pdf', :disposition => 'inline')
-    
-    end 
 
   end
   

@@ -590,6 +590,7 @@ before_filter :authenticate_user!
       
       total_egresos = 0
       table_content_footer = []
+      
     for  egresos  in @viaticotbk.get_egresos_suma() 
 
        total_egresos += egresos.total.round(2) 

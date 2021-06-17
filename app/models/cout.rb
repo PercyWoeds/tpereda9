@@ -53,6 +53,20 @@ belongs_to :viaticolgv_detail
     end 
   end 
 
+
+   if tipo_compro == "2"
+
+
+    if Cout.where(" tipo_compro = ? ","2").maximum("cast(substring(code,1,6)  as int)").nil? 
+         self.code = "000001"
+         puts  "codigo vacio....u"
+    else
+         self.code = Cout.where("tipo_compro = ?","2").maximum("cast(substring(code,1,6)  as int)").next.to_s.rjust(6, '0') 
+          
+    end 
+
+  end 
+
   return self.code 
 
   end
