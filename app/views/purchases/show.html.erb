@@ -31,10 +31,39 @@
   <b>Code:</b>
   <%= @purchase.documento %>
 </p>
+
+<p>
+  <b>Fecha Emision:</b>
+  <%= @purchase.date1.strftime("%d/%m/%Y") %>
+</p>
+
+
+<p>
+  <b>Fecha Vmto:</b>
+  <%= @purchase.date3.strftime("%d/%m/%Y") %>
+</p>
+
+<p>
+  <b>Fecha Recepcion:</b>
+  <%= @purchase.date2.strftime("%d/%m/%Y") %>
+</p>
+<p>
+  <b>Almacen:</b>
+  <%= @purchase.almacen.nombre %>
+</p>
+
+
 <p>
   <b>Stock :</b>
   
   <strong><%= @purchase.get_sumastock %></strong>
+</p>
+
+
+<p>
+  <b>Status :</b>
+  
+  <strong><%= @purchase.get_status %></strong>
 </p>
 
 

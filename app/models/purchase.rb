@@ -13,7 +13,7 @@ class Purchase < ActiveRecord::Base
   belongs_to :moneda
   belongs_to :payment
   belongs_to :product 
-   belongs_to :almacen 
+  belongs_to :almacen 
    
   
   belongs_to :purchaseorder
@@ -1123,6 +1123,15 @@ end
       return "* Asignado"
     else
       return "** No asignado" 
+    end
+  end 
+
+
+  def get_status
+    if(self.status == "1")
+      return "* No Contado"
+    else
+      return "**contado" 
     end
   end 
 

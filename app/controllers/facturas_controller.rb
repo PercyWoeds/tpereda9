@@ -941,7 +941,6 @@ def rpt_ingresos2_all_pdf
   end
 
 
-
   def rpt_ingresos3_all_pdf
   
     @company=Company.find(params[:id])          
@@ -4131,6 +4130,7 @@ def rpt_cobranzas_pdf
   end
 
 
+
 def rpt_ccobrar5_pdf
     @company=Company.find(params[:id])      
     @fecha1 = params[:fecha1]
@@ -4456,6 +4456,7 @@ end
           nroitem = nroitem + 1 
       
           @total_general = @total_general + customerpayment_rpt.balance
+          
         #end 
        end 
        end   
@@ -4536,6 +4537,26 @@ end
         #  table_content << row
 
 
+             a =   Tmppaycustomer.new(item: nroitem , 
+              customer:  $lcCliName, 
+              c_1:@total_anterior,
+              c_2:@total_mes01,
+              c_3:@total_mes02,
+              c_4:@total_mes03,
+              c_5:@total_mes04,
+              c_6:@total_mes05,
+              c_7:@total_mes06,
+              c_8:@total_mes07,
+              c_9:@total_mes08,
+              c_10:@total_mes09,
+              c_11:@total_mes10,
+              c_12:@total_mes11,
+              c_13:@total_mes12,
+              c_14:@total_cliente )
+             begin 
+             a.save
+             rescue 
+             end 
 
 
          @total_anterior_column = 0
