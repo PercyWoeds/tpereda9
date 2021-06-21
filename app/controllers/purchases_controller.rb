@@ -3363,6 +3363,7 @@ def newfactura2
   @almacens = @company.get_almacens()
   end
 
+
   # POST /purchases
   # POST /purchases.xml
   def create
@@ -3655,10 +3656,23 @@ def newfactura2
     @purchase[:division_id] = 1    
     @purchase[:date3]  =   @purchase[:date2] + @purchase.get_dias_vmto(@purchase[:payment_id]).days  
     
-    @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]  + @purchase[:inafecto]
-    @purchase[:charge]  = 0
-    @purchase[:pago] = 0
-    @purchase[:balance] =   @purchase[:total_amount]
+    
+    if @purchase[:payment_id]  == 1 
+      @purchase[:pago] = @purchase[:total_amount]
+      @purchase[:balance] =  0.00 
+         @purchase[:tipo]    = 0
+    
+    else 
+      @purchase[:pago] = 0
+      @purchase[:balance] =   @purchase[:total_amount] 
+       @purchase[:tipo]    = 1
+    end 
+    
+   #  @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]  + @purchase[:inafecto]
+
+   #  @purchase[:charge]  = 0
+    # @purchase[:pago] = 0
+  #   @purchase[:balance] =   @purchase[:total_amount]
 
 
     puts "usuario****"
