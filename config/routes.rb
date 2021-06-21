@@ -8,6 +8,8 @@ require 'sidekiq/cron/web'
   Mnygo::Application.routes.draw do
 
   
+  resources :mnto_details
+  resources :mntos
   resources :activities
   resources :vuelto_details
   resources :vueltos
@@ -221,6 +223,19 @@ require 'sidekiq/cron/web'
 
   end
 
+ resources :mntos do
+   
+        resources :mnto_details, except: [:index,:show,:editmultiple], controller:  "mntos/mnto_details" do
+       
+         collection do 
+          put :editmultiple      
+          put :updatemultiple      
+        end 
+ 
+
+      end 
+
+  end
 
   resources :suppliers  do
     resources :supplier_details, except: [:index,:show], controller: "suppliers/supplier_details"
@@ -1801,6 +1816,16 @@ match '/proyecto_exams/:id/proyectoexam_details/:proyectoexam_detail_id' => 'pro
 
  match 'viaticos/newviatico2/:id' => 'viaticos#newviatico2', via: [:get, :post]
  match 'viaticos/do_crear/:id'   => 'viaticos#do_crear', via: [:get, :post]
+
+
+
+
+match 'mntos/do_process/:id' => 'mntos#do_process', via: [:get, :post]
+match 'mntos/do_anular/:id' => 'mntos#do_anular', via: [:get, :post]
+match 'mntos/sendcancelar/:id' => 'mntos#sendcancelar', via: [:get, :post]
+match 'mntos/pdf/:id' => 'autoviatics#pdf', via: [:get, :post]
+
+
   
   mount Sidekiq::Web, at: '/sidekiq'
 

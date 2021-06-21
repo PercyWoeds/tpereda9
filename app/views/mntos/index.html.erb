@@ -1,0 +1,51 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Mntos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Division</th>
+     
+      <th>Fecha</th>
+      <th>Truck</th>
+      <th>Km programado</th>
+      <th>Km actual</th>
+      <th>Fecha2</th>
+      
+      <th>Processed</th>
+    
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @mntos.each do |mnto| %>
+      <tr>
+        <td><%= mnto.code %></td>
+        <td><%= mnto.division.name  %></td>
+        
+        <td><%= mnto.fecha.strftime("%d/%m/%Y") %></td>
+        <td><%= mnto.truck.placa%></td>
+        <td><%= mnto.km_programado %></td>
+        <td><%= mnto.km_actual %></td>
+        <td><%= mnto.fecha2.strftime("%d/%m/%Y") %></td>
+        
+        <td><%= mnto.get_processed %></td>
+       
+        <td><%= link_to 'Ver', mnto %></td>
+        <td><%= link_to 'Editar', edit_mnto_path(mnto) %></td>
+         <%if @current_user.email == 'percywoeds@gmail.com' %>
+
+        <td><%= link_to 'Eliminar', mnto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+         <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Mnto', new_mnto_path %>

@@ -1,0 +1,64 @@
+
+
+<h1> Editar  </h1>		 
+
+<%= form_tag  updatemultiple_mnto_mnto_details_path(@mnto.id), method: :put do %>
+
+ 	<table>
+		<thead>
+		  <tr>
+		      <th>
+		       Actividaad
+		      </th>
+		      <th>
+		         Estado 
+		      </th>
+		    
+		    
+		   </tr>		 
+		</thead>
+
+
+ 	<% for product in @mnto_select %>
+
+ 		<%= hidden_field_tag "products_ids[]",product.id %>
+
+	    <tbody>		
+			<tr>
+			 <td class="small bordered_bottom bordered_right">
+            
+              <%= product.activity.name  %>
+          
+
+            </td>
+
+	        <td class="small bordered_bottom bordered_right">
+
+	             <%=product.get_estado   %>
+
+	        </td>
+	      
+	        
+	      </tr>
+	 <%end %>
+	 	</tbody>
+	</table>
+
+	     <%= fields_for  product  do |f|	 %>		
+ 				
+ 		 	<%= render "fields",:f=> f %>
+	      	    
+   		 <%end %>
+
+		<div class="actions" >
+		<%= submit_tag "Actualizar  "%>
+		</div>
+
+
+
+<%end %>	
+
+
+
+
+

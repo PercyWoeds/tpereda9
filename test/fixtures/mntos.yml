@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  division_id: 1
+  ocupacion_id: 1
+  fecha: 2021-06-18 21:13:16
+  truck_id: 1
+  km_programado: 1.5
+  km_actual: 1.5
+  fecha2: 2021-06-18 21:13:16
+  user_id: 1
+  processed: MyString
+  date_processed: 2021-06-18 21:13:16
+
+two:
+  code: MyString
+  division_id: 1
+  ocupacion_id: 1
+  fecha: 2021-06-18 21:13:16
+  truck_id: 1
+  km_programado: 1.5
+  km_actual: 1.5
+  fecha2: 2021-06-18 21:13:16
+  user_id: 1
+  processed: MyString
+  date_processed: 2021-06-18 21:13:16

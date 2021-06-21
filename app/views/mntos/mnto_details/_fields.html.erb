@@ -1,0 +1,11 @@
+<% if params[:field].blank? || params[:field] == "1" || params[:field] == "2"%>
+<p>
+  <%= f.label :process, "Estado *", :class => "bold" %><br />
+
+
+    <%= f.select(:process, options_for_select([ ["En Proceso", "1"], ["Ejecutado","2"]] )) %>
+
+
+
+</p>
+<% end %>

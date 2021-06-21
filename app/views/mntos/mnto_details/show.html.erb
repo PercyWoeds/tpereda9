@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Activity:</strong>
+  <%= @mnto_detail.activity_id %>
+</p>
+
+<p>
+  <strong>Process:</strong>
+  <%= @mnto_detail.process %>
+</p>
+
+<p>
+  <strong>Mnto:</strong>
+  <%= @mnto_detail.mnto %>
+</p>
+
+<%= link_to 'Edit', edit_mnto_detail_path(@mnto_detail) %> |
+<%= link_to 'Back', mnto_details_path %>

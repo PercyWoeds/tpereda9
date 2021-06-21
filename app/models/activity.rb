@@ -1,5 +1,8 @@
 class Activity < ActiveRecord::Base
 
+   
+
+   has_many :mnto_details 
 
 	 def self.import(file)
 

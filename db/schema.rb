@@ -1,4 +1,4 @@
-# encoding: UTF-8
+f# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210617025831) do
+ActiveRecord::Schema.define(version: 20210619022011) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1805,6 +1805,33 @@ ActiveRecord::Schema.define(version: 20210617025831) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "company_id"
+  end
+
+  create_table "mnto_details", force: :cascade do |t|
+    t.integer  "activity_id"
+    t.string   "process"
+    t.integer  "mnto_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "mnto_details", ["mnto_id"], name: "index_mnto_details_on_mnto_id", using: :btree
+
+  create_table "mntos", force: :cascade do |t|
+    t.string   "code"
+    t.integer  "division_id"
+    t.integer  "ocupacion_id"
+    t.datetime "fecha"
+    t.integer  "truck_id"
+    t.float    "km_programado"
+    t.float    "km_actual"
+    t.datetime "fecha2"
+    t.integer  "user_id"
+    t.string   "processed"
+    t.datetime "date_processed"
+    t.string   "tipo"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "modelos", force: :cascade do |t|
@@ -3675,6 +3702,7 @@ ActiveRecord::Schema.define(version: 20210617025831) do
   add_foreign_key "conductors", "employees"
   add_foreign_key "contactopmdetails", "contactopms"
   add_foreign_key "cpagar_details", "cpagars"
+  add_foreign_key "mnto_details", "mntos"
   add_foreign_key "products", "stocks"
   add_foreign_key "service_extensions", "servicebuys"
   add_foreign_key "supplier_details", "suppliers"

@@ -41,6 +41,7 @@ wb.styles do |s|
           :style => [cadena,cadena,currency,currency,currency,currency,cadena]
 
 
+
       sheet.add_row ["CODE: ",
                       "CODIGO:",
                      "SALDO INICIAL",
@@ -53,7 +54,7 @@ wb.styles do |s|
       sheet.add_row ["",payment.code,payment.inicial,payment.total_ing,payment.total_egreso,payment.saldo,""],
           :style => [cadena,cadena,currency,currency,currency,currency,cadena,cadena,cadena]
       
-      if payment.caja_id  == 5 or  @payment.caja_id  == 6
+      if payment.caja_id  == 5 or  payment.caja_id  == 6
           @viatico = Viaticotbk.find(payment.id)
       else
 

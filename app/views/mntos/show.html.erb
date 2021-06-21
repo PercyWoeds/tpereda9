@@ -1,0 +1,174 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @mnto.code %>
+</p>
+
+<p>
+  <strong>Division:</strong>
+  <%= @mnto.division_id %>
+</p>
+
+<p>
+  <strong>Ocupacion:</strong>
+  <%= @mnto.ocupacion_id %>
+</p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @mnto.fecha %>
+</p>
+
+<p>
+  <strong>Truck:</strong>
+  <%= @mnto.truck_id %>
+</p>
+
+<p>
+  <strong>Km programado:</strong>
+  <%= @mnto.km_programado %>
+</p>
+
+<p>
+  <strong>Km actual:</strong>
+  <%= @mnto.km_actual %>
+</p>
+
+<p>
+  <strong>Fecha2:</strong>
+  <%= @mnto.fecha2 %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @mnto.user_id %>
+</p>
+
+<p>
+  <strong>Processed:</strong>
+  <%= @mnto.processed %>
+</p>
+
+<p>
+  <strong>Date processed:</strong>
+  <%= @mnto.date_processed %>
+</p>
+
+
+
+
+
+
+<table>
+  <thead>
+    <tr>
+     
+      <th>
+        Item
+      </th>
+
+       <th>
+        Actividad 
+      </th>
+
+       <th>
+        Ejecutado ?
+      </th>
+
+      
+     
+        <th>
+        Opciones 
+      </th>
+      
+    </tr>
+  </thead>
+  
+    
+<%= hr() %>
+
+<% nroitem = 1 %>
+
+
+<%= form_tag  editmultiple_mnto_mnto_details_path(@mnto.id), method: :put do %>
+
+<tbody>
+    <%  @mnto_detail.each do |product| %>
+    
+      <tr>
+
+        <td class="small bordered_bottom bordered_right">
+        <%= nroitem %>
+        </td>
+
+        <td class="small bordered_bottom bordered_right">
+            
+              <%= product.activity.name  %>
+          
+
+          </td>
+
+        <td class="small bordered_bottom bordered_right">
+
+             <%=product.get_estado   %>
+
+          </td>
+          
+         <td class="bordered_right bordered_bottom right">
+            <%= check_box_tag "products_ids[]", product.id  %>
+          </td>          
+
+          
+      
+      </tr>
+
+      <% nroitem += 1 %>
+    <% end %>
+  
+   
+  </tbody>
+</table>
+<br />
+
+
+<br />
+
+<%= select_tag :field, options_for_select([["En Proceso", "1"], ["Ejecutado", "2"]]) %>
+<%= submit_tag "Editar solo marcados" %>
+
+ <% end %>
+
+<p>
+  <strong>Seller:</strong>
+  <%= link_to @mnto.user.username, @mnto.user.email %>
+</p>
+
+<%= hr() %>
+
+
+<div class="button">
+  <%= link_to 'Exportar to PDF', "/mntos/pdf/#{@mnto.id}.pdf" %>  
+<%= link_to 'Edit', edit_mnto_path(@mnto) %> |
+  <% if @mnto.processed == "1" %>
+   <%= link_to 'Anular', "/mntos/do_anular/#{@mnto.id}" %>
+   <%= link_to 'Cancelar', "/mntos/sendcancelar/#{@mnto.id}" %>
+  <tr>
+    <%= link_to 'Enviar  via email', "/mntos/sendmail/#{@mnto.id}" %>
+  </tr>  
+
+  <%end %>
+
+
+  <% if @mnto.processed.nil? %>
+
+  <%= link_to 'Procesar ST.', "/mntos/do_process/#{@mnto.id}" %>
+  <%end %>
+
+
+  
+  <%= link_to 'Regresar', mntos_path %>
+
+
+</div>
+

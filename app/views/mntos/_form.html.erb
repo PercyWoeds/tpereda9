@@ -1,0 +1,116 @@
+ <% if @mnto.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@mnto.errors.count, "error") %> prohibited this invoice from being saved:</h2>
+
+    <ul>
+    <% @mnto.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>      
+
+
+
+
+<%= simple_form_for(@mnto) do |f| %>
+
+
+
+
+  <div class="form-inputs">
+   
+     <div class="field">
+       <%= f.label :division_id, "Division: ", :class => "bold" %><br />
+    <%= f.collection_select :division_id, @divisions, :id, :name, :prompt => true  %>
+    </div>
+
+
+    <table>
+
+
+        <td>
+        <div class="field">
+          <%= f.label :fecha, "Fecha Inicio: ", :class => "bold" %><br />
+          <%= f.date_field :fecha %>
+        </div>
+
+        </td>
+
+       <td>
+    
+    <div class="field">
+     <%= f.label :fecha, "Placa : ", :class => "bold" %><br />
+    <%= f.collection_select :truck_id, @trucks, :id, :placa, :prompt => true  %>
+      
+      
+    
+    </div>
+
+
+    
+    </td>
+
+      <div class="field">
+       <%= f.label :tipo, "Tipo: ", :class => "bold" %><br />
+               
+        <select id="tipo" name="tipo" >
+          <option value="1">Tipo A</option>
+          <option value="2">Tipo B</option>
+          <option value="3" selected>Tipo C</option>
+        </select>
+      </div>
+
+
+
+        
+
+
+
+        <td>
+        <div class="field">
+          <%= f.label :km_actual, "Km.Actual: ", :class => "bold" %><br />
+    
+
+            <%= f.number_field :km_actual ,:style=> 'width: 120px' %>
+        </div>
+
+        </td>
+
+
+        <td>
+        <div class="field">
+          <%= f.label :km_programado, "Km.Programado: ", :class => "bold" %><br />
+        
+            <%= f.number_field :km_programado ,:style=> 'width: 120px' %>
+        </div>
+
+        </td>
+
+        <td>
+        <div class="field">
+          <%= f.label :fecha2, "Fecha Termino: ", :class => "bold" %><br />
+          <%= f.date_field :fecha2 %>
+        </div>
+
+        </td>
+
+
+
+
+
+
+
+
+        
+    </table>
+
+
+
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

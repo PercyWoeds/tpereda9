@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Mnto Details</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Activity</th>
+      <th>Process</th>
+      <th>Mnto</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @mnto_details.each do |mnto_detail| %>
+      <tr>
+        <td><%= mnto_detail.activity_id %></td>
+        <td><%= mnto_detail.process %></td>
+        <td><%= mnto_detail.mnto %></td>
+        <td><%= link_to 'Show', mnto_detail %></td>
+        <td><%= link_to 'Edit', edit_mnto_detail_path(mnto_detail) %></td>
+        <td><%= link_to 'Destroy', mnto_detail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Mnto detail', new_mnto_detail_path %>

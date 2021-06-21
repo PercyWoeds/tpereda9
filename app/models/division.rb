@@ -4,7 +4,10 @@ class Division < ActiveRecord::Base
   belongs_to :company
   belongs_to :location
   
+  
   has_many :invoices
   has_many :purchases
   has_many :employees
+  has_many :mntos
+
 end
