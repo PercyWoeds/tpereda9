@@ -437,6 +437,7 @@ self.per_page = 20
 
   end 
 
+
   def get_viaticos_cheque
       lcCheque = 6
       @viaticos = ViaticoDetail.where("viatico_id = ? and document_id = ?",self.id, lcCheque).order(:destino_id,:id,:document_id)
