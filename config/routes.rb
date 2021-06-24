@@ -1823,7 +1823,8 @@ match '/proyecto_exams/:id/proyectoexam_details/:proyectoexam_detail_id' => 'pro
 match 'mntos/do_process/:id' => 'mntos#do_process', via: [:get, :post]
 match 'mntos/do_anular/:id' => 'mntos#do_anular', via: [:get, :post]
 match 'mntos/sendcancelar/:id' => 'mntos#sendcancelar', via: [:get, :post]
-match 'mntos/pdf/:id' => 'autoviatics#pdf', via: [:get, :post]
+match 'mntos/do_cancelar/:id' => 'mntos#do_cancelar', via: [:get, :post]
+match 'mntos/pdf/:id' => 'mntos#pdf', via: [:get, :post]
 
 
   

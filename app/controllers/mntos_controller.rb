@@ -129,22 +129,12 @@ class MntosController < ApplicationController
     @invoice = Mnto.find(params[:id])
 
 
-   a = Manifestship.find_by(:mnto_id=> @invoice.id)
-    if a 
-    flash[:notice] = "So
-
-
-        º
-
-        licitud de Transporte tiene OST asignadas, no se puede anular."
-    
-    else
-
     @invoice[:processed] = "2"
     @invoice.anular 
     
     flash[:notice] = "Documento a sido anulado."
-    end 
+   
+
     redirect_to @invoice 
 
 
@@ -199,6 +189,213 @@ class MntosController < ApplicationController
       where("code LIKE ?", "%#{search}%") 
         
   end
+
+
+  def pdf
+    @mnto  = Mnto.find(params[:id])
+    @company = Company.find(1)
+  
+@mnto_detail =  @mnto.mnto_details.order("mnto_details.activity_id")
+
+    Prawn::Document.generate("app/pdf_output/#{@mnto.id}.pdf") do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header(pdf)
+        pdf = build_pdf_body(pdf)
+        build_pdf_footer(pdf)
+        $lcFileName =  "app/pdf_output/#{@mnto.id}.pdf"      
+        
+    end     
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
+    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+  
+  end
+  
+def build_pdf_header(pdf)
+
+      pdf.font "Helvetica"  , :size => 8
+
+     image_path = "#{Dir.pwd}/public/images/tpereda2.png"
+
+       @fecha_hoy = Date.today  
+       table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center },
+        {:content => "SISTEMA DE GESTIÓN DE INTEGRADO ",
+          :rowspan => 2},"CODIGO ","TP-EC-F-003"], 
+          ["VERSION: ","03"], 
+          ["STATUS DE INGRESOS A PROYECTOS MINEROS, ALMACENES Y/O PUERTOS : " + @fecha_hoy.strftime("%d/%m/%Y") ,"Pagina: ","1 de 1 "] 
+         
+          ])
+        
+
+       pdf.table(table_content  ,{
+           :position => :center,
+           :width => pdf.bounds.width
+         })do
+            columns([1,2]).font_style = :bold
+            columns([0]).width = 118.55
+            columns([1]).width = 301.45 
+            columns([1]).align = :center
+            columns([2]).align = :center
+            columns([3]).align = :center
+            columns([2]).width = 60
+            columns([3]).width = 60
+
+         end
+      
+         pdf.move_down 2
+
+
+         table_content2 = ([["Fecha : ",Date.today.strftime("%d/%m/%Y")]])
+
+         pdf.table(table_content2,{:position=>:right }) do
+
+            columns([0, 1]).font_style = :bold
+            columns([0, 1]).width = 100
+            
+         end 
+         
+      pdf 
+      pdf.move_down 2
+
+
+      pdf 
+  end   
+
+  def build_pdf_body(pdf)
+    
+    pdf.text " ", :size => 13, :spacing => 4
+    pdf.font "Helvetica" , :size => 7
+
+    @texto_ost = " "
+    table_content = []
+    row  = []
+    row << "Fecha Inicio: "
+    row << "Placa : "
+    row << "Tipo : "
+    row << "Modelo: "
+    row << "Km. Programado : "
+    row << "Km. Actual : " 
+    row << "Fecha Termino : "
+
+    table_content << row 
+
+    row  = []
+    row <<  @mnto.fecha.strftime("%Y-%m-%d")
+    row << @mnto.truck.placa
+    row << @mnto.truck.tipo_unidad.name 
+    row << @mnto.truck.modelo.descrip
+    row << @mnto.km_actual.to_s 
+    row << @mnto.km_programado.to_s
+    row << @mnto.fecha2.strftime("%Y-%m-%d")
+    table_content << row 
+
+
+     result = pdf.table table_content, {:position => :center,
+                                                :width => pdf.bounds.width
+                                                } do 
+                                                  columns([0]).align=:center
+                                                  columns([1]).align=:center 
+                                                  columns([2]).align=:left
+                                                  columns([3]).align=:left
+                                                  columns([4]).align=:left  
+                                                  columns([5]).align=:left 
+                                                  columns([6]).align=:left
+
+                                                end                                          
+      pdf.move_down 10      
+      pdf
+       table_content = []
+       nroitem = 1
+
+    @mnto_detail.each do |product| 
+    
+     
+            row  = []
+            row << nroitem.to_s 
+            row <<   product.activity.name 
+            row <<   " " 
+            row <<   product.get_estado  
+            table_content << row 
+
+            nroitem += 1
+
+         # pdf.text @manifest.observa
+      
+    end
+
+result = pdf.table table_content, {:position => :center,
+                                                :width => pdf.bounds.width
+                                                } do 
+                                                  columns([0]).align=:left
+                                                  columns([1]).align=:left 
+                                                  columns([2]).align=:left
+
+                                                
+                                                  columns([1]).width = 400
+                                                  columns([2]).width = 59.169
+                                                  columns([3]).width = 65
+                                                end                                          
+      pdf.move_down 10      
+      pdf
+
+
+  end 
+
+
+
+    def build_pdf_footer(pdf)
+
+        
+        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+        
+        pdf.text "_________________               _____________________         ____________________      ", :size => 13, :spacing => 4
+        pdf.text ""
+        pdf.text "                  Mecanico                                                                                                                    Supervisor de mantenimiento           ", :size => 10, :spacing => 4
+     
+      end
+      pdf
+      
+  end
+  
+  
+ def client_data_headers
+  
+      client_headers  = [["Area  ", @mnto.division_id  ]] 
+      client_headers << ["Fecha Inicio : ", @manifest.customer.name ]    
+      client_headers << ["Fecha Termino: ", @manifest.solicitante+ @texto_ost]
+      
+      
+      client_headers
+  end
+
+  def invoice_headers   
+    
+      invoice_headers  = [["Placa : ","Supervisor de MANTENIMIENTO "  ]]
+      invoice_headers <<  ["Estado  : ",@manifest.get_processed ]    
+      
+
+      invoice_headers
+  end
+  
+  def invoice_summary
+      invoice_summary = []
+      invoice_summary << ["Importe",  "0.00"]
+      invoice_summary
+  end
+  
+
+
+
+  def manifest_3   
+      manifest_3   = [[ "Fecha Inicio: ","Placa : ","Tipo : ","Modelo: ","Km. Programado : ","Km. Actual : " ,"Fecha Termino : "  ]]
+
+      manifest_3 <<  [ @mnto.fecha.strftime("%Y-%m-%d"), @mnto.truck.placa, @mnto.truck.config,@mnto.truck.modelo ,  @mnto.km_actual,@mnto.km_programado,@mnto.fecha2.strftime("%Y-%m-%d") ]
+
+     
+
+      manifest_3
+  end
+    
 
   private
     # Use callbacks to share common setup or constraints between actions.

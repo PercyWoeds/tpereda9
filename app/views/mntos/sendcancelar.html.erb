@@ -1,0 +1,32 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Autorizacion", mntos_path %> &raquo;
+  <%= link_to @mnto.code, @mnto %>
+</div>
+
+<h1>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+   Ingresar observaciones 
+</h1>
+
+<%= hr() %>
+
+<h3>
+  <%= link_to @mnto.code, @mnto %>
+</h3>
+
+<%= hr() %>
+
+<form method="post" action="/mntos/do_cancelar/<%= @mnto.id %>">
+  <strong>Motivo de anulación :</strong>
+  <input type="text" name="motivo" value="Ingrese motivo de anulación " onclick="$(this).select();" />
+  <input type="submit" value="Grabar" class="bold" />
+</form>
+
+<%= hr() %>
+
+<div class="button">
+
+  <%= link_to 'Regresar', mntos_path %>
+</div>

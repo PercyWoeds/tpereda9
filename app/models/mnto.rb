@@ -4,6 +4,7 @@ belongs_to :user
 belongs_to :truck
 belongs_to :division 
 
+
 validates_uniqueness_of :code
 
 validates_presence_of :division_id, :code,:user_id,:truck_id,:tipo 
@@ -102,10 +103,7 @@ validates_presence_of :division_id, :code,:user_id,:truck_id,:tipo
   def anular
     if(self.processed == "2" )          
       self.processed="2"
-      self.subtotal =0
-      self.tax = 0
-      self.total = 0
-      self.balance = 0
+      
       
       self.date_processed = Time.now
       self.save
@@ -120,5 +118,14 @@ validates_presence_of :division_id, :code,:user_id,:truck_id,:tipo
     end
   end
  
+def cancelar
+    if(self.processed == "3" )          
+      self.processed="3"
+      
+      
+      self.date_processed = Time.now
+      self.save
+    end
+  end
  
 end

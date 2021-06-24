@@ -47,7 +47,7 @@
 
 <p>
   <strong>Processed:</strong>
-  <%= @mnto.processed %>
+  <%= @mnto.get_processed %>
 </p>
 
 <p>
@@ -115,11 +115,13 @@
 
           </td>
           
+
+        <%  if @mnto.processed.nil? %>
          <td class="bordered_right bordered_bottom right">
             <%= check_box_tag "products_ids[]", product.id  %>
           </td>          
 
-          
+        <% end %> 
       
       </tr>
 
@@ -133,9 +135,11 @@
 
 
 <br />
+  <%  if @mnto.processed.nil? %>
 
 <%= select_tag :field, options_for_select([["En Proceso", "1"], ["Ejecutado", "2"]]) %>
 <%= submit_tag "Editar solo marcados" %>
+ <% end %>
 
  <% end %>
 
@@ -148,7 +152,8 @@
 
 
 <div class="button">
-  <%= link_to 'Exportar to PDF', "/mntos/pdf/#{@mnto.id}.pdf" %>  
+  <%= link_to 'Exportar to PDF', "/mntos/pdf/#{@mnto.id}.pdf" %> 
+   
 <%= link_to 'Edit', edit_mnto_path(@mnto) %> |
   <% if @mnto.processed == "1" %>
    <%= link_to 'Anular', "/mntos/do_anular/#{@mnto.id}" %>
@@ -160,7 +165,7 @@
   <%end %>
 
 
-  <% if @mnto.processed.nil? %>
+  <% if @mnto.processed.nil?  %>
 
   <%= link_to 'Procesar ST.', "/mntos/do_process/#{@mnto.id}" %>
   <%end %>
