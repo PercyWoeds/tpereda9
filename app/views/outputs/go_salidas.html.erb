@@ -91,7 +91,7 @@
             <%= link_to "Editar", edit_output_path(output) %>
           </td>
 
-          <%if @current_user.level == 'admin' %>          
+             <%if @current_user.level == 'admin' or @current_user.level == 'compras'  %>           
             <td class="bordered_right bordered_bottom">
           <%= link_to "Eliminar", output , method: :delete, data: { confirm: 'Esta seguro ?' } %>
             </td>
