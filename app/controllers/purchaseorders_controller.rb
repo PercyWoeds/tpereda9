@@ -564,25 +564,22 @@ pdf.move_down 5
     if(params[:division] and params[:division] != "")
       @sel_division = params[:division]
     end
-
     if(@company.can_view(current_user))
-        if(params[:q] and params[:q] != "")
-          fields = ["description", "comments", "code"]
-
-          q = params[:q].strip
-          @q_org = q
-
-          query = str_sql_search(q, fields)
-
-          @purchaseorders = Purchaseorder.paginate(:page => params[:page], :order => 'id DESC', :conditions => ["company_id = ? AND (#{query})", @company.id])
+     
+      
+        if(params[:search] and params[:search] != "")
+          puts "dsds"
+          puts params[:search] 
+          @purchaseorders = Purchaseorder.paginate(:page => params[:page]).search(params[:search]).order("created_at desc  ")
         else
-          @purchaseorders = Purchaseorder.where(company_id:  @company.id).order("id DESC").paginate(:page => params[:page])
-          @filters_display = "none"
+          @purchaseorders = Purchaseorder.where(company_id:  @company.id).order("created_at desc").paginate(:page => params[:page])
+      
         end
-  
-    else
-      errPerms()
-    end
+
+    
+      else
+        errPerms()
+      end
   end
   # Show purchaseorders for a company
   def list_receiveorders

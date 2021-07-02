@@ -1548,6 +1548,7 @@ def get_customer_payments_detail_value(fecha1,fecha2,value="total")
  end
 
 
+
  
  def actualizar_fecha20(fecha1,fecha2)
     Tempcp.delete_all 
@@ -1555,7 +1556,7 @@ def get_customer_payments_detail_value(fecha1,fecha2,value="total")
     
     for customerpayment  in facturas
         moneda = customerpayment.bank_acount.moneda_id
-        fact =  CustomerPaymentDetail.where(customer_payment_id: customerpayment.id)
+        fact =  CustomerPaymentDetail.where("customer_payment_id =  ? and month_year is null " , customerpayment.id)
         
         for detalle in fact 
           if detalle.factura 
@@ -1575,7 +1576,6 @@ def get_customer_payments_detail_value(fecha1,fecha2,value="total")
           
         end
         end 
-        
         
     end 
 

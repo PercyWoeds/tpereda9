@@ -18,6 +18,7 @@ class Purchaseorder < ActiveRecord::Base
   has_many :purchaseorder_details
 
 
+
   TABLE_HEADERS = ["ITEM",
                      "CANT.",
                      "UNI.",
@@ -58,6 +59,11 @@ class Purchaseorder < ActiveRecord::Base
     end
 
 
+
+def self.search(search)
+      # Title is for the above case, the OP incorrectly had 'name'
+      where("code ilike ? ", "%#{search}%")
+end 
  def get_maximo
 
     year = Date.today.year.to_s

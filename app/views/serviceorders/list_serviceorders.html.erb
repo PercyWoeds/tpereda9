@@ -13,16 +13,19 @@
 </h1>
 
 
-
 <h4>Buscar </h4>
 
-<%= form_tag(serviceorders_path, method: :get , return: false ) do %>
-  <%= text_field_tag(:search, params[:search])%>
-  <%= submit_tag("Buscar ")%>
 
-<% end %>
+<div class="small">
+ <form method="get" action="/companies/serviceorders/<%= @company.id %>">
+    <strong>Buscar :</strong>
+    <input type="text" name="search" value="<% if @q_org %><%= @q_org %><% end %>" class="small" style="width: 250px;" onclick="$(this).select();" />
+    <input type="submit" value="Buscar " class="bold small_btn" />
+   <a href="/companies/serviceorders/<%= @company.id %>" class="small_btn">Limpiar</a>
+  </form>
+</div>
 
-<a href="/companies/serviceorders/<%= @company.id %>" class="small_btn">Clear</a>
+
 
 <br />
 <%= render "serviceorders/list" %>

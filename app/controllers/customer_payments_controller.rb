@@ -3378,10 +3378,6 @@ class CustomerPaymentsController < ApplicationController
   end
 
 
-  
-
-
-
   def rpt_ccobrar11_pdf
     @company=Company.find(params[:id])      
     @fecha1 = params[:fecha1]

@@ -432,12 +432,12 @@ pdf.move_down 5
      
       
         if(params[:search] and params[:search] != "")
-
+          puts "dsds"
+          puts params[:search] 
           @serviceorders = Serviceorder.paginate(:page => params[:page]).search(params[:search]).order("created_at desc  ")
         else
           @serviceorders = Serviceorder.where(company_id:  @company.id).order("created_at desc").paginate(:page => params[:page])
       
-
         end
 
     
